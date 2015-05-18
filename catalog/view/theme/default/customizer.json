@@ -1,0 +1,570 @@
+{
+  "general": {
+    "title": {
+      "en": "General",
+      "tr": "Genel"
+    },
+    "description": {
+      "en": "General",
+      "tr": "Genel"
+    },
+    "control": {
+      "sitename": {
+        "selector": "#logo a"
+      }
+    }
+  },
+  "colors": {
+    "title": {
+      "en": "Colors",
+      "tr": "Renkler"
+    },
+    "description": {
+      "en": "You can change site colors from following options",
+      "tr": "Renkler"
+    },
+    "control": {
+      "header_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Top Nav Background",
+          "tr": "Üst Menü Arkaplan"
+        },
+        "description": {
+          "en": "",
+          "tr": ""
+        },
+        "default": "#EEEEEE",
+        "selector": "nav#top"
+      },
+      "menu_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Menu Background",
+          "tr": "Menü Arkaplan"
+        },
+        "description": {
+          "en": "",
+          "tr": ""
+        },
+        "default": "#008db9",
+        "selector": "#menu"
+      },
+      "menu-border_border-color": {
+        "type": "color",
+        "label": {
+          "en": "Menu Separator Color",
+          "tr": "Menü Ayraç Renk"
+        },
+        "description": {
+          "en": "",
+          "tr": ""
+        },
+        "default": "#1083A6",
+        "selector": "#menu .nav > li > a"
+      },
+      "menu_color": {
+        "type": "color",
+        "label": {
+          "en": "Menu Text Color",
+          "tr": "Menu Metin Renk"
+        },
+        "description": {
+          "en": "",
+          "tr": ""
+        },
+        "default": "#FFFFFF",
+        "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav li a"
+      },      
+    "menu-text-hover_color": {
+        "type": "color",
+        "label": {
+          "en": "Menu Text Hover Color",
+          "tr": "Menu Metin Hover Renk"
+        },
+        "description": {
+          "en": "",
+          "tr": ""
+        },
+        "default": "#FFFFFF",
+        "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav li a:hover",
+    "advance": "true"
+      },
+      "menu-dropdown-menu_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Menu Dropdown Color",
+          "tr": "Açılır Menu Renk"
+        },
+        "description": {
+          "en": "",
+          "tr": ""
+        },
+        "default": "#FFFFFF",
+        "selector": ".collapse.navbar-collapse .nav.navbar-nav .dropdown-menu",
+    "advance": "true"
+      },
+      "menu-dropdown-menu-item_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Menu Dropdown Item Hover Background Color",
+          "tr": "Açılır Menu Ogeleri Renk"
+        },
+        "description": {
+          "en": "",
+          "tr": ""
+        },
+        "default": "#FFFFFF",
+        "selector": ".collapse.navbar-collapse .nav.navbar-nav .dropdown-menu .dropdown-inner .list-unstyled li a:hover",
+    "advance": "true"
+      },
+      "menu-dropdown-menu-item_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Menu Dropdown Item Color",
+          "tr": "Açılır Menu Ogeleri Renk"
+        },
+        "description": {
+          "en": "",
+          "tr": ""
+        },
+        "default": "#008db9",
+        "selector": ".collapse.navbar-collapse .nav.navbar-nav .dropdown-menu .dropdown-inner .list-unstyled li a:hover",
+    "advance": "true"
+      },
+      "breadcrumbs_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Breadcrumbs Background",
+          "tr": "Breadcrumbs Arkaplan"
+        },
+        "description": {
+          "en": "",
+          "tr": ""
+        },
+        "default": "#f5f5f5",
+        "selector": ".breadcrumb"
+      },
+      "breadcrumbs-border_border-color": {
+        "type": "color",
+        "label": {
+          "en": "Breadcrumbs Border Color",
+          "tr": "Breadcrumbs Border Renk"
+        },
+        "description": {
+          "en": "",
+          "tr": ""
+        },
+        "default": "#ddd",
+        "selector": ".breadcrumb"
+      },
+      "breadcrumbs-border-li_border-color": {
+        "type": "color",
+        "label": {
+          "en": "Breadcrumbs Arrow Border Color",
+          "tr": "Breadcrumbs Ok Border Renk"
+        },
+        "description": {
+          "en": "",
+          "tr": ""
+        },
+        "default": "#ddd",
+        "selector": ".breadcrumb > li:after",
+    "advance": "true"
+      },
+      "breadcrumbs-text_color": {
+        "type": "color",
+        "label": {
+          "en": "Breadcrumbs  Text Color",
+          "tr": "Breadcrumbs Text Renk"
+        },
+        "description": {
+          "en": "",
+          "tr": ""
+        },
+        "default": "#008db9",
+        "selector": ".breadcrumb li a",
+    "advance": "true"
+      },
+      "breadcrumbs-text-hover_color": {
+        "type": "color",
+        "label": {
+          "en": "Breadcrumbs Text Hover Color",
+          "tr": "Breadcrumbs Text Hover Renk"
+        },
+        "description": {
+          "en": "",
+          "tr": ""
+        },
+        "default": "#23527c",
+        "selector": ".breadcrumb li a:hover",
+    "advance": "true"
+      },
+    "footer_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Footer Background",
+          "tr": "Footer Arkaplan"
+        },
+        "default": "#eee",
+        "selector": "footer"
+      },
+    "footer-border_border-color": {
+        "type": "color",
+        "label": {
+          "en": "Footer Border Color",
+          "tr": "Footer Border Renk"
+        },
+        "default": "#008db9",
+        "selector": "footer"
+      },
+    "footer-border-size_border-top-width": {
+        "type": "text",
+        "label": {
+          "en": "Footer Border Size Color",
+          "tr": "Footer Border Size Renk"
+        },
+        "default": "6px",
+        "placeholder": "6px",
+        "selector": "footer",
+    "advance": "true"   
+      },
+    "footer-color_color": {
+        "type": "color",
+        "label": {
+          "en": "Footer Text Color",
+          "tr": "Footer Text Renk"
+        },
+        "default": "#333",
+        "selector": "footer",
+    "advance": "true"   
+      },
+    "footer-text-color_color": {
+        "type": "color",
+        "label": {
+          "en": "Footer Name Text Color",
+          "tr": "Footer Baslık Text Renk"
+        },
+        "default": "#008db9",
+        "selector": "footer .container .row .col-sm-3 h5",
+    "advance": "true"   
+      },
+    "footer-link-text-color_color": {
+        "type": "color",
+        "label": {
+          "en": "Footer Link Text Color",
+          "tr": "Footer Link Text Renk"
+        },
+        "default": "#008db9",
+        "selector": "footer .container .row .col-sm-3 .list-unstyled li a",
+    "advance": "true"   
+      },
+    "footer-link-hover-text-color_color": {
+        "type": "color",
+        "label": {
+          "en": "Footer Link Text Hover Color",
+          "tr": "Footer Link Text Hover Renk"
+        },
+        "default": "#008db9",
+        "selector": "footer .container .row .col-sm-3 .list-unstyled li a:hover",
+    "advance": "true"   
+      },
+      "button-group-first-button_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Button Group First Child(AddtoCart) Color",
+          "tr": "Buton Grop İlk Butonu(SepeteEkle) Rengi"
+        },
+        "default": "#008db9",
+        "selector": ".button-group button:first-of-type",
+    "advance": "true"   
+      },
+      "button-group-first-button-hover_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Button Group First Child(AddtoCart) Hover Color",
+          "tr": "Buton Grop İlk Butonu(SepeteEkle) Rengi"
+        },
+        "default": "#1872a2",
+        "selector": ".button-group button:first-of-type:hover",
+    "advance": "true"
+      },
+      "button-group-first-border_border": {
+        "type": "text",
+        "label": {
+          "en": "Button Group First Child(AddtoCart) Hover Color",
+          "tr": "Buton Grop İlk Butonu(SepeteEkle) Rengi"
+        },
+        "default": "",
+        "placeholder": "1px solid #ddd",
+        "selector": ".button-group button:first-of-type:hover",
+    "advance": "true"
+      },
+    "button-group-first-button-border_border-color": {
+        "type": "color",
+        "label": {
+          "en": "Button Group First Child(AddtoCart) Hover Color",
+          "tr": "Buton Grop İlk Butonu(SepeteEkle) Rengi"
+        },
+        "default": "",
+        "selector": ".button-group button:first-of-type",
+    "advance": "true"
+      },
+    "button-group-first-button-border-hover_border-color": {
+        "type": "color",
+        "label": {
+          "en": "Button Group First Child(AddtoCart) Hover Color",
+          "tr": "Buton Grop İlk Butonu(SepeteEkle) Rengi"
+        },
+        "default": "",
+        "selector": ".button-group button:first-of-type:hover",
+    "advance": "true"
+      },
+    "button-group-first-button-text_color": {
+        "type": "color",
+        "label": {
+          "en": "Button Group First Child(AddtoCart) Icon(Text) Color",
+          "tr": "Buton Grop İlk Butonu(SepeteEkle) Icon(Text) Rengi"
+        },
+        "default": "#fff",
+        "selector": ".button-group button:first-of-type",
+    "advance": "true"   
+      },
+      "button-group-first-button-text-hover_color": {
+        "type": "color",
+        "label": {
+          "en": "Button Group First Child(AddtoCart) Hover Color",
+          "tr": "Buton Grop İlk Butonu(SepeteEkle) Hover Rengi"
+        },
+        "default": "#444",
+        "selector": ".button-group button:first-of-type:hover",
+    "advance": "true"   
+      },
+      "button-group-other-button_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Button Group Other Children Color",
+          "tr": "Buton Grop Diğer Butonlar Rengi"
+        },
+        "default": "#eee",
+        "selector": ".button-group button",
+    "advance": "true"   
+      },
+      "button-group-other-button-hover_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Button Group Other Children Hover Color",
+          "tr": "Buton Grop Diğer Butonlar Hover Rengi"
+        },
+        "default": "#ddd",
+        "selector": ".button-group button:hover",
+    "advance": "true"
+      },
+      "button-group-other-button-border_border-color": {
+        "type": "color",
+        "label": {
+          "en": "Button Group Other Children Border Left Color",
+          "tr": "Buton Grop Diğer Butonlar Sol Border Rengi"
+        },
+        "default": "#ddd",
+        "selector": ".button-group button:hover",
+    "advance": "true"
+      },
+    "button-group-other-button-text_color": {
+        "type": "color",
+        "label": {
+          "en": "Button Group Other Children Icon(Text) Color",
+          "tr": "Buton Grop Diğer Butonlar Icon(Text) Rengi"
+        },
+        "default": "#888",
+        "selector": ".button-group button",
+    "advance": "true"   
+      },
+      "button-group-other-button-text-hover_color": {
+        "type": "color",
+        "label": {
+          "en": "Button Group Other Children Icon(Text) Hover Color",
+          "tr": "Buton Grop Diğer Butonlar Icon(Text) Hover Rengi"
+        },
+        "default": "#444",
+        "selector": ".button-group button:hover",
+    "advance": "true"   
+      },
+      "primary-button_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Primary Button Color",
+          "tr": "Birincil Buton Rengi"
+        },
+        "default": "#1e91cf",
+        "selector": ".btn-primary",
+    "advance": "true"   
+      },
+      "primary-button-hover_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Primary Button Hover Color",
+          "tr": "Birincil Buton Rengi"
+        },
+        "default": "#1872a2",
+        "selector": ".btn-primary:hover",
+    "advance": "true"
+      },
+      "primary-button-border_border-color": {
+        "type": "color",
+        "label": {
+          "en": "Primary Button Border Color",
+          "tr": "Birincil Buton Border Rengi"
+        },
+        "default": "#008db9",
+        "selector": ".btn-primary",
+    "advance": "true"
+      },
+    "primary-button-text_color": {
+        "type": "color",
+        "label": {
+          "en": "Primary Button Icon(Text) Color",
+          "tr": "Birincil Buton Icon(Text) Rengi"
+        },
+        "default": "#1e91cf",
+        "selector": ".btn-primary",
+    "advance": "true"   
+      },
+      "primary-button-text-hover_color": {
+        "type": "color",
+        "label": {
+          "en": "Primary Button Icon(Text) Hover Color",
+          "tr": "Birincil Buton Icon(Text) Hover Rengi"
+        },
+        "default": "#1872a2",
+        "selector": ".btn-primary:hover",
+    "advance": "true"   
+      },
+    "danger-button_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Danger Button Color",
+          "tr": "Danger Buton Rengi"
+        },
+        "default": "#c9302c",
+        "selector": ".btn-danger",
+    "advance": "true"   
+      },
+      "danger-button-hover_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Danger Button Hover Color",
+          "tr": "Danger Buton Rengi"
+        },
+        "default": "#ac2925",
+        "selector": ".btn-danger:hover",
+    "advance": "true"
+      },
+    "danger-button-border_border-color": {
+        "type": "color",
+        "label": {
+          "en": "Danger Button Border Color",
+          "tr": "Danger Buton Border Rengi"
+        },
+        "default": "#ac2925",
+        "selector": ".btn-danger",
+    "advance": "true"
+      },
+    "danger-button-text_color": {
+        "type": "color",
+        "label": {
+          "en": "Danger Button Icon(Text) Color",
+          "tr": "Default Buton Icon(Text) Rengi"
+        },
+        "default": "#fff",
+        "selector": ".btn-danger",
+    "advance": "true"   
+      },
+      "danger-button-text-hover_color": {
+        "type": "color",
+        "label": {
+          "en": "Danger Button Icon(Text) Hover Color",
+          "tr": "Danger Buton Icon(Text) Hover Rengi"
+        },
+        "default": "#fff",
+        "selector": ".btn-danger:hover",
+    "advance": "true"   
+      },
+    "default-button_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Default Button Color",
+          "tr": "Default Buton Rengi"
+        },
+        "default": "transparent",
+        "selector": ".btn-default",
+    "advance": "true"   
+      },
+      "default-button-hover_background-color": {
+        "type": "color",
+        "label": {
+          "en": "Default Button Hover Color",
+          "tr": "Default Buton Rengi"
+        },
+        "default": "#e6e6e6",
+        "selector": ".btn-default:hover",
+    "advance": "true"
+      },
+      "default-button-border_border-color": {
+        "type": "color",
+        "label": {
+          "en": "Default Button Border Color",
+          "tr": "Default Buton Border Rengi"
+        },
+        "default": "#ccc",
+        "selector": ".btn-default",
+    "advance": "true"
+      },  
+      "default-button-border-hover_border-color": {
+        "type": "color",
+        "label": {
+          "en": "Default Button Border Hover Color",
+          "tr": "Default Buton Border Hover Rengi"
+        },
+        "default": "#adadad",
+        "selector": ".btn-default:hover",
+    "advance": "true"
+      },    
+    "default-button-text_color": {
+        "type": "color",
+        "label": {
+          "en": "Default Button Icon(Text) Color",
+          "tr": "Default Buton Icon(Text) Rengi"
+        },
+        "default": "#777",
+        "selector": ".btn-default",
+    "advance": "true"   
+      },
+      "default-button-text-hover_color": {
+        "type": "color",
+        "label": {
+          "en": "Default Button Icon(Text) Hover Color",
+          "tr": "Default Buton Icon(Text) Hover Rengi"
+        },
+        "default": "#333",
+        "selector": ".btn-default:hover",
+    "advance": "true"   
+      }
+  }
+  },
+  "images": {
+    "title": {
+      "en": "Images",
+      "tr": "Resimler"
+    },
+    "description": {
+      "en": "Images",
+      "tr": "Resimler"
+    },
+    "control": {
+      "logo": {
+        "selector": "#logo a img"
+      }
+    }
+  }
+}

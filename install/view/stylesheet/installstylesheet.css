@@ -1,0 +1,151 @@
+body {
+    background: none repeat scroll 0 0 #fafafa;
+    color: #444444;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica,Arial, sans-serif;
+    font-weight: normal;
+    line-height: 20px;
+    width: 100%;
+}
+
+h4 {
+    color: #555;
+}
+
+.logo {
+    margin: 30px 0;
+    text-align: center;
+}
+
+#content  {
+    padding-bottom:0;
+}
+
+@media (max-width: 768px) {
+    .install #content .row .col-sm-offset-4 {
+        margin-left: auto !important;
+    }
+    .install .logo {
+        margin-top : auto;
+        text-align: center;
+    }
+}
+
+.install-center {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 500px !important;
+}
+
+.panel-default {
+    border-color: #e8e8e8;
+    border-width: 1px;
+}
+
+.loading-bar {
+    font-size: 35px;
+    position: absolute;
+    z-index: 500;
+    top: -20px;
+    left: -15px;
+    background: rgb(136, 136, 136);
+    width: 499px;
+    opacity: 0.2;
+    -moz-border-radius-bottomleft: 4px;
+    -moz-border-radius-bottomright: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.loading-spin {
+    font-size: 100px;
+    position: absolute;
+    margin: auto;
+    padding: 25% 40%;
+}
+
+/* Start Wizard */
+.install-wizard {
+    margin-top: 50px;
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 20px;
+}
+.install-wizard > .install-step > .progress {
+    position: relative;
+    border-radius: 0px;
+    height: 8px;
+    box-shadow: none;
+    margin: -25px 0;
+}
+.install-wizard > .install-step > .progress > .progress-bar {
+    width:0px;
+    box-shadow: none;
+    background: #3c763d;
+}
+.install-wizard > .install-step.text-success > .progress > .progress-bar {
+    width:100%;
+}
+.install-wizard > .install-step:nth-child(1) > .progress {
+    left: 61%;
+    width: 100%;
+}
+.install-wizard > .install-step:nth-child(2) > .progress {
+    left: 61%;
+    width: 100%;
+}
+.install-wizard > .install-step:nth-child(3) > .progress {
+    width: 0;
+}
+
+#install-body {
+    position: relative;
+    max-width: 500;
+    z-index: 10;
+}
+
+/* End Wizard */
+
+.form-horizontal .control-label {
+    text-align: left !important;
+}
+
+label {
+    font-weight: normal !important;
+}
+
+/* Addition to Boostrap */
+.col-xs-offset-right-12 {
+    margin-right: 100%;
+}
+.col-xs-offset-right-11 {
+    margin-right: 91.66666667%;
+}
+.col-xs-offset-right-10 {
+    margin-right: 83.33333333%;
+}
+.col-xs-offset-right-9 {
+    margin-right: 75%;
+}
+.col-xs-offset-right-8 {
+    margin-right: 66.66666667%;
+}
+.col-xs-offset-right-7 {
+    margin-right: 58.33333333%;
+}
+.col-xs-offset-right-6 {
+    margin-right: 50%;
+}
+.col-xs-offset-right-5 {
+    margin-right: 41.66666667%;
+}
+.col-xs-offset-right-4 {
+    margin-right: 33.33333333%;
+}
+.col-xs-offset-right-3 {
+    margin-right: 25%;
+}
+.col-xs-offset-right-2 {
+    margin-right: 16.66666667%;
+}
+.col-xs-offset-right-1 {
+    margin-right: 8.33333333%;
+}

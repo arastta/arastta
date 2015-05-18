@@ -1,0 +1,26 @@
+table.form {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+table.form > tbody > tr > td:first-child {
+	width: 200px;
+}
+table.form > tbody > tr > td {
+	padding: 10px;
+	color: #000000;
+	border-bottom: 1px dotted #CCCCCC;
+}
+table.form > tbody > tr > td > label {
+	font-weight: normal;
+}
+table.form > tbody > tr > td > span.help {
+	display: block;
+	color:gray;
+}
+.fa-info-circle:after {
+	content: "\00A0\00A0";
+}
+#export_import_loading {
+	display: inline-block;
+}

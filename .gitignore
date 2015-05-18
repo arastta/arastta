@@ -1,0 +1,10 @@
+/system/vendor/
+/system/log/
+/system/cache/
+/image/cache/
+/composer.phar
+/composer.lock
+/UPGRADE*.md
+.idea/
+/upload/
+/system/modification/
