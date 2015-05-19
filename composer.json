@@ -1,9 +1,9 @@
 {
-	"name": "arastta/dev",
+	"name": "arastta/arastta",
     "type": "project",
     "description": "Arastta eCommerce",
     "keywords": ["arastta", "ecommerce"],
-    "homepage": "https://github.com/arastta/dev",
+    "homepage": "https://github.com/arastta/arastta",
     "license": "GPL-3.0+",
     "config": {
       "vendor-dir": "system/vendor"
