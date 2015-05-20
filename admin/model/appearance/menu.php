@@ -181,9 +181,22 @@ class ModelAppearanceMenu extends Model {
     public function getMenuDesc() {
         $data = array();
 
+        $link = array();
+
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_description AS md LEFT JOIN " . DB_PREFIX . "menu AS m  ON m.menu_id = md.menu_id ");
 
         foreach ($query->rows as $result) {
+            // Quick fix for multilanguage
+            // Check if link exists to set for later usage
+            if (!empty($result['link'])) {
+                $link[$result['menu_id']] = $result['link'];
+            }
+
+            // Try to get the link from previous set if not already exists
+            if (empty($result['link']) and !empty($link[$result['menu_id']])) {
+                $result['link'] = $link[$result['menu_id']];
+            }
+
             $data[$result['menu_id']][$result['language_id']] = $result;
         }
 
@@ -193,9 +206,22 @@ class ModelAppearanceMenu extends Model {
     public function getMenuChildDesc() {
         $data = array();
 
+        $link = array();
+
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_child_description AS md LEFT JOIN " . DB_PREFIX . "menu_child AS m  ON m.menu_child_id = md.menu_child_id ");
 
         foreach ($query->rows as $result) {
+            // Quick fix for multilanguage
+            // Check if link exists to set for later usage
+            if (!empty($result['link'])) {
+                $link[$result['menu_child_id']] = $result['link'];
+            }
+
+            // Try to get the link from previous set if not already exists
+            if (empty($result['link']) and !empty($link[$result['menu_child_id']])) {
+                $result['link'] = $link[$result['menu_child_id']];
+            }
+
             $data[$result['menu_child_id']][$result['language_id']] = $result;
         }
 
