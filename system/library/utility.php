@@ -15,7 +15,7 @@ class Utility extends Object {
 		$this->cache = $registry->get('cache');	
 	}
 
-    public function getRemoteData($url, $options = array()) {
+    public function getRemoteData($url, $options = array('timeout' => 10)) {
         $user_agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
         $data = false;
 
@@ -30,8 +30,8 @@ class Utility extends Object {
             @curl_setopt($process, CURLOPT_AUTOREFERER, true);
             @curl_setopt($process, CURLOPT_FAILONERROR, true);
             @curl_setopt($process, CURLOPT_FOLLOWLOCATION, 1);
-            @curl_setopt($process, CURLOPT_TIMEOUT, 10);
-            @curl_setopt($process, CURLOPT_CONNECTTIMEOUT, 10);
+            @curl_setopt($process, CURLOPT_TIMEOUT, $options['timeout']);
+            @curl_setopt($process, CURLOPT_CONNECTTIMEOUT, $options['timeout']);
             @curl_setopt($process, CURLOPT_MAXREDIRS, 20);
 
             if (!empty($options['referrer'])) {

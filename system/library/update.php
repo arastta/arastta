@@ -123,7 +123,10 @@ class Update extends Object {
             $url = $base_url.$type.'/1.0/update/'.$product_id.'/'.$version.'/'.$info['arastta'];
         }
 
-        $file = $this->utility->getRemoteData($url, array('referrer' => true));
+        $options['timeout'] = 30;
+        $options['referrer'] = true;
+
+        $file = $this->utility->getRemoteData($url, $options);
 
         return $file;
     }
