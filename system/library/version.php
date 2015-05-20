@@ -22,7 +22,7 @@ final class Version extends Object {
 
     protected $minor = '0';
 
-    protected $patch = '0';
+    protected $patch = '1';
 
     protected $build = '';
 
