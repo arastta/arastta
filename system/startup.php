@@ -91,7 +91,7 @@ function autoload($class) {
 }
 
 spl_autoload_register('autoload');
-spl_autoload_extensions('.php');
+spl_autoload_extensions('.php');// Version$version = new Version();define('VERSION', $version->getShortVersion());
 
 // Engine
 require_once(modification(DIR_SYSTEM . 'engine/action.php'));
