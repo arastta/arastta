@@ -1,4 +1,11 @@
-<?php/** * @package		Arastta eCommerce * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org) * @license		GNU General Public License version 3; see LICENSE.txt */
+<?php
+/**
+ * @package		Arastta eCommerce
+ * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @license		GNU General Public License version 3; see LICENSE.txt
+ */
+
+
 class ModelAffiliateCommission extends Model {
 	public function getCommissions($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "affiliate_commission` WHERE affiliate_id = '" . (int)$this->affiliate->getId() . "'";

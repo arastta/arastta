@@ -1,4 +1,11 @@
-<?php/** * @package		Arastta eCommerce * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org) * @license		GNU General Public License version 3; see LICENSE.txt */
+<?php
+/**
+ * @package		Arastta eCommerce
+ * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @license		GNU General Public License version 3; see LICENSE.txt
+ */
+
+
 // Text
 $_['text_register_subject']     = '%s - Your Account has been created!';$_['text_register_message']     = '%s - Your Account has been created!';$_['text_approve_subject']      = 'Welcome and thank you for registering at %s';
 $_['text_approve_welcome']      = 'Welcome and thank you for registering at %s!';
