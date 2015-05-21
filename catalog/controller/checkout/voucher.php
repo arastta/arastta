@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerCheckoutVoucher extends Controller {
 	public function index() {
 		if ($this->config->get('voucher_status')) {

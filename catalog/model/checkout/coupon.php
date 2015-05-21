@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelCheckoutCoupon extends Model {
 	public function getCoupon($code) {
 		$status = true;

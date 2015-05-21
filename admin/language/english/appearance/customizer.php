@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 // Heading
 $_['heading_title']      	= 'Customizer';
 
@@ -13,7 +12,9 @@ $_['heading_title']      	= 'Customizer';
 $_['text_customizer']     	= 'Customizer';
 $_['text_menu_description'] = 'Press return or enter to expand';
 $_['text_title']            = 'Title';
-$_['text_advance']          = 'Advanced';$_['text_success']          = 'Success: You have modified Customizer!';$_['text_remove']           = 'Success: You have delete modified Customizer and Theme default show!';
+$_['text_advance']          = 'Advanced';
+$_['text_success']          = 'Success: You have modified Customizer!';
+$_['text_remove']           = 'Success: You have delete modified Customizer and Theme default show!';
 
 // Entry
 $_['entry_close']        	= 'Close';

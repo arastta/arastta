@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerMarketingAffiliate extends Controller {
 	private $error = array();
 
@@ -63,7 +62,15 @@ class ControllerMarketingAffiliate extends Controller {
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
-			}			            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('marketing/affiliate/edit', 'affiliate_id='.$affiliate_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }			
+			}
+			
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('marketing/affiliate/edit', 'affiliate_id='.$affiliate_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }			
 
 			$this->response->redirect($this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
@@ -115,7 +122,15 @@ class ControllerMarketingAffiliate extends Controller {
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
-			}			            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('marketing/affiliate/edit', 'affiliate_id='.$this->request->get['affiliate_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }			
+			}
+			
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('marketing/affiliate/edit', 'affiliate_id='.$this->request->get['affiliate_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }			
 
 			$this->response->redirect($this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
@@ -620,7 +635,9 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['help_code'] = $this->language->get('help_code');
 		$data['help_commission'] = $this->language->get('help_commission');
 
-		$data['button_save'] = $this->language->get('button_save');		$data['button_savenew'] = $this->language->get('button_savenew');        $data['button_saveclose'] = $this->language->get('button_saveclose');		
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_savenew'] = $this->language->get('button_savenew');
+        $data['button_saveclose'] = $this->language->get('button_saveclose');		
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_commission_add'] = $this->language->get('button_commission_add');
 		$data['button_remove'] = $this->language->get('button_remove');
@@ -1012,7 +1029,8 @@ class ControllerMarketingAffiliate extends Controller {
 		} else {
 			$data['confirm'] = '';
 		}
-		/*
+
+		/*
         if (isset($this->request->post['send_email'])) {
 			$data['send_email'] = $this->request->post['send_email'];
         } elseif (!empty($affiliate_info)) {
@@ -1024,7 +1042,8 @@ class ControllerMarketingAffiliate extends Controller {
         $data['show_send_email'] = '';
         if (!isset($this->request->get['affiliate_id'])) {
             $data['show_send_email'] = true;
-        }		*/
+        }
+		*/
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

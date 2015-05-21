@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelTotalTax extends Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
 		foreach ($taxes as $key => $value) {

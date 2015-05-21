@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 // Text
 $_['text_title']				= 'Bank Transfer';
 $_['text_instruction']			= 'Bank Transfer Instructions';

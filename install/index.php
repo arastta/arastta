@@ -5,12 +5,10 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 // Error Reporting
 error_reporting(E_ALL);
 
-if (version_compare(PHP_VERSION, '5.3.10', '<'))
-{
+if (version_compare(PHP_VERSION, '5.3.10', '<')) {
 	die('Your host needs to use PHP 5.3.10 or higher to run Arastta.');
 }
 

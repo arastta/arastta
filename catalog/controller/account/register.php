@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerAccountRegister extends Controller {
 	private $error = array();
 

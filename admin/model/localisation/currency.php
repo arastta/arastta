@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelLocalisationCurrency extends Model {
 	public function addCurrency($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "currency SET title = '" . $this->db->escape($data['title']) . "', code = '" . $this->db->escape($data['code']) . "', symbol_left = '" . $this->db->escape($data['symbol_left']) . "', symbol_right = '" . $this->db->escape($data['symbol_right']) . "', decimal_place = '" . $this->db->escape($data['decimal_place']) . "', value = '" . $this->db->escape($data['value']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW()");
@@ -14,7 +13,9 @@ class ModelLocalisationCurrency extends Model {
 			$this->refresh(true);
 		}
 
-		$this->cache->delete('currency');				return $this->db->getLastId();
+		$this->cache->delete('currency');
+		
+		return $this->db->getLastId();
 	}
 
 	public function editCurrency($currency_id, $data) {

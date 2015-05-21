@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelAffiliateCommission extends Model {
 	public function getCommissions($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "affiliate_commission` WHERE affiliate_id = '" . (int)$this->affiliate->getId() . "'";

@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelCatalogRecurring extends Model {
 	public function addRecurring($data) {
 		$this->trigger->fire('pre.admin.recurring.add', $data);

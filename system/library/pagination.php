@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class Pagination {
 	public $total = 0;
 	public $page = 1;

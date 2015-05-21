@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelAccountAddress extends Model {
 	public function addAddress($data) {
 		$this->trigger->fire('pre.customer.add.address', $data);

@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelCheckoutSuccess extends Model {
     public function getMessage($order_id){
         $message = '';

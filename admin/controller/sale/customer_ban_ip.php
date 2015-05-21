@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerSaleCustomerBanIp extends Controller {
 	private $error = array();
 
@@ -43,7 +42,15 @@ class ControllerSaleCustomerBanIp extends Controller {
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
-			}						if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('sale/customer_ban_ip/edit', 'customer_ban_ip_id='.$customer_ban_ip_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('sale/customer_ban_ip/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }			
+			}
+			
+			if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('sale/customer_ban_ip/edit', 'customer_ban_ip_id='.$customer_ban_ip_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('sale/customer_ban_ip/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }			
 
 			$this->response->redirect($this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
@@ -75,7 +82,15 @@ class ControllerSaleCustomerBanIp extends Controller {
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
-			}						if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('sale/customer_ban_ip/edit', 'customer_ban_ip_id='.$this->request->get['customer_ban_ip_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('sale/customer_ban_ip/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }			
+			}
+			
+			if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('sale/customer_ban_ip/edit', 'customer_ban_ip_id='.$this->request->get['customer_ban_ip_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('sale/customer_ban_ip/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }			
 
 			$this->response->redirect($this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
@@ -273,7 +288,9 @@ class ControllerSaleCustomerBanIp extends Controller {
 		
 		$data['entry_ip'] = $this->language->get('entry_ip');
 
-		$data['button_save'] = $this->language->get('button_save');		$data['button_savenew'] = $this->language->get('button_savenew');        $data['button_saveclose'] = $this->language->get('button_saveclose');		
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_savenew'] = $this->language->get('button_savenew');
+        $data['button_saveclose'] = $this->language->get('button_saveclose');		
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {

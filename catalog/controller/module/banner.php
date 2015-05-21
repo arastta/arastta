@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerModuleBanner extends Controller {
 	public function index($setting) {
 		static $module = 0;

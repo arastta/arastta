@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerLocalisationTaxClass extends Controller {
 	private $error = array();
 
@@ -44,7 +43,15 @@ class ControllerLocalisationTaxClass extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('localisation/tax_class/edit', 'tax_class_id='.$tax_class_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('localisation/tax_class/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }						
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('localisation/tax_class/edit', 'tax_class_id='.$tax_class_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('localisation/tax_class/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }			
+			
 			$this->response->redirect($this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
@@ -76,7 +83,15 @@ class ControllerLocalisationTaxClass extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('localisation/tax_class/edit', 'tax_class_id='.$this->request->get['tax_class_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('localisation/tax_class/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }						
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('localisation/tax_class/edit', 'tax_class_id='.$this->request->get['tax_class_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('localisation/tax_class/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }			
+			
 			$this->response->redirect($this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
@@ -277,7 +292,9 @@ class ControllerLocalisationTaxClass extends Controller {
 		$data['entry_based'] = $this->language->get('entry_based');
 		$data['entry_priority'] = $this->language->get('entry_priority');
 
-		$data['button_save'] = $this->language->get('button_save');		$data['button_savenew'] = $this->language->get('button_savenew');        $data['button_saveclose'] = $this->language->get('button_saveclose');		
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_savenew'] = $this->language->get('button_savenew');
+        $data['button_saveclose'] = $this->language->get('button_saveclose');		
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_rule_add'] = $this->language->get('button_rule_add');
 		$data['button_remove'] = $this->language->get('button_remove');

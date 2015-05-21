@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerLocalisationLanguage extends Controller {
 	private $error = array();
 
@@ -44,7 +43,15 @@ class ControllerLocalisationLanguage extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('localisation/language/edit', 'language_id='.$language_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('localisation/language/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }						
+
+			if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('localisation/language/edit', 'language_id='.$language_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('localisation/language/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }			
+			
 			$this->response->redirect($this->url->link('localisation/language', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
@@ -76,7 +83,15 @@ class ControllerLocalisationLanguage extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('localisation/language/edit', 'language_id='.$this->request->get['language_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('localisation/language/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }						
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('localisation/language/edit', 'language_id='.$this->request->get['language_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('localisation/language/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }			
+			
 			$this->response->redirect($this->url->link('localisation/language', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
@@ -288,7 +303,9 @@ class ControllerLocalisationLanguage extends Controller {
 		$data['help_directory'] = $this->language->get('help_directory');
 		$data['help_status'] = $this->language->get('help_status');
 
-		$data['button_save'] = $this->language->get('button_save');		$data['button_savenew'] = $this->language->get('button_savenew');        $data['button_saveclose'] = $this->language->get('button_saveclose');		
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_savenew'] = $this->language->get('button_savenew');
+        $data['button_saveclose'] = $this->language->get('button_saveclose');		
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {

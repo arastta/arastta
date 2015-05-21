@@ -5,7 +5,7 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
- class ModelCheckoutOrder extends Model {
+class ModelCheckoutOrder extends Model {
     public function addOrder($data) {
         $this->trigger->fire('pre.order.add', $data);
 

@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerReportSaleReturn extends Controller {
 	public function index() {
 		$this->load->language('report/sale_return');

@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelCatalogInformation extends Model {
 	public function addInformation($data) {
 		$this->trigger->fire('pre.admin.information.add', $data);

@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelLocalisationTaxClass extends Model {
 	public function addTaxClass($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "tax_class SET title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "', date_added = NOW()");
@@ -18,7 +17,9 @@ class ModelLocalisationTaxClass extends Model {
 			}
 		}
 
-		$this->cache->delete('tax_class');				return $tax_class_id;
+		$this->cache->delete('tax_class');
+		
+		return $tax_class_id;
 	}
 
 	public function editTaxClass($tax_class_id, $data) {

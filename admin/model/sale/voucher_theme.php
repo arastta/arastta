@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelSaleVoucherTheme extends Model {
 	public function addVoucherTheme($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme SET image = '" . $this->db->escape($data['image']) . "'");
@@ -16,7 +15,8 @@ class ModelSaleVoucherTheme extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme_description SET voucher_theme_id = '" . (int)$voucher_theme_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
 
-		$this->cache->delete('voucher_theme');		return $voucher_theme_id;
+		$this->cache->delete('voucher_theme');
+		return $voucher_theme_id;
 	}
 
 	public function editVoucherTheme($voucher_theme_id, $data) {

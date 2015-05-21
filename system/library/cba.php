@@ -5,8 +5,8 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class CBA {
+
 	private $access_key;
 	private $secret_key;
 	private $merchant_id;

@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerAffiliateLogout extends Controller {
 	public function index() {
 		if ($this->affiliate->isLogged()) {

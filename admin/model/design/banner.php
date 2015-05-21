@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelDesignBanner extends Model {
 	public function addBanner($data) {
 		$this->trigger->fire('pre.admin.banner.add', $data);
@@ -51,7 +50,10 @@ class ModelDesignBanner extends Model {
 			}
 		}
 
-		$this->trigger->fire('post.admin.banner.edit', $banner_id);				return $banner_id;	}
+		$this->trigger->fire('post.admin.banner.edit', $banner_id);
+		
+		return $banner_id;
+	}
 
 	public function deleteBanner($banner_id) {
 		$this->trigger->fire('pre.admin.banner.delete', $banner_id);

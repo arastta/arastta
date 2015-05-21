@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelLocalisationReturnReason extends Model {
 	public function addReturnReason($data) {
 		foreach ($data['return_reason'] as $language_id => $value) {
@@ -18,7 +17,8 @@ class ModelLocalisationReturnReason extends Model {
 			}
 		}
 
-		$this->cache->delete('return_reason');		return $return_reason_id;
+		$this->cache->delete('return_reason');
+		return $return_reason_id;
 	}
 
 	public function editReturnReason($return_reason_id, $data) {

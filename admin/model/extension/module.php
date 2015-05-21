@@ -5,8 +5,8 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelExtensionModule extends Model {
+
 	public function addModule($code, $data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($data['name']) . "', `code` = '" . $this->db->escape($code) . "', `setting` = '" . $this->db->escape(serialize($data)) . "'");
 	}

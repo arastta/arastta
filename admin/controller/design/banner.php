@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerDesignBanner extends Controller {
 	private $error = array();
 
@@ -26,7 +25,38 @@ class ControllerDesignBanner extends Controller {
 
 		$this->load->model('design/banner');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {			$banner_id = $this->model_design_banner->addBanner($this->request->post);			$this->session->data['success'] = $this->language->get('text_success');			$url = '';			if (isset($this->request->get['sort'])) {				$url .= '&sort=' . $this->request->get['sort'];			}			if (isset($this->request->get['order'])) {				$url .= '&order=' . $this->request->get['order'];			}			if (isset($this->request->get['page'])) {				$url .= '&page=' . $this->request->get['page'];			}            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('design/banner/edit', 'banner_id='.$banner_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('design/banner/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }            $this->response->redirect($this->url->link('design/banner', 'token=' . $this->session->data['token'] . $url, 'SSL'));                        			$this->response->redirect($this->url->link('design/banner', 'token=' . $this->session->data['token'] . $url, 'SSL'));		}
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			$banner_id = $this->model_design_banner->addBanner($this->request->post);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('design/banner/edit', 'banner_id='.$banner_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('design/banner/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            $this->response->redirect($this->url->link('design/banner', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            
+            
+			$this->response->redirect($this->url->link('design/banner', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		}
 
 		$this->getForm();
 	}
@@ -56,7 +86,15 @@ class ControllerDesignBanner extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('design/banner/edit', 'banner_id='.$this->request->get['banner_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('design/banner/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }				
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('design/banner/edit', 'banner_id='.$this->request->get['banner_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('design/banner/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }	
+			
 			$this->response->redirect($this->url->link('design/banner', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
@@ -261,7 +299,9 @@ class ControllerDesignBanner extends Controller {
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
-		$data['button_save'] = $this->language->get('button_save');        $data['button_savenew'] = $this->language->get('button_savenew');        $data['button_saveclose'] = $this->language->get('button_saveclose');
+		$data['button_save'] = $this->language->get('button_save');
+        $data['button_savenew'] = $this->language->get('button_savenew');
+        $data['button_saveclose'] = $this->language->get('button_saveclose');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_banner_add'] = $this->language->get('button_banner_add');
 		$data['button_remove'] = $this->language->get('button_remove');

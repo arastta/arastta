@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelReportSale extends Model {
 	// Sales
 	public function getTotalSales($data = array()) {

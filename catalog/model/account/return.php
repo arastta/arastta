@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelAccountReturn extends Model {
 	public function addReturn($data) {
 		$this->trigger->fire('pre.return.add', $data);

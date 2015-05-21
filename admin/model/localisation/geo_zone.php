@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelLocalisationGeoZone extends Model {
 	public function addGeoZone($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "geo_zone SET name = '" . $this->db->escape($data['name']) . "', description = '" . $this->db->escape($data['description']) . "', date_added = NOW()");
@@ -18,7 +17,9 @@ class ModelLocalisationGeoZone extends Model {
 			}
 		}
 
-		$this->cache->delete('geo_zone');				return $geo_zone_id;
+		$this->cache->delete('geo_zone');
+		
+		return $geo_zone_id;
 	}
 
 	public function editGeoZone($geo_zone_id, $data) {

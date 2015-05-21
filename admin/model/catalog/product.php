@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelCatalogProduct extends Model {
 	public function addProduct($data) {
 		$this->trigger->fire('pre.admin.product.add', $data);

@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelCatalogOption extends Model {
 	public function addOption($data) {
 		$this->trigger->fire('pre.admin.option.add', $data);

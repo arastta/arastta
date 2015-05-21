@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelTotalCredit extends Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
 		if ($this->config->get('credit_status')) {

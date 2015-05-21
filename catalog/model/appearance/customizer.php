@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelAppearanceCustomizer extends Model {
     public function getDefaultData($code, $store_id = 0) {
         $setting_data = array();

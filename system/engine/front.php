@@ -5,8 +5,8 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
-final class Front {	
+final class Front {
+	
 	private $registry;
 	private $pre_action = array();
 	private $error;

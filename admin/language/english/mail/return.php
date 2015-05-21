@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 // Text
 $_['text_subject']       = '%s - Return Update %s';
 $_['text_return_id']     = 'Return ID:';

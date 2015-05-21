@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 // Text
 $_['text_subject']  = 'You have been sent a gift voucher from %s';
 $_['text_greeting'] = 'Congratulations, You have received a Gift Certificate worth %s';

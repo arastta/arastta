@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelMain extends Model {
 
 	public function checkRequirements(){
@@ -99,7 +98,13 @@ class ModelMain extends Model {
         $this->session->data['db_database'] = $data['db_database'];
 
 		$content  = '<?php' . "\n";
-		$content .= '/**' . "\n";		$content .= ' * @package		Arastta eCommerce' . "\n";		$content .= ' * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)' . "\n";		$content .= ' * @license		GNU General Public License version 3; see LICENSE.txt' . "\n";		$content .= ' */' . "\n";		$content .= "\n";		$content .= '// DB' . "\n";
+		$content .= '/**' . "\n";
+		$content .= ' * @package		Arastta eCommerce' . "\n";
+		$content .= ' * @copyright	    Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)' . "\n";
+		$content .= ' * @license		GNU General Public License version 3; see LICENSE.txt' . "\n";
+		$content .= ' */' . "\n";
+		$content .= "\n";
+		$content .= '// DB' . "\n";
 		$content .= 'define(\'DB_DRIVER\', \'mysqli\');' . "\n";
 		$content .= 'define(\'DB_HOSTNAME\', \'' . addslashes($data['db_hostname']) . '\');' . "\n";
 		$content .= 'define(\'DB_USERNAME\', \'' . addslashes($data['db_username']) . '\');' . "\n";

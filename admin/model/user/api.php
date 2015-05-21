@@ -5,11 +5,12 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelUserApi extends Model {
 	public function addApi($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET username = '" . $this->db->escape($data['username']) . "', `password` = '" . $this->db->escape($data['password']) . "', status = '" . (int)$data['status'] . "', date_added = NOW(), date_modified = NOW()");
-				return $this->db->getLastId();	}
+		
+		return $this->db->getLastId();
+	}
 
 	public function editApi($api_id, $data) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET username = '" . $this->db->escape($data['username']) . "', `password` = '" . $this->db->escape($data['password']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE api_id = '" . (int)$api_id . "'");

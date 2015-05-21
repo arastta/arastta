@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelLocalisationLengthClass extends Model {
 	public function addLengthClass($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "length_class SET value = '" . (float)$data['value'] . "'");
@@ -16,7 +15,9 @@ class ModelLocalisationLengthClass extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "length_class_description SET length_class_id = '" . (int)$length_class_id . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($value['title']) . "', unit = '" . $this->db->escape($value['unit']) . "'");
 		}
 
-		$this->cache->delete('length_class');				return $length_class_id;
+		$this->cache->delete('length_class');
+		
+		return $length_class_id;
 	}
 
 	public function editLengthClass($length_class_id, $data) {

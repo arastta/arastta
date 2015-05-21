@@ -5,7 +5,7 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
- class Emailtemplate {
+class Emailtemplate {
 
 	public function __construct($registry) {
 		$this->config = $registry->get('config');

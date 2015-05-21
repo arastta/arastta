@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerLocalisationStockStatus extends Controller {
 	private $error = array();
 
@@ -43,7 +42,15 @@ class ControllerLocalisationStockStatus extends Controller {
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
-			}			            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('localisation/stock_status/edit', 'stock_status_id='.$stock_status_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('localisation/stock_status/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }			
+			}
+			
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('localisation/stock_status/edit', 'stock_status_id='.$stock_status_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('localisation/stock_status/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }			
 
 			$this->response->redirect($this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
@@ -76,7 +83,15 @@ class ControllerLocalisationStockStatus extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('localisation/stock_status/edit', 'stock_status_id='.$this->request->get['stock_status_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('localisation/stock_status/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }			
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('localisation/stock_status/edit', 'stock_status_id='.$this->request->get['stock_status_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('localisation/stock_status/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+			
 			$this->response->redirect($this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
@@ -271,7 +286,9 @@ class ControllerLocalisationStockStatus extends Controller {
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
-		$data['button_save'] = $this->language->get('button_save');		$data['button_savenew'] = $this->language->get('button_savenew');        $data['button_saveclose'] = $this->language->get('button_saveclose');		
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_savenew'] = $this->language->get('button_savenew');
+        $data['button_saveclose'] = $this->language->get('button_saveclose');		
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {

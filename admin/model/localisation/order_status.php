@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelLocalisationOrderStatus extends Model {
 	public function addOrderStatus($data) {
 		foreach ($data['order_status'] as $language_id => $value) {
@@ -28,7 +27,9 @@ class ModelLocalisationOrderStatus extends Model {
             $this->db->query($sql);
         }
 
-		$this->cache->delete('order_status');				return $order_status_id;
+		$this->cache->delete('order_status');
+		
+		return $order_status_id;
 	}
 
 	public function editOrderStatus($order_status_id, $data) {

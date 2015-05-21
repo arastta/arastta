@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 // Text
 $_['text_title']  = 'Weight Based Shipping';
 $_['text_weight'] = 'Weight:';

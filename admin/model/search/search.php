@@ -5,8 +5,8 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelSearchSearch extends Model {
+
     public function getProducts($data = array()) {
         $sql = "SELECT p.product_id, pd.name, p.model, p.image
                 FROM " . DB_PREFIX . "product p
@@ -56,7 +56,6 @@ class ModelSearchSearch extends Model {
 
         return $query->rows;
     }
-
 
     public function getCustomers($data = array()) {
         $sql = "SELECT customer_id, email, CONCAT(c.firstname, ' ', c.lastname) AS name

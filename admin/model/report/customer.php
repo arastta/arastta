@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelReportCustomer extends Model {
 	public function getTotalCustomersByDay() {
 		$customer_data = array();

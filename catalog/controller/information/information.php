@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerInformationInformation extends Controller {
 	public function index() {
 		$this->load->language('information/information');

@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelCatalogManufacturer extends Model {
 
 	public function getManufacturer($manufacturer_id) {

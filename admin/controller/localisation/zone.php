@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerLocalisationZone extends Controller {
 	private $error = array();
 
@@ -43,7 +42,15 @@ class ControllerLocalisationZone extends Controller {
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
-			}			            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('localisation/zone/edit', 'zone_id='.$zone_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('localisation/zone/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }			
+			}
+			
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('localisation/zone/edit', 'zone_id='.$zone_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('localisation/zone/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }			
 
 			$this->response->redirect($this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
@@ -76,7 +83,15 @@ class ControllerLocalisationZone extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('localisation/zone/edit', 'zone_id='.$this->request->get['zone_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('localisation/zone/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }			
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('localisation/zone/edit', 'zone_id='.$this->request->get['zone_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('localisation/zone/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+			
 			$this->response->redirect($this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 

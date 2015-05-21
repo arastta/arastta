@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerLocalisationLengthClass extends Controller {
 	private $error = array();
 
@@ -44,7 +43,15 @@ class ControllerLocalisationLengthClass extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('localisation/length_class/edit', 'length_class_id='.$length_class_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('localisation/length_class/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }			
+
+			if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('localisation/length_class/edit', 'length_class_id='.$length_class_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('localisation/length_class/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+			
 			$this->response->redirect($this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
@@ -75,7 +82,15 @@ class ControllerLocalisationLengthClass extends Controller {
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
-			}						if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('localisation/length_class/edit', 'length_class_id='.$this->request->get['length_class_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('localisation/length_class/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }			
+			}
+			
+			if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('localisation/length_class/edit', 'length_class_id='.$this->request->get['length_class_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('localisation/length_class/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }			
 
 			$this->response->redirect($this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
@@ -278,7 +293,9 @@ class ControllerLocalisationLengthClass extends Controller {
 
 		$data['help_value'] = $this->language->get('help_value');
 
-		$data['button_save'] = $this->language->get('button_save');		$data['button_savenew'] = $this->language->get('button_savenew');        $data['button_saveclose'] = $this->language->get('button_saveclose');		
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_savenew'] = $this->language->get('button_savenew');
+        $data['button_saveclose'] = $this->language->get('button_saveclose');		
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {

@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 // Text
 $_['text_address']       = 'Success: Payment address has been set!';
 $_['text_method']        = 'Success: Payment method has been set!';

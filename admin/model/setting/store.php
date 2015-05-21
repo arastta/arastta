@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelSettingStore extends Model {
 	public function addStore($data) {
 		$this->trigger->fire('pre.admin.store.add', $data);

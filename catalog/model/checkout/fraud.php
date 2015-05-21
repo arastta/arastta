@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelCheckoutFraud extends Model {
 	public function getFraudScore($data) {
 		$risk_score = 0;

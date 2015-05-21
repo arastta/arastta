@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelLocalisationTaxRate extends Model {
 	public function addTaxRate($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "tax_rate SET name = '" . $this->db->escape($data['name']) . "', rate = '" . (float)$data['rate'] . "', `type` = '" . $this->db->escape($data['type']) . "', geo_zone_id = '" . (int)$data['geo_zone_id'] . "', date_added = NOW(), date_modified = NOW()");
@@ -16,7 +15,9 @@ class ModelLocalisationTaxRate extends Model {
 			foreach ($data['tax_rate_customer_group'] as $customer_group_id) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "tax_rate_to_customer_group SET tax_rate_id = '" . (int)$tax_rate_id . "', customer_group_id = '" . (int)$customer_group_id . "'");
 			}
-		}				return $tax_rate_id;
+		}
+		
+		return $tax_rate_id;
 	}
 
 	public function editTaxRate($tax_rate_id, $data) {

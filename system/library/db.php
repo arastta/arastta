@@ -6,6 +6,7 @@
  */
 
 class DB {
+
 	private $db;
 
 	public function __construct($driver, $hostname, $username, $password, $database) {

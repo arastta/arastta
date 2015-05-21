@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 // Text
 $_['text_subject']  = '%s - Password reset request';
 $_['text_greeting'] = 'A new password was requested for %s administration.';

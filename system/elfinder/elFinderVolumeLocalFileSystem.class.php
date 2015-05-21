@@ -5,7 +5,7 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
- defined('AREXE') or die;
+defined('AREXE') or die;
 
 /**
  * elFinder driver for local filesystem.

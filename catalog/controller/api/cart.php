@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerApiCart extends Controller {
 	public function add() {
 		$this->load->language('api/cart');

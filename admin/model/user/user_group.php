@@ -5,11 +5,12 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelUserUserGroup extends Model {
 	public function addUserGroup($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($data['name']) . "', permission = '" . (isset($data['permission']) ? $this->db->escape(serialize($data['permission'])) : '') . "'");
-			return $this->db->getLastId();	}
+	
+		return $this->db->getLastId();
+	}
 
 	public function editUserGroup($user_group_id, $data) {
 		$this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($data['name']) . "', permission = '" . (isset($data['permission']) ? $this->db->escape(serialize($data['permission'])) : '') . "' WHERE user_group_id = '" . (int)$user_group_id . "'");

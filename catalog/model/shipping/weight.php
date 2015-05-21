@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelShippingWeight extends Model {
 	public function getQuote($address) {
 		$this->load->language('shipping/weight');

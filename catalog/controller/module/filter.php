@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerModuleFilter extends Controller {
 	public function index() {
 		if (isset($this->request->get['path'])) {

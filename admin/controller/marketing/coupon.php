@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerMarketingCoupon extends Controller {
 	private $error = array();
 
@@ -43,7 +42,15 @@ class ControllerMarketingCoupon extends Controller {
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
-			}			            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('marketing/coupon/edit', 'coupon_id='.$coupon_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('marketing/coupon/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }			
+			}
+			
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('marketing/coupon/edit', 'coupon_id='.$coupon_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('marketing/coupon/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }			
 
 			$this->response->redirect($this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
@@ -76,7 +83,15 @@ class ControllerMarketingCoupon extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {                $this->response->redirect($this->url->link('marketing/coupon/edit', 'coupon_id='.$this->request->get['coupon_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));            }            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {                $this->response->redirect($this->url->link('marketing/coupon/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));            }			
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+                $this->response->redirect($this->url->link('marketing/coupon/edit', 'coupon_id='.$this->request->get['coupon_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('marketing/coupon/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            }
+			
 			$this->response->redirect($this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
@@ -398,7 +413,9 @@ class ControllerMarketingCoupon extends Controller {
 		$data['help_uses_total'] = $this->language->get('help_uses_total');
 		$data['help_uses_customer'] = $this->language->get('help_uses_customer');
 
-		$data['button_save'] = $this->language->get('button_save');		$data['button_savenew'] = $this->language->get('button_savenew');        $data['button_saveclose'] = $this->language->get('button_saveclose');		
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_savenew'] = $this->language->get('button_savenew');
+        $data['button_saveclose'] = $this->language->get('button_saveclose');		
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		$data['tab_general'] = $this->language->get('tab_general');
@@ -708,7 +725,8 @@ class ControllerMarketingCoupon extends Controller {
 
 		$this->response->setOutput($this->load->view('marketing/coupon_history.tpl', $data));
 	}
-		public function autocomplete() {
+	
+	public function autocomplete() {
 		$json = array();
 
 		if (isset($this->request->get['filter_name']) || isset($this->request->get['filter_code'])) {

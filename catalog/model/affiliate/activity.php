@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelAffiliateActivity extends Model {
 	public function addActivity($key, $data) {
 		if (isset($data['affiliate_id'])) {

@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelLocalisationWeightClass extends Model {
 	public function addWeightClass($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "weight_class SET value = '" . (float)$data['value'] . "'");
@@ -16,7 +15,9 @@ class ModelLocalisationWeightClass extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "weight_class_description SET weight_class_id = '" . (int)$weight_class_id . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($value['title']) . "', unit = '" . $this->db->escape($value['unit']) . "'");
 		}
 
-		$this->cache->delete('weight_class');				return $weight_class_id;
+		$this->cache->delete('weight_class');
+		
+		return $weight_class_id;
 	}
 
 	public function editWeightClass($weight_class_id, $data) {

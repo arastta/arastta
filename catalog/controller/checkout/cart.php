@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerCheckoutCart extends Controller {
 	public function index() {
 		$this->load->language('checkout/cart');
@@ -398,7 +397,16 @@ class ControllerCheckoutCart extends Controller {
 	public function edit() {
 		$this->load->language('checkout/cart');
 
-		$json = array();				$checkCart = strpos($_SERVER['HTTP_REFERER'], 'checkout/cart');        $checkCheckout = strpos($_SERVER['HTTP_REFERER'], 'checkout/checkout');        if($checkCart !== false || $checkCheckout !== false){            $json['location'] = 'cart-checkout';        } else {            $json['location'] = 'module';        }
+		$json = array();
+		
+		$checkCart = strpos($_SERVER['HTTP_REFERER'], 'checkout/cart');
+        $checkCheckout = strpos($_SERVER['HTTP_REFERER'], 'checkout/checkout');
+
+        if($checkCart !== false || $checkCheckout !== false){
+            $json['location'] = 'cart-checkout';
+        } else {
+            $json['location'] = 'module';
+        }
 
 		// Update
 		if (!empty($this->request->post['quantity'])) {
@@ -423,7 +431,16 @@ class ControllerCheckoutCart extends Controller {
 		$this->load->language('checkout/cart');
 
 		$json = array();
-		$checkCart = strpos($_SERVER['HTTP_REFERER'], 'checkout/cart');        $checkCheckout = strpos($_SERVER['HTTP_REFERER'], 'checkout/checkout');        if($checkCart !== false || $checkCheckout !== false){            $json['location'] = 'cart-checkout';        } else {            $json['location'] = 'module';        }		
+
+		$checkCart = strpos($_SERVER['HTTP_REFERER'], 'checkout/cart');
+        $checkCheckout = strpos($_SERVER['HTTP_REFERER'], 'checkout/checkout');
+
+        if($checkCart !== false || $checkCheckout !== false){
+            $json['location'] = 'cart-checkout';
+        } else {
+            $json['location'] = 'module';
+        }
+		
 		// Remove
 		if (isset($this->request->post['key'])) {
 			$this->cart->remove($this->request->post['key']);

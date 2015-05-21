@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 // Text
 $_['text_success']     = 'Success: Your gift voucher discount has been applied!';
 $_['text_cart']        = 'Success: You have modified your shopping cart!';

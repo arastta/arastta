@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelAccountCredit extends Model {
 	public function getCredits($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "customer_credit` WHERE customer_id = '" . (int)$this->customer->getId() . "'";

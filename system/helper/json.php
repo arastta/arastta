@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 if (!function_exists('json_encode')) {
 	function json_encode($data) {
 		switch (gettype($data)) {

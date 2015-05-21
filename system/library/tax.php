@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 final class Tax {
 	private $tax_rates = array();
 

@@ -5,8 +5,8 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
-class ControllerHeader extends Controller {	
+class ControllerHeader extends Controller {
+	
 	public function index() {
 		$data['title'] = $this->document->getTitle();
 		$data['description'] = $this->document->getDescription();

@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerFeedGoogleBase extends Controller {
 	public function index() {
 		if ($this->config->get('google_base_status')) {

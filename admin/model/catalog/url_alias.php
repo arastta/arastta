@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelCatalogUrlAlias extends Model {
 
 	public function getUrlAlias($keyword, $language_id = 1) {

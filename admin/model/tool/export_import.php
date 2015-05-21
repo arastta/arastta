@@ -59,7 +59,6 @@ function error_handler_for_export_import($errno, $errstr, $errfile, $errline) {
 	return true;
 }
 
-
 function fatal_error_shutdown_handler_for_export_import() {
 	$last_error = error_get_last();
 	if ($last_error['type'] === E_ERROR) {
@@ -67,7 +66,6 @@ function fatal_error_shutdown_handler_for_export_import() {
 		error_handler_for_export_import(E_ERROR, $last_error['message'], $last_error['file'], $last_error['line']);
 	}
 }
-
 
 class ModelToolExportImport extends Model {
 

@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelMarketingCoupon extends Model {
 	public function addCoupon($data) {
 		$this->trigger->fire('pre.admin.coupon.add', $data);

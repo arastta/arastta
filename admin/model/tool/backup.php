@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelToolBackup extends Model {
 	public function restore($sql) {
 		foreach (explode(";\n", $sql) as $sql) {

@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ModelPaymentPPStandard extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('payment/pp_standard');

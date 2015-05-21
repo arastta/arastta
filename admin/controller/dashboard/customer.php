@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerDashboardCustomer extends Controller {
 	public function index() {
 		$this->load->language('dashboard/customer');

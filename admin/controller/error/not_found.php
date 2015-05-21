@@ -5,7 +5,6 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-
 class ControllerErrorNotFound extends Controller {
 	public function index() {
 		$this->load->language('error/not_found');
