@@ -235,7 +235,11 @@ class ModelMain extends Model {
 			DIR_SYSTEM . 'log/',
 		);
 		
-		$this->filesystem->chmod($dirs, 0755, 0000, true);
+		try {
+			$this->filesystem->chmod($dirs, 0755, 0000, true);
+		} catch (IOException $e) {
+			// Discard chmod failure, some systems may not support it
+		}
 		
 		$this->filesystem->remove(DIR_ROOT . 'install');
 		
