@@ -105,6 +105,28 @@ $(document).ready(function() {
 		}
 	}
 
+	// Menu child setting position
+	$("#menu li .parent").hover(function(){
+		if ($('#column-left').hasClass('active')) {
+			$(this).parent().children("ul").css({
+					top: "0" + "px"
+				});
+		} else {
+			var xyz = $(this).parent().children("ul");
+			var position = $(this).parent().children("ul").offset();
+			var	parentMenu = $(this).parent().children("ul").height();
+			var parentMenuHeight =  position.top;
+			var windowHeight = $(window).height();
+			
+			if (windowHeight < parentMenuHeight + parentMenu) {
+				var topHeight = ( ( parentMenuHeight + parentMenu ) - windowHeight ) + 10;
+				$(this).parent().children("ul").css({
+					top: "-" + topHeight + "px"
+				});
+			}
+		}
+	});
+	
 	//Form Submit for IE Browser
 	$('button[type=\'submit\']').on('click', function() {
 		$("form[id*='form-']").submit();
