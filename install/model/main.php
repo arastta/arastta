@@ -237,7 +237,7 @@ class ModelMain extends Model {
 		
 		try {
 			$this->filesystem->chmod($dirs, 0755, 0000, true);
-		} catch (IOException $e) {
+		} catch (Exception $e) {
 			// Discard chmod failure, some systems may not support it
 		}
 		
