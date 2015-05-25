@@ -241,6 +241,22 @@ function statusMenu(type, menu_id, menu_show_id, id) {
 }
 
 function deleteMenu(menu_id, menu_show_id) {
+	var checkMenuItem = 0;
+	
+	$('#menu-to-edit li').each(function(index, menuItem){
+	  var menuItemId = menuItem.id;
+	  if( checkMenuItem && menuItemId.indexOf( 'menu-item' ) != -1 ) {
+		checkMenuItem = 0
+	  }
+	  if(menu_show_id == menuItemId) {
+		checkMenuItem = 1;
+	  }
+	  if( checkMenuItem && menuItemId.indexOf( 'menu-child-item' ) != -1 ) {
+		$('#' + menuItemId).remove();
+	  }
+	  	  
+    });
+	
 	$('#' + menu_show_id).remove();
 	var listing = menu_show_id.split('-');
 	

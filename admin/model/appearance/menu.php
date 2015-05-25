@@ -168,14 +168,14 @@ class ModelAppearanceMenu extends Model {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_description` WHERE menu_id = '" . (int)$menu_id . "'");
 		
 		if(!empty($query->num_rows)){
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_id = '" . (int)$query->row['menu_child_id'] . "'");
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = '" . (int)$query->row['menu_child_id'] . "'");
 		}
     }
 
-    public function deleteChildMenu($menu_id) {
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child` WHERE menu_child_id = '" . (int)$menu_id . "'");
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_description` WHERE menu_child_id = '" . (int)$menu_id . "'");
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = '" . (int)$menu_id . "'");
+    public function deleteChildMenu($menu_child_id) {
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child` WHERE menu_child_id = '" . (int)$menu_child_id . "'");
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_description` WHERE menu_child_id = '" . (int)$menu_child_id . "'");
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = '" . (int)$menu_child_id . "'");
     }
 
     public function getMenuDesc() {
@@ -232,16 +232,16 @@ class ModelAppearanceMenu extends Model {
         $this->db->query("UPDATE `" . DB_PREFIX . "menu` SET status = '1' WHERE menu_id = '" . (int)$menu_id . "'");
     }
 
-	public function enableChildMenu($menu_id) {
-        $this->db->query("UPDATE `" . DB_PREFIX . "menu_child` SET status = '1' WHERE menu_child_id = '" . (int)$menu_id . "'");
+	public function enableChildMenu($menu_child_id) {
+        $this->db->query("UPDATE `" . DB_PREFIX . "menu_child` SET status = '1' WHERE menu_child_id = '" . (int)$menu_child_id . "'");
     }
 
 	public function disableMenu($menu_id) {
         $this->db->query("UPDATE `" . DB_PREFIX . "menu` SET status = '0' WHERE menu_id = '" . (int)$menu_id . "'");
     }
 
-	public function disableChildMenu($menu_id) {
-        $this->db->query("UPDATE `" . DB_PREFIX . "menu_child` SET status = '0' WHERE menu_child_id = '" . (int)$menu_id . "'");
+	public function disableChildMenu($menu_child_id) {
+        $this->db->query("UPDATE `" . DB_PREFIX . "menu_child` SET status = '0' WHERE menu_child_id = '" . (int)$menu_child_id . "'");
     }
 	
 	public function changeMenuPosition($data){
