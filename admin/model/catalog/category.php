@@ -443,6 +443,7 @@ class ModelCatalogCategory extends Model {
 		$sql .= " GROUP BY cp.category_id";
 
 		$sort_data = array(
+            'name',	
 			'status',
 			'sort_order'
 		);
