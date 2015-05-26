@@ -1380,7 +1380,7 @@
     color: #fff;
     white-space: nowrap;
     overflow: hidden;
-    padding: 2px 0
+    padding: 4px 0
 }
 
 .elfinder-quicklook-titlebar .ui-icon {
@@ -1453,7 +1453,8 @@
 }
 
 .elfinder-quicklook-fullscreen .elfinder-quicklook-navbar {
-    width: 188px;
+    width: 200px;
+	height: 45px;
     margin-left: -94px;
     padding: 5px;
     border: 1px solid #eee;
@@ -1583,16 +1584,17 @@ embed.elfinder-quicklook-preview-audio {
 }
 
 .elfinder-ltr .elfinder-stat-size {
-    float: right
+    float: right;
+	margin-right: 15px;
 }
 
 .elfinder-rtl .elfinder-stat-size {
-    float: left
+    float: left;
 }
 
 .elfinder-stat-selected {
     white-space: nowrap;
-    overflow: hidden
+    overflow: hidden;
 }
 
 .elfinder-toolbar {
@@ -1610,7 +1612,7 @@ embed.elfinder-quicklook-preview-audio {
     padding: 0;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
-    border-radius: 4px
+    border-radius: 4px;
 }
 
 .elfinder .elfinder-button {
@@ -1912,20 +1914,51 @@ embed.elfinder-quicklook-preview-audio {
     left: 0
 }
 
-.ui-resizable-handle, .elfinder-cwd-view-list{
-	height : 100% !important;
-}
 
 .elfinder-dialog-error .ui-dialog-titlebar {
 	padding-left: 65px !important;
 }
+
 .elfinder-dialog-error {
 	width : 300px !important;
 	height: 110px !important;
 }
+
 .elfinder-dialog-error .ui-dialog-content {
 	padding: 0.5em 7em !important;
 }
+
 #fileManager, .elfinder-navbar, .elfinder-cwd-wrapper, .elfinder-workzone {
 		height: 100% !important;
+}
+
+.elfinder-quicklook-preview.ui-helper-clearfix {
+  margin-top: 22px;
+  padding-bottom: 60px;
+}
+
+.ui-widget .ui-widget {
+  font-size: 1em;
+}
+.elfinder-resize-rotate-slider {
+  float: left;
+  width: 195px;
+  margin: 7px 7px 0;
+}
+.ui-slider-horizontal {
+  height: .8em;
+}
+.ui-slider {
+  position: relative;
+  text-align: left;
+}
+
+.elfinder-resize-row .ui-widget-content {
+  border: 1px solid #aaaaaa;
+  background: #ffffff url(images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+  color: #222222;
+}
+
+.ui-helper-reset.ui-widget.elfinder-quicklook.ui-draggable.ui-resizable.elfinder-quicklook-fullscreen.ui-resizable-disabled {
+  z-index: 99999 !important;
 }
