@@ -45,15 +45,6 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label required" for="input-locale"><span data-toggle="tooltip" title="<?php echo $help_locale; ?>"><?php echo $entry_locale; ?></span></label>
-            <div class="col-sm-10">
-              <input type="text" name="locale" value="<?php echo $locale; ?>" placeholder="<?php echo $entry_locale; ?>" id="input-locale" class="form-control" />
-              <?php if ($error_locale) { ?>
-              <div class="text-danger"><?php echo $error_locale; ?></div>
-              <?php } ?>
-            </div>
-          </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-image"><span data-toggle="tooltip" title="<?php echo $help_image; ?>"><?php echo $entry_image; ?></span></label>
             <div class="col-sm-10">
@@ -73,17 +64,26 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status"><span data-toggle="tooltip" title="<?php echo $help_status; ?>"><?php echo $entry_status; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-status"><span data-toggle="tooltip" title="<?php echo $help_status; ?>"><?php echo $text_enabled; ?></span></label>
             <div class="col-sm-10">
-              <select name="status" id="input-status" class="form-control">
-                <?php if ($status) { ?>
-                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                <option value="0"><?php echo $text_disabled; ?></option>
-                <?php } else { ?>
-                <option value="1"><?php echo $text_enabled; ?></option>
-                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                <?php } ?>
-              </select>
+                <label class="radio-inline">
+                    <?php if ($status) { ?>
+                    <input type="radio" name="status" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="status" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                </label>
+                <label class="radio-inline">
+                    <?php if (!$status) { ?>
+                    <input type="radio" name="status" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="status" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                </label>
             </div>
           </div>
           <div class="form-group">

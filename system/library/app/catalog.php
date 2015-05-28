@@ -95,60 +95,27 @@ class Catalog extends App {
         // Session
         $this->registry->set('session', new Session());
 
+        // Utility
+        $utility = new Utility($this->registry);
+        $this->registry->set('utility', $utility);
+
         // Language Detection
-        $languages = array();
+        $language = $utility->getLanguage();
 
-        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE status = '1'");
-
-        foreach ($query->rows as $result) {
-            $languages[$result['code']] = $result;
+        if (!isset($this->session->data['language']) || $this->session->data['language'] != $language['code']) {
+            $this->session->data['language'] = $language['code'];
         }
 
-        if (isset($this->request->get['lang']) && array_key_exists($this->request->get['lang'], $languages) && $languages[$this->request->get['lang']]['status']) {
-            $code = $this->request->get['lang'];
-        }
-        elseif (isset($this->session->data['language']) && array_key_exists($this->session->data['language'], $languages) && $languages[$this->session->data['language']]['status']) {
-            $code = $this->session->data['language'];
-        }
-        elseif (isset($this->request->cookie['language']) && array_key_exists($this->request->cookie['language'], $languages) && $languages[$this->request->cookie['language']]['status']) {
-            $code = $this->request->cookie['language'];
-        }
-        else {
-            $detect = '';
-            if (isset($this->request->server['HTTP_ACCEPT_LANGUAGE']) && $this->request->server['HTTP_ACCEPT_LANGUAGE']) {
-                $browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
-
-                foreach ($browser_languages as $browser_language) {
-                    foreach ($languages as $key => $value) {
-                        if ($value['status']) {
-                            $locale = explode(',', $value['locale']);
-
-                            if (in_array($browser_language, $locale)) {
-                                $detect = $key;
-                                break 2;
-                            }
-                        }
-                    }
-                }
-            }
-            $code = $detect ? $detect : $this->config->get('config_language');
+        if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $language['code']) {
+            setcookie('language', $language['code'], time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
         }
 
-        if (!isset($this->session->data['language']) || $this->session->data['language'] != $code) {
-            $this->session->data['language'] = $code;
-        }
-
-        if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
-            setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
-        }
-
-        $this->config->set('config_language_id', $languages[$code]['language_id']);
-        $this->config->set('config_language', $languages[$code]['code']);
+        $this->config->set('config_language', $language['code']);
+        $this->config->set('config_language_dir', $language['directory']);
+        $this->config->set('config_language_id', $language['language_id']);
 
         // Language
-        $language = new Language($languages[$code]['directory'], $this->registry);
-        $language->load('default');
-        $this->registry->set('language', $language);
+        $this->registry->set('language', new Language($language['directory'], $this->registry));
 
         // Page Cache
         $pagecache = new Pagecache($this->registry);
@@ -157,9 +124,6 @@ class Catalog extends App {
 
         // Document
         $this->registry->set('document', new Document());
-
-        // Utility
-        $this->registry->set('utility', new Utility($this->registry));
 
         $this->trigger->fire('post.app.initialise');
     }

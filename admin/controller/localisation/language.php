@@ -203,20 +203,7 @@ class ControllerLocalisationLanguage extends Controller {
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_name'] = $this->language->get('column_name');
-		$data['column_code'] = $this->language->get('column_code');
-		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
+        $data = $this->language->all($data);
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -283,30 +270,8 @@ class ControllerLocalisationLanguage extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_form'] = !isset($this->request->get['language_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-
-		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_code'] = $this->language->get('entry_code');
-		$data['entry_locale'] = $this->language->get('entry_locale');
-		$data['entry_image'] = $this->language->get('entry_image');
-		$data['entry_directory'] = $this->language->get('entry_directory');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		$data['entry_status'] = $this->language->get('entry_status');
-
-		$data['help_code'] = $this->language->get('help_code');
-		$data['help_locale'] = $this->language->get('help_locale');
-		$data['help_image'] = $this->language->get('help_image');
-		$data['help_directory'] = $this->language->get('help_directory');
-		$data['help_status'] = $this->language->get('help_status');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_savenew'] = $this->language->get('button_savenew');
-        $data['button_saveclose'] = $this->language->get('button_saveclose');		
-		$data['button_cancel'] = $this->language->get('button_cancel');
+        $data = $this->language->all();
+        $data['text_form'] = !isset($this->request->get['language_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -324,12 +289,6 @@ class ControllerLocalisationLanguage extends Controller {
 			$data['error_code'] = $this->error['code'];
 		} else {
 			$data['error_code'] = '';
-		}
-
-		if (isset($this->error['locale'])) {
-			$data['error_locale'] = $this->error['locale'];
-		} else {
-			$data['error_locale'] = '';
 		}
 
 		if (isset($this->error['image'])) {
@@ -404,14 +363,6 @@ class ControllerLocalisationLanguage extends Controller {
 			$data['code'] = '';
 		}
 
-		if (isset($this->request->post['locale'])) {
-			$data['locale'] = $this->request->post['locale'];
-		} elseif (!empty($language_info)) {
-			$data['locale'] = $language_info['locale'];
-		} else {
-			$data['locale'] = '';
-		}
-
 		if (isset($this->request->post['image'])) {
 			$data['image'] = $this->request->post['image'];
 		} elseif (!empty($language_info)) {
@@ -462,10 +413,6 @@ class ControllerLocalisationLanguage extends Controller {
 
 		if (utf8_strlen($this->request->post['code']) < 2) {
 			$this->error['code'] = $this->language->get('error_code');
-		}
-
-		if (!$this->request->post['locale']) {
-			$this->error['locale'] = $this->language->get('error_locale');
 		}
 
 		if (!$this->request->post['directory']) {

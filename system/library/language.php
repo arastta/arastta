@@ -7,41 +7,50 @@
 
 class Language {
 
-	private $default = 'english';
-	private $directory;
-	private $data = array();
+    private $default = 'en-GB';
+    private $directory;
+    private $data = array();
 
-	public function __construct($directory = '', $registry = '') {
-		$this->directory = $directory;
+    public function __construct($directory = '', $registry = '') {
+        $this->directory = $directory;
+
+        if (!is_object($registry)) {
+            return;
+        }
+
+        // Set default language from config
+        $default_lang = $registry->get('utility')->getDefaultLanguage();
+        if (!empty($default_lang)) {
+            $this->default = $default_lang['directory'];
+        }
+
+        // Load main language file
+        $this->load('default');
 
         // Try to load the language file based on the route variable
-        if (is_object($registry)) {
-            $this->default = $this->getDirectory($registry);
+        if (!empty($registry->get('request')->get['route'])) {
+            $g_route = $registry->get('request')->get['route'];
+            $a_route = explode('/', $g_route);
 
-            if (!empty($registry->get('request')->get['route'])) {
-                $g_route = $registry->get('request')->get['route'];
-                $a_route = explode('/', $g_route);
-
-                $n_route = array();
-                for ($i = 0; $i < 2; $i++) {
-                    if (empty($a_route[$i])) {
-                        continue;
-                    }
-
-                    $n_route[] = $a_route[$i];
+            $n_route = array();
+            for ($i = 0; $i < 2; $i++) {
+                if (empty($a_route[$i])) {
+                    continue;
                 }
 
-                // load the language file if we have ab/cd
-                if (count($n_route) == 2) {
-                    $this->load(implode('/', $n_route));
-                }
+                $n_route[] = $a_route[$i];
+            }
+
+            // load the language file if we have ab/cd
+            if (count($n_route) == 2) {
+                $this->load(implode('/', $n_route));
             }
         }
-	}
+    }
 
-	public function get($key) {
-		return (isset($this->data[$key]) ? $this->data[$key] : $key);
-	}
+    public function get($key) {
+        return (isset($this->data[$key]) ? $this->data[$key] : $key);
+    }
 
     public function all($data = array(), $skip = array()) {
         foreach ($this->data as $key => $value) {
@@ -55,61 +64,44 @@ class Language {
 
         return $data;
     }
-	
-	public function load($filename) {
-		$_ = array();
 
-		$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
+    public function load($filename) {
+        $_ = array();
 
-		if (file_exists($file)) {
-			require($file);
-		}
+        $file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
 
-		$file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
+        if (file_exists($file)) {
+            require(modification($file));
+        }
 
-		if (file_exists($file)) {
-			require($file);
-		}
+        $file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
 
-		$file = DIR_LANGUAGE . 'override/' . $this->directory . '/' . $filename . '.php';
+        if (file_exists($file)) {
+            require(modification($file));
+        }
 
-		if (file_exists($file)) {
-			require($file);
-		}
+        $file = DIR_LANGUAGE . 'override/' . $this->directory . '/' . $filename . '.php';
 
-		$this->data = array_merge($this->data, $_);
+        if (file_exists($file)) {
+            require(modification($file));
+        }
 
-		return $this->data;
-	}
+        $this->data = array_merge($this->data, $_);
 
-	public function override($filename) {
-		$_ = array();
+        return $this->data;
+    }
 
-		$file = DIR_LANGUAGE . 'override/' . $this->directory . '/' . $filename . '.php';
+    public function override($filename) {
+        $_ = array();
 
-		if (file_exists($file)) {
-			require($file);
-		}
+        $file = DIR_LANGUAGE . 'override/' . $this->directory . '/' . $filename . '.php';
 
-		$this->data = array_merge($this->data, $_);
+        if (file_exists($file)) {
+            require(modification($file));
+        }
 
-		return $this->data;
-	}
-	
+        $this->data = array_merge($this->data, $_);
 
-    public function getDirectory($registry){
-		if(is_object($registry->get('config'))) {
-			if(IS_ADMIN){
-				$code = $registry->get('config')->get('config_admin_language', 'en');
-			} else {
-				$code = $registry->get('config')->get('config_language', 'en');
-			}
-			
-			$language = $registry->get('db')->query("SELECT * FROM " . DB_PREFIX . "language WHERE code = '" . $code . "'");
-
-			return $language->row['directory'];
-		} else {
-			return 'en-GB';
-		}
-    }	
+        return $this->data;
+    }
 }
