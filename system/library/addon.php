@@ -49,20 +49,22 @@ class Addon extends Object {
     public function addAddon($data) {
         // Get files the zip includes
         $files = json_encode($this->indexFiles($data['dir']));
+        $params = json_encode($data['addon_params']);
 
         // Addon type
         $host = explode('/', $data['install_url']);
         $type = $host[3];
 
-        $this->db->query("INSERT INTO ". DB_PREFIX . "addon SET `product_id` = " . (int)$data['product_id'] . ", `product_name` = '" . $this->db->escape($data['product_name']) . "', `product_type` = '" . $this->db->escape($type) . "', `product_version` = '" . $this->db->escape($data['product_version']) . "', `addon_files` = '" . $this->db->escape($files) . "'");
+        $this->db->query("INSERT INTO ". DB_PREFIX . "addon SET `product_id` = " . (int)$data['product_id'] . ", `product_name` = '" . $this->db->escape($data['product_name']) . "', `product_type` = '" . $this->db->escape($type) . "', `product_version` = '" . $this->db->escape($data['product_version']) . "', `addon_files` = '" . $this->db->escape($files) . "', `params` = '" . $this->db->escape($params) . "'");
     }
 
-    public function removeAddon($id, $codes = array()) {
+    public function removeAddon($id, $params = null) {
         $this->db->query("DELETE FROM ". DB_PREFIX . "addon WHERE `product_id` = " . $id);
 
-        if (count($codes)) {
-            foreach ($codes as $code) {
-                $this->db->query("DELETE FROM ". DB_PREFIX . "modification WHERE `code` = '" . $code . "'");
+        $params = json_decode($params);
+        if (count($params)) {
+            foreach ($params as $table => $foreign_ids) {
+                $this->db->query("DELETE FROM ". DB_PREFIX . "{$table} WHERE `{$table}_id` IN (" . implode(',', $foreign_ids) . ")");
             }
         }
     }
