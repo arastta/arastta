@@ -1461,6 +1461,8 @@ class ControllerSaleOrder extends Controller {
 					'href'        => $this->url->link('sale/voucher/edit', 'token=' . $this->session->data['token'] . '&voucher_id=' . $voucher['voucher_id'], 'SSL')
 				);
 			}
+			
+			$data['totals'] = array();
 
 			$totals = $this->model_sale_order->getOrderTotals($this->request->get['order_id']);
 
