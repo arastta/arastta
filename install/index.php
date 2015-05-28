@@ -55,11 +55,6 @@ $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=UTF-8');
 $registry->set('response', $response);
 
-// Language
-$language = new Language('en-GB', $registry);
-$language->load('default');
-$registry->set('language', $language);
-
 // Document
 $document = new Document();
 $registry->set('document', $document);
@@ -67,6 +62,14 @@ $registry->set('document', $document);
 // Session
 $session = new Session();
 $registry->set('session', $session);
+
+// Utility
+$utility = new Utility($registry);
+$registry->set('utility', $utility);
+
+// Language
+$language = new Language('en-GB', $registry);
+$registry->set('language', $language);
 
 // Upgrade
 $upgrade = false;
