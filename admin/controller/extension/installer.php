@@ -614,15 +614,15 @@ class ControllerExtensionInstaller extends Controller {
 			$data = json_decode($data, true);
 
 			if (json_last_error() != JSON_ERROR_NONE) {
-				$json['error'] = $this->language->get('error_json_'.json_last_error());
+				$json['error'] = $this->language->get('error_json_' . json_last_error());
 			} elseif (count($data) and array_key_exists('translation', $data)) {
 
-				if ($this->model_extension_installer->languageExist($data['translation']['tag'])) {
+				if ($this->model_extension_installer->languageExist($data['translation']['directory'])) {
 					$json['error'] = $this->language->get('error_language_exist');
 				} else {
 					$this->load->model('localisation/language');
 
-					$data['translation']['directory'] = $data['translation']['tag'];
+					$data['translation']['locale'] = null;
 					$data['translation']['status'] = 1;
 					$data['translation']['sort_order'] = 0;
 					$language_id = $this->model_localisation_language->addLanguage($data['translation']);
@@ -976,7 +976,9 @@ class ControllerExtensionInstaller extends Controller {
 				$params = json_decode($addon['params']);
 				foreach ($params->language as $id) {
 					$lang = $this->model_localisation_language->getLanguage($id);
-					$this->filesystem->remove(array(DIR_ROOT . 'admin/language/'. $lang['directory'], DIR_ROOT . 'catalog/language/'. $lang['directory']));
+					if (isset($lang['directory'])) {
+						$this->filesystem->remove(array(DIR_ROOT . 'admin/language/'. $lang['directory'], DIR_ROOT . 'catalog/language/'. $lang['directory']));
+					}
 				}
 
 			}

@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `ar_addon` (
   `product_type` varchar(32) NOT NULL,
   `product_version` varchar(32) NOT NULL DEFAULT '1.0.0',
   `addon_files` text NOT NULL,
-  `addon_params` text DEFAULT NULL,
+  `params` text DEFAULT NULL,
   PRIMARY KEY (`addon_id`),
   KEY `product_id` (`product_id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
