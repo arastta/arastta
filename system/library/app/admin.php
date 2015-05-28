@@ -133,8 +133,7 @@ class Admin extends App {
 
         // Language
         $language = new Language($languages[$code]['directory'], $this->registry);
-        $language->load('english');
-        $language->load($languages[$code]['directory']);
+        $language->load('default');
         $this->registry->set('language', $language);
 
         // Document
