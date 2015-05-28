@@ -56,8 +56,8 @@ $response->addHeader('Content-Type: text/html; charset=UTF-8');
 $registry->set('response', $response);
 
 // Language
-$language = new Language('english', $registry);
-$language->load('english');
+$language = new Language('en-GB', $registry);
+$language->load('default');
 $registry->set('language', $language);
 
 // Document

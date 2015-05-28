@@ -1708,7 +1708,7 @@ CREATE TABLE IF NOT EXISTS `ar_language` (
 --
 
 INSERT INTO `ar_language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`) VALUES
-(1, 'English', 'en', 'en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'english', 1, 1);
+(1, 'English', 'en', 'en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'en-GB', 1, 1);
 
 -- --------------------------------------------------------
 

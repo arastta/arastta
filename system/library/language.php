@@ -15,22 +15,26 @@ class Language {
 		$this->directory = $directory;
 
         // Try to load the language file based on the route variable
-        if (is_object($registry) and !empty($registry->get('request')->get['route'])) {
-            $g_route = $registry->get('request')->get['route'];
-            $a_route = explode('/', $g_route);
+        if (is_object($registry)) {
+            $this->default = $this->getDirectory($registry);
 
-            $n_route = array();
-            for ($i = 0; $i < 2; $i++) {
-                if (empty($a_route[$i])) {
-                    continue;
+            if (!empty($registry->get('request')->get['route'])) {
+                $g_route = $registry->get('request')->get['route'];
+                $a_route = explode('/', $g_route);
+
+                $n_route = array();
+                for ($i = 0; $i < 2; $i++) {
+                    if (empty($a_route[$i])) {
+                        continue;
+                    }
+
+                    $n_route[] = $a_route[$i];
                 }
 
-                $n_route[] = $a_route[$i];
-            }
-
-            // load the language file if we have ab/cd
-            if (count($n_route) == 2) {
-                $this->load(implode('/', $n_route));
+                // load the language file if we have ab/cd
+                if (count($n_route) == 2) {
+                    $this->load(implode('/', $n_route));
+                }
             }
         }
 	}
@@ -91,4 +95,21 @@ class Language {
 
 		return $this->data;
 	}
+	
+
+    public function getDirectory($registry){
+		if(is_object($registry->get('config'))) {
+			if(IS_ADMIN){
+				$code = $registry->get('config')->get('config_admin_language', 'en');
+			} else {
+				$code = $registry->get('config')->get('config_language', 'en');
+			}
+			
+			$language = $registry->get('db')->query("SELECT * FROM " . DB_PREFIX . "language WHERE code = '" . $code . "'");
+
+			return $language->row['directory'];
+		} else {
+			return 'en-GB';
+		}
+    }	
 }
