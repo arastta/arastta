@@ -530,6 +530,7 @@ class ControllerExtensionInstaller extends Controller {
 					
 					if (!$json['overwrite']) {
 						$this->model_extension_modification->addModification($modification_data);
+						$this->session->data['addon_params']['modification'][] = $this->db->getLastId();
 					}
 					
                     if ($isVqmod) {
@@ -589,6 +590,52 @@ class ControllerExtensionInstaller extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function json() {
+		$this->load->language('extension/installer');
+		$this->load->model('extension/installer');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		$file = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/install.json';
+
+		if (!file_exists($file)) {
+			$json['error'] = $this->language->get('error_file');
+		}
+
+		if (!$json) {
+            // Fire event
+            $this->trigger->fire('pre.admin.extension.json', $file);
+
+			$data = file_get_contents($file);
+			$data = json_decode($data, true);
+
+			if (json_last_error() != JSON_ERROR_NONE) {
+				$json['error'] = $this->language->get('error_json_'.json_last_error());
+			} elseif (count($data) and array_key_exists('translation', $data)) {
+
+				if ($this->model_extension_installer->languageExist($data['translation']['tag'])) {
+					$json['error'] = $this->language->get('error_language_exist');
+				} else {
+					$this->load->model('localisation/language');
+
+					$data['translation']['directory'] = $data['translation']['tag'];
+					$data['translation']['status'] = 1;
+					$data['translation']['sort_order'] = 0;
+					$language_id = $this->model_localisation_language->addLanguage($data['translation']);
+					$this->session->data['addon_params']['language'][] = $language_id;
+
+				}
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function remove() {
 		$this->load->language('extension/installer');
 
@@ -616,10 +663,13 @@ class ControllerExtensionInstaller extends Controller {
 					'product_name' => $this->request->post['product_name'],
 					'install_url' => $this->request->post['install_url'],
 					'product_version' => $this->request->post['product_version'],
+					'addon_params' => isset($this->session->data['addon_params']) ? $this->session->data['addon_params'] : null,
 					'dir' => $directory,
 				);
 
 				$addon->addAddon($data);
+
+				unset($this->session->data['addon_params']);
 
 				$this->cache->remove('addon');
 				$this->cache->remove('update');
@@ -805,6 +855,14 @@ class ControllerExtensionInstaller extends Controller {
 					'path' => $path
 				);
 			}
+			// JSON
+			if (substr($zip_name, 0, 12) == 'install.json') {
+				$json['step'][] = array(
+					'text' => $this->language->get('text_json'),
+					'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/json', 'token='.$this->session->data['token'], 'SSL')),
+					'path' => $path
+				);
+			}
 
 			// Compare admin files
 			$file = DIR_APPLICATION.substr($zip_name, 13);
@@ -905,19 +963,26 @@ class ControllerExtensionInstaller extends Controller {
             // Fire event
             $this->trigger->fire('pre.admin.extension.uninstall', $files);
 
-            $absolutePaths = $modification_code = array();
+            $absolutePaths = $codes = array();
 			foreach ($files as $file) {
 				$absolutePaths[] = DIR_ROOT . $file;
-				if (strpos($file, '.xml') !== false) {
-					$modification_code[] = basename($file, '.xml');
-				}
 			}
 
 			// Remove files
 			$this->filesystem->remove($absolutePaths);
 
+			if ($addon['product_type'] == 'translation') {
+				$this->load->model('localisation/language');
+				$params = json_decode($addon['params']);
+				foreach ($params->language as $id) {
+					$lang = $this->model_localisation_language->getLanguage($id);
+					$this->filesystem->remove(array(DIR_ROOT . 'admin/language/'. $lang['directory'], DIR_ROOT . 'catalog/language/'. $lang['directory']));
+				}
+
+			}
+
 			// Remove addon and modification if exists from table
-			$addon_lib->removeAddon($this->request->get['product_id'], $modification_code);
+			$addon_lib->removeAddon($this->request->get['product_id'], $addon['params']);
 
 			// Refresh modifications
 			$this->request->get['extensionInstaller'] = 1;
@@ -925,6 +990,8 @@ class ControllerExtensionInstaller extends Controller {
 			unset($this->request->get['extensionInstaller']);
 
 			$json['success'] = $this->language->get('text_uninstall_success');
+
+			unset($this->session->data['addon_params']);
 
 			$this->cache->remove('addon');
 			$this->cache->remove('update');
