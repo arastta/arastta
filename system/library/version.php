@@ -22,17 +22,17 @@ final class Version extends Object {
 
     protected $minor = '0';
 
-    protected $patch = '1';
+    protected $patch = '2';
 
     protected $build = '';
 
     protected $status = 'Stable';
 
-    protected $date = '18-May-2015';
+    protected $date = '26-May-2015';
 
-    protected $time = '13:30';
+    protected $time = '14:00';
 
-    protected $zone = 'GMT';
+    protected $zone = 'GMT +2';
 
     /**
      * Compares two a "PHP standardized" version number against the current Arastta version.
