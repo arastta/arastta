@@ -22,7 +22,7 @@ class ControllerCommonLogin extends Controller {
 			$this->session->data['token'] = md5(mt_rand());
 
             if (!empty($this->request->post['lang'])) {
-                $this->session->data['language'] = $this->request->post['lang'];
+                $this->session->data['admin_language'] = $this->request->post['lang'];
             }
 
             if ($this->config->get('config_sec_admin_login')) {

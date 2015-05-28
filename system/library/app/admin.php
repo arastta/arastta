@@ -89,58 +89,26 @@ class Admin extends App {
         // Session
         $this->registry->set('session', new Session());
 
-        // Language
-        $languages = array();
-
-        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language`");
-
-        foreach ($query->rows as $result) {
-            $languages[$result['code']] = $result;
-        }
-
-        if (isset($this->session->data['language']) && array_key_exists($this->session->data['language'], $languages) && $languages[$this->session->data['language']]['status']) {
-            $code = $this->session->data['language'];
-        }
-        else {
-            $detect = '';
-
-            if (isset($this->request->server['HTTP_ACCEPT_LANGUAGE']) && $this->request->server['HTTP_ACCEPT_LANGUAGE']) {
-                $browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
-
-                foreach ($browser_languages as $browser_language) {
-                    foreach ($languages as $key => $value) {
-                        if ($value['status']) {
-                            $locale = explode(',', $value['locale']);
-
-                            if (in_array($browser_language, $locale)) {
-                                $detect = $key;
-                                break 2;
-                            }
-                        }
-                    }
-                }
-            }
-
-            $code = $detect ? $detect : $this->config->get('config_admin_language');
-        }
-
-        if (!isset($this->session->data['language']) || $this->session->data['language'] != $code) {
-            $this->session->data['language'] = $code;
-        }
-
-        $this->config->set('config_language_id', $languages[$code]['language_id']);
-        $this->config->set('config_language', $languages[$code]['code']);
+        // Utility
+        $utility = new Utility($this->registry);
+        $this->registry->set('utility', $utility);
 
         // Language
-        $language = new Language($languages[$code]['directory'], $this->registry);
-        $language->load('default');
-        $this->registry->set('language', $language);
+        $language = $utility->getLanguage();
+
+        if (!isset($this->session->data['admin_language']) || $this->session->data['admin_language'] != $language['code']) {
+            $this->session->data['admin_language'] = $language['code'];
+        }
+
+        $this->config->set('config_language', $language['code']);
+        $this->config->set('config_language_dir', $language['directory']);
+        $this->config->set('config_language_id', $language['language_id']);
+
+        // Language
+        $this->registry->set('language', new Language($language['directory'], $this->registry));
 
         // Document
         $this->registry->set('document', new Document());
-
-        // Utility
-        $this->registry->set('utility', new Utility($this->registry));
 
         // Update
         $this->registry->set('update', new Update($this->registry));

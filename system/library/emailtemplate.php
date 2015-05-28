@@ -8,6 +8,7 @@
 class Emailtemplate {
 
 	public function __construct($registry) {
+        $this->registry = $registry;
 		$this->config = $registry->get('config');
 		$this->url = $registry->get('url');
 		$this->language = $registry->get('language');
@@ -368,8 +369,7 @@ class Emailtemplate {
         }
 
          // Load the language for any mails that might be required to be sent out
-        $language = new Language($order_info['language_directory']);
-        $language->load('english');
+        $language = new Language($order_info['language_directory'], $this->registry);
         $language->load('mail/order');
 
         $text  = sprintf($language->get('text_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8')) . "\n\n";

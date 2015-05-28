@@ -10,10 +10,111 @@ class Utility extends Object {
 	public function __construct($registry) {
 		$this->db = $registry->get('db');
         $this->url = $registry->get('url');
+        $this->cache = $registry->get('cache');
         $this->config = $registry->get('config');
 		$this->request = $registry->get('request');
-		$this->cache = $registry->get('cache');	
+		$this->session = $registry->get('session');
 	}
+
+    public function getLanguage() {
+        $languages = array();
+
+        $prefix = IS_ADMIN ? 'admin_' : '';
+
+        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE status = '1'");
+
+        foreach ($query->rows as $result) {
+            $languages[$result['code']] = $result;
+        }
+
+        if (isset($this->request->get['lang']) && array_key_exists($this->request->get['lang'], $languages) && $languages[$this->request->get['lang']]['status']) {
+            $code = $this->request->get['lang'];
+        }
+        elseif (isset($this->session->data[$prefix.'language']) && array_key_exists($this->session->data[$prefix.'language'], $languages) && $languages[$this->session->data[$prefix.'language']]['status']) {
+            $code = $this->session->data[$prefix.'language'];
+        }
+        elseif (isset($this->request->cookie['language']) && array_key_exists($this->request->cookie[$prefix.'language'], $languages) && $languages[$this->request->cookie[$prefix.'language']]['status']) {
+            $code = $this->request->cookie[$prefix.'language'];
+        }
+        else {
+            $browser = $this->getBrowserLangCode($languages);
+
+            if (is_object($this->config)) {
+                $default = IS_ADMIN ? $this->config->get('config_admin_language') : $this->config->get('config_language');
+            }
+            else {
+                $default = 'en-GB';
+            }
+
+            $code = $browser ? $browser : $default;
+        }
+
+        return $languages[$code];
+    }
+
+    public function getDefaultLanguage(){
+        if (!is_object($this->config)) {
+            return;
+        }
+
+        $store_id = $this->config->get('config_store_id');
+
+        if (IS_ADMIN){
+            $sql = "SELECT * FROM " . DB_PREFIX . "setting WHERE `key` = 'config_admin_language' AND `store_id` = '" . $store_id . "'";
+        } else {
+            $sql = "SELECT * FROM " . DB_PREFIX . "setting WHERE `key` = 'config_language' AND `store_id` = '" . $store_id . "'";
+        }
+        $query = $this->db->query($sql);
+        $code = $query->row['value'];
+
+        $language = $this->db->query("SELECT * FROM " . DB_PREFIX . "language WHERE `code` = '" . $code . "'");
+
+        return $language->row;
+    }
+
+    public function getBrowserLangCode($system_langs) {
+        $lang = null;
+
+        if (empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            return $lang;
+        }
+
+        $browser_langs = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
+
+        foreach ($browser_langs as $browser_lang) {
+            // Slice out the part before ; on first step, the part before - on second, place into array
+            $browser_lang = substr($browser_lang, 0, strcspn($browser_lang, ';'));
+            $primary_browser_lang = substr($browser_lang, 0, 2);
+
+            foreach ($system_langs as $system_lang) {
+                if (!$system_lang['status']) {
+                    continue;
+                }
+
+                $system_code = $system_lang['code'];
+                $system_dir = $system_lang['directory'];
+
+                // Take off 3 letters (zh-yue) iso code languages as they can't match browsers' languages and default them to en
+                // http://www.w3.org/International/articles/language-tags/#extlang
+                if (strlen($system_dir) > 5) {
+                    continue;
+                }
+
+                if (strtolower($browser_lang) == strtolower(substr($system_dir, 0, strlen($browser_lang)))) {
+                    return $system_code;
+                }
+                elseif ($primary_browser_lang == substr($system_dir, 0, 2)) {
+                    $primary_detected_code = $system_code;
+                }
+            }
+
+            if (isset($primary_detected_code)) {
+                return $primary_detected_code;
+            }
+        }
+
+        return $lang;
+    }
 
     public function getRemoteData($url, $options = array('timeout' => 10)) {
         $user_agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
