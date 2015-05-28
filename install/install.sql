@@ -2034,164 +2034,6 @@ INSERT INTO `ar_menu` (`menu_id`, `sort_order`, `columns`, `menu_type`, `status`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ar_menu_child`
---
-
-CREATE TABLE IF NOT EXISTS `ar_menu_child` (
-  `menu_child_id` int(11) NOT NULL AUTO_INCREMENT,
-  `menu_id` int(11) NOT NULL,
-  `sort_order` int(3) NOT NULL,
-  `menu_type` varchar(20) NOT NULL,
-  `status` int(3) NOT NULL,
-  PRIMARY KEY (`menu_child_id`),
-  KEY `menu_id` (`menu_id`)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `ar_menu_child`
---
-
-INSERT INTO `ar_menu_child` (`menu_child_id`, `menu_id`, `sort_order`, `menu_type`, `status`) VALUES
-(1, 1, 1, 'category', 1),
-(2, 1, 2, 'category', 1),
-(3, 2, 1, 'category', 1),
-(4, 2, 2, 'category', 1),
-(5, 0, 25, 'category', 1),
-(6, 0, 26, 'category', 1),
-(7, 0, 27, 'category', 1),
-(8, 0, 6, 'category', 1),
-(10, 8, 1, 'category', 1),
-(11, 8, 2, 'category', 1),
-(12, 8, 3, 'category', 1),
-(13, 8, 4, 'category', 1),
-(14, 8, 5, 'category', 1),
-(15, 8, 6, 'category', 1),
-(16, 8, 7, 'category', 1),
-(17, 8, 8, 'category', 1),
-(18, 8, 9, 'category', 1),
-(19, 8, 10, 'category', 1),
-(20, 8, 11, 'category', 1),
-(21, 8, 12, 'category', 1),
-(22, 8, 13, 'category', 1),
-(23, 8, 14, 'category', 1),
-(24, 8, 15, 'category', 1),
-(25, 8, 16, 'category', 1),
-(26, 8, 17, 'category', 1),
-(27, 8, 18, 'category', 1),
-(28, 3, 1, 'category', 1),
-(29, 3, 2, 'category', 1),
-(30, 3, 4, 'category', 1),
-(31, 3, 0, '', 1),
-(32, 3, 3, 'category', 1),
-(33, 3, 5, 'category', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ar_menu_child_description`
---
-
-CREATE TABLE IF NOT EXISTS `ar_menu_child_description` (
-  `menu_child_id` int(11) NOT NULL,
-  `menu_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `link` varchar(255) NOT NULL DEFAULT '',
-  `language_id` int(11) NOT NULL,
-  PRIMARY KEY (`menu_child_id`,`language_id`),
-  KEY `menu_id` (`menu_id`),
-  KEY `language_id` (`language_id`)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `ar_menu_child_description`
---
-
-INSERT INTO `ar_menu_child_description` (`menu_child_id`, `menu_id`, `name`, `link`, `language_id`) VALUES
-(1, 1, 'PC', '26', 1),
-(2, 1, 'MAC', '27', 1),
-(3, 2, 'Macs', '46', 1),
-(4, 2, 'Windows', '45', 1),
-(5, 0, 'Monitors', '28', 1),
-(6, 0, 'Projectors', '29', 1),
-(7, 0, 'Printers', '30', 1),
-(8, 0, 'Scanners', '31', 1),
-(10, 8, 'test 11', '43', 1),
-(11, 8, 'test 12', '44', 1),
-(12, 8, 'test 15', '47', 1),
-(13, 8, 'test 16', '48', 1),
-(14, 8, 'test 17', '49', 1),
-(15, 8, 'test 18', '50', 1),
-(16, 8, 'test 19', '51', 1),
-(17, 8, 'test 20', '52', 1),
-(18, 8, 'test 21', '53', 1),
-(19, 8, 'test 22', '54', 1),
-(20, 8, 'test 23', '55', 1),
-(21, 8, 'test 24', '56', 1),
-(22, 8, 'test 4', '38', 1),
-(23, 8, 'test 5', '37', 1),
-(24, 8, 'test 6', '39', 1),
-(25, 8, 'test 7', '40', 1),
-(26, 8, 'test 8', '41', 1),
-(27, 8, 'test 9', '42', 1),
-(28, 3, 'Mice', '32', 1),
-(29, 3, 'Monitors', '28', 1),
-(30, 3, 'Projectors', '29', 1),
-(32, 3, 'Printers', '30', 1),
-(33, 3, 'Scanners', '31', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ar_menu_child_to_store`
---
-
-CREATE TABLE IF NOT EXISTS `ar_menu_child_to_store` (
-  `menu_child_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`menu_child_id`,`store_id`),
-  KEY `store_id` (`store_id`)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `ar_menu_child_to_store`
---
-
-INSERT INTO `ar_menu_child_to_store` (`menu_child_id`, `store_id`) VALUES
-(1, 0),
-(2, 0),
-(3, 0),
-(4, 0),
-(5, 0),
-(6, 0),
-(7, 0),
-(8, 0),
-(10, 0),
-(11, 0),
-(12, 0),
-(13, 0),
-(14, 0),
-(15, 0),
-(16, 0),
-(17, 0),
-(18, 0),
-(19, 0),
-(20, 0),
-(21, 0),
-(22, 0),
-(23, 0),
-(24, 0),
-(25, 0),
-(26, 0),
-(27, 0),
-(28, 0),
-(29, 0),
-(30, 0),
-(32, 0),
-(33, 0);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `ar_menu_description`
 --
 
@@ -2242,6 +2084,152 @@ INSERT INTO `ar_menu_to_store` (`menu_id`, `store_id`) VALUES
 (6, 0),
 (7, 0),
 (8, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_menu_child`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_menu_child` (
+  `menu_child_id` int(11) NOT NULL AUTO_INCREMENT,
+  `menu_id` int(11) NOT NULL,
+  `sort_order` int(3) NOT NULL,
+  `menu_type` varchar(20) NOT NULL,
+  `status` int(3) NOT NULL,
+  PRIMARY KEY (`menu_child_id`),
+  KEY `menu_id` (`menu_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ar_menu_child`
+--
+
+INSERT INTO `ar_menu_child` (`menu_child_id`, `menu_id`, `sort_order`, `menu_type`, `status`) VALUES
+(1, 1, 1, 'category', 1),
+(2, 1, 2, 'category', 1),
+(3, 2, 1, 'category', 1),
+(4, 2, 2, 'category', 1),
+(10, 8, 1, 'category', 1),
+(11, 8, 2, 'category', 1),
+(12, 8, 3, 'category', 1),
+(13, 8, 4, 'category', 1),
+(14, 8, 5, 'category', 1),
+(15, 8, 6, 'category', 1),
+(16, 8, 7, 'category', 1),
+(17, 8, 8, 'category', 1),
+(18, 8, 9, 'category', 1),
+(19, 8, 10, 'category', 1),
+(20, 8, 11, 'category', 1),
+(21, 8, 12, 'category', 1),
+(22, 8, 13, 'category', 1),
+(23, 8, 14, 'category', 1),
+(24, 8, 15, 'category', 1),
+(25, 8, 16, 'category', 1),
+(26, 8, 17, 'category', 1),
+(27, 8, 18, 'category', 1),
+(28, 3, 1, 'category', 1),
+(29, 3, 2, 'category', 1),
+(30, 3, 4, 'category', 1),
+(31, 3, 0, 'category', 1),
+(32, 3, 3, 'category', 1),
+(33, 3, 5, 'category', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_menu_child_description`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_menu_child_description` (
+  `menu_child_id` int(11) NOT NULL,
+  `menu_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `link` varchar(255) NOT NULL DEFAULT '',
+  `language_id` int(11) NOT NULL,
+  PRIMARY KEY (`menu_child_id`,`language_id`),
+  KEY `menu_id` (`menu_id`),
+  KEY `language_id` (`language_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ar_menu_child_description`
+--
+
+INSERT INTO `ar_menu_child_description` (`menu_child_id`, `menu_id`, `name`, `link`, `language_id`) VALUES
+(1, 1, 'PC', '26', 1),
+(2, 1, 'MAC', '27', 1),
+(3, 2, 'Macs', '46', 1),
+(4, 2, 'Windows', '45', 1),
+(10, 8, 'test 11', '43', 1),
+(11, 8, 'test 12', '44', 1),
+(12, 8, 'test 15', '47', 1),
+(13, 8, 'test 16', '48', 1),
+(14, 8, 'test 17', '49', 1),
+(15, 8, 'test 18', '50', 1),
+(16, 8, 'test 19', '51', 1),
+(17, 8, 'test 20', '52', 1),
+(18, 8, 'test 21', '53', 1),
+(19, 8, 'test 22', '54', 1),
+(20, 8, 'test 23', '55', 1),
+(21, 8, 'test 24', '56', 1),
+(22, 8, 'test 4', '38', 1),
+(23, 8, 'test 5', '37', 1),
+(24, 8, 'test 6', '39', 1),
+(25, 8, 'test 7', '40', 1),
+(26, 8, 'test 8', '41', 1),
+(27, 8, 'test 9', '42', 1),
+(28, 3, 'Mice', '32', 1),
+(29, 3, 'Monitors', '28', 1),
+(30, 3, 'Projectors', '29', 1),
+(32, 3, 'Printers', '30', 1),
+(33, 3, 'Scanners', '31', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_menu_child_to_store`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_menu_child_to_store` (
+  `menu_child_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`menu_child_id`,`store_id`),
+  KEY `store_id` (`store_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ar_menu_child_to_store`
+--
+
+INSERT INTO `ar_menu_child_to_store` (`menu_child_id`, `store_id`) VALUES
+(1, 0),
+(2, 0),
+(3, 0),
+(4, 0),
+(10, 0),
+(11, 0),
+(12, 0),
+(13, 0),
+(14, 0),
+(15, 0),
+(16, 0),
+(17, 0),
+(18, 0),
+(19, 0),
+(20, 0),
+(21, 0),
+(22, 0),
+(23, 0),
+(24, 0),
+(25, 0),
+(26, 0),
+(27, 0),
+(28, 0),
+(29, 0),
+(30, 0),
+(32, 0),
+(33, 0);
 
 -- --------------------------------------------------------
 

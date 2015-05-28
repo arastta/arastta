@@ -201,6 +201,19 @@ class ModelLocalisationLanguage extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "recurring_description SET recurring_id = '" . (int)$recurring['recurring_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($recurring['name']));
 		}
 		
+		// Menu
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+		foreach ($query->rows as $menu) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu['menu_id'] . "', name = '" . $menu['name'] . "', link = '" . $menu['link'] . "', language_id = '" . (int)$language_id . "'");
+		}
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_child_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+		foreach ($query->rows as $menu_child) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_description SET menu_child_id = '" . (int)$menu_child['menu_child_id'] . "', menu_id = '" . (int)$menu_child['menu_id'] . "', name = '" . $menu_child['name'] . "', link = '" . $menu_child['link'] . "', language_id = '" . (int)$language_id . "'");
+		}
+		
 		return $language_id;
 	}
 
@@ -272,6 +285,10 @@ class ModelLocalisationLanguage extends Model {
 		$this->cache->delete('weight_class');
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "recurring_description WHERE language_id = '" . (int)$language_id . "'");
+		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_description WHERE language_id = '" . (int)$language_id . "'");
+		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_child_description WHERE language_id = '" . (int)$language_id . "'");
 	}
 
 	public function getLanguage($language_id) {
