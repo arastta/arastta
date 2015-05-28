@@ -27,7 +27,7 @@ class ControllerExtensionInstaller extends Controller {
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_clear'] = $this->language->get('button_clear');
 		$data['button_continue'] = $this->language->get('button_continue');
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -39,7 +39,7 @@ class ControllerExtensionInstaller extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], 'SSL')
 		);
-		
+
 		$data['token'] = $this->session->data['token'];
 
 		$directories = glob(DIR_UPLOAD . 'temp-*', GLOB_ONLYDIR);
@@ -129,7 +129,7 @@ class ControllerExtensionInstaller extends Controller {
                         $json['overwrite'][] = 'vqmod/xml/' . $this->request->files['file']['name'];
                     }
                 }
-				
+
 				// If xml file copy it to the temporary directory
 				move_uploaded_file($this->request->files['file']['tmp_name'], $file);
 
@@ -262,7 +262,7 @@ class ControllerExtensionInstaller extends Controller {
 					if (is_dir($file)) {
 						$path[] = $file . '/*';
 					}
-					
+
 					$edit_page_url = explode("upload", strtolower($file));
 					$edit_page_url = 'upload'.$edit_page_url[2];
 
@@ -278,7 +278,7 @@ class ControllerExtensionInstaller extends Controller {
 
             foreach ($files as $file) {
                 // Upload everything in the upload directory
-                
+
                 $destination = substr($file, strlen($directory));
                 if (is_dir($file)) {
                     if (!is_dir($root.$destination)) {
@@ -294,15 +294,15 @@ class ControllerExtensionInstaller extends Controller {
                         $json['error'] = sprintf($this->language->get('error_ftp_file'), $file);
                     }
                 }
-            }		
-			
+            }
+
 		    $this->response->setOutput(json_encode($json));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
+
 	public function permission_control($edit_page_url){
         $search_page = array(
             'appearance' 			=> 'appearance',
@@ -328,7 +328,7 @@ class ControllerExtensionInstaller extends Controller {
             'total' 				=> 'total',
             'user' 				    => 'user'
         );
-		
+
         foreach($search_page as $page) {
 			if (strpos($edit_page_url, 'upload/admin/controller/'.$page)!== false){
 
@@ -366,7 +366,7 @@ class ControllerExtensionInstaller extends Controller {
 
         if(is_file($file)){
             $content = file_get_contents($file);
-			
+
 			// Just add admin file in content.
 			if(strpos($file, 'admin') !== false && strpos($content, 'design/layout') !== false){
                 $replace_text['design/layout'] = 'appearance/layout';
@@ -445,7 +445,7 @@ class ControllerExtensionInstaller extends Controller {
         } else if (file_exists(DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/' . $this->session->data['vqmod_file_name'])){
             $file = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/' . $this->session->data['vqmod_file_name'];
         }
-		
+
 		if (!file_exists($file)) {
 			$json['error'] = $this->language->get('error_file');
 		}
@@ -464,7 +464,7 @@ class ControllerExtensionInstaller extends Controller {
                 try {
 					$dom = new DOMDocument('1.0', 'UTF-8');
 					$dom->loadXml($xml);
-					
+
 					$name = $dom->getElementsByTagName('name')->item(0);
 
 					if ($name) {
@@ -472,15 +472,15 @@ class ControllerExtensionInstaller extends Controller {
 					} else {
 						$name = '';
 					}
-					
+
 					$code = $dom->getElementsByTagName('code')->item(0);
 					if(!empty($code)) {
 						if ($code) {
 							$code = $code->nodeValue;
-							
+
 							// Check to see if the modification is already installed or not.
 							$modification_info = $this->model_extension_modification->getModificationByCode($code);
-							
+
 							if ($modification_info) {
 								$json['overwrite'][] =  $code . '.xml';
 								$json['error'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
@@ -490,7 +490,7 @@ class ControllerExtensionInstaller extends Controller {
 						}
 					} else {
                         $isVqmod = 1 ;
-                    }	
+                    }
 					$author = $dom->getElementsByTagName('author')->item(0);
 
 					if ($author) {
@@ -517,7 +517,7 @@ class ControllerExtensionInstaller extends Controller {
 
                     #Xml replace text '', Because It doesn't necessary Arastta
                     $xml = '';
-					
+
 					$modification_data = array(
 						'name'    => $name,
 						'code'    => $code,
@@ -527,12 +527,12 @@ class ControllerExtensionInstaller extends Controller {
 						'xml'     => $xml,
 						'status'  => 1
 					);
-					
+
 					if (!$json['overwrite']) {
 						$this->model_extension_modification->addModification($modification_data);
-						$this->session->data['addon_params']['modification'][] = $this->db->getLastId();
+						$this->session->data['addon_params']['extension/modification'][] = $this->db->getLastId();
 					}
-					
+
                     if ($isVqmod) {
                         $file  = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/' . $this->session->data['vqmod_file_name'];
                         $msmod = DIR_VQMOD.'xml/'. $this->session->data['vqmod_file_name'];
@@ -626,7 +626,7 @@ class ControllerExtensionInstaller extends Controller {
 					$data['translation']['status'] = 1;
 					$data['translation']['sort_order'] = 0;
 					$language_id = $this->model_localisation_language->addLanguage($data['translation']);
-					$this->session->data['addon_params']['language'][] = $language_id;
+					$this->session->data['addon_params']['localisation/language'][] = $language_id;
 
 				}
 			}
@@ -687,7 +687,7 @@ class ControllerExtensionInstaller extends Controller {
 				// We have to use scandir function because glob will not pick up dot files.
 				foreach (array_diff(scandir($next), array('.', '..')) as $file) {
 					$file = $next . '/' . $file;
-					
+
 					if (is_dir($file)) {
 						$path[] = $file;
 					}
@@ -738,11 +738,11 @@ class ControllerExtensionInstaller extends Controller {
 
 				while (count($path) != 0) {
 					$next = array_shift($path);
-					
+
 					// We have to use scandir function because glob will not pick up dot files.
 					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
 						$file = $next . '/' . $file;
-						
+
 						if (is_dir($file)) {
 							$path[] = $file;
 						}
@@ -971,10 +971,10 @@ class ControllerExtensionInstaller extends Controller {
 			// Remove files
 			$this->filesystem->remove($absolutePaths);
 
-			if ($addon['product_type'] == 'translation') {
+			$params = json_decode($addon['params'], true);
+			if (count($params) and $addon['product_type'] == 'translation') {
 				$this->load->model('localisation/language');
-				$params = json_decode($addon['params']);
-				foreach ($params->language as $id) {
+				foreach ($params['localisation/language'] as $id) {
 					$lang = $this->model_localisation_language->getLanguage($id);
 					if (isset($lang['directory'])) {
 						$this->filesystem->remove(array(DIR_ROOT . 'admin/language/'. $lang['directory'], DIR_ROOT . 'catalog/language/'. $lang['directory']));
@@ -983,8 +983,19 @@ class ControllerExtensionInstaller extends Controller {
 
 			}
 
-			// Remove addon and modification if exists from table
-			$addon_lib->removeAddon($this->request->get['product_id'], $addon['params']);
+			// Remove addon and its related row from tables
+			$addon_lib->removeAddon($this->request->get['product_id']);
+			if (count($params)) {
+				foreach ($params as $model => $foreign_ids) {
+					$this->load->model($model);
+					$array = explode('/', $model);
+					$function_name = 'delete' . ucfirst($array[1]);
+					$model = 'model_' . implode('_', $array);
+					foreach ($foreign_ids as $foreign_id) {
+						$this->$model->$function_name($foreign_id);
+					}
+				}
+			}
 
 			// Refresh modifications
 			$this->request->get['extensionInstaller'] = 1;
