@@ -388,11 +388,7 @@ class Route extends Object {
 
         foreach ($query as $variable => $value) {
             if (is_array($value)) {
-                foreach ($value as $var => $val) {
-                    $val = urlencode($val);
-
-                    $this->request->get[$var] = $val;
-                }
+                $this->parseNonSeoVariables($value);
             }
             else {
                 $value = urlencode($value);
