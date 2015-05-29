@@ -346,3 +346,25 @@ div#sub-column .row a{
 a {
 cursor:pointer
 }
+
+.buy.col-sm-4 .progress {
+  border: 1px solid #ccc;
+  margin-left: -60px;
+  height: 22px;
+  cursor: context-menu;
+  line-height: 20px;
+}
+
+.buy.col-sm-4  .progress-text{
+  margin-left: -60px;
+}
+
+.buy.col-sm-4  .progress-bar.success {
+  line-height: 20px;
+ }
+ 
+ .progress-bar.success {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+ }
