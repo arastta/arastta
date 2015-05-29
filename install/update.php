@@ -12,7 +12,7 @@ if(version_compare($version, '1.0.3', '<')) {
     $this->filesystem->remove(DIR_CATALOG . 'language/english');
 	
 	// Update language directory name
-	$this->db->query("UPDATE `" . DB_PREFIX . "language` SET `directory` = 'en-GB' WHERE `language_id` = 1;");
+	$this->db->query("UPDATE `" . DB_PREFIX . "language` SET `directory` = 'en-GB' WHERE `code` = 'en';");
 
 	// Add field ('params') Addon table
 	$query = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "addon`");
