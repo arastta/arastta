@@ -8,10 +8,10 @@
 class ModelExtensionInstaller extends Model {
 
 	public function languageExist($dir) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "language WHERE `directory` = '" . $this->db->escape($dir) . "'");
+		$query = $this->db->query("SELECT language_id FROM " . DB_PREFIX . "language WHERE `directory` = '" . $this->db->escape($dir) . "'");
 
 		if ($query->num_rows) {
-			return true;
+			return $query->row['language_id'];
 		} else {
 			return false;
 		}

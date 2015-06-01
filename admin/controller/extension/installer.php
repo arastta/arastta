@@ -616,19 +616,17 @@ class ControllerExtensionInstaller extends Controller {
 			if (json_last_error() != JSON_ERROR_NONE) {
 				$json['error'] = $this->language->get('error_json_' . json_last_error());
 			} elseif (count($data) and array_key_exists('translation', $data)) {
+				$this->load->model('localisation/language');
 
-				if ($this->model_extension_installer->languageExist($data['translation']['directory'])) {
-					$json['error'] = $this->language->get('error_language_exist');
-				} else {
-					$this->load->model('localisation/language');
+				$data['translation']['locale'] = null;
+				$data['translation']['status'] = 1;
+				$data['translation']['sort_order'] = 0;
 
-					$data['translation']['locale'] = null;
-					$data['translation']['status'] = 1;
-					$data['translation']['sort_order'] = 0;
+				$language_id = $this->model_extension_installer->languageExist($data['translation']['directory']);
+				if (!$language_id) {
 					$language_id = $this->model_localisation_language->addLanguage($data['translation']);
-					$this->session->data['addon_params']['localisation/language'][] = $language_id;
-
 				}
+				$this->session->data['addon_params']['localisation/language'][] = $language_id;
 			}
 		}
 
