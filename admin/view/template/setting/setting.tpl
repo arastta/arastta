@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="pull-right">
         <button type="submit" onclick="save('save')" form="form-setting" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
-		<button type="submit" form="form-setting" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
+        <button type="submit" form="form-setting" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -258,37 +258,37 @@
                 </div>
               </div>
             </div>
-              <div class="tab-pane" id="tab-design">
-                  <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-template"><?php echo $entry_template; ?></label>
-                      <div class="col-sm-10">
-                          <select name="config_template" id="input-template" class="form-control">
-                              <?php foreach ($templates as $template) { ?>
-                              <?php if ($template == $config_template) { ?>
-                              <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
-                              <?php } else { ?>
-                              <option value="<?php echo $template; ?>"><?php echo $template; ?></option>
-                              <?php } ?>
-                              <?php } ?>
-                          </select>
-                          <br />
-                          <img src="" alt="" id="template" class="img-thumbnail" /></div>
-                  </div>
-                  <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-layout"><?php echo $entry_layout; ?></label>
-                      <div class="col-sm-10">
-                          <select name="config_layout_id" id="input-layout" class="form-control">
-                              <?php foreach ($layouts as $layout) { ?>
-                              <?php if ($layout['layout_id'] == $config_layout_id) { ?>
-                              <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
-                              <?php } else { ?>
-                              <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
-                              <?php } ?>
-                              <?php } ?>
-                          </select>
-                      </div>
-                  </div>
+            <div class="tab-pane" id="tab-design">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-template"><?php echo $entry_template; ?></label>
+                <div class="col-sm-10">
+                  <select name="config_template" id="input-template" class="form-control">
+                    <?php foreach ($templates as $template) { ?>
+                    <?php if ($template == $config_template) { ?>
+                    <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $template; ?>"><?php echo $template; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <br />
+                  <img src="" alt="" id="template" class="img-thumbnail" /></div>
               </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-layout"><?php echo $entry_layout; ?></label>
+                <div class="col-sm-10">
+                  <select name="config_layout_id" id="input-layout" class="form-control">
+                    <?php foreach ($layouts as $layout) { ?>
+                    <?php if ($layout['layout_id'] == $config_layout_id) { ?>
+                    <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+            </div>
             <div class="tab-pane" id="tab-option">
               <fieldset>
                 <legend><?php echo $text_common; ?></legend>
@@ -306,7 +306,7 @@
                     </select>
                   </div>
                 </div>
-              </fieldset>			
+              </fieldset>
               <fieldset>
                 <legend><?php echo $text_product; ?></legend>
                 <div class="form-group">
@@ -604,9 +604,9 @@
                     <input type="text" name="config_login_attempts" value="<?php echo $config_login_attempts; ?>" placeholder="<?php echo $entry_login_attempts; ?>" id="input-login-attempts" class="form-control" />
                     <?php if ($error_login_attempts) { ?>
                     <div class="text-danger"><?php echo $error_login_attempts; ?></div>
-                    <?php } ?>                  
+                    <?php } ?>
                   </div>
-                </div>                
+                </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-account"><span data-toggle="tooltip" title="<?php echo $help_account; ?>"><?php echo $entry_account; ?></span></label>
                   <div class="col-sm-10">
@@ -1242,23 +1242,23 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-smtp-encryption"><span data-toggle="tooltip" title="<?php echo $help_mail_smtp_encryption; ?>"><?php echo $entry_smtp_encryption; ?></span></label>
                 <div class="col-sm-10">
-                    <select name="config_mail[smtp_encryption]" <?php echo ($config_mail_protocol == 'smtp') ? '' : 'disabled="disabled"' ?> id="input-mail-smtp-encryption" class="form-control">
-                        <?php if ($config_smtp_encryption == 'none') { ?>
-                        <option value="none" selected="selected"><?php echo $text_smtp_encryption_n; ?></option>
-                        <?php } else { ?>
-                        <option value="none"><?php echo $text_smtp_encryption_n; ?></option>
-                        <?php } ?>
-                        <?php if ($config_smtp_encryption == 'ssl') { ?>
-                        <option value="ssl" selected="selected"><?php echo $text_smtp_encryption_s; ?></option>
-                        <?php } else { ?>
-                        <option value="ssl"><?php echo $text_smtp_encryption_s; ?></option>
-                        <?php } ?>
-                        <?php if ($config_smtp_encryption == 'tls') { ?>
-                        <option value="tls" selected="selected"><?php echo $text_smtp_encryption_t; ?></option>
-                        <?php } else { ?>
-                        <option value="tls"><?php echo $text_smtp_encryption_t; ?></option>
-                        <?php } ?>
-                    </select>
+                  <select name="config_mail[smtp_encryption]" <?php echo ($config_mail_protocol == 'smtp') ? '' : 'disabled="disabled"' ?> id="input-mail-smtp-encryption" class="form-control">
+                  <?php if ($config_smtp_encryption == 'none') { ?>
+                  <option value="none" selected="selected"><?php echo $text_smtp_encryption_n; ?></option>
+                  <?php } else { ?>
+                  <option value="none"><?php echo $text_smtp_encryption_n; ?></option>
+                  <?php } ?>
+                  <?php if ($config_smtp_encryption == 'ssl') { ?>
+                  <option value="ssl" selected="selected"><?php echo $text_smtp_encryption_s; ?></option>
+                  <?php } else { ?>
+                  <option value="ssl"><?php echo $text_smtp_encryption_s; ?></option>
+                  <?php } ?>
+                  <?php if ($config_smtp_encryption == 'tls') { ?>
+                  <option value="tls" selected="selected"><?php echo $text_smtp_encryption_t; ?></option>
+                  <?php } else { ?>
+                  <option value="tls"><?php echo $text_smtp_encryption_t; ?></option>
+                  <?php } ?>
+                  </select>
                 </div>
               </div>
               <div class="form-group">
@@ -1269,458 +1269,458 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-seo">
-                <fieldset>
-                    <legend><?php echo $text_seo_urls; ?></legend>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><?php echo $entry_seo_url; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="radio-inline">
-                                <?php if ($config_seo_url) { ?>
-                                <input type="radio" name="config_seo_url" value="1" checked="checked" />
-                                <?php echo $text_yes; ?>
-                                <?php } else { ?>
-                                <input type="radio" name="config_seo_url" value="1" />
-                                <?php echo $text_yes; ?>
-                                <?php } ?>
-                            </label>
-                            <label class="radio-inline">
-                                <?php if (!$config_seo_url) { ?>
-                                <input type="radio" name="config_seo_url" value="0" checked="checked" />
-                                <?php echo $text_no; ?>
-                                <?php } else { ?>
-                                <input type="radio" name="config_seo_url" value="0" />
-                                <?php echo $text_no; ?>
-                                <?php } ?>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_rewrite; ?>"><?php echo $entry_seo_rewrite; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="radio-inline">
-                                <input type="radio" name="config_seo_rewrite" value="1" <?php echo ($config_seo_rewrite) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_yes; ?>
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="config_seo_rewrite" value="0" <?php echo (!$config_seo_rewrite) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_no; ?>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_suffix; ?>"><?php echo $entry_seo_suffix; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="radio-inline">
-                                <input type="radio" name="config_seo_suffix" value="1" <?php echo ($config_seo_suffix) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_yes; ?>
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="config_seo_suffix" value="0" <?php echo (!$config_seo_suffix) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_no; ?>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-seo-category"><span data-toggle="tooltip" title="<?php echo $help_seo_category; ?>"><?php echo $entry_seo_category; ?></span></label>
-                        <div class="col-sm-10">
-                            <select name="config_seo_category" id="input-seo-category" class="form-control">
-                                <option value="0" <?php echo ($config_seo_category == '0') ? 'selected="selected"' : ''; ?> ><?php echo $text_no; ?></option>
-                                <option value="last" <?php echo ($config_seo_category == 'last') ? 'selected="selected"' : ''; ?> ><?php echo $text_seo_category_last; ?></option>
-                                <option value="all" <?php echo ($config_seo_category == 'all') ? 'selected="selected"' : ''; ?> ><?php echo $text_seo_category_all; ?></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_translate; ?>"><?php echo $entry_seo_translate; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="radio-inline">
-                                <input type="radio" name="config_seo_translate" value="1" <?php echo ($config_seo_translate) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_yes; ?>
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="config_seo_translate" value="0" <?php echo (!$config_seo_translate) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_no; ?>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_lang_code; ?>"><?php echo $entry_seo_lang_code; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="radio-inline">
-                                <input type="radio" name="config_seo_lang_code" value="1" <?php echo ($config_seo_lang_code) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_yes; ?>
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="config_seo_lang_code" value="0" <?php echo (!$config_seo_lang_code) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_no; ?>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_canonical; ?>"><?php echo $entry_seo_canonical; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="radio-inline">
-                                <input type="radio" name="config_seo_canonical" value="1" <?php echo ($config_seo_canonical) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_yes; ?>
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="config_seo_canonical" value="0" <?php echo (!$config_seo_canonical) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_no; ?>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-seo-www-red"><span data-toggle="tooltip" title="<?php echo $help_seo_www_red; ?>"><?php echo $entry_seo_www_red; ?></span></label>
-                        <div class="col-sm-10">
-                            <select name="config_seo_www_red" id="input-seo-www-red" class="form-control">
-                                <option value="0" <?php echo ($config_seo_www_red == '0') ? 'selected="selected"' : ''; ?> ><?php echo $text_no; ?></option>
-                                <option value="with" <?php echo ($config_seo_www_red == 'with') ? 'selected="selected"' : ''; ?> ><?php echo $text_seo_www_red_with; ?></option>
-                                <option value="non" <?php echo ($config_seo_www_red == 'non') ? 'selected="selected"' : ''; ?> ><?php echo $text_seo_www_red_non; ?></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_nonseo_red; ?>"><?php echo $entry_seo_nonseo_red; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="radio-inline">
-                                <input type="radio" name="config_seo_nonseo_red" value="1" <?php echo ($config_seo_nonseo_red) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_yes; ?>
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="config_seo_nonseo_red" value="0" <?php echo (!$config_seo_nonseo_red) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_no; ?>
-                            </label>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend><?php echo $text_metadata; ?></legend>
-                    <div class="form-group required">
-                        <label class="col-sm-2 control-label" for="input-meta-title"><?php echo $entry_meta_title; ?></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="config_meta_title" value="<?php echo $config_meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title" class="form-control" />
-                            <?php if ($error_meta_title) { ?>
-                            <div class="text-danger"><?php echo $error_meta_title; ?></div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-meta-title-add"><span data-toggle="tooltip" title="<?php echo $help_meta_title_add; ?>"><?php echo $entry_meta_title_add; ?></span></label>
-                        <div class="col-sm-10">
-                            <select name="config_meta_title_add" id="input-meta-title-add" class="form-control">
-                                <option value="0" <?php echo ($config_meta_title_add == '0') ? 'selected="selected"' : ''; ?>><?php echo $text_no; ?></option>
-                                <option value="pre" <?php echo ($config_meta_title_add == 'pre') ? 'selected="selected"' : ''; ?>><?php echo $text_meta_title_add_pre; ?></option>
-                                <option value="post" <?php echo ($config_meta_title_add == 'post') ? 'selected="selected"' : ''; ?>><?php echo $text_meta_title_add_post; ?></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-meta-description"><?php echo $entry_meta_description; ?></label>
-                        <div class="col-sm-10">
-                            <textarea name="config_meta_description" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description" class="form-control"><?php echo $config_meta_description; ?></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-meta-keyword"><?php echo $entry_meta_keyword; ?></label>
-                        <div class="col-sm-10">
-                            <textarea name="config_meta_keyword" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword" class="form-control"><?php echo $config_meta_keyword; ?></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-meta-generator"><span data-toggle="tooltip" title="<?php echo $help_meta_generator; ?>"><?php echo $entry_meta_generator; ?></span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="config_meta_generator" value="<?php echo $config_meta_generator; ?>" placeholder="<?php echo $entry_meta_generator; ?>" id="input-meta-generator" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-meta-googlekey"><span data-toggle="tooltip" title="<?php echo $help_meta_googlekey; ?>"><?php echo $entry_meta_googlekey; ?></span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="config_meta_googlekey" value="<?php echo $config_meta_googlekey; ?>" placeholder="<?php echo $entry_meta_googlekey; ?>" id="input-meta-googlekey" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-meta-alexakey"><span data-toggle="tooltip" title="<?php echo $help_meta_alexakey; ?>"><?php echo $entry_meta_alexakey; ?></span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="config_meta_alexakey" value="<?php echo $config_meta_alexakey; ?>" placeholder="<?php echo $entry_meta_alexakey; ?>" id="input-meta-alexakey" class="form-control" />
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend><?php echo $text_seo_sitemap; ?></legend>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-sitemap-all"><span data-toggle="tooltip" title="<?php echo $help_sitemap_all; ?>"><?php echo $entry_sitemap_all; ?></span></label>
-                        <div class="col-sm-10" style="margin-top: 9px;">
-                            <a href="<?php echo $config_sitemap_all; ?>" target="_blank"><?php echo $config_sitemap_all; ?></a>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-sitemap-products"><span data-toggle="tooltip" title="<?php echo $help_sitemap_products; ?>"><?php echo $entry_sitemap_products; ?></span></label>
-                        <div class="col-sm-10" style="margin-top: 9px;">
-                            <a href="<?php echo $config_sitemap_products; ?>" target="_blank"><?php echo $config_sitemap_products; ?></a>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-sitemap-categories"><span data-toggle="tooltip" title="<?php echo $help_sitemap_categories; ?>"><?php echo $entry_sitemap_categories; ?></span></label>
-                        <div class="col-sm-10" style="margin-top: 9px;">
-                            <a href="<?php echo $config_sitemap_categories; ?>" target="_blank"><?php echo $config_sitemap_categories; ?></a>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-sitemap-manufacturers"><span data-toggle="tooltip" title="<?php echo $help_sitemap_manufacturers; ?>"><?php echo $entry_sitemap_manufacturers; ?></span></label>
-                        <div class="col-sm-10" style="margin-top: 9px;">
-                            <a href="<?php echo $config_sitemap_manufacturers; ?>" target="_blank"><?php echo $config_sitemap_manufacturers; ?></a>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend><?php echo $text_google_analytics; ?></legend>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-google-analytics"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_google_analytics); ?>"><?php echo $entry_google_analytics; ?></span></label>
-                        <div class="col-sm-10">
-                            <textarea name="config_google_analytics" rows="5" placeholder="<?php echo $entry_google_analytics; ?>" id="input-google-analytics" class="form-control"><?php echo $config_google_analytics; ?></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-google-analytics-status"><?php echo $entry_status; ?></label>
-                        <div class="col-sm-10">
-                            <select name="config_google_analytics_status" id="input-google-analytics-status" class="form-control">
-                                <?php if ($config_google_analytics_status) { ?>
-                                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                                <option value="0"><?php echo $text_disabled; ?></option>
-                                <?php } else { ?>
-                                <option value="1"><?php echo $text_enabled; ?></option>
-                                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                </fieldset>
+              <fieldset>
+                <legend><?php echo $text_seo_urls; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><?php echo $entry_seo_url; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                      <?php if ($config_seo_url) { ?>
+                      <input type="radio" name="config_seo_url" value="1" checked="checked" />
+                      <?php echo $text_yes; ?>
+                      <?php } else { ?>
+                      <input type="radio" name="config_seo_url" value="1" />
+                      <?php echo $text_yes; ?>
+                      <?php } ?>
+                    </label>
+                    <label class="radio-inline">
+                      <?php if (!$config_seo_url) { ?>
+                      <input type="radio" name="config_seo_url" value="0" checked="checked" />
+                      <?php echo $text_no; ?>
+                      <?php } else { ?>
+                      <input type="radio" name="config_seo_url" value="0" />
+                      <?php echo $text_no; ?>
+                      <?php } ?>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_rewrite; ?>"><?php echo $entry_seo_rewrite; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                      <input type="radio" name="config_seo_rewrite" value="1" <?php echo ($config_seo_rewrite) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_yes; ?>
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="config_seo_rewrite" value="0" <?php echo (!$config_seo_rewrite) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_no; ?>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_suffix; ?>"><?php echo $entry_seo_suffix; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                      <input type="radio" name="config_seo_suffix" value="1" <?php echo ($config_seo_suffix) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_yes; ?>
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="config_seo_suffix" value="0" <?php echo (!$config_seo_suffix) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_no; ?>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-seo-category"><span data-toggle="tooltip" title="<?php echo $help_seo_category; ?>"><?php echo $entry_seo_category; ?></span></label>
+                  <div class="col-sm-10">
+                    <select name="config_seo_category" id="input-seo-category" class="form-control">
+                      <option value="0" <?php echo ($config_seo_category == '0') ? 'selected="selected"' : ''; ?> ><?php echo $text_no; ?></option>
+                      <option value="last" <?php echo ($config_seo_category == 'last') ? 'selected="selected"' : ''; ?> ><?php echo $text_seo_category_last; ?></option>
+                      <option value="all" <?php echo ($config_seo_category == 'all') ? 'selected="selected"' : ''; ?> ><?php echo $text_seo_category_all; ?></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_translate; ?>"><?php echo $entry_seo_translate; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                      <input type="radio" name="config_seo_translate" value="1" <?php echo ($config_seo_translate) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_yes; ?>
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="config_seo_translate" value="0" <?php echo (!$config_seo_translate) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_no; ?>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_lang_code; ?>"><?php echo $entry_seo_lang_code; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                      <input type="radio" name="config_seo_lang_code" value="1" <?php echo ($config_seo_lang_code) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_yes; ?>
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="config_seo_lang_code" value="0" <?php echo (!$config_seo_lang_code) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_no; ?>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_canonical; ?>"><?php echo $entry_seo_canonical; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                      <input type="radio" name="config_seo_canonical" value="1" <?php echo ($config_seo_canonical) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_yes; ?>
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="config_seo_canonical" value="0" <?php echo (!$config_seo_canonical) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_no; ?>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-seo-www-red"><span data-toggle="tooltip" title="<?php echo $help_seo_www_red; ?>"><?php echo $entry_seo_www_red; ?></span></label>
+                  <div class="col-sm-10">
+                    <select name="config_seo_www_red" id="input-seo-www-red" class="form-control">
+                      <option value="0" <?php echo ($config_seo_www_red == '0') ? 'selected="selected"' : ''; ?> ><?php echo $text_no; ?></option>
+                      <option value="with" <?php echo ($config_seo_www_red == 'with') ? 'selected="selected"' : ''; ?> ><?php echo $text_seo_www_red_with; ?></option>
+                      <option value="non" <?php echo ($config_seo_www_red == 'non') ? 'selected="selected"' : ''; ?> ><?php echo $text_seo_www_red_non; ?></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_nonseo_red; ?>"><?php echo $entry_seo_nonseo_red; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                      <input type="radio" name="config_seo_nonseo_red" value="1" <?php echo ($config_seo_nonseo_red) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_yes; ?>
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="config_seo_nonseo_red" value="0" <?php echo (!$config_seo_nonseo_red) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_no; ?>
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend><?php echo $text_metadata; ?></legend>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-meta-title"><?php echo $entry_meta_title; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_meta_title" value="<?php echo $config_meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title" class="form-control" />
+                    <?php if ($error_meta_title) { ?>
+                    <div class="text-danger"><?php echo $error_meta_title; ?></div>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-meta-title-add"><span data-toggle="tooltip" title="<?php echo $help_meta_title_add; ?>"><?php echo $entry_meta_title_add; ?></span></label>
+                  <div class="col-sm-10">
+                    <select name="config_meta_title_add" id="input-meta-title-add" class="form-control">
+                      <option value="0" <?php echo ($config_meta_title_add == '0') ? 'selected="selected"' : ''; ?>><?php echo $text_no; ?></option>
+                      <option value="pre" <?php echo ($config_meta_title_add == 'pre') ? 'selected="selected"' : ''; ?>><?php echo $text_meta_title_add_pre; ?></option>
+                      <option value="post" <?php echo ($config_meta_title_add == 'post') ? 'selected="selected"' : ''; ?>><?php echo $text_meta_title_add_post; ?></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-meta-description"><?php echo $entry_meta_description; ?></label>
+                  <div class="col-sm-10">
+                    <textarea name="config_meta_description" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description" class="form-control"><?php echo $config_meta_description; ?></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-meta-keyword"><?php echo $entry_meta_keyword; ?></label>
+                  <div class="col-sm-10">
+                    <textarea name="config_meta_keyword" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword" class="form-control"><?php echo $config_meta_keyword; ?></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-meta-generator"><span data-toggle="tooltip" title="<?php echo $help_meta_generator; ?>"><?php echo $entry_meta_generator; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_meta_generator" value="<?php echo $config_meta_generator; ?>" placeholder="<?php echo $entry_meta_generator; ?>" id="input-meta-generator" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-meta-googlekey"><span data-toggle="tooltip" title="<?php echo $help_meta_googlekey; ?>"><?php echo $entry_meta_googlekey; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_meta_googlekey" value="<?php echo $config_meta_googlekey; ?>" placeholder="<?php echo $entry_meta_googlekey; ?>" id="input-meta-googlekey" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-meta-alexakey"><span data-toggle="tooltip" title="<?php echo $help_meta_alexakey; ?>"><?php echo $entry_meta_alexakey; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_meta_alexakey" value="<?php echo $config_meta_alexakey; ?>" placeholder="<?php echo $entry_meta_alexakey; ?>" id="input-meta-alexakey" class="form-control" />
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend><?php echo $text_seo_sitemap; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-sitemap-all"><span data-toggle="tooltip" title="<?php echo $help_sitemap_all; ?>"><?php echo $entry_sitemap_all; ?></span></label>
+                  <div class="col-sm-10" style="margin-top: 9px;">
+                    <a href="<?php echo $config_sitemap_all; ?>" target="_blank"><?php echo $config_sitemap_all; ?></a>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-sitemap-products"><span data-toggle="tooltip" title="<?php echo $help_sitemap_products; ?>"><?php echo $entry_sitemap_products; ?></span></label>
+                  <div class="col-sm-10" style="margin-top: 9px;">
+                    <a href="<?php echo $config_sitemap_products; ?>" target="_blank"><?php echo $config_sitemap_products; ?></a>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-sitemap-categories"><span data-toggle="tooltip" title="<?php echo $help_sitemap_categories; ?>"><?php echo $entry_sitemap_categories; ?></span></label>
+                  <div class="col-sm-10" style="margin-top: 9px;">
+                    <a href="<?php echo $config_sitemap_categories; ?>" target="_blank"><?php echo $config_sitemap_categories; ?></a>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-sitemap-manufacturers"><span data-toggle="tooltip" title="<?php echo $help_sitemap_manufacturers; ?>"><?php echo $entry_sitemap_manufacturers; ?></span></label>
+                  <div class="col-sm-10" style="margin-top: 9px;">
+                    <a href="<?php echo $config_sitemap_manufacturers; ?>" target="_blank"><?php echo $config_sitemap_manufacturers; ?></a>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend><?php echo $text_google_analytics; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-google-analytics"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_google_analytics); ?>"><?php echo $entry_google_analytics; ?></span></label>
+                  <div class="col-sm-10">
+                    <textarea name="config_google_analytics" rows="5" placeholder="<?php echo $entry_google_analytics; ?>" id="input-google-analytics" class="form-control"><?php echo $config_google_analytics; ?></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-google-analytics-status"><?php echo $entry_status; ?></label>
+                  <div class="col-sm-10">
+                    <select name="config_google_analytics_status" id="input-google-analytics-status" class="form-control">
+                      <?php if ($config_google_analytics_status) { ?>
+                      <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                      <option value="0"><?php echo $text_disabled; ?></option>
+                      <?php } else { ?>
+                      <option value="1"><?php echo $text_enabled; ?></option>
+                      <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
             </div>
             <div class="tab-pane" id="tab-cache">
-                <fieldset>
-                    <legend><?php echo $text_common; ?></legend>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-cache-storage"><span data-toggle="tooltip" title="<?php echo $help_cache_storage; ?>"><?php echo $entry_cache_storage; ?></span></label>
-                        <div class="col-sm-10">
-                            <select name="config_cache_storage" id="input-cache-storage" class="form-control">
-                                <option value="apc" <?php echo ($config_cache_storage == 'apc') ? 'selected="selected"' : ''; ?> >Apc</option>
-                                <option value="file" <?php echo ($config_cache_storage == 'file') ? 'selected="selected"' : ''; ?> ><?php echo $text_cache_storage_file; ?></option>
-                                <option value="memcached" <?php echo ($config_cache_storage == 'memcached') ? 'selected="selected"' : ''; ?> >Memcached</option>
-                                <option value="redis" <?php echo ($config_cache_storage == 'redis') ? 'selected="selected"' : ''; ?> >Redis</option>
-                                <option value="wincache" <?php echo ($config_cache_storage == 'wincache') ? 'selected="selected"' : ''; ?> >Wincache</option>
-                                <option value="xcache" <?php echo ($config_cache_storage == 'xcache') ? 'selected="selected"' : ''; ?> >XCache</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group required">
-                        <label class="col-sm-2 control-label" for="input-cache-lifetime"><span data-toggle="tooltip" title="<?php echo $help_cache_lifetime; ?>"><?php echo $entry_cache_lifetime; ?></span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="config_cache_lifetime" value="<?php echo $config_cache_lifetime; ?>" placeholder="<?php echo $entry_cache_lifetime; ?>" id="input-cache-lifetime" class="form-control" />
-                            <?php if ($error_cache_lifetime) { ?>
-                            <div class="text-danger"><?php echo $error_cache_lifetime; ?></div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_cache_clear; ?>"><?php echo $entry_cache_clear; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="radio-inline">
-                                <input type="radio" name="config_cache_clear" value="1" <?php echo ($config_cache_clear) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_yes; ?>
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="config_cache_clear" value="0" <?php echo (!$config_cache_clear) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_no; ?>
-                            </label>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend><?php echo $text_pagecache; ?></legend>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_pagecache; ?>"><?php echo $entry_pagecache; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="radio-inline">
-                                <input type="radio" name="config_pagecache" value="1" <?php echo ($config_pagecache) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_yes; ?>
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="config_pagecache" value="0" <?php echo (!$config_pagecache) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_no; ?>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-pagecache-exlude"><span data-toggle="tooltip" title="<?php echo $help_pagecache_exclude; ?>"><?php echo $entry_pagecache_exclude; ?></span></label>
-                        <div class="col-sm-10">
-                            <textarea name="config_pagecache_exclude" rows="5" placeholder="<?php echo $entry_pagecache_exclude; ?>" id="input-pagecache-exlude" class="form-control"><?php echo $config_pagecache_exclude; ?></textarea>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend><?php echo $text_cache_clear; ?></legend>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="button-clear"></label>
-                        <div class="col-sm-10">
-                            <button type="button" id="button-clear" class="btn btn-warning"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;<?php echo $text_cache_clear; ?></button>
-                        </div>
-                    </div>
-                </fieldset>
+              <fieldset>
+                <legend><?php echo $text_common; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-cache-storage"><span data-toggle="tooltip" title="<?php echo $help_cache_storage; ?>"><?php echo $entry_cache_storage; ?></span></label>
+                  <div class="col-sm-10">
+                    <select name="config_cache_storage" id="input-cache-storage" class="form-control">
+                      <option value="apc" <?php echo ($config_cache_storage == 'apc') ? 'selected="selected"' : ''; ?> >Apc</option>
+                      <option value="file" <?php echo ($config_cache_storage == 'file') ? 'selected="selected"' : ''; ?> ><?php echo $text_cache_storage_file; ?></option>
+                      <option value="memcached" <?php echo ($config_cache_storage == 'memcached') ? 'selected="selected"' : ''; ?> >Memcached</option>
+                      <option value="redis" <?php echo ($config_cache_storage == 'redis') ? 'selected="selected"' : ''; ?> >Redis</option>
+                      <option value="wincache" <?php echo ($config_cache_storage == 'wincache') ? 'selected="selected"' : ''; ?> >Wincache</option>
+                      <option value="xcache" <?php echo ($config_cache_storage == 'xcache') ? 'selected="selected"' : ''; ?> >XCache</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-cache-lifetime"><span data-toggle="tooltip" title="<?php echo $help_cache_lifetime; ?>"><?php echo $entry_cache_lifetime; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_cache_lifetime" value="<?php echo $config_cache_lifetime; ?>" placeholder="<?php echo $entry_cache_lifetime; ?>" id="input-cache-lifetime" class="form-control" />
+                    <?php if ($error_cache_lifetime) { ?>
+                    <div class="text-danger"><?php echo $error_cache_lifetime; ?></div>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_cache_clear; ?>"><?php echo $entry_cache_clear; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                      <input type="radio" name="config_cache_clear" value="1" <?php echo ($config_cache_clear) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_yes; ?>
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="config_cache_clear" value="0" <?php echo (!$config_cache_clear) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_no; ?>
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend><?php echo $text_pagecache; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_pagecache; ?>"><?php echo $entry_pagecache; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                      <input type="radio" name="config_pagecache" value="1" <?php echo ($config_pagecache) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_yes; ?>
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="config_pagecache" value="0" <?php echo (!$config_pagecache) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_no; ?>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-pagecache-exlude"><span data-toggle="tooltip" title="<?php echo $help_pagecache_exclude; ?>"><?php echo $entry_pagecache_exclude; ?></span></label>
+                  <div class="col-sm-10">
+                    <textarea name="config_pagecache_exclude" rows="5" placeholder="<?php echo $entry_pagecache_exclude; ?>" id="input-pagecache-exlude" class="form-control"><?php echo $config_pagecache_exclude; ?></textarea>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend><?php echo $text_cache_clear; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="button-clear"></label>
+                  <div class="col-sm-10">
+                    <button type="button" id="button-clear" class="btn btn-warning"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;<?php echo $text_cache_clear; ?></button>
+                  </div>
+                </div>
+              </fieldset>
             </div>
             <div class="tab-pane" id="tab-security">
-                <fieldset>
-                    <legend><?php echo $text_common; ?></legend>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_secure; ?>"><?php echo $entry_secure; ?></span></label>
-                        <div class="col-sm-10">
-                            <select name="config_secure" id="input-secure" class="form-control">
-                                <option value="0" <?php echo ($config_secure == '0') ? 'selected="selected"' : ''; ?>><?php echo $text_no; ?></option>
-                                <option value="1" <?php echo ($config_secure == '1') ? 'selected="selected"' : ''; ?>><?php echo $text_secure_checkout; ?></option>
-                                <option value="2" <?php echo ($config_secure == '2') ? 'selected="selected"' : ''; ?>><?php echo $text_secure_catalog; ?></option>
-                                <option value="3" <?php echo ($config_secure == '3') ? 'selected="selected"' : ''; ?>><?php echo $text_secure_all; ?></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-encryption"><span data-toggle="tooltip" title="<?php echo $help_encryption; ?>"><?php echo $entry_encryption; ?></span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" placeholder="<?php echo $entry_encryption; ?>" id="input-encryption" class="form-control" />
-                            <?php if ($error_encryption) { ?>
-                            <div class="text-danger"><?php echo $error_encryption; ?></div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-sec-admin-login"><span data-toggle="tooltip" title="<?php echo $help_sec_admin_login; ?>"><?php echo $entry_sec_admin_login; ?></span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="config_sec_admin_login" value="<?php echo $config_sec_admin_login; ?>" placeholder="<?php echo $entry_sec_admin_login; ?>" id="input-sec-admin-login" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-sec-admin-keyword"><span data-toggle="tooltip" title="<?php echo $help_sec_admin_keyword; ?>"><?php echo $entry_sec_admin_keyword; ?></span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="config_sec_admin_keyword" value="<?php echo $config_sec_admin_keyword; ?>" placeholder="<?php echo $entry_sec_admin_keyword; ?>" id="input-sec-admin-keyword" class="form-control" />
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend><?php echo $text_firewall; ?></legend>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_sec_lfi; ?>"><?php echo $entry_sec_lfi; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="config_sec_lfi[]" value="get" <?php echo (in_array('get', $config_sec_lfi)) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_sec_get; ?>
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="config_sec_lfi[]" value="post" <?php echo (in_array('post', $config_sec_lfi)) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_sec_post; ?>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_sec_rfi; ?>"><?php echo $entry_sec_rfi; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="config_sec_rfi[]" value="get" <?php echo (in_array('get', $config_sec_rfi)) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_sec_get; ?>
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="config_sec_rfi[]" value="post" <?php echo (in_array('post', $config_sec_rfi)) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_sec_post; ?>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_sec_sql; ?>"><?php echo $entry_sec_sql; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="config_sec_sql[]" value="get" <?php echo (in_array('get', $config_sec_sql)) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_sec_get; ?>
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="config_sec_sql[]" value="post" <?php echo (in_array('post', $config_sec_sql)) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_sec_post; ?>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_sec_xss; ?>"><?php echo $entry_sec_xss; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="config_sec_xss[]" value="get" <?php echo (in_array('get', $config_sec_xss)) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_sec_get; ?>
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="config_sec_xss[]" value="post" <?php echo (in_array('post', $config_sec_xss)) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_sec_post; ?>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_sec_htmlpurifier; ?>"><?php echo $entry_sec_htmlpurifier; ?></span></label>
-                        <div class="col-sm-10">
-                            <label class="radio-inline">
-                                <input type="radio" name="config_sec_htmlpurifier" value="1" <?php echo ($config_sec_htmlpurifier) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_yes; ?>
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="config_sec_htmlpurifier" value="0" <?php echo (!$config_sec_htmlpurifier) ? 'checked="checked"' : ''; ?>/>
-                                <?php echo $text_no; ?>
-                            </label>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend><?php echo $text_upload; ?></legend>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-file-max-size"><span data-toggle="tooltip" title="<?php echo $help_file_max_size; ?>"><?php echo $entry_file_max_size; ?></span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="config_file_max_size" value="<?php echo $config_file_max_size; ?>" placeholder="<?php echo $entry_file_max_size; ?>" id="input-file-max-size" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-file-ext-allowed"><span data-toggle="tooltip" title="<?php echo $help_file_ext_allowed; ?>"><?php echo $entry_file_ext_allowed; ?></span></label>
-                        <div class="col-sm-10">
-                            <textarea name="config_file_ext_allowed" rows="5" placeholder="<?php echo $entry_file_ext_allowed; ?>" id="input-file-ext-allowed" class="form-control"><?php echo $config_file_ext_allowed; ?></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-file-mime-allowed"><span data-toggle="tooltip" title="<?php echo $help_file_mime_allowed; ?>"><?php echo $entry_file_mime_allowed; ?></span></label>
-                        <div class="col-sm-10">
-                            <textarea name="config_file_mime_allowed" cols="60" rows="5" placeholder="<?php echo $entry_file_mime_allowed; ?>" id="input-file-mime-allowed" class="form-control"><?php echo $config_file_mime_allowed; ?></textarea>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend><?php echo $text_google_captcha; ?></legend>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-google-captcha-public"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_google_captcha); ?>"><?php echo $entry_google_captcha_public; ?></span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="config_google_captcha_public" value="<?php echo $config_google_captcha_public; ?>" placeholder="<?php echo $entry_google_captcha_public; ?>" id="input-google-captcha-public" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-google-captcha-secret"><?php echo $entry_google_captcha_secret; ?></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="config_google_captcha_secret" value="<?php echo $config_google_captcha_secret; ?>" placeholder="<?php echo $entry_google_captcha_secret; ?>" id="input-google-captcha-secret" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-google-captcha-status"><?php echo $entry_status; ?></label>
-                        <div class="col-sm-10">
-                            <select name="config_google_captcha_status" id="input-google-captcha-status" class="form-control">
-                                <?php if ($config_google_captcha_status) { ?>
-                                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                                <option value="0"><?php echo $text_disabled; ?></option>
-                                <?php } else { ?>
-                                <option value="1"><?php echo $text_enabled; ?></option>
-                                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                </fieldset>
+              <fieldset>
+                <legend><?php echo $text_common; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_secure; ?>"><?php echo $entry_secure; ?></span></label>
+                  <div class="col-sm-10">
+                    <select name="config_secure" id="input-secure" class="form-control">
+                      <option value="0" <?php echo ($config_secure == '0') ? 'selected="selected"' : ''; ?>><?php echo $text_no; ?></option>
+                      <option value="1" <?php echo ($config_secure == '1') ? 'selected="selected"' : ''; ?>><?php echo $text_secure_checkout; ?></option>
+                      <option value="2" <?php echo ($config_secure == '2') ? 'selected="selected"' : ''; ?>><?php echo $text_secure_catalog; ?></option>
+                      <option value="3" <?php echo ($config_secure == '3') ? 'selected="selected"' : ''; ?>><?php echo $text_secure_all; ?></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-encryption"><span data-toggle="tooltip" title="<?php echo $help_encryption; ?>"><?php echo $entry_encryption; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" placeholder="<?php echo $entry_encryption; ?>" id="input-encryption" class="form-control" />
+                    <?php if ($error_encryption) { ?>
+                    <div class="text-danger"><?php echo $error_encryption; ?></div>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-sec-admin-login"><span data-toggle="tooltip" title="<?php echo $help_sec_admin_login; ?>"><?php echo $entry_sec_admin_login; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_sec_admin_login" value="<?php echo $config_sec_admin_login; ?>" placeholder="<?php echo $entry_sec_admin_login; ?>" id="input-sec-admin-login" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-sec-admin-keyword"><span data-toggle="tooltip" title="<?php echo $help_sec_admin_keyword; ?>"><?php echo $entry_sec_admin_keyword; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_sec_admin_keyword" value="<?php echo $config_sec_admin_keyword; ?>" placeholder="<?php echo $entry_sec_admin_keyword; ?>" id="input-sec-admin-keyword" class="form-control" />
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend><?php echo $text_firewall; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_sec_lfi; ?>"><?php echo $entry_sec_lfi; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="config_sec_lfi[]" value="get" <?php echo (in_array('get', $config_sec_lfi)) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_sec_get; ?>
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="config_sec_lfi[]" value="post" <?php echo (in_array('post', $config_sec_lfi)) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_sec_post; ?>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_sec_rfi; ?>"><?php echo $entry_sec_rfi; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="config_sec_rfi[]" value="get" <?php echo (in_array('get', $config_sec_rfi)) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_sec_get; ?>
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="config_sec_rfi[]" value="post" <?php echo (in_array('post', $config_sec_rfi)) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_sec_post; ?>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_sec_sql; ?>"><?php echo $entry_sec_sql; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="config_sec_sql[]" value="get" <?php echo (in_array('get', $config_sec_sql)) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_sec_get; ?>
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="config_sec_sql[]" value="post" <?php echo (in_array('post', $config_sec_sql)) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_sec_post; ?>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_sec_xss; ?>"><?php echo $entry_sec_xss; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="config_sec_xss[]" value="get" <?php echo (in_array('get', $config_sec_xss)) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_sec_get; ?>
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="config_sec_xss[]" value="post" <?php echo (in_array('post', $config_sec_xss)) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_sec_post; ?>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_sec_htmlpurifier; ?>"><?php echo $entry_sec_htmlpurifier; ?></span></label>
+                  <div class="col-sm-10">
+                    <label class="radio-inline">
+                      <input type="radio" name="config_sec_htmlpurifier" value="1" <?php echo ($config_sec_htmlpurifier) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_yes; ?>
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="config_sec_htmlpurifier" value="0" <?php echo (!$config_sec_htmlpurifier) ? 'checked="checked"' : ''; ?>/>
+                      <?php echo $text_no; ?>
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend><?php echo $text_upload; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-file-max-size"><span data-toggle="tooltip" title="<?php echo $help_file_max_size; ?>"><?php echo $entry_file_max_size; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_file_max_size" value="<?php echo $config_file_max_size; ?>" placeholder="<?php echo $entry_file_max_size; ?>" id="input-file-max-size" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-file-ext-allowed"><span data-toggle="tooltip" title="<?php echo $help_file_ext_allowed; ?>"><?php echo $entry_file_ext_allowed; ?></span></label>
+                  <div class="col-sm-10">
+                    <textarea name="config_file_ext_allowed" rows="5" placeholder="<?php echo $entry_file_ext_allowed; ?>" id="input-file-ext-allowed" class="form-control"><?php echo $config_file_ext_allowed; ?></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-file-mime-allowed"><span data-toggle="tooltip" title="<?php echo $help_file_mime_allowed; ?>"><?php echo $entry_file_mime_allowed; ?></span></label>
+                  <div class="col-sm-10">
+                    <textarea name="config_file_mime_allowed" cols="60" rows="5" placeholder="<?php echo $entry_file_mime_allowed; ?>" id="input-file-mime-allowed" class="form-control"><?php echo $config_file_mime_allowed; ?></textarea>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend><?php echo $text_google_captcha; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-google-captcha-public"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_google_captcha); ?>"><?php echo $entry_google_captcha_public; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_google_captcha_public" value="<?php echo $config_google_captcha_public; ?>" placeholder="<?php echo $entry_google_captcha_public; ?>" id="input-google-captcha-public" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-google-captcha-secret"><?php echo $entry_google_captcha_secret; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_google_captcha_secret" value="<?php echo $config_google_captcha_secret; ?>" placeholder="<?php echo $entry_google_captcha_secret; ?>" id="input-google-captcha-secret" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-google-captcha-status"><?php echo $entry_status; ?></label>
+                  <div class="col-sm-10">
+                    <select name="config_google_captcha_status" id="input-google-captcha-status" class="form-control">
+                      <?php if ($config_google_captcha_status) { ?>
+                      <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                      <option value="0"><?php echo $text_disabled; ?></option>
+                      <?php } else { ?>
+                      <option value="1"><?php echo $text_enabled; ?></option>
+                      <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
             </div>
             <div class="tab-pane" id="tab-fraud">
               <div class="form-group">
@@ -1855,29 +1855,29 @@
                   <input type="text" name="config_compression" value="<?php echo $config_compression; ?>" placeholder="<?php echo $entry_compression; ?>" id="input-compression" class="form-control" />
                 </div>
               </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_debug_system; ?>"><?php echo $entry_debug_system; ?></span></label>
-                    <div class="col-sm-10">
-                        <label class="radio-inline">
-                            <input type="radio" name="config_debug_system" value="1" <?php echo ($config_debug_system) ? 'checked="checked"' : ''; ?>/>
-                            <?php echo $text_yes; ?>
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="config_debug_system" value="0" <?php echo (!$config_debug_system) ? 'checked="checked"' : ''; ?>/>
-                            <?php echo $text_no; ?>
-                        </label>
-                    </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_debug_system; ?>"><?php echo $entry_debug_system; ?></span></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline">
+                    <input type="radio" name="config_debug_system" value="1" <?php echo ($config_debug_system) ? 'checked="checked"' : ''; ?>/>
+                    <?php echo $text_yes; ?>
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="config_debug_system" value="0" <?php echo (!$config_debug_system) ? 'checked="checked"' : ''; ?>/>
+                    <?php echo $text_no; ?>
+                  </label>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label"><?php echo $entry_error_display; ?></label>
-                    <div class="col-sm-10">
-                        <select name="config_error_display" id="input-secure" class="form-control">
-                            <option value="0" <?php echo ($config_error_display == '0') ? 'selected="selected"' : ''; ?>><?php echo $text_no; ?></option>
-                            <option value="1" <?php echo ($config_error_display == '1') ? 'selected="selected"' : ''; ?>><?php echo $text_error_basic; ?></option>
-                            <option value="2" <?php echo ($config_error_display == '2') ? 'selected="selected"' : ''; ?>><?php echo $text_error_advanced; ?></option>
-                        </select>
-                    </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_error_display; ?></label>
+                <div class="col-sm-10">
+                  <select name="config_error_display" id="input-secure" class="form-control">
+                    <option value="0" <?php echo ($config_error_display == '0') ? 'selected="selected"' : ''; ?>><?php echo $text_no; ?></option>
+                    <option value="1" <?php echo ($config_error_display == '1') ? 'selected="selected"' : ''; ?>><?php echo $text_error_basic; ?></option>
+                    <option value="2" <?php echo ($config_error_display == '2') ? 'selected="selected"' : ''; ?>><?php echo $text_error_advanced; ?></option>
+                  </select>
                 </div>
+              </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_error_log; ?></label>
                 <div class="col-sm-10">
@@ -1917,139 +1917,139 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-$('select[name=\'config_template\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value),
-		dataType: 'html',
-		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spin').remove();
-		},
-		success: function(html) {
-			$('#template').attr('src', html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
+  $('select[name=\'config_template\']').on('change', function() {
+    $.ajax({
+      url: 'index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value),
+      dataType: 'html',
+      beforeSend: function() {
+        $('select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+      },
+      complete: function() {
+        $('.fa-spin').remove();
+      },
+      success: function(html) {
+        $('#template').attr('src', html);
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
 
-$('select[name=\'config_template\']').trigger('change');
+  $('select[name=\'config_template\']').trigger('change');
 
-$('select[name=\'config_mail[protocol]\']').on('change', function() {
-	var configMail = $(this).val();
-	
-	if (configMail == 'phpmail') {
-		$("input[name=\'config_mail[sendmail_path]\']").prop('disabled', true);
-		$("input[name=\'config_mail[smtp_hostname]\']").prop('disabled', true);
-		$("input[name=\'config_mail[smtp_username]\']").prop('disabled', true);
-		$("input[name=\'config_mail[smtp_password]\']").prop('disabled', true);
-		$("input[name=\'config_mail[smtp_port]\']").prop('disabled', true);
-		$("select[name=\'config_mail[smtp_encryption]\']").prop('disabled', true);
-	}
+  $('select[name=\'config_mail[protocol]\']').on('change', function() {
+    var configMail = $(this).val();
+
+    if (configMail == 'phpmail') {
+      $("input[name=\'config_mail[sendmail_path]\']").prop('disabled', true);
+      $("input[name=\'config_mail[smtp_hostname]\']").prop('disabled', true);
+      $("input[name=\'config_mail[smtp_username]\']").prop('disabled', true);
+      $("input[name=\'config_mail[smtp_password]\']").prop('disabled', true);
+      $("input[name=\'config_mail[smtp_port]\']").prop('disabled', true);
+      $("select[name=\'config_mail[smtp_encryption]\']").prop('disabled', true);
+    }
     else if(configMail == 'sendmail') {
-		$("input[name=\'config_mail[sendmail_path]\']").prop('disabled', false);
-		$("input[name=\'config_mail[smtp_hostname]\']").prop('disabled', true);
-		$("input[name=\'config_mail[smtp_username]\']").prop('disabled', true);
-		$("input[name=\'config_mail[smtp_password]\']").prop('disabled', true);
-		$("input[name=\'config_mail[smtp_port]\']").prop('disabled', true);
-		$("select[name=\'config_mail[smtp_encryption]\']").prop('disabled', true);
-	}
+      $("input[name=\'config_mail[sendmail_path]\']").prop('disabled', false);
+      $("input[name=\'config_mail[smtp_hostname]\']").prop('disabled', true);
+      $("input[name=\'config_mail[smtp_username]\']").prop('disabled', true);
+      $("input[name=\'config_mail[smtp_password]\']").prop('disabled', true);
+      $("input[name=\'config_mail[smtp_port]\']").prop('disabled', true);
+      $("select[name=\'config_mail[smtp_encryption]\']").prop('disabled', true);
+    }
     else if (configMail == 'smtp') {
-		$("input[name=\'config_mail[sendmail_path]\']").prop('disabled', true);
-		$("input[name=\'config_mail[smtp_hostname]\']").prop('disabled', false);
-		$("input[name=\'config_mail[smtp_username]\']").prop('disabled', false);
-		$("input[name=\'config_mail[smtp_password]\']").prop('disabled', false);
-		$("input[name=\'config_mail[smtp_port]\']").prop('disabled', false);
-		$("select[name=\'config_mail[smtp_encryption]\']").prop('disabled', false);
-	}
+      $("input[name=\'config_mail[sendmail_path]\']").prop('disabled', true);
+      $("input[name=\'config_mail[smtp_hostname]\']").prop('disabled', false);
+      $("input[name=\'config_mail[smtp_username]\']").prop('disabled', false);
+      $("input[name=\'config_mail[smtp_password]\']").prop('disabled', false);
+      $("input[name=\'config_mail[smtp_port]\']").prop('disabled', false);
+      $("select[name=\'config_mail[smtp_encryption]\']").prop('disabled', false);
+    }
 
     $('select[name=\'config_mail[smtp_encryption]\']').removeClass('form-control');
     $('select[name=\'config_mail[smtp_encryption]\']').selectpicker('refresh');
-});
+  });
 
-$('select[name=\'config_mail[protocol]\']').trigger('change');
-//--></script> 
+  $('select[name=\'config_mail[protocol]\']').trigger('change');
+  //--></script>
   <script type="text/javascript"><!--
-$('select[name=\'config_country_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=setting/setting/country&token=<?php echo $token; ?>&country_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('select[name=\'config_country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spin').remove();
-		},
-		success: function(json) {
-			html = '<option value=""><?php echo $text_select; ?></option>';
+  $('select[name=\'config_country_id\']').on('change', function() {
+    $.ajax({
+      url: 'index.php?route=setting/setting/country&token=<?php echo $token; ?>&country_id=' + this.value,
+      dataType: 'json',
+      beforeSend: function() {
+        $('select[name=\'config_country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+      },
+      complete: function() {
+        $('.fa-spin').remove();
+      },
+      success: function(json) {
+        html = '<option value=""><?php echo $text_select; ?></option>';
 
-			if (json['zone'] && json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-          			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+        if (json['zone'] && json['zone'] != '') {
+          for (i = 0; i < json['zone'].length; i++) {
+            html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
-					if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
-            			html += ' selected="selected"';
-					}
+            if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
+              html += ' selected="selected"';
+            }
 
-					html += '>' + json['zone'][i]['name'] + '</option>';
-				}
-			} else {
-				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
-			}
+            html += '>' + json['zone'][i]['name'] + '</option>';
+          }
+        } else {
+          html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
+        }
 
-			$('select[name=\'config_zone_id\']').html(html);
+        $('select[name=\'config_zone_id\']').html(html);
 
-            $('select[name=\'config_zone_id\']').selectpicker('refresh');
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
+        $('select[name=\'config_zone_id\']').selectpicker('refresh');
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
 
-$('select[name=\'config_country_id\']').trigger('change');
-//--></script>
+  $('select[name=\'config_country_id\']').trigger('change');
+  //--></script>
 </div>
 
 <script type="text/javascript"><!--
 $('#button-clear').on('click', function() {
-    $.ajax({
-        url: 'index.php?route=setting/setting/clearcache&token=<?php echo $token; ?>',
-        dataType: 'json',
-        beforeSend: function() {
-            $('#button-clear').button('loading');
-        },
-        success: function(json) {
-            $('#button-clear').removeClass('btn-warning');
+  $.ajax({
+    url: 'index.php?route=setting/setting/clearcache&token=<?php echo $token; ?>',
+    dataType: 'json',
+    beforeSend: function() {
+      $('#button-clear').button('loading');
+    },
+    success: function(json) {
+      $('#button-clear').removeClass('btn-warning');
 
-            if (json['message']) {
-                $('#button-clear').addClass('btn-success');
-                $('#button-clear').html('<i class="fa fa-check-circle"></i>&nbsp;&nbsp;'+json['message']);
-            }
-            else {
-                $('#button-clear').addClass('btn-danger');
-                $('#button-clear').html('<i class="fa fa-times-circle"></i>&nbsp;&nbsp;'+json['error']);
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
+      if (json['message']) {
+        $('#button-clear').addClass('btn-success');
+        $('#button-clear').html('<i class="fa fa-check-circle"></i>&nbsp;&nbsp;'+json['message']);
+      }
+      else {
+        $('#button-clear').addClass('btn-danger');
+        $('#button-clear').html('<i class="fa fa-times-circle"></i>&nbsp;&nbsp;'+json['error']);
+      }
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    }
+  });
 });
 //--></script>
 
 <script type="text/javascript"><!--
 function save(type){
-	var input = document.createElement('input');
-	input.type = 'hidden';
-	input.name = 'button';
-	input.value = type;
-	form = $("form[id^='form-']").append(input);
-	form.submit();
+  var input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = 'button';
+  input.value = type;
+  form = $("form[id^='form-']").append(input);
+  form.submit();
 }
 //--></script>
-            
+
 <?php echo $footer; ?>
