@@ -93,14 +93,14 @@ class Admin extends App {
         $utility = new Utility($this->registry);
         $this->registry->set('utility', $utility);
 
-        // Language
+        // Language Detection
         $language = $utility->getLanguage();
 
         if (!isset($this->session->data['admin_language']) || $this->session->data['admin_language'] != $language['code']) {
             $this->session->data['admin_language'] = $language['code'];
         }
 
-        $this->config->set('config_language', $language['code']);
+        //$this->config->set('config_language', $language['code']);
         $this->config->set('config_language_dir', $language['directory']);
         $this->config->set('config_language_id', $language['language_id']);
 
