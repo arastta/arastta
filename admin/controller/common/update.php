@@ -40,6 +40,7 @@ class ControllerCommonUpdate extends Controller {
 
         $data['check'] = $this->url->link('common/update/check', 'token=' . $this->session->data['token'], 'SSL');
         $data['update'] = $this->url->link('common/update/update', 'token=' . $this->session->data['token'], 'SSL');
+        $data['changelog'] = $this->url->link('common/update/changelog', 'token=' . $this->session->data['token'], 'SSL');
 
         $addon = new Addon($this->registry);
         $data['addons'] = $addon->getAddons();
@@ -89,6 +90,14 @@ class ControllerCommonUpdate extends Controller {
 
         // Return
         $this->response->redirect($this->url->link('common/update', 'token=' . $this->session->data['token'] , 'SSL'));
+    }
+
+    public function changelog() {
+        $this->load->model('common/update');
+
+        $output = $this->model_common_update->changelog();
+
+        $this->response->setOutput($output);
     }
 
     protected function validate($type) {

@@ -10,6 +10,8 @@
     },
     "require": {
         "ezyang/htmlpurifier": "4.6.0",
+        "erusev/parsedown": "1.5.3",
+        "erusev/parsedown-extra": "0.7.0",
         "joomla/cache": "1.*@dev",
         "joomla/profiler": "1.*@dev",
         "joomla/uri": "1.*@dev",

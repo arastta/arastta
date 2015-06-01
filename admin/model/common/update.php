@@ -18,6 +18,36 @@ class ModelCommonUpdate extends Model {
         return true;
     }
 
+    public function changelog() {
+        $output = '';
+
+        // Get remote data
+        $version = $this->request->get['version'];
+
+        $url = 'https://api.github.com/repos/arastta/arastta/releases/latest';
+
+        $json = $this->utility->getRemoteData($url);
+
+        if (empty($json)) {
+            return $output;
+        }
+
+        $data = json_decode($json);
+
+        if (empty($data->body)) {
+            return $output;
+        }
+
+        // Parse markdown output
+        $markdown = str_replace('## Changelog', '', $data->body);
+
+        $parsedown = new ParsedownExtra();
+
+        $output = $parsedown->text($markdown);
+
+        return $output;
+    }
+
     // Upgrade
     public function update() {
         $version = $this->request->get['version'];

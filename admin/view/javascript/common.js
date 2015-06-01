@@ -39,6 +39,37 @@ $(window).on('resize', function () {
 
 $(document).ready(function() {
 
+    $(document).on('click', '.popup', function(e) {
+        e.preventDefault();
+
+        $('#modal-popup').remove();
+
+        var element = this;
+
+        $.ajax({
+            url: $(element).attr('href'),
+            type: 'get',
+            dataType: 'html',
+            success: function(data) {
+                html  = '<div id="modal-popup" class="modal">';
+                html += '  <div class="modal-dialog">';
+                html += '    <div class="modal-content">';
+                html += '      <div class="modal-header">';
+                html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+                html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
+                html += '      </div>';
+                html += '      <div class="modal-body">' + data + '</div>';
+                html += '    </div';
+                html += '  </div>';
+                html += '</div>';
+
+                $('body').append(html);
+
+                $('#modal-popup').modal('show');
+            }
+        });
+    });
+
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         container = $('#container').height();
         content = $('#content').height();

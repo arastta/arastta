@@ -16,10 +16,11 @@ $_['column_action']                         = 'Action';
 
 //Button
 $_['button_check']                          = 'Check Again';
-$_['button_core']                           = 'Update Arastta';
+$_['button_core']                           = 'Update Arastta to %s version';
 $_['button_extension']                      = 'Update Extension';
 $_['button_theme']                          = 'Update Theme';
 $_['button_translation']                    = 'Update Translation';
+$_['button_changelog']                      = 'Changelog';
 
 //Text
 $_['text_extension']                        = 'Extensions';
