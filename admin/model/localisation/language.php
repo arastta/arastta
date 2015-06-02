@@ -200,7 +200,14 @@ class ModelLocalisationLanguage extends Model {
 		foreach ($query->rows as $recurring) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "recurring_description SET recurring_id = '" . (int)$recurring['recurring_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($recurring['name']));
 		}
-		
+
+		// Manufacturer
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+		foreach ($query->rows as $manufacturer) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer_description SET manufacturer_id = '" . (int)$manufacturer['manufacturer_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($manufacturer['name']) . "', description = '" . $this->db->escape($manufacturer['description']) . "', meta_title = '" . $this->db->escape($manufacturer['meta_title']) . "', meta_description = '" . $this->db->escape($manufacturer['meta_description']) . "', meta_keyword = '" . $this->db->escape($manufacturer['meta_keyword']) . "' ;");
+		}
+
 		// Menu
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -286,8 +293,9 @@ class ModelLocalisationLanguage extends Model {
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "recurring_description WHERE language_id = '" . (int)$language_id . "'");
 		
-		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_description WHERE language_id = '" . (int)$language_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer_description WHERE language_id = '" . (int)$language_id . "'");
 		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_description WHERE language_id = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_child_description WHERE language_id = '" . (int)$language_id . "'");
 	}
 
