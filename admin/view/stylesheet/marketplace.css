@@ -368,3 +368,14 @@ cursor:pointer
   background-color: #449d44;
   border-color: #398439;
  }
+
+ .progress-bar.warning {
+  color: #ffffff;
+  background-color: #faa732;
+  border-color: transparent;
+ }
+
+ .progress-bar.danger {
+   color: #ffffff;
+  background-color: #da4f49;
+ }
