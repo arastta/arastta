@@ -159,7 +159,7 @@ class ModelAppearanceLayout extends Model {
         }
 
 	}
-	
+
 	public function getTotalLayouts() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "layout");
 
@@ -171,12 +171,18 @@ class ModelAppearanceLayout extends Model {
             $this->load->language('module/' . $code);
             $name = $this->language->get('heading_title');
         } else {
+			$module = '';
+
 			if(!empty($module_id)) {
-                $module = " AND module_id = '" . $module_id . "'";
+                $module = " AND `module_id` = '" . $module_id . "'";
             }
+
             $this->load->language('module/' . $code);
-            $query = $this->db->query("SELECT name FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "'");
-            $name = $this->language->get('heading_title') . ' &gt; ' . ($query->row['name']) ? $query->row['name'] : '';
+
+            $query = $this->db->query("SELECT name FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "'" . $module);
+
+            $name  = $this->language->get('heading_title') . ' &gt; ';
+			$name .= (!empty($query->row['name'])) ? $query->row['name'] : ' -- none -- ' ;
         }
 
         return ($name) ? $name : '';
