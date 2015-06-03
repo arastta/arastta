@@ -33,7 +33,7 @@ class Utility extends Object {
         elseif (isset($this->session->data[$prefix.'language']) && array_key_exists($this->session->data[$prefix.'language'], $languages) && $languages[$this->session->data[$prefix.'language']]['status']) {
             $code = $this->session->data[$prefix.'language'];
         }
-        elseif (isset($this->request->cookie['language']) && array_key_exists($this->request->cookie[$prefix.'language'], $languages) && $languages[$this->request->cookie[$prefix.'language']]['status']) {
+        elseif (isset($this->request->cookie[$prefix.'language']) && array_key_exists($this->request->cookie[$prefix.'language'], $languages) && $languages[$this->request->cookie[$prefix.'language']]['status']) {
             $code = $this->request->cookie[$prefix.'language'];
         }
         else {
