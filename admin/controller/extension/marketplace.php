@@ -32,7 +32,6 @@ class ControllerExtensionMarketplace extends Controller {
 			$this->load->model('user/api');
 
 			$post['api_key'] = $this->config->get('api_key');
-			$post['domain'] = $_SERVER['HTTP_HOST'] . rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/.\\');
 
 			if ($post) {
 				$curl = curl_init();
@@ -47,6 +46,7 @@ class ControllerExtensionMarketplace extends Controller {
 				curl_setopt($curl, CURLOPT_URL, $this->apiBaseUrl . 'index.php?route=api/key');
 				curl_setopt($curl, CURLOPT_POST, true);
 				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post));
+				curl_setopt($curl, CURLOPT_REFERER, $this->url->getDomain());
 
 				$json = curl_exec($curl);
 
@@ -184,8 +184,13 @@ class ControllerExtensionMarketplace extends Controller {
 
 			$json = json_encode($response);
 		}
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput($json);
+		if (!empty($this->request->server['HTTP_X_REQUESTED_WITH'])) {
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput($json);
+		} else {
+			$this->response->addHeader('Content-Type: text/plain');
+			$this->response->setOutput($json);
+		}
 	}
 
 	protected function validate() {

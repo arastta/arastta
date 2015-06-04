@@ -23,7 +23,6 @@ Marketplace.loadweb = function(url) {
 		.css("left", $('.panel-body').position().left - $(window).scrollLeft())
 		.css("width", $('.panel-body').width())
 		.css("height", $('.panel-body').height());
-	$.event.trigger("ajaxStart");
 
 	$.ajax({
 		url: url,
@@ -31,32 +30,32 @@ Marketplace.loadweb = function(url) {
 		cache: true,
 		jsonpCallback: "arapi_jsonpcallback",
 		beforeSend: function () {
-			$('#customizer-preview').html('<div id="customizer-loading" class="text-center"><i class="fa fa-spinner fa-spin checkout-spin"></i></div>');
+			elem = $('<div id="marketplace-loading" class="text-center"><i class="fa fa-spinner fa-spin checkout-spin"></i></div>')
+				.css("background", "50% 15% no-repeat rgba(224, 224, 224, 0.8)")
+				.css("top", $('.panel-body').offset().top - $(window).scrollTop())
+				.css("left", $('.panel-body').offset().left - $(window).scrollLeft())
+				.css("width", $('.panel-body').outerWidth())
+				.css("height", $('.panel-body').outerHeight())
+				.css("position", "fixed")
+				.css("z-index", "1000")
+				.css("opacity", "0.80")
+				.css("-ms-filter", "progid:DXImageTransform.Microsoft.Alpha(Opacity = 80)")
+				.css("filter", "alpha(opacity = 80)")
+				.appendTo('.panel-body');
 		},
 		success: function (response) {
-			$('#web-loader').hide();
 			if (response.error) {
 				$('.panel.panel-default').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+response.error.warning+'<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			} else {
 				$('.panel-body').html(response.html);
 			}
-			if ($('.panel-body').length) {
-				$.event.trigger("ajaxStop");
-			}
 		},
 		fail: function() {
-			$('#web-loader').hide();
+			$('#marketplace-loading').hide();
 			$('#web-loader-error').show();
-			if ($('.panel-body').length) {
-				$.event.trigger("ajaxStop");
-			}
-		},
-		complete: function() {
-			if ($('.panel-body').length) {
-				$.event.trigger("ajaxStop");
-			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
+			$('#marketplace-loading').hide();
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
@@ -64,16 +63,12 @@ Marketplace.loadweb = function(url) {
 };
 
 var step = new Array();
-Marketplace.installfromweb = function(install_url, product_id, product_name, product_version, obj) {
-	if ('' == install_url) {
-		alert("This extension cannot be installed via the web. Please visit the developer's website to purchase/download.");
-		return false;
-	}
+Marketplace.installfromweb = function (product_id, product_name, product_version, obj) {
 	$.ajax({
 		url: 'index.php?route=extension/installer/install&token=' + token,
 		dataType: 'json',
 		type: 'post',
-		data: { install_url: install_url},
+		data   : {product_id: product_id, store: store},
 		beforeSend: function () {
 			$(obj).html('<div class="install-loading" class="text-center"><i class="fa fa-spinner fa-spin"></i></div>');
 			$(obj).attr('disabled', 'disabled');
@@ -87,7 +82,7 @@ Marketplace.installfromweb = function(install_url, product_id, product_name, pro
 
 			if (json['step']) {
 				step = json['step'];
-				next(install_url, product_id, product_name, product_version);
+				next(product_id, product_name, product_version);
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -99,55 +94,8 @@ Marketplace.installfromweb = function(install_url, product_id, product_name, pro
 
 Marketplace.apps.initialize = function() {
 	Marketplace.apps.loaded = 1;
-
 	Marketplace.loadweb(baseUrl+'index.php?route=extension/marketplace/api&api=api/marketplace');
 };
-
-Marketplace.cart = {
-	'add': function(product_id, quantity) {
-		$.ajax({
-			url: baseUrl+'index.php?route=extension/marketplace/api&api=api/cart/add&version='+apps_version+'&token='+token+'&store='+store,
-			type: 'post',
-			data: 'product_id=' + product_id + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
-			dataType: 'json',
-			beforeSend: function() {
-				$('#cart > button').button('loading');
-			},
-			complete: function() {
-				$('#cart > button').button('reset');
-			},
-			success: function(json) {
-				$('.alert, .text-danger').remove();
-
-				if (json['redirect']) {
-					location = json['redirect'];
-				}
-
-				if (json['success']) {
-					//$('#marketplace-content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-					// Need to set timeout otherwise it wont update the total
-					setTimeout(function () {
-						$('#cart > a').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
-					}, 100);
-
-					$('html, body').animate({ scrollTop: 0 }, 'slow');
-
-				}
-			},
-			error: function(request, status, error) {
-				if (request.responseText) {
-					$('#web-loader-error').html(request.responseText);
-				}
-				$('#web-loader').hide();
-				$('#web-loader-error').show();
-				if ($('.panel-body').length) {
-					$.event.trigger("ajaxStop");
-				}
-			}
-		});
-	}
-}
 
 $(document).on('keypress', '#marketplace-search-input', function() {
 		var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -169,14 +117,14 @@ function searchFilter (store_id, store_name) {
 	store = store_name.toLowerCase();
 }
 
-function next(install_url, product_id, product_name, product_version) {
+function next(product_id, product_name, product_version) {
 	data = step.shift();
 	if (data) {
 		$.ajax({
 			url: data.url,
 			type: 'post',
 			dataType: 'json',
-			data: { path: data.path, install_url: install_url, product_id: product_id, product_name: product_name, product_version: product_version },
+			data   : {path: data.path, store: store, product_id: product_id, product_name: product_name, product_version: product_version},
 			success: function(json) {
 				$('.alert-success, .alert-danger').remove();
 
@@ -192,7 +140,7 @@ function next(install_url, product_id, product_name, product_version) {
 				}
 
 				if (!json['error'] && !json['success']) {
-					next(install_url, product_id, product_name, product_version);
+					next(product_id, product_name, product_version);
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -270,7 +218,4 @@ $(document).on('click', '.uninstall-button-product', function() {
 // Set last page opened on the menu
 $(document).on('click', '#marketplace-menu a[onclick]', function() {
 	sessionStorage.setItem('marketplace-menu', $(this).attr('onclick'));
-});
-
-$(document).ready(function() {
 });
