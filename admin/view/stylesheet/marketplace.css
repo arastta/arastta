@@ -7,8 +7,10 @@ body {color: #666; font-weight: 400;}
 
 
 #marketplace-loading {
-	padding : 10%;
-	font-size: 125px;
+    padding    : 20%;
+    opacity    : 0.80;
+    -ms-filter : progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+    filter     : alpha(opacity=80);
 }
 
 #marketplace-search-div {padding-left: 0;}
@@ -346,6 +348,101 @@ div#sub-column .row a{
 a {
 cursor:pointer
 }
+
+/* Checkout */
+.lead.text-center.row.checkout-wizard {
+    font-size : 21px;
+}
+
+.checkout-wizard {
+    margin-top : 50px;
+}
+
+.checkout-wizard > .checkout-step > .progress {
+    position      : relative;
+    border-radius : 0px;
+    height        : 8px;
+    box-shadow    : none;
+    margin        : -25px 0;
+}
+
+.checkout-wizard > .checkout-step > .progress > .progress-bar {
+    width      : 0px;
+    box-shadow : none;
+    background : #5CB85C;
+}
+
+.checkout-wizard > .checkout-step.text-success > .progress > .progress-bar {
+    width : 100%;
+}
+
+.checkout-wizard > .checkout-step:nth-child(1) > .progress {
+    left  : 54%;
+    width : 100%;
+}
+
+.checkout-wizard > .checkout-step:nth-child(2) > .progress {
+    width : 0;
+}
+
+.checkout-pointer {
+    cursor : pointer;
+}
+
+.checkout-fieldset {
+    margin-bottom : 20px;
+}
+
+.login-forgotten-link {
+    margin-left : 10px;
+}
+
+.checkout-spin {
+    font-size : 5em !important;
+}
+
+.checkout-header-circle {
+    font-size : 2em !important;
+}
+
+.checkout-header-icon {
+    font-size : 1em !important;
+}
+
+.panel {
+    border-radius : 0;
+}
+
+.panel-group .panel {
+    border-radius : 0;
+}
+
+.panel-np-full {
+    padding-left  : 0px !important;
+    padding-right : 0px !important;
+}
+
+.panel-np-left {
+    padding-left : 0px !important;
+/ padding-right : 10 px !important;
+}
+
+.panel-np-right {
+    padding-left  : 10px !important;
+    padding-right : 0px !important;
+}
+
+.panel-heading {
+    vertical-align          : middle;
+    border-top-left-radius  : 0;
+    border-top-right-radius : 0;
+}
+
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+    border : none;
+}
+
+/* Checkout */
 
 .buy.col-sm-4 .progress {
   border: 1px solid #ccc;

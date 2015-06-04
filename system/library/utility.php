@@ -141,7 +141,8 @@ class Utility extends Object {
 
             if (!empty($options['post'])) {
                 @curl_setopt($process, CURLOPT_POST, 1);
-            }
+				@curl_setopt($process, CURLOPT_POSTFIELDS, http_build_query($options['post_fields']));
+			}
 
             $data = @curl_exec($process);
 

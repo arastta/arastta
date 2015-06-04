@@ -51,11 +51,7 @@ class Addon extends Object {
         $files = json_encode($this->indexFiles($data['dir']));
         $params = json_encode($data['addon_params']);
 
-        // Addon type
-        $host = explode('/', $data['install_url']);
-        $type = $host[3];
-
-        $this->db->query("INSERT INTO ". DB_PREFIX . "addon SET `product_id` = " . (int)$data['product_id'] . ", `product_name` = '" . $this->db->escape($data['product_name']) . "', `product_type` = '" . $this->db->escape($type) . "', `product_version` = '" . $this->db->escape($data['product_version']) . "', `addon_files` = '" . $this->db->escape($files) . "', `params` = '" . $this->db->escape($params) . "'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "addon SET `product_id` = " . (int) $data['product_id'] . ", `product_name` = '" . $this->db->escape($data['product_name']) . "', `product_type` = '" . $this->db->escape($data['product_type']) . "', `product_version` = '" . $this->db->escape($data['product_version']) . "', `addon_files` = '" . $this->db->escape($files) . "', `params` = '" . $this->db->escape($params) . "'");
     }
 
     public function removeAddon($id) {

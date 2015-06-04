@@ -654,12 +654,12 @@ class ControllerExtensionInstaller extends Controller {
             $this->trigger->fire('pre.admin.extension.remove', $directory);
 
 			// Add addon to addon table
-			if (isset($this->request->post['product_id']) and isset($this->request->post['product_name']) and isset($this->request->post['install_url']) and isset($this->request->post['product_version'])) {
+			if (isset($this->request->post['product_id']) and isset($this->request->post['product_name']) and isset($this->request->post['store']) and isset($this->request->post['product_version'])) {
 				$addon = new Addon($this->registry);
 				$data = array(
 					'product_id' => $this->request->post['product_id'],
 					'product_name' => $this->request->post['product_name'],
-					'install_url' => $this->request->post['install_url'],
+					'product_type' => rtrim($this->request->post['store'], 's'),
 					'product_version' => $this->request->post['product_version'],
 					'addon_params' => isset($this->session->data['addon_params']) ? $this->session->data['addon_params'] : null,
 					'dir' => $directory,
@@ -774,7 +774,7 @@ class ControllerExtensionInstaller extends Controller {
 	public function install() {
 		$this->load->language('extension/installer');
 		$json = array();
-		$data = $this->utility->getRemoteData(html_entity_decode($this->request->post['install_url']), array('referrer' => true));
+		$data = $this->utility->getRemoteData(html_entity_decode("http://arastta.io/" . rtrim($this->request->post['store'], 's') . "/1.0/download/" . $this->request->post['product_id'] . "/latest/" . VERSION . "/" . $this->config->get('api_key')), array('referrer' => true));
 
 		if ($data) {
 			$path = 'temp-' . md5(mt_rand());
