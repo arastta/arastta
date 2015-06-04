@@ -262,6 +262,8 @@ class Utility extends Object {
 
         $info['stores'] = (int) $this->getTotalStores() + 1;
 
+        $info['api'] = $this->config->get('api_key', '');
+
         return $info;
     }
 

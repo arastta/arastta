@@ -62,9 +62,9 @@ class Update extends Object {
 
             // Check core first
             $info = $this->utility->getInfo();
-            $base_url = 'http://arastta.io/';
+            $base_url = 'http://arastta.io';
 
-            $url = $base_url.'core/1.0/version/'.$info['arastta'].'/'.$info['php'].'/'.$info['mysql'].'/'.$info['langs'].'/'.$info['stores'];
+            $url = $base_url.'/core/1.0/version/'.$info['arastta'].'/'.$info['php'].'/'.$info['mysql'].'/'.$info['langs'].'/'.$info['stores'];
 
             $data['core'] = $this->getRemoteVersion($url);
 
@@ -75,7 +75,7 @@ class Update extends Object {
                 foreach ($addons as $addon) {
                     $type = $addon['product_type'];
 
-                    $url = $base_url.$type.'/1.0/version/'.$addon['product_id'].'/'.$addon['product_version'].'/'.$info['arastta'];
+                    $url = $base_url.'/'.$type.'/1.0/version/'.$addon['product_id'].'/'.$addon['product_version'].'/'.$info['arastta'];
 
                     $data[$type][$addon['product_id']] = $this->getRemoteVersion($url);
                 }
@@ -110,17 +110,16 @@ class Update extends Object {
     public function downloadUpdate($product_id, $version) {
         // Check core first
         $info = $this->utility->getInfo();
-        $base_url = 'http://arastta.io/';
+        $base_url = 'http://arastta.io';
 
         if ($product_id == 'core') {
-            $url = $base_url.'core/1.0/update/'.$version.'/'.$info['php'].'/'.$info['mysql'];
+            $url = $base_url.'/core/1.0/update/'.$version.'/'.$info['php'].'/'.$info['mysql'];
         }
         else {
             $addons = $this->addon->getAddons();
             $type = $addons[$product_id]['product_type'];
 
-            //$url = $base_url.$type.'/v1.0/update/'.$product_id.'/'.$version.'/'.$info['arastta'].'/'.$this->config->get('api_key', 0);
-            $url = $base_url.$type.'/1.0/update/'.$product_id.'/'.$version.'/'.$info['arastta'];
+            $url = $base_url.'/'.$type.'/1.0/update/'.$product_id.'/'.$version.'/'.$info['arastta'].'/'.$info['api'];
         }
 
         $options['timeout'] = 30;
