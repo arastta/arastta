@@ -21,8 +21,8 @@ Marketplace.loadweb = function(url) {
 	$('#marketplace-loading')
 		.css("top", $('.panel-body').position().top - $(window).scrollTop())
 		.css("left", $('.panel-body').position().left - $(window).scrollLeft())
-		.css("width", $('.panel-body').width())
-		.css("height", $('.panel-body').height());
+		.css("width", $('.panel-body').outerWidth())
+		.css("height", $('.panel-body').outerHeight());
 
 	$.ajax({
 		url: url,
@@ -30,7 +30,7 @@ Marketplace.loadweb = function(url) {
 		cache: true,
 		jsonpCallback: "arapi_jsonpcallback",
 		beforeSend: function () {
-			elem = $('<div id="marketplace-loading" class="text-center"><i class="fa fa-spinner fa-spin checkout-spin"></i></div>')
+			elem = $('<div id="marketplace-loading" class="text-center"><div class="loading-wrap"><i class="fa fa-spinner fa-spin checkout-spin"></i></div></div>')
 				.css("background", "50% 15% no-repeat rgba(224, 224, 224, 0.8)")
 				.css("top", $('.panel-body').offset().top - $(window).scrollTop())
 				.css("left", $('.panel-body').offset().left - $(window).scrollLeft())

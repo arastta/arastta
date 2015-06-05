@@ -5,12 +5,19 @@ body {color: #666; font-weight: 400;}
 	border-bottom: 2px solid rgba(0,0,0,0.2) !important;
 }
 
+.panel-default > .panel-body {
+    min-height : 300px;
+}
 
-#marketplace-loading {
-    padding    : 20%;
-    opacity    : 0.80;
-    -ms-filter : progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
-    filter     : alpha(opacity=80);
+.loading-wrap {
+    position : absolute;
+    top      : 0;
+    bottom   : 0;
+    left     : 0;
+    right    : 0;
+    margin   : auto;
+    width    : 70px;
+    height   : 70px;
 }
 
 #marketplace-search-div {padding-left: 0;}
