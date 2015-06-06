@@ -11,12 +11,10 @@
 			  <div class="panel-body">
 				<?php if ($success) { ?>
 				<div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-				  <button type="button" class="close" data-dismiss="alert">&times;</button>
 				</div>
 				<?php } ?>
 				<?php if ($error_warning) { ?>
 				<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-				  <button type="button" class="close" data-dismiss="alert">&times;</button>
 				</div>
 				<?php } ?>
 				<form action="<?php echo $action; ?>" method="post"  class="login-form" enctype="multipart/form-data">
