@@ -138,8 +138,7 @@ class ControllerCommonLogin extends Controller {
         $total_languages = $this->model_localisation_language->getTotalLanguages();
         if ($total_languages > 1) {
             $data['languages'] = $this->model_localisation_language->getLanguages();
-        }
-        else {
+        } else {
             $data['languages'] = '';
             $this->session->data['language'] = $this->config->get('config_admin_language');
         }
