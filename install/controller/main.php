@@ -1,17 +1,15 @@
 <?php
 /**
- * @package		Arastta eCommerce
+ * @package	Arastta eCommerce
  * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @license	GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerMain extends Controller {
-
-	public function index() {
+public function index() {
 		$this->load->model('main');
 
 		$data = $this->language->all();
-		
+
 		$this->document->setTitle($data['heading_main']);
 
         $data['requirements'] = $this->model_main->checkRequirements();
@@ -24,42 +22,27 @@ class ControllerMain extends Controller {
 
     public function displayDatabase() {
         $data = array();
+        $data = $this->language->all();
 
-        $data['action'] = $this->url->link('main');
+        $vars = array(
+			'db_hostname'	=> 'localhost',
+			'db_username'	=> '',
+			'db_password'	=> '',
+			'db_database'	=> ''
+		);
 
-        $data['text_database_header'] = $this->language->get('text_database_header');
-        $data['entry_db_hostname'] = $this->language->get('entry_db_hostname');
-        $data['entry_db_username'] = $this->language->get('entry_db_username');
-        $data['entry_db_password'] = $this->language->get('entry_db_password');
-        $data['entry_db_database'] = $this->language->get('entry_db_database');
-        $data['entry_db_prefix'] = $this->language->get('entry_db_prefix');
-        $data['button_next'] = $this->language->get('button_next');
+		foreach( $vars as $k => $v ) {
+			if (isset($this->session->data[$k])) {
+	            $data[$k] = $this->session->data[$k];
+	        } else {
+	            $data[$k] = $v;
+	        }
+		}
 
-        if (isset($this->session->data['db_hostname'])) {
-            $data['db_hostname'] = $this->session->data['db_hostname'];
-        } else {
-            $data['db_hostname'] = 'localhost';
-        }
+		unset( $vars );
 
-        if (isset($this->session->data['db_username'])) {
-            $data['db_username'] = $this->session->data['db_username'];
-        } else {
-            $data['db_username'] = '';
-        }
-
-        if (isset($this->session->data['db_password'])) {
-            $data['db_password'] = $this->session->data['db_password'];
-        } else {
-            $data['db_password'] = '';
-        }
-
-        if (isset($this->session->data['db_database'])) {
-            $data['db_database'] = $this->session->data['db_database'];
-        } else {
-            $data['db_database'] = '';
-        }
-
-        $data['db_prefix'] = $this->generatePrefix();
+		$data['action']		= $this->url->link('main');
+        $data['db_prefix']	= $this->generatePrefix();
 
         $json['output'] = $this->load->view('database.tpl', $data);
 
@@ -71,7 +54,7 @@ class ControllerMain extends Controller {
         $this->load->model('main');
 
         $json = $this->validateDatabase();
-		
+
 		if (empty($json)) {
             $this->model_main->saveConfig($this->request->post);
 
@@ -84,54 +67,32 @@ class ControllerMain extends Controller {
 
     public function displaySettings() {
         $data = array();
+        $data = $this->language->all();
+
+		$vars = array(
+			'store_name'		=> '',
+			'store_email'		=> '',
+			'admin_username'	=> '',
+			'admin_email'		=> '',
+			'admin_password'	=> ''
+		);
+
+		foreach( $vars as $k => $v ) {
+			if (isset($this->session->data[$k])) {
+	            $data[$k] = $this->session->data[$k];
+	        } else {
+	            $data[$k] = $v;
+	        }
+		}
 
         $data['action'] = $this->url->link('main');
-
-        $data['text_settings_header'] = $this->language->get('text_settings_header');
-        $data['entry_store_name'] = $this->language->get('entry_store_name');
-        $data['entry_store_email'] = $this->language->get('entry_store_email');
-        $data['entry_admin_username'] = $this->language->get('entry_admin_username');
-        $data['entry_admin_email'] = $this->language->get('entry_admin_email');
-        $data['entry_admin_password'] = $this->language->get('entry_admin_password');
-        $data['button_next'] = $this->language->get('button_next');
-        $data['button_back'] = $this->language->get('button_back');
-
-        if (isset($this->session->data['store_name'])) {
-            $data['store_name'] = $this->session->data['store_name'];
-        } else {
-            $data['store_name'] = '';
-        }
-
-        if (isset($this->session->data['store_email'])) {
-            $data['store_email'] = $this->session->data['store_email'];
-        } else {
-            $data['store_email'] = '';
-        }
-
-        if (isset($this->session->data['admin_username'])) {
-            $data['admin_username'] = $this->session->data['admin_username'];
-        } else {
-            $data['admin_username'] = '';
-        }
-
-        if (isset($this->session->data['admin_email'])) {
-            $data['admin_email'] = $this->session->data['admin_email'];
-        } else {
-            $data['admin_email'] = '';
-        }
-
-        if (isset($this->session->data['admin_password'])) {
-            $data['admin_password'] = $this->session->data['admin_password'];
-        } else {
-            $data['admin_password'] = '';
-        }
 
         $json['output'] = $this->load->view('settings.tpl', $data);
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
     }
-	
+
 	public function saveSettings() {
         $json = $this->validateSettings();
 
@@ -150,13 +111,12 @@ class ControllerMain extends Controller {
     public function displayFinish() {
         $data = array();
 
-        $data['button_store'] = $this->language->get('button_store');
-        $data['button_admin'] = $this->language->get('button_admin');
+        $data['button_store']		= $this->language->get('button_store');
+        $data['button_admin']		= $this->language->get('button_admin');
+        $data['text_finish_header'] = $this->language->get('text_finish_header');
 
         $data['store'] = HTTP_CATALOG;
         $data['admin'] = HTTP_CATALOG.'admin';
-
-        $data['text_finish_header'] = $this->language->get('text_finish_header');
 
         $json['output'] = $this->load->view('finish.tpl', $data);
 
