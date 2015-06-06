@@ -35,10 +35,9 @@
                 <input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" placeholder="<?php echo $entry_db_prefix; ?>" id="input-database-prefix" class="form-control" />
             </div>
         </div>
-
         <div class="form-group pull-right">
             <div class="col-xs-12">
-                <button type="button" onclick="saveDatabase();" class="btn btn-primary"><?php echo $button_next; ?> <i class="fa fa-arrow-right"></i></button>
+                <button type="button" onclick="saveDatabase();" class="btn btn-success"><?php echo $button_next; ?> <i class="fa fa-arrow-right"></i></button>
             </div>
         </div>
     </div>
