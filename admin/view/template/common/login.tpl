@@ -70,7 +70,7 @@
 	  </div>
 	</div>
 	<div class="copyright">
-		 <a href="<?php echo $store['href']; ?>"> ← Back to <?php echo $store['name']; ?></a>
+		 <a href="<?php echo $store['href']; ?>">&nbsp;&larr;&nbsp;<?php echo $text_back_to; ?>&nbsp;<?php echo $store['name']; ?></a>
 	</div>	
 </div>
 <?php echo $footer; ?>
