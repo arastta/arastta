@@ -69,4 +69,8 @@
             container.hide();
         }
     });
+
+    jQuery('#arastta-search').submit(function(e) {
+        e.preventDefault();
+    });
 </script>
