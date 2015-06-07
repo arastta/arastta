@@ -82,4 +82,4 @@ $_['column_product_name']          = 'Product Name';
 $_['column_product_id']            = 'Product ID';
 
 $_['button_view']                  = 'View';
-$_['button_Edit']                  = 'Edit';
+$_['button_edit']                  = 'Edit';
