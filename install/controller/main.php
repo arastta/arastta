@@ -13,10 +13,10 @@ class ControllerMain extends Controller {
 
 		$this->document->setTitle($data['heading_main']);
 
-        	$data['requirements'] = $this->model_main->checkRequirements();
+        $data['requirements'] = $this->model_main->checkRequirements();
 
-        	$data['header'] = $this->load->controller('header');
-        	$data['footer'] = $this->load->controller('footer');
+        $data['header'] = $this->load->controller('header');
+        $data['footer'] = $this->load->controller('footer');
 
 		$this->response->setOutput($this->load->view('main.tpl', $data));
 	}
