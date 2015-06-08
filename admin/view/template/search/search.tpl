@@ -12,13 +12,12 @@
         <li><a onclick="setOption('orders', '<?php echo $text_orders_placeholder; ?>'); return false;"><i class="fa fa-credit-card"></i><span><?php echo $text_orders; ?></span></a></li>
       </ul>
     </div>
-    <input id="arastta-search-input" type="text" class="form-control" placeholder="Search" name="query" autocomplete="off">
-    <input id="arastta-search-option" type="hidden" name="search-option" value="catalog">
-    <div id="loader-search"><img src="view/image/loader-search.gif"></div>
+    <input id="arastta-search-input" type="text" class="form-control" placeholder="<?php echo $text_placeholder; ?>" name="query" autocomplete="off" />
+    <input id="arastta-search-option" type="hidden" name="search-option" value="catalog" />
+    <div id="loader-search"><img src="view/image/loader-search.gif" alt="" /></div>
   </div>
 </form>
 <div id="arastta-search-result"></div>
-
 <script type="text/javascript">
     function setOption(option, text) {
         jQuery('#arastta-search-option').val(option);
