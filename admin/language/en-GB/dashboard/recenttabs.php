@@ -26,4 +26,4 @@ $_['column_product_id']            = 'Product ID';
 
 // Button
 $_['button_view']                  = 'View';
-$_['button_Edit']                  = 'Edit';
+$_['button_edit']                  = 'Edit';

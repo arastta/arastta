@@ -46,7 +46,6 @@ $_['error_ftp_login']        = 'Could not login as %s';
 $_['error_ftp_root']         = 'Could not set root directory as %s';
 $_['error_ftp_directory']    = 'Could not change to directory %s';
 $_['error_ftp_file']         = 'Could not upload file %s';
-$_['error_vqmod_file']       = 'This extension doesn\'t work Arastta, Because Arastta doesn\'t support VQMOD, it support OCMOD ';
 $_['error_copy_xmls_file']   = 'XML dosen\'t install,Please check file!';
 $_['error_uninstall_already']= 'Uninstalled already!';
 $_['error_zip']              = 'Warning: ZIP extension needs to be loaded on your server! Please, ask your hosting company for further help.';

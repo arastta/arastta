@@ -250,10 +250,6 @@ $(document).ready(function() {
 	$('span.close').click(function() {
 		$(this).parent().remove();
 	});
-
-	$('a[data-toggle="tab"]').click(function() {
-		$('#export_import_notification').remove();
-	});
 });
 
 function checkFileSize(id) {
