@@ -42,7 +42,6 @@ $_['entry_settings_use_import_cache']       = 'Use phpTemp cache for large Impor
 
 // Error
 $_['error_permission']                      = 'Warning: You do not have permission to modify Export/Import!';
-
 $_['error_upload']                          = 'Uploaded spreadsheet file has validation errors!';
 $_['error_categories_header']               = 'Export/Import: Invalid header in the Categories worksheet';
 $_['error_products_header']                 = 'Export/Import: Invalid header in the Products worksheet';
@@ -80,19 +79,10 @@ $_['error_upload_ext']                      = 'Uploaded file has not one of the 
 $_['error_no_news']                         = 'No messages';
 $_['error_batch_number']                    = 'Batch number must be greater than 0';
 $_['error_min_item_id']                     = 'Start id must be greater than 0';
-$_['error_option_name']                     = 'Option \'%1\' is defined multiple times!<br />';
-$_['error_option_name']                    .= 'In the Settings-tab please activate the following:<br />';
-$_['error_option_name']                    .= "Use <em>option_id</em> instead of <em>option name</em> in worksheets 'ProductOptions' and 'ProductOptionValues'";
-$_['error_option_value_name']               = 'Option value \'%1\' is defined multiple times within its option!<br />';
-$_['error_option_value_name']              .= 'In the Settings-tab please activate the following:<br />';
-$_['error_option_value_name']              .= "Use <em>option_value_id</em> instead of <em>option_value name</em> in worksheet 'ProductOptionValues'";
-$_['error_attribute_group_name']            = 'AttributeGroup \'%1\' is defined multiple times!<br />';
-$_['error_attribute_group_name']           .= 'In the Settings-tab please activate the following:<br />';
-$_['error_attribute_group_name']           .= "Use <em>attribute_group_id</em> instead of <em>attribute_group name</em> in worksheets 'ProductAttributes'";
-$_['error_attribute_name']                  = 'Attribute \'%1\' is defined multiple times within its attribute group!<br />';
-$_['error_attribute_name']                 .= 'In the Settings-tab please activate the following:<br />';
-$_['error_attribute_name']                 .= "Use <em>attribute_id</em> instead of <em>attribute name</em> in worksheet 'ProductAttributes'";
-
+$_['error_option_name']                     = 'Option <b>%1</b> is defined multiple times!<br />Please activate following in the Settings:<br />Use <em>option_id</em> instead of <em>option name</em> in worksheets "ProductOptions" and "ProductOptionValues"';
+$_['error_option_value_name']               = 'Option value \'%1\' is defined multiple times within its option!<br />In the Settings-tab please activate the following:<br />Use <em>option_value_id</em> instead of <em>option_value name</em> in worksheet "ProductOptionValues"';
+$_['error_attribute_group_name']            = 'AttributeGroup \'%1\' is defined multiple times!<br />In the Settings-tab please activate the following:<br />Use <em>attribute_group_id</em> instead of <em>attribute_group name</em> in worksheets "ProductAttributes"';
+$_['error_attribute_name']                  = 'Attribute \'%1\' is defined multiple times within its attribute group!<br />In the Settings-tab please activate the following:<br />Use <em>attribute_id</em> instead of <em>attribute name</em> in worksheet "ProductAttributes"';
 $_['error_missing_customer_group']                      = 'Export/Import: Missing customer_groups in worksheet \'%1\'!';
 $_['error_invalid_customer_group']                      = 'Export/Import: Undefined customer_group \'%2\' used in worksheet \'%1\;!';
 $_['error_missing_product_id']                          = 'Export/Import: Missing product_ids in worksheet \'%1\'!';
