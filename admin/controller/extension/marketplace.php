@@ -101,9 +101,10 @@ class ControllerExtensionMarketplace extends Controller {
 		if ((isset($this->request->get['changeApiKey']) and $this->request->get['changeApiKey']) or (empty($data['api_key']) or isset($data['error']))) {
 			$data['entry_api_key'] = $this->language->get('entry_api_key');
 			$data['button_continue'] = $this->language->get('button_continue');
+			$data['help_api_key'] = $this->language->get('help_api_key');
 			$data['changeApiKey'] = true;
 
-			$data['api_key_href'] = 'http://arastta.pro/index.php?route=account/api';
+			$data['api_key_href'] = 'http://extensions.arastta.pro/index.php?route=account/api';
 			$data['action'] = $this->url->link('extension/marketplace/saveApiKey', 'token=' . $this->session->data['token'], 'SSL');
 		}
 
