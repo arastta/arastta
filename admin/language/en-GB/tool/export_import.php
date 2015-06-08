@@ -77,7 +77,6 @@ $_['error_page_no_data']                    = 'No more data.';
 $_['error_param_not_number']                = 'Values for data range must be whole numbers.';
 $_['error_upload_name']                     = 'Missing file name for upload';
 $_['error_upload_ext']                      = 'Uploaded file has not one of the \'.xls\', \'.xlsx\' or \'.ods\' file name extensions, it might not be a spreadsheet file!';
-$_['error_notifications']                   = 'Could not load messages from MHCCORP.COM.';
 $_['error_no_news']                         = 'No messages';
 $_['error_batch_number']                    = 'Batch number must be greater than 0';
 $_['error_min_item_id']                     = 'Start id must be greater than 0';
