@@ -24,10 +24,10 @@ class ControllerSearchSearch extends Controller {
 
     public function search(){
         $this->load->language('search/search');
+        
+        $data = $this->language->all();
 
         $data['token'] = $this->session->data['token'];
-
-        $data = $this->language->all();
 
         if(!empty($this->request->get['query'])) {
             $_data['query'] = $this->request->get['query'];
