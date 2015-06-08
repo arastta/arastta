@@ -184,7 +184,7 @@ class ControllerMain extends Controller {
             $json['error']['database'] = $this->language->get('error_db_database');
         }
 
-        if (empty($this->request->post['db_prefix'])) {
+        if (!empty($this->request->post['db_prefix']) && !preg_match("/^[a-z0-9_]+$/", $this->request->post['db_prefix'])) {
             $json['error']['prefix'] = $this->language->get('error_db_prefix');
         }
 
