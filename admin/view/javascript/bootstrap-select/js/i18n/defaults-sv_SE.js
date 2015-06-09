@@ -23,10 +23,19 @@
 
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Niets geselecteerd',
-    noneResultsText: 'Geen resultaten gevonden voor {0}',
-    countSelectedText: '{0} van {1} geselecteerd',
-    maxOptionsText: ['Limiet bereikt ({n} {var} max)', 'Groep limiet bereikt ({n} {var} max)', ['items', 'item']],
+    noneSelectedText: 'Inget valt',
+    noneResultsText: 'Inget sökresultat matchar {0}',
+    countSelectedText: function (numSelected, numTotal) {
+      return (numSelected === 1) ? "{0} alternativ valt" : "{0} alternativ valda";
+    },
+    maxOptionsText: function (numAll, numGroup) {
+      return [
+        'Gräns uppnåd (max {n} alternativ)',
+        'Gräns uppnåd (max {n} gruppalternativ)'
+      ];
+    },
+    selectAllText: 'Markera alla',
+    deselectAllText: 'Avmarkera alla',
     multipleSeparator: ', '
   };
 })(jQuery);
