@@ -23,17 +23,9 @@ class ControllerMain extends Controller {
 	}
 
     public function displayDatabase() {
-        $data = array();
+		$data = $this->language->all();
 
         $data['action'] = $this->url->link('main');
-
-        $data['text_database_header'] = $this->language->get('text_database_header');
-        $data['entry_db_hostname'] = $this->language->get('entry_db_hostname');
-        $data['entry_db_username'] = $this->language->get('entry_db_username');
-        $data['entry_db_password'] = $this->language->get('entry_db_password');
-        $data['entry_db_database'] = $this->language->get('entry_db_database');
-        $data['entry_db_prefix'] = $this->language->get('entry_db_prefix');
-        $data['button_next'] = $this->language->get('button_next');
 
         if (isset($this->session->data['db_hostname'])) {
             $data['db_hostname'] = $this->session->data['db_hostname'];
@@ -83,18 +75,9 @@ class ControllerMain extends Controller {
 	}
 
     public function displaySettings() {
-        $data = array();
+		$data = $this->language->all();
 
         $data['action'] = $this->url->link('main');
-
-        $data['text_settings_header'] = $this->language->get('text_settings_header');
-        $data['entry_store_name'] = $this->language->get('entry_store_name');
-        $data['entry_store_email'] = $this->language->get('entry_store_email');
-        $data['entry_admin_username'] = $this->language->get('entry_admin_username');
-        $data['entry_admin_email'] = $this->language->get('entry_admin_email');
-        $data['entry_admin_password'] = $this->language->get('entry_admin_password');
-        $data['button_next'] = $this->language->get('button_next');
-        $data['button_back'] = $this->language->get('button_back');
 
         if (isset($this->session->data['store_name'])) {
             $data['store_name'] = $this->session->data['store_name'];
@@ -148,10 +131,7 @@ class ControllerMain extends Controller {
 	}
 
     public function displayFinish() {
-        $data = array();
-
-        $data['button_store'] = $this->language->get('button_store');
-        $data['button_admin'] = $this->language->get('button_admin');
+		$data = $this->language->all();
 
         $data['store'] = HTTP_CATALOG;
         $data['admin'] = HTTP_CATALOG.'admin';
