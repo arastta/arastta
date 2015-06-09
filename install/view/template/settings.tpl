@@ -35,13 +35,11 @@
                 <input type="password" name="admin_password" value="<?php echo $admin_password; ?>" placeholder="<?php echo $entry_admin_password; ?>" id="input-admin-password" class="form-control" />
             </div>
         </div>
-
         <div class="form-group pull-left">
             <div class="col-xs-12">
                 <button type="button" onclick="displayDatabase();" class="btn btn-info"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
         </div>
-
         <div class="form-group pull-right">
             <div class="col-xs-12">
                 <button type="button" onclick="saveSettings();" class="btn btn-success"><?php echo $button_next; ?> <i class="fa fa-arrow-right"></i></button>
