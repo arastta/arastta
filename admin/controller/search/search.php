@@ -15,13 +15,7 @@ class ControllerSearchSearch extends Controller {
 
         $data = array();
 
-        $data['text_search_options'] = $this->language->get('text_search_options');
-        $data['text_catalog'] = $this->language->get('text_catalog');
-        $data['text_customers'] = $this->language->get('text_customers');
-        $data['text_orders'] = $this->language->get('text_orders');
-        $data['text_catalog_placeholder'] = $this->language->get('text_catalog_placeholder');
-        $data['text_customers_placeholder'] = $this->language->get('text_customers_placeholder');
-        $data['text_orders_placeholder'] = $this->language->get('text_orders_placeholder');
+        $data = $this->language->all();
 
 		$data['search_link'] = $this->url->link('search/search/search', 'token=' . $this->session->data['token'], 'SSL');
 		
@@ -30,16 +24,10 @@ class ControllerSearchSearch extends Controller {
 
     public function search(){
         $this->load->language('search/search');
+        
+        $data = $this->language->all();
 
         $data['token'] = $this->session->data['token'];
-
-        $data['text_products'] = $this->language->get('text_products');
-        $data['text_categories'] = $this->language->get('text_categories');
-        $data['text_manufacturers'] = $this->language->get('text_manufacturers');
-        $data['text_no_result'] = $this->language->get('text_no_result');
-        $data['text_customers'] = $this->language->get('text_customers');
-        $data['text_orders'] = $this->language->get('text_orders');
-        $data['text_order_id'] = $this->language->get('text_order_id');
 
         if(!empty($this->request->get['query'])) {
             $_data['query'] = $this->request->get['query'];
