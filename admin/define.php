@@ -43,17 +43,3 @@ define('DIR_LOGS', 			DIR_SYSTEM . 'log/'); // depreciated due to plural usage, 
 define('DIR_MODIFICATION',	DIR_SYSTEM . 'modification/');
 define('DIR_LANGUAGE',		DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', 		DIR_APPLICATION . 'view/template/');
-
-// Installation check, and check on removal of the install directory.
-if (!file_exists(DIR_ROOT . 'config.php') or (filesize(DIR_ROOT . 'config.php') < 10) or file_exists(DIR_INSTALL . 'index.php')) {
-    if (file_exists(DIR_INSTALL . 'index.php')) {
-        header('Location: ../install/index.php');
-
-        exit();
-    }
-    else {
-        echo 'No configuration file found and no installation code available. Exiting...';
-
-        exit();
-    }
-}

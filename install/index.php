@@ -13,6 +13,7 @@ if (version_compare(PHP_VERSION, '5.3.10', '<')) {
 }
 
 define('AREXE', 1);
+define('INSTALLER', 1);
 
 require_once('define.php');
 
