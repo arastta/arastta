@@ -13,6 +13,7 @@ $_['text_orders']                   = 'Orders';
 $_['text_products']                 = 'Products';
 $_['text_categories']               = 'Categories';
 $_['text_manufacturers']            = 'Manufacturers';
+$_['text_placeholder']              = 'Search';
 
 $_['text_catalog_placeholder']      = 'Name, Model, SKU';
 $_['text_customers_placeholder']    = 'First Name, Last Name, E-Mail';
