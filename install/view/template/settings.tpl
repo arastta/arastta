@@ -38,7 +38,7 @@
 
         <div class="form-group pull-left">
             <div class="col-xs-12">
-                <button type="button" onclick="displayDatabase();" class="btn btn-info"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+                <button type="button" onclick="displayDatabase();" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
         </div>
 
