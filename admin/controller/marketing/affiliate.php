@@ -634,6 +634,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		$data['help_code'] = $this->language->get('help_code');
 		$data['help_commission'] = $this->language->get('help_commission');
+		$data['help_send_email'] = $this->language->get('help_send_email');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_savenew'] = $this->language->get('button_savenew');

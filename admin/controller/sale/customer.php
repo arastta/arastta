@@ -734,6 +734,7 @@ class ControllerSaleCustomer extends Controller {
 
 		$data['help_safe'] = $this->language->get('help_safe');
 		$data['help_points'] = $this->language->get('help_points');
+		$data['help_send_email'] = $this->language->get('help_send_email');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_savenew'] = $this->language->get('button_savenew');
