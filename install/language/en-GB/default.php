@@ -47,3 +47,4 @@ $_['error_store_email'] 		= 'Store email required!';
 $_['error_admin_username'] 		= 'Username required!';
 $_['error_admin_email'] 		= 'Invalid E-Mail!';
 $_['error_admin_password'] 		= 'Password required!';
+$_['error_remove_install'] 		= 'Failed to remove the install directory. Please remove this manually for security reasons.';

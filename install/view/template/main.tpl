@@ -66,150 +66,156 @@
 
 <script type="text/javascript">
 <?php if ($requirements) { ?>
-    $(document).on('ready', function() {
-        $('#step-database').addClass('text-muted');
-        $('#step-settings').addClass('text-muted');
-        $('#step-finish').addClass('text-muted');
-    });
+	$(document).on('ready', function() {
+		$('#step-database').addClass('text-muted');
+		$('#step-settings').addClass('text-muted');
+		$('#step-finish').addClass('text-muted');
+	});
 <?php } else { ?>
-    $(document).on('ready', function() {
-        displayDatabase();
-    });
+	$(document).on('ready', function() {
+		displayDatabase();
+	});
 
-    // Display Database
-    function displayDatabase() {
-        $('#step-settings').removeClass('text-primary');
-        $('#step-settings').addClass('text-muted');
-        $('#step-database').removeClass('text-success');
-        $('#step-database').addClass('text-primary');
-        $('#step-finish').addClass('text-muted');
+	// Display Database
+	function displayDatabase() {
+		$('#step-settings').removeClass('text-primary');
+		$('#step-settings').addClass('text-muted');
+		$('#step-database').removeClass('text-success');
+		$('#step-database').addClass('text-primary');
+		$('#step-finish').addClass('text-muted');
 
-        $.ajax({
-            url: 'index.php?route=main/displaydatabase',
-            dataType: 'json',
-            type: 'post',
-            beforeSend: function() {
-                $('#install-loading').html('<span class="loading-bar"><span class="loading-spin"><i class="fa fa-spinner fa-spin"></i></span></span>');
-            },
-            complete: function() {
-                $('.loading-bar').delay(500).fadeOut('slow');
-            },
-            success: function(json) {
-                $('#install-content').html(json['output']);
-                $('.loading-bar').css({"height": $('.panel-body').height()-84});
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    }
+		$.ajax({
+			url: 'index.php?route=main/displaydatabase',
+			dataType: 'json',
+			type: 'post',
+			beforeSend: function() {
+				$('#install-loading').html('<span class="loading-bar"><span class="loading-spin"><i class="fa fa-spinner fa-spin"></i></span></span>');
+			},
+			complete: function() {
+				$('.loading-bar').delay(500).fadeOut('slow');
+			},
+			success: function(json) {
+				$('#install-content').html(json['output']);
+				$('.loading-bar').css({"height": $('.panel-body').height()-84});
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
 
-    // Save Database
-    function saveDatabase() {
-        $.ajax({
-            url: 'index.php?route=main/savedatabase',
-            dataType: 'json',
-            type: 'post',
-            data: $('#install-content input[type=\'text\'], input[type=\'password\']'),
-            beforeSend: function() {
-                $('#install-loading').html('<span class="loading-bar"><span class="loading-spin"><i class="fa fa-spinner fa-spin"></i></span></span>');
-                $('.loading-bar').css({"height": $('.panel-body').height()-84});
-            },
-            complete: function() {
-                $('.loading-bar').delay(500).fadeOut('slow');
-            },
-            success: function(json) {
-                $('.text-danger').remove();
-                $('.form-group').children().removeClass('has-error')
+	// Save Database
+	function saveDatabase() {
+		$.ajax({
+			url: 'index.php?route=main/savedatabase',
+			dataType: 'json',
+			type: 'post',
+			data: $('#install-content input[type=\'text\'], input[type=\'password\']'),
+			beforeSend: function() {
+				$('#install-loading').html('<span class="loading-bar"><span class="loading-spin"><i class="fa fa-spinner fa-spin"></i></span></span>');
+				$('.loading-bar').css({"height": $('.panel-body').height()-84});
+			},
+			complete: function() {
+				$('.loading-bar').delay(500).fadeOut('slow');
+			},
+			success: function(json) {
+				$('.text-danger').remove();
+				$('.form-group').children().removeClass('has-error');
 
-                if (json['error']) {
+				if (json['error']) {
+					for (i in json['error']) {
+						var element = $('#input-database-' + i.replace(/_/g, '-'));
 
-                    for (i in json['error']) {
-                        var element = $('#input-database-' + i.replace(/_/g, '-'));
+						if ($(element).parent().hasClass('input-group')) {
+							$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+						} else {
+							$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+						}
+					}
 
-                        if ($(element).parent().hasClass('input-group')) {
-                            $(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
-                        } else {
-                            $(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
-                        }
-                    }
-					
-                    // Highlight any found errors
-                    $('.text-danger').parent().addClass('has-error');
-					
+					// Highlight any found errors
+					$('.text-danger').parent().addClass('has-error');
+
 					// Reset the height of loading bar
-                    $('.loading-bar').css({"height": $('.panel-body').height()-84});
-                } else if (json['output']) {
+					$('.loading-bar').css({"height": $('.panel-body').height()-84});
+				} else if (json['output']) {
 					$('.loading-bar').css({"height": "135%"});
-				
-                    $('#step-database').addClass('text-success');
-                    $('#step-settings').addClass('text-primary');
-                    $('#step-finish').addClass('text-muted');
 
-                    $('#install-content').html(json['output']);
-                }
+					$('#step-database').addClass('text-success');
+					$('#step-settings').addClass('text-primary');
+					$('#step-finish').addClass('text-muted');
 
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    }
+					$('#install-content').html(json['output']);
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
 
-    // Save Settings
-    function saveSettings() {
-        $.ajax({
-            url: 'index.php?route=main/savesettings',
-            dataType: 'json',
-            type: 'post',
-            data: $('#install-content input[type=\'text\'], input[type=\'password\']'),
-            beforeSend: function() {
-                $('#install-loading').html('<span class="loading-bar"><span class="loading-spin"><i class="fa fa-spinner fa-spin"></i></span></span>');
-                $('.loading-bar').css({"height": $('.panel-body').height()-84});
-            },
-            complete: function() {
-                $('.loading-bar').delay(500).fadeOut('slow');
-            },
-            success: function(json) {
-                $('.text-danger').remove();
-                $('.form-group').removeClass('has-error');
+	// Save Settings
+	function saveSettings() {
+		$.ajax({
+			url: 'index.php?route=main/savesettings',
+			dataType: 'json',
+			type: 'post',
+			data: $('#install-content input[type=\'text\'], input[type=\'password\']'),
+			beforeSend: function() {
+				$('#install-loading').html('<span class="loading-bar"><span class="loading-spin"><i class="fa fa-spinner fa-spin"></i></span></span>');
+				$('.loading-bar').css({"height": $('.panel-body').height()-84});
+			},
+			complete: function() {
+				$('.loading-bar').delay(500).fadeOut('slow');
+			},
+			success: function(json) {
+				$('.text-danger').remove();
+				$('.form-group').removeClass('has-error');
 
-                if (json['error']) {
-                    for (i in json['error']) {
-                        var element = $('#input-' + i.replace(/_/g, '-'));
+				if (json['error']) {
+					for (i in json['error']) {
+						var element = $('#input-' + i.replace(/_/g, '-'));
 
-                        if ($(element).parent().hasClass('input-group')) {
-                            $(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
-                        } else {
-                            $(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
-                        }
-                    }
+						if ($(element).parent().hasClass('input-group')) {
+							$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+						} else {
+							$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+						}
+					}
 
-                    // Highlight any found errors
-                    $('.text-danger').parent().addClass('has-error');
-					
+					// Highlight any found errors
+					$('.text-danger').parent().addClass('has-error');
+
 					// Reset the height of loading bar
-                    $('.loading-bar').css({"height": $('.panel-body').height()-84});
-                } else if (json['output']) {
-                    $('#step-database').addClass('text-success');
-                    $('#step-settings').addClass('text-success');
-                    $('#step-finish').addClass('text-success');
+					$('.loading-bar').css({"height": $('.panel-body').height()-84});
+				} else if (json['output']) {
+					$('#step-database').addClass('text-success');
+					$('#step-settings').addClass('text-success');
+					$('#step-finish').addClass('text-success');
 
-                    $('#install-content').html(json['output']);
-                    $('.loading-bar').css({"height": $('.panel-body').height()-84});
-                    $('.loading-spin').css({"padding": "5% 40%"});
+					$('#install-content').html(json['output']);
+					$('.loading-bar').css({"height": $('.panel-body').height()-84});
+					$('.loading-spin').css({"padding": "5% 40%"});
 
-                    $.ajax({
-                        url: 'index.php?route=main/removeinstall',
-                        type: 'post'
-                    });
-                }
-
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    }
+					$.ajax({
+						url: 'index.php?route=main/removeinstall',
+						type: 'post',
+						dataType: 'json',
+						success: function(json) {
+							if (!json['success']) {
+								$('#error-remove-install').css('display', 'block');
+							}
+						},
+						error: function() {
+							$('#error-remove-install').css('display', 'block');
+						}
+					});
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
 <?php } ?>
-//--></script>
+</script>
