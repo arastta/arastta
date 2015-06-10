@@ -38,13 +38,13 @@
 
         <div class="form-group pull-left">
             <div class="col-xs-12">
-                <button type="button" onclick="displayDatabase();" class="btn btn-primary"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+                <button type="button" onclick="displayDatabase();" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
         </div>
 
         <div class="form-group pull-right">
             <div class="col-xs-12">
-                <button type="button" onclick="saveSettings();" class="btn btn-primary"><?php echo $button_next; ?> <i class="fa fa-arrow-right"></i></button>
+                <button type="button" onclick="saveSettings();" class="btn btn-success"><?php echo $button_next; ?> <i class="fa fa-arrow-right"></i></button>
             </div>
         </div>
     </div>
