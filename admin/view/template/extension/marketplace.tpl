@@ -36,7 +36,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-api_key"><span data-toggle="tooltip" title="<?php echo $help_api_key; ?>"><a href="<?php echo $api_key_href; ?>" target="_blank"><?php echo $entry_api_key; ?></a></span></label>
                 <div class="col-sm-10">
-                  <input type="password" name="api_key" placeholder="<?php echo $entry_api_key; ?>" rows="5" id="input-api_key" class="form-control" />
+                  <input type="password" name="api_key" placeholder="<?php echo $entry_api_key; ?>" id="input-api_key" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
