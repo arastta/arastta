@@ -241,8 +241,12 @@ class ModelMain extends Model {
 			// Discard chmod failure, some systems may not support it
 		}
 		
-		$this->filesystem->remove(DIR_ROOT . 'install');
-		
+		try {
+			$this->filesystem->remove(DIR_ROOT . 'install');
+		} catch (Exception $e) {
+			return false;
+		}
+
 		return true;
 	}
 }

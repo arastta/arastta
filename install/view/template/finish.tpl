@@ -3,6 +3,12 @@
         <i class="fa fa-thumbs-o-up fa-4x"></i>&nbsp;<h4><?php echo $text_finish_header; ?></h4>
     </div>
 </div>
+<div class="col-xs-12" style="display:none;" id="error-remove-install">
+    <div class="alert alert-danger">
+    	<i class="fa fa-exclamation-circle"></i> <?php echo $error_remove_install; ?>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+</div>
 <div class="col-xs-12" style="margin: 20px 0;">
     <div class="col-xs-6">
         <a href="<?php echo $store; ?>" class="btn btn-default"><i class="fa fa-shopping-cart"></i>&nbsp;<?php echo $button_store; ?></a>

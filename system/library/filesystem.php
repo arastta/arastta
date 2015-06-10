@@ -11,11 +11,11 @@ class Filesystem extends Symfony\Component\Filesystem\Filesystem {
 		// extend later
 	}
 
-    public function mkdir($dirs, $mode = 0755) {
-        parent::mkdir($dirs, $mode);
-    }
+	public function mkdir($dirs, $mode = 0755) {
+		parent::mkdir($dirs, $mode);
+	}
 
-    public function remove($files) {
-        parent::remove($files);
-    }
+	public function remove($files) {
+		parent::remove($files);
+	}
 }
