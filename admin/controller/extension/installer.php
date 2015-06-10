@@ -776,7 +776,16 @@ class ControllerExtensionInstaller extends Controller {
 		$json = array();
 		$data = $this->utility->getRemoteData(html_entity_decode("http://arastta.io/" . rtrim($this->request->post['store'], 's') . "/1.0/download/" . $this->request->post['product_id'] . "/latest/" . VERSION . "/" . $this->config->get('api_key')), array('referrer' => true));
 
-		if ($data) {
+		$response = json_decode($data, true);
+		if (empty($data) and isset($response['error']) or (isset($response['status']) and $response['status'] == 'Error')) {
+			if (isset($response['error'])) {
+				$json['error'] = $response['error'];
+			} else {
+				$json['error'] = $this->language->get('error_download');
+			}
+		}
+
+		if ($data and !isset($json['error'])) {
 			$path = 'temp-' . md5(mt_rand());
 			$file = DIR_UPLOAD . $path . '/upload.zip';
 
