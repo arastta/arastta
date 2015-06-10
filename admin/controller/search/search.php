@@ -10,118 +10,116 @@ class ControllerSearchSearch extends Controller {
 		if(empty($this->session->data['token'])) {
 			return;
 		}
-	
+
 		$this->load->language('search/search');
 
-        $data = array();
-
-        $data = $this->language->all();
+		$data = $this->language->all();
 
 		$data['search_link'] = $this->url->link('search/search/search', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		return $this->load->view('search/search.tpl', $data);
 	}
 
-    public function search(){
-        $this->load->language('search/search');
-        
-        $data = $this->language->all();
+	public function search(){
+		$this->load->language('search/search');
 
-        $data['token'] = $this->session->data['token'];
+		$data = $this->language->all();
 
-        if(!empty($this->request->get['query'])) {
-            $_data['query'] = $this->request->get['query'];
-        }
-        else{
-            $json['error'] = $this->language->get('text_empty_query');
-        }
+		$data['token'] = $this->session->data['token'];
 
-        if(!empty($this->request->get['search-option'])) {
-            $search_option = $this->request->get['search-option'];
-        }
-        else{
-            $search_option = 'catalog';
-        }
+		if(!empty($this->request->get['query'])) {
+			$_data['query'] = $this->request->get['query'];
+		}
+		else{
+			$json['error'] = $this->language->get('text_empty_query');
+		}
 
-        if(!empty($json['error'])) {
-            $this->response->setOutput(json_encode($json));
-            return;
-        }
+		if(!empty($this->request->get['search-option'])) {
+			$search_option = $this->request->get['search-option'];
+		}
+		else{
+			$search_option = 'catalog';
+		}
 
-        $this->load->model('tool/image');
-        $data['no_image'] = $this->model_tool_image->resize('no_image.png', 30, 30);
+		if(!empty($json['error'])) {
+			$this->response->setOutput(json_encode($json));
+			return;
+		}
 
-        $this->load->model('search/search');
+		$this->load->model('tool/image');
+		$data['no_image'] = $this->model_tool_image->resize('no_image.png', 30, 30);
 
-        switch($search_option) {
-            case 'catalog':
-                // Get products
-                $data['products'] = $this->model_search_search->getProducts($_data);
+		$this->load->model('search/search');
 
-                foreach($data['products'] as $key => $product){
-                    if(!empty($product['image'])) {
-                        $data['products'][$key]['image'] = $this->model_tool_image->resize($product['image'], 30, 30);
-                    }
-                    else{
-                        $data['products'][$key]['image'] = $this->model_tool_image->resize('no_image.png', 30, 30);
-                    }
+		switch($search_option) {
+			case 'catalog':
+				// Get products
+				$data['products'] = $this->model_search_search->getProducts($_data);
 
-                    $data['products'][$key]['url'] = $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL');
-                }
+				foreach($data['products'] as $key => $product){
+					if(!empty($product['image'])) {
+						$data['products'][$key]['image'] = $this->model_tool_image->resize($product['image'], 30, 30);
+					}
+					else{
+						$data['products'][$key]['image'] = $this->model_tool_image->resize('no_image.png', 30, 30);
+					}
 
-                // Get categories
-                $data['categories'] = $this->model_search_search->getCategories($_data);
+					$data['products'][$key]['url'] = $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL');
+				}
 
-                foreach($data['categories'] as $key => $category){
-                    if(!empty($category['image'])) {
-                        $data['categories'][$key]['image'] = $this->model_tool_image->resize($category['image'], 30, 30);
-                    }
-                    else{
-                        $data['categories'][$key]['image'] = $this->model_tool_image->resize('no_image.png', 30, 30);
-                    }
+				// Get categories
+				$data['categories'] = $this->model_search_search->getCategories($_data);
 
-                    $data['categories'][$key]['url'] = $this->url->link('catalog/category/edit', 'token=' . $this->session->data['token'] . '&category_id=' . $category['category_id'], 'SSL');
-                }
+				foreach($data['categories'] as $key => $category){
+					if(!empty($category['image'])) {
+						$data['categories'][$key]['image'] = $this->model_tool_image->resize($category['image'], 30, 30);
+					}
+					else{
+						$data['categories'][$key]['image'] = $this->model_tool_image->resize('no_image.png', 30, 30);
+					}
 
-                // Get manufacturers
-                $data['manufacturers'] = $this->model_search_search->getManufacturers($_data);
+					$data['categories'][$key]['url'] = $this->url->link('catalog/category/edit', 'token=' . $this->session->data['token'] . '&category_id=' . $category['category_id'], 'SSL');
+				}
 
-                foreach($data['manufacturers'] as $key => $manufacturer){
-                    if(!empty($category['image'])) {
-                        $data['manufacturers'][$key]['image'] = $this->model_tool_image->resize($manufacturer['image'], 30, 30);
-                    }
-                    else{
-                        $data['manufacturers'][$key]['image'] = $this->model_tool_image->resize('no_image.png', 30, 30);
-                    }
+				// Get manufacturers
+				$data['manufacturers'] = $this->model_search_search->getManufacturers($_data);
 
-                    $data['manufacturers'][$key]['url'] = $this->url->link('catalog/manufacturer/edit', 'token=' . $this->session->data['token'] . '&manufacturer_id=' . $manufacturer['manufacturer_id'], 'SSL');
-                }
+				foreach($data['manufacturers'] as $key => $manufacturer){
+					if(!empty($category['image'])) {
+						$data['manufacturers'][$key]['image'] = $this->model_tool_image->resize($manufacturer['image'], 30, 30);
+					}
+					else{
+						$data['manufacturers'][$key]['image'] = $this->model_tool_image->resize('no_image.png', 30, 30);
+					}
 
-                $json['result'] = $this->load->view('search/catalog_result.tpl', $data);
+					$data['manufacturers'][$key]['url'] = $this->url->link('catalog/manufacturer/edit', 'token=' . $this->session->data['token'] . '&manufacturer_id=' . $manufacturer['manufacturer_id'], 'SSL');
+				}
 
-                break;
-            case 'customers':
-                $data['customers'] = $this->model_search_search->getCustomers($_data);
+				$json['result'] = $this->load->view('search/catalog_result.tpl', $data);
 
-                foreach($data['customers'] as $key => $customer){
-                    $data['customers'][$key]['url'] = $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $customer['customer_id'], 'SSL');
-                }
+				break;
+			case 'customers':
+				$data['customers'] = $this->model_search_search->getCustomers($_data);
 
-                $json['result'] = $this->load->view('search/customers_result.tpl', $data);
-                break;
-            case 'orders':
-                $data['orders'] = $this->model_search_search->getOrders($_data);
+				foreach($data['customers'] as $key => $customer){
+					$data['customers'][$key]['url'] = $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $customer['customer_id'], 'SSL');
+				}
 
-                foreach($data['orders'] as $key => $order){
-                    $data['orders'][$key]['url'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $order['order_id'], 'SSL');
-                }
+				$json['result'] = $this->load->view('search/customers_result.tpl', $data);
+				break;
+			case 'orders':
+				$data['orders'] = $this->model_search_search->getOrders($_data);
 
-                $json['result'] = $this->load->view('search/orders_result.tpl', $data);
-                break;
-            default:
-                break;
-        }
+				foreach($data['orders'] as $key => $order){
+					$data['orders'][$key]['url'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $order['order_id'], 'SSL');
+				}
 
-        $this->response->setOutput(json_encode($json));
-    }
+				$json['result'] = $this->load->view('search/orders_result.tpl', $data);
+				break;
+			default:
+				break;
+		}
+
+		$this->response->setOutput(json_encode($json));
+	}
 }
