@@ -101,7 +101,7 @@
     <?php if($preturn_update) { ?>
     <li><a href="<?php echo $update; ?>" title="<?php echo $alert_update . ' ' . $text_update; ?>"><?php if(!empty($alert_update)) { ?><span class="label label-danger pull-left"><?php echo $alert_update; ?></span><?php } ?><i class="fa fa-refresh fa-lg"></i></a></li>
     <?php } ?>
-    <li class="dropdown"><a href="http://arastta.org/learn"><i class="fa fa-life-ring fa-lg"></i></a></li>
+    <li class="dropdown"><a href="http://arastta.org/learn" target="_blank"><i class="fa fa-life-ring fa-lg"></i></a></li>
     <li id="header-profile" class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown">
         <img width="25" height="25" src="<?php echo $image; ?>" alt="<?php echo $firstname; ?> <?php echo $lastname; ?>" title="<?php echo $username; ?>" class="img-circle" />
