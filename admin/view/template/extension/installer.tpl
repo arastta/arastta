@@ -144,6 +144,8 @@ function next() {
 			dataType: 'json',
 			data: 'path=' + data.path,
 			success: function(json) {
+				$('#progress-bar').removeClass('progress-bar-warning');
+							
 				if (json['error']) {
 					$('#progress-bar').addClass('progress-bar-danger');
 					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
