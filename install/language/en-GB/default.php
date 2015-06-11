@@ -35,6 +35,18 @@ $_['entry_admin_username']      = 'Admin Username';
 $_['entry_admin_email']         = 'Admin E-Mail';
 $_['entry_admin_password']      = 'Admin Password';
 
+// Help
+$_['help_db_hostname']          = 'Hostname';
+$_['help_db_username']          = 'Username';
+$_['help_db_password']          = 'Password';
+$_['help_db_database']          = 'Database Name';
+$_['help_db_prefix']            = 'Table Prefix';
+$_['help_store_name']           = 'Store Name';
+$_['help_store_email']          = 'Store E-Mail';
+$_['help_admin_username']       = 'Admin Username';
+$_['help_admin_email']          = 'Admin E-Mail';
+$_['help_admin_password']       = 'Admin Password';
+
 // Error
 $_['error_db_hostname'] 	    = 'Hostname required!';
 $_['error_db_username'] 	    = 'Username required!';

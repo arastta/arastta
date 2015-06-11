@@ -85,7 +85,7 @@
 		$('#step-finish').addClass('text-muted');
 
 		$.ajax({
-			url: 'index.php?route=main/displaydatabase',
+			url: 'index.php?route=main/displayDatabase',
 			dataType: 'json',
 			type: 'post',
 			beforeSend: function() {
@@ -107,7 +107,7 @@
 	// Save Database
 	function saveDatabase() {
 		$.ajax({
-			url: 'index.php?route=main/savedatabase',
+			url: 'index.php?route=main/saveDatabase',
 			dataType: 'json',
 			type: 'post',
 			data: $('#install-content input[type=\'text\'], input[type=\'password\']'),
@@ -157,7 +157,7 @@
 	// Save Settings
 	function saveSettings() {
 		$.ajax({
-			url: 'index.php?route=main/savesettings',
+			url: 'index.php?route=main/saveSettings',
 			dataType: 'json',
 			type: 'post',
 			data: $('#install-content input[type=\'text\'], input[type=\'password\']'),
@@ -198,7 +198,7 @@
 					$('.loading-spin').css({"padding": "5% 40%"});
 
 					$.ajax({
-						url: 'index.php?route=main/removeinstall',
+						url: 'index.php?route=main/removeInstall',
 						type: 'post',
 						dataType: 'json',
 						success: function(json) {
