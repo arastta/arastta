@@ -1,5 +1,7 @@
 # Arastta™
 
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/arastta/localized.png)](https://crowdin.com/project/arastta) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/arastta/arastta)
+
 Arastta is the next generation of Open Source eCommerce software built with modern technologies such as Symfony, Doctrine, OOP, Bootstrap, jQuery, Swift Mailer etc.
 
 * [Home](http://arastta.org) - The house of Arastta
@@ -7,10 +9,6 @@ Arastta is the next generation of Open Source eCommerce software built with mode
 * [Ideas](http://arastta.org/ideas) - Share your ideas
 * [Forum](http://arastta.org/forum) - Join the community
 * [Tutorials](http://arastta.org/docs) - Learn more about Arastta
-
-Join our developer chat. We are online every work day between 10:00 and 16:00 UTC+2
-
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/arastta/arastta)
 
 ## Requirements
 
