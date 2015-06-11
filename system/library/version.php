@@ -22,15 +22,15 @@ final class Version extends Object {
 
     protected $minor = '0';
 
-    protected $patch = '4';
+    protected $patch = '5';
 
     protected $build = '';
 
     protected $status = 'Stable';
 
-    protected $date = '04-June-2015';
+    protected $date = '11-June-2015';
 
-    protected $time = '17:00';
+    protected $time = '12:00';
 
     protected $zone = 'GMT +2';
 
