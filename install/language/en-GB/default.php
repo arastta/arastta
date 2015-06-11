@@ -36,16 +36,16 @@ $_['entry_admin_email']         = 'Admin E-Mail';
 $_['entry_admin_password']      = 'Admin Password';
 
 // Help
-$_['help_db_hostname']          = 'Hostname';
-$_['help_db_username']          = 'Username';
-$_['help_db_password']          = 'Password';
-$_['help_db_database']          = 'Database Name';
-$_['help_db_prefix']            = 'Table Prefix';
-$_['help_store_name']           = 'Store Name';
-$_['help_store_email']          = 'Store E-Mail';
-$_['help_admin_username']       = 'Admin Username';
-$_['help_admin_email']          = 'Admin E-Mail';
-$_['help_admin_password']       = 'Admin Password';
+$_['help_db_hostname']          = 'Usually: localhost';
+$_['help_db_username']          = 'Your MySQL username';
+$_['help_db_password']          = 'Your MySQL password';
+$_['help_db_database']          = 'Database you want to run Arastta in';
+$_['help_db_prefix']            = 'Prefix for multiple installs in one db';
+$_['help_store_name']           = 'Name of your store, used everywhere';
+$_['help_store_email']          = 'E-mail of your store, used everywhere';
+$_['help_admin_username']       = 'Username of admin account';
+$_['help_admin_email']          = 'E-mail of admin account';
+$_['help_admin_password']       = 'Password of admin account';
 
 // Error
 $_['error_db_hostname'] 	    = 'Hostname required!';
