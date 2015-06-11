@@ -280,7 +280,6 @@ class ControllerExtensionInstaller extends Controller {
 
 					// $edit_page_url = explode("upload", strtolower($file));
 					$edit_page_url = explode("upload", $file);
-					
                     if(empty($edit_page_url[2])) {
                         $edit_page_url = explode($sub_folder, $edit_page_url);
                         $edit_page_url = 'upload' . $edit_page_url[1];
@@ -511,6 +510,7 @@ class ControllerExtensionInstaller extends Controller {
 
 							if ($modification_info) {
 								$json['overwrite'][] =  $code . '.xml';
+								$json['warning'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
 								$json['error'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
 							}
 						} else {

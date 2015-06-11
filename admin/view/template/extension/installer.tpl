@@ -148,9 +148,17 @@ function next() {
 					$('#progress-bar').addClass('progress-bar-danger');
 					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 					$('#button-clear').prop('disabled', false);
-				} 
-				
+				}
+
+                if (json['warning']) {
+					$('#progress-bar').removeClass('progress-bar-danger');
+					$('#progress-bar').addClass('progress-bar-warning');
+					$('#progress-text').html('<div class="text-warning">' + json['warning'] + '</div>');
+					$('#button-clear').prop('disabled', false);
+				}
+
 				if (json['success']) {
+					$('#progress-bar').removeClass('progress-bar-warning');
 					$('#progress-bar').removeClass('progress-bar-danger');
 					$('#progress-bar').addClass('progress-bar-success');
 					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
