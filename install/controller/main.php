@@ -121,6 +121,8 @@ class ControllerMain extends Controller {
 		if (empty($json)) {
 			$this->load->model('main');
 
+			set_time_limit(300); // 5 minutes
+
 			$this->model_main->createDatabaseTables($this->request->post);
 
 			$this->displayFinish();
