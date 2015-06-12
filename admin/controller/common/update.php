@@ -77,6 +77,8 @@ class ControllerCommonUpdate extends Controller {
         if ($this->validate('modify') and !empty($this->request->get['product_id'])) {
             $this->load->model('common/update');
 
+            set_time_limit(600); // 10 minutes
+
             // Update
             if (!$this->model_common_update->update()) {
                 $this->session->data['msg_error'] = $this->language->get('text_update_error');
