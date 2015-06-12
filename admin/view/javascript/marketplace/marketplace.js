@@ -97,7 +97,7 @@ Marketplace.apps.initialize = function() {
 	Marketplace.loadweb(baseUrl+'index.php?route=extension/marketplace/api&api=api/marketplace');
 };
 
-$(document).on('keypress', '#marketplace-search-input', function() {
+$(document).on('keypress', '#marketplace-search-input', function(event) {
 		var keycode = (event.keyCode ? event.keyCode : event.which);
 		if(keycode == '13'){
 			var search = $(this).val();
