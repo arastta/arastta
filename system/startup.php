@@ -5,12 +5,23 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
+// Installation check, and check on removal of the install directory.
+if ((!file_exists(DIR_ROOT . 'config.php') || (filesize(DIR_ROOT . 'config.php') < 10)) && !defined('INSTALLER')) {
+	if (file_exists(DIR_INSTALL . 'index.php')) {
+		header('Location: ' . str_replace(array('admin', 'index.php', '//'), array('', '', '/'), $_SERVER['REQUEST_URI']) . 'install/index.php');
+
+		exit();
+	} else {
+		die('No configuration file found and no installation code available. Exiting...');
+	}
+}
+
 // Error Reporting
 error_reporting(E_ALL);
 
 // Check Version
 if (version_compare(PHP_VERSION, '5.3.10', '<')) {
-    die('Your host needs to use PHP 5.3.10 or higher to run Arastta.');
+	die('Your host needs to use PHP 5.3.10 or higher to run Arastta.');
 }
 
 if (!ini_get('date.timezone')) {
@@ -53,7 +64,7 @@ if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS
 
 // Composer
 if (!file_exists(DIR_SYSTEM.'vendor/autoload.php')) {
-    die('You need to run Composer first. More details https://github.com/arastta/arastta');
+	die('You need to run Composer first. More details https://github.com/arastta/arastta');
 }
 require_once(DIR_SYSTEM.'vendor/autoload.php');
 
@@ -68,11 +79,11 @@ function modification($filename) {
 	if (substr($filename, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
 		$file = DIR_MODIFICATION . 'system/' . substr($filename, strlen(DIR_SYSTEM));
 	}
-	
+
 	if (is_file($file)) {
 		return $file;
 	}
-	
+
 	return $filename;
 }
 
@@ -85,13 +96,12 @@ function autoload($class) {
 		include(modification($lib));
 
 		return true;
-	}
-    else if (is_file($app)) {
+	} else if (is_file($app)) {
 		include(modification($app));
 
 		return true;
 	}
-    
+
 	return false;
 }
 
