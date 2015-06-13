@@ -25,7 +25,6 @@ $_['text_analytics']               = 'Analytics';
 $_['text_online']                  = 'People Online';
 $_['text_activity']                = 'Recent Activity';
 $_['text_last_order']              = 'Recent Orders';
-$_['text_order']                   = 'Orders';
 $_['text_sale']                    = 'Sales';
 $_['text_customer']                = 'Customers';
 $_['text_affiliates']              = 'Affiliates';
