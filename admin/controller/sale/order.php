@@ -71,6 +71,8 @@ class ControllerSaleOrder extends Controller {
         $app->route();
         $app->dispatch();
 
+        unset($app);
+
         // Return back to admin
         Client::setName('admin');
 
@@ -2314,6 +2316,7 @@ class ControllerSaleOrder extends Controller {
                 // Initialise main classes
                 $app->initialise();
 
+                // Include any URL perameters
                 foreach ($this->request->get as $key => $value) {
                     if ($key != 'route' && $key != 'token' && $key != 'store_id') {
                         $app->request->get[$key] = $value;
@@ -2340,44 +2343,9 @@ class ControllerSaleOrder extends Controller {
                 // Get the output
                 $json = $app->response->getOutput();
 
+                unset($app);
+
                 Client::setName('admin');
-
-                /*
-				// Include any URL perameters
-				$url_data = array();
-				
-				foreach ($this->request->get as $key => $value) {
-					if ($key != 'route' && $key != 'token' && $key != 'store_id') {
-						$url_data[$key] = $value;
-					}
-				}
-				
-				$curl = curl_init();
-				
-				// Set SSL if required
-				if (substr($url, 0, 5) == 'https') {
-					curl_setopt($curl, CURLOPT_PORT, 443);
-				}
-				
-				curl_setopt($curl, CURLOPT_HEADER, false);
-				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
-				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
-				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($curl, CURLOPT_URL, $url . 'index.php?route=' . $this->request->get['api'] . ($url_data ? '&' . http_build_query($url_data) : ''));
-				
-				if ($this->request->post) {
-					curl_setopt($curl, CURLOPT_POST, true);
-					curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
-				}
-				
-				curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
-				
-				$json = curl_exec($curl);
-
-				curl_close($curl);*/
 			}
 		} else {
             $response = array();
