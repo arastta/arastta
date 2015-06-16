@@ -134,7 +134,7 @@ class ControllerAppearanceCustomizer extends Controller {
     }
 
     public function getCustomizerItem(){
-        $useTemplate = $this->config->get('config_template');
+        $use_template = $this->config->get('config_template');
 
         $data['general'] = array(
             "title" => "text_general_title",
@@ -210,8 +210,8 @@ class ControllerAppearanceCustomizer extends Controller {
             unset($data['images']['control']['logo']);
         }
 
-        if(is_file(DIR_CATALOG . 'view/theme/' . $useTemplate . '/customizer.json')) {
-            $json = file_get_contents(DIR_CATALOG . 'view/theme/' . $useTemplate . '/customizer.json');
+        if (is_file(DIR_CATALOG . 'view/theme/' . $use_template . '/customizer.json')) {
+            $json = file_get_contents(DIR_CATALOG . 'view/theme/' . $use_template . '/customizer.json');
             $items = json_decode($json, true);
 
             if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
@@ -232,7 +232,7 @@ class ControllerAppearanceCustomizer extends Controller {
 
                     if (!empty($item_value['control'])) {
                         foreach ($item_value['control'] as $control => $value) {
-                            foreach($value as $key => $val){
+                            foreach ($value as $key => $val){
                                 $data[$item_name]['control'][$control][$key] = $val;
                             }
                         }
@@ -262,7 +262,7 @@ class ControllerAppearanceCustomizer extends Controller {
             )
         );
 
-        $result = $this->getLanguageTex($data, $useTemplate);
+        $result = $this->getLanguageText($data, $use_template);
 
         return $result;
     }
@@ -365,31 +365,31 @@ class ControllerAppearanceCustomizer extends Controller {
        return $this->load->view('appearance/customizer_menu.tpl', $data);
     }
 
-    public function getLanguageTex($data, $useTemplate){
-        $this->load->language('theme/' . $useTemplate);
-        
+    public function getLanguageText($data, $use_template){
+        $this->load->language('theme/' . $use_template);
+
         $language = $this->language->all();
 
-        foreach($data as $key => $value){
-            if(isset($data[$key]['title'])) {
+        foreach ($data as $key => $value){
+            if (isset($data[$key]['title'])) {
                 $data[$key]['title'] = $language[$value['title']];
             }
 
-            if(isset($data[$key]['description'])) {
+            if (isset($data[$key]['description'])) {
                 $data[$key]['description'] = $language[$value['description']];
             }
 
-            foreach($value['control'] as $cont_key => $cont_val){
-                if(isset($data[$key]['control'][$cont_key]['label'])){
+            foreach ($value['control'] as $cont_key => $cont_val){
+                if (isset($data[$key]['control'][$cont_key]['label'])){
                     $data[$key]['control'][$cont_key]['label'] = $language[$cont_val['label']];
                 }
 
-                if(isset($data[$key]['control'][$cont_key]['description'])){
+                if (isset($data[$key]['control'][$cont_key]['description'])){
                     $data[$key]['control'][$cont_key]['description'] = $language[$cont_val['description']];
                 }
 
-                if(isset($data[$key]['control'][$cont_key]['choices'])){
-                    foreach($data[$key]['control'][$cont_key]['choices'] as $choices_key => $choices_val){
+                if (isset($data[$key]['control'][$cont_key]['choices'])){
+                    foreach ($data[$key]['control'][$cont_key]['choices'] as $choices_key => $choices_val){
                         $data[$key]['control'][$cont_key]['choices'][$choices_key] = $language[$choices_val];
                     }
                 }
