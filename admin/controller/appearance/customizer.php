@@ -134,28 +134,28 @@ class ControllerAppearanceCustomizer extends Controller {
     }
 
     public function getCustomizerItem(){
-        $useTemplate = $this->config->get('config_template');
+        $use_template = $this->config->get('config_template');
 
         $data['general'] = array(
-            "title" => array("en" => "General", "tr" => "Genel"),
-            "description" => array("en" => "", "tr" => ""),
+            "title" => "text_general_title",
+            "description" => "text_general_description",
             "control" => array(
                 "sitename" => array(
                     "type" => "text",
-                    "label" => array("en" => "Site Title", "tr" => "Site Başlığı"),
+                    "label" => "text_general_sitename_label",
                     "default" => $this->config->get('config_name'),
                     "selector" => "#logo a"
                 ),
                 "font" => array(
                     "type" => "font",
-                    "label" => array("en" => "Site Font", "tr" => "Site Fontu"),
+                    "label" => "text_general_font_label",
                     "default" => "",
                     "selector" => "body"
                 ),
                 "layout_width" => array(
                     "type" => "select",
-                    "choices" => array( "1170px" => array("en" => "Boxed", "tr" => "Boxed"), "100%" => array("en" => "Full Width", "tr" => "Full Width")),
-                    "label" => array("en" => "Layout", "tr" => "Tasarım"),
+                    "choices" => array( "1170px" => "text_general_layout_width", "100%" => "text_general_layout_full_width"),
+                    "label" => "text_general_layout_label",
                     "default" => "100%",
                     "selector" => "body"
                 )
@@ -163,18 +163,17 @@ class ControllerAppearanceCustomizer extends Controller {
         );
 
         $data['colors'] = array(
-            "title" => array("en" => "Colors", "tr" => "Renkler"),
-            "description" => array("en" => "", "tr" => ""),
+            "title" => "text_colors_title",
             "control" => array(
                 "container_background-color" => array(
                     "type" => "color",
-                    "label" => array("en" => "Background Color", "tr" => "Arka Plan Renk"),
+                    "label" => "text_colors_container_background_label",
                     "default" => "#fff",
                     "selector" => "body"
                 ),
                 "container-color_color" => array(
                     "type" => "color",
-                    "label" => array("en" => "Text Color", "tr" => "Text Renk"),
+                    "label" => "text_colors_container_color_label",
                     "default" => "#666",
                     "selector" => "body"
                 )
@@ -182,21 +181,23 @@ class ControllerAppearanceCustomizer extends Controller {
         );
 
         $this->load->model('tool/image');
+
         $default_image = $this->model_tool_image->resize($this->config->get('config_logo'), 100, 100);
+
         $data['images'] = array(
-            "title" => array("en" => "Images", "tr" => "Resimler"),
-            "description" => array("en" => "", "tr" => ""),
+            "title" => "text_images_title",
+            "description" => "text_images_description",
             "control" => array(
                 "logo" => array(
                     "type" => "image",
-                    "label" => array("en" => "Logo", "tr" => "Logo"),
+                    "label" => "text_images_logo_label",
                     "default" => $default_image,
                     "default_raw" => $this->config->get('config_logo'),
                     "selector" => "#logo a img"
                 ),
                 "container_background-image" => array(
                     "type" => "image",
-                    "label" => array("en" => "Background Image", "tr" => "Arka Plan Resmi"),
+                    "label" => "text_images_container_background_label",
                     "default" => "",
                     "selector" => "body"
                 )
@@ -209,8 +210,8 @@ class ControllerAppearanceCustomizer extends Controller {
             unset($data['images']['control']['logo']);
         }
 
-        if(is_file(DIR_CATALOG . 'view/theme/' . $useTemplate . '/customizer.json')) {
-            $json = file_get_contents(DIR_CATALOG . 'view/theme/' . $useTemplate . '/customizer.json');
+        if (is_file(DIR_CATALOG . 'view/theme/' . $use_template . '/customizer.json')) {
+            $json = file_get_contents(DIR_CATALOG . 'view/theme/' . $use_template . '/customizer.json');
             $items = json_decode($json, true);
 
             if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
@@ -231,7 +232,7 @@ class ControllerAppearanceCustomizer extends Controller {
 
                     if (!empty($item_value['control'])) {
                         foreach ($item_value['control'] as $control => $value) {
-                            foreach($value as $key => $val){
+                            foreach ($value as $key => $val){
                                 $data[$item_name]['control'][$control][$key] = $val;
                             }
                         }
@@ -243,25 +244,27 @@ class ControllerAppearanceCustomizer extends Controller {
         }
 
         $data['custom'] = array(
-            "title" => array("en" => "Custom", "tr" => "Custom"),
-            "description" => array("en" => "", "tr" => ""),
+            "title" => "text_custom_title",
+            "description" => "text_custom_description",
             "control" => array(
                 "custom-css" => array(
                     "type" => "textarea",
-                    "label" => array("en" => "Custom Css", "tr" => "Custom Css"),
+                    "label" => "text_custom_css",
                     "default" => "",
                     "selector" => "head"
                 ),
                 "custom-js" => array(
                     "type" => "textarea",
-                    "label" => array("en" => "Custom Javascript", "tr" => "Custom Javascript"),
+                    "label" => "text_custom_js",
                     "default" => "",
                     "selector" => "head"
                 ),
             )
         );
 
-        return $data;
+        $result = $this->getLanguageText($data, $use_template);
+
+        return $result;
     }
 	
 	public function getFonts(){	
@@ -360,6 +363,40 @@ class ControllerAppearanceCustomizer extends Controller {
         $data['token'] = $this->session->data['token'];
 
        return $this->load->view('appearance/customizer_menu.tpl', $data);
+    }
+
+    public function getLanguageText($data, $use_template){
+        $this->load->language('theme/' . $use_template);
+
+        $language = $this->language->all();
+
+        foreach ($data as $key => $value){
+            if (isset($data[$key]['title'])) {
+                $data[$key]['title'] = $language[$value['title']];
+            }
+
+            if (isset($data[$key]['description'])) {
+                $data[$key]['description'] = $language[$value['description']];
+            }
+
+            foreach ($value['control'] as $cont_key => $cont_val){
+                if (isset($data[$key]['control'][$cont_key]['label'])){
+                    $data[$key]['control'][$cont_key]['label'] = $language[$cont_val['label']];
+                }
+
+                if (isset($data[$key]['control'][$cont_key]['description'])){
+                    $data[$key]['control'][$cont_key]['description'] = $language[$cont_val['description']];
+                }
+
+                if (isset($data[$key]['control'][$cont_key]['choices'])){
+                    foreach ($data[$key]['control'][$cont_key]['choices'] as $choices_key => $choices_val){
+                        $data[$key]['control'][$cont_key]['choices'][$choices_key] = $language[$choices_val];
+                    }
+                }
+            }
+        }
+
+        return $data;
     }
 
     protected function validate() {

@@ -2,19 +2,19 @@
 <?php foreach($sections as $section_name => $section_value){ ?>
 	<li id="accordion-section-<?php echo $section_name; ?>" class="ds_heading accordion-section control-section control-section-default" style="">
 		<h3 class="accordion-section-title" tabindex="0">
-			<?php echo $section_value['title'][$language]; ?>
+			<?php echo $section_value['title']; ?>
 			<span class="screen-reader-text"><?php echo $text_menu_description;?></span>
 		</h3>
 		<ul class="accordion-section-content ds_content" style="">
 			<li class="customizer-section-description-container">
-				<p class="description customizer-section-description"><?php echo $section_value['description'][$language]; ?></p>
+				<p class="description customizer-section-description"><?php echo $section_value['description']; ?></p>
 			</li>
 			<?php foreach($section_value['control'] as $control_name => $control_value) { ?>
 			<li id="customizer-control-<?php echo $control_name; ?>" class="customizer-control customizer-control-text <?php if(!empty($control_value['advance'])) { echo 'advance-hide';} ?>" <?php if(empty($control_value['advance'])) { echo 'style="display: list-item;"';} ?>>
 				<label>
-					<span class="customizer-control-title"><?php echo $control_value['label'][$language]; ?></span>
-					<?php if(!empty($control_value['description'][$language])) { ?>
-						<span class="description customizer-control-description"><?php echo $control_value['description'][$language]; ?></span>
+					<span class="customizer-control-title"><?php echo $control_value['label']; ?></span>
+					<?php if(!empty($control_value['description'])) { ?>
+						<span class="description customizer-control-description"><?php echo $control_value['description']; ?></span>
 					<?php } ?>
 					<?php if(!empty($control_value['advance'])){ $isAdvance = '1'; } ?>
 					<?php switch ($control_value['type']) {
@@ -64,7 +64,7 @@
 									}
 								 ?>
 								<input type="checkbox" name="<?php echo $control_name; ?>[]" id="<?php echo $choices_name; ?>" <?php echo $selected; ?>  value="<?php echo $choices_name; ?>">
-								<?php echo $choices_value[$language]; ?>
+								<?php echo $choices_value; ?>
 							</label>
 						</div>
 					</div>
@@ -93,7 +93,7 @@
 									}
 								?>
 								<input type="radio" name="<?php echo $control_name; ?>" id="<?php echo $choices_name; ?>" <?php echo $selected; ?> value="<?php echo $choices_name; ?>">
-								<?php echo $choices_value[$language]; ?>
+								<?php echo $choices_value; ?>
 							</label>
 						</div>
 					</div>
@@ -119,7 +119,7 @@
 							$selected = '';
 						 }
 						 ?>
-						<option value="<?php echo $choices_name; ?>" <?php echo $selected; ?>><?php echo $choices_value[$language]; ?></option>
+						<option value="<?php echo $choices_name; ?>" <?php echo $selected; ?>><?php echo $choices_value; ?></option>
 						<?php } ?>
 					</select>
 					<?php } ?>
