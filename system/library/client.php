@@ -7,7 +7,7 @@
 
 final class Client {
 
-    private static $name;
+    private static $name = 'catalog';
 
     public static function getName() {
         return self::$name;

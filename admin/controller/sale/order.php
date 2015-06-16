@@ -2308,6 +2308,7 @@ class ControllerSaleOrder extends Controller {
 
         if ($this->validate()) {
 			if (isset($this->session->data['cookie']) && isset($this->request->get['api'])) {
+                // Change the client
                 Client::setName('catalog');
 
                 // App
@@ -2345,6 +2346,7 @@ class ControllerSaleOrder extends Controller {
 
                 unset($app);
 
+                // Return back to admin
                 Client::setName('admin');
 			}
 		} else {
