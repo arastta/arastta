@@ -46,7 +46,7 @@ class ArasttaModification {
 					if (substr($file_node_path.$file_node_name, 0, 7) == 'catalog') {
 						$path = DIR_CATALOG . substr($file_node_path.$file_node_name, 8);
 					} else if (substr($file_node_path.$file_node_name, 0, 5) == 'admin') {
-						$path = DIR_APPLICATION . substr($file_node_path.$file_node_name, 6);
+						$path = DIR_ADMIN . substr($file_node_path.$file_node_name, 6);
 					} else if (substr($file_node_path.$file_node_name, 0, 6) == 'system') {
 						$path = DIR_SYSTEM . substr($file_node_path.$file_node_name, 7);
 					}
@@ -265,8 +265,8 @@ class ArasttaModification {
         if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
             $key = 'catalog/' . substr($file, strlen(DIR_CATALOG));
         }
-        if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
-            $key = 'admin/' . substr($file, strlen(DIR_APPLICATION));
+        if (substr($file, 0, strlen(DIR_ADMIN)) == DIR_ADMIN) {
+            $key = 'admin/' . substr($file, strlen(DIR_ADMIN));
         }
         if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
             $key = 'system/' . substr($file, strlen(DIR_SYSTEM));

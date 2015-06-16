@@ -35,7 +35,7 @@ final class Loader {
     }
 
 	public function model($model) {
-        $file = DIR_APPLICATION . 'model/' . $model . '.php';
+        $file = Client::getDir() . 'model/' . $model . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
 
 		if (file_exists($file)) {

@@ -31,7 +31,7 @@ class ControllerCommonDashboard extends Controller {
 		);
 		
 		// Check install directory exists
-		if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
+		if (is_dir(dirname(DIR_ROOT) . '/install')) {
 			$data['error_install'] = $this->language->get('error_install');
 		} else {
 			$data['error_install'] = '';

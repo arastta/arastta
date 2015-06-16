@@ -83,7 +83,7 @@ class Trigger extends Object {
                 continue;
             }
 
-            $file = DIR_APPLICATION . 'event/' . $path . '.php';
+            $file = Client::getDir() . 'event/' . $path . '.php';
 
             if (!file_exists($file)) {
                 continue;
@@ -101,11 +101,11 @@ class Trigger extends Object {
         $listeners = array();
 
         $files = new Finder();
-        $files->files()->in(DIR_APPLICATION.'event/app/');
+        $files->files()->in(Client::getDir().'event/app/');
 
         $folder = $this->getCallbackFolder();
-        if (!empty($folder) and file_exists(DIR_APPLICATION.'event/'.$folder.'/')) {
-            $files->files()->in(DIR_APPLICATION.'event/'.$folder.'/');
+        if (!empty($folder) and file_exists(Client::getDir().'event/'.$folder.'/')) {
+            $files->files()->in(Client::getDir().'event/'.$folder.'/');
         }
 
         $files->files()->name('*.php');
@@ -117,7 +117,7 @@ class Trigger extends Object {
             $listeners[] = $folder.'/'.$file_name;
 
             // System triggers
-            $file = DIR_APPLICATION . 'event/app/' . $file_name . '.php';
+            $file = Client::getDir() . 'event/app/' . $file_name . '.php';
             if (file_exists($file) and !in_array('app/'.$file_name, $listeners)) {
                 $listeners[] = 'app/'.$file_name;
             }

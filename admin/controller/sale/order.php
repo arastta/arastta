@@ -2456,6 +2456,44 @@ class ControllerSaleOrder extends Controller {
 			}
 			
 			if (isset($this->session->data['cookie']) && isset($this->request->get['api'])) {
+                Client::setName('catalog');
+
+                // App
+                $app = new Catalog();
+
+                // Initialise main classes
+                $app->initialise();
+
+                foreach ($this->request->get as $key => $value) {
+                    if ($key != 'route' && $key != 'token' && $key != 'store_id') {
+                        $app->request->get[$key] = $value;
+                    }
+                }
+
+                $app->request->get['route'] = $this->request->get['api'];
+
+                if ($this->request->post) {
+                    $app->request->post = $this->request->post;
+                }
+
+                $app->session->data['api_id'] = $this->config->get('config_api_id');
+                $app->session->data['cookie'] = $this->session->data['cookie'];
+
+                // Load eCommerce classes
+                $app->ecommerce();
+
+                // Route the app
+                $app->route();
+
+                // Dispatch the app
+                $app->dispatch();
+
+                // Get the output
+                $json = $app->response->getOutput();
+
+                Client::setName('admin');
+
+                /*
 				// Include any URL perameters
 				$url_data = array();
 				
@@ -2490,7 +2528,7 @@ class ControllerSaleOrder extends Controller {
 				
 				$json = curl_exec($curl);
 
-				curl_close($curl);
+				curl_close($curl);*/
 			}
 		} else {
             $response = array();
