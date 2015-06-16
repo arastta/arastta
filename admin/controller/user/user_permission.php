@@ -377,7 +377,7 @@ class ControllerUserUserPermission extends Controller {
 
 		$data['permissions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/*/*.php');
+		$files = glob(DIR_ADMIN . 'controller/*/*.php');
 
 		foreach ($files as $file) {
 			$part = explode('/', dirname($file));
