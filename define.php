@@ -40,5 +40,5 @@ define('DIR_LOG', 			DIR_SYSTEM . 'log/');
 define('DIR_LANGUAGE', 		DIR_CATALOG . 'language/');
 define('DIR_TEMPLATE', 		DIR_CATALOG . 'view/theme/');
 
-define('DIR_APPLICATION', 	DIR_ROOT . 'admin/'); // depreciated due to app instances, use DIR_CATALOG
+define('DIR_APPLICATION', 	DIR_ROOT . 'catalog/'); // depreciated due to app instances, use DIR_CATALOG
 define('DIR_LOGS', 			DIR_SYSTEM . 'log/'); // depreciated due to plural usage, use DIR_LOG

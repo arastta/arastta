@@ -16,6 +16,9 @@ define('AREXE', 1);
 define('INSTALLER', 1);
 
 require_once('define.php');
+require_once(DIR_SYSTEM . 'library/client.php');
+
+Client::setName('install');
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
