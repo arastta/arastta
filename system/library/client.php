@@ -30,4 +30,8 @@ final class Client {
     public static function isCatalog() {
         return (self::getDir() == DIR_CATALOG);
     }
+
+    public static function isInstall() {
+        return (self::getDir() == DIR_INSTALL);
+    }
 }

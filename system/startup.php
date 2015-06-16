@@ -6,7 +6,7 @@
  */
 
 // Installation check, and check on removal of the install directory.
-if ((!file_exists(DIR_ROOT . 'config.php') || (filesize(DIR_ROOT . 'config.php') < 10)) && !defined('INSTALLER')) {
+if ((!file_exists(DIR_ROOT . 'config.php') || (filesize(DIR_ROOT . 'config.php') < 10)) && !Client::isInstall()) {
 	if (file_exists(DIR_INSTALL . 'index.php')) {
 		header('Location: ' . str_replace(array('admin', 'index.php', '//'), array('', '', '/'), $_SERVER['REQUEST_URI']) . 'install/index.php');
 
