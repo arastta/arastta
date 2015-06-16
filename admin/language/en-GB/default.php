@@ -33,7 +33,7 @@ $_['text_no_results']               = 'No results!';
 $_['text_confirm']                  = 'Are you sure?';
 $_['text_home']                     = 'Home';
 
-//Customizer
+// Customizer
 $_['text_general_title']                        = 'General';
 $_['text_general_description']                  = 'General';
 $_['text_general_sitename_label']               = 'Site Title';
@@ -50,9 +50,12 @@ $_['text_custom_title']                         = 'Custom';
 $_['text_custom_description']                   = '';
 $_['text_custom_css']                           = 'Custom Css';
 $_['text_custom_js']                            = 'Custom Javascript';
+$_['text_general_layout_width']                 = 'Boxed';
+$_['text_general_layout_full_width']            = 'Full Width';
 
 // Column
 $_['column_status']       		    = 'Status';
+
 // Button
 $_['button_add']                    = 'Add New';
 $_['button_delete']                 = 'Delete';

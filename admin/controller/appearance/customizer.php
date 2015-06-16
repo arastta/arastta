@@ -154,7 +154,7 @@ class ControllerAppearanceCustomizer extends Controller {
                 ),
                 "layout_width" => array(
                     "type" => "select",
-                    "choices" => array( "1170px" => array("en" => "Boxed", "tr" => "Boxed"), "100%" => array("en" => "Full Width", "tr" => "Full Width")),
+                    "choices" => array( "1170px" => "text_general_layout_width", "100%" => "text_general_layout_full_width"),
                     "label" => "text_general_layout_label",
                     "default" => "100%",
                     "selector" => "body"
@@ -164,7 +164,6 @@ class ControllerAppearanceCustomizer extends Controller {
 
         $data['colors'] = array(
             "title" => "text_colors_title",
-            "description" => array("en" => "", "tr" => ""),
             "control" => array(
                 "container_background-color" => array(
                     "type" => "color",
@@ -245,29 +244,27 @@ class ControllerAppearanceCustomizer extends Controller {
         }
 
         $data['custom'] = array(
-            "title" => "text_customizer_custom_title",
-            "description" => "text_customizer_custom_description",
+            "title" => "text_custom_title",
+            "description" => "text_custom_description",
             "control" => array(
                 "custom-css" => array(
                     "type" => "textarea",
-                    "label" => "text_customizer_custom_css",
+                    "label" => "text_custom_css",
                     "default" => "",
                     "selector" => "head"
                 ),
                 "custom-js" => array(
                     "type" => "textarea",
-                    "label" => "text_customizer_custom_js",
+                    "label" => "text_custom_js",
                     "default" => "",
                     "selector" => "head"
                 ),
             )
         );
 
-        $this->load->language('theme/' . $useTemplate);
-        #Get All Language Text
-        $data2 = $this->language->all();
+        $result = $this->getLanguageTex($data, $useTemplate);
 
-        return $data;
+        return $result;
     }
 	
 	public function getFonts(){	
@@ -366,6 +363,40 @@ class ControllerAppearanceCustomizer extends Controller {
         $data['token'] = $this->session->data['token'];
 
        return $this->load->view('appearance/customizer_menu.tpl', $data);
+    }
+
+    public function getLanguageTex($data, $useTemplate){
+        $this->load->language('theme/' . $useTemplate);
+        
+        $language = $this->language->all();
+
+        foreach($data as $key => $value){
+            if(isset($data[$key]['title'])) {
+                $data[$key]['title'] = $language[$value['title']];
+            }
+
+            if(isset($data[$key]['description'])) {
+                $data[$key]['description'] = $language[$value['description']];
+            }
+
+            foreach($value['control'] as $cont_key => $cont_val){
+                if(isset($data[$key]['control'][$cont_key]['label'])){
+                    $data[$key]['control'][$cont_key]['label'] = $language[$cont_val['label']];
+                }
+
+                if(isset($data[$key]['control'][$cont_key]['description'])){
+                    $data[$key]['control'][$cont_key]['description'] = $language[$cont_val['description']];
+                }
+
+                if(isset($data[$key]['control'][$cont_key]['choices'])){
+                    foreach($data[$key]['control'][$cont_key]['choices'] as $choices_key => $choices_val){
+                        $data[$key]['control'][$cont_key]['choices'][$choices_key] = $language[$choices_val];
+                    }
+                }
+            }
+        }
+
+        return $data;
     }
 
     protected function validate() {
