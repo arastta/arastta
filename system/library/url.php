@@ -37,10 +37,10 @@ class Url extends Object {
             if ($config_secure == 3) { // everywhere
                 $url = $this->ssl;
             }
-            else if (($config_secure == 2) and (IS_ADMIN == false)) { // catalog
+            else if (($config_secure == 2) and (Client::isAdmin() == false)) { // catalog
                 $url = $this->ssl;
             }
-            else if (($config_secure == 1) and (IS_ADMIN == false) and ($secure == true)) { // checkout
+            else if (($config_secure == 1) and (Client::isAdmin() == false) and ($secure == true)) { // checkout
                 $url = $this->ssl;
             }
             else {

@@ -70,10 +70,10 @@ require_once(DIR_SYSTEM.'vendor/autoload.php');
 
 // Modification Override
 function modification($filename) {
-	if (!defined('DIR_CATALOG')) {
-		$file = DIR_MODIFICATION . 'catalog/' . substr($filename, strlen(DIR_APPLICATION));
+	if (Client::isCatalog()) {
+		$file = DIR_MODIFICATION . 'catalog/' . substr($filename, strlen(Client::getDir()));
 	} else {
-		$file = DIR_MODIFICATION . 'admin/' .  substr($filename, strlen(DIR_APPLICATION));
+		$file = DIR_MODIFICATION . 'admin/' .  substr($filename, strlen(Client::getDir()));
 	}
 
 	if (substr($filename, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {

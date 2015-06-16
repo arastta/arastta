@@ -184,7 +184,7 @@ class ControllerCommonHeader extends Controller {
 
         $data['bootstrap_select_lang'] = '';
         $lang_tag = str_replace('-', '_', $this->config->get('config_language_dir'));
-        if (is_file(DIR_APPLICATION.'view/javascript/bootstrap-select/js/i18n/defaults-'.$lang_tag.'.min.js')) {
+        if (is_file(DIR_ADMIN.'view/javascript/bootstrap-select/js/i18n/defaults-'.$lang_tag.'.min.js')) {
             $data['bootstrap_select_lang'] = $lang_tag;
         }
 		

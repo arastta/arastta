@@ -26,9 +26,9 @@ $base = __DIR__;
 define('DIR_BASE',          $base . '/');
 define('DIR_ROOT', 			$base . '/');
 define('DIR_INSTALL',     	DIR_ROOT . 'install/');
-define('DIR_APPLICATION', 	DIR_ROOT . 'catalog/');
 define('DIR_SYSTEM', 		DIR_ROOT . 'system/');
 define('DIR_ADMIN', 		DIR_ROOT . 'admin/');
+define('DIR_CATALOG', 		DIR_ROOT . 'catalog/');
 define('DIR_VQMOD', 		DIR_ROOT . 'vqmod/');
 define('DIR_IMAGE', 		DIR_ROOT . 'image/');
 define('DIR_DOWNLOAD', 		DIR_ROOT . 'download/');
@@ -37,6 +37,8 @@ define('DIR_CONFIG', 		DIR_SYSTEM . 'config/');
 define('DIR_CACHE', 		DIR_SYSTEM . 'cache/');
 define('DIR_MODIFICATION',	DIR_SYSTEM . 'modification/');
 define('DIR_LOG', 			DIR_SYSTEM . 'log/');
+define('DIR_LANGUAGE', 		DIR_CATALOG . 'language/');
+define('DIR_TEMPLATE', 		DIR_CATALOG . 'view/theme/');
+
+define('DIR_APPLICATION', 	DIR_ROOT . 'catalog/'); // depreciated due to app instances, use DIR_CATALOG
 define('DIR_LOGS', 			DIR_SYSTEM . 'log/'); // depreciated due to plural usage, use DIR_LOG
-define('DIR_LANGUAGE', 		DIR_APPLICATION . 'language/');
-define('DIR_TEMPLATE', 		DIR_APPLICATION . 'view/theme/');

@@ -118,7 +118,7 @@ class ControllerExtensionShipping extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('shipping');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/shipping/' . $value . '.php')) {
+			if (!file_exists(DIR_ADMIN . 'controller/shipping/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('shipping', $value);
 
 				unset($extensions[$key]);
@@ -127,7 +127,7 @@ class ControllerExtensionShipping extends Controller {
 
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/shipping/*.php');
+		$files = glob(DIR_ADMIN . 'controller/shipping/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

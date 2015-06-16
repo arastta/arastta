@@ -19,7 +19,7 @@ class Utility extends Object {
     public function getLanguage() {
         $languages = array();
 
-        $prefix = IS_ADMIN ? 'admin_' : '';
+        $prefix = Client::isAdmin() ? 'admin_' : '';
 
         $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE status = '1'");
 
@@ -40,7 +40,7 @@ class Utility extends Object {
             $browser = $this->getBrowserLangCode($languages);
 
             if (is_object($this->config)) {
-                $default = IS_ADMIN ? $this->config->get('config_admin_language') : $this->config->get('config_language');
+                $default = Client::isAdmin() ? $this->config->get('config_admin_language') : $this->config->get('config_language');
             }
             else {
                 $default = 'en-GB';
@@ -59,7 +59,7 @@ class Utility extends Object {
 
         $store_id = $this->config->get('config_store_id');
 
-        if (IS_ADMIN){
+        if (Client::isAdmin()){
             $sql = "SELECT * FROM " . DB_PREFIX . "setting WHERE `key` = 'config_admin_language' AND `store_id` = '" . $store_id . "'";
         } else {
             $sql = "SELECT * FROM " . DB_PREFIX . "setting WHERE `key` = 'config_language' AND `store_id` = '" . $store_id . "'";

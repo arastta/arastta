@@ -900,7 +900,7 @@ class ControllerExtensionInstaller extends Controller {
 			}
 
 			// Compare admin files
-			$file = DIR_APPLICATION.substr($zip_name, 13);
+			$file = DIR_ADMIN.substr($zip_name, 13);
 			if (is_file($file) && strtolower(substr($zip_name, 0, 13)) == 'upload/admin/') {
 				$json['overwrite'][] = substr($zip_name, 7);
 			}
