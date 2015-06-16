@@ -37,7 +37,6 @@ define('DIR_CONFIG', 		DIR_SYSTEM . 'config/');
 define('DIR_CACHE', 		DIR_SYSTEM . 'cache/');
 define('DIR_MODIFICATION',	DIR_SYSTEM . 'modification/');
 define('DIR_LOG', 			DIR_SYSTEM . 'log/');
-define('DIR_LOGS', 			DIR_SYSTEM . 'log/'); // depreciated due to plural usage, use DIR_LOG
 define('DIR_LANGUAGE', 		DIR_INSTALL . 'language/');
 define('DIR_TEMPLATE', 		DIR_INSTALL . 'view/template/');
 
