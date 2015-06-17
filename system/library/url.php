@@ -15,7 +15,7 @@ class Url extends Object {
 
 	public function __construct($domain, $ssl = '', $registry = '') {
 		$this->domain = $domain;
-		$this->ssl = $ssl;
+		$this->ssl = str_replace('http://', 'https://', $ssl);
 
         if (is_object($registry)) {
             $this->config = $registry->get('config');
@@ -31,29 +31,11 @@ class Url extends Object {
             $this->ssl = str_replace('http://', 'https://', $this->domain);
         }
 
-        if (is_object($this->config)) { // keep B/C alive
-            $config_secure = $this->config->get('config_secure');
-
-            if ($config_secure == 3) { // everywhere
-                $url = $this->ssl;
-            }
-            else if (($config_secure == 2) and (Client::isAdmin() == false)) { // catalog
-                $url = $this->ssl;
-            }
-            else if (($config_secure == 1) and (Client::isAdmin() == false) and ($secure == true)) { // checkout
-                $url = $this->ssl;
-            }
-            else {
-                $url = $this->domain;
-            }
+        if ($this->useSSL($secure)) {
+            $url = $this->get('ssl');
         }
         else {
-            if ($secure) {
-                $url = $this->ssl;
-            }
-            else {
-                $url = $this->domain;
-            }
+            $url = $this->get('domain');
         }
 
         // fix if admin forgot the trailing slash
@@ -75,11 +57,11 @@ class Url extends Object {
 	}
 
     public function getDomain($secure = false) {
-        if (!$secure) {
-            $domain = $this->get('domain');
+        if ($this->useSSL($secure)) {
+            $domain = $this->get('ssl');
         }
         else {
-            $domain = $this->get('ssl');
+            $domain = $this->get('domain');
         }
 
         if (empty($domain)) {
@@ -121,5 +103,30 @@ class Url extends Object {
         }
 
         return $url;
+    }
+
+    public function useSSL($secure) {
+        $ret = false;
+
+        if (is_object($this->config)) { // keep B/C alive
+            $config_secure = $this->config->get('config_secure');
+
+            if ($config_secure == 3) { // everywhere
+                $ret = true;
+            }
+            else if (($config_secure == 2) and (Client::isCatalog())) { // catalog
+                $ret = true;
+            }
+            else if (($config_secure == 1) and (Client::isCatalog()) and ($secure == true)) { // checkout
+                $ret = true;
+            }
+        }
+        else {
+            if ($secure) {
+                $ret = true;
+            }
+        }
+
+        return $ret;
     }
 }
