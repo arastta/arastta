@@ -2306,49 +2306,47 @@ class ControllerSaleOrder extends Controller {
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        if ($this->validate()) {
-			if (isset($this->session->data['cookie']) && isset($this->request->get['api'])) {
-                // Change the client
-                Client::setName('catalog');
+        if ($this->validate() && isset($this->request->get['api'])) {
+            // Change the client
+            Client::setName('catalog');
 
-                // App
-                $app = new Catalog();
+            // App
+            $app = new Catalog();
 
-                // Initialise main classes
-                $app->initialise();
+            // Initialise main classes
+            $app->initialise();
 
-                // Include any URL perameters
-                foreach ($this->request->get as $key => $value) {
-                    if ($key != 'route' && $key != 'token' && $key != 'store_id') {
-                        $app->request->get[$key] = $value;
-                    }
+            // Include any URL perameters
+            foreach ($this->request->get as $key => $value) {
+                if ($key != 'route' && $key != 'token' && $key != 'store_id') {
+                    $app->request->get[$key] = $value;
                 }
+            }
 
-                $app->request->get['route'] = $this->request->get['api'];
+            $app->request->get['route'] = $this->request->get['api'];
 
-                if ($this->request->post) {
-                    $app->request->post = $this->request->post;
-                }
+            if ($this->request->post) {
+                $app->request->post = $this->request->post;
+            }
 
-                $app->session->data['api_id'] = $this->config->get('config_api_id');
+            $app->session->data['api_id'] = $this->config->get('config_api_id');
 
-                // Load eCommerce classes
-                $app->ecommerce();
+            // Load eCommerce classes
+            $app->ecommerce();
 
-                // Route the app
-                $app->route();
+            // Route the app
+            $app->route();
 
-                // Dispatch the app
-                $app->dispatch();
+            // Dispatch the app
+            $app->dispatch();
 
-                // Get the output
-                $json = $app->response->getOutput();
+            // Get the output
+            $json = $app->response->getOutput();
 
-                unset($app);
+            unset($app);
 
-                // Return back to admin
-                Client::setName('admin');
-			}
+            // Return back to admin
+            Client::setName('admin');
 		} else {
             $response = array();
             $response['error'] = $this->error;
