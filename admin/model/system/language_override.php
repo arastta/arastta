@@ -12,8 +12,7 @@ class ModelSystemLanguageoverride extends Model {
 	public function getLanguages($filter_data = array()) {
         if (isset($filter_data['filter_client']) and ($filter_data['filter_client'] != 'admin')) {
             $lang_dir = DIR_CATALOG.'language/';
-        }
-        else {
+        } else {
             $lang_dir = DIR_LANGUAGE;
         }
 
@@ -30,86 +29,133 @@ class ModelSystemLanguageoverride extends Model {
     }
 
 	public function getStrings($filter_data = array()) {
-        $temp_data = array();
+        $temp_data		= array();
+        $folders		= array();
+        $paths			= array();
+        $lang_dir		= DIR_LANGUAGE;
+        $filter_path	= ( !empty( $filter_data['filter_path'] ) ? $filter_data['filter_path'] : false );
+        $filter_folder	= ( !empty( $filter_data['filter_folder'] ) ? $filter_data['filter_folder'] : false );
+        $dirs			= array();
+
+        if ( empty( $filter_data['filter_client'] ) ) {
+        	$dirs[] = DIR_CATALOG . 'language/';
+        } else {
+        	switch( $filter_data['filter_client'] )
+        	{
+        		case '*':
+        			$dirs = array(
+	        		 	DIR_CATALOG . 'language/',
+					 	DIR_LANGUAGE
+					);
+					break;
+
+				case 'catalog':
+					$dirs[] = DIR_CATALOG . 'language/';
+					break;
+
+				case 'admin':
+					$dirs[] = DIR_LANGUAGE;
+					break;
+        	}
+        }
 
         if (isset($filter_data['filter_client']) and ($filter_data['filter_client'] != 'admin')) {
-            $lang_dir = DIR_CATALOG.'language/';
+            $lang_dir = DIR_CATALOG . 'language/';
         }
-        else {
-            $lang_dir = DIR_LANGUAGE;
-        }
+
+        if( $filter_path == '..' ) {
+    		$filter_path = 'default.php';
+    	}
+
+    	if( $filter_folder == '..' ) {
+    		$filter_folder = 'default.php';
+    	}
 
         $files = new Finder();
-        $files->files()->in($lang_dir)->exclude('override');
 
-        foreach ($files as $file) {
-            // example: english/catalog/attribute.php
-            $path_name = str_replace('\\', '/', $file->getRelativePathname());
+        foreach( $dirs as $dir ) {
+        	$files->files()->in($dir)->exclude('override');
 
-            $temp = explode('/', $path_name);
+			foreach ($files as $file) {
+	            // example: english/catalog/attribute.php
+	            $path_name = str_replace('\\', '/', $file->getRelativePathname());
 
-            if (isset($filter_data['filter_language']) and isset($temp[0]) and ($filter_data['filter_language'] != $temp[0])) {
-                continue;
-            }
+	            $temp = explode('/', $path_name);
 
-            if (isset($filter_data['filter_folder']) and isset($temp[1]) and ($filter_data['filter_folder'] != $temp[1])) {
-                continue;
-            }
+	            $folders[]	= ( ( $temp[1] != 'default.php' ) ? $temp[1] : '..' );
+				$paths[]	= ( ( $temp[1] != 'default.php' ) ? $temp[1] : '..' ) . ( !empty( $temp[2] ) ? '/' . $temp[2] : '' );
 
-            if (isset($filter_data['filter_path']) and isset($temp[1]) and isset($temp[2]) and ($filter_data['filter_path'] != $temp[1].'/'.$temp[2])) {
-                continue;
-            }
 
-            require($lang_dir.$path_name);
+	            if (isset($filter_data['filter_language']) and isset($temp[0]) and ($filter_data['filter_language'] != $temp[0])) {
+	                continue;
+	            }
 
-            $override_file = $lang_dir.'override/'.$path_name;
-            if (file_exists($override_file)) {
-                require($override_file);
-            }
+	            if ( $filter_folder && !empty( $temp[1] ) ) {
+	            	if( $filter_folder != $temp[1] ) {
+	            		continue;
+	            	}
+	            }
 
-            if (empty($_)) {
-                continue;
-            }
+	            if ( $filter_path && !empty( $temp[1] ) ) {
+	            	$path = $temp[1] . ( !empty( $temp[2] ) ? '/' . $temp[2] : '' );
 
-            // Prepare the array key
-            $key = str_replace('/', '_', $path_name);
-            $key = str_replace('.php', '', $key);
+					if ( $filter_path != $path ) {
+	            		continue;
+	            	}
+	            }
 
-            if (isset($filter_data['filter_text'])) {
-                $_temp = array();
+				if ( file_exists( $dir . $path_name ) ) {
+		            require( $dir . $path_name );
 
-                foreach ($_ as $var => $val) {
-                    if (!stristr($val, $filter_data['filter_text'])) {
-                        continue;
-                    }
+		            $override_file = $dir . 'override/' . $path_name;
+		            if ( file_exists( $override_file ) ) {
+		                require( $override_file );
+		            }
 
-                    $_temp[$var] = $val;
-                }
+		            if ( empty( $_ ) ) {
+		                continue;
+		            }
 
-                if (empty($_temp)) {
-                    continue;
-                }
+		            // Prepare the array key
+		            $key = str_replace( '/', '_', $path_name );
+		            $key = str_replace( '.php', '', $key );
+		            $key = str_replace( array( DIR_ROOT, 'language', '/', '\\' ), '', $dir ) . '_' . $key;
 
-                $temp_data[$key] = $_temp;
-            }
-            else {
-                $temp_data[$key] = $_;
-            }
+		            if (isset($filter_data['filter_text'])) {
+		                $_temp = array();
 
-            unset($_);
-        }
+		                foreach ($_ as $var => $val) {
+		                    if (!stristr($val, $filter_data['filter_text']) && !stristr($var, $filter_data['filter_text']) ) {
+		                        continue;
+		                    }
+
+		                    $_temp[$var] = $val;
+		                }
+
+		                if (empty($_temp)) {
+		                    continue;
+		                }
+
+		                $temp_data[$key] = $_temp;
+		            } else {
+		                $temp_data[$key] = $_;
+		            }
+
+		            unset($_);
+				}
+	        }
+		}
 
         // Substract the first dimension count
-        $total = count($temp_data, COUNT_RECURSIVE) - count($temp_data);
+        $total		= count($temp_data, COUNT_RECURSIVE) - count($temp_data);
+        $data		= array();
+        $counter	= 0;
 
-        $data = array();
-
-        $counter = 0;
         foreach ($temp_data as $key => $strings) {
             $data[$key] = array();
 
             foreach ($strings as $var => $val) {
-                $counter++;
+                ++$counter;
 
                 if ($counter < $filter_data['start']) {
                     continue;
@@ -123,43 +169,49 @@ class ModelSystemLanguageoverride extends Model {
             }
         }
 
-        return array($data, $total);
+		$folders = array_unique( $folders );
+		asort( $folders );
+
+		$paths = array_unique( $paths );
+		asort( $paths );
+
+        return array($data, $total, $folders, $paths);
 	}
 
+	/**
+	 * save edited language strings in new file (folder override)
+	 * @param array		$files
+	 * @return int
+	 */
     public function saveStrings($files) {
         if (empty($files)) {
             return;
         }
 
-        if (isset($this->request->get['filter_client']) and ($this->request->get['filter_client'] != 'admin')) {
-            $lang_dir = DIR_CATALOG.'language/';
-        }
-        else {
-            $lang_dir = DIR_LANGUAGE;
-        }
-
-        // lstrings[english_catalog_attribute][heading_title]
+        // lstrings[catalog_en-GB_catalog_attribute][heading_title]
         foreach ($files as $file => $strings) {
             if (empty($strings)) {
                 continue;
             }
 
             // Lets build the path
-            $temp = explode('_', $file);
-            $path = $temp[0].'/'.$temp[1].'/'.$temp[2];
+            $temp		= explode( '_', $file );
+			$lang_dir	= DIR_ROOT . array_shift( $temp ) . '/language/';
+            $path		= $temp[0] . '/' . $temp[1] . ( !empty( $temp[2] ) ? '/' . $temp[2] : '' );
 
-            if (!empty($temp[3])) {
-                $path .= '_'.$temp[3];
+            if ( !empty( $temp[3] ) ) {
+                $path .= '_' . $temp[3];
             }
 
-            if (!empty($temp[4])) {
-                $path .= '_'.$temp[4];
+            if ( !empty( $temp[4] ) ) {
+                $path .= '_' . $temp[4];
             }
 
             $path .= '.php';
 
             // Make sure the original file exists
-            $org_file = $lang_dir.$path;
+            $org_file = $lang_dir . $path;
+
             if (!file_exists($org_file)) {
                 continue;
             }
@@ -170,7 +222,8 @@ class ModelSystemLanguageoverride extends Model {
             unset($_);
 
             // Load the override if available, to allow return back to the original
-            $ovr_file = $lang_dir.'override/'.$path;
+            $ovr_file = $lang_dir . 'override/' . $path;
+
             if (file_exists($ovr_file)) {
                 require($ovr_file);
 
@@ -218,7 +271,9 @@ class ModelSystemLanguageoverride extends Model {
             }
 
             // Write into the file
-            $this->filesystem->dumpFile($ovr_file, $content, 0644);
+            $this->filesystem->dumpFile($ovr_file, rtrim( $content, "\n" ), 0644);
+
+            return count( $new_strings );
         }
     }
 }
