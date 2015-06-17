@@ -181,6 +181,12 @@ class ControllerCommonHeader extends Controller {
 
 		$data['sitename'] = (strlen($this->config->get('config_name')) > 14) ? substr($this->config->get('config_name'),0,14) . "..." : $this->config->get('config_name');
 		$data['site_url'] = HTTPS_CATALOG;
+
+        $data['bootstrap_select_lang'] = '';
+        $lang_tag = str_replace('-', '_', $this->config->get('config_language_dir'));
+        if (is_file(DIR_ADMIN.'view/javascript/bootstrap-select/js/i18n/defaults-'.$lang_tag.'.min.js')) {
+            $data['bootstrap_select_lang'] = $lang_tag;
+        }
 		
         $data['search'] = $this->load->controller('search/search');
 

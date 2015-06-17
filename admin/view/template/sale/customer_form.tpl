@@ -323,7 +323,7 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-safe"><?php echo $entry_safe; ?></label>
+                        <label class="col-sm-2 control-label" for="input-safe"><span data-toggle="tooltip" title="<?php echo $help_safe; ?>"><?php echo $entry_safe; ?></span></label>
                         <div class="col-sm-10">
                           <select name="safe" id="input-safe" class="form-control">
                             <?php if ($safe) { ?>
@@ -338,7 +338,7 @@
                       </div>
                       <?php if(!empty($show_send_email)) { ?>  
                       <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-send-email"><?php echo $entry_send_email; ?></label>
+                        <label class="col-sm-2 control-label" for="input-send-email"><span data-toggle="tooltip" title="<?php echo $help_send_email; ?>"><?php echo $entry_send_email; ?></span></label>
                         <div class="col-sm-10">
                           <select name="send_email" id="input-send-email" class="form-control">
                             <?php if ($send_email) { ?>

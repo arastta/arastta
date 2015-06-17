@@ -19,12 +19,15 @@ $_['button_continue']      = 'Continue';
 $_['button_installer']     = 'Install manually';
 $_['button_modifications'] = 'Modifications';
 
+// Help
+$_['help_api_key'] = 'Please insert your API Key in order to use Marketplace. If you do not have any, please, click the &quot;API Key&quot; link nearby this tooltip, login and create one.';
+
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify modifications!';
 $_['error_warning']     = 'Warning: Please check the form carefully for errors!';
 $_['error_curl']        = 'Warning: cURL error %s(%s)!';
 $_['error_action']      = 'Warning: Could not complete this action!';
 $_['error_default']     = 'Warning: Something went wrong. Please contact your administration!';
-$_['error_api_key']     = 'Warning: Please insert your API Key in order to be able to enter Marketplace!';
+$_['error_api_key']     = 'Warning: Please insert your API Key in order to use Marketplace. If you do not have already an API Key, please goto <a href="http://extensions.arastta.pro/account/login" target="_blank">Arastta Extensions</a>, login and create one.';
 $_['error_zip']         = 'Warning: ZIP extension needs to be loaded on your server! Please, ask your hosting company for further help.';
 $_['error_xml']         = 'Warning: XML extension needs to be loaded on your server! Please, ask your hosting company for further help.';

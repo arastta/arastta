@@ -25,6 +25,9 @@
 <script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="view/javascript/bootstrap-select/js/bootstrap-select.min.js"></script>
+<?php if ($bootstrap_select_lang) { ?>
+<script type="text/javascript" src="view/javascript/bootstrap-select/js/i18n/defaults-<?php echo $bootstrap_select_lang; ?>.min.js"></script>
+<?php } ?>
 <script type="text/javascript" src="view/javascript/tinymce/jquery.tinymce.min.js"></script>
 <script src="view/javascript/common.js" type="text/javascript"></script>
 
@@ -98,7 +101,7 @@
     <?php if($preturn_update) { ?>
     <li><a href="<?php echo $update; ?>" title="<?php echo $alert_update . ' ' . $text_update; ?>"><?php if(!empty($alert_update)) { ?><span class="label label-danger pull-left"><?php echo $alert_update; ?></span><?php } ?><i class="fa fa-refresh fa-lg"></i></a></li>
     <?php } ?>
-    <li class="dropdown"><a href="http://arastta.org/learn"><i class="fa fa-life-ring fa-lg"></i></a></li>
+    <li class="dropdown"><a href="http://arastta.org/learn" target="_blank"><i class="fa fa-life-ring fa-lg"></i></a></li>
     <li id="header-profile" class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown">
         <img width="25" height="25" src="<?php echo $image; ?>" alt="<?php echo $firstname; ?> <?php echo $lastname; ?>" title="<?php echo $username; ?>" class="img-circle" />

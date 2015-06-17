@@ -26,7 +26,13 @@ class ControllerLocalisationLanguage extends Controller {
 		$this->load->model('localisation/language');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$language = $this->model_localisation_language->addLanguage($this->request->post);
+            $data = $this->request->post;
+
+            if (empty($data['locale'])) {
+                $data['locale'] = '';
+            }
+
+            $language_id = $this->model_localisation_language->addLanguage($data);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -66,7 +72,14 @@ class ControllerLocalisationLanguage extends Controller {
 		$this->load->model('localisation/language');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_language->editLanguage($this->request->get['language_id'], $this->request->post);
+            $data = $this->request->post;
+            $language_id = $this->request->get['language_id'];
+
+            if (empty($data['locale'])) {
+                $data['locale'] = '';
+            }
+
+            $this->model_localisation_language->editLanguage($language_id, $data);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -85,7 +98,7 @@ class ControllerLocalisationLanguage extends Controller {
 			}
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                $this->response->redirect($this->url->link('localisation/language/edit', 'language_id='.$this->request->get['language_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+                $this->response->redirect($this->url->link('localisation/language/edit', 'language_id='.$language_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {

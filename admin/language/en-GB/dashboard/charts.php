@@ -25,7 +25,6 @@ $_['text_analytics']               = 'Analytics';
 $_['text_online']                  = 'People Online';
 $_['text_activity']                = 'Recent Activity';
 $_['text_last_order']              = 'Recent Orders';
-$_['text_order']                   = 'Orders';
 $_['text_sale']                    = 'Sales';
 $_['text_customer']                = 'Customers';
 $_['text_affiliates']              = 'Affiliates';
@@ -82,4 +81,4 @@ $_['column_product_name']          = 'Product Name';
 $_['column_product_id']            = 'Product ID';
 
 $_['button_view']                  = 'View';
-$_['button_Edit']                  = 'Edit';
+$_['button_edit']                  = 'Edit';

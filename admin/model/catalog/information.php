@@ -80,7 +80,7 @@ class ModelCatalogInformation extends Model {
         foreach ($data['seo_url'] as $language_id => $value) {
             $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . (int)$information_id . "' AND language_id = '" . $this->db->escape($language_id) . "'");
 
-            $alias = empty($value) ? $data['information_description'][$language_id]['name'] : $value;
+            $alias = empty($value) ? $data['information_description'][$language_id]['title'] : $value;
 
             $alias = $this->model_catalog_url_alias->generateAlias($alias);
 

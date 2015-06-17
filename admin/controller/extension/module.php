@@ -144,7 +144,7 @@ class ControllerExtensionModule extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('module');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/module/' . $value . '.php')) {
+			if (!file_exists(DIR_ADMIN . 'controller/module/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('module', $value);
 
 				unset($extensions[$key]);
@@ -155,7 +155,7 @@ class ControllerExtensionModule extends Controller {
 
 		$data['extensions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/module/*.php');
+		$files = glob(DIR_ADMIN . 'controller/module/*.php');
 
 		if ($files) {
 			foreach ($files as $file) {

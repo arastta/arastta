@@ -32,7 +32,7 @@ class Route extends Object {
 
         $query_string = $this->uri->getQuery();
 
-        $route = str_replace($this->url->getDomain(), '', rawurldecode($this->uri->toString()));
+        $route = str_replace($this->url->getFullUrl(), '', rawurldecode($this->uri->toString()));
         $route = str_replace('?'.$query_string, '', $route);
 
         // Don't parse if home page

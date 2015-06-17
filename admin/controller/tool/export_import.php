@@ -2,6 +2,7 @@
 /**
  * @package		Arastta eCommerce
  * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright	Copyright (C) 2010-2015 JNeuhoff. All rights reserved. (mhccorp.com)
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
@@ -15,7 +16,6 @@ class ControllerToolExportImport extends Controller {
 		$this->load->model('tool/export_import');
 		$this->getForm();
 	}
-
 
 	public function upload() {
 		$this->load->language('tool/export_import');
@@ -42,7 +42,6 @@ class ControllerToolExportImport extends Controller {
 		$this->getForm();
 	}
 
-
 	protected function return_bytes($val)
 	{
 		$val = trim($val);
@@ -64,7 +63,6 @@ class ControllerToolExportImport extends Controller {
 		}
 		return $val;
 	}
-
 
 	public function download() {
 		$this->load->language('tool/export_import');
@@ -108,7 +106,6 @@ class ControllerToolExportImport extends Controller {
 		$this->getForm();
 	}
 
-
 	public function settings() {
 		$this->load->language('tool/export_import');
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -127,7 +124,6 @@ class ControllerToolExportImport extends Controller {
 		}
 		$this->getForm();
 	}
-
 
 	protected function getForm() {
 		$data = array();
@@ -333,7 +329,6 @@ class ControllerToolExportImport extends Controller {
 		$this->response->setOutput($this->load->view('tool/export_import.tpl', $data));
 	}
 
-
 	protected function validateDownloadForm() {
 		if (!$this->user->hasPermission('access', 'tool/export_import')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -383,7 +378,6 @@ class ControllerToolExportImport extends Controller {
 		return true;
 	}
 
-
 	protected function validateUploadForm() {
 		if (!$this->user->hasPermission('modify', 'tool/export_import')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -418,7 +412,6 @@ class ControllerToolExportImport extends Controller {
 			return false;
 		}
 	}
-
 
 	protected function validateSettingsForm() {
 		if (!$this->user->hasPermission('access', 'tool/export_import')) {
@@ -467,23 +460,5 @@ class ControllerToolExportImport extends Controller {
 		}
 
 		return true;
-	}
-
-
-	public function getNotifications() {
-		sleep(1); // give the data some "feel" that its not in our system
-		$this->load->model('tool/export_import');
-		$this->load->language( 'tool/export_import' );
-		$response = $this->model_tool_export_import->getNotifications();
-		$json = array();
-		if ($response===false) {
-			$json['message'] = '';
-			$json['error'] = $this->language->get( 'error_notifications' );
-		} else {
-			$json['message'] = $response;
-			$json['error'] = '';
-		}
-
-		$this->response->setOutput(json_encode($json));
 	}
 }

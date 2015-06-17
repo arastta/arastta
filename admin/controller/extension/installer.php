@@ -250,6 +250,16 @@ class ControllerExtensionInstaller extends Controller {
             // Fire event
             $this->trigger->fire('pre.admin.extension.ftp', $directory);
 
+            $replaceFolderName = array(
+                'admin/language/english' => 'admin/language/en-GB',
+                'catalog/language/english' => 'catalog/language/en-GB'
+            );
+
+            // Replace language folder
+            foreach($replaceFolderName as $folderKey => $folderValue){
+                $this->replaceFolderName($directory . $folderKey, $directory . $folderValue);
+            }
+
             // Get a list of files ready to upload
 			$files = array();
 
@@ -263,10 +273,21 @@ class ControllerExtensionInstaller extends Controller {
 						$path[] = $file . '/*';
 					}
 
-					$edit_page_url = explode("upload", strtolower($file));
-					$edit_page_url = 'upload'.$edit_page_url[2];
+                    // Replace directory path for language
+                    foreach($replaceFolderName as $folderKey => $folderValue){
+                        $file = str_replace($folderKey, $folderValue, $file);
+                    }
 
-					$this->permission_control($edit_page_url);
+					// $edit_page_url = explode("upload", strtolower($file));
+					$edit_page_url = explode("upload", $file);
+                    if(empty($edit_page_url[2])) {
+                        $edit_page_url = explode($sub_folder, $edit_page_url);
+                        $edit_page_url = 'upload' . $edit_page_url[1];
+                    } else {
+                        $edit_page_url = 'upload' . $edit_page_url[2];
+                    }
+
+					$this->permissionControl($edit_page_url);
                     $this->replaceFileArastta($file);
 
                     $files[] = $file;
@@ -282,7 +303,7 @@ class ControllerExtensionInstaller extends Controller {
                 $destination = substr($file, strlen($directory));
                 if (is_dir($file)) {
                     if (!is_dir($root.$destination)) {
-                        if (!mkdir($root.$destination)) {
+                        if (!mkdir($root . $destination)) {
                             $json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);
                             exit();
                         }
@@ -290,7 +311,7 @@ class ControllerExtensionInstaller extends Controller {
                 }
 
                 if (is_file($file)) {
-                    if (!copy($file, $root.$destination)) {
+                    if (!copy($file, $root . $destination)) {
                         $json['error'] = sprintf($this->language->get('error_ftp_file'), $file);
                     }
                 }
@@ -303,7 +324,7 @@ class ControllerExtensionInstaller extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function permission_control($edit_page_url){
+	public function permissionControl($edit_page_url){
         $search_page = array(
             'appearance' 			=> 'appearance',
             'catalog' 			    => 'catalog',
@@ -378,6 +399,12 @@ class ControllerExtensionInstaller extends Controller {
             }
 
             file_put_contents($file, $content);
+        }
+    }
+
+    public function replaceFolderName($originalName, $changeName) {
+        if(is_dir($originalName)) {
+            rename($originalName, $changeName);
         }
     }
 
@@ -483,6 +510,7 @@ class ControllerExtensionInstaller extends Controller {
 
 							if ($modification_info) {
 								$json['overwrite'][] =  $code . '.xml';
+								$json['warning'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
 								$json['error'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
 							}
 						} else {
@@ -776,7 +804,16 @@ class ControllerExtensionInstaller extends Controller {
 		$json = array();
 		$data = $this->utility->getRemoteData(html_entity_decode("http://arastta.io/" . rtrim($this->request->post['store'], 's') . "/1.0/download/" . $this->request->post['product_id'] . "/latest/" . VERSION . "/" . $this->config->get('api_key')), array('referrer' => true));
 
-		if ($data) {
+		$response = json_decode($data, true);
+		if (empty($data) and isset($response['error']) or (isset($response['status']) and $response['status'] == 'Error')) {
+			if (isset($response['error'])) {
+				$json['error'] = $response['error'];
+			} else {
+				$json['error'] = $this->language->get('error_download');
+			}
+		}
+
+		if ($data and !isset($json['error'])) {
 			$path = 'temp-' . md5(mt_rand());
 			$file = DIR_UPLOAD . $path . '/upload.zip';
 
@@ -863,7 +900,7 @@ class ControllerExtensionInstaller extends Controller {
 			}
 
 			// Compare admin files
-			$file = DIR_APPLICATION.substr($zip_name, 13);
+			$file = DIR_ADMIN.substr($zip_name, 13);
 			if (is_file($file) && strtolower(substr($zip_name, 0, 13)) == 'upload/admin/') {
 				$json['overwrite'][] = substr($zip_name, 7);
 			}

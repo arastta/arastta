@@ -64,10 +64,12 @@ $_['entry_description']         = 'Description';
 $_['entry_name']                = 'Affiliate Name';
 $_['entry_approved']            = 'Approved';
 $_['entry_date_added']          = 'Date Added';
+$_['entry_send_email']      	= 'Send Email';
 
 // Help
 $_['help_code']                 = 'The tracking code that will be used to track referrals.';
 $_['help_commission']           = 'Percentage the affiliate receives on each order.';
+$_['help_send_email']			= 'Send an information email to the affiliate after being saved.';
 
 // Error
 $_['error_permission']          = 'Warning: You do not have permission to modify affiliates!';

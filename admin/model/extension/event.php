@@ -25,8 +25,8 @@ class ModelExtensionEvent extends Model {
           '_', '-', '.'
         );
 		
-        if(is_file(DIR_APPLICATION . 'event/app/' . $code . '.php')) {
-            $file = file_get_contents(DIR_APPLICATION . 'event/app/' . $code . '.php', FILE_USE_INCLUDE_PATH);
+        if (is_file(Client::getDir() . 'event/app/' . $code . '.php')) {
+            $file = file_get_contents(Client::getDir() . 'event/app/' . $code . '.php', FILE_USE_INCLUDE_PATH);
 
             $searchString = 'class EventApp' . ucwords(str_replace($replaceArray, "", $code)) . ' extends Event {';
 
@@ -38,7 +38,7 @@ class ModelExtensionEvent extends Model {
         $this->load->controller("' . $action . '", $data);
     }
         ';
-            if(strpos($file, $string) === false) {
+            if (strpos($file, $string) === false) {
 
                 $index = str_replace($searchString, $searchString.$function , $file);
 
@@ -62,12 +62,10 @@ class EventApp' . ucwords(str_replace($replaceArray, "", $code)) . ' extends Eve
 }';
         }
 
-		$this->filesystem->dumpFile(DIR_APPLICATION . 'event/app/' . $code . '.php', $content, 0644);
-		$this->filesystem->dumpFile(DIR_CATALOG . 'event/app/' . $code . '.php', $content, 0644);
+		$this->filesystem->dumpFile(Client::getDir() . 'event/app/' . $code . '.php', $content, 0644);
     }
 
 	public function deleteEvent($code) {
-        $this->filesystem->remove(DIR_APPLICATION . 'event/app/' . $code . '.php');
-        $this->filesystem->remove(DIR_CATALOG . 'event/app/' . $code . '.php');
+        $this->filesystem->remove(Client::getDir() . 'event/app/' . $code . '.php');
 	}
 }

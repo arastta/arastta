@@ -18,6 +18,7 @@ $_['text_product']              = 'Product';
 $_['text_manufacturer']         = 'Manufacturer';
 $_['text_information']          = 'Information';
 $_['text_custom']               = 'Custom Link';
+$_['text_confirm']				= 'Are you sure?';
 
 $_['text_menu_title']           = 'Menu Structure';
 $_['text_menu_description']     = 'Drag each item into the order you prefer. Click the arrow on the right of the item to reveal additional configuration options.';

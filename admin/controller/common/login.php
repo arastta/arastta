@@ -53,16 +53,7 @@ class ControllerCommonLogin extends Controller {
 			}
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_login'] = $this->language->get('text_login');
-		$data['text_forgotten'] = $this->language->get('text_forgotten');
-
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_language'] = $this->language->get('entry_language');
-
-		$data['button_login'] = $this->language->get('button_login');
+		$data = $this->language->all();
 
 		if ((isset($this->session->data['token']) && !isset($this->request->get['token'])) || ((isset($this->request->get['token']) && (isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token']))))) {
 			$this->error['warning'] = $this->language->get('error_token');
@@ -138,8 +129,7 @@ class ControllerCommonLogin extends Controller {
         $total_languages = $this->model_localisation_language->getTotalLanguages();
         if ($total_languages > 1) {
             $data['languages'] = $this->model_localisation_language->getLanguages();
-        }
-        else {
+        } else {
             $data['languages'] = '';
             $this->session->data['language'] = $this->config->get('config_admin_language');
         }

@@ -35,6 +35,7 @@ $_['text_home']                     = 'Home';
 
 // Column
 $_['column_status']       		    = 'Status';
+
 // Button
 $_['button_add']                    = 'Add New';
 $_['button_delete']                 = 'Delete';

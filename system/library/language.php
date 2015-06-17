@@ -68,19 +68,37 @@ class Language {
     public function load($filename) {
         $_ = array();
 
-        $file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
+        $dir = Client::getDir();
+
+		// Step 1: Load the en-GB language translation (it's the safest fallback) 
+        $file = $dir . 'language/' . 'en-GB/' . $filename . '.php';
 
         if (file_exists($file)) {
             require(modification($file));
         }
 
-        $file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
+		// Step 2: Load the store's default language translation (it's the store owner preferred fallback)
+		// Don't load twice if it's en-GB
+		if ($this->default != 'en-GB') {
+			$file = $dir . 'language/' . $this->default . '/' . $filename . '.php';
 
-        if (file_exists($file)) {
-            require(modification($file));
-        }
+			if (file_exists($file)) {
+				require(modification($file));
+			}
+		}
 
-        $file = DIR_LANGUAGE . 'override/' . $this->directory . '/' . $filename . '.php';
+		// Step 3: Load the user's selected language translation (it's the user preferred language)
+		// Dont't load twice if it's en-GB or same as default
+		if (($this->directory != 'en-GB') and ($this->directory != $this->default)) {
+			$file = $dir . 'language/' . $this->directory . '/' . $filename . '.php';
+
+			if (file_exists($file)) {
+				require(modification($file));
+			}
+		}
+
+		// Step 4: Load the user's selected language override (it's the store owner preferred language)
+        $file = $dir . 'language/' . 'override/' . $this->directory . '/' . $filename . '.php';
 
         if (file_exists($file)) {
             require(modification($file));
@@ -94,7 +112,7 @@ class Language {
     public function override($filename) {
         $_ = array();
 
-        $file = DIR_LANGUAGE . 'override/' . $this->directory . '/' . $filename . '.php';
+        $file = Client::getDir() . 'language/' . 'override/' . $this->directory . '/' . $filename . '.php';
 
         if (file_exists($file)) {
             require(modification($file));

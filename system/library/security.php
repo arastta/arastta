@@ -79,6 +79,10 @@ class Security extends Object {
             // also remove blank entries that do not pose a threat
             $exceptions[] = 'http://&';
             $exceptions[] = 'https://&';
+
+			// Remove arastta.pro links for PayPal Express In-Context Checkout
+            $exceptions[] = 'http://arastta.pro';
+            $exceptions[] = 'https://arastta.pro';
         }
 
         $uri = str_replace($exceptions, '', $uri);

@@ -162,7 +162,7 @@ class ControllerExtensionModification extends Controller {
 					}
 
 					if (substr($file->getAttribute('path'), 0, 5) == 'admin') {
-						$path = DIR_APPLICATION . str_replace('../', '', substr($file->getAttribute('path'), 6));
+						$path = DIR_ADMIN . str_replace('../', '', substr($file->getAttribute('path'), 6));
 					}
 
 					if (substr($file->getAttribute('path'), 0, 6) == 'system') {
@@ -179,8 +179,8 @@ class ControllerExtensionModification extends Controller {
 									$key = 'catalog/' . substr($file, strlen(DIR_CATALOG));
 								}
 
-								if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
-									$key = 'admin/' . substr($file, strlen(DIR_APPLICATION));
+								if (substr($file, 0, strlen(DIR_ADMIN)) == DIR_ADMIN) {
+									$key = 'admin/' . substr($file, strlen(DIR_ADMIN));
 								}
 
 								if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
@@ -790,8 +790,7 @@ class ControllerExtensionModification extends Controller {
                         'author'          => $author,
                         'version'         => $version,
                         'link'            => $link,
-                        'status'          => $status,
-                        'date_added'      => '',
+                        'status'          => ($status) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
                         'enable'          => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $modification_id, 'SSL'),
                         'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $modification_id, 'SSL'),
                         'enabled'         => $status,
