@@ -127,13 +127,17 @@ class ModelMain extends Model {
             return false;
         }
         else {
-			// Create database if not exists
+			// Try to create database, if doesn't exist
 			$sql = "CREATE DATABASE IF NOT EXISTS ".$data['db_database'];
 			if ($conn->query($sql) === false) {
-				$conn->close();
-				error_reporting(E_ALL);
+				// Couldn't create it, just check if exists
+				$sql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '".$data['db_database']."'";
+				if (!$conn->query($sql)->num_rows) {
+					$conn->close();
+					error_reporting(E_ALL);
 
-				return false;
+					return false;
+				}
 			}
 		
             $conn->close();
