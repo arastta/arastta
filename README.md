@@ -2,7 +2,7 @@
 
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/arastta/localized.png)](https://crowdin.com/project/arastta) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/arastta/arastta)
 
-Arastta is the next generation of Open Source eCommerce software built with modern technologies such as Symfony, Doctrine, OOP, Bootstrap, jQuery, Swift Mailer etc.
+Arastta is the next generation of Open Source eCommerce software built with modern technologies such as Symfony, Doctrine (soon), MVC, Bootstrap, jQuery, Swift Mailer etc.
 
 * [Home](http://arastta.org) - The house of Arastta
 * [Blog](http://arastta.org/blog) - Get the latest news
