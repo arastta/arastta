@@ -6,11 +6,6 @@
         <button type="submit" form="form-language-override" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
       </div>
       <h1><?php echo $heading_title; ?></h1>
-      <ul class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-        <?php } ?>
-      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -27,103 +22,107 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
-		  <div class="pull-right">
-			<button type="button" data-toggle="tooltip" title="<?php echo $button_show_filter; ?>" class="btn btn-primary btn-sm" id="showFilter"><i class="fa fa-eye"></i></button>
-			<button type="button" data-toggle="tooltip" title="<?php echo $button_hide_filter; ?>" class="btn btn-primary btn-sm" id="hideFilter"><i class="fa fa-eye-slash"></i></button>
-		  </div>		
+        <div class="pull-right">
+          <button type="button" data-toggle="tooltip" title="<?php echo $button_show_filter; ?>" class="btn btn-primary btn-sm" id="showFilter"><i class="fa fa-eye"></i></button>
+          <button type="button" data-toggle="tooltip" title="<?php echo $button_hide_filter; ?>" class="btn btn-primary btn-sm" id="hideFilter"><i class="fa fa-eye-slash"></i></button>
+        </div>
       </div>
       <div class="panel-body">
-		  <div class="well" style="display:none;">
-				<div class="row">
-					<div class="col-sm-4">
-						<div class="form-group">
-							<label class="control-label" for="input-name"><?php echo $column_text; ?></label>
-                            <input type="text" name="filter_text" value="<?php echo $filter_text; ?>" placeholder="<?php echo $column_text; ?>" id="input-name" class="form-control" autocomplete="off" />
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div class="form-group">
-							<label class="control-label" for="input-name"><?php echo $column_path; ?></label>
-                            <input type="text" name="filter_path" value="<?php echo $filter_path; ?>" placeholder="<?php echo $column_path; ?>" id="input-name" class="form-control" autocomplete="off" />
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label class="control-label" for="input-category"><?php echo $column_language; ?></label>
-							<select name="filter_language" class="form-control">
-                                <option value="*"></option>
-	                            <?php foreach ($languages as $language) { ?>
-                                <?php if ($language == $filter_language) { ?>
-                                <option value="<?php echo $language; ?>" selected="selected"><?php echo ucfirst($language); ?></option>
-                                <?php } else { ?>
-                                <option value="<?php echo $language; ?>"><?php echo ucfirst($language); ?></option>
-                                <?php } ?>
-                                <?php } ?>
-							</select>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
-							<label class="control-label" for="input-category"><?php echo $column_client; ?></label>
-							<select name="filter_client" class="form-control">
-							  <?php if ($filter_client == 'admin') { ?>
-							  <option value="admin" selected="selected"><?php echo $text_admin; ?></option>
-                              <option value="catalog"><?php echo $text_catalog; ?></option>
-							  <?php } else { ?>
-                              <option value="admin"><?php echo $text_admin; ?></option>
-							  <option value="catalog" selected="selected"><?php echo $text_catalog; ?></option>
-							  <?php } ?>
-							</select>
-						</div>
-                        <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
-					</div>
-				</div>
-			</div>
+        <div class="well" style="display:none;">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="input-name"><?php echo $column_text; ?></label>
+                <input type="text" name="filter_text" value="<?php echo $filter_text; ?>" placeholder="<?php echo $column_text; ?>" id="input-name" class="form-control" autocomplete="off" />
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="input-name"><?php echo $column_path; ?></label>
+                <input type="text" name="filter_path" value="<?php echo $filter_path; ?>" placeholder="<?php echo $column_path; ?>" id="input-name" class="form-control" autocomplete="off" />
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label class="control-label"><?php echo $column_language; ?></label>
+                <select name="filter_language" class="form-control">
+                  <option value="*"></option>
+                  <?php foreach ($languages as $language) { ?>
+                  <?php if ($language == $filter_language) { ?>
+                  <option value="<?php echo $language; ?>" selected="selected"><?php echo ucfirst($language); ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $language; ?>"><?php echo $language; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <label class="control-label"><?php echo $column_client; ?></label>
+                <select name="filter_client" class="form-control">
+                  <?php if ($filter_client == 'admin') { ?>
+                  <option value="admin" selected="selected"><?php echo $text_admin; ?></option>
+                  <option value="catalog"><?php echo $text_catalog; ?></option>
+                  <?php } else { ?>
+                  <option value="admin"><?php echo $text_admin; ?></option>
+                  <option value="catalog" selected="selected"><?php echo $text_catalog; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+            </div>
+          </div>
+        </div>
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-language-override">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
-                <tr>
-                    <td class="text-left"><?php echo $column_text; ?></td>
-                    <td class="text-left" style="width: 1px;"><?php echo $column_constant; ?></td>
-                    <td class="text-left" style="width: 1px;"><?php echo $column_path; ?></td>
-                    <td class="text-left" style="width: 1px;"><?php echo $column_language; ?></td>
-                    <td class="text-left" style="width: 1px;"><?php echo $column_client; ?></td>
-                </tr>
+              <tr>
+                <td class="text-left"><?php echo $column_text; ?></td>
+                <td class="text-left" style="width: 1px;"><?php echo $column_constant; ?></td>
+                <td class="text-left" style="width: 1px;"><?php echo $column_path; ?></td>
+                <td class="text-center" style="width: 1px;"><?php echo $column_language; ?></td>
+                <td class="text-left" style="width: 1px;"><?php echo $column_client; ?></td>
+              </tr>
               </thead>
               <tbody>
-                <?php if ($files) { ?>
+              <?php if ($files) { ?>
                 <?php foreach ($files as $key => $strings) { ?>
-                    <?php foreach ($strings as $var => $value) {
-                        $temp = explode('_', $key);
+                  <?php foreach ($strings as $var => $value) {
+                  $temp = explode('_', $key);
 
-                        if (empty($temp[0]) or empty($temp[1]) or empty($temp[2])) {
-                            continue;
-                        }
+                  if (empty($temp[0]) or empty($temp[1])) {
+                    continue;
+                  }
 
-                        $language = $temp[0];
-                        $path = $temp[1].'/'.$temp[2];
+                  $language = $temp[0];
+                  $path = $temp[1];
 
-                        if (!empty($temp[3])) {
-                            $path .= '_'.$temp[3];
-                        }
+                  if (!empty($temp[2])) {
+                    $path .= '/'.$temp[2];
+                  }
 
-                        $path .= '.php';
-                    ?>
-                    <tr>
-                        <td class="text-left"><input type="text" name="lstrings[<?php echo $key; ?>][<?php echo $var; ?>]" value="<?php echo $value; ?>" class="form-control input-full-width" /></td>
-                        <td class="text-left"><?php echo $var; ?></td>
-                        <td class="text-left"><?php echo $path; ?></td>
-                        <td class="text-left"><?php echo ucfirst($language); ?></td>
-                        <td class="text-left"><?php echo ucfirst($filter_client); ?></td>
-                    </tr>
-                    <?php } ?>
-                <?php } ?>
-                <?php } else { ?>
-                <tr>
-                  <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
-                </tr>
-                <?php } ?>
+                  if (!empty($temp[3])) {
+                    $path .= '_'.$temp[3];
+                  }
+
+                  $path .= '.php';
+                ?>
+              <tr>
+                <td class="text-left"><input type="text" name="lstrings[<?php echo $key; ?>][<?php echo $var; ?>]" value="<?php echo $value; ?>" class="form-control input-full-width" /></td>
+                <td class="text-left"><?php echo $var; ?></td>
+                <td class="text-left"><?php echo $path; ?></td>
+                <td class="text-center"><?php echo $language; ?></td>
+                <td class="text-left"><?php echo ucfirst($filter_client); ?></td>
+              </tr>
+              <?php } ?>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+              </tr>
+              <?php } ?>
               </tbody>
             </table>
           </div>
