@@ -29,7 +29,7 @@ class Modification {
 	 * @description Error handler for bad XML files
 	 */
 	public static function handleXMLError($errno, $errstr, $errfile, $errline) {
-		if ($errno == E_WARNING and (substr_count($errstr, 'DOMDocument::loadXML()') > 0)) {
+		if ($errno == E_WARNING && (substr_count($errstr, 'DOMDocument::loadXML()') > 0)) {
 			throw new DOMException(str_replace('DOMDocument::loadXML()', '', $errstr));
 		} else {
 			return false;
@@ -47,7 +47,7 @@ class Modification {
 		// Merge vQmods and OCmods files
 		$files = array_merge(glob(DIR_VQMOD . 'xml/*.xml'), glob(DIR_SYSTEM . 'xml/*.xml'));
 
-		if (!empty($files) and $files) {
+		if (!empty($files) && $files) {
 			foreach ($files as $file) {
 				$xmls[$file] = file_get_contents($file);
 			}
@@ -75,7 +75,7 @@ class Modification {
 				$vqmver  = $modification_node->getElementsByTagName('vqmver')->item(0);
 				if ($vqmver) {
 					$version_check = $vqmver->getAttribute('required');
-					if (strtolower($version_check) == 'true' and version_compare($version, $vqmver->nodeValue, '<')) {
+					if (strtolower($version_check) == 'true' && version_compare($version, $vqmver->nodeValue, '<')) {
 						$log[] = "Modification::applyMod - VQMOD VERSION '" . $vqmver->nodeValue . "' OR ABOVE REQUIRED, XML FILE HAS BEEN SKIPPED";
 						$log[] = "  vqmver = '$vqmver'";
 						$log[] = '----------------------------------------------------------------';
@@ -182,7 +182,7 @@ class Modification {
 
 		$files      = array();
 		$file_names = explode(',', $file_node_name);
-		if (isset($file_names[0]) and $file_names[0] == '') {
+		if (isset($file_names[0]) && $file_names[0] == '') {
 			$file_names = explode(',', $file_node_path);
 			if ($file_names === false) {
 				$file_names = array();
@@ -203,7 +203,7 @@ class Modification {
 
 			$paths = glob($path);
 
-			if (($paths === false) or is_array($paths) and (count($paths) == 0)) {
+			if (($paths === false) || is_array($paths) && (count($paths) == 0)) {
 				switch ($file_node_error) {
 					case 'skip':
 						break;
@@ -278,7 +278,7 @@ class Modification {
 	public function operationNode($nodes, &$modification, $modification_id, $file, $key, $log) {
 		foreach ($nodes as $operation_node) {
 			$operation_node_error = $operation_node->getAttribute('error');
-			if (($operation_node_error != 'skip') and ($operation_node_error != 'log') and $this->is_vqmod) {
+			if (($operation_node_error != 'skip') && ($operation_node_error != 'log') && $this->is_vqmod) {
 				$operation_node_error = 'abort';
 			}
 
@@ -286,7 +286,7 @@ class Modification {
 			if ($ignoreif_node) {
 				$ignoreif_node_regex = $ignoreif_node->getAttribute('regex');
 				$ignoreif_node_value = trim($ignoreif_node->nodeValue);
-				if ($ignoreif_node_regex == 'true' and preg_match($ignoreif_node_value, $modification[$key])) {
+				if ($ignoreif_node_regex == 'true' && preg_match($ignoreif_node_value, $modification[$key])) {
 					continue;
 				} elseif (strpos($modification[$key], $ignoreif_node_value) !== false) {
 					continue;
@@ -347,7 +347,7 @@ class Modification {
 				default:
 					$changed = false;
 					foreach ($tmp as $line_num => $line) {
-						if (strlen($search_node_value) == 0 and ($operation_node_error == 'log' or $operation_node_error == 'abort')) {
+						if (strlen($search_node_value) == 0 && ($operation_node_error == 'log' || $operation_node_error == 'abort')) {
 							$log[] = "Modification::operationNode - EMPTY SEARCH CONTENT ERROR:";
 							$log[] = "  modification id = '$modification_id'";
 							$log[] = "  file name = '$file'";
@@ -358,7 +358,7 @@ class Modification {
 						if ($search_node_regex == 'true') {
 							$pos = @preg_match($search_node_value, $line);
 							if ($pos === false) {
-								if ($operation_node_error == 'log' or $operation_node_error == 'abort') {
+								if ($operation_node_error == 'log' || $operation_node_error == 'abort') {
 									$log[] = "Modification::operationNode - INVALID REGEX ERROR:";
 									$log[] = "  modification id = '$modification_id'";
 									$log[] = "  file name = '$file'";
@@ -377,7 +377,7 @@ class Modification {
 						if ($pos !== false) {
 							$index_count++;
 							$changed = true;
-							if (!$search_node_indexes or ($search_node_indexes and in_array($index_count, $search_node_indexes))) {
+							if (!$search_node_indexes || ($search_node_indexes && in_array($index_count, $search_node_indexes))) {
 								switch ($position) {
 									case 'before':
 										$offset       = ($line_num - $_offset < 0) ? -1 : $line_num - $_offset;
@@ -423,8 +423,8 @@ class Modification {
 					}
 
 					if (!$changed) {
-						$skip_text = ($operation_node_error == 'skip' or $operation_node_error == 'log') ? '(SKIPPED)' : '(ABORTING MOD)';
-						if ($operation_node_error == 'log' or $operation_node_error) {
+						$skip_text = ($operation_node_error == 'skip' || $operation_node_error == 'log') ? '(SKIPPED)' : '(ABORTING MOD)';
+						if ($operation_node_error == 'log' || $operation_node_error) {
 							$log[] = "Modification::operationNode - SEARCH NOT FOUND $skip_text:";
 							$log[] = "  modification id = '$modification_id'";
 							$log[] = "  file name = '$file'";
@@ -447,7 +447,7 @@ class Modification {
 			$modification[$key] = implode("\n", $tmp);
 
 
-			if (!$status and $search_node_regex == 'true') {
+			if (!$status && $search_node_regex == 'true') {
 				$match = array();
 
 				preg_match_all($search_node_value, $modification[$key], $match, PREG_OFFSET_CAPTURE);
@@ -467,7 +467,7 @@ class Modification {
 			}
 
 
-			if (!$status and !$this->is_vqmod) {
+			if (!$status && !$this->is_vqmod) {
 				// Log
 				$log[] = 'NOT FOUND!';
 			}
