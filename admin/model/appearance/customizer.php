@@ -23,10 +23,10 @@ class ModelAppearanceCustomizer extends Model {
                 $element = explode("-", $key);
                 if($element[1] == 'css'){
                     $value = iconv("CP1257","UTF-8", $value);
-                    $this->filesystem->dumpFile(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/custom.css', $value, 0644);
+                    $this->filesystem->dumpFile(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/custom.css', $value);
                 } else {
                     $value = iconv("CP1257","UTF-8", $value);
-                    $this->filesystem->dumpFile(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/javascript/custom.js', $value, 0644);
+                    $this->filesystem->dumpFile(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/javascript/custom.js', $value);
                 }
             }
 
@@ -77,7 +77,7 @@ class ModelAppearanceCustomizer extends Model {
             }
         }
 
-        $this->filesystem->dumpFile(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/customizer.css', $customizerCss, 0644);
+        $this->filesystem->dumpFile(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/customizer.css', $customizerCss);
     }
 
     public function resetCustomizer($code, $store_id = 0){

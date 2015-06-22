@@ -120,6 +120,7 @@
 			},
 			success: function(json) {
 				$('.text-danger').remove();
+				$('.alert-danger').remove();
 				$('.form-group').children().removeClass('has-error');
 
 				if (json['error']) {
@@ -132,6 +133,10 @@
 							$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
 						}
 					}
+
+          if (json['error']['config']) {
+            $('#install-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'][i] + '</div>');
+          }
 
 					// Highlight any found errors
 					$('.text-danger').parent().addClass('has-error');

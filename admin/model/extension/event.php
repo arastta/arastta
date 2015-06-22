@@ -62,7 +62,7 @@ class EventApp' . ucwords(str_replace($replaceArray, "", $code)) . ' extends Eve
 }';
         }
 
-		$this->filesystem->dumpFile(Client::getDir() . 'event/app/' . $code . '.php', $content, 0644);
+		$this->filesystem->dumpFile(Client::getDir() . 'event/app/' . $code . '.php', $content);
     }
 
 	public function deleteEvent($code) {

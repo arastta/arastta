@@ -218,7 +218,7 @@ class ModelSystemLanguageoverride extends Model {
             }
 
             // Write into the file
-            $this->filesystem->dumpFile($ovr_file, $content, 0644);
+            $this->filesystem->dumpFile($ovr_file, $content);
         }
     }
 }
