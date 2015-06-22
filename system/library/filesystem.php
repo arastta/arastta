@@ -18,4 +18,8 @@ class Filesystem extends Symfony\Component\Filesystem\Filesystem {
 	public function remove($files) {
 		parent::remove($files);
 	}
+
+	public function dumpFile($filename, $content, $mode = 0755) {
+		parent::dumpFile($filename, $content, $mode = 0755);
+	}
 }

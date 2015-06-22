@@ -29,7 +29,7 @@ class Modification {
 	 * @description Error handler for bad XML files
 	 */
 	public static function handleXMLError($errno, $errstr, $errfile, $errline) {
-		if ($errno == E_WARNING && (substr_count($errstr, 'DOMDocument::loadXML()') > 0)) {
+		if ($errno == E_WARNING and (substr_count($errstr, 'DOMDocument::loadXML()') > 0)) {
 			throw new DOMException(str_replace('DOMDocument::loadXML()', '', $errstr));
 		} else {
 			return false;
@@ -47,11 +47,9 @@ class Modification {
 		// Merge vQmods and OCmods files
 		$files = array_merge(glob(DIR_VQMOD . 'xml/*.xml'), glob(DIR_SYSTEM . 'xml/*.xml'));
 
-		if (!empty($files)) {
-			if ($files) {
-				foreach ($files as $file) {
-					$xmls[$file] = file_get_contents($file);
-				}
+		if (!empty($files) and $files) {
+			foreach ($files as $file) {
+				$xmls[$file] = file_get_contents($file);
 			}
 		}
 
@@ -77,14 +75,12 @@ class Modification {
 				$vqmver  = $modification_node->getElementsByTagName('vqmver')->item(0);
 				if ($vqmver) {
 					$version_check = $vqmver->getAttribute('required');
-					if (strtolower($version_check) == 'true') {
-						if (version_compare($version, $vqmver->nodeValue, '<')) {
-							$log[] = "Modification::applyMod - VQMOD VERSION '" . $vqmver->nodeValue . "' OR ABOVE REQUIRED, XML FILE HAS BEEN SKIPPED";
-							$log[] = "  vqmver = '$vqmver'";
-							$log[] = '----------------------------------------------------------------';
+					if (strtolower($version_check) == 'true' and version_compare($version, $vqmver->nodeValue, '<')) {
+						$log[] = "Modification::applyMod - VQMOD VERSION '" . $vqmver->nodeValue . "' OR ABOVE REQUIRED, XML FILE HAS BEEN SKIPPED";
+						$log[] = "  vqmver = '$vqmver'";
+						$log[] = '----------------------------------------------------------------';
 
-							return false;
-						}
+						return false;
 					}
 				}
 			} catch (Exception $e) {
@@ -105,7 +101,8 @@ class Modification {
 
 			foreach ($file_nodes as $file_node) {
 
-				if (!$files = $this->getFiles($file_node, $log)) {
+				$files = $this->getFiles($file_node, $log);
+				if ($files === false) {
 					return false;
 				}
 
@@ -149,9 +146,9 @@ class Modification {
 	 * @param $log
 	 */
 	public function writeLog($log) {
-		if ((defined('DIR_LOGS'))) {
-			$ocmod = new Log('modification.log');
-			$ocmod->write(implode("\n", $log));
+		if ((defined('DIR_LOG'))) {
+			$modification = new Log('modification.log');
+			$modification->write(implode("\n", $log));
 		}
 	}
 
@@ -168,6 +165,7 @@ class Modification {
 				return;
 			}
 		}
+
 		$this->is_vqmod = false;
 	}
 
@@ -180,7 +178,6 @@ class Modification {
 	public function getFiles($file_node, &$log) {
 		$file_node_path = $file_node->getAttribute('path');
 		$file_node_name = $file_node->getAttribute('name');
-
 		$file_node_error = $file_node->getAttribute('error');
 
 		$files      = array();
@@ -191,22 +188,22 @@ class Modification {
 				$file_names = array();
 			}
 		}
+
 		foreach ($file_names as $file_name) {
 			$path = '';
+
+			// Get the full path of the files that are going to be used for modification
 			if (substr($file_node_path . $file_name, 0, 7) == 'catalog') {
 				$path = DIR_CATALOG . substr($file_node_path . $file_name, 8);
-			} else {
-				if (substr($file_node_path . $file_name, 0, 5) == 'admin') {
-					$path = DIR_ADMIN . substr($file_node_path . $file_name, 6);
-				} else {
-					if (substr($file_node_path . $file_name, 0, 6) == 'system') {
-						$path = DIR_SYSTEM . substr($file_node_path . $file_name, 7);
-					}
-				}
+			} elseif (substr($file_node_path . $file_name, 0, 5) == 'admin') {
+				$path = DIR_ADMIN . substr($file_node_path . $file_name, 6);
+			} elseif (substr($file_node_path . $file_name, 0, 6) == 'system') {
+				$path = DIR_SYSTEM . substr($file_node_path . $file_name, 7);
 			}
+
 			$paths = glob($path);
 
-			if (($paths === false) || is_array($paths) && (count($paths) == 0)) {
+			if (($paths === false) or is_array($paths) and (count($paths) == 0)) {
 				switch ($file_node_error) {
 					case 'skip':
 						break;
@@ -259,11 +256,9 @@ class Modification {
 		$key = '';
 		if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
 			$key = 'catalog/' . substr($file, strlen(DIR_CATALOG));
-		}
-		if (substr($file, 0, strlen(DIR_ADMIN)) == DIR_ADMIN) {
+		} elseif (substr($file, 0, strlen(DIR_ADMIN)) == DIR_ADMIN) {
 			$key = 'admin/' . substr($file, strlen(DIR_ADMIN));
-		}
-		if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
+		} elseif (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
 			$key = 'system/' . substr($file, strlen(DIR_SYSTEM));
 		}
 
@@ -283,7 +278,7 @@ class Modification {
 	public function operationNode($nodes, &$modification, $modification_id, $file, $key, $log) {
 		foreach ($nodes as $operation_node) {
 			$operation_node_error = $operation_node->getAttribute('error');
-			if (($operation_node_error != 'skip') && ($operation_node_error != 'log') && $this->is_vqmod) {
+			if (($operation_node_error != 'skip') and ($operation_node_error != 'log') and $this->is_vqmod) {
 				$operation_node_error = 'abort';
 			}
 
@@ -291,14 +286,10 @@ class Modification {
 			if ($ignoreif_node) {
 				$ignoreif_node_regex = $ignoreif_node->getAttribute('regex');
 				$ignoreif_node_value = trim($ignoreif_node->nodeValue);
-				if ($ignoreif_node_regex == 'true') {
-					if (preg_match($ignoreif_node_value, $modification[$key])) {
-						continue;
-					}
-				} else {
-					if (strpos($modification[$key], $ignoreif_node_value) !== false) {
-						continue;
-					}
+				if ($ignoreif_node_regex == 'true' and preg_match($ignoreif_node_value, $modification[$key])) {
+					continue;
+				} elseif (strpos($modification[$key], $ignoreif_node_value) !== false) {
+					continue;
 				}
 			}
 
@@ -314,6 +305,7 @@ class Modification {
 			} else {
 				$position = 'replace';
 			}
+
 			$search_node_indexes = $this->getIndexes($search_node->getAttribute('index'));
 
 			if ($search_node->getAttribute('offset')) {
@@ -323,11 +315,13 @@ class Modification {
 			} else {
 				$_offset = '0';
 			}
+
 			$search_node_regex = ($search_node->getAttribute('regex')) ? $search_node->getAttribute('regex') : 'false';
 			$limit             = $search_node->getAttribute('limit');
 			if (!$limit) {
 				$limit = -1;
 			}
+
 			$search_node_trim  = ($search_node->getAttribute('trim') == 'false') ? 'false' : 'true';
 			$search_node_value = ($search_node_trim == 'true') ? trim($search_node->nodeValue) : $search_node->nodeValue;
 			$add_node_trim     = ($add_node->getAttribute('trim') == 'true') ? 'true' : 'false';
@@ -353,21 +347,18 @@ class Modification {
 				default:
 					$changed = false;
 					foreach ($tmp as $line_num => $line) {
-						if (strlen($search_node_value) == 0) {
-							if ($operation_node_error == 'log' || $operation_node_error == 'abort') {
-								$log[] = "Modification::operationNode - EMPTY SEARCH CONTENT ERROR:";
-								$log[] = "  modification id = '$modification_id'";
-								$log[] = "  file name = '$file'";
-								$log[] = "";
-							}
+						if (strlen($search_node_value) == 0 and ($operation_node_error == 'log' or $operation_node_error == 'abort')) {
+							$log[] = "Modification::operationNode - EMPTY SEARCH CONTENT ERROR:";
+							$log[] = "  modification id = '$modification_id'";
+							$log[] = "  file name = '$file'";
+							$log[] = "";
 							break;
 						}
-
 
 						if ($search_node_regex == 'true') {
 							$pos = @preg_match($search_node_value, $line);
 							if ($pos === false) {
-								if ($operation_node_error == 'log' || $operation_node_error == 'abort') {
+								if ($operation_node_error == 'log' or $operation_node_error == 'abort') {
 									$log[] = "Modification::operationNode - INVALID REGEX ERROR:";
 									$log[] = "  modification id = '$modification_id'";
 									$log[] = "  file name = '$file'";
@@ -386,7 +377,7 @@ class Modification {
 						if ($pos !== false) {
 							$index_count++;
 							$changed = true;
-							if (!$search_node_indexes || ($search_node_indexes && in_array($index_count, $search_node_indexes))) {
+							if (!$search_node_indexes or ($search_node_indexes and in_array($index_count, $search_node_indexes))) {
 								switch ($position) {
 									case 'before':
 										$offset       = ($line_num - $_offset < 0) ? -1 : $line_num - $_offset;
@@ -425,14 +416,15 @@ class Modification {
 										}
 										break;
 								}
+
 								$status = true;
 							}
 						}
 					}
 
 					if (!$changed) {
-						$skip_text = ($operation_node_error == 'skip' || $operation_node_error == 'log') ? '(SKIPPED)' : '(ABORTING MOD)';
-						if ($operation_node_error == 'log' || $operation_node_error) {
+						$skip_text = ($operation_node_error == 'skip' or $operation_node_error == 'log') ? '(SKIPPED)' : '(ABORTING MOD)';
+						if ($operation_node_error == 'log' or $operation_node_error) {
 							$log[] = "Modification::operationNode - SEARCH NOT FOUND $skip_text:";
 							$log[] = "  modification id = '$modification_id'";
 							$log[] = "  file name = '$file'";
@@ -515,23 +507,7 @@ class Modification {
 		foreach ($modification as $key => $value) {
 			// Only create a file if there are changes
 			if ($original[$key] != $value) {
-				$path = '';
-
-				$directories = explode('/', dirname($key));
-
-				foreach ($directories as $directory) {
-					$path = $path . '/' . $directory;
-
-					if (!is_dir(DIR_MODIFICATION . $path)) {
-						$this->filesystem->mkdir(DIR_MODIFICATION . $path);
-					}
-				}
-
-				$handle = fopen(DIR_MODIFICATION . $key, 'w');
-
-				fwrite($handle, $value);
-
-				fclose($handle);
+				$this->filesystem->dumpFile(DIR_MODIFICATION . $key, $value);
 			}
 		}
 	}
