@@ -124,18 +124,6 @@ class ControllerSystemLanguageoverride extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $data['text_home'],
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $data['heading_title'],
-			'href' => $this->url->link('system/language_override', 'token=' . $this->session->data['token'] . $url, 'SSL')
-		);
 
         $data['action'] = $this->url->link('system/language_override/savelist', 'token=' . $this->session->data['token'] . $url, 'SSL');
 

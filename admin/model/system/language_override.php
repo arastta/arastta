@@ -36,14 +36,14 @@ class ModelSystemLanguageoverride extends Model {
             $lang_dir = DIR_CATALOG.'language/';
         }
         else {
-            $lang_dir = DIR_LANGUAGE;
+            $lang_dir = DIR_ADMIN.'language/';
         }
 
         $files = new Finder();
         $files->files()->in($lang_dir)->exclude('override');
 
         foreach ($files as $file) {
-            // example: english/catalog/attribute.php
+            // example: en-GB/catalog/attribute.php
             $path_name = str_replace('\\', '/', $file->getRelativePathname());
 
             $temp = explode('/', $path_name);
@@ -135,7 +135,7 @@ class ModelSystemLanguageoverride extends Model {
             $lang_dir = DIR_CATALOG.'language/';
         }
         else {
-            $lang_dir = DIR_LANGUAGE;
+            $lang_dir = DIR_ADMIN.'language/';
         }
 
         // lstrings[english_catalog_attribute][heading_title]
@@ -146,7 +146,11 @@ class ModelSystemLanguageoverride extends Model {
 
             // Lets build the path
             $temp = explode('_', $file);
-            $path = $temp[0].'/'.$temp[1].'/'.$temp[2];
+            $path = $temp[0].'/'.$temp[1];
+
+            if (!empty($temp[2])) {
+                $path .= '/'.$temp[2];
+            }
 
             if (!empty($temp[3])) {
                 $path .= '_'.$temp[3];
@@ -217,8 +221,10 @@ class ModelSystemLanguageoverride extends Model {
                 $content .= '$_[\'' . $key . '\'] = \'' . $value . '\';' . "\n";
             }
 
+            $content = rtrim($content, "\n");
+
             // Write into the file
-            $this->filesystem->dumpFile($ovr_file, $content);
+            $this->filesystem->dumpFile($ovr_file, $content, 0644);
         }
     }
 }
