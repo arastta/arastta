@@ -26,17 +26,17 @@ class ModelSearchSearch extends Model {
     }
 
     public function getCategories($data = array()) {
-        $sql = "SELECT cp.category_id AS category_id, GROUP_CONCAT(cd1.name ORDER BY cp.level SEPARATOR '&nbsp;&nbsp;&gt;&nbsp;&nbsp;') AS name, c1.image
+        $sql = "SELECT cp.category_id AS category_id, GROUP_CONCAT(cdpath.name ORDER BY cp.level SEPARATOR '&nbsp;&nbsp;&gt;&nbsp;&nbsp;') AS name, cmain.image
                 FROM " . DB_PREFIX . "category_path cp
-                LEFT JOIN " . DB_PREFIX . "category c1 ON (cp.category_id = c1.category_id)
-                LEFT JOIN " . DB_PREFIX . "category c2 ON (cp.path_id = c2.category_id)
-                LEFT JOIN " . DB_PREFIX . "category_description cd1 ON (cp.path_id = cd1.category_id)
-                LEFT JOIN " . DB_PREFIX . "category_description cd2 ON (cp.category_id = cd2.category_id)
-                WHERE cd1.language_id = '" . (int)$this->config->get('config_language_id') . "'
-                    AND cd2.language_id = '" . (int)$this->config->get('config_language_id') . "'
-                    AND cd1.name LIKE '" . $this->db->escape($data['query']) . "%'
+                LEFT JOIN " . DB_PREFIX . "category cmain ON (cp.category_id = cmain.category_id)
+                LEFT JOIN " . DB_PREFIX . "category cpath ON (cp.path_id = cpath.category_id)
+                LEFT JOIN " . DB_PREFIX . "category_description cdmain ON (cp.category_id = cdmain.category_id)
+                LEFT JOIN " . DB_PREFIX . "category_description cdpath ON (cp.path_id = cdpath.category_id)
+                WHERE cdpath.language_id = '" . (int)$this->config->get('config_language_id') . "'
+                    AND cdmain.language_id = '" . (int)$this->config->get('config_language_id') . "'
+                    AND cdmain.name LIKE '%" . $this->db->escape($data['query']) . "%'
                 GROUP BY cp.category_id
-                ORDER BY cd1.name ASC
+                ORDER BY name ASC
                 LIMIT 5";
 
         $query = $this->db->query($sql);
