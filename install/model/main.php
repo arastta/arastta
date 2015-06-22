@@ -112,7 +112,12 @@ class ModelMain extends Model {
 		$content .= 'define(\'DB_DATABASE\', \'' . addslashes($data['db_database']) . '\');' . "\n";
 		$content .= 'define(\'DB_PREFIX\', \'' . addslashes($data['db_prefix']) . '\');' . "\n";
 		
-		$this->filesystem->dumpFile(DIR_ROOT . 'config.php', $content, 0644);
+		try {
+			$this->filesystem->dumpFile(DIR_ROOT . 'config.php', $content);
+			return true;
+		} catch(Exception $e) {
+			return false;
+		}
 	}
 
     public function validateDatabaseConnection($data) {

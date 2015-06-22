@@ -65,9 +65,14 @@ class ControllerMain extends Controller {
 		$json = $this->validateDatabase();
 
 		if (empty($json)) {
-			$this->model_main->saveConfig($this->request->post);
+			if(!$this->model_main->saveConfig($this->request->post)) {
+				$json['error']['config'] = $this->language->get('error_config');
 
-			$this->displaySettings();
+				$this->response->addHeader('Content-Type: application/json');
+				$this->response->setOutput(json_encode($json));
+			} else {
+				$this->displaySettings();
+			}
 		} else {
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));
