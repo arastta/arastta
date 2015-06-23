@@ -104,14 +104,11 @@ class ControllerCommonUpdate extends Controller {
 
     protected function validate($type) {
         if (!$this->user->hasPermission($type, 'common/update')) {
-            $error['warning'] = $this->language->get('error_permission');
-            echo json_encode($error);
-        }
+            $this->session->data['msg_error'] = $this->language->get('error_permission');
 
-        if (empty($error['warning'])) {
-            return true;
-        } else {
             return false;
         }
+
+        return true;
     }
 }
