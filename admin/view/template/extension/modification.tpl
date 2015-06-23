@@ -80,7 +80,7 @@
                           <?php }  else { ?>
                           <input type="checkbox" name="selected[]" value="<?php echo empty($modification['modification_id']) ? $modification['vqmod_id'] : $modification['modification_id']; ?>" />
                           <?php } ?></td>
-                      <td class="text-left"><?php echo $modification['name']; ?></td>
+                      <td class="text-left"><?php echo $modification['name']; ?><br /><div class="text-danger"><?php echo $modification['invalid_xml']; ?><div></td>
                       <td class="text-left"><?php echo $modification['author']; ?></td>
                       <td class="text-left"><?php echo $modification['version']; echo empty($modification['modification_id']) ? ' - ( VQMOD )' : ' - ( OCMOD )'; ?></td>
                       <td class="text-left"><?php echo $modification['status']; ?></td>

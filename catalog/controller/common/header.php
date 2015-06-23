@@ -35,7 +35,7 @@ class ControllerCommonHeader extends Controller {
 			$server = $this->config->get('config_url');
 		}
 
-        if(is_file(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/customizer.css')){
+        if(is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/customizer.css')){
             $this->document->addStyle('catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/customizer.css');
             $this->checkFont();
             $this->checkCustom();
@@ -252,11 +252,11 @@ class ControllerCommonHeader extends Controller {
     }
 
     public function checkCustom(){
-        if(is_file(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/custom.css')) {
+        if(is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/custom.css')) {
             $this->document->addStyle('catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/custom.css');
         }
 
-        if(is_file(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_template') . '/javascript/custom.js')) {
+        if(is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/javascript/custom.js')) {
             $this->document->addScript('catalog/view/theme/' . $this->config->get('config_template') . '/javascript/custom.js');
         }
     }

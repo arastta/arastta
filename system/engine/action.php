@@ -5,7 +5,8 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-final class Action {	
+final class Action {
+	
 	private $file;
 	private $class;
 	private $method;
@@ -20,7 +21,7 @@ final class Action {
 		foreach ($parts as $part) {
 			$path .= $part;
 
-			if (is_dir(DIR_APPLICATION . 'controller/' . $path)) {
+			if (is_dir(Client::getDir() . 'controller/' . $path)) {
 				$path .= '/';
 
 				array_shift($parts);
@@ -28,7 +29,7 @@ final class Action {
 				continue;
 			}
 
-			$file = DIR_APPLICATION . 'controller/' . str_replace(array('../', '..\\', '..'), '', $path) . '.php';
+			$file = Client::getDir() . 'controller/' . str_replace(array('../', '..\\', '..'), '', $path) . '.php';
 
 			if (is_file($file)) {
 				$this->file = $file;

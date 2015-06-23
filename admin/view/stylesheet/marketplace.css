@@ -37,6 +37,10 @@ body {color: #666; font-weight: 400;}
 
 #marketplace-content {max-width: 820px !important;}
 
+.checkout-container #marketplace-content {
+    max-width: 1250px !important;
+}
+
 .container.marketplace-home .row #content {
     background: #f5f5f5;
     padding: 40px 20px;
