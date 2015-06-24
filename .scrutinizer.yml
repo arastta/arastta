@@ -1,0 +1,21 @@
+checks:
+    php:
+        code_rating: true
+        duplication: true
+
+filter:
+    excluded_paths:
+        - 'vendor/*'
+
+tools:
+    php_cs_fixer: true
+    php_analyzer: true
+    php_mess_detector: true
+    php_changetracking: true
+    php_code_sniffer: true
+    php_pdepend: true
+    sensiolabs_security_checker: true
+    external_code_coverage:
+        timeout: 600
+        runs: 3
+    php_code_coverage: false

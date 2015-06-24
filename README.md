@@ -1,6 +1,6 @@
 # Arastta™
 
-[![Crowdin](https://d322cqt584bo4o.cloudfront.net/arastta/localized.png)](https://crowdin.com/project/arastta) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/arastta/arastta)
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/arastta/localized.png)](https://crowdin.com/project/arastta) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/arastta/arastta) [![Code Climate](https://codeclimate.com/github/arastta/arastta/badges/gpa.svg)](https://codeclimate.com/github/arastta/arastta) [![Dependency Status](https://www.versioneye.com/user/projects/558a9f56306662001a000726/badge.svg?style=flat)](https://www.versioneye.com/user/projects/558a9f56306662001a000726)
 
 Arastta is the next generation of Open Source eCommerce software built with modern technologies such as Symfony, Doctrine (soon), MVC, Bootstrap, jQuery, Swift Mailer etc.
 
