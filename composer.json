@@ -9,6 +9,7 @@
       "vendor-dir": "system/vendor"
     },
     "require": {
+        "php": ">=5.3.10",
         "ezyang/htmlpurifier": "4.6.0",
         "erusev/parsedown": "1.5.3",
         "erusev/parsedown-extra": "0.7.0",
