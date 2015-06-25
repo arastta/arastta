@@ -302,7 +302,7 @@ class Route extends Object {
             $uri->delVar('lang');
 
             // Append the suffix if enabled
-            if ($this->config->get('config_seo_suffix')) {
+            if ($this->config->get('config_seo_suffix') && !$is_home) {
                 $url .= '.html';
             }
 
