@@ -104,7 +104,7 @@ class ControllerSearchSearch extends Controller {
                 $data['customers'] = $this->model_search_search->getCustomers($_data);
 
                 foreach($data['customers'] as $key => $customer){
-                    $data['customers'][$key]['url'] = $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $customer['customer_id'], 'SSL');
+                    $data['customers'][$key]['url'] = $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $customer['customer_id'], 'SSL');
                 }
 
                 $json['result'] = $this->load->view('search/customers_result.tpl', $data);
