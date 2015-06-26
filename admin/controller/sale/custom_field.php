@@ -85,7 +85,7 @@ class ControllerSaleCustomField extends Controller {
 			}
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                 $this->response->redirect($this->url->link('sale/custom_field/edit', 'recurring_id='.$this->request->get['custom_field_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+                 $this->response->redirect($this->url->link('sale/custom_field/edit', 'custom_field_id='.$this->request->get['custom_field_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
