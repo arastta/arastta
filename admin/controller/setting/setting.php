@@ -956,7 +956,7 @@ class ControllerSettingSetting extends Controller {
         }
 
         if (isset($this->request->post['config_seo_rewrite'])) {
-            $data['config_seo_indexphp'] = $this->request->post['config_seo_rewrite'];
+            $data['config_seo_rewrite'] = $this->request->post['config_seo_rewrite'];
         } else {
             $data['config_seo_rewrite'] = $this->config->get('config_seo_rewrite');
         }
