@@ -32,7 +32,7 @@ class ModelCatalogInformation extends Model {
 		}
 
         foreach ($data['seo_url'] as $language_id => $value) {
-            $alias = empty($value) ? $data['information_description'][$language_id]['name'] : $value;
+            $alias = empty($value) ? $data['information_description'][$language_id]['title'] : $value;
 
             $alias = $this->model_catalog_url_alias->generateAlias($alias);
 
