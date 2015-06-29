@@ -53,7 +53,7 @@ class Modification {
 			}
 		}
 
-		$modification = $log = array();
+	$modification = $log = $original = array();
 
 		if (empty($xmls)) {
 			$log[] = 'Modification::applyMod - NO XML FILES READABLE IN XML FOLDERS';
@@ -507,7 +507,7 @@ class Modification {
 		foreach ($modification as $key => $value) {
 			// Only create a file if there are changes
 			if ($original[$key] != $value) {
-				$this->filesystem->dumpFile(DIR_MODIFICATION . $key, $value);
+				$this->filesystem->dumpFile(DIR_MODIFICATION . $key, $value, 0755);
 			}
 		}
 	}
