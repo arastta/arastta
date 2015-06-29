@@ -1,0 +1,23 @@
+Arastta has been modified pursuant to the GNU GPLv3 as of May 18, 2015,
+and as distributed, it includes or is derivative of works licensed under the
+GNU General Public License or other Free or Open Source software licenses,
+including works copyrighted by any or all of the following:
+
+- Arastta 			Contributors @ arastta.org/contributors
+- Console 			(C) Fabien Potencier, Symfony, SensioLabs
+- Composer 			(C) Nils Adermann, Jordi Boggiano
+- Cache				(C) Joomla, Open Source Matters Inc.
+- Debug				(C) Fabien Potencier, Symfony, SensioLabs
+- DOM Crawler 		(C) Fabien Potencier, Symfony, SensioLabs
+- Export/Import	 	(C) 2008-2015 J.Neuhoff t/a MHCCORP.COM
+- Filesystem	 	(C) Fabien Potencier, Symfony, SensioLabs
+- Finder	 		(C) Fabien Potencier, Symfony, SensioLabs
+- HTML Purifier		(C) Edward Z. Yang (Ambush Commander)
+- OpenCart			(C) 2006-2015 Daniel Kerr, OpenCart Ltd.
+- Parsedown			(C) Emanuil Rusev, erusev.com
+- Parsedown Extra	(C) Emanuil Rusev, erusev.com
+- PHPExcel			(C) 2006-2015 PHPExcel
+- Profiler			(C) Joomla, Open Source Matters Inc.
+- Psr				(C) PHP Framework Interoperability Group
+- Swift Mailer		(C) Fabien Potencier, Symfony, SensioLabs
+- Uri				(C) Joomla, Open Source Matters Inc.

@@ -2,7 +2,7 @@
 /**
  * @package		Arastta eCommerce
  * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @copyright	Copyright (C) 2010-2015 JNeuhoff. All rights reserved. (mhccorp.com)
+ * @credits		See CREDITS.txt for credits and other copyright notices.
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
