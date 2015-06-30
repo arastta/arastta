@@ -54,7 +54,7 @@ class Modification {
 			}
 		}
 
-	$modification = $log = $original = array();
+		$modification = $log = $original = array();
 
 		if (empty($xmls)) {
 			$log[] = 'Modification::applyMod - NO XML FILES READABLE IN XML FOLDERS';
@@ -177,14 +177,15 @@ class Modification {
 	 * @description Find all files to be modified
 	 */
 	public function getFiles($file_node, &$log) {
-		$file_node_path = $file_node->getAttribute('path');
-		$file_node_name = $file_node->getAttribute('name');
+		$file_node_path  = $file_node->getAttribute('path');
+		$file_node_name  = $file_node->getAttribute('name');
 		$file_node_error = $file_node->getAttribute('error');
 
 		$files      = array();
 		$file_names = explode(',', $file_node_name);
 		if (isset($file_names[0]) && $file_names[0] == '') {
 			$file_names = explode(',', $file_node_path);
+			$file_node_path = '';
 			if ($file_names === false) {
 				$file_names = array();
 			}
