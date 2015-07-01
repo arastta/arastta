@@ -13,11 +13,11 @@ if (version_compare(PHP_VERSION, '5.3.10', '<')) {
 define('AREXE', 1);
 
 require_once('define.php');
-require_once(DIR_SYSTEM . 'library/client.php');
-
-Client::setName('admin');
 
 // Startup
+require_once(DIR_SYSTEM . 'library/client.php');
+Client::setName('admin');
+
 require_once(DIR_SYSTEM . 'startup.php');
 
 // App
