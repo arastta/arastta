@@ -75,7 +75,7 @@ class Language {
         $file = $dir . 'language/' . 'en-GB/' . $filename . '.php';
 
         if (file_exists($file)) {
-            require(modification($file));
+            require($file);
         }
 
 		// Step 2: Load the store's default language translation (it's the store owner preferred fallback)
@@ -84,7 +84,7 @@ class Language {
 			$file = $dir . 'language/' . $this->default . '/' . $filename . '.php';
 
 			if (file_exists($file)) {
-				require(modification($file));
+				require($file);
 			}
 		}
 
@@ -94,7 +94,7 @@ class Language {
 			$file = $dir . 'language/' . $this->directory . '/' . $filename . '.php';
 
 			if (file_exists($file)) {
-				require(modification($file));
+				require($file);
 			}
 		}
 
@@ -102,7 +102,7 @@ class Language {
         $file = $dir . 'language/' . 'override/' . $this->directory . '/' . $filename . '.php';
 
         if (file_exists($file)) {
-            require(modification($file));
+            require($file);
         }
 
         $this->data = array_merge($this->data, $_);
@@ -116,7 +116,7 @@ class Language {
         $file = Client::getDir() . 'language/' . 'override/' . $this->directory . '/' . $filename . '.php';
 
         if (file_exists($file)) {
-            require(modification($file));
+            require($file);
         }
 
         $this->data = array_merge($this->data, $_);

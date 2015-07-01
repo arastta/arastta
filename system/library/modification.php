@@ -45,8 +45,12 @@ class Modification {
 		// To catch XML syntax errors
 		set_error_handler(array('Modification', 'handleXMLError'));
 
-		// Merge vQmods and OCmods files
-		$files = array_merge(glob(DIR_VQMOD . 'xml/*.xml'), glob(DIR_SYSTEM . 'xml/*.xml'));
+        if (class_exists('VQMod')) {
+            $files = glob(DIR_SYSTEM . 'xml/*.xml');
+        } else {
+            // Merge vQmods and OCmods files
+            $files = array_merge(glob(DIR_VQMOD . 'xml/*.xml'), glob(DIR_SYSTEM . 'xml/*.xml'));
+        }
 
 		if (!empty($files) && $files) {
 			foreach ($files as $file) {
