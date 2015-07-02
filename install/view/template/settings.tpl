@@ -35,6 +35,12 @@
                 <input type="password" name="admin_password" value="<?php echo $admin_password; ?>" placeholder="<?php echo $help_admin_password; ?>" id="input-admin-password" class="form-control" />
             </div>
         </div>
+        <div class="form-group">
+            <label for="input-install-demo-data" class="control-label col-xs-4"><?php echo $entry_install_demo_data; ?></label>
+            <div class="col-xs-8">
+                <input type="checkbox" name="install_demo_data" id="input-install-demo-data" checked />
+            </div>
+        </div>
 
         <div class="form-group pull-left">
             <div class="col-xs-12">

@@ -112,6 +112,10 @@ label {
     font-weight: normal !important;
 }
 
+.form-group > div > input[type="checkbox"] {
+    margin-top: 9px;
+}
+
 /* Addition to Boostrap */
 .col-xs-offset-right-12 {
     margin-right: 100%;
