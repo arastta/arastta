@@ -46,7 +46,7 @@ class Trigger extends Object {
 
         foreach ($this->listeners[$event] as $listener) {
             if (is_callable(array($listener, $method))) {
-                $value = call_user_func(array($listener, $method), $arg);
+                $value = call_user_func_array(array($listener, $method), array(&$arg));
             }
 
             if (!empty($value)) {
