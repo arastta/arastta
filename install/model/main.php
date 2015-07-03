@@ -156,6 +156,8 @@ class ModelMain extends Model {
 	public function createDatabaseTables($data) {
         $this->session->data['store_name'] = $data['store_name'];
         $this->session->data['store_email'] = $data['store_email'];
+        $this->session->data['admin_first_name'] = $data['admin_first_name'];
+        $this->session->data['admin_last_name'] = $data['admin_last_name'];
         $this->session->data['admin_username'] = $data['admin_username'];
         $this->session->data['admin_email'] = $data['admin_email'];
         $this->session->data['admin_password'] = $data['admin_password'];
@@ -196,7 +198,7 @@ class ModelMain extends Model {
 
 			$db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE user_id = '1'");
 
-			$db->query("INSERT INTO `" . DB_PREFIX . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($data['admin_username']) . "', salt = '" . $db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $db->escape(sha1($salt . sha1($salt . sha1($data['admin_password'])))) . "', firstname = 'Ada', lastname = 'Bulut', image = 'catalog/demo/ada-bulut.png', email = '" . $db->escape($data['admin_email']) . "', status = '1', date_added = NOW()");
+			$db->query("INSERT INTO `" . DB_PREFIX . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($data['admin_username']) . "', salt = '" . $db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $db->escape(sha1($salt . sha1($salt . sha1($data['admin_password'])))) . "', firstname = '" . $db->escape($data['admin_first_name']) . "', lastname = '" . $db->escape($data['admin_last_name']) . "', image = 'no-image.png', email = '" . $db->escape($data['admin_email']) . "', status = '1', date_added = NOW()");
 
             $db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_name'");
             $db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_name', value = '" . $db->escape($data['store_name']) . "'");
