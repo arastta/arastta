@@ -35,23 +35,48 @@
                 <input type="password" name="admin_password" value="<?php echo $admin_password; ?>" placeholder="<?php echo $help_admin_password; ?>" id="input-admin-password" class="form-control" />
             </div>
         </div>
-        <div class="form-group">
-            <label for="input-install-demo-data" class="control-label col-xs-4"><?php echo $entry_install_demo_data; ?></label>
-            <div class="col-xs-8">
-                <input type="checkbox" name="install_demo_data" id="input-install-demo-data" checked />
+
+        <div class="collapse" id="advanced-settings">
+            <div class="form-group">
+                <div class="col-xs-offset-4 col-xs-8">
+                    <h4><?php echo $text_advanced_settings; ?></h4>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-install-demo-data" class="control-label col-xs-4"><?php echo $entry_install_demo_data; ?></label>
+                <div class="col-xs-8">
+                    <input type="checkbox" name="install_demo_data" id="input-install-demo-data" <?php echo $install_demo_data ? 'checked ' : ''; ?>/>
+                </div>
             </div>
         </div>
-
-        <div class="form-group pull-left">
-            <div class="col-xs-12">
-                <button type="button" onclick="displayDatabase();" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
-            </div>
+        <hr />
+        <div class="text-center">
+            <button type="button" class="btn-expand-down" data-toggle="collapse" data-target="#advanced-settings" aria-expanded="false" aria-controls="advanced-settings" title="<?php echo $help_advanced_settings; ?>" id="btn-show-advanced"><i class="fa fa-chevron-down"></i></button>
         </div>
 
-        <div class="form-group pull-right">
-            <div class="col-xs-12">
-                <button type="button" onclick="saveSettings();" class="btn btn-success"><?php echo $button_next; ?> <i class="fa fa-arrow-right"></i></button>
+        <div class="clearfix">
+            <div class="form-group pull-left">
+                <div class="col-xs-12">
+                    <button type="button" onclick="displayDatabase();" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+                </div>
+            </div>
+
+            <div class="form-group pull-right">
+                <div class="col-xs-12">
+                    <button type="button" onclick="saveSettings();" class="btn btn-success"><?php echo $button_next; ?> <i class="fa fa-arrow-right"></i></button>
+                </div>
             </div>
         </div>
     </div>
 </form>
+<script type="text/javascript">
+    $('#advanced-settings').on('hidden.bs.collapse', function() {
+        $('#btn-show-advanced').html('<i class="fa fa-chevron-down"></i>');
+    });
+
+    $('#advanced-settings').on('shown.bs.collapse', function() {
+        $('#btn-show-advanced').html('<i class="fa fa-chevron-up"></i>');
+    });
+
+    $('#btn-show-advanced').tooltip();
+</script>

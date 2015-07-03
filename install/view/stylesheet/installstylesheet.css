@@ -113,7 +113,27 @@ label {
 }
 
 .form-group > div > input[type="checkbox"] {
-    margin-top: 9px;
+    margin-top: 10px;
+}
+
+.btn-expand-down {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 15px;
+    border: 2px solid #000;
+    background-color: transparent;
+    outline: none;
+}
+
+hr {
+    border-color: #ccc;
+}
+
+
+/* fixes glitching due to margin-collapsing */
+#advanced-settings .form-group:last-child {
+    margin-bottom: 0;
 }
 
 /* Addition to Boostrap */

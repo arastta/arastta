@@ -6,59 +6,6 @@
  */
 
 class ModelMain extends Model {
-
-	private static $demoDataTables = array(
-		'attribute',
-		'attribute_description',
-		'attribute_group',
-		'attribute_group_description',
-		'banner',
-		'banner_image',
-		'banner_image_description',
-		'category',
-		'category_description',
-		'category_path',
-		'category_to_store',
-		'coupon',
-		'geo_zone',
-		'manufacturer',
-		'manufacturer_description',
-		'manufacturer_to_store',
-		'menu',
-		'menu_description',
-		'menu_to_store',
-		'menu_child',
-		'menu_child_description',
-		'menu_child_to_store',
-		'module',
-		'option',
-		'option_description',
-		'option_value',
-		'option_value_description',
-		'product',
-		'product_attribute',
-		'product_description',
-		'product_discount',
-		'product_image',
-		'product_option',
-		'product_option_value',
-		'product_related',
-		'product_reward',
-		'product_special',
-		'product_to_category',
-		'product_to_store',
-		'tax_class',
-		'tax_rate',
-		'tax_rate_to_customer_group',
-		'tax_rule',
-		'url_alias',
-		'voucher_theme',
-		'voucher_theme_description',
-		'zone_to_geo_zone'
-	);
-
-    private $installDemoData;
-
 	public function checkRequirements(){
 		$errors = array();
 
@@ -200,17 +147,16 @@ class ModelMain extends Model {
     }
 	
 	public function createDatabaseTables($data) {
-		$this->installDemoData = isset($data['install_demo_data']);
-
         $this->session->data['store_name'] = $data['store_name'];
         $this->session->data['store_email'] = $data['store_email'];
         $this->session->data['admin_username'] = $data['admin_username'];
         $this->session->data['admin_email'] = $data['admin_email'];
         $this->session->data['admin_password'] = $data['admin_password'];
+        $this->session->data['install_demo_data'] = isset($data['install_demo_data']);
 
         $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
-		$file = DIR_APPLICATION . 'install.sql';
+		$file = DIR_APPLICATION . 'tables.sql';
 
 		if (!file_exists($file)) {
 			exit('Could not load sql file: ' . $file);
@@ -226,11 +172,6 @@ class ModelMain extends Model {
 					$sql .= $line;
 
 					if (preg_match('/;\s*$/', $line)) {
-						if ($this->skipQuery($sql)) {
-							$sql = '';
-							continue;
-						}
-
 						$sql = str_replace("DROP TABLE IF EXISTS `ar_", "DROP TABLE IF EXISTS `" . DB_PREFIX, $sql);
 						$sql = str_replace("CREATE TABLE `ar_", "CREATE TABLE `" . DB_PREFIX, $sql);
 						$sql = str_replace("CREATE TABLE IF NOT EXISTS `ar_", "CREATE TABLE IF NOT EXISTS `" . DB_PREFIX, $sql);
@@ -239,6 +180,30 @@ class ModelMain extends Model {
 						$db->query($sql);
 
 						$sql = '';
+					}
+				}
+			}
+
+			if (isset($data['install_demo_data'])) {
+				$file = DIR_APPLICATION . 'demo.sql';
+
+				if (!file_exists($file)) {
+					exit('Could not load sql file: ' . $file);
+				}
+
+				$lines = file($file);
+
+				foreach($lines as $line) {
+					if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
+						$sql .= $line;
+
+						if (preg_match('/;\s*$/', $line)) {
+							$sql = str_replace("INSERT INTO `ar_", "INSERT INTO `" . DB_PREFIX, $sql);
+
+							$db->query($sql);
+
+							$sql = '';
+						}
 					}
 				}
 			}
@@ -311,25 +276,5 @@ class ModelMain extends Model {
 		}
 
 		return true;
-	}
-
-	/*
-	 * Checks whether the SQL query can be skipped (i.e. if it is demo data and demo data shouldn't be installed)
-	 *
-	 * @param string $query The SQL query
-	 * @return bool True if the query can be skipped
-	 */
-	private function skipQuery($query) {
-		if ($this->installDemoData) {
-			return false;
-		}
-
-		preg_match('/INSERT INTO `ar_([_[:alnum:]]+)`/', $query, $matches);
-
-		if (isset($matches[1]) && in_array($matches[1], self::$demoDataTables)) {
-			return true;
-		}
-
-		return false;
 	}
 }
