@@ -114,6 +114,12 @@ class ControllerMain extends Controller {
 			$data['admin_password'] = '';
 		}
 
+		if (isset($this->session->data['install_demo_data']) && !$this->session->data['install_demo_data']) {
+			$data['install_demo_data'] = 0;
+		} else {
+			$data['install_demo_data'] = 1;
+		}
+
 		$json['output'] = $this->load->view('settings.tpl', $data);
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -129,6 +135,14 @@ class ControllerMain extends Controller {
 			set_time_limit(300); // 5 minutes
 
 			$this->model_main->createDatabaseTables($this->request->post);
+
+			if (!isset($this->request->post['install_demo_data'])) {
+				try {
+					$this->filesystem->remove(DIR_ROOT . 'image/catalog/demo');
+				} catch (Exception $e) {
+					// Discard exception
+				}
+			}
 
 			$this->displayFinish();
 		} else {
