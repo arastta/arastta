@@ -21,6 +21,7 @@ $_['text_settings']             = 'Settings';
 $_['text_finish']               = 'Finish';
 $_['text_database_header']      = 'Enter your database details.';
 $_['text_settings_header']      = 'Enter your store settings.';
+$_['text_advanced_settings']    = 'Advanced Settings';
 $_['text_finish_header']        = 'Congratulations! Arastta is now installed.';
 
 // Entry
@@ -34,6 +35,7 @@ $_['entry_store_email']         = 'Store E-Mail';
 $_['entry_admin_username']      = 'Admin Username';
 $_['entry_admin_email']         = 'Admin E-Mail';
 $_['entry_admin_password']      = 'Admin Password';
+$_['entry_install_demo_data']   = 'Install demo data';
 
 // Help
 $_['help_db_hostname']          = 'Usually: localhost';
@@ -46,6 +48,7 @@ $_['help_store_email']          = 'E-mail of your store, used everywhere';
 $_['help_admin_username']       = 'Username of admin account';
 $_['help_admin_email']          = 'E-mail of admin account';
 $_['help_admin_password']       = 'Password of admin account';
+$_['help_advanced_settings']    = 'Advanced settings';
 
 // Error
 $_['error_db_hostname'] 	    = 'Hostname required!';

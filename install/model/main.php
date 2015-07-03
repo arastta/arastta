@@ -6,7 +6,6 @@
  */
 
 class ModelMain extends Model {
-
 	public function checkRequirements(){
 		$errors = array();
 
@@ -153,10 +152,11 @@ class ModelMain extends Model {
         $this->session->data['admin_username'] = $data['admin_username'];
         $this->session->data['admin_email'] = $data['admin_email'];
         $this->session->data['admin_password'] = $data['admin_password'];
+        $this->session->data['install_demo_data'] = isset($data['install_demo_data']);
 
         $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
-		$file = DIR_APPLICATION . 'install.sql';
+		$file = DIR_APPLICATION . 'tables.sql';
 
 		if (!file_exists($file)) {
 			exit('Could not load sql file: ' . $file);
@@ -180,6 +180,30 @@ class ModelMain extends Model {
 						$db->query($sql);
 
 						$sql = '';
+					}
+				}
+			}
+
+			if (isset($data['install_demo_data'])) {
+				$file = DIR_APPLICATION . 'demo.sql';
+
+				if (!file_exists($file)) {
+					exit('Could not load sql file: ' . $file);
+				}
+
+				$lines = file($file);
+
+				foreach($lines as $line) {
+					if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
+						$sql .= $line;
+
+						if (preg_match('/;\s*$/', $line)) {
+							$sql = str_replace("INSERT INTO `ar_", "INSERT INTO `" . DB_PREFIX, $sql);
+
+							$db->query($sql);
+
+							$sql = '';
+						}
 					}
 				}
 			}
