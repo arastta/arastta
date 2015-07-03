@@ -125,6 +125,14 @@ class ControllerMain extends Controller {
 
 			$this->model_main->createDatabaseTables($this->request->post);
 
+			if (!isset($this->request->post['install_demo_data'])) {
+				try {
+					$this->filesystem->remove(DIR_ROOT . 'image/catalog/demo');
+				} catch (Exception $e) {
+					// Discard exception
+				}
+			}
+
 			$this->displayFinish();
 		} else {
 			$this->response->addHeader('Content-Type: application/json');
