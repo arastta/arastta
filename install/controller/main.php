@@ -96,6 +96,18 @@ class ControllerMain extends Controller {
 			$data['store_email'] = '';
 		}
 
+		if (isset($this->session->data['admin_first_name'])) {
+			$data['admin_first_name'] = $this->session->data['admin_first_name'];
+		} else {
+			$data['admin_first_name'] = '';
+		}
+
+		if (isset($this->session->data['admin_last_name'])) {
+			$data['admin_last_name'] = $this->session->data['admin_last_name'];
+		} else {
+			$data['admin_last_name'] = '';
+		}
+
 		if (isset($this->session->data['admin_username'])) {
 			$data['admin_username'] = $this->session->data['admin_username'];
 		} else {
@@ -195,6 +207,14 @@ class ControllerMain extends Controller {
 
 		if (empty($this->request->post['store_email'])) {
 			$json['error']['store-email'] = $this->language->get('error_store_email');
+		}
+
+		if (empty($this->request->post['admin_first_name'])) {
+			$json['error']['admin-first-name'] = $this->language->get('error_admin_first_name');
+		}
+
+		if (empty($this->request->post['admin_last_name'])) {
+			$json['error']['admin-last-name'] = $this->language->get('error_admin_last_name');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['admin_username'])) < 3) || (utf8_strlen(trim($this->request->post['admin_username'])) > 32)) {

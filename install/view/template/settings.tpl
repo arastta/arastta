@@ -18,6 +18,18 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="input-admin-first-name" class="control-label col-xs-4"><?php echo $entry_admin_first_name; ?></label>
+            <div class="col-xs-8">
+                <input type="text" name="admin_first_name" value="<?php echo $admin_first_name; ?>" placeholder="<?php echo $help_admin_first_name; ?>" id="input-admin-first-name" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-admin-last-name" class="control-label col-xs-4"><?php echo $entry_admin_last_name; ?></label>
+            <div class="col-xs-8">
+                <input type="text" name="admin_last_name" value="<?php echo $admin_last_name; ?>" placeholder="<?php echo $help_admin_last_name; ?>" id="input-admin-last-name" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
             <label for="input-admin-email" class="control-label col-xs-4"><?php echo $entry_admin_email; ?></label>
             <div class="col-xs-8">
                 <input type="text" name="admin_email" value="<?php echo $admin_email; ?>" placeholder="<?php echo $help_admin_email; ?>" id="input-admin-email" class="form-control" />
