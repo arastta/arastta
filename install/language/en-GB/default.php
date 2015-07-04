@@ -36,6 +36,8 @@ $_['entry_store_email']         = 'Store E-Mail';
 $_['entry_admin_username']      = 'Admin Username';
 $_['entry_admin_email']         = 'Admin E-Mail';
 $_['entry_admin_password']      = 'Admin Password';
+$_['entry_admin_first_name']    = 'Admin First Name';
+$_['entry_admin_last_name']     = 'Admin Last Name';
 $_['entry_install_demo_data']   = 'Install demo data';
 
 // Help
@@ -50,6 +52,8 @@ $_['help_admin_username']       = 'Username of admin account';
 $_['help_admin_email']          = 'E-mail of admin account';
 $_['help_admin_password']       = 'Password of admin account';
 $_['help_advanced_settings']    = 'Advanced settings';
+$_['help_admin_first_name']     = 'Administrator first name';
+$_['help_admin_last_name']      = 'Administrator last name';
 
 // Error
 $_['error_db_hostname'] 	    = 'Hostname required!';
@@ -63,4 +67,6 @@ $_['error_store_email'] 		= 'Store email required!';
 $_['error_admin_username'] 		= 'Username required!';
 $_['error_admin_email'] 		= 'Invalid E-Mail!';
 $_['error_admin_password'] 		= 'Password required!';
+$_['error_admin_first_name'] 	= 'Admin first name required!';
+$_['error_admin_last_name'] 	= 'Admin last name required!';
 $_['error_remove_install'] 		= 'Failed to remove the install directory. Please remove this manually for security reasons.';
