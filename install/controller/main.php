@@ -114,6 +114,18 @@ class ControllerMain extends Controller {
 			$data['admin_password'] = '';
 		}
 
+		if (isset($this->session->data['admin_first_name'])) {
+			$data['admin_first_name'] = $this->session->data['admin_first_name'];
+		} else {
+			$data['admin_first_name'] = '';
+		}
+
+		if (isset($this->session->data['admin_last_name'])) {
+			$data['admin_last_name'] = $this->session->data['admin_last_name'];
+		} else {
+			$data['admin_last_name'] = '';
+		}
+
 		if (isset($this->session->data['install_demo_data']) && !$this->session->data['install_demo_data']) {
 			$data['install_demo_data'] = 0;
 		} else {

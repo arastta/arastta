@@ -158,6 +158,8 @@ class ModelMain extends Model {
         $this->session->data['admin_username'] = $data['admin_username'];
         $this->session->data['admin_email'] = $data['admin_email'];
         $this->session->data['admin_password'] = $data['admin_password'];
+        $this->session->data['admin_first_name'] = $data['admin_first_name'];
+        $this->session->data['admin_last_name'] = $data['admin_last_name'];
         $this->session->data['install_demo_data'] = isset($data['install_demo_data']);
 
         $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
@@ -214,13 +216,18 @@ class ModelMain extends Model {
 				}
 			}
 
+			if (!$data['admin_first_name'] || !$data['admin_last_name']) {
+				$data['admin_first_name'] = 'Ada';
+				$data['admin_last_name'] = 'Bulut';
+			}
+
 			$db->query("SET CHARACTER SET utf8");
 
 			$db->query("SET @@session.sql_mode = 'MYSQL40'");
 
 			$db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE user_id = '1'");
 
-			$db->query("INSERT INTO `" . DB_PREFIX . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($data['admin_username']) . "', salt = '" . $db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $db->escape(sha1($salt . sha1($salt . sha1($data['admin_password'])))) . "', firstname = 'Ada', lastname = 'Bulut', image = 'catalog/demo/ada-bulut.png', email = '" . $db->escape($data['admin_email']) . "', status = '1', date_added = NOW()");
+			$db->query("INSERT INTO `" . DB_PREFIX . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($data['admin_username']) . "', salt = '" . $db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $db->escape(sha1($salt . sha1($salt . sha1($data['admin_password'])))) . "', firstname = '" . $db->escape($data['admin_first_name']) . "', lastname = '" . $db->escape($data['admin_last_name']) . "', image = 'admin-default.png', email = '" . $db->escape($data['admin_email']) . "', status = '1', date_added = NOW()");
 
             $db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_name'");
             $db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_name', value = '" . $db->escape($data['store_name']) . "'");
