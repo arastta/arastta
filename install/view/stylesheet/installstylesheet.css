@@ -112,6 +112,35 @@ label {
     font-weight: normal !important;
 }
 
+.form-group > div > input[type="checkbox"] {
+    margin-top: 10px;
+}
+
+.btn-expand-down {
+    width: 30px;
+    height: 30px;
+    padding: 0px;
+    border-radius: 15px;
+    background-color: transparent;
+    outline: medium none;
+    border: 1px solid #ccc;
+    color: #333;
+}
+
+.fa-chevron-up {
+    margin-bottom: 5px;
+}
+
+hr {
+    border-color: #ccc;
+}
+
+
+/* fixes glitching due to margin-collapsing */
+#advanced-settings .form-group:last-child {
+    margin-bottom: 0;
+}
+
 /* Addition to Boostrap */
 .col-xs-offset-right-12 {
     margin-right: 100%;

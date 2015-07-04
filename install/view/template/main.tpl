@@ -165,7 +165,7 @@
 			url: 'index.php?route=main/saveSettings',
 			dataType: 'json',
 			type: 'post',
-			data: $('#install-content input[type=\'text\'], input[type=\'password\']'),
+			data: $('#install-content input[type=\'text\'], input[type=\'password\'], input[type=\'checkbox\']:checked'),
 			beforeSend: function() {
 				$('#install-loading').html('<span class="loading-bar"><span class="loading-spin"><i class="fa fa-spinner fa-spin"></i></span></span>');
 				$('.loading-bar').css({"height": $('.panel-body').height()-84});
