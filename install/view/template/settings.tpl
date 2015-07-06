@@ -81,14 +81,3 @@
         </div>
     </div>
 </form>
-<script type="text/javascript">
-    $('#advanced-settings').on('hidden.bs.collapse', function() {
-        $('#btn-show-advanced').html('<i class="fa fa-chevron-down"></i>');
-    });
-
-    $('#advanced-settings').on('shown.bs.collapse', function() {
-        $('#btn-show-advanced').html('<i class="fa fa-chevron-up"></i>');
-    });
-
-    $('#btn-show-advanced').tooltip();
-</script>

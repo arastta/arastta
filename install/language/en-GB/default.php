@@ -31,6 +31,7 @@ $_['entry_db_username']         = 'Username';
 $_['entry_db_password']         = 'Password';
 $_['entry_db_database']         = 'Database Name';
 $_['entry_db_prefix']           = 'Table Prefix';
+$_['entry_db_driver']           = 'Driver';
 $_['entry_store_name']          = 'Store Name';
 $_['entry_store_email']         = 'Store E-Mail';
 $_['entry_admin_username']      = 'Admin Username';
@@ -51,7 +52,7 @@ $_['help_store_email']          = 'E-mail of your store, used everywhere';
 $_['help_admin_username']       = 'Username of admin account';
 $_['help_admin_email']          = 'E-mail of admin account';
 $_['help_admin_password']       = 'Password of admin account';
-$_['help_advanced_settings']    = 'Advanced settings';
+$_['help_advanced_settings']    = 'Advanced Settings';
 $_['help_admin_first_name']     = 'Administrator first name';
 $_['help_admin_last_name']      = 'Administrator last name';
 
