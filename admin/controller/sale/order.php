@@ -24,6 +24,12 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function edit() {
+        if (!$this->validate()) {
+            $this->session->data['error'] = $this->language->get('error_permission');
+
+            $this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL'));
+        }
+
 		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -52,7 +58,13 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('sale/order');
+        if (!$this->validate()) {
+            $this->session->data['error'] = $this->language->get('error_permission');
+
+            $this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL'));
+        }
+
+        $this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -72,58 +84,60 @@ class ControllerSaleOrder extends Controller {
         $app->route();
         $app->dispatch();
 
+        $response = json_decode($app->response->getOutput(), true);
+
         unset($app);
 
         // Return back to admin
         Client::setName('admin');
 
-		if (isset($response['error'])) {
-			$this->error['warning'] = $response['error'];
-		}
+        if (isset($response['error'])) {
+            $this->error['warning'] = $response['error'];
+        }
 
-		if (isset($response['success'])) {
-			$this->session->data['success'] = $response['success'];
+        if (isset($response['success'])) {
+            $this->session->data['success'] = $response['success'];
 
-			$url = '';
+            $url = '';
 
-			if (isset($this->request->get['filter_order_id'])) {
-				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-			}
+            if (isset($this->request->get['filter_order_id'])) {
+                $url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+            }
 
-			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-			}
+            if (isset($this->request->get['filter_customer'])) {
+                $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+            }
 
-			if (isset($this->request->get['filter_order_status'])) {
-				$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
-			}
+            if (isset($this->request->get['filter_order_status'])) {
+                $url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
+            }
 
-			if (isset($this->request->get['filter_total'])) {
-				$url .= '&filter_total=' . $this->request->get['filter_total'];
-			}
+            if (isset($this->request->get['filter_total'])) {
+                $url .= '&filter_total=' . $this->request->get['filter_total'];
+            }
 
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
+            if (isset($this->request->get['filter_date_added'])) {
+                $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+            }
 
-			if (isset($this->request->get['filter_date_modified'])) {
-				$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-			}
+            if (isset($this->request->get['filter_date_modified'])) {
+                $url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
+            }
 
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
 
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
 
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
 
-			$this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-		}
+            $this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+        }
 
 		$this->getList();
 	}
@@ -310,6 +324,12 @@ class ControllerSaleOrder extends Controller {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
+		}
+
+		if (isset($this->session->data['error'])) {
+			$data['error_warning'] = $this->session->data['error'];
+
+			unset($this->session->data['error']);
 		}
 
 		if (isset($this->session->data['success'])) {
@@ -2301,8 +2321,6 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function api() {
-		$json = array();
-
         $this->load->language('sale/order');
 
         $this->document->setTitle($this->language->get('heading_title'));
