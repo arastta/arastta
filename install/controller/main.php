@@ -53,6 +53,12 @@ class ControllerMain extends Controller {
 
 		$data['db_prefix'] = $this->generatePrefix();
 
+        if (isset($this->session->data['db_driver'])) {
+            $data['db_driver'] = $this->session->data['db_driver'];
+        } else {
+            $data['db_driver'] = 'mysqli';
+        }
+
 		$json['output'] = $this->load->view('database.tpl', $data);
 
 		$this->response->addHeader('Content-Type: application/json');

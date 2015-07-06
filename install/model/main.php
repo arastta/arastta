@@ -96,6 +96,7 @@ class ModelMain extends Model {
         $this->session->data['db_username'] = $data['db_username'];
         $this->session->data['db_password'] = $data['db_password'];
         $this->session->data['db_database'] = $data['db_database'];
+        $this->session->data['db_driver'] = $data['db_driver'];
 
 		$content  = '<?php' . "\n";
 		$content .= '/**' . "\n";
@@ -105,7 +106,7 @@ class ModelMain extends Model {
 		$content .= ' */' . "\n";
 		$content .= "\n";
 		$content .= '// DB' . "\n";
-		$content .= 'define(\'DB_DRIVER\', \'mysqli\');' . "\n";
+		$content .= 'define(\'DB_DRIVER\', \'' . addslashes($data['db_driver']) . '\');' . "\n";
 		$content .= 'define(\'DB_HOSTNAME\', \'' . addslashes($data['db_hostname']) . '\');' . "\n";
 		$content .= 'define(\'DB_USERNAME\', \'' . addslashes($data['db_username']) . '\');' . "\n";
 		$content .= 'define(\'DB_PASSWORD\', \'' . addslashes($data['db_password']) . '\');' . "\n";
@@ -122,6 +123,19 @@ class ModelMain extends Model {
 
     public function validateDatabaseConnection($data) {
         error_reporting(0);
+
+        if ($data['db_driver'] == 'pdo') {
+            $pdo = new \PDO("mysql:host=" . $data['db_hostname'] . ";port=3306;dbname=" . $data['db_database'], $data['db_username'], $data['db_password']);
+
+            //$status = $pdo->getAttribute(PDO::ATTR_CONNECTION_STATUS);
+            $status = ($pdo->getAttribute(PDO::ATTR_DRIVER_NAME) == 'mysql') ? true : false;
+
+            $pdo = null;
+
+            error_reporting(E_ALL);
+
+            return $status;
+        }
 
         $conn = new MySQLi($data['db_hostname'], $data['db_username'], $data['db_password']);
 
