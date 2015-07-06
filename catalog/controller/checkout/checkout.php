@@ -71,6 +71,8 @@ class ControllerCheckoutCheckout extends Controller {
             if ($information_info) {
                 $data['error_agree'] = sprintf($this->language->get('error_agree'), $information_info['title']);
             }
+        } else {
+            $data['error_agree'] = '';
         }
 
 		if (isset($this->session->data['error'])) {
