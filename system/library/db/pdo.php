@@ -111,7 +111,7 @@ final class PDO {
 	}
 
     public function getVersion() {
-        return $this->pdo->getAttribute(PDO::ATTR_SERVER_VERSION);
+        return $this->pdo->getAttribute(constant("PDO::ATTR_SERVER_VERSION"));
     }
 
 	public function __destruct() {
