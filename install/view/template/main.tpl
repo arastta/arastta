@@ -144,7 +144,7 @@
                     // Reset the height of loading bar
                     $('.loading-bar').css({"height": $('.panel-body').height()-84});
 				} else if (json['output']) {
-					$('.loading-bar').css({"height": "135%"});
+					$('.loading-bar').css({"height": "109%"});
 
 					$('#step-database').addClass('text-success');
 					$('#step-settings').addClass('text-primary');
@@ -222,15 +222,5 @@
 			}
 		});
 	}
-	
-	$('#advanced-settings').on('hidden.bs.collapse', function() {
-		$('#btn-show-advanced').html('<i class="fa fa-chevron-down"></i>');
-	});
-
-	$('#advanced-settings').on('shown.bs.collapse', function() {
-		$('#btn-show-advanced').html('<i class="fa fa-chevron-up"></i>');
-	});
-
-	$('#btn-show-advanced').tooltip();
 <?php } ?>
 </script>
