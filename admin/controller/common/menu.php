@@ -742,9 +742,15 @@ class ControllerCommonMenu extends Controller {
 	}
 
 	protected function compareMenuItems($item1, $item2) {
-		$item1['position'] = isset($item1['position']) ? $item1['position'] : 0;
-		$item2['position'] = isset($item2['position']) ? $item2['position'] : 0;
-		return $item1['position'] > $item2['position'];
+		if (!isset($item1['position'])) {
+			return 1;
+		}
+
+		if (!isset($item2['position'])) {
+			return -1;
+		}
+
+		return ($item1['position'] < $item2['position']) ? -1 : 1;
 	}
 
 	public function addMenuItem($id, $text, $href='', $parent_id='', $permission=true, $icon='', $position=0) {
