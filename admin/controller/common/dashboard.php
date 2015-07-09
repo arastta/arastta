@@ -42,16 +42,14 @@ class ControllerCommonDashboard extends Controller {
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['order'] = $this->load->controller('dashboard/order');
-		$data['sale'] = $this->load->controller('dashboard/sale');
-		$data['customer'] = $this->load->controller('dashboard/customer');
-		$data['online'] = $this->load->controller('dashboard/online');
-		$data['map'] = $this->load->controller('dashboard/map');
-		$data['chart'] = $this->load->controller('dashboard/chart');
-		$data['charts'] = $this->load->controller('dashboard/charts');
-		$data['activity'] = $this->load->controller('dashboard/activity');
-		$data['recent'] = $this->load->controller('dashboard/recent');
-		$data['recenttabs'] = $this->load->controller('dashboard/recenttabs');
+        $data['activity'] = $this->checkModule('dashboard/activity');
+        $data['charts'] = $this->checkModule('dashboard/charts');
+        $data['customer'] = $this->checkModule('dashboard/customer');
+        $data['map'] = $this->checkModule('dashboard/map');
+        $data['online'] = $this->checkModule('dashboard/online');
+        $data['order'] = $this->checkModule('dashboard/order');
+        $data['sale'] = $this->checkModule('dashboard/sale');
+		$data['recenttabs'] = $this->checkModule('dashboard/recenttabs');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		// Run currency update
@@ -63,4 +61,12 @@ class ControllerCommonDashboard extends Controller {
 			
 		$this->response->setOutput($this->load->view('common/dashboard.tpl', $data));
 	}
+
+    protected function checkModule($route) {
+        if ($this->user->hasPermission('dashboard',$route)) {
+            return $this->load->controller($route);
+        }
+
+        return null;
+    }
 }

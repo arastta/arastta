@@ -8,7 +8,7 @@
 
 namespace DB;
 
-final class mPDO {
+final class PDO {
 
 	private $pdo = null;
 	private $statement = null;
@@ -109,6 +109,10 @@ final class mPDO {
 	public function getLastId() {
 		return $this->pdo->lastInsertId();
 	}
+
+    public function getVersion() {
+        return $this->pdo->getAttribute(constant("PDO::ATTR_SERVER_VERSION"));
+    }
 
 	public function __destruct() {
 		$this->pdo = null;
