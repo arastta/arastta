@@ -48,7 +48,9 @@
     </div>
       <?php } ?>
       <?php if (!empty($activity)) { ?>
-      <div class="col-lg-6 col-md-12 col-sx-12 col-sm-12"><?php echo $activity; ?></div>
+	<div class="row">
+		<div class="col-lg-6 col-md-12 col-sx-12 col-sm-12"><?php echo $activity; ?></div>
+	</div>
       <?php } ?>
   </div>
 </div>

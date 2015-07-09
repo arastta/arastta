@@ -471,13 +471,14 @@ class ControllerUserUserPermission extends Controller {
 		return !$this->error;
 	}
 
-    protected function getDashboardText($route) {
+    protected function getDashboardText($route, $get_text = 'heading_title') {
+        $route = $route == 'user/user_permission' ? 'user/user_group' : $route;
         $this->load->language($route);
 
         $text = $this->language->get('heading_title');
 
         if(empty($text)) {
-            $text = $this->language->get('heading_title');
+            $text = $this->language->get($get_text);
         }
 
         return $text;
