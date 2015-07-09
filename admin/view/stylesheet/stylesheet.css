@@ -2285,9 +2285,31 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
 }
 
 .container-fluid .panel.panel-default .pull-right button i, .container-fluid .panel.panel-default .pull-right a i{
-vertical-align: initial;
+    vertical-align: initial;
 }
 
 .well.well-sm {
     display: inherit !important;
 }
+
+.user-group-select-button {
+    cursor: pointer;
+}
+
+.well.user-group {
+    display: inherit !important;
+    margin: -20px 15px 0px 15px;
+    background-color: transparent;
+    border: 0px;
+    border-radius: 0px;
+    box-shadow: inherit;
+}
+
+.user-group-button-group {
+    padding-top: 10px;
+}
+
+.user-group .col-sm-3 .file-group {
+    margin-top: 15px;
+}
+
