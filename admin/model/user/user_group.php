@@ -22,7 +22,9 @@ class ModelUserUserGroup extends Model {
 	}
 
 	public function getUserGroup($user_group_id) {
-		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
+        $user_groups = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group");
+
+        $query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
 
 		$user_group = array(
 			'name'       => $query->row['name'],
