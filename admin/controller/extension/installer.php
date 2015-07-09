@@ -289,22 +289,19 @@ class ControllerExtensionInstaller extends Controller {
                     }
 
 					$this->permissionControl($edit_page_url);
-                    $this->replaceFileArastta($file);
+                    $this->replaceFile($file);
 
                     $files[] = $file;
 				}
 			}
-
-			# admin / controller / extension / to Arastta Root.
-			$root = dirname( dirname( dirname( __DIR__ ) ) ) . '/';
 
             foreach ($files as $file) {
                 // Upload everything in the upload directory
 
                 $destination = substr($file, strlen($directory));
                 if (is_dir($file)) {
-                    if (!is_dir($root.$destination)) {
-                        if (!mkdir($root . $destination)) {
+                    if (!is_dir(DIR_ROOT . $destination)) {
+                        if (!mkdir(DIR_ROOT . $destination)) {
                             $json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);
                             exit();
                         }
@@ -312,7 +309,7 @@ class ControllerExtensionInstaller extends Controller {
                 }
 
                 if (is_file($file)) {
-                    if (!copy($file, $root . $destination)) {
+                    if (!copy($file, DIR_ROOT . $destination)) {
                         $json['error'] = sprintf($this->language->get('error_ftp_file'), $file);
                     }
                 }
@@ -379,7 +376,7 @@ class ControllerExtensionInstaller extends Controller {
         $this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '".$permission."' WHERE `user_group_id` = 1");
     }
 
-    public function replaceFileArastta($file) {
+    public function replaceFile($file) {
         $replace_text = array(
             'VQMod::modCheck' => 'modification',
             '$this->event->trigger' => '$this->trigger->fire',
