@@ -110,7 +110,7 @@
 			url: 'index.php?route=main/saveDatabase',
 			dataType: 'json',
 			type: 'post',
-			data: $('#install-content input[type=\'text\'], input[type=\'password\']'),
+			data: $('#install-content input[type=\'text\'], input[type=\'password\'], select'),
 			beforeSend: function() {
 				$('#install-loading').html('<span class="loading-bar"><span class="loading-spin"><i class="fa fa-spinner fa-spin"></i></span></span>');
 				$('.loading-bar').css({"height": $('.panel-body').height()-84});
@@ -134,17 +134,17 @@
 						}
 					}
 
-          if (json['error']['config']) {
-            $('#install-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'][i] + '</div>');
-          }
+                    if (json['error']['config']) {
+                        $('#install-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'][i] + '</div>');
+                    }
 
-					// Highlight any found errors
-					$('.text-danger').parent().addClass('has-error');
+                    // Highlight any found errors
+                    $('.text-danger').parent().addClass('has-error');
 
-					// Reset the height of loading bar
-					$('.loading-bar').css({"height": $('.panel-body').height()-84});
+                    // Reset the height of loading bar
+                    $('.loading-bar').css({"height": $('.panel-body').height()-84});
 				} else if (json['output']) {
-					$('.loading-bar').css({"height": "135%"});
+					$('.loading-bar').css({"height": "109%"});
 
 					$('#step-database').addClass('text-success');
 					$('#step-settings').addClass('text-primary');
@@ -165,7 +165,7 @@
 			url: 'index.php?route=main/saveSettings',
 			dataType: 'json',
 			type: 'post',
-			data: $('#install-content input[type=\'text\'], input[type=\'password\']'),
+			data: $('#install-content input[type=\'text\'], input[type=\'password\'], input[type=\'checkbox\']:checked'),
 			beforeSend: function() {
 				$('#install-loading').html('<span class="loading-bar"><span class="loading-spin"><i class="fa fa-spinner fa-spin"></i></span></span>');
 				$('.loading-bar').css({"height": $('.panel-body').height()-84});

@@ -21,6 +21,7 @@ $_['column_action']     = 'Action';
 
 // Entry
 $_['entry_name']        = 'User Group Name';
+$_['entry_dashboard']   = 'Dashboard Modules';
 $_['entry_access']      = 'Access Permission';
 $_['entry_modify']      = 'Modify Permission';
 

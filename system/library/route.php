@@ -85,7 +85,7 @@ class Route extends Object {
 
         // URLs are stored without suffix in database
         if ($this->config->get('config_seo_suffix')) {
-            $seo_url = rtrim($seo_url, '.html');
+			$seo_url = substr($seo_url, 0, -5);
         }
 
         $parts = explode('/', $seo_url);

@@ -24,3 +24,4 @@ $_['column_action']     = 'Action';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify modifications!';
+$_['error_remove']      = 'Warning: Failed to remove file/directory "%s" !';
