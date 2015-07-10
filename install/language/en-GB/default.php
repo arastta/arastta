@@ -22,6 +22,7 @@ $_['text_settings']             = 'Settings';
 $_['text_finish']               = 'Finish';
 $_['text_database_header']      = 'Enter your database details.';
 $_['text_settings_header']      = 'Enter your store settings.';
+$_['text_advanced']    			= 'Advanced';
 $_['text_finish_header']        = 'Congratulations! Arastta is now installed.';
 
 // Entry
@@ -30,11 +31,15 @@ $_['entry_db_username']         = 'Username';
 $_['entry_db_password']         = 'Password';
 $_['entry_db_database']         = 'Database Name';
 $_['entry_db_prefix']           = 'Table Prefix';
+$_['entry_db_driver']           = 'Driver';
 $_['entry_store_name']          = 'Store Name';
 $_['entry_store_email']         = 'Store E-Mail';
 $_['entry_admin_username']      = 'Admin Username';
 $_['entry_admin_email']         = 'Admin E-Mail';
 $_['entry_admin_password']      = 'Admin Password';
+$_['entry_admin_first_name']    = 'Admin First Name';
+$_['entry_admin_last_name']     = 'Admin Last Name';
+$_['entry_install_demo_data']   = 'Install demo data';
 
 // Help
 $_['help_db_hostname']          = 'Usually: localhost';
@@ -47,6 +52,8 @@ $_['help_store_email']          = 'E-mail of your store, used everywhere';
 $_['help_admin_username']       = 'Username of admin account';
 $_['help_admin_email']          = 'E-mail of admin account';
 $_['help_admin_password']       = 'Password of admin account';
+$_['help_admin_first_name']     = 'Administrator first name';
+$_['help_admin_last_name']      = 'Administrator last name';
 
 // Error
 $_['error_db_hostname'] 	    = 'Hostname required!';
@@ -60,4 +67,6 @@ $_['error_store_email'] 		= 'Store email required!';
 $_['error_admin_username'] 		= 'Username required!';
 $_['error_admin_email'] 		= 'Invalid E-Mail!';
 $_['error_admin_password'] 		= 'Password required!';
+$_['error_admin_first_name'] 	= 'Admin first name required!';
+$_['error_admin_last_name'] 	= 'Admin last name required!';
 $_['error_remove_install'] 		= 'Failed to remove the install directory. Please remove this manually for security reasons.';

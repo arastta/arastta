@@ -470,7 +470,7 @@ function checkTerms() {
 
   if (!$('input[name=\'agree\']').is(':checked')) {
     if(!$('.alert').length) {
-      $('#ar-right-1 .panel-body').prepend('<div class="alert alert-danger"><?php echo str_replace('&amp;', '&', htmlspecialchars($error_agree, ENT_QUOTES)); ?><button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+      $('#ar-right-1 .panel-body').prepend('<div class="alert alert-danger"><?php echo str_replace('&amp;', '&', $error_agree); ?><button type="button" class="close" data-dismiss="alert">&times;</button></div>');
     }
 
     return false;
