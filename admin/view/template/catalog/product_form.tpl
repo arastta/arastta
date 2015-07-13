@@ -67,21 +67,21 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="input-tag<?php echo $language['language_id']; ?>"><span data-toggle="tooltip" title="<?php echo $help_tag; ?>"><?php echo $entry_tag; ?></span></label>
+                                        <label class="col-sm-2 control-label" for="input-tag<?php echo $language['language_id']; ?>"><?php echo $entry_tag; ?></label>
                                         <div class="col-sm-10 tags-select">
                                             <select id="tags-<?php echo $language['language_id']; ?>" name="product_description[<?php echo $language['language_id']; ?>][tag][]" class="inputbox chzn-done tags-multi-select" size="5" multiple="multiple" style="display: none !important;">
                                                 <?php if (!empty($product_description[$language['language_id']]['tag'])) {
-                                    foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
-                                                <option data-tag-remove="<?php echo $tag_key; ?>" value="<?php echo $tag_value; ?>" selected="selected"><?php echo $tag_value; ?></option>
-                                                <?php   }
-                                 } ?>
+														  foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
+															<option data-tag-remove="<?php echo $tag_key; ?>" value="<?php echo $tag_value; ?>" selected="selected"><?php echo $tag_value; ?></option>
+                                                <?php     }
+														} ?>
                                             </select>
                                             <div class="form-control">
                                                 <?php if (!empty($product_description[$language['language_id']]['tag'])) {
-                                    foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
-                                                <span class="tag-choice"><?php echo $tag_value; ?><a class="tag-choice-close" onclick="removeTag(this);" data-tag-remove-index="<?php echo $tag_key; ?>"><i class="fa fa-times"></i></a></span>
+														  foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
+															<span class="tag-choice"><?php echo $tag_value; ?><a class="tag-choice-close" onclick="removeTag(this);" data-tag-remove-index="<?php echo $tag_key; ?>"><i class="fa fa-times"></i></a></span>
                                                 <?php     }
-                                } ?>
+													  } ?>
                                                 <input type="text" name="tag" value="" placeholder="<?php echo $entry_tag; ?>" id="input-tag<?php echo $language['language_id']; ?>" class="form-control input-full-width tag-select" />
                                             </div>
                                         </div>
