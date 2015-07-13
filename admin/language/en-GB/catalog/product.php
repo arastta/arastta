@@ -113,3 +113,5 @@ $_['error_name']             = 'Product Name must be greater than 3 and less tha
 $_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
 $_['error_model']            = 'Product Model must be greater than 1 and less than 64 characters!';
 $_['error_seo_url']          = 'SEO URL already in use!';
+$_['error_tag']              = 'Warning: Already added this tag!';
+$_['error_tag_empty']        = 'Warning: Please check the tag must be greater than 1!';

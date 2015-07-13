@@ -585,6 +585,9 @@ class ControllerCatalogProduct extends Controller {
 
 		$data['tab_general'] = $this->language->get('tab_general');
 
+		$data['error_tag'] = $this->language->get('error_tag');
+		$data['error_tag_empty'] = $this->language->get('error_tag_empty');
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -692,6 +695,25 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['product_description'] = array();
 		}
+
+        // Tags
+        if (!empty($data['product_description'])) {
+            foreach ($data['product_description'] as $language_id => $product_description_data) {
+                if (!empty($data['product_description'][$language_id]['tag'])) {
+                    $check = strpos($product_description_data['tag'], ',');
+
+                    if ($check !== false) {
+                        $tags = explode(',' , $product_description_data['tag']);
+
+                        foreach ($tags as $tag) {
+                            $tag_result[] = $tag;
+                        }
+                    }
+
+                    $data['product_description'][$language_id]['tag'] = $tag_result;
+                }
+            }
+        }
 
 		if (isset($this->request->post['image'])) {
 			$data['image'] = $this->request->post['image'];
@@ -1395,6 +1417,32 @@ class ControllerCatalogProduct extends Controller {
 				);
 			}
 		}
+
+        if (isset($this->request->get['tag_name'])) {
+
+            $this->load->model('catalog/product');
+
+            if (isset($this->request->get['tag_name'])) {
+                $tag_name = $this->request->get['tag_name'];
+            } else {
+                $tag_name = '';
+            }
+
+            $filter = null;
+
+            if(isset($this->request->post['tag_text'])) {
+                $filter = $this->request->post['tag_text'];
+            }
+
+            $results = $this->model_catalog_product->getTags($tag_name, $filter);
+
+            foreach ($results as $result) {
+                $json[] = array(
+                    'tag' => $result,
+                    'tag_id' => $result
+                );
+            }
+        }
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

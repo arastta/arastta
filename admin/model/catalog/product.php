@@ -20,6 +20,7 @@ class ModelCatalogProduct extends Model {
 
 		foreach ($data['product_description'] as $language_id => $value) {
             empty($value['meta_title']) ? $value['meta_title'] = $value['name'] : $value['meta_title'];
+            !empty($value['tag']) ? $value['tag'] = implode(',', $value['tag']) : $value['tag'];
 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int)$product_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
@@ -155,6 +156,7 @@ class ModelCatalogProduct extends Model {
 
 		foreach ($data['product_description'] as $language_id => $value) {
 			empty($value['meta_title']) ? $value['meta_title'] = $value['name'] : $value['meta_title'];
+            !empty($value['tag']) ? $value['tag'] = implode(',', $value['tag']) : $value['tag'];
 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int)$product_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
@@ -764,4 +766,55 @@ class ModelCatalogProduct extends Model {
 
 		return $query->row['total'];
 	}
+
+    public function getTags($tag_name, $filter_tags = null) {
+        $tags = $tags_filter = array();
+
+        $check_search = true;
+
+        $filter = " AND not(tag = '')";
+
+        if (!empty($filter_tags)) {
+            foreach ($filter_tags as $filter_tag) {
+                $filter .= " AND not (tag = '" . $filter_tag['value'] . "')";
+                $tags_filter[] = $filter_tag['value'];
+            }
+        }
+
+        $query = $this->db->query("SELECT DISTINCT(tag) FROM `" . DB_PREFIX . "product_description` WHERE `tag` LIKE '%" . $tag_name . "%'" . $filter);
+
+        if ($query->num_rows) {
+            foreach ($query->rows as $result) {
+                $check = strpos($result['tag'], ',');
+
+                $tag = $result['tag'];
+
+                if ($check !== false) {
+                    $tag = explode(',' , $result['tag']);
+                }
+
+                if (is_array($tag)) {
+                    foreach ($tag as $value) {
+                        if (!empty($tag_name)) {
+                            $check_search = strpos($value , $tag_name);
+                        }
+
+                        if (!in_array($value, $tags) && !in_array($value, $tags_filter) && $check_search !== false) {
+                            $tags[] = $value;
+                        }
+                    }
+                } else {
+                    if (!empty($tag_name)) {
+                        $check_search = strpos($tag , $tag_name);
+                    }
+
+                    if (!in_array($tag, $tags) && !in_array($tag, $tags_filter) && $check_search !== false) {
+                        $tags[] = $tag;
+                    }
+                }
+            }
+        }
+
+        return $tags;
+    }
 }
