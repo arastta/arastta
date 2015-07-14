@@ -14,12 +14,20 @@ class ModelAppearanceLayout extends Model {
 
 		$layout_id = $this->db->getLastId();
 
+        if(empty($data['layout_route'])) {
+            $data['layout_route'] = $this->getLayoutRoutes($layout_id);
+        }
+
+        if(empty($data['layout_module'])) {
+            $data['layout_module'] = $this->getLayoutModules($layout_id, false);
+        }
+
 		if (isset($data['layout_route'])) {
 			foreach ($data['layout_route'] as $layout_route) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', store_id = '" . (int)$layout_route['store_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "'");
 			}
 		}
-		
+
 		if (isset($data['layout_module'])) {
 			foreach ($data['layout_module'] as $layout_module) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_module SET layout_id = '" . (int)$layout_id . "', code = '" . $this->db->escape($layout_module['code']) . "', position = '" . $this->db->escape($layout_module['position']) . "', sort_order = '" . (int)$layout_module['sort_order'] . "'");
@@ -35,6 +43,11 @@ class ModelAppearanceLayout extends Model {
 		if(empty($data['layout_route'])) {
 			$data['layout_route'] = $this->getLayoutRoutes($layout_id);
 		}
+
+        if(empty($data['layout_module'])) {
+            $data['layout_module'] = $this->getLayoutModules($layout_id, false);
+        }
+
 		$this->trigger->fire('pre.admin.layout.edit', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "layout SET name = '" . $this->db->escape($data['name']) . "' WHERE layout_id = '" . (int)$layout_id . "'");
@@ -46,7 +59,7 @@ class ModelAppearanceLayout extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', store_id = '" . (int)$layout_route['store_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "'");
 			}
 		}
-		
+
 		$this->db->query("DELETE FROM " . DB_PREFIX . "layout_module WHERE layout_id = '" . (int)$layout_id . "'");
 		
 		if (isset($data['layout_module'])) {
@@ -135,7 +148,7 @@ class ModelAppearanceLayout extends Model {
 		return $query->rows;
 	}
 	
-	public function getLayoutModules($layout_id) {
+	public function getLayoutModules($layout_id, $position = true) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "layout_module WHERE layout_id = '" . (int)$layout_id . "' ORDER BY sort_order");
 
         if(!empty($query->rows)) {
@@ -152,7 +165,11 @@ class ModelAppearanceLayout extends Model {
                     $layout_module['link'] = $this->url->link('module/' . $_code[0], 'module_id=' . $_code[1] . '&token=' . $this->session->data['token'], 'SSL');
                 }
 
-                $data[$layout_module['position']][] = $layout_module;
+                if ($position) {
+                   $data[$layout_module['position']][] = $layout_module;
+                } else {
+                   $data[] = $layout_module;
+                }
             }
             return $data;
         } else {

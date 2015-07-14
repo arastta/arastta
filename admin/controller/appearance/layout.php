@@ -217,13 +217,11 @@ class ControllerAppearanceLayout extends Controller {
 	}
 
 	public function getModuleList() {
-
         $data['extensions'] = $this->getModule();
 		
 		$html = '';
 		
-		foreach($data['extensions'] as $modules) { 
-		
+		foreach($data['extensions'] as $modules) {
 			$html .= '<div class="accordion-heading"><i class="fa fa-cubes"></i><span class="module-name">' . $modules['name'] . '</span>';
 			$html .= '	<div class="btn-group">';
 
@@ -259,14 +257,12 @@ class ControllerAppearanceLayout extends Controller {
 			$html .= "	$('#module-modal').modal('show');";
 			$html .= "});";
 			$html .= "</script>";
-		}		
+		}
 
-		echo $html;
-		exit();
+        $this->response->setOutput($html);
 	}
 
 	public function getLayoutList() {
-       		
 		$this->load->model('appearance/layout');
 		
         $layouts = $this->model_appearance_layout->getLayouts();
@@ -280,8 +276,7 @@ class ControllerAppearanceLayout extends Controller {
 		
 		$html += '</select>';
 
-		echo $html;
-		exit();
+		$this->response->setOutput($html);
 	}	
 	
 	public function saveModule(){
@@ -352,14 +347,14 @@ class ControllerAppearanceLayout extends Controller {
         foreach ($layouts as $layout) {
             $layout_modules = $this->model_appearance_layout->getLayoutModules($layout['layout_id']);
 
-            $layouts[$layout['layout_id']] = array(
+            $result[$layout['layout_id']] = array(
                 'layout_id' => $layout['layout_id'],
                 'name' => $layout['name'],
                 'modules' => $layout_modules
             );
         }
 		
-		return $layouts;
+		return $result;
 	}
 	
 	public function getModule($type = 'all') {
@@ -469,13 +464,11 @@ class ControllerAppearanceLayout extends Controller {
     }
 	
 	public function installScriptStyleFile() {
-	
 		$this->document->addStyle('view/stylesheet/layout.css');
         $this->document->addStyle('view/javascript/jquery/layout/jquery-ui.css');
 
 		$this->document->addScript('view/javascript/layout/layout.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery-lockfixed.js');
-		
 	}	
 }
