@@ -95,7 +95,6 @@
         display: none !important;
     }
 	.input-icon input {
-        padding-bottom: 2px;
-        font-size: 14px;
+        padding-bottom: 3px;
     }
 </style>
