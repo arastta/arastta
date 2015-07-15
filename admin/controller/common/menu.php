@@ -86,6 +86,7 @@ class ControllerCommonMenu extends Controller {
 		$p_return_upload = $this->user->hasPermission('access','tool/upload');
 		$p_return_export_import = $this->user->hasPermission('access','tool/export_import');
 		$p_return_file_manager = $this->user->hasPermission('access','tool/file_manager');
+		$p_return_system_info = $this->user->hasPermission('access','tool/system_info');
 
 		#Reports permissions
 		$p_return_sale_order = $this->user->hasPermission('access','report/sale_order');
@@ -176,9 +177,9 @@ class ControllerCommonMenu extends Controller {
 			'tools' => array(
 				'text' => $data['text_tools'],
 				'icon' => 'fa-wrench',
-				'permission' => $p_return_backup || $p_return_export_import || $p_return_file_manager || $p_return_upload || $p_return_error_log,
+				'permission' => $p_return_backup || $p_return_export_import || $p_return_file_manager || $p_return_upload || $p_return_error_log || $p_return_system_info,
 				'position' => 11
-			),
+			)
 		);
 
 		#Catalog
@@ -255,7 +256,7 @@ class ControllerCommonMenu extends Controller {
 				'href' => $this->url->link('catalog/information', 'token=' . $this->session->data['token'], 'SSL'),
 				'position' => 10,
 				'permission' => $p_return_information
-			),
+			)
 		);
 
 		#Sales
@@ -283,7 +284,7 @@ class ControllerCommonMenu extends Controller {
 				'href' => $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL'),
 				'position' => 4,
 				'permission' => $p_return_paypal
-			),
+			)
 		);
 
 		#Customers
@@ -356,7 +357,7 @@ class ControllerCommonMenu extends Controller {
 				'href' => $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], 'SSL'),
 				'position' => 5,
 				'permission' => $p_return_contact
-			),
+			)
 		);
 
 		#Reports
@@ -478,7 +479,7 @@ class ControllerCommonMenu extends Controller {
 						'permission' => $p_return_affiliate_activity
 					),
 				)
-			),
+			)
 		);
 
 		#Appearance
@@ -506,7 +507,7 @@ class ControllerCommonMenu extends Controller {
 				'href' => $this->url->link('design/banner', 'token=' . $this->session->data['token'], 'SSL'),
 				'position' => 4,
 				'permission' => $p_return_design_banner
-			),
+			)
 		);
 
 		#Marketplace
@@ -534,7 +535,7 @@ class ControllerCommonMenu extends Controller {
 				'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL'),
 				'position' => 4,
 				'permission' => $p_return_feed
-			),
+			)
 		);
 
 		#Localisation
@@ -636,7 +637,7 @@ class ControllerCommonMenu extends Controller {
 				'href' => $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'], 'SSL'),
 				'position' => 11,
 				'permission' => $p_return_weight_class
-			),
+			)
 		);
 
 		#System
@@ -685,7 +686,7 @@ class ControllerCommonMenu extends Controller {
 				'href' => $this->url->link('system/language_override', 'token=' . $this->session->data['token'], 'SSL'),
 				'position' => 6,
 				'permission' => $p_return_language_override
-			),
+			)
 		);
 
 		#Tools
@@ -720,6 +721,12 @@ class ControllerCommonMenu extends Controller {
 				'position' => 5,
 				'permission' => $p_return_error_log
 			),
+			'system_info' => array(
+				'text' => $data['text_system_info'],
+				'href' => $this->url->link('tool/system_info', 'token=' . $this->session->data['token'], 'SSL'),
+				'position' => 6,
+				'permission' => $p_return_system_info
+			)
 		);
 
 		$this->trigger->fire('pre.admin.menu.render', $this);

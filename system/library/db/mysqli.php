@@ -67,6 +67,17 @@ final class MySQLi {
 		return mysqli_get_server_info($this->link);
 	}
 
+    public function getCollation() {
+        // Get the database collation from server
+        $result = $this->query('SHOW VARIABLES LIKE "collation_database"');
+
+        if (!empty($result->row) && isset($result->row['Value'])) {
+            return $result->row['Value'];
+        } else {
+            return '';
+        }
+    }
+
 	public function __destruct() {
 		$this->link->close();
 	}
