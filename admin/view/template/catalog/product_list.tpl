@@ -88,7 +88,10 @@
 				  <?php } ?>
 				</select>
 			  </div>
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+			  	<div class="pull-right">
+			  		<button type="button" id="button-reset-filter" class="btn btn-default"><i class="fa fa-circle-o"></i> <?php echo $button_reset; ?></button>
+              		<button type="button" id="button-filter" class="btn btn-primary"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+            	</div>
             </div>
           </div>
         </div>
@@ -230,7 +233,12 @@ $('#button-filter').on('click', function() {
 	location = url;
 });
 //--></script> 
-  <script type="text/javascript"><!--
+<script type="text/javascript"><!--
+	$('#button-reset-filter').on('click', function(){
+		$('input[name^="filter_"]').val('');
+		$('select[name^="filter_"]').val('*');
+	});
+
 $('input[name=\'filter_name\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
