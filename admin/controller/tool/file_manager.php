@@ -6,10 +6,10 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
-require_once( DIR_SYSTEM . 'elfinder/elFinderConnector.class.php' );
-require_once( DIR_SYSTEM . 'elfinder/elFinder.class.php' );
-require_once( DIR_SYSTEM . 'elfinder/elFinderVolumeDriver.class.php' );
-require_once( DIR_SYSTEM . 'elfinder/elFinderVolumeLocalFileSystem.class.php' );
+require_once(DIR_SYSTEM . 'elfinder/elFinderConnector.class.php');
+require_once(DIR_SYSTEM . 'elfinder/elFinder.class.php');
+require_once(DIR_SYSTEM . 'elfinder/elFinderVolumeDriver.class.php');
+require_once(DIR_SYSTEM . 'elfinder/elFinderVolumeLocalFileSystem.class.php');
 
 class ControllerToolFilemanager extends Controller {
 
@@ -18,25 +18,13 @@ class ControllerToolFilemanager extends Controller {
 	public function index() {
 		$this->load->language('tool/file_manager');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+        $data = $this->language->all();
 
-		$data['heading_title'] = $this->language->get('heading_title');
+		$this->document->setTitle($data['heading_title']);
 
   		$this->document->breadcrumbs = array();
 
         $this->validate();
-
-   		$data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
-   		);
-
-   		$data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('tool/file_manager', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
-   		);
 		
 		$data['fileSystem'] = $this->url->link('tool/file_manager/runFileSystem', 'token=' . $this->session->data['token'], 'SSL');
 		

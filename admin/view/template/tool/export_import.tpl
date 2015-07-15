@@ -25,6 +25,9 @@
 		</div>
 		<?php } ?>
 		<div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-table"></i> <?php echo $text_list; ?></h3>
+      </div>
 			<div class="panel-body">
 				<ul class="nav nav-tabs">
 					<li class="active"><a href="#tab-export" data-toggle="tab"><?php echo $tab_export; ?></a></li>
