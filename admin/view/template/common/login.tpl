@@ -94,4 +94,8 @@
     .input-icon .bootstrap-select {
         display: none !important;
     }
+	.input-icon input[type="text"] {
+        padding-bottom: 2px;
+        font-size: 15px;
+    }
 </style>
