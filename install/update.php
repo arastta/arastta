@@ -30,6 +30,9 @@ if(version_compare($version, '1.1.0', '<')) {
 	foreach ($user_groups->rows as $user_group) {
 		$user_group['permission'] = unserialize($user_group['permission']);
 		
+		$user_group['permission']['access'][] = 'tool/system_info';
+		$user_group['permission']['modify'][] = 'tool/system_info';
+		
 		$user_group['permission']['dashboard'] = array(
 			'0' => 'dashboard/charts',
 			'1' => 'dashboard/online',
@@ -40,6 +43,6 @@ if(version_compare($version, '1.1.0', '<')) {
 			'6' => 'dashboard/map',
 		);
 		
-		$this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . (isset($user_group['permission']) ? $this->db->escape(serialize($user_group['permission'])) : '') . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
 	}
 }

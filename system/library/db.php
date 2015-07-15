@@ -39,4 +39,8 @@ class DB {
 	public function getVersion() {
 		return $this->db->getVersion();
 	}
+
+	public function getCollation() {
+		return $this->db->getCollation();
+	}
 }
