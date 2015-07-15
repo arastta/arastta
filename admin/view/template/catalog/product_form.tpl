@@ -673,13 +673,15 @@
                                                     </tfoot>
                                                 </table>
                                             </div>
-                                            <select id="option-values<?php echo $option_row; ?>" style="display: none;">
-                                                <?php if (isset($option_values[$product_option['option_id']])) { ?>
-                                                <?php foreach ($option_values[$product_option['option_id']] as $option_value) { ?>
-                                                <option value="<?php echo $option_value['option_value_id']; ?>"><?php echo $option_value['name']; ?></option>
-                                                <?php } ?>
-                                                <?php } ?>
-                                            </select>
+                                            <div class="hidden-option">
+                                                <select id="option-values<?php echo $option_row; ?>" style="display: none;">
+                                                    <?php if (isset($option_values[$product_option['option_id']])) { ?>
+                                                    <?php foreach ($option_values[$product_option['option_id']] as $option_value) { ?>
+                                                    <option value="<?php echo $option_value['option_value_id']; ?>"><?php echo $option_value['name']; ?></option>
+                                                    <?php } ?>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
                                             <?php } ?>
                                         </div>
                                         <?php $option_row++; ?>

@@ -2342,3 +2342,7 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
     width: 97.9%;
     margin-top: 5px;
 }
+
+.hidden-option {
+    display: none;
+}
