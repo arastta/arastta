@@ -356,7 +356,7 @@ class ModelCheckoutOrder extends Model {
                 // Restock
                 $product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 
-                foreach($product_query->rows as $product) {
+                foreach ($product_query->rows as $product) {
                     $this->db->query("UPDATE `" . DB_PREFIX . "product` SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_id = '" . (int)$product['product_id'] . "' AND subtract = '1'");
 
                     $option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
@@ -455,16 +455,16 @@ class ModelCheckoutOrder extends Model {
 
 				$getTotal = $order_total->rows;
 
-                    $textData = array(
-                        'order_info'   => $order_info,
-                        'order_id'     => $order_id,
-                        'order_status' => $order_status,
-                        'comment'      => $comment,
-                        'notify'       => $notify,
-                        'getProdcuts'  => $this->getOrderProducts($order_id),
-                        'getVouchers'  => $this->getOrderVouchers($order_id),
-                        'getTotal'     => $getTotal
-                    );
+                $textData = array(
+                    'order_info'   => $order_info,
+                    'order_id'     => $order_id,
+                    'order_status' => $order_status,
+                    'comment'      => $comment,
+                    'notify'       => $notify,
+                    'getProdcuts'  => $this->getOrderProducts($order_id),
+                    'getVouchers'  => $this->getOrderVouchers($order_id),
+                    'getTotal'     => $getTotal
+                );
 
 				$text = $this->emailtemplate->getText('Order', 'order',$textData);
                 
@@ -481,13 +481,14 @@ class ModelCheckoutOrder extends Model {
                 }
 
                 if ($this->config->get('config_order_mail')) {
-                    if(!isset($mail)) {
+
+                    if (!isset($mail)) {
                         $mail = new Mail($this->config->get('config_mail'));
-                        $mail->setTo($order_info['email']);
                         $mail->setFrom($this->config->get('config_email'));
                         $mail->setSender($order_info['store_name']);
                     }
 
+                    $mail->setSubject($subject);
                     $mail->setHTML($message);
                     $mail->setText($text);
                     $mail->setTo($this->config->get('config_email'));
@@ -502,23 +503,6 @@ class ModelCheckoutOrder extends Model {
                         }
                     }
                 }
-
-                #If select admin send mail AddOrderHistory
-                /*if (($order_info['order_status_id'] && $order_status_id && $notify)) {
-                    $mail->setHTML($message);
-					$mail->setText($text);
-                    $mail->setTo($this->config->get('config_email'));
-                    $mail->send();
-
-                    $emails = explode(',', $this->config->get('config_alert_emails'));
-
-                    foreach ($emails as $email) {
-                        if ($email && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
-                            $mail->setTo($email);
-                            $mail->send();
-                        }
-                    }
-                }*/
             }
         }
         // If order status in the complete range create any vouchers that where in the order need to be made available.

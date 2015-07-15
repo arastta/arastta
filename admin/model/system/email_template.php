@@ -8,51 +8,31 @@
 
 class ModelSystemEmailtemplate extends Model {
 
-	public function editEmailTemplate($email_template, $data) {
-		$this->trigger->fire('pre.admin.emailTempalte.edit', $data);
+	public function editEmailTemplate($email_template, $email_template_description) {
+		$this->trigger->fire('pre.admin.emailtemplate.edit', $email_template_description);
 
-	    $email_template = $this->request->get['email_template'];
-		
 		$item = explode("_", $email_template);
 		
-		$sql  = "SELECT id FROM " . DB_PREFIX . "email WHERE type = '" . $item[0] ."' AND text_id = '" . (int)$item[1] ."'";
-		$query = $this->db->query($sql);
-		$email_id = $query->row['id'];
+		$query = $this->db->query("SELECT id FROM " . DB_PREFIX . "email WHERE type = '" . $item[0] ."' AND text_id = '" . (int)$item[1] ."'");
 
-		$sql  = "SELECT id FROM " . DB_PREFIX . "email_description WHERE email_id = '" . (int)$email_id . "'";
-		$query = $this->db->query($sql);
-		
-		if(!empty($query->row)) {
-			foreach ($data['email_template_description'] as $language_id => $value) {
-				$sql  = "UPDATE " . DB_PREFIX . "email_description SET";
-				$sql .= " name = '". $this->db->escape($value['name']) . "', description = '". $this->db->escape($value['description']) . "'";
-				$sql .= " WHERE email_id = '" . (int)$email_id . "' AND language_id = '" . (int)$language_id . "' ";
-				
-				$this->db->query($sql);
-			}
-		} else {
-			foreach ($data['email_template_description'] as $language_id => $value) {
-				$sql  = "INSERT INTO " . DB_PREFIX . "email_description SET";
-				$sql .= " email_id = '" . (int)$email_id . "', name = '". $this->db->escape($value['name']) . "', description = '". $this->db->escape($value['description']) . "',";
-				$sql .= " status = '1', language_id = '". (int)$language_id . "'";				
-				$this->db->query($sql);
-			}	
-		}
+        $email_id = $query->row['id'];
 
-		$this->trigger->fire('post.admin.emailTempalte.edit', $email_template);
+        $this->db->query("DELETE FROM " . DB_PREFIX . "email_description WHERE email_id = '" . (int)$email_id . "'");
+
+        foreach ($email_template_description as $language_id => $value) {
+            $this->db->query("INSERT INTO " . DB_PREFIX . "email_description SET  email_id = '" . (int)$email_id . "', name = '". $this->db->escape($value['name']) . "', description = '". $this->db->escape($value['description']) . "', status = '1', language_id = '". (int)$language_id . "'");
+        }
+
+		$this->trigger->fire('post.admin.emailtemplate.edit', $email_template_description);
 	}
 
-	public function getEmailTempalte($email_template) {
+	public function getEmailTemplate($email_template) {
 		$item = explode("_", $email_template);
-		
-		$sql  = "SELECT * FROM " . DB_PREFIX . "email AS e";
-		$sql .= " LEFT JOIN " . DB_PREFIX . "email_description AS ed ON ed.email_id = e.id";
-		$sql .= " WHERE e.type = '{$item[0]}' AND e.text_id = '{$item[1]}'";
-		
-		$query = $this->db->query($sql);
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "email AS e LEFT JOIN " . DB_PREFIX . "email_description AS ed ON ed.email_id = e.id WHERE e.type = '" . $item[0] . "' AND e.text_id = '" . $item[1] . "'");
 		
 		foreach ($query->rows as $result) {
-			$email_tempalte_data[$result['language_id']] = array(
+			$email_template_data[$result['language_id']] = array(
 				'text'         => $result['text'],
 				'text_id'      => $result['text_id'],
 				'type'         => $result['type'],
@@ -63,10 +43,10 @@ class ModelSystemEmailtemplate extends Model {
 			);
 		}
 
-		return $email_tempalte_data;
+		return $email_template_data;
 	}
 
-	public function getEmailTempaltes($data = array()) {
+	public function getEmailTemplates($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "email` AS e";
 		
 		$isWhere = 0;
@@ -127,7 +107,6 @@ class ModelSystemEmailtemplate extends Model {
 			$sql .= " ASC";
 		}
 
-
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
 				$data['start'] = 0;
@@ -142,31 +121,32 @@ class ModelSystemEmailtemplate extends Model {
 
 		$query = $this->db->query($sql);
 
-        if(!empty($query->num_rows)){
+        if (!empty($query->num_rows)) {
             foreach($query->rows as $key => $email_temp){
-                if($email_temp['type'] == 'order') {
-                    $_result = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE order_status_id ='". $email_temp['text_id'] ."' AND language_id ='" . $this->config->get('config_language_id') ."'") ;
-                    if(!empty($_result->num_rows) && !empty($_result->row['name'])) {
-                        $query->rows[$key]['text'] = $_result->row['name'];
+                if ($email_temp['type'] == 'order') {
+                    $result = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE order_status_id ='". $email_temp['text_id'] ."' AND language_id ='" . $this->config->get('config_language_id') ."'") ;
+
+                    if (!empty($result->num_rows) && !empty($result->row['name'])) {
+                        $query->rows[$key]['text'] = $result->row['name'];
                     }
                 }
             }
         }
 
-		$result = $query->rows;
-
-		return $result;
+        return $query->rows;
 	}
 	
-	protected function _getEmailTypes( $item ) {
+	protected function _getEmailTypes($item) {
 		$result = array ( 'order', 'customer', 'affiliate', 'Contact', 'contact', 'cron', 'mail' );
-		if($item < 1  || $item > 7) {
+
+        if ($item < 1  || $item > 7) {
 			$item = 1;
 		}
+
 		return $result[$item-1];
 	}	
 	
-	public function getEmailTempaltesStores($email_template) {
+	public function getEmailTemplatesStores($email_template) {
 		$manufacturer_store_data = array();
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer_to_store WHERE email_template = '" . (int)$email_template . "'");
@@ -178,7 +158,7 @@ class ModelSystemEmailtemplate extends Model {
 		return $manufacturer_store_data;
 	}
 
-	public function getTotalEmailTempaltes( $data ) {
+	public function getTotalEmailTemplates( $data ) {
 		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "email AS e";
 
 		$isWhere = 0;
@@ -217,7 +197,7 @@ class ModelSystemEmailtemplate extends Model {
 			$_sql[] = "e.status LIKE '" . $this->db->escape($data['filter_status']) . "%'";
 		}
 				
-		if($isWhere) {
+		if ($isWhere) {
 			$sql .= " WHERE " . implode(" AND ", $_sql);
 		}				
 

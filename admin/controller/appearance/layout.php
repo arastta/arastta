@@ -263,6 +263,7 @@ class ControllerAppearanceLayout extends Controller {
 	}
 
 	public function getLayoutList() {
+       		
 		$this->load->model('appearance/layout');
 		
         $layouts = $this->model_appearance_layout->getLayouts();
@@ -276,7 +277,7 @@ class ControllerAppearanceLayout extends Controller {
 		
 		$html += '</select>';
 
-		$this->response->setOutput($html);
+        $this->response->setOutput($html);
 	}	
 	
 	public function saveModule(){
