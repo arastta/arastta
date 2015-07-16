@@ -96,7 +96,7 @@
 			},
 			success: function(json) {
 				$('#install-content').html(json['output']);
-				$('.loading-bar').css({"height": $('.panel-body').height()-84});
+                $('.loading-bar').css({"height": $('.panel-body').height()-84});
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -134,17 +134,17 @@
 						}
 					}
 
-                    if (json['error']['config']) {
-                        $('#install-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'][i] + '</div>');
-                    }
+					if (json['error']['config']) {
+							$('#install-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'][i] + '</div>');
+					}
 
-                    // Highlight any found errors
-                    $('.text-danger').parent().addClass('has-error');
+					// Highlight any found errors
+					$('.text-danger').parent().addClass('has-error');
 
-                    // Reset the height of loading bar
-                    $('.loading-bar').css({"height": $('.panel-body').height()-84});
+					// Reset the height of loading bar
+					$('.loading-bar').css({"height": $('.panel-body').height()-84});
 				} else if (json['output']) {
-					$('.loading-bar').css({"height": "109%"});
+					$('.loading-bar').css({"height": "390px"});
 
 					$('#step-database').addClass('text-success');
 					$('#step-settings').addClass('text-primary');
