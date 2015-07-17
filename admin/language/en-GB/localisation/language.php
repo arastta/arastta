@@ -14,18 +14,16 @@ $_['text_success']      = 'Success: You have modified languages!';
 $_['text_list']         = 'Language List';
 $_['text_add']          = 'Add Language';
 $_['text_edit']         = 'Edit Language';
+$_['text_upload']       = 'Upload Translation';
 
 // Column
-$_['column_name']       = 'Name';
-$_['column_code']       = 'Code';
-$_['column_sort_order'] = 'Sort Order';
 $_['column_action']     = 'Action';
 
 // Entry
 $_['entry_name']        = 'Name';
 $_['entry_code']        = 'Code';
-$_['entry_directory']   = 'Directory';
 $_['entry_image']       = 'Image';
+$_['entry_directory']   = 'Directory';
 $_['entry_status']      = 'Status';
 $_['entry_sort_order']  = 'Sort Order';
 
