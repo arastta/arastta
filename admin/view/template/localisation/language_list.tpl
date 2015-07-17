@@ -4,11 +4,11 @@
     <div class="container-fluid">
       <div class="pull-right">
         <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
+        <a href="<?php echo $upload; ?>" data-toggle="tooltip" title="<?php echo $text_upload; ?>" class="btn btn-default"><i class="fa fa-upload"></i></a>
         <button type="button" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-default" onclick="changeStatus(1);"><i class="fa fa-check-circle text-success"></i></button>
         <button type="button" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-default" onclick="changeStatus(0);"><i class="fa fa-times-circle text-danger"></i></button>
         <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-language').submit() : false;"><i class="fa fa-trash-o"></i></button>
-        <a href="<?php echo $upload; ?>" data-toggle="tooltip" title="<?php echo $text_upload; ?>" class="btn btn-default"><i class="fa fa-upload"></i></a>
-      </div>
+        </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
