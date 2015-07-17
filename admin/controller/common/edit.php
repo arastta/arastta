@@ -13,51 +13,64 @@ class ControllerCommonEdit extends Controller {
         $select = $this->request->get['selected'];
         $status = $this->request->get['status'];
 
-        if ((count($select) == 0) or is_null($status) or !$this->validate($type)) {
+        if ((count($select) == 0) or is_null($status)) {
             exit();
         }
 
-        $this->load->model('common/edit');
+        $route = '';
+        $is_extension = false;
 
         switch($type) {
             case 'review':
             case 'product':
             case 'category':
             case 'information':
-                $this->language->load('catalog/'.$type);
-                $this->model_common_edit->changeStatus($type, $select, (int)$status);
+                $route = 'catalog/'.$type;
                 break;
             case 'payment':
             case 'feed':
             case 'shipping':
             case 'total':
-                $this->language->load('extension/'.$type);
-                $this->model_common_edit->changeStatus($type, $select, (int)$status, true);
+                $is_extension = true;
+                $route = 'extension/'.$type;
                 break;
+            case 'language':
             case 'zone':
             case 'country':
-                $this->language->load('localisation/'.$type);
-                $this->model_common_edit->changeStatus($type, $select, (int)$status);
+                $route = 'localisation/'.$type;
                 break;
-            case 'coupon' :
-                $this->language->load('sale/'.$type);
-                $this->model_common_edit->changeStatus($type, $select, (int)$status);
+            case 'coupon':
+                $route = 'sale/'.$type;
             default:
                 break;
         }
 
+        if (empty($route)) {
+            exit();
+        }
+
+        $this->language->load($route);
+
+        if (!$this->validate($route)) {
+            exit();
+        }
+
+        $this->load->model('common/edit');
+        $this->model_common_edit->changeStatus($type, $select, (int)$status, $is_extension);
+
         $this->session->data['success'] = $this->language->get('text_success');
+
         echo 0;
+
         exit();
     }
 
-    /** changeStatus **/
-    private function validate($type) {
-        if($type = 'extension'){
+    private function validate($route) {
+        if ($route == 'extension/extension'){
             return true;
         }
 
-        if (!$this->user->hasPermission('modify', 'catalog/'.$type)) {
+        if (!$this->user->hasPermission('modify', $route)) {
             $error['warning'] = $this->language->get('error_permission');
             echo json_encode($error);
         }
@@ -68,6 +81,4 @@ class ControllerCommonEdit extends Controller {
             return false;
         }
     }
-    /**end changeStatus **/
-
 }

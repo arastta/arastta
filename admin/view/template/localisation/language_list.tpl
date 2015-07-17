@@ -2,8 +2,12 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
+      <div class="pull-right">
+        <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
+        <button type="button" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-default" onclick="changeStatus(1);"><i class="fa fa-check-circle text-success"></i></button>
+        <button type="button" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-default" onclick="changeStatus(0);"><i class="fa fa-times-circle text-danger"></i></button>
         <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-language').submit() : false;"><i class="fa fa-trash-o"></i></button>
+        <a href="<?php echo $upload; ?>" data-toggle="tooltip" title="<?php echo $text_upload; ?>" class="btn btn-default"><i class="fa fa-upload"></i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -34,23 +38,42 @@
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left"><?php if ($sort == 'name') { ?>
-                    <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+                  <td class="text-center" style="width: 1px;">
+                    <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
+                  </td>
+                  <td class="text-left" style="width: 35%;">
+                    <?php if ($sort == 'name') { ?>
+                    <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_name; ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
-                    <?php } ?></td>
-                  <td class="text-left"><?php if ($sort == 'code') { ?>
-                    <a href="<?php echo $sort_code; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_code; ?></a>
+                    <a href="<?php echo $sort_name; ?>"><?php echo $entry_name; ?></a>
+                    <?php } ?>
+                  </td>
+                  <td class="text-center">
+                    <?php if ($sort == 'code') { ?>
+                    <a href="<?php echo $sort_code; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_code; ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_code; ?>"><?php echo $column_code; ?></a>
-                    <?php } ?></td>
-                  <td class="text-right"><?php if ($sort == 'sort_order') { ?>
-                    <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
+                    <a href="<?php echo $sort_code; ?>"><?php echo $entry_code; ?></a>
+                    <?php } ?>
+                  </td>
+                  <td class="text-center">
+                    <?php echo $entry_image; ?>
+                  </td>
+                  <td class="text-center">
+                    <?php echo $entry_directory; ?>
+                  </td>
+                  <td class="text-center">
+                    <?php echo $entry_status; ?>
+                  </td>
+                  <td class="text-right">
+                    <?php if ($sort == 'sort_order') { ?>
+                    <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_sort_order; ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
-                    <?php } ?></td>
-                  <td class="text-right"><?php echo $column_action; ?></td>
+                    <a href="<?php echo $sort_sort_order; ?>"><?php echo $entry_sort_order; ?></a>
+                    <?php } ?>
+                  </td>
+                  <td class="text-right">
+                    <?php echo $column_action; ?>
+                  </td>
                 </tr>
               </thead>
               <tbody>
@@ -61,11 +84,29 @@
                     <input type="checkbox" name="selected[]" value="<?php echo $language['language_id']; ?>" checked="checked" />
                     <?php } else { ?>
                     <input type="checkbox" name="selected[]" value="<?php echo $language['language_id']; ?>" />
-                    <?php } ?></td>
-                  <td class="text-left"><?php echo $language['name']; ?></td>
-                  <td class="text-left"><?php echo $language['code']; ?></td>
-                  <td class="text-right"><?php echo $language['sort_order']; ?></td>
-                  <td class="text-right"><a href="<?php echo $language['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                    <?php } ?>
+                  </td>
+                  <td class="text-left">
+                    <?php echo $language['name']; ?>
+                  </td>
+                  <td class="text-center">
+                    <?php echo $language['code']; ?>
+                  </td>
+                  <td class="text-center">
+                    <img src="view/image/flags/<?php echo $language['image']; ?>" alt="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>">
+                  </td>
+                  <td class="text-center">
+                    <?php echo $language['directory']; ?>
+                  </td>
+                  <td class="text-center">
+                    <?php echo ($language['status'] == 1) ? $text_enabled : $text_disabled; ?>
+                  </td>
+                  <td class="text-right">
+                    <?php echo $language['sort_order']; ?>
+                  </td>
+                  <td class="text-right">
+                    <a href="<?php echo $language['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                  </td>
                 </tr>
                 <?php } ?>
                 <?php } else { ?>
@@ -85,4 +126,21 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+function changeStatus(status){
+  $.ajax({
+    url: 'index.php?route=common/edit/changeStatus&type=language&status='+ status +'&token=<?php echo $token; ?>',
+    dataType: 'json',
+    data: $("form[id^='form-']").serialize(),
+    success: function(json) {
+      if(json){
+        $('.panel.panel-default').before('<div class="alert alert-warning"><i class="fa fa-warning"></i> ' + json.warning + '<button type="button" class="close" data-dismiss="alert">×</button></div>');
+      }
+      else{
+        location.reload();
+      }
+    }
+  });
+}
+//--></script>
 <?php echo $footer; ?>
