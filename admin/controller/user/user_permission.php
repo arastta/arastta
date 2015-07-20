@@ -404,11 +404,14 @@ class ControllerUserUserPermission extends Controller {
 			$permission = end($part) . '/' . basename($file, '.php');
 
 			if (!in_array($permission, $ignore)) {
-				$data['permissions'][end($part)][$permission] = $this->getDashboardText($permission);
+                $folder = $this->getFolderName(end($part), $permission);
+				$data['permissions'][$folder][$permission] = $this->getDashboardText($permission);
 			}
 		}
 
-         $data['permissions'] = $this->getSortFiles($data['permissions']);
+        ksort($data['permissions']);
+
+        $data['permissions'] = $this->getSortFiles($data['permissions']);
 
 		if (isset($this->request->post['permission']['dashboard'])) {
 			$data['dashboard'] = $this->request->post['permission']['dashboard'];
@@ -482,6 +485,28 @@ class ControllerUserUserPermission extends Controller {
         }
 
         return $text;
+    }
+
+    protected function getFolderName($folder, $permission, $replace = array()) {
+        $folders = array(
+            'design/banner'         => 'appearance',
+            'sale/customer'         => 'customer',
+            'sale/customer_group'   => 'customer',
+            'sale/custom_field'     => 'customer',
+            'sale/customer_ban_ip'  => 'customer'
+        );
+
+        $replace = array_merge($replace, $folders);
+
+        if (array_key_exists($permission, $replace)) {
+            foreach ($replace as $key => $value) {
+                if ($key == $permission) {
+                    $folder = $value;
+                }
+            }
+        }
+
+        return $folder;
     }
 
     protected function getSortFiles($files) {
