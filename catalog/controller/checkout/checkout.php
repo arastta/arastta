@@ -69,7 +69,7 @@ class ControllerCheckoutCheckout extends Controller {
             $information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
 
             if ($information_info) {
-                $data['error_agree'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+                $data['error_agree'] = html_entity_decode(sprintf($this->language->get('error_agree'), $information_info['title']), ENT_QUOTES, 'UTF-8');
             }
         } else {
             $data['error_agree'] = '';
