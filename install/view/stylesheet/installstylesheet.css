@@ -137,6 +137,10 @@ hr {
     border-color: #ccc;
 }
 
+.lang_select {
+    width: 100%;
+    margin-top: 15px;
+}
 
 /* fixes glitching due to margin-collapsing */
 #advanced-settings .form-group:last-child {

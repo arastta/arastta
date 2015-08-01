@@ -1347,13 +1347,6 @@ CREATE TABLE IF NOT EXISTS `ar_language` (
   KEY `name` (`name`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `ar_language`
---
-
-INSERT INTO `ar_language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`) VALUES
-(1, 'English', 'en', 'en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'en-GB', 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -2661,8 +2654,6 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (310, 0, 'config', 'config_comment', '', 0),
 (311, 0, 'config', 'config_country_id', '222', 0),
 (312, 0, 'config', 'config_zone_id', '3563', 0),
-(313, 0, 'config', 'config_language', 'en', 0),
-(314, 0, 'config', 'config_admin_language', 'en', 0),
 (315, 0, 'config', 'config_currency', 'USD', 0),
 (316, 0, 'config', 'config_currency_auto', '1', 0),
 (317, 0, 'config', 'config_length_class_id', '1', 0),

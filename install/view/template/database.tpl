@@ -58,7 +58,10 @@
 		</div>
 		<hr />
 		<div class="form-group">
-			<div class="col-xs-4 col-xs-offset-4 text-center">
+      <div class="col-xs-4 text-left">
+        <button type="button" onclick="window.location='index.php';" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+      </div>
+			<div class="col-xs-4 text-center">
 				<button type="button" class="btn-expand-down" data-toggle="collapse" data-target="#advanced-settings" aria-expanded="false" aria-controls="advanced-settings" title="<?php echo $text_advanced; ?>" id="btn-show-advanced"><i class="fa fa-chevron-down"></i></button>
 			</div>
 			<div class="col-xs-4 text-right">

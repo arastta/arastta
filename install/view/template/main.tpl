@@ -85,7 +85,7 @@
 		$('#step-finish').addClass('text-muted');
 
 		$.ajax({
-			url: 'index.php?route=main/displayDatabase',
+			url: 'index.php?route=database&lang=<?php echo $lang; ?>',
 			dataType: 'json',
 			type: 'post',
 			beforeSend: function() {
@@ -107,7 +107,7 @@
 	// Save Database
 	function saveDatabase() {
 		$.ajax({
-			url: 'index.php?route=main/saveDatabase',
+			url: 'index.php?route=database/save&lang=<?php echo $lang; ?>',
 			dataType: 'json',
 			type: 'post',
 			data: $('#install-content input[type=\'text\'], input[type=\'password\'], select'),
@@ -144,7 +144,7 @@
 					// Reset the height of loading bar
 					$('.loading-bar').css({"height": $('.panel-body').height()-84});
 				} else if (json['output']) {
-					$('.loading-bar').css({"height": "390px"});
+					$('.loading-bar').css({"height": "115%"});
 
 					$('#step-database').addClass('text-success');
 					$('#step-settings').addClass('text-primary');
@@ -162,7 +162,7 @@
 	// Save Settings
 	function saveSettings() {
 		$.ajax({
-			url: 'index.php?route=main/saveSettings',
+			url: 'index.php?route=setting/save&lang=<?php echo $lang; ?>',
 			dataType: 'json',
 			type: 'post',
 			data: $('#install-content input[type=\'text\'], input[type=\'password\'], input[type=\'checkbox\']:checked'),
@@ -203,7 +203,7 @@
 					$('.loading-spin').css({"padding": "5% 40%"});
 
 					$.ajax({
-						url: 'index.php?route=main/removeInstall',
+						url: 'index.php?route=finish/removeInstall&lang=<?php echo $lang; ?>',
 						type: 'post',
 						dataType: 'json',
 						success: function(json) {
