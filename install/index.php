@@ -72,37 +72,31 @@ $utility = new Utility($registry);
 $registry->set('utility', $utility);
 
 // Language
-$language = new Language('en-GB', $registry);
+if (isset($request->get['lang']) && $filesystem->exists(DIR_LANGUAGE . $request->get['lang'])) {
+    $lang = $request->get['lang'];
+    $route = 'main';
+} else {
+    $lang = 'en-GB';
+    $request->get['lang'] = $lang;
+    $route = 'language';
+}
+
+$language = new Language($lang, $registry);
 $registry->set('language', $language);
 
-// Upgrade
-$upgrade = false;
-
-if (file_exists('../config.php')) {
-	if (filesize('../config.php') > 0) {
-		$upgrade = true;
-
-		$lines = file(DIR_ROOT . 'config.php');
-
-		foreach ($lines as $line) {
-			if (strpos(strtoupper($line), 'DB_') !== false) {
-				eval($line);
-			}
-		}
-	}
+// Config
+if (file_exists(DIR_ROOT . 'config.php') && filesize(DIR_ROOT . 'config.php') > 0) {
+	require_once(DIR_ROOT . 'config.php');
 }
 
 // Front Controller
 $controller = new Front($registry);
 
-$action = new Action('main');
 // Router
 if (isset($request->get['route'])) {
-	$action = new Action($request->get['route']);
-} elseif ($upgrade) {
-	//$action = new Action('upgrade');
+    $action = new Action($request->get['route']);
 } else {
-	$action = new Action('main');
+	$action = new Action($route);
 }
 
 // Dispatch
