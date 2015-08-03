@@ -14,10 +14,25 @@ class ModelCatalogUrlAlias extends Model {
 		return $query->row;
 	}
 
-    public function generateAlias($title) {
+    public function generateAlias($title, $id = null) {
         $title = html_entity_decode($title, ENT_QUOTES, 'UTF-8');
 
         $alias = $this->safeAlias($title);
+
+        if ($id) {
+            $count = 0;
+            $baseAlias = $alias;
+
+            while ($this->db->query("SELECT COUNT(*) AS count FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($alias) . "'")->row['count'] > 0) {
+                if ($count == 0) {
+                    $baseAlias = ($alias = $alias . '-' . $id) . '-';
+                } else {
+                    $alias = $baseAlias . $count;
+                }
+
+                $count++;
+            }
+        }
 
         return $alias;
     }
