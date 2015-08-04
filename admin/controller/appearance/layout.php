@@ -439,6 +439,6 @@ class ControllerAppearanceLayout extends Controller {
 
         $data['extensions'] = $this->getModule();
 		
-		return $this->load->view('appearance/module_list.tpl', $data);
+		return $this->load->view('appearance/layout_module_list.tpl', $data);
 	}
 }
