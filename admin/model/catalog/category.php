@@ -100,7 +100,7 @@ class ModelCatalogCategory extends Model {
         foreach ($data['seo_url'] as $language_id => $value) {
             $alias = empty($value) ? $data['category_description'][$language_id]['name'] : $value;
 
-            $alias = $this->model_catalog_url_alias->generateAlias($alias);
+            $alias = $this->model_catalog_url_alias->generateAlias($alias, $category_id);
 
             if ($alias) {
                 $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($alias) . "', language_id = '" . $language_id . "'");
@@ -334,7 +334,7 @@ class ModelCatalogCategory extends Model {
 
             $alias = empty($value) ? $data['category_description'][$language_id]['name'] : $value;
 
-            $alias = $this->model_catalog_url_alias->generateAlias($alias);
+            $alias = $this->model_catalog_url_alias->generateAlias($alias, $category_id);
 
             if ($alias) {
                 $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($alias) . "', language_id = '" . $language_id . "'");
