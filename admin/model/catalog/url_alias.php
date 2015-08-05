@@ -14,51 +14,29 @@ class ModelCatalogUrlAlias extends Model {
 		return $query->row;
 	}
 
-    public function generateAlias($title, $id = null) {
-        $title = html_entity_decode($title, ENT_QUOTES, 'UTF-8');
+    public function addAlias($type, $id, $alias, $language_id) {
+        $alias = $this->seo->generateAlias($alias, $id, $language_id);
 
-        $alias = $this->safeAlias($title);
-
-        if ($id) {
-            $count = 0;
-            $baseAlias = $alias;
-
-            while ($this->db->query("SELECT COUNT(*) AS count FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($alias) . "'")->row['count'] > 0) {
-                if ($count == 0) {
-                    $baseAlias = ($alias = $alias . '-' . $id) . '-';
-                } else {
-                    $alias = $baseAlias . $count;
-                }
-
-                $count++;
-            }
+        if ($alias) {
+            $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = '" . $this->db->escape($type) . "_id=" . (int)$id . "', keyword = '" . $this->db->escape($alias) . "', language_id = '" . (int)$language_id . "'");
         }
-
-        return $alias;
     }
 
-    // From Joomla.Framework
-    public function safeAlias($string) {
-        // Replace double byte whitespaces by single byte (East Asian languages)
-        $str = preg_replace('/\xE3\x80\x80/', ' ', $string);
+    public function clearAliases($type, $id, $language_id = null) {
+        if ($language_id) {
+            $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = '" . $this->db->escape($type) . "_id=" . (int)$id . "' AND language_id = '" . (int)$language_id . "'");
+        } else {
+            $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = '" . $this->db->escape($type) . "_id=" . (int)$id . "'");
+        }
+    }
 
-        // Remove any '-' from the string as they will be used as concatenator.
-        // Would be great to let the spaces in but only Firefox is friendly with this
+    public function getAliases($type, $id, $language_id = null) {
+        if ($language_id) {
+            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE query = '" . $this->db->escape($type) . "_id=" . (int)$id . "' AND language_id = '" . (int)$language_id . "'");
+        } else {
+            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE query = '" . $this->db->escape($type) . "_id=" . (int)$id . "'");
+        }
 
-        $str = str_replace('-', ' ', $str);
-
-        // Replace forbidden characters by whitespaces
-        $str = preg_replace('#[:\#\*"@+=;!><&\.%()\]\/\'\\\\|\[]#', "\x20", $str);
-
-        // Delete all '?'
-        $str = str_replace('?', '', $str);
-
-        // Trim white spaces at beginning and end of alias and make lowercase
-        $str = trim(utf8_strtolower($str));
-
-        // Remove any duplicate whitespace and replace whitespaces by hyphens
-        $str = preg_replace('#\x20+#', '-', $str);
-
-        return $str;
+        return $query->rows;
     }
 }

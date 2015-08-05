@@ -140,10 +140,25 @@ class Seo extends Object {
         return $data[$code];
     }
 
-    public function generateAlias($title) {
+    public function generateAlias($title, $id = null, $language_id = null) {
         $title = html_entity_decode($title, ENT_QUOTES, 'UTF-8');
 
         $alias = $this->safeAlias($title);
+
+        if ($id && $language_id) {
+            $count = 0;
+            $baseAlias = $alias;
+
+            while ($this->db->query("SELECT COUNT(*) AS count FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($alias) . "' AND language_id = '" . (int)$language_id . "'")->row['count'] > 0) {
+                if ($count == 0) {
+                    $baseAlias = ($alias = $alias . '-' . $id) . '-';
+                } else {
+                    $alias = $baseAlias . $count;
+                }
+
+                $count++;
+            }
+        }
 
         return $alias;
     }
