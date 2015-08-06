@@ -447,7 +447,8 @@ class ModelCheckoutOrder extends Model {
                     'order_status'      => $order_status,
                     'totals'            => $totals,
                     'tax_amount'        => $tax_amount,
-                    'invoice_no'        => !empty($invoice_no) ? $invoice_no : ''
+                    'invoice_no'        => !empty($invoice_no) ? $invoice_no : '',
+                    'comment'			=> nl2br($comment)
                 );
 
                 $subject = $this->emailtemplate->getSubject('OrderAll', 'order_' . (int)$order_status_id, $data);
