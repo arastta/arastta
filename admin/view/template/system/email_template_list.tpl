@@ -50,7 +50,7 @@
               <div class="form-group">
                 <label class="control-label" for="input-type"><?php echo $entry_type; ?></label>
                 <select name="filter_type" id="input-type" class="form-control">
-				  <option value=""></option>
+				  <option value=""><?php echo $text_all; ?></option>
 				  <?php foreach ($types as $type) { ?>
                   <?php if ($filter_type == $type['id']) { ?>
                   <option value="<?php echo $type['id']; ?>" selected="selected"><?php echo $type['value']; ?></option>
@@ -65,7 +65,7 @@
               <div class="form-group">
                 <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <select name="filter_status" id="input-status" class="form-control">
-                  <option value="*"></option>
+                  <option value="*"><?php echo $text_all; ?></option>
                   <?php if ($filter_status) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                   <?php } else { ?>
@@ -83,7 +83,7 @@
             </div>
           </div>
         </div>	  
-        <form action="<?php //echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-email-template">
+        <form action="" method="post" enctype="multipart/form-data" id="form-email-template">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
