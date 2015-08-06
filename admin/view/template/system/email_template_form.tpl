@@ -25,6 +25,12 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
       </div>
       <div class="panel-body">
+  			<div class="form-group">
+  				<label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shortcodes; ?>"><?php echo $text_shortcodes; ?></span></label>
+					<div class="col-sm-10" style="margin-bottom: 20px; min-height: 50px; padding: 7px; border: 1px solid #EBEBEB; border-radius: 5px;">
+					<div id="shortCodes"></div>
+					</div>
+				</div>
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-email-template" class="form-horizontal">
            <div class="tab-pane active in" id="tab-general">
               <ul class="nav nav-tabs" id="language">
@@ -59,7 +65,7 @@
     </div>
   </div>
 </div>
-  <script type="text/javascript"><!--
+<script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
 	<?php if( $text_editor == 'summernote' ) { ?>
 		$('#input-description<?php echo $language['language_id']; ?>').summernote({
@@ -79,11 +85,80 @@
 		});
 	<?php } ?>
 <?php } ?>
-//--></script> 
-  <script type="text/javascript"><!--
+
 $('#language a:first').tab('show');
-//--></script>
-<script type="text/javascript"><!--
+
+jQuery(document).ready(function(){ 
+	function getShortCodes() {
+		var html = '';
+		var value = '<?php echo $context; ?>';
+
+		switch( value ) {
+			case 'admin_forgotten':
+				html += '<?php echo $text_shortcode_admin_forgotten; ?>';
+				break;
+			case 'admin_login':
+				html += '<?php echo $text_shortcode_admin_login; ?>';
+				break;
+			case 'affiliate_affiliate_approve':
+				html += '<?php echo $text_shortcode_affiliate_affiliate_approve; ?>';
+				break;
+			case 'affiliate_order':
+				html += '<?php echo $text_shortcode_affiliate_order; ?>';
+				break;
+			case 'affiliate_add_commission':
+				html += '<?php echo $text_shortcode_affiliate_add_commission; ?>';
+				break;
+			case 'affiliate_register':
+				html += '<?php echo $text_shortcode_affiliate_register; ?>';
+				break;
+			case 'affiliate_approve':
+				html += '<?php echo $text_shortcode_affiliate_approve; ?>';
+				break;
+			case 'affiliate_password_reset':
+				html += '<?php echo $text_shortcode_affiliate_password_reset; ?>';
+				break;
+			case 'contact_confirmation':
+				html += '<?php echo $text_shortcode_contact_confirmation; ?>';
+				break;
+			case 'customer_credit':
+				html += '<?php echo $text_shortcode_customer_credit; ?>';
+				break;
+			case 'customer_voucher':
+				html += '<?php echo $text_shortcode_customer_voucher; ?>';
+				break;
+			case 'customer_approve':
+				html += '<?php echo $text_shortcode_customer_approve; ?>';
+				break;
+			case 'customer_password_reset':
+				html += '<?php echo $text_shortcode_customer_password_reset; ?>';
+				break;
+			case 'customer_register_approval':
+				html += '<?php echo $text_shortcode_customer_register_approval; ?>';
+				break;
+			case 'customer_register':
+				html += '<?php echo $text_shortcode_customer_register; ?>';
+				break;
+			case 'order_status_voided':
+			case 'order_status_shipped':
+			case 'order_status_reversed':
+			case 'order_status_denied':
+			case 'order_status_expired':
+			case 'order_status_failed':
+			case 'order_status_pending':
+			case 'order_status_processed':
+			case 'order_status_processing':
+			case 'order_status_refunded':
+			case 'order_status_cancelled':
+				html += '<?php echo $text_shortcode_order_status_voided; ?>';
+				break;
+		}
+		$('#shortCodes').html(html);
+	};
+
+	getShortCodes();
+});
+
 function save(type){
 	var input = document.createElement('input');
 	input.type = 'hidden';
