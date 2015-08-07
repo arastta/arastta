@@ -1,0 +1,81 @@
+.module-block, .mblock {
+    background-color: #F2F2F2;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    height: 40px;
+    position: relative;
+    padding: 2px 5px;
+    line-height: 35px;
+    text-align: left !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    margin-bottom: 5px;
+}
+
+.mblock {
+    margin: 10px;
+}
+
+.ui-draggable {
+    cursor: move;
+}
+
+.module-name {
+    margin-left: 5px;
+}
+
+.dashed {
+    background: #F2F2F2;
+    margin-bottom: 5px;
+    border: 2px dashed #999;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    margin-top: 37px;
+}
+
+#tab-products #search {
+    max-width: 100% !important;
+}
+
+#tab-products #search .form-control.input-lg {
+    max-width: 100% !important;
+    height: 39px !important;
+}
+
+.col-sm-5 .tab-content, .col-sm-5 .dashed {
+    min-height: 200px;
+}
+
+.ajaxadvance:hover {
+    text-decoration: none;
+    color: #fff;
+    background-color: #229ac8;
+}
+
+.dashed .pull-center {
+    margin-top: 13%;
+    margin-left: 39%;
+    position: absolute;
+}
+
+.ajaxadvance.row {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.content.col-sm-8, .button.col-sm-2 {
+    margin-top: 5px;
+}
+
+.mblock-action {
+    margin-top: -35px;
+}
+
+#logo, #logo-width-height {
+   /* display: none;*/
+}
