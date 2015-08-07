@@ -276,7 +276,6 @@
 		background: linear-gradient(to right,rgba(255,255,255,0.2),rgba(255,255,255,0.8),rgba(255,255,255,1));
 	}
 </style>
-
 <script type="text/javascript"><!--
 $(document).ready(function() {
   // Product List
