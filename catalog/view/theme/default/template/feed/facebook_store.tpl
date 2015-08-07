@@ -254,12 +254,11 @@
     }
     #category-search {
       height: 45px;
-     /* font-size: 20px; */
     }
     .currency-select {
       text-align: left;
     }
-	.product-thumb {
+	.product-thumb .button-group, .product-thumb {
 		overflow: hidden !important;
 	}
 	.caption h4 {
@@ -267,15 +266,15 @@
 		position: relative;
 	}
 	.caption h4:after {
-    content: "";
-    position: absolute;
-    right: -20px;
-    height: 25px;
-    width: 25px;
-    background-image: -webkit-gradient(linear,left top,right top,color-stop(0%,rgba(255,255,255,0)),color-stop(100%,rgba(255,255,255,1)));
-    background-image: -webkit-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1));
-    background: linear-gradient(to right,rgba(255,255,255,0.2),rgba(255,255,255,0.8),rgba(255,255,255,1));
-}
+		content: "";
+		position: absolute;
+		right: -20px;
+		height: 25px;
+		width: 25px;
+		background-image: -webkit-gradient(linear,left top,right top,color-stop(0%,rgba(255,255,255,0)),color-stop(100%,rgba(255,255,255,1)));
+		background-image: -webkit-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1));
+		background: linear-gradient(to right,rgba(255,255,255,0.2),rgba(255,255,255,0.8),rgba(255,255,255,1));
+	}
 </style>
 
 <script type="text/javascript"><!--
@@ -286,11 +285,9 @@ $(document).ready(function() {
 
     $('#content .product-facebook-layout > .clearfix').remove();
 
-    //$('#content .product-facebook-layout').attr('class', 'product-facebook-layout product-list col-xs-12');
     $('#content .row > .product-facebook-layout').attr('class', 'product-facebook-layout product-list col-sm-12');
 
     localStorage.setItem('facebook-display', 'list');
-	//page_height();
   });
 
   // Product Grid
@@ -302,7 +299,6 @@ $(document).ready(function() {
     $('#content .product-facebook-layout').attr('class', 'product-facebook-layout product-grid col-sm-3');
 
     localStorage.setItem('facebook-display', 'grid');
-	//page_height();
   });
 
   // Currency
@@ -337,7 +333,7 @@ $(document).ready(function() {
   });
 });
 
-/* Search */
+// Search 
 $('#search-button').on('click', function(e) {
   e.preventDefault();
 
