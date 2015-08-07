@@ -462,7 +462,7 @@ class ModelCheckoutOrder extends Model {
                     'order_status' => $order_status,
                     'comment'      => $comment,
                     'notify'       => $notify,
-                    'getProdcuts'  => $this->getOrderProducts($order_id),
+                    'getProducts'  => $this->getOrderProducts($order_id),
                     'getVouchers'  => $this->getOrderVouchers($order_id),
                     'getTotal'     => $getTotal
                 );
