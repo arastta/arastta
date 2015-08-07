@@ -183,11 +183,12 @@ class ControllerSystemEmailtemplate extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 		
 		#Text
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_list']			= $this->language->get('text_list');
+		$data['text_no_results']	= $this->language->get('text_no_results');
+		$data['text_confirm']		= $this->language->get('text_confirm');
+		$data['text_enabled']		= $this->language->get('text_enabled');
+		$data['text_disabled']		= $this->language->get('text_disabled');
+		$data['text_all']			= $this->language->get('text_all');
 
 		#Column
 		$data['column_text'] = $this->language->get('column_text');
@@ -294,6 +295,31 @@ class ControllerSystemEmailtemplate extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_default'] = $this->language->get('text_default');
+		
+		// shortcodes
+		$data['text_shortcodes']	= $this->language->get('text_shortcodes');
+		$data['help_shortcodes']	= $this->language->get('help_shortcodes');
+
+		$vars = array(
+			// admin
+			'admin_forgotten', 'admin_login',
+			// affiliate
+			'affiliate_affiliate_approve', 'affiliate_order', 'affiliate_add_commission',
+			'affiliate_register', 'affiliate_approve', 'affiliate_password_reset',
+			// contact
+			'contact_confirmation',
+			// customer
+			'customer_credit', 'customer_voucher', 'customer_approve', 'customer_password_reset',
+			'customer_register_approval', 'customer_register',
+			// order
+			'order_status_voided'
+		);
+
+		foreach( $vars as $var ) {
+			$data['text_shortcode_' . $var]	= $this->language->get('text_shortcode_' . $var);
+		}
+
+		unset( $vars );
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_description'] = $this->language->get('entry_description');
@@ -359,20 +385,22 @@ class ControllerSystemEmailtemplate extends Controller {
 		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->request->post['name'])) {
-			$data['email_template_description'] = $this->request->post['email_template_description']['name'];
-		} elseif (!empty($email_template_info)) {
-			$data['email_template_description'] = $email_template_info;
+			$data['email_template_description'] = $this->request->post['name'];
+		} elseif (!empty($email_template_info['data'])) {
+			$data['email_template_description'] = $email_template_info['data'];
 		} else {
 			$data['email_template_description'] = '';
 		}
 
 		if (isset($this->request->post['description'])) {
-			$data['email_template_description'] = $this->request->post['email_template_description']['description'];
-		} elseif (!empty($email_template_info)) {
-			$data['email_template_description'] = $email_template_info;
+			$data['email_template_description'] = $this->request->post['description'];
+		} elseif (!empty($email_template_info['data'])) {
+			$data['email_template_description'] = $email_template_info['data'];
 		} else {
 			$data['email_template_description'] = '';
 		}
+
+		$data['context'] = ( !empty( $email_template_info['context'] ) ? str_replace( '.', '_', $email_template_info['context'] ) : '' );
 
 		$this->load->model('setting/store');
 
@@ -401,11 +429,12 @@ class ControllerSystemEmailtemplate extends Controller {
 	}
 	
 	protected function _getEmailTypes() {
-		$result = array ( 'Order Status', 'Customer', 'Affiliate', 'Contact', 'Reviews', 'Cron', 'Mail' );
-	
-		for ($i = 0; $i <= 6; $i++){
+		$result = array ( 'Order Status', 'Customer', 'Affiliate', 'Contact', 'Reviews', 'Cron', 'Mail', 'Admin' );
+		$count = count( $result ) - 1;
+
+		for ($i = 0; $i <= $count; ++$i){
 			$types[] = array(
-				'id'	=> $i+1,
+				'id'	=> $i + 1,
 				'value'	=> $result[$i]
 			);
 		}
