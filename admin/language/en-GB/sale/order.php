@@ -144,6 +144,9 @@ $_['column_reference']                        = 'Reference';
 $_['column_action']                           = 'Action';
 $_['column_weight']                           = 'Product weight';
 
+// Button
+$_['button_invoice_pdf']                      = 'PDF Invoice';
+
 // Entry
 $_['entry_store']                             = 'Store';
 $_['entry_customer']                          = 'Customer';

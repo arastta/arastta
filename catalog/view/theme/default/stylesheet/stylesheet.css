@@ -947,3 +947,11 @@ h2.price {
 #payment-address .text-danger, #shipping-address .text-danger {
 	margin-top: 5px;
 }
+
+.invoice-50 {
+    width: 50%;
+}
+
+.invoice-logo {
+    margin-bottom: 20px;
+}

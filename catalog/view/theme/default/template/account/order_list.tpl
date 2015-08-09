@@ -38,7 +38,12 @@
               <td class="text-right"><?php echo $order['products']; ?></td>
               <td class="text-left"><?php echo $order['name']; ?></td>
               <td class="text-right"><?php echo $order['total']; ?></td>
-              <td class="text-right"><a href="<?php echo $order['href']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-right">
+                <?php if ($order['invoice']) { ?>
+                <a href="<?php echo $order['invoice']; ?>" data-toggle="tooltip" title="<?php echo $button_invoice; ?>" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i></a>
+                <?php } ?>
+                <a href="<?php echo $order['href']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
+              </td>
             </tr>
             <?php } ?>
           </tbody>
