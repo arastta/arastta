@@ -160,6 +160,9 @@
       </table>
       <?php } ?>
       <div class="buttons clearfix">
+        <?php if ($invoice) { ?>
+          <div class="pull-left"><a href="<?php echo $invoice; ?>" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i> <?php echo $button_invoice; ?></a></div>
+        <?php } ?>
         <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
       </div>
       <?php echo $content_bottom; ?></div>

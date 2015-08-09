@@ -25,6 +25,14 @@ $_['text_history']          = 'Order History';
 $_['text_success']          = 'Success: You have added <a href="%s">%s</a> to your <a href="%s">shopping cart</a>!';
 $_['text_empty']            = 'You have not made any previous orders!';
 $_['text_error']            = 'The order you requested could not be found!';
+$_['text_invoice']          = 'Invoice';
+$_['text_invoice_date']     = 'Invoice Date:';
+$_['text_email']            = 'E-Mail:';
+$_['text_telephone']        = 'Telephone:';
+$_['text_fax']              = 'Fax:';
+$_['text_website']          = 'Web Site:';
+$_['text_to']               = 'To';
+$_['text_ship_to']          = 'Ship To (if different address)';
 
 // Column
 $_['column_order_id']       = 'Order ID';
@@ -39,6 +47,11 @@ $_['column_action']         = 'Action';
 $_['column_date_added']     = 'Date Added';
 $_['column_status']         = 'Order Status';
 $_['column_comment']        = 'Comment';
+$_['column_product2']       = 'Product';
+$_['column_price2']         = 'Unit Price';
+
+// Button
+$_['button_invoice']        = 'PDF Invoice';
 
 // Error
 $_['error_reorder']         = '%s is not currently available to be reordered.';
