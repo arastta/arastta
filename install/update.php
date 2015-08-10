@@ -33,6 +33,9 @@ if(version_compare($version, '1.1.0', '<')) {
 		$user_group['permission']['access'][] = 'tool/system_info';
 		$user_group['permission']['modify'][] = 'tool/system_info';
 		
+		$user_group['permission']['access'][] = 'feed/facebook_store';
+		$user_group['permission']['modify'][] = 'feed/facebook_store';
+		
 		$user_group['permission']['dashboard'] = array(
 			'0' => 'dashboard/charts',
 			'1' => 'dashboard/online',
@@ -44,5 +47,17 @@ if(version_compare($version, '1.1.0', '<')) {
 		);
 		
 		$this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
+	
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module`");
+
+		foreach ($query->rows as $module) {
+			$module_setting = unserialize($module['setting']);
+			
+			if (isset($module_setting['product']) || $module_setting['code'] == 'featured') {
+				$module_setting['feed'] = 1;
+				
+				$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($module_setting['name']) . "', `setting` = '" . $this->db->escape(serialize($module_setting)) . "' WHERE `module_id` = '" . (int)$module['module_id'] . "'");
+			}
+		}
 	}
 }

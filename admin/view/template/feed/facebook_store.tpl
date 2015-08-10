@@ -324,7 +324,6 @@
                       <input type="hidden" name="facebook_store_feed[]" value="<?php echo $feed['code'] . '-' . $feed['id'] ; ?>">
                     </div>
                     <?php } ?>
-                    <div id="text_remove" data-text-confirm="<?php echo $text_remove_feed; ?>" style="display: none;"></div>
                   </div>
                 </div>
               </div>
@@ -337,9 +336,10 @@
 </div>
 
 <script type="text/javascript"><!--
+var confirm_text = '<?php echo $text_remove_feed; ?>';
+
 $(document).ready(function() {
     FaceBook.init();
-
 });
 
 function save(type){

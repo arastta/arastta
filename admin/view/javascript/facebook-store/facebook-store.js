@@ -1,5 +1,4 @@
 var token = getURLVar('token');
-var confirm_text = $('#text_remove').attr('data-text-confirm');
 
 var FaceBook = function() {
 
@@ -43,7 +42,7 @@ var FaceBook = function() {
                         html += '	</div>';
                         html += '	<div class="mblock-control-menu ui-sortable-handle">';
                         html += '		<div class="mblock-action pull-right">';
-                        html += '			<a class="btn btn-xs btn-remove" onclick="confirm(\'' + confirm_text + '\') ? removeLayoutModule(\'<?php echo $layout_id; ?>\', \'<?php echo $module_id; ?>\', $(this)):false;"><i class="fa fa-trash-o"></i></a>';
+                        html += '			<a class="btn btn-xs btn-remove" onclick="confirm(\'' + confirm_text + '\')  ? removeFeed($(this)) : false;"><i class="fa fa-trash-o"></i></a>';
                         html += '		</div>';
                         html += '	</div>';
                         html += '	<input type="hidden" name="facebook_store_feed[]" value="' + data_code + '"/>';
@@ -245,7 +244,7 @@ function addProduct(product_id) {
                 html += '	</div>';
                 html += '	<div class="mblock-control-menu ui-sortable-handle">';
                 html += '		<div class="mblock-action pull-right">';
-                html += '			<a class="btn btn-xs btn-remove" onclick="confirm(\'' + confirm_text + '\') ? removeLayoutModule(\'<?php echo $layout_id; ?>\', \'<?php echo $module_id; ?>\', $(this)):false;"><i class="fa fa-trash-o"></i></a>';
+                html += '			<a class="btn btn-xs btn-remove" onclick="confirm(\'' + confirm_text + '\')  ? removeFeed($(this)) : false;"><i class="fa fa-trash-o"></i></a>';
                 html += '		</div>';
                 html += '	</div>';
                 html += '	<input type="hidden" name="facebook_store_feed[]" value="product-' + json['product_id'] + '"/>';
