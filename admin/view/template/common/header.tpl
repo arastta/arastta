@@ -13,39 +13,43 @@
 <?php if ($icon) { ?>
 <link href="<?php echo $icon; ?>" rel="icon" />
 <?php } ?>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 <link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
-<link href="view/javascript/bootstrap/arastta/arastta.css" type="text/css" rel="stylesheet" />
-<link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
-<link href="view/javascript/summernote/summernote.css" rel="stylesheet">
-<link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
-<link href="view/javascript/bootstrap-select/css/bootstrap-select.min.css" type="text/css" rel="stylesheet" />
-
-<script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="view/javascript/bootstrap-select/js/bootstrap-select.min.js"></script>
-<?php if ($bootstrap_select_lang) { ?>
-<script type="text/javascript" src="view/javascript/bootstrap-select/js/i18n/defaults-<?php echo $bootstrap_select_lang; ?>.min.js"></script>
+<link type="text/css" href="view/javascript/bootstrap/arastta/arastta.css" rel="stylesheet" />
+<link type="text/css" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<?php if( $summernote ) { ?>
+<link type="text/css" href="view/javascript/summernote/summernote.css" rel="stylesheet" />
 <?php } ?>
-<script type="text/javascript" src="view/javascript/tinymce/jquery.tinymce.min.js"></script>
-<script src="view/javascript/common.js" type="text/javascript"></script>
-
+<link type="text/css" href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen" />
+<link type="text/css" href="view/javascript/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+<link type="text/css" href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
 <?php foreach ($styles as $style) { ?>
 <link type="text/css" href="<?php echo $style['href']; ?>" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
-
+<script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="view/javascript/bootstrap-select/js/bootstrap-select.min.js"></script>
+<?php if ($bootstrap_select_lang) { ?>
+<script type="text/javascript" src="view/javascript/bootstrap-select/js/i18n/defaults-<?php echo $bootstrap_select_lang; ?>.min.js"></script>
+<?php } ?>
+<script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/addon/selection/active-line.js"></script>
+<script type="text/javascript" src="view/javascript/codemirror/mode/xml/xml.js"></script>
+<?php if( $summernote ) { ?>
 <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+<?php }else{ ?>
+<script type="text/javascript" src="view/javascript/tinymce/jquery.tinymce.min.js"></script>
+<?php } ?>
 <script type="text/javascript" src="view/javascript/jquery/datetimepicker/moment.js" ></script>
 <script type="text/javascript" src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="view/javascript/common.js"></script>
 
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
-
 </head>
 <body>
 <div id="container">
@@ -70,7 +74,7 @@
         <li><a href="<?php echo $new_customer; ?>" style="display: block; overflow: auto;"><?php echo $text_new_customer; ?></a></li>
         <li><a href="<?php echo $new_download; ?>" style="display: block; overflow: auto;"><?php echo $text_new_download; ?></a></li>
       </ul>
-    </li> 
+    </li>
   </ul>
   <ul class="nav pull-right">
     <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><?php if(!empty($alert_order)) { ?><span class="label label-danger pull-left"><?php echo $alert_order; ?></span><?php } ?><i class="fa fa-shopping-cart fa-lg"></i></a>
@@ -122,7 +126,7 @@
         <li><a href="<?php echo $store['href']; ?>" target="_blank"><?php echo $store['name']; ?></a></li>
         <?php } ?>
         <li class="divider"></li>
-        <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>				
+        <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
       </ul>
     </li>
   </ul>

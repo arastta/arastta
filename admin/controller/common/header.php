@@ -61,7 +61,7 @@ class ControllerCommonHeader extends Controller {
 			$data['new_download'] = $this->url->link('catalog/download/add', 'token=' . $this->session->data['token'], 'SSL');
 			$data['new_manufacturer'] = $this->url->link('catalog/manufacturer/add', 'token=' . $this->session->data['token'], 'SSL');
 			$data['new_product'] = $this->url->link('catalog/product/add', 'token=' . $this->session->data['token'], 'SSL');
-						
+
 			// Orders
 			$this->load->model('sale/order');
 
@@ -164,7 +164,7 @@ class ControllerCommonHeader extends Controller {
                 $data['username'] = '';
                 $data['image'] = '';
             }
-            
+
 			$this->load->model('setting/store');
 
             $data['url_user'] = $this->url->link('user/user/edit', 'user_id='.$this->user->getId().'&token=' . $this->session->data['token'], 'SSL');
@@ -188,7 +188,9 @@ class ControllerCommonHeader extends Controller {
         if (is_file(DIR_ADMIN.'view/javascript/bootstrap-select/js/i18n/defaults-'.$lang_tag.'.min.js')) {
             $data['bootstrap_select_lang'] = $lang_tag;
         }
-		
+
+        $data['summernote'] = ($this->config->get('config_text_editor') == 'summernote') ? true : false;
+
         $data['search'] = $this->load->controller('search/search');
 
 		return $this->load->view('common/header.tpl', $data);
