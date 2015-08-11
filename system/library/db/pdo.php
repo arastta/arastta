@@ -114,6 +114,17 @@ final class PDO {
         return $this->pdo->getAttribute(constant("PDO::ATTR_SERVER_VERSION"));
     }
 
+    public function getCollation() {
+        // Get the database collation from server
+        $result = $this->query('SHOW VARIABLES LIKE "collation_database"');
+
+        if (!empty($result->row) && isset($result->row['Value'])) {
+            return $result->row['Value'];
+        } else {
+            return '';
+        }
+    }
+
 	public function __destruct() {
 		$this->pdo = null;
 	}

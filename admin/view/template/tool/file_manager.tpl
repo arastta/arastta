@@ -23,7 +23,7 @@
       <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-exchange"></i> <?php echo $heading_title; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-folder"></i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
 		<div id="fileManager"></div>

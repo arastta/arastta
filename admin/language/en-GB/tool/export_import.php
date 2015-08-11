@@ -10,6 +10,7 @@
 $_['heading_title']                         = 'Export / Import';
 
 // Text
+$_['text_list']                             = 'Export and Import';
 $_['text_success']                          = 'Success: You have successfully imported your data!';
 $_['text_success_settings']                 = 'Success: You have successfully updated the settings for the Export/Import tool!';
 $_['text_export_type_category']             = 'Categories';

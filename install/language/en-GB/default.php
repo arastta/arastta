@@ -70,3 +70,5 @@ $_['error_admin_password'] 		= 'Password required!';
 $_['error_admin_first_name'] 	= 'Admin first name required!';
 $_['error_admin_last_name'] 	= 'Admin last name required!';
 $_['error_remove_install'] 		= 'Failed to remove the install directory. Please remove this manually for security reasons.';
+$_['error_lang_code'] 		    = 'Language selection required, please, select one.';
+$_['error_lang_download'] 		= 'Not able to download the selected language, please, select another one.';

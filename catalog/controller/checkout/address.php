@@ -130,9 +130,9 @@ class ControllerCheckoutAddress extends Controller {
                     }
                 }
                 else {
-                    $json = $this->validateFields('payment');
+                    $json_payment = $this->validateFields('payment');
 
-                    if (!$json) {
+                    if (!$json_payment) {
                         $this->saveAddress('payment');
                     }
                 }
@@ -160,12 +160,21 @@ class ControllerCheckoutAddress extends Controller {
                     }
                 }
                 else {
-                    $json = $this->validateFields('shipping');
+                    $json_shipping = $this->validateFields('shipping');
 
-                    if (!$json) {
+                    if (!$json_shipping) {
                         $this->saveAddress('shipping');
                     }
                 }
+
+                if ($json_payment && $json_shipping) {
+                    $json['error'] = array_merge($json_payment['error'], $json_shipping['error']);
+                } elseif ($json_payment) {
+                    $json['error'] = $json_payment['error'];
+                } else if ($json_shipping) {
+                    $json['error'] = $json_shipping['error'];
+                }
+
             }
 
             if (!$json and $this->cart->hasShipping()) {

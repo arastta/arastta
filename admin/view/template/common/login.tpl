@@ -72,3 +72,29 @@
 	</div>	
 </div>
 <?php echo $footer; ?>
+<style type="text/css">
+    #input-language {
+        display: inherit !important;
+        width: 100%;
+        height: 35px;
+        padding: 8px 13px;
+        font-size: 12px;
+        line-height: 1.42857143;
+        color: #555555;
+        background-color: #ffffff;
+        background-image: none;
+        border: 1px solid #cccccc;
+        border-radius: 3px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+    .input-icon .bootstrap-select {
+        display: none !important;
+    }
+	.input-icon input {
+        padding-bottom: 3px;
+    }
+</style>

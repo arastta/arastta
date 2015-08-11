@@ -40,12 +40,7 @@ class ModelCatalogManufacturer extends Model {
 
         foreach ($data['seo_url'] as $language_id => $value) {
             $alias = empty($value) ? $data['manufacturer_description'][$language_id]['name'] : $value;
-
-            $alias = $this->model_catalog_url_alias->generateAlias($alias);
-
-            if ($alias) {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'manufacturer_id=" . (int)$manufacturer_id . "', keyword = '" . $this->db->escape($alias) . "', language_id = '" . $language_id . "'");
-            }
+            $this->model_catalog_url_alias->addAlias('manufacturer', $manufacturer_id, $alias, $language_id);
         }
 
 		$this->cache->delete('manufacturer');
@@ -88,16 +83,11 @@ class ModelCatalogManufacturer extends Model {
             }
         }
 
+        $this->model_catalog_url_alias->clearAliases('manufacturer', $manufacturer_id);
+
         foreach ($data['seo_url'] as $language_id => $value) {
-            $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manufacturer_id=" . (int)$manufacturer_id . "' AND language_id = '" . $this->db->escape($language_id) . "'");
-
             $alias = empty($value) ? $data['manufacturer_description'][$language_id]['name'] : $value;
-
-            $alias = $this->model_catalog_url_alias->generateAlias($alias);
-
-            if ($alias) {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'manufacturer_id=" . (int)$manufacturer_id . "', keyword = '" . $this->db->escape($alias) . "', language_id = '" . $language_id . "'");
-            }
+            $this->model_catalog_url_alias->addAlias('manufacturer', $manufacturer_id, $alias, $language_id);
         }
 
 		$this->cache->delete('manufacturer');
@@ -112,7 +102,9 @@ class ModelCatalogManufacturer extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer_description WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
         $this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer_to_layout WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer_to_store WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manufacturer_id=" . (int)$manufacturer_id . "'");
+
+        $this->load->model('catalog/url_alias');
+        $this->model_catalog_url_alias->clearAliases('manufacturer', $manufacturer_id);
 		
 		// Main Menu Item 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'manufacturer' AND md.link = '" . (int)$manufacturer_id . "'");
@@ -145,10 +137,11 @@ class ModelCatalogManufacturer extends Model {
         $manufacturer = $query->row;
         $manufacturer['seo_url'] = array();
 
-        $query = $this->db->query("SELECT keyword, language_id FROM " . DB_PREFIX . "url_alias WHERE query = 'manufacturer_id=" . (int)$manufacturer_id . "'");
+        $this->load->model('catalog/url_alias');
+        $aliases = $this->model_catalog_url_alias->getAliases('manufacturer', $manufacturer_id);
 
-        if ($query->rows) {
-            foreach ($query->rows as $row) {
+        if ($aliases) {
+            foreach ($aliases as $row) {
                 $manufacturer['seo_url'][$row['language_id']] = $row['keyword'];
             }
         }

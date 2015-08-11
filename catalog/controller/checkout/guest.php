@@ -16,6 +16,7 @@ class ControllerCheckoutGuest extends Controller {
         $data['text_your_account'] = $this->language->get('text_your_account');
         $data['text_your_address'] = $this->language->get('text_your_address');
         $data['text_loading'] = $this->language->get('text_loading');
+        $data['text_guest_details'] = $this->language->get('text_guest_details');
 
         $data['entry_firstname'] = $this->language->get('entry_firstname');
         $data['entry_lastname'] = $this->language->get('entry_lastname');
@@ -154,7 +155,7 @@ class ControllerCheckoutGuest extends Controller {
             $custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
 
             foreach ($custom_fields as $custom_field) {
-                if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+                if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
                     $json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
                 }
             }

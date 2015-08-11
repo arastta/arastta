@@ -23,6 +23,6 @@ class Filesystem extends SFilesystem {
 	}
 
 	public function dumpFile($filename, $content, $mode = 0644) {
-		parent::dumpFile($filename, $content, $mode = 0644);
+		parent::dumpFile($filename, $content, $mode);
 	}
 }

@@ -7,7 +7,7 @@
  */
 
 // Heading
-$_['heading_title'] = 'Sales Analytics';
+$_['heading_title'] = 'Analytics';
 
 // Text
 $_['text_order']    = 'Orders';

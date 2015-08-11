@@ -248,6 +248,7 @@ class ControllerSaleOrder extends Controller {
 		);
 
 		$data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'], 'SSL');
+		$data['invoicepdf'] = $this->url->link('sale/order/invoicepdf', 'token=' . $this->session->data['token'], 'SSL');
 		$data['shipping'] = $this->url->link('sale/order/shipping', 'token=' . $this->session->data['token'], 'SSL');
 		$data['add'] = $this->url->link('sale/order/add', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -308,6 +309,7 @@ class ControllerSaleOrder extends Controller {
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
 		$data['entry_date_modified'] = $this->language->get('entry_date_modified');
 
+		$data['button_invoice_pdf'] = $this->language->get('button_invoice_pdf');
 		$data['button_invoice_print'] = $this->language->get('button_invoice_print');
 		$data['button_shipping_print'] = $this->language->get('button_shipping_print');
 		$data['button_add'] = $this->language->get('button_add');
@@ -966,6 +968,7 @@ class ControllerSaleOrder extends Controller {
 			$data['entry_notify'] = $this->language->get('entry_notify');
 			$data['entry_comment'] = $this->language->get('entry_comment');
 
+            $data['button_invoice_pdf'] = $this->language->get('button_invoice_pdf');
 			$data['button_invoice_print'] = $this->language->get('button_invoice_print');
 			$data['button_shipping_print'] = $this->language->get('button_shipping_print');
 			$data['button_edit'] = $this->language->get('button_edit');
@@ -1039,6 +1042,7 @@ class ControllerSaleOrder extends Controller {
 
 			$data['shipping'] = $this->url->link('sale/order/shipping', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
 			$data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
+			$data['invoicepdf'] = $this->url->link('sale/order/invoicepdf', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
 			$data['edit'] = $this->url->link('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
 			$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
@@ -1370,49 +1374,9 @@ class ControllerSaleOrder extends Controller {
 			// Unset any past sessions this page date_added for the api to work.
 			unset($this->session->data['cookie']);
 
-			// Set up the API session
-			if ($this->user->hasPermission('modify', 'sale/order')) {
-				$this->load->model('user/api');
-
-				$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
-
-				if ($api_info) {
-					$curl = curl_init();
-
-					// Set SSL if required
-					if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
-						curl_setopt($curl, CURLOPT_PORT, 443);
-					}
-
-					curl_setopt($curl, CURLOPT_HEADER, false);
-					curl_setopt($curl, CURLINFO_HEADER_OUT, true);
-					curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-					curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-					curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
-					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-					curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/login');
-					curl_setopt($curl, CURLOPT_POST, true);
-					curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($api_info));
-
-					$json = curl_exec($curl);
-
-					if (!$json) {
-						$data['error_warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
-					} else {
-						$response = json_decode($json, true);
-					}
-
-					if (isset($response['cookie'])) {
-						$this->session->data['cookie'] = $response['cookie'];
-					}
-				}
-			}
-
-			if (isset($response['cookie'])) {
-				$this->session->data['cookie'] = $response['cookie'];
-			} else {
-				$data['error_warning'] = $this->language->get('error_permission');
+			// Check permission
+			if (!$this->user->hasPermission('modify', 'sale/order')) {
+                $data['error_warning'] = $this->language->get('error_permission');
 			}
 
 			// Fraud
@@ -1899,235 +1863,267 @@ class ControllerSaleOrder extends Controller {
 		$this->response->setOutput($this->load->view('sale/order_history.tpl', $data));
 	}
 
-	public function invoice() {
-		$this->load->language('sale/order');
+    public function invoice() {
+        $this->load->language('sale/order');
 
-		$data['title'] = $this->language->get('text_invoice');
+        $data['title'] = $this->language->get('text_invoice');
 
-		if ($this->request->server['HTTPS']) {
-			$data['base'] = HTTPS_SERVER;
-		} else {
-			$data['base'] = HTTP_SERVER;
-		}
+        if ($this->request->server['HTTPS']) {
+            $data['base'] = HTTPS_SERVER;
+        } else {
+            $data['base'] = HTTP_SERVER;
+        }
 
-		$data['direction'] = $this->language->get('direction');
-		$data['lang'] = $this->language->get('code');
+        $data['direction'] = $this->language->get('direction');
+        $data['lang'] = $this->language->get('code');
 
-		$data['text_invoice'] = $this->language->get('text_invoice');
-		$data['text_order_detail'] = $this->language->get('text_order_detail');
-		$data['text_order_id'] = $this->language->get('text_order_id');
-		$data['text_invoice_no'] = $this->language->get('text_invoice_no');
-		$data['text_invoice_date'] = $this->language->get('text_invoice_date');
-		$data['text_date_added'] = $this->language->get('text_date_added');
-		$data['text_telephone'] = $this->language->get('text_telephone');
-		$data['text_fax'] = $this->language->get('text_fax');
-		$data['text_email'] = $this->language->get('text_email');
-		$data['text_website'] = $this->language->get('text_website');
-		$data['text_to'] = $this->language->get('text_to');
-		$data['text_ship_to'] = $this->language->get('text_ship_to');
-		$data['text_payment_method'] = $this->language->get('text_payment_method');
-		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
+        $data['text_invoice'] = $this->language->get('text_invoice');
+        $data['text_order_detail'] = $this->language->get('text_order_detail');
+        $data['text_order_id'] = $this->language->get('text_order_id');
+        $data['text_invoice_no'] = $this->language->get('text_invoice_no');
+        $data['text_invoice_date'] = $this->language->get('text_invoice_date');
+        $data['text_date_added'] = $this->language->get('text_date_added');
+        $data['text_telephone'] = $this->language->get('text_telephone');
+        $data['text_fax'] = $this->language->get('text_fax');
+        $data['text_email'] = $this->language->get('text_email');
+        $data['text_website'] = $this->language->get('text_website');
+        $data['text_to'] = $this->language->get('text_to');
+        $data['text_ship_to'] = $this->language->get('text_ship_to');
+        $data['text_payment_method'] = $this->language->get('text_payment_method');
+        $data['text_shipping_method'] = $this->language->get('text_shipping_method');
 
-		$data['column_product'] = $this->language->get('column_product');
-		$data['column_model'] = $this->language->get('column_model');
-		$data['column_quantity'] = $this->language->get('column_quantity');
-		$data['column_price'] = $this->language->get('column_price');
-		$data['column_total'] = $this->language->get('column_total');
-		$data['column_comment'] = $this->language->get('column_comment');
+        $data['column_product'] = $this->language->get('column_product');
+        $data['column_model'] = $this->language->get('column_model');
+        $data['column_quantity'] = $this->language->get('column_quantity');
+        $data['column_price'] = $this->language->get('column_price');
+        $data['column_total'] = $this->language->get('column_total');
+        $data['column_comment'] = $this->language->get('column_comment');
 
-		$this->load->model('sale/order');
+        $this->load->model('sale/order');
 
-		$this->load->model('setting/setting');
+        $this->load->model('setting/setting');
 
-		$data['orders'] = array();
+        $data['orders'] = array();
 
-		$orders = array();
+        $orders = array();
 
-		if (isset($this->request->post['selected'])) {
-			$orders = $this->request->post['selected'];
-		} elseif (isset($this->request->get['order_id'])) {
-			$orders[] = $this->request->get['order_id'];
-		}
+        if (isset($this->request->post['selected'])) {
+            $orders = $this->request->post['selected'];
+        } elseif (isset($this->request->get['order_id'])) {
+            $orders[] = $this->request->get['order_id'];
+        }
 
-		foreach ($orders as $order_id) {
-			$order_info = $this->model_sale_order->getOrder($order_id);
+        foreach ($orders as $order_id) {
+            $order_info = $this->model_sale_order->getOrder($order_id);
 
-			if ($order_info) {
-				$store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
+            if ($order_info) {
+                $store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
 
-				if ($store_info) {
-					$store_address = $store_info['config_address'];
-					$store_email = $store_info['config_email'];
-					$store_telephone = $store_info['config_telephone'];
-					$store_fax = $store_info['config_fax'];
-				} else {
-					$store_address = $this->config->get('config_address');
-					$store_email = $this->config->get('config_email');
-					$store_telephone = $this->config->get('config_telephone');
-					$store_fax = $this->config->get('config_fax');
-				}
+                if ($store_info) {
+                    $store_address = $store_info['config_address'];
+                    $store_email = $store_info['config_email'];
+                    $store_telephone = $store_info['config_telephone'];
+                    $store_fax = $store_info['config_fax'];
+                } else {
+                    $store_address = $this->config->get('config_address');
+                    $store_email = $this->config->get('config_email');
+                    $store_telephone = $this->config->get('config_telephone');
+                    $store_fax = $this->config->get('config_fax');
+                }
 
-				if ($order_info['invoice_no']) {
-					$invoice_no = $order_info['invoice_prefix'] . $order_info['invoice_no'];
-				} else {
-					$invoice_no = '';
-				}
+                if ($order_info['invoice_no']) {
+                    $invoice_no = $order_info['invoice_prefix'] . $order_info['invoice_no'];
+                } else {
+                    $invoice_no = '';
+                }
 
-				if ($order_info['payment_address_format']) {
-					$format = $order_info['payment_address_format'];
-				} else {
-					$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
-				}
+                if ($order_info['payment_address_format']) {
+                    $format = $order_info['payment_address_format'];
+                } else {
+                    $format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+                }
 
-				$find = array(
-					'{firstname}',
-					'{lastname}',
-					'{company}',
-					'{address_1}',
-					'{address_2}',
-					'{city}',
-					'{postcode}',
-					'{zone}',
-					'{zone_code}',
-					'{country}'
-				);
+                $find = array(
+                    '{firstname}',
+                    '{lastname}',
+                    '{company}',
+                    '{address_1}',
+                    '{address_2}',
+                    '{city}',
+                    '{postcode}',
+                    '{zone}',
+                    '{zone_code}',
+                    '{country}'
+                );
 
-				$replace = array(
-					'firstname' => $order_info['payment_firstname'],
-					'lastname'  => $order_info['payment_lastname'],
-					'company'   => $order_info['payment_company'],
-					'address_1' => $order_info['payment_address_1'],
-					'address_2' => $order_info['payment_address_2'],
-					'city'      => $order_info['payment_city'],
-					'postcode'  => $order_info['payment_postcode'],
-					'zone'      => $order_info['payment_zone'],
-					'zone_code' => $order_info['payment_zone_code'],
-					'country'   => $order_info['payment_country']
-				);
+                $replace = array(
+                    'firstname' => $order_info['payment_firstname'],
+                    'lastname'  => $order_info['payment_lastname'],
+                    'company'   => $order_info['payment_company'],
+                    'address_1' => $order_info['payment_address_1'],
+                    'address_2' => $order_info['payment_address_2'],
+                    'city'      => $order_info['payment_city'],
+                    'postcode'  => $order_info['payment_postcode'],
+                    'zone'      => $order_info['payment_zone'],
+                    'zone_code' => $order_info['payment_zone_code'],
+                    'country'   => $order_info['payment_country']
+                );
 
-				$payment_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+                $payment_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
-				if ($order_info['shipping_address_format']) {
-					$format = $order_info['shipping_address_format'];
-				} else {
-					$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
-				}
+                if ($order_info['shipping_address_format']) {
+                    $format = $order_info['shipping_address_format'];
+                } else {
+                    $format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+                }
 
-				$find = array(
-					'{firstname}',
-					'{lastname}',
-					'{company}',
-					'{address_1}',
-					'{address_2}',
-					'{city}',
-					'{postcode}',
-					'{zone}',
-					'{zone_code}',
-					'{country}'
-				);
+                $find = array(
+                    '{firstname}',
+                    '{lastname}',
+                    '{company}',
+                    '{address_1}',
+                    '{address_2}',
+                    '{city}',
+                    '{postcode}',
+                    '{zone}',
+                    '{zone_code}',
+                    '{country}'
+                );
 
-				$replace = array(
-					'firstname' => $order_info['shipping_firstname'],
-					'lastname'  => $order_info['shipping_lastname'],
-					'company'   => $order_info['shipping_company'],
-					'address_1' => $order_info['shipping_address_1'],
-					'address_2' => $order_info['shipping_address_2'],
-					'city'      => $order_info['shipping_city'],
-					'postcode'  => $order_info['shipping_postcode'],
-					'zone'      => $order_info['shipping_zone'],
-					'zone_code' => $order_info['shipping_zone_code'],
-					'country'   => $order_info['shipping_country']
-				);
+                $replace = array(
+                    'firstname' => $order_info['shipping_firstname'],
+                    'lastname'  => $order_info['shipping_lastname'],
+                    'company'   => $order_info['shipping_company'],
+                    'address_1' => $order_info['shipping_address_1'],
+                    'address_2' => $order_info['shipping_address_2'],
+                    'city'      => $order_info['shipping_city'],
+                    'postcode'  => $order_info['shipping_postcode'],
+                    'zone'      => $order_info['shipping_zone'],
+                    'zone_code' => $order_info['shipping_zone_code'],
+                    'country'   => $order_info['shipping_country']
+                );
 
-				$shipping_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+                $shipping_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
-				$this->load->model('tool/upload');
+                $this->load->model('tool/upload');
 
-				$product_data = array();
+                $product_data = array();
 
-				$products = $this->model_sale_order->getOrderProducts($order_id);
+                $products = $this->model_sale_order->getOrderProducts($order_id);
 
-				foreach ($products as $product) {
-					$option_data = array();
+                foreach ($products as $product) {
+                    $option_data = array();
 
-					$options = $this->model_sale_order->getOrderOptions($order_id, $product['order_product_id']);
+                    $options = $this->model_sale_order->getOrderOptions($order_id, $product['order_product_id']);
 
-					foreach ($options as $option) {
-						if ($option['type'] != 'file') {
-							$value = $option['value'];
-						} else {
-							$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+                    foreach ($options as $option) {
+                        if ($option['type'] != 'file') {
+                            $value = $option['value'];
+                        } else {
+                            $upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
-							if ($upload_info) {
-								$value = $upload_info['name'];
-							} else {
-								$value = '';
-							}
-						}
+                            if ($upload_info) {
+                                $value = $upload_info['name'];
+                            } else {
+                                $value = '';
+                            }
+                        }
 
-						$option_data[] = array(
-							'name'  => $option['name'],
-							'value' => $value
-						);
-					}
+                        $option_data[] = array(
+                            'name'  => $option['name'],
+                            'value' => $value
+                        );
+                    }
 
-					$product_data[] = array(
-						'name'     => $product['name'],
-						'model'    => $product['model'],
-						'option'   => $option_data,
-						'quantity' => $product['quantity'],
-						'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-						'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
-					);
-				}
+                    $product_data[] = array(
+                        'name'     => $product['name'],
+                        'model'    => $product['model'],
+                        'option'   => $option_data,
+                        'quantity' => $product['quantity'],
+                        'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+                        'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+                    );
+                }
 
-				$voucher_data = array();
+                $voucher_data = array();
 
-				$vouchers = $this->model_sale_order->getOrderVouchers($order_id);
+                $vouchers = $this->model_sale_order->getOrderVouchers($order_id);
 
-				foreach ($vouchers as $voucher) {
-					$voucher_data[] = array(
-						'description' => $voucher['description'],
-						'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value'])
-					);
-				}
+                foreach ($vouchers as $voucher) {
+                    $voucher_data[] = array(
+                        'description' => $voucher['description'],
+                        'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value'])
+                    );
+                }
 
-				$total_data = array();
+                $total_data = array();
 
-				$totals = $this->model_sale_order->getOrderTotals($order_id);
+                $totals = $this->model_sale_order->getOrderTotals($order_id);
 
-				foreach ($totals as $total) {
-					$total_data[] = array(
-						'title' => $total['title'],
-						'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
-					);
-				}
+                foreach ($totals as $total) {
+                    $total_data[] = array(
+                        'title' => $total['title'],
+                        'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
+                    );
+                }
 
-				$data['orders'][] = array(
-					'order_id'	         => $order_id,
-					'invoice_no'         => $invoice_no,
-					'date_added'         => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
-					'store_name'         => $order_info['store_name'],
-					'store_url'          => rtrim($order_info['store_url'], '/'),
-					'store_address'      => nl2br($store_address),
-					'store_email'        => $store_email,
-					'store_telephone'    => $store_telephone,
-					'store_fax'          => $store_fax,
-					'email'              => $order_info['email'],
-					'telephone'          => $order_info['telephone'],
-					'shipping_address'   => $shipping_address,
-					'shipping_method'    => $order_info['shipping_method'],
-					'payment_address'    => $payment_address,
-					'payment_method'     => $order_info['payment_method'],
-					'product'            => $product_data,
-					'voucher'            => $voucher_data,
-					'total'              => $total_data,
-					'comment'            => nl2br($order_info['comment'])
-				);
-			}
-		}
+                $data['orders'][] = array(
+                    'order_id'	         => $order_id,
+                    'invoice_no'         => $invoice_no,
+                    'date_added'         => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
+                    'store_name'         => $order_info['store_name'],
+                    'store_url'          => rtrim($order_info['store_url'], '/'),
+                    'store_address'      => nl2br($store_address),
+                    'store_email'        => $store_email,
+                    'store_telephone'    => $store_telephone,
+                    'store_fax'          => $store_fax,
+                    'email'              => $order_info['email'],
+                    'telephone'          => $order_info['telephone'],
+                    'shipping_address'   => $shipping_address,
+                    'shipping_method'    => $order_info['shipping_method'],
+                    'payment_address'    => $payment_address,
+                    'payment_method'     => $order_info['payment_method'],
+                    'product'            => $product_data,
+                    'voucher'            => $voucher_data,
+                    'total'              => $total_data,
+                    'comment'            => nl2br($order_info['comment'])
+                );
+            }
+        }
 
-		$this->response->setOutput($this->load->view('sale/order_invoice.tpl', $data));
+        $this->response->setOutput($this->load->view('sale/order_invoice.tpl', $data));
+    }
+
+	public function invoicePdf() {
+        if (isset($this->request->post['selected'])) {
+            $selected = $this->request->post['selected'];
+            $order_id = current($selected);
+        } elseif (isset($this->request->get['order_id'])) {
+            $order_id = $this->request->get['order_id'];
+        }
+
+        if (empty($order_id)) {
+            $this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL'));
+        }
+
+		Client::setName('catalog');
+
+        $app = new Catalog();
+
+        $app->initialise();
+
+        $app->request->get['route'] = 'account/order/invoice';
+        $app->request->get['order_id'] = $order_id;
+        $app->request->post = array();
+
+        $app->ecommerce();
+        $app->route();
+        $app->dispatch();
+
+        unset($app);
+
+        // Return back to admin
+        Client::setName('admin');
 	}
 
 	public function shipping() {

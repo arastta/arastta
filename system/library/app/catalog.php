@@ -205,6 +205,9 @@ class Catalog extends App {
 
         global $log;
         $log = $this->registry->get('log');
+
+        global $loader;
+        $loader = $this->registry->get('load');
 		# B/C end
 		
         // Front Controller

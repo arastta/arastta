@@ -311,7 +311,7 @@ class ControllerCheckoutCart extends Controller {
 				$option = array();
 			}
 
-			$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
+			$product_options = $this->model_catalog_product->getProductOptions($product_id);
 
 			foreach ($product_options as $product_option) {
 				if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
@@ -340,9 +340,9 @@ class ControllerCheckoutCart extends Controller {
 			}
 
 			if (!$json) {
-				$this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
+				$this->cart->add($product_id, $quantity, $option, $recurring_id);
 
-				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
+				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $product_id), $product_info['name'], $this->url->link('checkout/cart'));
 
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
@@ -387,7 +387,7 @@ class ControllerCheckoutCart extends Controller {
 
 				$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
 			} else {
-				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']));
+				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $product_id));
 			}
 		}
 
@@ -399,7 +399,7 @@ class ControllerCheckoutCart extends Controller {
 		$this->load->language('checkout/cart');
 
 		$json = array();
-		
+
 		$checkCart = strpos($_SERVER['HTTP_REFERER'], 'checkout/cart');
         $checkCheckout = strpos($_SERVER['HTTP_REFERER'], 'checkout/checkout');
 
@@ -441,7 +441,7 @@ class ControllerCheckoutCart extends Controller {
         } else {
             $json['location'] = 'module';
         }
-		
+
 		// Remove
 		if (isset($this->request->post['key'])) {
 			$this->cart->remove($this->request->post['key']);

@@ -65,7 +65,7 @@ class Seo extends Object {
                 $alias = !empty($found) ? $found : $tmp;
             }
             else {
-                $alias = 'product_'.$id;
+                $alias = $type.'-'.$id;
             }
 
             $rows[$type][$id] = $alias;
@@ -75,6 +75,8 @@ class Seo extends Object {
     }
 
     public function getAliasQuery($keyword) {
+        $query = false;
+
         $results = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($keyword) . "'");
 
         if ($results->num_rows) {
@@ -102,8 +104,13 @@ class Seo extends Object {
 
             $query = !empty($found) ? $found : $tmp;
         }
-        else {
-            $query = false;
+        elseif (strpos($keyword, '-')) {
+            $tmp = explode('-', $keyword);
+            $routes = array('product', 'category', 'manufacturer', 'information');
+
+            if (!empty($tmp[0]) && in_array($tmp[0], $routes) && !empty($tmp[1]) && is_numeric($tmp[1])) {
+                $query = $tmp[0].'_id='.$tmp[1];
+            }
         }
 
         return $query;
@@ -133,10 +140,25 @@ class Seo extends Object {
         return $data[$code];
     }
 
-    public function generateAlias($title) {
+    public function generateAlias($title, $id = null, $language_id = null) {
         $title = html_entity_decode($title, ENT_QUOTES, 'UTF-8');
 
         $alias = $this->safeAlias($title);
+
+        if ($id && $language_id) {
+            $count = 0;
+            $baseAlias = $alias;
+
+            while ($this->db->query("SELECT COUNT(*) AS count FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($alias) . "' AND language_id = '" . (int)$language_id . "'")->row['count'] > 0) {
+                if ($count == 0) {
+                    $baseAlias = ($alias = $alias . '-' . $id) . '-';
+                } else {
+                    $alias = $baseAlias . $count;
+                }
+
+                $count++;
+            }
+        }
 
         return $alias;
     }

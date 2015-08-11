@@ -20,6 +20,7 @@ class ModelCatalogProduct extends Model {
 
 		foreach ($data['product_description'] as $language_id => $value) {
             empty($value['meta_title']) ? $value['meta_title'] = $value['name'] : $value['meta_title'];
+            !empty($value['tag']) ? $value['tag'] = implode(',', $value['tag']) : $value['tag'];
 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int)$product_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
@@ -120,12 +121,7 @@ class ModelCatalogProduct extends Model {
         if (isset($data['seo_url'])) {
             foreach ($data['seo_url'] as $language_id => $value) {
                 $alias = empty($value) ? $data['product_description'][$language_id]['name'] : $value;
-
-                $alias = $this->model_catalog_url_alias->generateAlias($alias);
-
-                if ($alias) {
-                    $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($alias) . "', language_id = '" . $language_id . "'");
-                }
+                $this->model_catalog_url_alias->addAlias('product', $product_id, $alias, $language_id);
             }
         }
 
@@ -155,6 +151,7 @@ class ModelCatalogProduct extends Model {
 
 		foreach ($data['product_description'] as $language_id => $value) {
 			empty($value['meta_title']) ? $value['meta_title'] = $value['name'] : $value['meta_title'];
+            !empty($value['tag']) ? $value['tag'] = implode(',', $value['tag']) : $value['tag'];
 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int)$product_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
@@ -278,16 +275,11 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
+		$this->model_catalog_url_alias->clearAliases('product', $product_id);
+
         foreach ($data['seo_url'] as $language_id => $value) {
-            $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'product_id=" . (int)$product_id . "' AND language_id = '" . $this->db->escape($language_id) . "'");
-
             $alias = empty($value) ? $data['product_description'][$language_id]['name'] : $value;
-
-            $alias = $this->model_catalog_url_alias->generateAlias($alias);
-
-            if ($alias) {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($alias) . "', language_id = '" . $language_id . "'");
-            }
+            $this->model_catalog_url_alias->addAlias('product', $product_id, $alias, $language_id);
         }
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_recurring` WHERE product_id = " . (int)$product_id);
@@ -355,7 +347,9 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_store WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "review WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_recurring WHERE product_id = " . (int)$product_id);
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'product_id=" . (int)$product_id . "'");
+
+		$this->load->model('catalog/url_alias');
+		$this->model_catalog_url_alias->clearAliases('product', $product_id);
 		
 		// Main Menu Item 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'product' AND md.link = '" . (int)$product_id . "'");
@@ -388,10 +382,11 @@ class ModelCatalogProduct extends Model {
         $product = $query->row;
         $product['seo_url'] = array();
 
-        $query = $this->db->query("SELECT keyword, language_id FROM " . DB_PREFIX . "url_alias WHERE query = 'product_id=" . (int)$product_id . "'");
+        $this->load->model('catalog/url_alias');
+        $aliases = $this->model_catalog_url_alias->getAliases('product', $product_id);
 
-        if ($query->rows) {
-            foreach ($query->rows as $row) {
+        if ($aliases) {
+            foreach ($aliases as $row) {
                 $product['seo_url'][$row['language_id']] = $row['keyword'];
             }
         }
@@ -764,4 +759,55 @@ class ModelCatalogProduct extends Model {
 
 		return $query->row['total'];
 	}
+
+    public function getTags($tag_name, $filter_tags = null) {
+        $tags = $tags_filter = array();
+
+        $check_search = true;
+
+        $filter = " AND not(tag = '')";
+
+        if (!empty($filter_tags)) {
+            foreach ($filter_tags as $filter_tag) {
+                $filter .= " AND not (tag = '" . $filter_tag['value'] . "')";
+                $tags_filter[] = $filter_tag['value'];
+            }
+        }
+
+        $query = $this->db->query("SELECT DISTINCT(tag) FROM `" . DB_PREFIX . "product_description` WHERE `tag` LIKE '%" . $tag_name . "%'" . $filter);
+
+        if ($query->num_rows) {
+            foreach ($query->rows as $result) {
+                $check = strpos($result['tag'], ',');
+
+                $tag = $result['tag'];
+
+                if ($check !== false) {
+                    $tag = explode(',' , $result['tag']);
+                }
+
+                if (is_array($tag)) {
+                    foreach ($tag as $value) {
+                        if (!empty($tag_name)) {
+                            $check_search = strpos($value , $tag_name);
+                        }
+
+                        if (!in_array($value, $tags) && !in_array($value, $tags_filter) && $check_search !== false) {
+                            $tags[] = $value;
+                        }
+                    }
+                } else {
+                    if (!empty($tag_name)) {
+                        $check_search = strpos($tag , $tag_name);
+                    }
+
+                    if (!in_array($tag, $tags) && !in_array($tag, $tags_filter) && $check_search !== false) {
+                        $tags[] = $tag;
+                    }
+                }
+            }
+        }
+
+        return $tags;
+    }
 }

@@ -27,7 +27,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		$this->load->model('sale/customer_group');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$$customer_group_id = $this->model_sale_customer_group->addCustomerGroup($this->request->post);
+			$customer_group_id = $this->model_sale_customer_group->addCustomerGroup($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

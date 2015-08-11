@@ -56,7 +56,9 @@ final class Loader {
 	}
 
 	public function view($template, $data = array()) {
-        $file = DIR_TEMPLATE . $template;
+        $theme_dir = Client::isCatalog() ? 'theme' : 'template';
+
+        $file = Client::getDir() . 'view/' . $theme_dir . '/' . $template;
 
 		if (file_exists($file)) {
             $event_args = array(&$template, &$data);
@@ -79,6 +81,20 @@ final class Loader {
 			trigger_error('Error: Could not load template ' . $file . '!');
 			exit();
 		}
+	}
+
+	public function output($file, $data) {
+        if (Client::isAdmin()) {
+            $output = $this->view($file.'.tpl', $data);
+        } else {
+            if (file_exists(Client::getDir() . 'view/theme/'. $this->config->get('config_template') . '/template/'.$file.'.tpl')) {
+                $output = $this->view($this->config->get('config_template') . '/template/'.$file.'.tpl', $data);
+            } else {
+                $output = $this->view('default/template/'.$file.'.tpl', $data);
+            }
+        }
+
+        return $output;
 	}
 
 	public function library($library) {

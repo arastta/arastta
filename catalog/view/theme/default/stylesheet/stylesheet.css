@@ -937,3 +937,21 @@ h2.price {
     padding: 10px 0;
     color: #008db9;
 }
+
+#account .form-group.col-sm-6  .text-danger,
+.form-group.col-sm-6.required.has-error .text-danger {
+	position: absolute;
+	margin-top: 5px;
+}
+
+#payment-address .text-danger, #shipping-address .text-danger {
+	margin-top: 5px;
+}
+
+.invoice-50 {
+    width: 50%;
+}
+
+.invoice-logo {
+    margin-bottom: 20px;
+}

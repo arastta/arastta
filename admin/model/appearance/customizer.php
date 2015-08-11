@@ -128,13 +128,25 @@ class ModelAppearanceCustomizer extends Model {
     }
 
     public function getCustomizerItem($key){
-        $json  = file_get_contents( DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/customizer.json' );
+		$theme_customizer = DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/customizer.json';
+		$default_customizer = DIR_CATALOG . 'view/theme/default/customizer.json';
+		
+		if (is_file($theme_customizer)) {
+			$json = file_get_contents($theme_customizer);
+		} elseif (is_file($default_customizer)) {
+			$json = file_get_contents($default_customizer);
+		} else {
+			return false;
+		}
+	
         $items = json_decode($json, true);
 
         foreach($items as $item_name => $item_value){
-            if(!empty($item_value['control'][$key])){
-                return $item_value['control'][$key];
+            if (empty($item_value['control'][$key])){
+                continue;
             }
+			
+			return $item_value['control'][$key];
         }
 
         return false;
