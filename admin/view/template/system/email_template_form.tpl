@@ -25,6 +25,12 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
       </div>
       <div class="panel-body">
+      	  <div class="form-group">
+      	  	<label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shortcodes; ?>"><?php echo $text_shortcodes; ?></span></label>
+			<div class="col-sm-10" style="margin-bottom: 20px; min-height: 50px; padding: 7px; border: 1px solid #EBEBEB; border-radius: 5px;">
+			  <div id="shortCodes"></div>
+			</div>
+		  </div>
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-email-template" class="form-horizontal">
            <div class="tab-pane active in" id="tab-general">
               <ul class="nav nav-tabs" id="language">
@@ -59,31 +65,124 @@
     </div>
   </div>
 </div>
-  <script type="text/javascript"><!--
-<?php foreach ($languages as $language) { ?>
-	<?php if( $text_editor == 'summernote' ) { ?>
-		$('#input-description<?php echo $language['language_id']; ?>').summernote({
-			height: 300
-		});
-	<?php } else if ( $text_editor == 'tinymce' ) { ?>
-		$('#input-description<?php echo $language['language_id']; ?>').tinymce({
-			script_url : 'view/javascript/tinymce/tinymce.min.js',
-			plugins: "visualblocks,textpattern,table,media,pagebreak,link,image",
-		      target_list: [
-		       {title: 'None', value: ''},
-		       {title: 'Same page', value: '_self'},
-		       {title: 'New page', value: '_blank'},
-		       {title: 'LIghtbox', value: '_lightbox'}
-		      ],
-			height : 500  
-		});
-	<?php } ?>
-<?php } ?>
-//--></script> 
-  <script type="text/javascript"><!--
-$('#language a:first').tab('show');
-//--></script>
 <script type="text/javascript"><!--
+	jQuery(document).ready(function(){
+	<?php foreach ($languages as $language) {
+		if( $text_editor == 'summernote' ) { ?>
+			$('#input-description<?php echo $language['language_id']; ?>').summernote({
+				<?php echo $lang_editor; ?>height: 300,
+				codemirror: {
+					mode: 'text/html',
+					lineNumbers: true,
+					lineWrapping: true,
+					styleActiveLine: true
+				}
+			});
+		<?php } else if ( $text_editor == 'tinymce' ) { ?>
+			$('#input-description<?php echo $language['language_id']; ?>').tinymce({
+				plugins: 'fullscreen preview textcolor visualblocks textpattern table media pagebreak link image codemirror colorpicker wordcount ',
+				toolbar: 'paste undo redo | forecolor backcolor table | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink image media | preview fullscreen | code',
+				entity_encoding: 'raw',
+				image_advtab: true,
+				//menubar: false, // optional
+				toolbar_items_size: 'small',
+				target_list: [
+					{title: 'None', value: ''},
+					{title: 'Same page', value: '_self'},
+					{title: 'New window', value: '_blank'},
+					{title: 'Lightbox', value: '_lightbox'}
+				],
+				height : 500,
+				<?php echo $lang_editor; ?>
+				content_css : '<?php echo HTTP_CATALOG; ?>catalog/view/theme/default/stylesheet/stylesheet.css',
+				codemirror: {
+					path: '<?php echo HTTPS_SERVER; ?>view/javascript/codemirror/',
+					mode: 'text/html',
+					indentOnInit: true,
+					lineNumbers: true,
+					lineWrapping: true,
+					styleActiveLine: true
+				},
+				/** optional - needed for embedding images and codemirror */
+				convert_urls: false,
+				relative_urls: true,
+				document_base_url: '<?php echo HTTPS_IMAGE; ?>catalog/data/'
+		});
+		<?php } ?>
+	<?php } ?>
+
+	$('#language a:first').tab('show');
+
+	function getShortCodes() {
+		var html = '';
+		var value = '<?php echo $context; ?>';
+
+		switch( value ) {
+			case 'admin_forgotten':
+				html += '<?php echo $text_shortcode_admin_forgotten; ?>';
+				break;
+			case 'admin_login':
+				html += '<?php echo $text_shortcode_admin_login; ?>';
+				break;
+			case 'affiliate_affiliate_approve':
+				html += '<?php echo $text_shortcode_affiliate_affiliate_approve; ?>';
+				break;
+			case 'affiliate_order':
+				html += '<?php echo $text_shortcode_affiliate_order; ?>';
+				break;
+			case 'affiliate_add_commission':
+				html += '<?php echo $text_shortcode_affiliate_add_commission; ?>';
+				break;
+			case 'affiliate_register':
+				html += '<?php echo $text_shortcode_affiliate_register; ?>';
+				break;
+			case 'affiliate_approve':
+				html += '<?php echo $text_shortcode_affiliate_approve; ?>';
+				break;
+			case 'affiliate_password_reset':
+				html += '<?php echo $text_shortcode_affiliate_password_reset; ?>';
+				break;
+			case 'contact_confirmation':
+				html += '<?php echo $text_shortcode_contact_confirmation; ?>';
+				break;
+			case 'customer_credit':
+				html += '<?php echo $text_shortcode_customer_credit; ?>';
+				break;
+			case 'customer_voucher':
+				html += '<?php echo $text_shortcode_customer_voucher; ?>';
+				break;
+			case 'customer_approve':
+				html += '<?php echo $text_shortcode_customer_approve; ?>';
+				break;
+			case 'customer_password_reset':
+				html += '<?php echo $text_shortcode_customer_password_reset; ?>';
+				break;
+			case 'customer_register_approval':
+				html += '<?php echo $text_shortcode_customer_register_approval; ?>';
+				break;
+			case 'customer_register':
+				html += '<?php echo $text_shortcode_customer_register; ?>';
+				break;
+			case 'order_status_voided':
+			case 'order_status_shipped':
+			case 'order_status_reversed':
+			case 'order_status_denied':
+			case 'order_status_expired':
+			case 'order_status_failed':
+			case 'order_status_pending':
+			case 'order_status_processed':
+			case 'order_status_processing':
+			case 'order_status_refunded':
+			case 'order_status_cancelled':
+				html += '<?php echo $text_shortcode_order_status_voided; ?>';
+				break;
+		}
+		$('#shortCodes').html(html);
+	};
+
+	getShortCodes();
+});
+
 function save(type){
 	var input = document.createElement('input');
 	input.type = 'hidden';
