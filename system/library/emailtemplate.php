@@ -15,6 +15,7 @@ class Emailtemplate {
 		$this->language = $registry->get('language');
 		$this->db = $registry->get('db');
 		$this->currency = new Currency($registry);
+		$this->load = new Loader($registry);
 	}
 
 	// Mail Subject
@@ -716,31 +717,32 @@ class Emailtemplate {
         return $result;
     }
 
+    // Default Mail Subject & Message
     public function getDefaultSubject($type, $template_id, $data){
         switch (ucwords($type)) {
             case 'Login':
-                $subject = $this->getDefautLoginSubject($template_id, $data);
+                $subject = $this->getDefaultLoginSubject($template_id, $data);
                 break;
             case 'Affilate':
-                $subject = $this->getDefautAffilateSubject($template_id, $data);
+                $subject = $this->getDefaultAffilateSubject($template_id, $data);
                 break;
             case 'Customer':
-                $subject = $this->getDefautCustomerSubject($template_id, $data);
+                $subject = $this->getDefaultCustomerSubject($template_id, $data);
                 break;
             case 'Contact':
-                $subject = $this->getDefautContactSubject($template_id, $data);
+                $subject = $this->getDefaultContactSubject($template_id, $data);
                 break;
             case 'Order':
-                $subject = $this->getDefautOrderSubject($template_id, $data);
+                $subject = $this->getDefaultOrderSubject($template_id, $data);
+                break;
+			case 'OrderAll':
+                $subject = $this->getDefaultOrderSubject($template_id, $data);
                 break;
             case 'Review':
-                $subject = $this->getDefautReviewSubject($template_id, $data);
+                $subject = $this->getDefaultReviewSubject($template_id, $data);
                 break;
             case 'Voucher':
-                $subject = $this->getDefautVoucherSubject($template_id, $data);
-                break;
-            case 'Order':
-                $subject = $this->getDefautOrderSubject($template_id, $data);
+                $subject = $this->getDefaultVoucherSubject($template_id, $data);
                 break;
         }
 
@@ -750,35 +752,35 @@ class Emailtemplate {
     public function getDefaultMessage($type, $template_id, $data){
         switch (ucwords($type)) {
             case 'Login':
-                $subject = $this->getDefautLoginMessage($template_id, $data);
+                $subject = $this->getDefaultLoginMessage($template_id, $data);
                 break;
             case 'Affilate':
-                $subject = $this->getDefautAffilateMessage($template_id, $data);
+                $subject = $this->getDefaultAffilateMessage($template_id, $data);
                 break;
             case 'Customer':
-                $subject = $this->getDefautCustomerMessage($template_id, $data);
+                $subject = $this->getDefaultCustomerMessage($template_id, $data);
                 break;
             case 'Contact':
-                $subject = $this->getDefautContactMessage($template_id, $data);
+                $subject = $this->getDefaultContactMessage($template_id, $data);
                 break;
             case 'Order':
-                $subject = $this->getDefautOrderMessage($template_id, $data);
+                $subject = $this->getDefaultOrderMessage($template_id, $data);
+                break;
+            case 'OrderAll':
+                $subject = $this->getDefaultOrderMessage($template_id, $data);
                 break;
             case 'Review':
-                $subject = $this->getDefautReviewMessage($template_id, $data);
+                $subject = $this->getDefaultReviewMessage($template_id, $data);
                 break;
             case 'Voucher':
-                $subject = $this->getDefautVoucherMessage($template_id, $data);
-                break;
-            case 'Order':
-                $subject = $this->getDefautOrderMessage($template_id, $data);
+                $subject = $this->getDefaultVoucherMessage($template_id, $data);
                 break;
         }
 
         return $subject;
     }
 
-    public function getDefautLoginSubject($type_id, $data){
+    public function getDefaultLoginSubject($type_id, $data){
         $username = $data['username'];
 
         $subject = 'User '.$username.' logged in on '.$this->config->get('config_name').' admin panel';
@@ -786,7 +788,7 @@ class Emailtemplate {
         return $subject;
     }
 
-    public function getDefautLoginMessage($type_id, $data){
+    public function getDefaultLoginMessage($type_id, $data){
         $message = 'Hello,<br/><br/>';
         $message .= 'We would like to notify you that user ' . $data['username'] . ' has just logged in to the admin panel of your store, ' . $data['store_name'] . ', using IP address ' . $data['ip_address'].'.<br/><br/>';
         $message .= 'If this is expected you need to do nothing about it. If you suspect a hacking attempt, please log in to your store\'s admin panel immediately and change your password at once.<br/><br/>';
@@ -796,7 +798,7 @@ class Emailtemplate {
         return $message;
     }
 
-    public function getDefautAffilateSubject($type_id, $data){
+    public function getDefaultAffilateSubject($type_id, $data){
         $this->load->language('mail/affiliate');
 
         if($type_id == 'affiliate_4'){
@@ -814,12 +816,10 @@ class Emailtemplate {
             $subject = $this->config->get('config_name') . ' - Affilate Mail';
         }
 
-        $this->load->language('mail/affiliate');
-
         return $subject;
     }
 
-    public function getDefautAffilateMessage($type_id, $data){
+    public function getDefaultAffilateMessage($type_id, $data){
         $this->load->language('mail/affiliate');
 
         if($type_id == 'affiliate_4'){
@@ -846,28 +846,31 @@ class Emailtemplate {
         return $message;
     }
 
-    /* Affilate getComissionTotal Frontend & Backend */
+    // Affilate getComissionTotal Frontend & Backend
     public function getCommissionTotal($affiliate_id) {
         $query = $this->db->query("SELECT SUM(amount) AS total FROM " . DB_PREFIX . "affiliate_commission WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 
         return $query->row['total'];
     }
-    /* Affilate getComissionTotal Frontend & Backend */
 
     public function getDefaultCustomerSubject($type_id, $data) {
         $this->load->language('mail/customer');
 
-        if($type_id == 'customer_4') {
+        if ($type_id == 'customer_4') {
             $subject = sprintf($this->language->get('text_approve_subject'), $this->config->get('config_name'));
-        } else if($type_id == 'customer_1') {
+        } else if ($type_id == 'customer_1') {
             // Register
             $subject = sprintf($this->language->get('text_register_subject'), $this->config->get('config_name'));
-        } else if($type_id == 'customer_2') {
+        } else if ($type_id == 'customer_2') {
             // Aprove
             $subject = sprintf($this->language->get('text_approve_wait_subject'), $this->config->get('config_name'));
-        } else if($type_id == 'customer_3') {
+        } else if ($type_id == 'customer_3') {
             // Reset
             $subject = sprintf($this->language->get('text_approve_subject'), $this->config->get('config_name'));
+        } else if($type_id == 'customer_5'){
+            $subject = $this->getDefaultVoucherSubject($type_id, $data);
+        } else {
+            $subject = $this->config->get('config_name') . ' - Customer Mail';
         }
 
         return $subject;
@@ -876,7 +879,7 @@ class Emailtemplate {
     public function getDefaultCustomerMessage($type_id, $data) {
         $this->load->language('mail/customer');
 
-        if($type_id == 'customer_4') {
+        if ($type_id == 'customer_4') {
             $store_name = $this->config->get('config_name');
             $store_url = HTTP_CATALOG . 'index.php?route=account/login';
 
@@ -886,20 +889,309 @@ class Emailtemplate {
             $message .= $this->language->get('text_approve_services') . "\n\n";
             $message .= $this->language->get('text_approve_thanks') . "\n";
             $message .= $store_name;
-        }else if($type_id == 'customer_1') {
+        } else if ($type_id == 'customer_1') {
             // Register
             $message = sprintf($this->language->get('text_register_message'), $this->config->get('config_name'));
-        } else if($type_id == 'customer_2') {
+        } else if ($type_id == 'customer_2') {
             // Aprove
             $message = sprintf($this->language->get('text_register_message'), $this->config->get('config_name'));
-        } else if($type_id == 'customer_3') {
+        } else if ($type_id == 'customer_3') {
             $message = ' --- ';
+        } else if ($type_id == 'customer_5') {
+            $message = $this->getDefaultVoucherMessage($type_id, $data);
+        } else {
+            $message = 'Customer Mail Description';
         }
 
         return $message;
     }
 
-     public function imageResize($filename, $width, $height) {
+    public function getDefaultContactSubject($type_id, $data) {
+        $this->load->language('information/contact');
+
+        $subject = sprintf($this->language->get('email_subject'), $data['name']);
+
+        return $subject;
+    }
+
+    public function getDefaultContactMessage($type_id, $data) {
+        return strip_tags($data['enquiry']);
+    }
+
+    public function getDefaultOrderSubject($type_id, $data) {
+        $this->load->language('mail/order');
+
+        $subject = sprintf($this->language->get('text_new_subject'), $data['order_info']['store_name'], $data['order_info']['order_id']);
+
+        return $subject;
+    }
+
+    public function getDefaultOrderMessage($type_id, $data) {
+        $this->load->language('mail/order');
+
+        foreach($data as $dataKey => $dataValue) {
+            $$dataKey = $dataValue;
+        }
+
+        // HTML Mail
+        $html_data = array();
+
+        $html_data['title'] = sprintf($this->language->get('text_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_info['order_id']);
+
+        $html_data['text_greeting'] = sprintf($this->language->get('text_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+        $html_data['text_link'] = $this->language->get('text_new_link');
+        $html_data['text_download'] = $this->language->get('text_new_download');
+        $html_data['text_order_detail'] = $this->language->get('text_new_order_detail');
+        $html_data['text_instruction'] = $this->language->get('text_new_instruction');
+        $html_data['text_order_id'] = $this->language->get('text_new_order_id');
+        $html_data['text_date_added'] = $this->language->get('text_new_date_added');
+        $html_data['text_payment_method'] = $this->language->get('text_new_payment_method');
+        $html_data['text_shipping_method'] = $this->language->get('text_new_shipping_method');
+        $html_data['text_email'] = $this->language->get('text_new_email');
+        $html_data['text_telephone'] = $this->language->get('text_new_telephone');
+        $html_data['text_ip'] = $this->language->get('text_new_ip');
+        $html_data['text_order_status'] = $this->language->get('text_new_order_status');
+        $html_data['text_payment_address'] = $this->language->get('text_new_payment_address');
+        $html_data['text_shipping_address'] = $this->language->get('text_new_shipping_address');
+        $html_data['text_product'] = $this->language->get('text_new_product');
+        $html_data['text_model'] = $this->language->get('text_new_model');
+        $html_data['text_quantity'] = $this->language->get('text_new_quantity');
+        $html_data['text_price'] = $this->language->get('text_new_price');
+        $html_data['text_total'] = $this->language->get('text_new_total');
+        $html_data['text_footer'] = $this->language->get('text_new_footer');
+
+        $html_data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+        $html_data['store_name'] = $order_info['store_name'];
+        $html_data['store_url'] = $order_info['store_url'];
+        $html_data['customer_id'] = $order_info['customer_id'];
+        $html_data['link'] = $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_info['order_id'];
+
+        if (isset($download_status) && $download_status) {
+            $html_data['download'] = $order_info['store_url'] . 'index.php?route=account/download';
+        } else {
+            $html_data['download'] = '';
+        }
+
+        $html_data['order_id'] = $order_info['order_id'];
+        $html_data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
+        $html_data['payment_method'] = $order_info['payment_method'];
+        $html_data['shipping_method'] = $order_info['shipping_method'];
+        $html_data['email'] = $order_info['email'];
+        $html_data['telephone'] = $order_info['telephone'];
+        $html_data['ip'] = $order_info['ip'];
+        $html_data['order_status'] = $order_status;
+
+        if ($comment && $notify) {
+            $html_data['comment'] = nl2br($comment);
+        } else {
+            $html_data['comment'] = '';
+        }
+
+        if ($order_info['payment_address_format']) {
+            $format = $order_info['payment_address_format'];
+        } else {
+            $format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+        }
+
+        $find = array(
+            '{firstname}',
+            '{lastname}',
+            '{company}',
+            '{address_1}',
+            '{address_2}',
+            '{city}',
+            '{postcode}',
+            '{zone}',
+            '{zone_code}',
+            '{country}'
+        );
+
+        $replace = array(
+            'firstname' => $order_info['payment_firstname'],
+            'lastname'  => $order_info['payment_lastname'],
+            'company'   => $order_info['payment_company'],
+            'address_1' => $order_info['payment_address_1'],
+            'address_2' => $order_info['payment_address_2'],
+            'city'      => $order_info['payment_city'],
+            'postcode'  => $order_info['payment_postcode'],
+            'zone'      => $order_info['payment_zone'],
+            'zone_code' => $order_info['payment_zone_code'],
+            'country'   => $order_info['payment_country']
+        );
+
+        $html_data['payment_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+
+        if ($order_info['shipping_address_format']) {
+            $format = $order_info['shipping_address_format'];
+        } else {
+            $format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+        }
+
+        $find = array(
+            '{firstname}',
+            '{lastname}',
+            '{company}',
+            '{address_1}',
+            '{address_2}',
+            '{city}',
+            '{postcode}',
+            '{zone}',
+            '{zone_code}',
+            '{country}'
+        );
+
+        $replace = array(
+            'firstname' => $order_info['shipping_firstname'],
+            'lastname'  => $order_info['shipping_lastname'],
+            'company'   => $order_info['shipping_company'],
+            'address_1' => $order_info['shipping_address_1'],
+            'address_2' => $order_info['shipping_address_2'],
+            'city'      => $order_info['shipping_city'],
+            'postcode'  => $order_info['shipping_postcode'],
+            'zone'      => $order_info['shipping_zone'],
+            'zone_code' => $order_info['shipping_zone_code'],
+            'country'   => $order_info['shipping_country']
+        );
+
+        $html_data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+
+        $this->load->model('tool/upload');
+
+        // Products
+        $html_data['products'] = array();
+
+        $order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_info['order_id'] . "'");
+
+        foreach ($order_product_query->rows as $product) {
+            $option_data = array();
+
+            $order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_info['order_id'] . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
+
+            foreach ($order_option_query->rows as $option) {
+                if ($option['type'] != 'file') {
+                    $value = $option['value'];
+                } else {
+                    $upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+                    if ($upload_info) {
+                        $value = $upload_info['name'];
+                    } else {
+                        $value = '';
+                    }
+                }
+
+                $option_data[] = array(
+                    'name'  => $option['name'],
+                    'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
+                );
+            }
+
+            $html_data['products'][] = array(
+                'name'     => $product['name'],
+                'model'    => $product['model'],
+                'option'   => $option_data,
+                'quantity' => $product['quantity'],
+                'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+                'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+            );
+        }
+
+        // Vouchers
+        $html_data['vouchers'] = array();
+
+        $order_voucher_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_voucher WHERE order_id = '" . (int)$order_info['order_id'] . "'");
+
+        foreach ($order_voucher_query->rows as $voucher) {
+            $html_data['vouchers'][] = array(
+                'description' => $voucher['description'],
+                'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
+            );
+        }
+
+        // Order Totals
+        $order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_info['order_id'] . "' ORDER BY sort_order ASC");
+
+        foreach ($order_total_query->rows as $total) {
+            $html_data['totals'][] = array(
+                'title' => $total['title'],
+                'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
+            );
+        }
+
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/order.tpl')) {
+            $html = $this->load->view($this->config->get('config_template') . '/template/mail/order.tpl', $html_data);
+        } else {
+            $html = $this->load->view('default/template/mail/order.tpl', $html_data);
+        }
+
+        return $html;
+    }
+
+    public function getDefaultReviewSubject($type_id, $data) {
+        $this->load->language('mail/review');
+
+        $subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
+
+        return $subject;
+    }
+
+    public function getDefaultReviewMessage($type_id, $data) {
+        $this->load->language('mail/review');
+        $this->load->model('catalog/product');
+
+        $product_info = $this->model_catalog_product->getProduct($data['product_id']);
+
+        $message  = $this->language->get('text_waiting') . "\n";
+        $message .= sprintf($this->language->get('text_product'), $this->db->escape(strip_tags($product_info['name']))) . "\n";
+        $message .= sprintf($this->language->get('text_reviewer'), $this->db->escape(strip_tags($data['name']))) . "\n";
+        $message .= sprintf($this->language->get('text_rating'), $this->db->escape(strip_tags($data['rating']))) . "\n";
+        $message .= $this->language->get('text_review') . "\n";
+        $message .= $this->db->escape(strip_tags($data['text'])) . "\n\n";
+
+        return $message;
+    }
+
+    public function getDefaultVoucherSubject($type_id, $data) {
+        $this->load->language('mail/review');
+
+        $subject = sprintf($this->language->get('text_subject'), $data['name']);
+
+        return $subject;
+    }
+
+    public function getDefaultVoucherMessage($type_id, $data) {
+        $this->load->language('mail/voucher');
+
+        $voucher_data = array();
+
+        $voucher_data['title'] = sprintf($this->language->get('text_subject'), $data['name']);
+
+        $voucher_data['text_greeting']  = sprintf($this->language->get('text_greeting'), $data['amount']);
+        $voucher_data['text_from']      = sprintf($this->language->get('text_from'), $data['name']);
+        $voucher_data['text_message']   = $this->language->get('text_message');
+        $voucher_data['text_redeem']    = sprintf($this->language->get('text_redeem'), $data['code']);
+        $voucher_data['text_footer']    = $this->language->get('text_footer');
+
+        if (is_file(DIR_IMAGE . $data['image'])) {
+            $voucher_data['image'] = $this->config->get('config_url') . 'image/' . $data['image'];
+        } else {
+            $voucher_data['image'] = '';
+        }
+
+        $voucher_data['store_name'] = $data['store_name'];
+        $voucher_data['store_url']  = $data['store_href'];
+        $voucher_data['message']    = $data['message'];
+
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/voucher.tpl')) {
+            $message = $this->load->view($this->config->get('config_template') . '/template/mail/voucher.tpl', $voucher_data);
+        } else {
+            $message = $this->load->view('default/template/mail/voucher.tpl', $voucher_data);
+        }
+
+        return $message;
+    }
+
+    public function imageResize($filename, $width, $height) {
          if (!is_file(DIR_IMAGE . $filename)) {
              return;
          }
@@ -940,13 +1232,13 @@ class Emailtemplate {
          }
      }
 
-     public function getUploadByCode($code) {
+    public function getUploadByCode($code) {
          $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE code = '" . $this->db->escape($code) . "'");
 
          return $query->row;
      }
 
-     public function getProduct($product_id) {
+    public function getProduct($product_id) {
          $query = $this->db->query("SELECT DISTINCT p.*, pd.*, md.name AS manufacturer, (SELECT price FROM " . DB_PREFIX . "product_discount pd2 WHERE pd2.product_id = p.product_id AND pd2.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND pd2.quantity = '1' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())) ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, (SELECT price FROM " . DB_PREFIX . "product_special ps WHERE ps.product_id = p.product_id AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special, (SELECT points FROM " . DB_PREFIX . "product_reward pr WHERE pr.product_id = p.product_id AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "') AS reward, (SELECT ss.name FROM " . DB_PREFIX . "stock_status ss WHERE ss.stock_status_id = p.stock_status_id AND ss.language_id = '" . (int)$this->config->get('config_language_id') . "') AS stock_status, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating, (SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r2 WHERE r2.product_id = p.product_id AND r2.status = '1' GROUP BY r2.product_id) AS reviews, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON (p.manufacturer_id = md.manufacturer_id AND md.language_id = '" . (int)$this->config->get('config_language_id') . "') WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
          if ($query->num_rows) {
@@ -997,5 +1289,4 @@ class Emailtemplate {
              return false;
          }
      }
-
  }
