@@ -28,7 +28,7 @@ class ControllerSystemEmailtemplate extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 	
-			$this->model_system_email_template->editEmailTemplate($this->request->get['email_template'], $this->request->post);
+			$this->model_system_email_template->editEmailTemplate($this->request->get['email_template'], $this->request->post['email_template_description']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -165,9 +165,9 @@ class ControllerSystemEmailtemplate extends Controller {
 			'filter_status'	 => $filter_status
 		);
 
-		$email_template_total = $this->model_system_email_template->getTotalEmailTempaltes($filter_data);
+		$email_template_total = $this->model_system_email_template->getTotalEmailTemplates($filter_data);
 
-		$results = $this->model_system_email_template->getEmailTempaltes($filter_data);
+		$results = $this->model_system_email_template->getEmailTemplates($filter_data);
 
 		foreach ($results as $result) {
 			$data['emailTemplates'][] = array(
@@ -270,10 +270,8 @@ class ControllerSystemEmailtemplate extends Controller {
 		$data['filter_name'] 	= $filter_name;
 		$data['filter_type'] 	= $filter_type;
 		$data['filter_status'] 	= $filter_status;
-		
-		$types = $this->_getEmailTypes();
-		
-		$data['types'] = $types; 
+
+		$data['types'] = $this->_getEmailTypes();
 		
 		$data['token'] = $this->session->data['token']; 
 		
@@ -351,7 +349,7 @@ class ControllerSystemEmailtemplate extends Controller {
 		$data['cancel'] = $this->url->link('system/email_template', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		if (isset($this->request->get['email_template']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$email_template_info = $this->model_system_email_template->getEmailTempalte($this->request->get['email_template']);
+			$email_template_info = $this->model_system_email_template->getEmailTemplate($this->request->get['email_template']);
 		}
 		
 		$this->load->model('localisation/language');
@@ -361,7 +359,7 @@ class ControllerSystemEmailtemplate extends Controller {
 		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->request->post['name'])) {
-			$data['email_template_description'] = $this->request->post['name'];
+			$data['email_template_description'] = $this->request->post['email_template_description']['name'];
 		} elseif (!empty($email_template_info)) {
 			$data['email_template_description'] = $email_template_info;
 		} else {
@@ -369,7 +367,7 @@ class ControllerSystemEmailtemplate extends Controller {
 		}
 
 		if (isset($this->request->post['description'])) {
-			$data['email_template_description'] = $this->request->post['description'];
+			$data['email_template_description'] = $this->request->post['email_template_description']['description'];
 		} elseif (!empty($email_template_info)) {
 			$data['email_template_description'] = $email_template_info;
 		} else {
@@ -426,7 +424,7 @@ class ControllerSystemEmailtemplate extends Controller {
 				'limit'       => 5
 			);
 
-			$results = $this->model_system_email_template->getEmailTempaltes($filter_data);
+			$results = $this->model_system_email_template->getEmailTemplates($filter_data);
 
 			foreach ($results as $result) {
 				$json[] = array(

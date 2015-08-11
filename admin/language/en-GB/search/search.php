@@ -7,6 +7,8 @@
  */
 
 // Heading
+$_['heading_title']       			= 'Search';
+
 $_['text_search_options']           = 'Search Options';
 $_['text_catalog']                  = 'Catalog';
 $_['text_customers']                = 'Customers';

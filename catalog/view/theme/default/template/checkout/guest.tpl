@@ -1,5 +1,7 @@
 <div class="row">
     <div class="col-sm-12">
+	    <fieldset id="account">
+        <legend><?php echo $text_guest_details; ?></legend>
         <div class="form-group col-sm-6" style="display: <?php echo (count($customer_groups) > 1 ? 'block' : 'none'); ?>;">
             <label class="control-label"><?php echo $entry_customer_group; ?></label>
             <?php foreach ($customer_groups as $customer_group) { ?>
@@ -147,6 +149,7 @@
         <?php } ?>
         <?php } ?>
         <?php } ?>
+		</fieldset>
         <div class="buttons col-sm-12">
             <div class="pull-right">
                 <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />

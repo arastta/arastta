@@ -52,6 +52,14 @@ $(document).ready(function() {
 		$('#currency').submit();
 	});
 
+	$('#currency .data-value').on('click', function(e) {
+		e.preventDefault();
+
+		$('#currency input[name=\'code\']').attr('value', $(this).attr('name'));
+
+		$('#currency').submit();
+	});
+
 	// Language
 	$('#language a').on('click', function(e) {
 		e.preventDefault();
@@ -198,7 +206,12 @@ $.fn.liveSearch = function(option) {
 				
 				
 				for (i = 0; i < count; i++) {
-					html += '<li data-value="' + json[i]['value'] + '"><a href="' + json[i]['href'] + '">';
+					html += '<li data-value="' + json[i]['value'] + '">';
+                    if ($('#search').hasClass('facebook-search')) {
+                        html += '<a href="' + json[i]['href'] + '" target="_blank">';
+                    } else {
+                        html += '<a href="' + json[i]['href'] + '">';
+                    }
 					html += '<div class="ajaxadvance">';
 					html += '<div class="image">';
 					html += '<img title="' + json[i]['value'] + '" src="' + json[i]['image'] + '"/>';
@@ -211,7 +224,12 @@ $.fn.liveSearch = function(option) {
 				}
 				
 				if(count == 5) {
-					html += '<li data-value="' + json[i]['value'] + '"><a href="' + json[i]['searchall'] + '">';
+					html += '<li data-value="' + json[i]['value'] + '">';
+                    if ($('#search').hasClass('facebook-search')) {
+                        html += '<a href="' + json[i]['searchall'] + '" target="_blank">';
+                    } else {
+                        html += '<a href="' + json[i]['searchall'] + '">';
+                    }
 					html += '<div class="ajaxadvance">';
 					html += ' -- View All -- ';
 					html += '</div></a></li>'

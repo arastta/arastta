@@ -203,7 +203,7 @@ class ControllerUserUserPermission extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -281,12 +281,17 @@ class ControllerUserUserPermission extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
+        $data['tab_general'] = $this->language->get('tab_general');
+        $data['tab_access'] = $this->language->get('tab_access');
+        $data['tab_modify'] = $this->language->get('tab_modify');
+
 		$data['text_form'] = !isset($this->request->get['user_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_select_all'] = $this->language->get('text_select_all');
 		$data['text_unselect_all'] = $this->language->get('text_unselect_all');
 
 		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_dashboard'] = $this->language->get('entry_dashboard');
 		$data['entry_access'] = $this->language->get('entry_access');
 		$data['entry_modify'] = $this->language->get('entry_modify');
 
@@ -376,9 +381,22 @@ class ControllerUserUserPermission extends Controller {
 			'dashboard/sale'
 		);
 
+        $data['dashboards'] = array(
+            'dashboard/activity'    => $this->getDashboardText('dashboard/activity'),
+            'dashboard/charts'      => $this->getDashboardText('dashboard/charts'),
+            'dashboard/customer'    => $this->getDashboardText('dashboard/customer'),
+            'dashboard/map'         => $this->getDashboardText('dashboard/map'),
+            'dashboard/online'      => $this->getDashboardText('dashboard/online'),
+            'dashboard/order'       => $this->getDashboardText('dashboard/order'),
+            'dashboard/recenttabs'  => $this->getDashboardText('dashboard/recenttabs'),
+            'dashboard/sale'        => $this->getDashboardText('dashboard/sale')
+        );
+
+        asort($data['dashboards']);
+
 		$data['permissions'] = array();
 
-		$files = glob(DIR_ADMIN . 'controller/*/*.php');
+        $files = glob(DIR_ADMIN . 'controller/*/*.php');
 
 		foreach ($files as $file) {
 			$part = explode('/', dirname($file));
@@ -386,11 +404,24 @@ class ControllerUserUserPermission extends Controller {
 			$permission = end($part) . '/' . basename($file, '.php');
 
 			if (!in_array($permission, $ignore)) {
-				$data['permissions'][] = $permission;
+                $folder = $this->getFolderName(end($part), $permission);
+				$data['permissions'][$folder][$permission] = $this->getDashboardText($permission);
 			}
 		}
 
-		if (isset($this->request->post['permission']['access'])) {
+        ksort($data['permissions']);
+
+        $data['permissions'] = $this->getSortFiles($data['permissions']);
+
+		if (isset($this->request->post['permission']['dashboard'])) {
+			$data['dashboard'] = $this->request->post['permission']['dashboard'];
+		} elseif (isset($user_group_info['permission']['dashboard'])) {
+			$data['dashboard'] = $user_group_info['permission']['dashboard'];
+		} else {
+			$data['dashboard'] = array();
+		}
+
+        if (isset($this->request->post['permission']['access'])) {
 			$data['access'] = $this->request->post['permission']['access'];
 		} elseif (isset($user_group_info['permission']['access'])) {
 			$data['access'] = $user_group_info['permission']['access'];
@@ -442,4 +473,70 @@ class ControllerUserUserPermission extends Controller {
 
 		return !$this->error;
 	}
+
+    protected function getDashboardText($route, $get_text = 'heading_title') {
+        $route = $route == 'user/user_permission' ? 'user/user_group' : $route;
+        $this->load->language($route);
+
+        $text = $this->language->get('heading_title');
+
+        if(empty($text)) {
+            $text = $this->language->get($get_text);
+        }
+
+        return $text;
+    }
+
+    protected function getFolderName($folder, $permission, $replace = array()) {
+        $folders = array(
+            'design/banner'         => 'appearance',
+            'sale/customer'         => 'customer',
+            'sale/customer_group'   => 'customer',
+            'sale/custom_field'     => 'customer',
+            'sale/customer_ban_ip'  => 'customer'
+        );
+
+        $replace = array_merge($replace, $folders);
+
+        if (array_key_exists($permission, $replace)) {
+            foreach ($replace as $key => $value) {
+                if ($key == $permission) {
+                    $folder = $value;
+                }
+            }
+        }
+
+        return $folder;
+    }
+
+    protected function getSortFiles($files) {
+        $total_file = $count = $i = 0;
+
+        foreach ($files as $key => $file) {
+            $file_group[$key] = count($file);
+            $total_file      += count($file);
+        }
+
+        $slice = ceil($total_file / 4);
+
+        foreach ($file_group as $key => $value) {
+            if ($count  < $slice) {
+                $file_sort[$i][] = $key;
+                $count += $value;
+            } else {
+                $i++;
+                $count = 0;
+                $file_sort[$i][] = $key;
+                $count += $value;
+            }
+        }
+
+        foreach ($file_sort as $key => $value) {
+            foreach ($value as $folder) {
+                $result[$key][$folder] = $files[$folder];
+            }
+        }
+
+        return $result;
+    }
 }

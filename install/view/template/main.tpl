@@ -85,7 +85,7 @@
 		$('#step-finish').addClass('text-muted');
 
 		$.ajax({
-			url: 'index.php?route=main/displayDatabase',
+			url: 'index.php?route=database&lang=<?php echo $lang; ?>',
 			dataType: 'json',
 			type: 'post',
 			beforeSend: function() {
@@ -96,7 +96,7 @@
 			},
 			success: function(json) {
 				$('#install-content').html(json['output']);
-				$('.loading-bar').css({"height": $('.panel-body').height()-84});
+                $('.loading-bar').css({"height": $('.panel-body').height()-84});
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -107,7 +107,7 @@
 	// Save Database
 	function saveDatabase() {
 		$.ajax({
-			url: 'index.php?route=main/saveDatabase',
+			url: 'index.php?route=database/save&lang=<?php echo $lang; ?>',
 			dataType: 'json',
 			type: 'post',
 			data: $('#install-content input[type=\'text\'], input[type=\'password\'], select'),
@@ -134,17 +134,17 @@
 						}
 					}
 
-                    if (json['error']['config']) {
-                        $('#install-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'][i] + '</div>');
-                    }
+					if (json['error']['config']) {
+							$('#install-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'][i] + '</div>');
+					}
 
-                    // Highlight any found errors
-                    $('.text-danger').parent().addClass('has-error');
+					// Highlight any found errors
+					$('.text-danger').parent().addClass('has-error');
 
-                    // Reset the height of loading bar
-                    $('.loading-bar').css({"height": $('.panel-body').height()-84});
+					// Reset the height of loading bar
+					$('.loading-bar').css({"height": $('.panel-body').height()-84});
 				} else if (json['output']) {
-					$('.loading-bar').css({"height": "109%"});
+					$('.loading-bar').css({"height": "115%"});
 
 					$('#step-database').addClass('text-success');
 					$('#step-settings').addClass('text-primary');
@@ -162,7 +162,7 @@
 	// Save Settings
 	function saveSettings() {
 		$.ajax({
-			url: 'index.php?route=main/saveSettings',
+			url: 'index.php?route=setting/save&lang=<?php echo $lang; ?>',
 			dataType: 'json',
 			type: 'post',
 			data: $('#install-content input[type=\'text\'], input[type=\'password\'], input[type=\'checkbox\']:checked'),
@@ -203,7 +203,7 @@
 					$('.loading-spin').css({"padding": "5% 40%"});
 
 					$.ajax({
-						url: 'index.php?route=main/removeInstall',
+						url: 'index.php?route=finish/removeInstall&lang=<?php echo $lang; ?>',
 						type: 'post',
 						dataType: 'json',
 						success: function(json) {

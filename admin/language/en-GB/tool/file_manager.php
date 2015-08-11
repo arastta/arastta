@@ -7,7 +7,10 @@
  */
 
 // Heading
-$_['heading_title']    = 'File Manager';
+$_['heading_title']     = 'File Manager';
+
+// Text
+$_['text_list']         = 'Files and Folders';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify modifications!';

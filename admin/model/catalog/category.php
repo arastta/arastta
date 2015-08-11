@@ -99,12 +99,7 @@ class ModelCatalogCategory extends Model {
 
         foreach ($data['seo_url'] as $language_id => $value) {
             $alias = empty($value) ? $data['category_description'][$language_id]['name'] : $value;
-
-            $alias = $this->model_catalog_url_alias->generateAlias($alias);
-
-            if ($alias) {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($alias) . "', language_id = '" . $language_id . "'");
-            }
+            $this->model_catalog_url_alias->addAlias('category', $category_id, $alias, $language_id);
         }
 
 		$this->cache->delete('category');
@@ -329,16 +324,11 @@ class ModelCatalogCategory extends Model {
 			}
 		}
 
+        $this->model_catalog_url_alias->clearAliases('category', $category_id);
+
         foreach ($data['seo_url'] as $language_id => $value) {
-            $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id . "' AND language_id = '" . $this->db->escape($language_id) . "'");
-
             $alias = empty($value) ? $data['category_description'][$language_id]['name'] : $value;
-
-            $alias = $this->model_catalog_url_alias->generateAlias($alias);
-
-            if ($alias) {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'category_id=" . (int)$category_id . "', keyword = '" . $this->db->escape($alias) . "', language_id = '" . $language_id . "'");
-            }
+            $this->model_catalog_url_alias->addAlias('category', $category_id, $alias, $language_id);
         }
 
 		$this->cache->delete('category');
@@ -363,7 +353,9 @@ class ModelCatalogCategory extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_store WHERE category_id = '" . (int)$category_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_layout WHERE category_id = '" . (int)$category_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_category WHERE category_id = '" . (int)$category_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id . "'");
+		
+        $this->load->model('catalog/url_alias');
+        $this->model_catalog_url_alias->clearAliases('category', $category_id);
 		
 		// Main Menu Item 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int)$category_id . "'");
@@ -419,11 +411,12 @@ class ModelCatalogCategory extends Model {
 
         $category = $query->row;
         $category['seo_url'] = array();
+        
+        $this->load->model('catalog/url_alias');
+        $aliases = $this->model_catalog_url_alias->getAliases('category', $category_id);
 
-        $query = $this->db->query("SELECT keyword, language_id FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id . "'");
-
-        if ($query->rows) {
-            foreach ($query->rows as $row) {
+        if ($aliases) {
+            foreach ($aliases as $row) {
                 $category['seo_url'][$row['language_id']] = $row['keyword'];
             }
         }

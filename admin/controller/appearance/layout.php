@@ -42,8 +42,7 @@ class ControllerAppearanceLayout extends Controller {
         $data['removeModule'] = $this->url->link('appearance/layout/removeModule', 'token=' . $this->session->data['token'], 'SSL');
 
         $data['layouts'] = $this->getLayouts();
-		#Get all module and New upload module auto install
-		$data['extensions'] = $this->getModule();
+		$data['module_list_html'] = $this->getModuleListHTML();
 		
 		$this->installScriptStyleFile();
 
@@ -217,52 +216,7 @@ class ControllerAppearanceLayout extends Controller {
 	}
 
 	public function getModuleList() {
-
-        $data['extensions'] = $this->getModule();
-		
-		$html = '';
-		
-		foreach($data['extensions'] as $modules) { 
-		
-			$html .= '<div class="accordion-heading"><i class="fa fa-cubes"></i><span class="module-name">' . $modules['name'] . '</span>';
-			$html .= '	<div class="btn-group">';
-
-            if(!empty($modules['module'])) {
-                $html .= '		<a href="' . $modules['link'] . '" data-type="iframe"  data-toggle="tooltip" title="' . $modules['name'] . '" class="btn btn-success btn-edit"><i class="fa fa-plus-circle"></i></a>';
-            }
-
-            $html .= '	</div>';
-			$html .= '</div>';
-			
-			if(!empty($modules['instance'])) {
-				$html .= '<div class="accordion-content accordion-content-drag">';
-				 foreach($modules['module'] as $module) {
-					$html .= '	<div class="module-block ui-draggable" data-code="' . $module['code'] . '" id="' . str_replace('.', '_', $module['code']) . '"><i class="fa fa-arrows-alt"></i> ' . $module['name'];
-                    $html .= '		<a href="' . $modules['link'] . '&module_id=' . $module['module_id'] . '" data-type="iframe" data-toggle="tooltip" style="top:6px!important;font-size:1.2em !important;right: 35px;" title="' . $modules['name'] . '" class="btn btn-primary btn-xs btn-edit btn-group"><i class="fa fa-pencil"></i></a>';
-                    $html .= '		<a onclick="removeModule(' . "'" . $module['module_id'] . "', '" . str_replace('.', '_', $module['code']) . "'" . ');" data-toggle="tooltip" name="reset" style="top:6px!important;font-size:1.2em !important;" title="Remove" id="reset' . $module['module_id'] .'" class="btn btn-danger btn-xs reset"><i class="fa fa-trash-o"></i></a>';
-					$html .= '	</div>';
-				}
-				$html .= '</div>';
-		    } else {
-				$html .= '<div class="accordion-content accordion-content-drag">';
-				$html .= '	<div class="module-block ui-draggable" data-code="' . $modules['code'] . '"><i class="fa fa-arrows-alt"></i> ' . $modules['name'];
-                $html .= '		<a href="' . $modules['link'] . '" data-type="iframe" data-toggle="tooltip" style="top:6px!important;font-size:1.2em !important;" title="' . $modules['name'] . '" class="btn btn-primary btn-xs btn-edit btn-group"><i class="fa fa-pencil"></i></a>';
-				$html .= '  </div>';
-				$html .= '</div>';
-			}
-			
-			$html .= "<script>";
-			$html .= "$('.btn-edit').on('click', function(event) {";
-			$html .= "	event.preventDefault();";
-			$html .= "	var data_href = $(this).attr('href');";
-			$html .= "	$('#model-large').attr('src',data_href);";
-			$html .= "	$('#module-modal').modal('show');";
-			$html .= "});";
-			$html .= "</script>";
-		}		
-
-		echo $html;
-		exit();
+		$this->response->setOutput($this->getModuleListHTML());
 	}
 
 	public function getLayoutList() {
@@ -280,8 +234,7 @@ class ControllerAppearanceLayout extends Controller {
 		
 		$html += '</select>';
 
-		echo $html;
-		exit();
+        $this->response->setOutput($html);
 	}	
 	
 	public function saveModule(){
@@ -352,14 +305,14 @@ class ControllerAppearanceLayout extends Controller {
         foreach ($layouts as $layout) {
             $layout_modules = $this->model_appearance_layout->getLayoutModules($layout['layout_id']);
 
-            $layouts[$layout['layout_id']] = array(
+            $result[$layout['layout_id']] = array(
                 'layout_id' => $layout['layout_id'],
                 'name' => $layout['name'],
                 'modules' => $layout_modules
             );
         }
 		
-		return $layouts;
+		return $result;
 	}
 	
 	public function getModule($type = 'all') {
@@ -469,13 +422,23 @@ class ControllerAppearanceLayout extends Controller {
     }
 	
 	public function installScriptStyleFile() {
-	
 		$this->document->addStyle('view/stylesheet/layout.css');
         $this->document->addStyle('view/javascript/jquery/layout/jquery-ui.css');
 
 		$this->document->addScript('view/javascript/layout/layout.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery-lockfixed.js');
-		
 	}	
+
+	private function getModuleListHTML() {
+		$this->load->language('appearance/layout');
+
+		$data['button_new'] = $this->language->get('button_new');
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_remove'] = $this->language->get('button_remove');
+
+        $data['extensions'] = $this->getModule();
+		
+		return $this->load->view('appearance/layout_module_list.tpl', $data);
+	}
 }

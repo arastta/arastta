@@ -57,7 +57,7 @@
               <?php $zone_to_geo_zone_row = 0; ?>
               <?php foreach ($zone_to_geo_zones as $zone_to_geo_zone) { ?>
               <tr id="zone-to-geo-zone-row<?php echo $zone_to_geo_zone_row; ?>">
-                <td class="text-left"><select name="zone_to_geo_zone[<?php echo $zone_to_geo_zone_row; ?>][country_id]" id="country<?php echo $zone_to_geo_zone_row; ?>" class="form-control" onchange="$('#zone<?php echo $zone_to_geo_zone_row; ?>').load('index.php?route=localisation/geo_zone/zone&token=<?php echo $token; ?>&country_id=' + this.value + '&zone_id=0');">
+                <td class="text-left"><select name="zone_to_geo_zone[<?php echo $zone_to_geo_zone_row; ?>][country_id]" id="country<?php echo $zone_to_geo_zone_row; ?>" class="form-control" onchange="getZone('#zone<?php echo $zone_to_geo_zone_row; ?>', this.value, '0');">
                     <?php foreach ($countries as $country) { ?>
                     <?php  if ($country['country_id'] == $zone_to_geo_zone['country_id']) { ?>
                     <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo stripslashes($country['name']); ?></option>
@@ -67,7 +67,7 @@
                     <?php } ?>
                   </select></td>
                 <td class="text-left"><select name="zone_to_geo_zone[<?php echo $zone_to_geo_zone_row; ?>][zone_id]" id="zone<?php echo $zone_to_geo_zone_row; ?>" class="form-control">
-                            <option value="0"><?php $text_all_zones ; ?></option>
+                            <option value="0"><?php echo $text_all_zones; ?></option>
                         <?php foreach ($zone_to_geo_zone['zone'] as $zone) { ?>
                             <?php  if ($zone_to_geo_zone['zone_id'] == $zone['zone_id']) { ?>
                             <option value="<?php echo $zone['zone_id']; ?>" selected="selected"><?php echo $zone['zone_name']; ?></option>
@@ -93,9 +93,6 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-      getZone('#zone-id',  $('#country-id').attr('value'), '0');
-//--></script>
-  <script type="text/javascript"><!--
 var zone_to_geo_zone_row = <?php echo $zone_to_geo_zone_row; ?>;
 
 function getZone(zoneID, country_id, zone_id){
@@ -104,14 +101,16 @@ function getZone(zoneID, country_id, zone_id){
         type: 'post',
         dataType: 'html',
         success: function(html) {
+            $(zoneID + ' option').remove();
             $(zoneID).append(html);
+            $(zoneID).selectpicker('refresh');
         }
     });
 }
 
 function addGeoZone() {
 	html  = '<tr id="zone-to-geo-zone-row' + zone_to_geo_zone_row + '">';
-	html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][country_id]" id="country' + zone_to_geo_zone_row + '" class="form-control" onchange="$(\'#zone' + zone_to_geo_zone_row + '\').load(\'index.php?route=localisation/geo_zone/zone&token=<?php echo $token; ?>&country_id=\' + this.value + \'&zone_id=0\');">';
+	html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][country_id]" id="country' + zone_to_geo_zone_row + '" class="form-control" onchange="getZone(\'#zone' + zone_to_geo_zone_row + ' \', this.value ,\'0\');">';
 	<?php foreach ($countries as $country) { ?>
 	html += '<option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
 	<?php } ?>   
@@ -127,6 +126,13 @@ function addGeoZone() {
 	zone_to_geo_zone_row++;
 }
 //--></script>
+<?php $zone_to_geo_zone_row = 0; ?>
+<?php foreach ($zone_to_geo_zones as $zone_to_geo_zone) { ?>
+<script type="text/javascript"><!--
+    getZone('#zone<?php echo $zone_to_geo_zone_row; ?>',  '<?php echo $zone_to_geo_zone["country_id"]; ?>', '<?php echo $zone_to_geo_zone["zone_id"]; ?>');
+    //--></script>
+<?php $zone_to_geo_zone_row++; ?>
+<?php } ?>
 <script type="text/javascript"><!--
 function save(type){
 	var input = document.createElement('input');

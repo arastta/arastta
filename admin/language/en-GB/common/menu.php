@@ -5,6 +5,9 @@
  * @credits		See CREDITS.txt for credits and other copyright notices.
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
+ 
+// Heading
+$_['heading_title']    				   = 'Menu';
 
 // Text
 $_['text_affiliate']                   = 'Affiliates';
@@ -28,6 +31,7 @@ $_['text_download']                    = 'Downloads';
 $_['text_email_template']              = 'Email Templates';
 $_['text_language_override']           = 'Language Overrides';
 $_['text_error_log']                   = 'Error Logs';
+$_['text_system_info']                 = 'System Information';
 $_['text_extension']                   = 'Extensions';
 $_['text_export_import']               = 'Export / Import';
 $_['text_feed']                        = 'Feeds';

@@ -241,6 +241,7 @@ $(document).on('click', '#button-register', function() {
 
         // Highlight any found errors
         $('.text-danger').parent().addClass('has-error');
+		$('.form-group.col-sm-6').css('margin-bottom', '30px');
       } else {
         $('#ar-step-account').find('.fa-stack').addClass('checkout-pointer');
         $('#ar-step-account').find('.fa-title').addClass('checkout-pointer');
@@ -303,6 +304,7 @@ $(document).on('click', '#button-guest', function() {
 
         // Highlight any found errors
         $('.text-danger').parent().addClass('has-error');
+		$('.form-group.col-sm-6').css('margin-bottom', '30px');
       } else {
         $('#ar-step-account').find('.fa-stack').addClass('checkout-pointer');
         $('#ar-step-account').find('.fa-title').addClass('checkout-pointer');

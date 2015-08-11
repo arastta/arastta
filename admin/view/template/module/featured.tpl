@@ -86,6 +86,7 @@
               </select>
             </div>
           </div>
+		  <input type="hidden" name="feed" value="1" />
         </form>
       </div>
     </div>

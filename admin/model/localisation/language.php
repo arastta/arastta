@@ -221,6 +221,13 @@ class ModelLocalisationLanguage extends Model {
 		foreach ($query->rows as $menu_child) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_description SET menu_child_id = '" . (int)$menu_child['menu_child_id'] . "', menu_id = '" . (int)$menu_child['menu_id'] . "', name = '" . $menu_child['name'] . "', link = '" . $menu_child['link'] . "', language_id = '" . (int)$language_id . "'");
 		}
+
+        // Email Template
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "email_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+        foreach ($query->rows as $email) {
+            $this->db->query("INSERT INTO " . DB_PREFIX . "email_description SET email_id = '" . (int)$email['email_id'] . "', name = '" . $this->db->escape($email['name']) . "', description = '" . $this->db->escape($email['description']) . "', status = '1', language_id = '" . (int)$language_id . "'");
+        }
 		
 		return $language_id;
 	}
@@ -298,6 +305,8 @@ class ModelLocalisationLanguage extends Model {
 		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_description WHERE language_id = '" . (int)$language_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "menu_child_description WHERE language_id = '" . (int)$language_id . "'");
+
+		$this->db->query("DELETE FROM " . DB_PREFIX . "email_description WHERE language_id = '" . (int)$language_id . "'");
 	}
 
 	public function getLanguage($language_id) {

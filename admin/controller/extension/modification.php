@@ -77,30 +77,52 @@ class ControllerExtensionModification extends Controller {
 		$this->load->model('extension/modification');
 
 		if ($this->validate()) {
+            $url = '';
+
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+
+            // Clear all modification files
+            try {
+                $this->filesystem->remove(DIR_MODIFICATION);
+            } catch (Exception $e) {
+                if ($e->getPath() instanceof SplFileInfo) {
+                    $filename = $e->getPath()->getPathname();
+                } else {
+                    $filename = $e->getPath();
+                }
+                $this->session->data['error'] = sprintf($this->language->get('error_remove'), $filename);
+
+                if(empty($this->request->get['extensionInstaller'])) {
+                    $this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+                } else {
+                    $json = array();
+                    unset($this->session->data['success']);
+                    unset($this->session->data['error']);
+                    $json['error'] = sprintf($this->language->get('error_remove'), $filename);
+                    $this->response->addHeader('Content-Type: application/json');
+                    $this->response->setOutput(json_encode($json));
+                    return;
+                }
+            }
+
             // Clear Log
             $this->clearlog(true);
-
-			// Clear all modification files
-			$this->filesystem->remove(DIR_MODIFICATION);
 
 			// Apply vQmods and OCmods
 			$this->modification->applyMod();
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
 			if(empty($this->request->get['extensionInstaller'])) {
 			    $this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 			} else {
@@ -125,24 +147,36 @@ class ControllerExtensionModification extends Controller {
 		$this->load->model('extension/modification');
 
 		if ($this->validate()) {
-			// Clear all modification files
-			$this->filesystem->remove(DIR_MODIFICATION);
+            $url = '';
+
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+
+            // Clear all modification files
+            try {
+                $this->filesystem->remove(DIR_MODIFICATION);
+            } catch (Exception $e) {
+                if ($e->getPath() instanceof SplFileInfo) {
+                    $filename = $e->getPath()->getPathname();
+                } else {
+                    $filename = $e->getPath();
+                }
+                $this->session->data['error'] = sprintf($this->language->get('error_remove'), $filename);
+
+                $this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+
+            }
 
 			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
 
 			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
@@ -523,6 +557,12 @@ class ControllerExtensionModification extends Controller {
 		} else {
 			$data['error_warning'] = '';
 		}
+
+        if (isset($this->session->data['error'])) {
+            $data['error_warning'] = $this->session->data['error'];
+
+            unset($this->session->data['error']);
+        }
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];

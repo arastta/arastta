@@ -116,6 +116,9 @@ class Admin extends App {
 
         // Update
         $this->registry->set('update', new Update($this->registry));
+
+        // SEO
+        $this->registry->set('seo', new SEO($this->registry));
 		
         $this->trigger->fire('post.app.initialise');
     }

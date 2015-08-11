@@ -126,62 +126,10 @@ class ControllerToolExportImport extends Controller {
 	}
 
 	protected function getForm() {
-		$data = array();
-		$data['heading_title'] = $this->language->get('heading_title');
+		$data = $this->language->all();
 
-		$data['text_export_type_category'] = $this->language->get('text_export_type_category');
-		$data['text_export_type_product'] = $this->language->get('text_export_type_product');
-		$data['text_export_type_poa'] = $this->language->get('text_export_type_poa');
-		$data['text_export_type_option'] = $this->language->get('text_export_type_option');
-		$data['text_export_type_attribute'] = $this->language->get('text_export_type_attribute');
-		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');
-		$data['text_loading_notifications'] = $this->language->get( 'text_loading_notifications' );
-		$data['text_retry'] = $this->language->get('text_retry');
-
-		$data['entry_export'] = $this->language->get( 'entry_export' );
-		$data['entry_import'] = $this->language->get( 'entry_import' );
-		$data['entry_export_type'] = $this->language->get( 'entry_export_type' );
-		$data['entry_range_type'] = $this->language->get( 'entry_range_type' );
-		$data['entry_start_id'] = $this->language->get( 'entry_start_id' );
-		$data['entry_start_index'] = $this->language->get( 'entry_start_index' );
-		$data['entry_end_id'] = $this->language->get( 'entry_end_id' );
-		$data['entry_end_index'] = $this->language->get( 'entry_end_index' );
-		$data['entry_incremental'] = $this->language->get( 'entry_incremental' );
-		$data['entry_upload'] = $this->language->get( 'entry_upload' );
-		$data['entry_settings_use_option_id'] = $this->language->get( 'entry_settings_use_option_id' );
-		$data['entry_settings_use_option_value_id'] = $this->language->get( 'entry_settings_use_option_value_id' );
-		$data['entry_settings_use_attribute_group_id'] = $this->language->get( 'entry_settings_use_attribute_group_id' );
-		$data['entry_settings_use_attribute_id'] = $this->language->get( 'entry_settings_use_attribute_id' );
-		$data['entry_settings_use_export_cache'] = $this->language->get( 'entry_settings_use_export_cache' );
-		$data['entry_settings_use_import_cache'] = $this->language->get( 'entry_settings_use_import_cache' );
-
-		$data['tab_export'] = $this->language->get( 'tab_export' );
-		$data['tab_import'] = $this->language->get( 'tab_import' );
-		$data['tab_settings'] = $this->language->get( 'tab_settings' );
-
-		$data['button_export'] = $this->language->get( 'button_export' );
-		$data['button_import'] = $this->language->get( 'button_import' );
-		$data['button_settings'] = $this->language->get( 'button_settings' );
-		$data['button_export_id'] = $this->language->get( 'button_export_id' );
-		$data['button_export_page'] = $this->language->get( 'button_export_page' );
-
-		$data['help_range_type'] = $this->language->get( 'help_range_type' );
-		$data['help_incremental_yes'] = $this->language->get( 'help_incremental_yes' );
-		$data['help_incremental_no'] = $this->language->get( 'help_incremental_no' );
-		$data['help_import'] = $this->language->get( 'help_import' );
-		$data['help_format'] = $this->language->get( 'help_format' );
-
-		$data['error_select_file'] = $this->language->get('error_select_file');
 		$data['error_post_max_size'] = str_replace( '%1', ini_get('post_max_size'), $this->language->get('error_post_max_size') );
 		$data['error_upload_max_filesize'] = str_replace( '%1', ini_get('upload_max_filesize'), $this->language->get('error_upload_max_filesize') );
-		$data['error_id_no_data'] = $this->language->get('error_id_no_data');
-		$data['error_page_no_data'] = $this->language->get('error_page_no_data');
-		$data['error_param_not_number'] = $this->language->get('error_param_not_number');
-		$data['error_notifications'] = $this->language->get('error_notifications');
-		$data['error_no_news'] = $this->language->get('error_no_news');
-		$data['error_batch_number'] = $this->language->get('error_batch_number');
-		$data['error_min_item_id'] = $this->language->get('error_min_item_id');
 
 		if (!empty($this->session->data['export_import_error']['errstr'])) {
 			$this->error['warning'] = $this->session->data['export_import_error']['errstr'];

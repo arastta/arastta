@@ -180,8 +180,8 @@ class ModelAffiliateAffiliate extends Model {
             'password'  => $password
         );
 
-        $subject = $this->emailtemplate->getSubject('Affiliate', 'affiliate_3', $data);
-        $message = $this->emailtemplate->getMessage('Affiliate', 'affiliate_3', $data);
+        $subject = $this->emailtemplate->getSubject('Affiliate', 'affiliate_2', $data);
+        $message = $this->emailtemplate->getMessage('Affiliate', 'affiliate_2', $data);
 
         $mail = new Mail($this->config->get('config_mail'));
         $mail->setTo($data['email']);
@@ -191,5 +191,4 @@ class ModelAffiliateAffiliate extends Model {
         $mail->setHTML($message);
         $mail->send();
     }
-
 }

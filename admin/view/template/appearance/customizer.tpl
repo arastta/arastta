@@ -1,53 +1,52 @@
 <!DOCTYPE html>
 <html dir="<?php echo $direction; ?>" lang="<?php echo $language; ?>">
 <head>
-    <meta charset="UTF-8" />
-    <title><?php echo $title; ?></title>
-    <base href="<?php echo $base; ?>" />
-    <?php if ($description) { ?>
-    <meta name="description" content="<?php echo $description; ?>" />
-    <?php } ?>
-    <?php if ($keywords) { ?>
-    <meta name="keywords" content="<?php echo $keywords; ?>" />
-    <?php } ?>
-    <?php if ($icon) { ?>
-    <link href="<?php echo $icon; ?>" rel="icon" />
-    <?php } ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
-    <?php foreach ($styles as $style) { ?>
-    <link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
-    <?php } ?>
-    <?php foreach ($scripts as $script) { ?>
-    <script src="<?php echo $script; ?>" type="text/javascript"></script>
-    <?php } ?>
-    <script type="text/javascript">
-        var wpColorPickerL10n = {"clear":"<?php echo $entry_clear; ?>","defaultString":"<?php echo $entry_default; ?>","pick":"<?php echo $entry_select_color; ?>","current":"<?php echo $entry_current_color; ?>"};
-    </script>
+	<meta charset="UTF-8" />
+	<title><?php echo $title; ?></title>
+	<base href="<?php echo $base; ?>" />
+	<?php if ($description) { ?>
+	<meta name="description" content="<?php echo $description; ?>" />
+	<?php } ?>
+	<?php if ($keywords) { ?>
+	<meta name="keywords" content="<?php echo $keywords; ?>" />
+	<?php } ?>
+	<?php if ($icon) { ?>
+	<link href="<?php echo $icon; ?>" rel="icon" />
+	<?php } ?>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<?php foreach ($styles as $style) { ?>
+	<link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
+	<?php } ?>
+	<?php foreach ($scripts as $script) { ?>
+	<script src="<?php echo $script; ?>" type="text/javascript"></script>
+	<?php } ?>
+	<script type="text/javascript">
+		var wpColorPickerL10n = {"clear":"<?php echo $entry_clear; ?>","defaultString":"<?php echo $entry_default; ?>","pick":"<?php echo $entry_select_color; ?>","current":"<?php echo $entry_current_color; ?>"};
+	</script>
 </head>
 <body>
 <div class="wp-full-overlay expanded">
-    <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-    <?php } ?>
-    <?php if ($success) { ?>
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-    <?php } ?>
+	<?php if ($error_warning) { ?>
+	<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+	</div>
+	<?php } ?>
+	<?php if ($success) { ?>
+	<div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+	</div>
+	<?php } ?>
 	<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="customizer-controls" class="wrap wp-full-overlay-sidebar">
 		<div id="customizer-header-actions" class="wp-full-overlay-header">
-            <button type="button" name="reset" id="reset" class="btn btn-danger button-primary reset" value="Reset">
-                <i class="fa fa-trash-o"></i>
-            </button>
-            <button type="submit" name="save" id="save" class="btn btn-primary button-primary save" value="Save">
-                <i class="fa fa-save"></i>
-            </button>
-            <div class="checkbox advance">
-                <label><input type="checkbox" id="advance-conrol" value=""><span><?php echo $text_advance; ?></span></label>
-            </div>
+			<button type="button" name="reset" id="reset" class="btn btn-danger button-primary reset" value="Reset">
+				<i class="fa fa-trash-o"></i>
+			</button>
+			<button type="submit" name="save" id="save" class="btn btn-primary button-primary save" value="Save">
+				<i class="fa fa-save"></i>
+			</button>
+			<div class="checkbox advance">
+				<label><input type="checkbox" id="advance-conrol" value=""><span><?php echo $text_advance; ?></span></label>
+			</div>
 			<a class="customizer-controls-close" href="<?php echo $back;?>">
 				<span class="screen-reader-text"><?php echo $entry_close; ?></span>
 			</a>
@@ -55,36 +54,37 @@
 				<span class="screen-reader-text"><?php echo $entry_back; ?></span>
 			</span>
 		</div>
-
 		<div id="widgets-right">
 			<div class="wp-full-overlay-sidebar-content" tabindex="-1">
 				<div id="customizer-theme-controls" class="module_accordion ds_accordion">
-                    <div id="accordion-section-themes" class="customize-themes">
-                        <h3 class="accordion-section-title nonecontent">
-                            <p class="description customizer-section-description"><?php echo 'Change Themes'; ?></p>
-                            <select name="customizer_themes" id="customizer_themes" class="form-control">
-                                <?php foreach ($templates as $template) { ?>
-                                <?php if ($template == $config_template) { ?>
-                                <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
-                                <?php } else { ?>
-                                <option value="<?php echo $template; ?>"><?php echo $template; ?></option>
-                                <?php } ?>
-                                <?php } ?>
-                            </select>
-                        </h3>
-                    </div>
+					<div id="accordion-section-themes" class="customize-themes">
+						<h3 class="accordion-section-title nonecontent">
+							<p class="description customizer-section-description"><?php echo 'Change Themes'; ?></p>
+							<select name="customizer_themes" id="customizer_themes" class="form-control">
+								<?php foreach ($templates as $template) { ?>
+								<?php if ($template == $config_template) { ?>
+								<option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
+								<?php } else { ?>
+								<option value="<?php echo $template; ?>"><?php echo $template; ?></option>
+								<?php } ?>
+								<?php } ?>
+							</select>
+						</h3>
+					</div>
 					<ul id="customize-all-content">
-                    <?php foreach($sections as $section_name => $section_value){ ?>
+						<?php foreach($sections as $section_name => $section_value){ ?>
 						<li id="accordion-section-<?php echo $section_name; ?>" class="ds_heading accordion-section control-section control-section-default" style="">
 							<h3 class="accordion-section-title" tabindex="0">
 								<?php echo $section_value['title']; ?>
 								<span class="screen-reader-text"><?php echo $text_menu_description;?></span>
 							</h3>
 							<ul class="accordion-section-content ds_content" style="">
-                                <li class="customizer-section-description-container">
-                                    <p class="description customizer-section-description"><?php echo $section_value['description']; ?></p>
-                                </li>
-                                <?php foreach($section_value['control'] as $control_name => $control_value) { ?>
+								<?php if (isset($section_value['description'])) { ?>
+								<li class="customizer-section-description-container">
+									<p class="description customizer-section-description"><?php echo $section_value['description']; ?></p>
+								</li>
+								<?php } ?>
+								<?php foreach($section_value['control'] as $control_name => $control_value) { ?>
 								<li id="customizer-control-<?php echo $control_name; ?>" class="customizer-control customizer-control-text <?php if(!empty($control_value['advance'])) { echo 'advance-hide';} ?>" <?php if(empty($control_value['advance'])) { echo 'style="display: list-item;"';} ?>>
 									<label>
 										<span class="customizer-control-title"><?php echo $control_value['label']; ?></span>

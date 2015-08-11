@@ -85,8 +85,12 @@ class ControllerCommonUpdate extends Controller {
                 $this->session->data['msg_error'] = $this->language->get('text_update_error');
             }
             else {
+				$this->request->get['extensionInstaller'] = 1;
+                $this->load->controller('extension/modification/refresh');
+                unset($this->request->get['extensionInstaller']);
+				
                 $this->session->data['msg_success'] = $this->language->get('text_update_success');
-
+				
                 $this->model_common_update->check();
             }
         }
