@@ -48,6 +48,19 @@ class ControllerDashboardCharts extends Controller {
         $data['text_total_affiliate'] = $this->language->get('text_total_affiliate');
         $data['text_total_affiliate_approval'] = $this->language->get('text_total_affiliate_approval');
 
+        $data['text_today'] = $this->language->get('text_today');
+        $data['text_yesterday'] = $this->language->get('text_yesterday');
+        $data['text_last_week'] = $this->language->get('text_last_week');
+        $data['text_last_half_mount'] = $this->language->get('text_last_half_mount');
+        $data['text_mount'] = $this->language->get('text_mount');
+        $data['text_this_mount'] = $this->language->get('text_this_mount');
+        $data['text_last_mount'] = $this->language->get('text_last_mount');
+        $data['text_submit'] = $this->language->get('text_submit');
+        $data['text_clear'] = $this->language->get('text_clear');
+        $data['text_from'] = $this->language->get('text_from');
+        $data['text_to'] = $this->language->get('text_to');
+        $data['text_custom'] = $this->language->get('text_custom');
+
         $data['column_order_id'] = $this->language->get('column_order_id');
         $data['column_customer'] = $this->language->get('column_customer');
         $data['column_status'] = $this->language->get('column_status');
@@ -58,9 +71,7 @@ class ControllerDashboardCharts extends Controller {
         $data['column_product_id'] = $this->language->get('column_product_id');
 
 		$data['token'] = $this->session->data['token'];
-
-
-
+        
         $this->load->model('localisation/currency');
 
         $currency = $this->model_localisation_currency->getCurrencyByCode($this->config->get('config_currency'));
@@ -79,7 +90,7 @@ class ControllerDashboardCharts extends Controller {
 
 		return $this->load->view('dashboard/charts.tpl', $data);
 	}
-	
+
 
         # Ajax Functions
     /**********************************************************************************************************************/

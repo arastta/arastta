@@ -65,7 +65,18 @@ $_['text_total_affiliate']          = 'No. of Affiliates:';
 $_['text_total_affiliate_approval'] = 'Affiliates Awaiting Approval:';
 $_['text_pending_order']            = 'Pending Orders:';
 $_['text_products_and_sales']       = 'Sales and Products';
-
+$_['text_today']                    = 'Today';
+$_['text_yesterday']                = 'Yesterday';
+$_['text_last_week']                = 'Last 7 Days';
+$_['text_last_half_mount']          = 'Last 15 Days';
+$_['text_mount']                    = 'Last 30 Days';
+$_['text_this_mount']               = 'This Month';
+$_['text_last_mount']               = 'Last Month';
+$_['text_submit']                   = 'Submit';
+$_['text_clear']                    = 'Clear';
+$_['text_from']                     = 'From';
+$_['text_to']                       = 'To';
+$_['text_custom']                   = 'Custom';
 
 $_['text_best_sellers']              = 'Best Sellers';
 $_['text_less_sellers']              = 'Less Sellers';

@@ -184,9 +184,25 @@ class ControllerCommonHeader extends Controller {
 		$data['site_url'] = HTTPS_CATALOG;
 
         $data['bootstrap_select_lang'] = '';
+
         $lang_tag = str_replace('-', '_', $this->config->get('config_language_dir'));
+
         if (is_file(DIR_ADMIN.'view/javascript/bootstrap-select/js/i18n/defaults-'.$lang_tag.'.min.js')) {
             $data['bootstrap_select_lang'] = $lang_tag;
+        }
+
+        $moment_special = array(
+            'en' => 'en-gb',
+            'br' => 'pt-br',
+            'zh' => 'zh-cn',
+            'tw' => 'zh-tw',
+            'no' => 'nn'
+        );
+
+        $data['moment_lang'] = $data['lang'];
+
+        if (array_key_exists($data['lang'], $moment_special)) {
+            $data['moment_lang'] = $moment_special[$data['lang']];
         }
 		
         $data['search'] = $this->load->controller('search/search');
