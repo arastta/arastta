@@ -32,6 +32,10 @@ class ModelLanguage extends Model {
             $this->session->data['lang_code'] = 'en';
             $this->session->data['lang_image'] = 'gb.png';
             $this->session->data['lang_directory'] = 'en-GB';
+			
+			// Workaround to mutual session ids
+            $this->session->data['config_language'] = 'en';
+            $this->session->data['config_admin_language'] = 'en';
 
             return $code;
         }
@@ -64,7 +68,7 @@ class ModelLanguage extends Model {
         }
 
         // Remove Zip
-        unlink($file);
+		$this->filesystem->remove($file);
 
         $temp_path = DIR_UPLOAD . $path;
 
@@ -74,6 +78,10 @@ class ModelLanguage extends Model {
         $this->session->data['lang_code'] = $json['translation']['code'];
         $this->session->data['lang_image'] = $json['translation']['image'];
         $this->session->data['lang_directory'] = $json['translation']['directory'];
+			
+		// Workaround to mutual session ids
+		$this->session->data['config_language'] = $json['translation']['code'];
+		$this->session->data['config_admin_language'] = $json['translation']['code'];
 
         $lang_dir = $json['translation']['directory'];
 
