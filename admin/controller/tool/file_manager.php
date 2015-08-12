@@ -36,6 +36,14 @@ class ControllerToolFilemanager extends Controller {
 		$this->document->addScript('view/javascript/elfinder/elfinder.min.js');
 		$this->document->addScript('view/javascript/elfinder/proxy/elFinderSupportVer1.js');
 
+        if (is_file(DIR_ADMIN . 'view/javascript/elfinder/i18n/elfinder.' . $this->language->get('code') . '.js')) {
+            $this->document->addScript('view/javascript/elfinder/i18n/elfinder.' . $this->language->get('code') . '.js');
+        } else {
+            $this->document->addScript('view/javascript/elfinder/i18n/elfinder.en.js');
+        }
+
+        $data['lang'] = $this->language->get('code');
+
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {
