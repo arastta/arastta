@@ -51,7 +51,6 @@
   </div>
 </div>
 <link type="text/css" href="view/javascript/jquery/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
-<script type="text/javascript" src="view/javascript/jquery/daterangepicker/moment.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script>
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.js"></script>
@@ -61,7 +60,6 @@
 var start_date = '';
 var end_date = '';
 var block_range = 'day';
-
 jQuery(document).ready(function() {
     var cb = function(start, end, label) { /* date range picker callback */
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -73,6 +71,9 @@ jQuery(document).ready(function() {
 
         getCharts();
     };
+
+    var lang_code = moment.locale();
+    var lang_data = moment.localeData();
 
     var option_daterangepicker = {
         startDate: moment().subtract('days', 14),
@@ -91,25 +92,27 @@ jQuery(document).ready(function() {
         format: 'MM/DD/YYYY',
         separator: ' to ',
         ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
-            'Last 7 Days': [moment().subtract('days', 6), moment()],
-            'Last 15 Days': [moment().subtract('days', 14), moment()],
-            'Last 30 Days': [moment().subtract('days', 29), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+            '<?php echo $text_today; ?>' : [moment(), moment()],
+            '<?php echo $text_yesterday; ?>': [moment().subtract('days', 1), moment().subtract('days', 1)],
+            '<?php echo $text_last_week; ?>': [moment().subtract('days', 6), moment()],
+            '<?php echo $text_last_half_mount; ?>': [moment().subtract('days', 14), moment()],
+            '<?php echo $text_mount; ?>': [moment().subtract('days', 29), moment()],
+            '<?php echo $text_this_mount; ?>': [moment().startOf('month'), moment().endOf('month')],
+            '<?php echo $text_last_mount; ?>': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
         },
         locale: {
-            applyLabel: 'Submit',
-            cancelLabel: 'Clear',
-            fromLabel: 'From',
-            toLabel: 'To',
-            customRangeLabel: 'Custom',
-            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
-            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            applyLabel: '<?php echo $text_submit; ?>',
+            cancelLabel: '<?php echo $text_clear; ?>',
+            fromLabel: '<?php echo $text_from; ?>',
+            toLabel: '<?php echo $text_to; ?>',
+            customRangeLabel: '<?php echo $text_custom; ?>',
+            daysOfWeek: lang_data._weekdaysShort,
+            monthNames: lang_data._months,
             firstDay: 1
         }
     };
+
+
 
     jQuery('#reportrange span').html(moment().subtract('days', 14).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 

@@ -39,7 +39,8 @@
 <?php } ?>
 
 <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
-<script type="text/javascript" src="view/javascript/jquery/datetimepicker/moment.js" ></script>
+<script type="text/javascript" src="view/javascript/jquery/moment/moment.js" ></script>
+<script type="text/javascript" src="view/javascript/jquery/moment/locale/<?php echo $moment_lang; ?>.js" ></script>
 <script type="text/javascript" src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 
 <?php foreach ($scripts as $script) { ?>
