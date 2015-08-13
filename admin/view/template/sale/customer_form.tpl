@@ -935,6 +935,7 @@ function country(element, index, zone_id) {
 			}
 
 			$('select[name=\'address[' + index + '][zone_id]\']').html(html);
+			$('select[name=\'address[' + index + '][zone_id]\']').selectpicker('refresh');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
