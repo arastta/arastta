@@ -3,11 +3,6 @@
   <div class="page-header">
     <div class="container-fluid">
       <h1><?php echo $heading_title; ?></h1>
-      <ul class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-        <?php } ?>
-      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -35,7 +30,7 @@
 	$(document).ready(function() {
 		var elf = $('#fileManager').elfinder({
 			url : '<?php echo str_replace('&amp;', '&', $fileSystem);?>',
-      lang : '<?php echo $lang; ?>'
+			lang : '<?php echo $lang; ?>'
 		}).elfinder('instance');
 	});
 </script>
