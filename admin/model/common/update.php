@@ -83,7 +83,7 @@ class ModelCommonUpdate extends Model {
         }
 
         // Remove Zip
-        unlink($file);
+		$this->filesystem->remove($file);
 
         if ($product_id == 'core') {
             $temp_path = DIR_UPLOAD . $path;
