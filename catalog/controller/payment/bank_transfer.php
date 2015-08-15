@@ -10,9 +10,11 @@ class ControllerPaymentBankTransfer extends Controller {
 	public function index() {
 		$this->load->language('payment/bank_transfer');
 
-		$data['text_instruction'] = $this->language->get('text_instruction');
-		$data['text_description'] = $this->language->get('text_description');
-		$data['text_payment'] = $this->language->get('text_payment');
+		$data['text_instruction']		= $this->language->get('text_instruction');
+		$data['text_description']		= $this->language->get('text_description');
+		$data['text_payment']			= $this->language->get('text_payment');
+		$data['text_order_processing']	= $this->language->get('text_order_processing');
+		$data['text_order_complete']	= $this->language->get('text_order_complete');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
