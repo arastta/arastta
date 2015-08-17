@@ -304,12 +304,6 @@ class ControllerLocalisationOrderStatus extends Controller {
 			$data['error_name'] = array();
 		}
 
-        if (isset($this->error['message'])) {
-			$data['error_message'] = $this->error['message'];
-		} else {
-			$data['error_message'] = array();
-		}
-
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -378,10 +372,6 @@ class ControllerLocalisationOrderStatus extends Controller {
 		foreach ($this->request->post['order_status'] as $language_id => $value) {
 			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
-			}
-			
-			if ((utf8_strlen($value['message']) < 3)) {
-				$this->error['message'][$language_id] = $this->language->get('error_message');
 			}
 		}
 

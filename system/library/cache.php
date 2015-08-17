@@ -53,6 +53,15 @@ class Cache {
     }
 
     public function remove($key) {
+        if ($key != 'language') {
+            $languages = $this->get('language');
+
+            if (!empty($languages)) {
+                foreach ($languages as $language) {
+                    $this->cache->remove($key . '.' . $language['language_id']);
+                }
+            }
+        }
         return $this->cache->remove($key);
     }
 
