@@ -420,6 +420,8 @@ $('input[name=\'payment_address\']').on('change', function() {
       $('#payment-address').parent().addClass('col-sm-6');
       $('#shipping-address').parent().addClass('col-sm-6');
       $('#shipping-address').parent().show();
+
+      $('#shipping-address select[name=\'shipping_country_id\']').trigger('change');
     }
   });
 
@@ -626,9 +628,9 @@ $('#payment-address select[name=\'payment_country_id\']').on('change', function(
     },
     success: function(json) {
       if (json['postcode_required'] == '1') {
-        $('#payment-address input[name=\'payment_postcode\']').parent().parent().addClass('required');
+        $('#payment-address input[name=\'payment_postcode\']').parent().addClass('required');
       } else {
-        $('#payment-address input[name=\'payment_postcode\']').parent().parent().removeClass('required');
+        $('#payment-address input[name=\'payment_postcode\']').parent().removeClass('required');
       }
 
       html = '<option value=""><?php echo $text_select; ?></option>';
@@ -693,9 +695,9 @@ $('#payment-address select[name=\'payment_country_id\']').ready(function() {
       },
       success: function(json) {
         if (json['postcode_required'] == '1') {
-          $('#shipping-address input[name=\'shipping_postcode\']').parent().parent().addClass('required');
+          $('#shipping-address input[name=\'shipping_postcode\']').parent().addClass('required');
         } else {
-          $('#shipping-address input[name=\'shipping_postcode\']').parent().parent().removeClass('required');
+          $('#shipping-address input[name=\'shipping_postcode\']').parent().removeClass('required');
         }
 
         html = '<option value=""><?php echo $text_select; ?></option>';
