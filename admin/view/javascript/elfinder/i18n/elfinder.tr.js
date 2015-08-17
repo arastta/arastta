@@ -22,10 +22,10 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			
 			/********************************** errors **********************************/
 			'error'                : 'Hata',
-			'errUnknown'           : 'Unknown error.',
-			'errUnknownCmd'        : 'Unknown command.',
-			'errJqui'              : 'Invalid jQuery UI configuration. Selectable, draggable and droppable components must be included.',
-			'errNode'              : 'elFinder requires DOM Element to be created.',
+			'errUnknown'           : 'Bilinmeyen Hata.',
+			'errUnknownCmd'        : 'Bilinmeyen Komut.',
+			'errJqui'              : 'Geçersiz jQuery UI konfigurasyonu. Selectable, draggable and droppable eklentilerinin yüklemesi lazım.',
+			'errNode'              : 'elFinder DOM elementine ihtiyaç duyar.',
 			'errURL'               : 'Invalid elFinder configuration! URL option is not set.',
 			'errAccess'            : 'Access denied.',
 			'errConnect'           : 'Unable to connect to backend.',
@@ -346,4 +346,3 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 		}
 	}
 }
-
