@@ -6,8 +6,12 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
  
+$this->version = new Version($registry);
+
+$installed_version = $this->version->getShortVersion();
+ 
 // Version 1.0.3 changes;
-if(version_compare($version, '1.0.3', '<')) {
+if(version_compare($installed_version, '1.0.3', '<')) {
     // Delete language english directory
     $this->filesystem->remove(DIR_LANGUAGE . 'english');
     $this->filesystem->remove(DIR_CATALOG . 'language/english');
@@ -24,7 +28,7 @@ if(version_compare($version, '1.0.3', '<')) {
 }
 
 // Version 1.1.0 changes;
-if(version_compare($version, '1.1.0', '<')) {
+if(version_compare($installed_version, '1.1.0', '<')) {
 	$user_groups = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group");
 
 	foreach ($user_groups->rows as $user_group) {
