@@ -300,7 +300,7 @@
                       <div id="search" class="input-group">
                         <input type="text" name="search" value="" placeholder="Search" class="form-control input-lg" autocomplete="off"><ul class="dropdown-menu" style="padding: 2px; display: none;"></ul>
                         <span class="input-group-btn">
-                          <button type="button" class="btn btn-default btn-lg"><i class="fa fa-search"></i></button>
+                          <button type="button" disabled class="btn btn-default btn-lg"><i class="fa fa-search"></i></button>
                         </span>
                       </div>
                     </div>
