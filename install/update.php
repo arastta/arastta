@@ -59,7 +59,7 @@ if (version_compare(VERSION, '1.1.0', '<')) {
 	foreach ($query->rows as $module) {
 		$module_setting = unserialize($module['setting']);
 		
-		if (isset($module_setting['product']) || $module_setting['code'] == 'featured') {
+		if (isset($module_setting['product']) || ($module['code'] == 'featured')) {
 			$module_setting['feed'] = 1;
 			
 			$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($module_setting['name']) . "', `setting` = '" . $this->db->escape(serialize($module_setting)) . "' WHERE `module_id` = '" . (int)$module['module_id'] . "'");
