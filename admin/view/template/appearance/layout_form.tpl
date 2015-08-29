@@ -42,14 +42,14 @@
               <?php foreach ($layout_routes as $layout_route) { ?>
               <tr id="route-row<?php echo $route_row; ?>">
                 <td class="text-left"><select name="layout_route[<?php echo $route_row; ?>][store_id]" class="form-control">
-                    <option value="0"><?php echo $text_default; ?></option>
-                    <?php foreach ($stores as $store) { ?>
-                    <?php if ($store['store_id'] == $layout_route['store_id']) { ?>
-                    <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
-                    <?php } ?>
-                    <?php } ?>
+                  <option value="0"><?php echo $text_default; ?></option>
+                  <?php foreach ($stores as $store) { ?>
+                  <?php if ($store['store_id'] == $layout_route['store_id']) { ?>
+                  <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
                   </select></td>
                 <td class="text-left"><input type="text" name="layout_route[<?php echo $route_row; ?>][route]" value="<?php echo $layout_route['route']; ?>" placeholder="<?php echo $entry_route; ?>" class="form-control" /></td>
                 <td class="text-left"><button type="button" onclick="$('#route-row<?php echo $route_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
@@ -68,24 +68,25 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
+</div>
+<script type="text/javascript"><!--
 var route_row = <?php echo $route_row; ?>;
 
 function addRoute() {
-	html  = '<tr id="route-row' + route_row + '">';
-	html += '  <td class="text-left"><select name="layout_route[' + route_row + '][store_id]" class="form-control">';
-	html += '  <option value="0"><?php echo $text_default; ?></option>';
-	<?php foreach ($stores as $store) { ?>
-	html += '<option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
-	<?php } ?>   
-	html += '  </select></td>';
-	html += '  <td class="text-left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="<?php echo $entry_route; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#route-row' + route_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-	html += '</tr>';
-	
-	$('#route tbody').append(html);
-	
-	route_row++;
+  html  = '<tr id="route-row' + route_row + '">';
+  html += '  <td class="text-left"><select name="layout_route[' + route_row + '][store_id]" class="form-control">';
+  html += '  <option value="0"><?php echo $text_default; ?></option>';
+  <?php foreach ($stores as $store) { ?>
+    html += '<option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
+  <?php } ?>
+  html += '  </select></td>';
+  html += '  <td class="text-left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="<?php echo $entry_route; ?>" class="form-control" /></td>';
+  html += '  <td class="text-left"><button type="button" onclick="$(\'#route-row' + route_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+  html += '</tr>';
+
+  $('#route tbody').append(html);
+
+  route_row++;
 }
-//--></script></div>
+//--></script>
 <?php echo $footer; ?>

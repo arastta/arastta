@@ -7,7 +7,6 @@
 			<?php endif; ?>
 		</div>
 	</div>
-
 	<?php if($modules['instance']): ?>
 		<?php if(!empty($modules['module'])): ?>
 			<div class="accordion-content accordion-content-drag">

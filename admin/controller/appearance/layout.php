@@ -14,7 +14,7 @@ class ControllerAppearanceLayout extends Controller {
 
         $this->load->model('appearance/layout');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			if (!empty($this->request->post['layout_id'])) {
                 $this->model_appearance_layout->editLayout($this->request->post['layout_id'], $this->request->post);
 
@@ -32,9 +32,9 @@ class ControllerAppearanceLayout extends Controller {
 
         $data['stores'] = $this->model_setting_store->getStores();
 
-        $data['refresh'] = $this->url->link('appearance/layout', 'token=' . $this->session->data['token'], 'SSL');
+        $data['refresh'] = str_replace("&amp;", "&", $this->url->link('appearance/layout', 'token=' . $this->session->data['token'], 'SSL'));
         $data['responsive_module'] = $this->url->link('appearance/layout/module', 'token=' . $this->session->data['token'], 'SSL');
-        $data['action'] = $this->url->link('appearance/layout', 'token=' . $this->session->data['token'], 'SSL');
+        $data['action'] = str_replace("&amp;", "&", $this->url->link('appearance/layout', 'token=' . $this->session->data['token'], 'SSL'));
         $data['edit'] = $this->url->link('appearance/layout/edit', 'token=' . $this->session->data['token'], 'SSL');
         $data['add'] = $this->url->link('appearance/layout/add', 'token=' . $this->session->data['token'], 'SSL');
         $data['cancel'] = $this->url->link('appearance/layout', 'token=' . $this->session->data['token'], 'SSL');
@@ -64,6 +64,13 @@ class ControllerAppearanceLayout extends Controller {
 			$data['error_code'] = '';
 		}
 
+		if (isset($this->session->data['warning'])) {
+			$data['error_warning'] = $this->session->data['warning'];
+			unset($this->session->data['warning']);
+		} else {
+			$data['error_warning'] = '';
+		}
+
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 			unset($this->session->data['success']);
@@ -87,7 +94,7 @@ class ControllerAppearanceLayout extends Controller {
 
 		$this->load->model('appearance/layout');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_appearance_layout->addLayout($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -105,7 +112,7 @@ class ControllerAppearanceLayout extends Controller {
 
 		$this->load->model('appearance/layout');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_appearance_layout->editLayout($this->request->get['layout_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -206,21 +213,12 @@ class ControllerAppearanceLayout extends Controller {
 
 		$this->response->setOutput($this->load->view('appearance/layout_form.tpl', $data));
 	}
-	
-	protected function validateForm() {
-		if (!$this->user->hasPermission('modify', 'appearance/layout')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
-	}
 
 	public function getModuleList() {
 		$this->response->setOutput($this->getModuleListHTML());
 	}
 
 	public function getLayoutList() {
-       		
 		$this->load->model('appearance/layout');
 		
         $layouts = $this->model_appearance_layout->getLayouts();
@@ -237,61 +235,80 @@ class ControllerAppearanceLayout extends Controller {
         $this->response->setOutput($html);
 	}	
 	
-	public function saveModule(){
-        $this->load->model('appearance/layout');
-		
-		$data = array (
-			'layout_id'  => $this->request->post['layout_id'],
-			'position'   => $this->request->post['layout_position'],
-			'code'  	 => $this->request->post['module_code'],
-			'sort_order' => '0',
-		);
-		
-		$this->model_appearance_layout->addLayoutModule($data);
-		
-		$json = array (
-			'success' => '1',
-			'link'    => $this->url->link('appearance/layout', 'token=' . $this->session->data['token'], 'SSL')
-		);
+	public function saveModule() {
+        $json = array(
+            'success' => '1',
+            'link'    => $this->url->link('appearance/layout', 'token=' . $this->session->data['token'], 'SSL')
+        );
+
+        if ($this->validate()) {
+            $this->load->model('appearance/layout');
+
+            $data = array(
+                'layout_id' => $this->request->post['layout_id'],
+                'position' => $this->request->post['layout_position'],
+                'code' => $this->request->post['module_code'],
+                'sort_order' => '0',
+            );
+
+            $this->model_appearance_layout->addLayoutModule($data);
+        } else {
+            $json['success'] = '0';
+        }
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function removeModule(){
-        $this->load->model('appearance/layout');
-		
-		$this->model_appearance_layout->removeModule($this->request->post['module_id']);
-		
-		$json = array (
-			'success' => '1'
-		);
+	public function removeModule() {
+        $json = array(
+            'success' => '1'
+        );
+
+        if ($this->validate()) {
+            $this->load->model('appearance/layout');
+
+            $this->model_appearance_layout->removeModule($this->request->post['module_id']);
+        } else {
+            $json['success'] = '0';
+            $json['error_warning'] = $this->error['warning'];
+        }
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function removeLayoutModule(){
-        $this->load->model('appearance/layout');
+	public function removeLayoutModule() {
+        $json = array(
+            'success' => '1'
+        );
 
-		$this->model_appearance_layout->removeLayoutModule($this->request->post);
+        if ($this->validate()) {
+            $this->load->model('appearance/layout');
 
-		$json = array (
-			'success' => '1'
-		);
+            $this->model_appearance_layout->removeLayoutModule($this->request->post);
+        } else {
+            $json['success'] = '0';
+            $json['error_warning'] = $this->error['warning'];
+        }
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 	
-	public function removeLayout(){
-        $this->load->model('appearance/layout');
-		
-		$this->model_appearance_layout->removeLayout($this->request->post['layout_id']);
-		
-		$json = array (
-			'success' => '1'
-		);
+	public function removeLayout() {
+        $json = array(
+            'success' => '1'
+        );
+
+        if ($this->validate()) {
+            $this->load->model('appearance/layout');
+
+            $this->model_appearance_layout->removeLayout($this->request->post['layout_id']);
+        } else {
+            $json['success'] = '0';
+            $json['error_warning'] = $this->error['warning'];
+        }
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -323,7 +340,7 @@ class ControllerAppearanceLayout extends Controller {
 
         $extensions = $this->model_extension_extension->getInstalled('module');
 
-		if($type == 'all') {
+		if ($type == 'all') {
 			foreach ($extensions as $key => $value) {
 				if (!file_exists(DIR_ADMIN . 'controller/module/' . $value . '.php')) {
 					$this->model_extension_extension->uninstall('module', $value);
@@ -342,7 +359,7 @@ class ControllerAppearanceLayout extends Controller {
 
 					$this->load->language('module/' . $extension);
 
-					if(!in_array($extension, $extensions)){
+					if (!in_array($extension, $extensions)){
 						$this->checkModuleInstalled($extension);
 						$extensions[] = $extension;
 					}
@@ -355,6 +372,7 @@ class ControllerAppearanceLayout extends Controller {
 					$module_data = array();
 
 					$modules = $this->model_extension_module->getModulesByCode($extension);
+
 					foreach ($modules as $module) {
 						$status = unserialize($module['setting']);
 						$module_data[] = array(
@@ -441,4 +459,12 @@ class ControllerAppearanceLayout extends Controller {
 		
 		return $this->load->view('appearance/layout_module_list.tpl', $data);
 	}
+
+    protected function validate() {
+        if (!$this->user->hasPermission('modify', 'appearance/layout')) {
+            $this->error['warning'] = $this->language->get('error_permission');
+        }
+
+        return !$this->error;
+    }
 }
