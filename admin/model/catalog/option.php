@@ -149,7 +149,7 @@ class ModelCatalogOption extends Model {
 	public function getOptionValues($option_id) {
 		$option_value_data = array();
 
-		$option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_value ov LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE ov.option_id = '" . (int)$option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY ov.sort_order, ovd.name");
+		$option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_value ov LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE ov.option_id = '" . (int)$option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY ov.sort_order ASC, ovd.name ASC");
 
 		foreach ($option_value_query->rows as $option_value) {
 			$option_value_data[] = array(
@@ -166,12 +166,12 @@ class ModelCatalogOption extends Model {
 	public function getOptionValueDescriptions($option_id) {
 		$option_value_data = array();
 
-		$option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_value WHERE option_id = '" . (int)$option_id . "' ORDER BY sort_order");
+		$option_value_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "option_value ov LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE ov.option_id = '" . (int)$option_id . "' ORDER BY ov.sort_order ASC, ovd.name ASC");
 
 		foreach ($option_value_query->rows as $option_value) {
 			$option_value_description_data = array();
 
-			$option_value_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_value_description WHERE option_value_id = '" . (int)$option_value['option_value_id'] . "'");
+			$option_value_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_value_description WHERE option_value_id = '" . (int)$option_value['option_value_id'] . "' ORDER BY name ASC");
 
 			foreach ($option_value_description_query->rows as $option_value_description) {
 				$option_value_description_data[$option_value_description['language_id']] = array('name' => $option_value_description['name']);
