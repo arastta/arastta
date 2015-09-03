@@ -439,10 +439,18 @@ $(document).ready(function() {
             if(advance == '0'){
                 $('.advance-hide').addClass('advance-show');
                 $('.advance-hide').removeClass('advance-hide');
+				
+				$('.advance-show input').each(function( index ) {
+				  $(this).prop('disabled', false);
+				});
                 advance = '1';
             }else {
                 $('.advance-show').addClass('advance-hide');
                 $('.advance-show').removeClass('advance-show');
+			
+				$('.advance-hide input').each(function( index ) {
+				  $(this).prop('disabled', true);
+				});
                 advance = '0';
             }
         });
