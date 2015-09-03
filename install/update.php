@@ -6,12 +6,11 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
  
-$this->version = new Version($registry);
-
-$installed_version = $this->version->getShortVersion();
+# VERSION = the current version
+# $version = the version to be updated
  
-// Version 1.0.3 changes;
-if(version_compare($installed_version, '1.0.3', '<')) {
+// 1.0.3 changes;
+if (version_compare(VERSION, '1.0.3', '<')) {
     // Delete language english directory
     $this->filesystem->remove(DIR_LANGUAGE . 'english');
     $this->filesystem->remove(DIR_CATALOG . 'language/english');
@@ -22,13 +21,14 @@ if(version_compare($installed_version, '1.0.3', '<')) {
 	// Add field ('params') Addon table
 	$query = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "addon`");
 	
-	if(!in_array('params', $query->rows)) {
+	if (!in_array('params', $query->rows)) {
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "addon` ADD COLUMN `params` TEXT DEFAULT NULL");
 	}
 }
 
-// Version 1.1.0 changes;
-if(version_compare($installed_version, '1.1.0', '<')) {
+// 1.1.0 changes;
+if (version_compare(VERSION, '1.1.0', '<')) {
+	// Update the user groups
 	$user_groups = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group");
 
 	foreach ($user_groups->rows as $user_group) {
@@ -51,17 +51,18 @@ if(version_compare($installed_version, '1.1.0', '<')) {
 		);
 		
 		$this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
+	}
 	
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module`");
+	// Update the modules
+	$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module`");
 
-		foreach ($query->rows as $module) {
-			$module_setting = unserialize($module['setting']);
+	foreach ($query->rows as $module) {
+		$module_setting = unserialize($module['setting']);
+		
+		if (isset($module_setting['product']) || ($module['code'] == 'featured')) {
+			$module_setting['feed'] = 1;
 			
-			if (isset($module_setting['product']) || $module_setting['code'] == 'featured') {
-				$module_setting['feed'] = 1;
-				
-				$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($module_setting['name']) . "', `setting` = '" . $this->db->escape(serialize($module_setting)) . "' WHERE `module_id` = '" . (int)$module['module_id'] . "'");
-			}
+			$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape($module_setting['name']) . "', `setting` = '" . $this->db->escape(serialize($module_setting)) . "' WHERE `module_id` = '" . (int)$module['module_id'] . "'");
 		}
 	}
 }

@@ -78,19 +78,19 @@ class ControllerSettingStore extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                 $this->response->redirect($this->url->link('setting/store/edit', 'store_id='.$this->request->get['store_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+                 $this->response->redirect($this->url->link('setting/store/edit', 'store_id='.$this->request->get['store_id'].'&token=' . $this->session->data['token'], 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
-                 $this->response->redirect($this->url->link('setting/store/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+                 $this->response->redirect($this->url->link('setting/store/add', 'token=' . $this->session->data['token'], 'SSL'));
             }
             
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                $this->response->redirect($this->url->link('setting/store/edit', 'store_id='.$this->request->get['store_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+                $this->response->redirect($this->url->link('setting/store/edit', 'store_id='.$this->request->get['store_id'].'&token=' . $this->session->data['token'], 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
-                $this->response->redirect($this->url->link('setting/store/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+                $this->response->redirect($this->url->link('setting/store/add', 'token=' . $this->session->data['token'], 'SSL'));
             }			
 			
 			$this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], 'SSL'));

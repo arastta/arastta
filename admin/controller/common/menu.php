@@ -773,9 +773,9 @@ class ControllerCommonMenu extends Controller {
 			if (isset($this->menu[$parent_id])) {
 				$this->menu[$parent_id]['children'][$id] = $new_item;
 			} else {
-				foreach ($this->menu as $id=>$item) {
+				foreach ($this->menu as $menu_id=>$item) {
 					if (isset($item['children']) && isset($item['children'][$parent_id])) {
-						$this->menu[$id]['children'][$parent_id]['children'][$id] = $new_item;
+						$this->menu[$menu_id]['children'][$parent_id]['children'][$id] = $new_item;
 						break;
 					}
 				}

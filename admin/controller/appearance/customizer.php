@@ -366,32 +366,35 @@ class ControllerAppearanceCustomizer extends Controller {
        return $this->load->view('appearance/customizer_menu.tpl', $data);
     }
 
-    public function getLanguageText($data, $use_template){
+    public function getLanguageText($data, $use_template) {
+        $this->load->language('theme/default');
         $this->load->language('theme/' . $use_template);
 
         $language = $this->language->all();
 
-        foreach ($data as $key => $value){
-            if (isset($data[$key]['title'])) {
+        foreach ($data as $key => $value) {
+            if (isset($data[$key]['title']) && isset($language[$value['title']])) {
                 $data[$key]['title'] = $language[$value['title']];
             }
 
-            if (isset($data[$key]['description'])) {
+            if (isset($data[$key]['description']) && isset($language[$value['description']])) {
                 $data[$key]['description'] = $language[$value['description']];
             }
 
             foreach ($value['control'] as $cont_key => $cont_val){
-                if (isset($data[$key]['control'][$cont_key]['label'])){
+                if (isset($data[$key]['control'][$cont_key]['label']) && isset($language[$cont_val['label']])) {
                     $data[$key]['control'][$cont_key]['label'] = $language[$cont_val['label']];
                 }
 
-                if (isset($data[$key]['control'][$cont_key]['description'])){
+                if (isset($data[$key]['control'][$cont_key]['description']) && isset($language[$cont_val['description']])) {
                     $data[$key]['control'][$cont_key]['description'] = $language[$cont_val['description']];
                 }
 
-                if (isset($data[$key]['control'][$cont_key]['choices'])){
-                    foreach ($data[$key]['control'][$cont_key]['choices'] as $choices_key => $choices_val){
-                        $data[$key]['control'][$cont_key]['choices'][$choices_key] = $language[$choices_val];
+                if (isset($data[$key]['control'][$cont_key]['choices'])) {
+                    foreach ($data[$key]['control'][$cont_key]['choices'] as $choices_key => $choices_val) {
+						if (isset($language[$choices_val])) {
+							$data[$key]['control'][$cont_key]['choices'][$choices_key] = $language[$choices_val];
+						}
                     }
                 }
             }
