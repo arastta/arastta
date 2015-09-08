@@ -48,17 +48,6 @@ class User extends Object {
 				$this->logout();
 			}
 		}
-        else if ($this->config->get('config_sec_admin_keyword')) {
-            if (isset($this->request->get[$this->config->get('config_sec_admin_keyword')])) {
-                return;
-            }
-
-            if (isset($this->request->get['route']) and ($this->request->get['route'] == 'common/login') and !empty($this->request->post['username']) and !empty($this->request->post['password'])) {
-                return;
-            }
-
-            $this->response->redirect(HTTPS_CATALOG);
-        }
 	}
 
 	public function login($username, $password) {

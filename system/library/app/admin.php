@@ -156,6 +156,12 @@ class Admin extends App {
         global $log;
         $log = $this->registry->get('log');
 		# B/C end
+
+        if (!$this->_canAccessAdmin()) {
+            $catalog = Client::isAdmin() ? HTTPS_CATALOG : HTTPS_SERVER;
+
+            $this->response->redirect($catalog);
+        }
 		
         // Front Controller
         $controller = new Front($this->registry);
@@ -177,5 +183,25 @@ class Admin extends App {
         $controller->dispatch($action, new Action('error/not_found'));
 
         $this->trigger->fire('post.app.dispatch');
+    }
+
+    protected function _canAccessAdmin() {
+        if (isset($this->session->data['user_id'])) {
+            return true;
+        }
+
+        if (!$this->config->get('config_sec_admin_keyword')) {
+            return true;
+        }
+
+        if (isset($this->request->get[$this->config->get('config_sec_admin_keyword')])) {
+            return true;
+        }
+
+        if (isset($this->request->get['route']) && ($this->request->get['route'] == 'common/login') && !empty($this->request->post['username']) && !empty($this->request->post['password'])) {
+            return true;
+        }
+
+        return false;
     }
 }
