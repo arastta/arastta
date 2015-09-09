@@ -675,6 +675,14 @@ class ControllerSaleReturn extends Controller {
 			$data['error_model'] = '';
 		}
 
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+		
 		$url = '';
 
 		if (isset($this->request->get['filter_return_id'])) {

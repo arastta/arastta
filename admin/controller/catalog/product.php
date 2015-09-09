@@ -593,7 +593,7 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['error_warning'] = '';
 		}
-
+	
 		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
 		} else {
@@ -622,6 +622,14 @@ class ControllerCatalogProduct extends Controller {
 			$data['error_seo_url'] = $this->error['seo_url'];
 		} else {
 			$data['error_seo_url'] = array();
+		}
+		
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
 		}
 		
 		$url = '';

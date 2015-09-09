@@ -394,6 +394,14 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['error_seo_url'] = array();
 		}
+
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
 		
 		$url = '';
 

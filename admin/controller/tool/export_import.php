@@ -144,6 +144,14 @@ class ControllerToolExportImport extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+
 		unset($this->session->data['export_import_error']);
 		unset($this->session->data['export_import_nochange']);
 

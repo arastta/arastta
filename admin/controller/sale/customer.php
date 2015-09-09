@@ -817,6 +817,14 @@ class ControllerSaleCustomer extends Controller {
 			$data['error_address'] = array();
 		}
 
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+		
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {

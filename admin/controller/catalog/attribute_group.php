@@ -294,7 +294,7 @@ class ControllerCatalogAttributeGroup extends Controller {
         $data['button_savenew'] = $this->language->get('button_savenew');
         $data['button_saveclose'] = $this->language->get('button_saveclose');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-            
+         
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -305,6 +305,14 @@ class ControllerCatalogAttributeGroup extends Controller {
 			$data['error_name'] = $this->error['name'];
 		} else {
 			$data['error_name'] = array();
+		}
+		
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
 		}
 
 		$url = '';
