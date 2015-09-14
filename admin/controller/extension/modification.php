@@ -29,6 +29,7 @@ class ControllerExtensionModification extends Controller {
 
                 if(file_exists(DIR_SYSTEM . 'xml/'.$modification_id)) {
                     unlink(DIR_SYSTEM . 'xml/'.$modification_id);
+                    $this->model_extension_modification->deleteModification($this->db->query("SELECT `modification_id` FROM " . DB_PREFIX . "modification WHERE `code`='" . substr($modification_id, 0, -4) . "'")->row['modification_id']);
                 } else if(file_exists(DIR_VQMOD . 'xml/'.$modification_id)){
                     unlink(DIR_VQMOD . 'xml/'.$modification_id);
                 }
