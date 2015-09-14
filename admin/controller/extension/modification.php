@@ -14,7 +14,7 @@ class ControllerExtensionModification extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/modification');
+        $this->load->model('extension/modification');
 
 		$this->getList();
 	}
@@ -23,8 +23,6 @@ class ControllerExtensionModification extends Controller {
 		$this->load->language('extension/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('extension/modification');
 
 		if (isset($this->request->post['selected']) && $this->validate()) {
 			foreach ($this->request->post['selected'] as $modification_id) {
@@ -73,8 +71,8 @@ class ControllerExtensionModification extends Controller {
 		$this->load->language('extension/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('extension/modification');
+		
+        $this->load->model('extension/modification');
 
 		if ($this->validate()) {
             $url = '';
@@ -119,7 +117,7 @@ class ControllerExtensionModification extends Controller {
             $this->clearlog(true);
 
 			// Apply vQmods and OCmods
-			$this->modification->applyMod();
+            $this->model_extension_modification->applyMod();
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -143,8 +141,6 @@ class ControllerExtensionModification extends Controller {
 		$this->load->language('extension/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('extension/modification');
 
 		if ($this->validate()) {
             $url = '';
@@ -189,7 +185,6 @@ class ControllerExtensionModification extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/modification');
 		$json = array();
 
 		$json['success'] = "0";
@@ -239,7 +234,6 @@ class ControllerExtensionModification extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/modification');
 		$json = array();
 
 		$json['success'] = "0";
@@ -321,7 +315,7 @@ class ControllerExtensionModification extends Controller {
 
 	protected function getList() {
 		// To catch XML syntax errors
-		set_error_handler(array('Modification', 'handleXMLError'));
+		set_error_handler(array('ModelExtensionModification', 'handleXMLError'));
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {

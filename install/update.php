@@ -66,3 +66,9 @@ if (version_compare(VERSION, '1.1.0', '<')) {
 		}
 	}
 }
+
+// 1.1.3 changes;
+if (version_compare(VERSION, '1.1.3', '<')) {
+	// Delete modification table
+	$this->db->query("DROP TABLE `" . DB_PREFIX . "modification`");
+}

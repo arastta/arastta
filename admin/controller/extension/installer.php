@@ -102,7 +102,7 @@ class ControllerExtensionInstaller extends Controller {
 			$json['step'] = array();
 			$json['overwrite'] = array();
 
-            if (strrchr($this->request->files['file']['name'], '.') != '.zip') {
+			if (strrchr($this->request->files['file']['name'], '.') == '.xml') {
                 $xml = file_get_contents($this->request->files['file']['tmp_name']);
 
                 if ($xml) {
@@ -110,24 +110,21 @@ class ControllerExtensionInstaller extends Controller {
                     $dom->loadXml($xml);
                     $code = $dom->getElementsByTagName('code')->item(0);
                 }
-            } else {
-                $code = NULL;
-            }
 
-			if (strrchr($this->request->files['file']['name'], '.') == '.xml') {
 				$file = DIR_UPLOAD . $path . '/install.xml';
 
                 if(empty($code)) {
                     $this->session->data['vqmod_file_name'] = $this->request->files['file']['name'];
                     $file = DIR_UPLOAD . $path . '/' . $this->request->files['file']['name'];
 
-                    $_file = DIR_VQMOD . 'xml/' . $this->request->files['file']['name'];
-
-                    $vqmodNameLen = strlen($this->request->files['file']['name']);
-                    $vqmodNameLen = $vqmodNameLen + 11;
-
-                    if (is_file($_file) && strtolower(substr($_file, -$vqmodNameLen)) == '/vqmod/xml/' . $this->request->files['file']['name']) {
+                    if (is_file(DIR_VQMOD . 'xml/' . $this->request->files['file']['name'])) {
                         $json['overwrite'][] = 'vqmod/xml/' . $this->request->files['file']['name'];
+                    }
+                } else {
+                    $code = $code->nodeValue;
+
+                    if (is_file(DIR_SYSTEM . 'xml/' . $code . '.xml') ) {
+                        $json['overwrite'][] = 'system/xml/' . $code . '.xml';
                     }
                 }
 
@@ -458,17 +455,24 @@ class ControllerExtensionInstaller extends Controller {
 	public function xml() {
 		$this->load->language('extension/installer');
 
-        $isVqmod = 0;
-		$json = array();
+        $json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
+        if (!$this->user->hasPermission('modify', 'extension/installer')) {
+            $json['error'] = $this->language->get('error_permission');
+        }
 
-        if(file_exists(DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/install.xml')){
-            $file = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/install.xml';
-        } else if (file_exists(DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/' . $this->session->data['vqmod_file_name'])){
-            $file = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/' . $this->session->data['vqmod_file_name'];
+        $ocmod = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/install.xml';
+
+        if(file_exists($ocmod)){
+            $file = $ocmod;
+        } else if (!empty($this->session->data['vqmod_file_name'])){
+            $vqmod = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/' . $this->session->data['vqmod_file_name'];
+
+            if (file_exists($vqmod)) {
+                $file = $vqmod;
+            } else {
+                $file = null;
+            }
         }
 
 		if (!file_exists($file)) {
@@ -476,108 +480,27 @@ class ControllerExtensionInstaller extends Controller {
 		}
 
 		if (!$json) {
-            $json['overwrite'] = array();
-			$this->load->model('extension/modification');
-
-			// If xml file just put it straight into the DB
 			$xml = file_get_contents($file);
 
 			if ($xml) {
                 // Fire event
                 $this->trigger->fire('pre.admin.extension.xml', $xml);
 
-                try {
-					$dom = new DOMDocument('1.0', 'UTF-8');
-					$dom->loadXml($xml);
+                if (!empty($this->session->data['vqmod_file_name'])) {
+                    $msmod = DIR_VQMOD . 'xml/'. $this->session->data['vqmod_file_name'];
+                } else {
+                    $dom = new DOMDocument('1.0', 'UTF-8');
+                    $dom->loadXml($xml);
 
-					$name = $dom->getElementsByTagName('name')->item(0);
+                    $code = $dom->getElementsByTagName('code')->item(0);
+                    $code = $code->nodeValue;
 
-					if ($name) {
-						$name = $name->nodeValue;
-					} else {
-						$name = '';
-					}
+                    $msmod = DIR_SYSTEM . 'xml/' . $code . '.xml';
+                }
 
-					$code = $dom->getElementsByTagName('code')->item(0);
-					if(!empty($code)) {
-						if ($code) {
-							$code = $code->nodeValue;
-
-							// Check to see if the modification is already installed or not.
-							$modification_info = $this->model_extension_modification->getModificationByCode($code);
-
-							if ($modification_info) {
-								$json['overwrite'][] =  $code . '.xml';
-								$json['warning'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
-								$json['error'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
-							}
-						} else {
-							$json['error'] = $this->language->get('error_code');
-						}
-					} else {
-                        $isVqmod = 1 ;
-                    }
-					$author = $dom->getElementsByTagName('author')->item(0);
-
-					if ($author) {
-						$author = $author->nodeValue;
-					} else {
-						$author = '';
-					}
-
-					$version = $dom->getElementsByTagName('version')->item(0);
-
-					if ($version) {
-						$version = $version->nodeValue;
-					} else {
-						$version = '';
-					}
-
-					$link = $dom->getElementsByTagName('link')->item(0);
-
-					if ($link) {
-						$link = $link->nodeValue;
-					} else {
-						$link = '';
-					}
-
-                    #Xml replace text '', Because It doesn't necessary Arastta
-                    $xml = '';
-
-					$modification_data = array(
-						'name'    => $name,
-						'code'    => $code,
-						'author'  => $author,
-						'version' => $version,
-						'link'    => $link,
-						'xml'     => $xml,
-						'status'  => 1
-					);
-
-					if (!$json['overwrite']) {
-						$this->model_extension_modification->addModification($modification_data);
-						$this->session->data['addon_params']['extension/modification'][] = $this->db->getLastId();
-					}
-
-                    if ($isVqmod) {
-                        $file  = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/' . $this->session->data['vqmod_file_name'];
-                        $msmod = DIR_VQMOD.'xml/'. $this->session->data['vqmod_file_name'];
-                    } else {
-						if(is_file(DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']).'/install.xml')){
-                            $file  = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']).'/install.xml';
-                        } else{
-                            $file = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/' . $this->session->data['vqmod_file_name'];
-                        }
-                        $msmod = DIR_SYSTEM . 'xml/' . $code . '.xml';
-                    }
-
-                    if (!copy($file, $msmod)) {
-                        $json['error'] =   $this->language->get('error_copy_xmls_file');
-                    }
-
-				} catch(Exception $exception) {
-					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
-				}
+                if (!copy($file, $msmod)) {
+                    $json['error'] =   $this->language->get('error_copy_xmls_file');
+                }
 			}
 		}
 
@@ -857,28 +780,19 @@ class ControllerExtensionInstaller extends Controller {
 			}
 			else if (substr($zip_name, -4) == '.xml') {
 				$check = strpos($zip_name, '/');
+
 				if (!empty($check) && $check > 0) {
 					$_msmod   = explode('/', $zip_name);
 					$zip_name = end($_msmod);
 				}
 
 				if (is_file(DIR_VQMOD.'xml/'.$zip_name)) {
-					$_file = DIR_VQMOD.'xml/'.$zip_name;
-				}
-				else {
-					$_file = DIR_SYSTEM.'xml/'.$zip_name;
+                    $json['overwrite'][] = 'vqmod/xml/'.$zip_name;
 				}
 
-				$vqmodNameLen = strlen($zip_name);
-				$vqmodNameLen = $vqmodNameLen + 11;
-
-				if (is_file($_file) && strtolower(substr($_file, -$vqmodNameLen)) == '/vqmod/xml/'.$zip_name) {
-					$json['overwrite'][] = 'vqmod/xml/'.$zip_name;
+                if (is_file(DIR_SYSTEM.'xml/'.$zip_name)) {
+                    $json['overwrite'][] = 'system/xml/'.$zip_name;
 				}
-				else if (is_file($_file) && strtolower(substr($_file, -$vqmodNameLen)) == '/system/xml/'.$zip_name) {
-					$json['overwrite'][] = 'system/xml/'.$zip_name;
-				}
-
 			}
 			// PHP
 			if (substr($zip_name, 0, 11) == 'install.php') {
