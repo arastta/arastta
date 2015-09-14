@@ -15,9 +15,6 @@ class Admin extends App {
         // File System
         $this->registry->set('filesystem', new Filesystem());
 
-        // Modification
-        $this->registry->set('modification', new Modification($this->registry));
-
         // Config
         $this->registry->set('config', new Config());
 
