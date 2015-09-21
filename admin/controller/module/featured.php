@@ -45,15 +45,19 @@ class ControllerModuleFeatured extends Controller {
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_yes']  = $this->language->get('text_yes');
+		$data['text_no']   = $this->language->get('text_no');
 		
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_product'] = $this->language->get('entry_product');
+		$data['entry_random_product'] = $this->language->get('entry_random_product');
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['help_product'] = $this->language->get('help_product');
+		$data['help_random_product']  = $this->language->get('help_random_product');
 
 		$data['button_save'] = $this->language->get('button_save');
         $data['button_savenew'] = $this->language->get('button_savenew');
@@ -154,6 +158,14 @@ class ControllerModuleFeatured extends Controller {
 				}
 			}
 		}	
+		
+		if (isset($this->request->post['random_product'])) {
+			$data['random_product'] = $this->request->post['random_product'];
+		} elseif (!empty($module_info)) {
+			$data['random_product'] = $module_info['random_product'];
+		} else {
+			$data['random_product'] = '0';
+		}
 				
 		if (isset($this->request->post['limit'])) {
 			$data['limit'] = $this->request->post['limit'];
@@ -178,7 +190,7 @@ class ControllerModuleFeatured extends Controller {
 		} else {
 			$data['height'] = 200;
 		}		
-		
+				
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
 		} elseif (!empty($module_info)) {
@@ -186,7 +198,7 @@ class ControllerModuleFeatured extends Controller {
 		} else {
 			$data['status'] = '';
 		}
-				
+						
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

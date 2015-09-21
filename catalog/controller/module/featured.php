@@ -29,6 +29,10 @@ class ControllerModuleFeatured extends Controller {
 		}
 
 		if (!empty($setting['product'])) {
+			if ($setting['random_product']) {
+				shuffle($setting['product']);
+			}
+			
 			$products = array_slice($setting['product'], 0, (int)$setting['limit']);
 			
 			foreach ($products as $product_id) {
