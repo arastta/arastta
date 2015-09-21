@@ -530,6 +530,7 @@ class ControllerExtensionModification extends Controller {
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_author'] = $this->language->get('column_author');
 		$data['column_version'] = $this->language->get('column_version');
+		$data['column_type'] = $this->language->get('column_type');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_action'] = $this->language->get('column_action');
