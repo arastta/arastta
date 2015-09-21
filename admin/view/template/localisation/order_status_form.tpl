@@ -63,6 +63,17 @@
                           <?php } ?>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_email_template; ?>"><?php echo $entry_email_template; ?></span></label>
+                        <div class="col-sm-10">
+                          <div class="input-group" style="max-width: 100%;"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+                              <textarea name="order_status[<?php echo $language['language_id']; ?>][email_template]" placeholder="<?php echo $entry_email_template; ?>" id="input-email-template-<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($email_template[$language['language_id']]) ? $email_template[$language['language_id']]['description'] : ''; ?></textarea>
+                          </div>
+                          <?php if (isset($error_message[$language['language_id']])) { ?>
+                          <div class="text-danger"><?php echo $error_message[$language['language_id']]; ?></div>
+                          <?php } ?>
+                        </div>
+                    </div>
                 </div>
                 <?php } ?>
             </div>
@@ -75,11 +86,11 @@
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) {
     if ( $text_editor == 'summernote' ) { ?>
-        $('#input-message-<?php echo $language['language_id']; ?>').summernote({
+        $('#input-message-<?php echo $language['language_id']; ?>, #input-email-template-<?php echo $language['language_id']; ?>').summernote({
             height: 300
         });
     <?php } else if ( $text_editor == 'tinymce' ) { ?>
-        $('#input-message-<?php echo $language['language_id']; ?>').tinymce({
+        $('#input-message-<?php echo $language['language_id']; ?>, #input-email-template-<?php echo $language['language_id']; ?>').tinymce({
             script_url : 'view/javascript/tinymce/tinymce.min.js',
             plugins: "visualblocks,textpattern,table,media,pagebreak,link,image",
             target_list: [

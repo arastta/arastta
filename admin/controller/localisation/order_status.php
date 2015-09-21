@@ -286,6 +286,9 @@ class ControllerLocalisationOrderStatus extends Controller {
 		
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_message'] = $this->language->get('entry_message');
+		$data['entry_email_template'] = $this->language->get('entry_email_template');
+
+		$data['help_email_template'] = $this->language->get('help_email_template');
 
 		$data['button_save'] = $this->language->get('button_save');
         $data['button_savenew'] = $this->language->get('button_savenew');
@@ -356,6 +359,14 @@ class ControllerLocalisationOrderStatus extends Controller {
 			$data['order_status'] = $this->model_localisation_order_status->getOrderStatusDescriptions($this->request->get['order_status_id']);
 		} else {
 			$data['order_status'] = array();
+		}
+
+		if (isset($this->request->get['order_status_id'])) {
+			$this->load->model('system/email_template');
+
+			$data['email_template'] = $this->model_system_email_template->getEmailTemplate('order_' . $this->request->get['order_status_id']);
+		} else {
+			$data['email_template'] = '';
 		}
 
         // Text Editor

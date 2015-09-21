@@ -22,6 +22,10 @@ $_['column_action']    = 'Action';
 // Entry
 $_['entry_name']       = 'Order Status Name';
 $_['entry_message']    = 'Checkout Success Message';
+$_['entry_email_template'] = 'Email Template';
+
+// Help
+$_['help_email_template'] = 'If you generate a new "Order Status" and its textarea field is empty, the demo template will be loaded.';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify order statues!';
