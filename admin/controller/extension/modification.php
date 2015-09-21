@@ -23,7 +23,6 @@ class ControllerExtensionModification extends Controller {
 		$this->load->language('extension/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
 		if (isset($this->request->post['selected']) && $this->validate()) {
 			foreach ($this->request->post['selected'] as $modification_id) {
 
@@ -71,7 +70,6 @@ class ControllerExtensionModification extends Controller {
 		$this->load->language('extension/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
         $this->load->model('extension/modification');
 
 		if ($this->validate()) {
@@ -184,7 +182,6 @@ class ControllerExtensionModification extends Controller {
 		$this->load->language('extension/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
 		$json = array();
 
 		$json['success'] = "0";
@@ -233,7 +230,6 @@ class ControllerExtensionModification extends Controller {
 		$this->load->language('extension/modification');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
 		$json = array();
 
 		$json['success'] = "0";
@@ -366,14 +362,6 @@ class ControllerExtensionModification extends Controller {
 
 		$data['modifications'] = array();
 
-		$filter_data = array(
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
-		);
-
-
         $files_enable = glob(DIR_SYSTEM . 'xml/*.xml');
         $files_disable = glob(DIR_SYSTEM . 'xml/*.xml_');
 
@@ -458,6 +446,7 @@ class ControllerExtensionModification extends Controller {
 					'author'          => $author,
 					'version'         => $version,
 					'link'            => $link,
+					'type'            => 'OCMOD',
 					'status'          => ($status) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'enable'          => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $modification_id, 'SSL'),
 					'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $modification_id, 'SSL'),
@@ -467,52 +456,51 @@ class ControllerExtensionModification extends Controller {
             }
         }
 
-        if(file_exists(DIR_VQMOD . 'xml/')){
+        if (file_exists(DIR_VQMOD . 'xml/')) {
 
             $data['vqmods'] = $this->_checkVqmodfile();
 
-			if(!empty($data['vqmods'])) {
+			if (!empty($data['vqmods'])) {
 
 				$modification_vqmod = array();
 
-
-				foreach($data['modifications'] as $modification){
-					if( substr($modification['modification_id'], -5) != '.xml_') {
+				foreach ($data['modifications'] as $modification) {
+					if (substr($modification['modification_id'], -5) != '.xml_') {
 						# enable OCMOD
 						$modification_vqmod [] = $modification;
-				   } else {
-						if(empty($vqmod_add)) {
+				    } else {
+						if (empty($vqmod_add)) {
 							$vqmod_add = 1;
-							foreach($data['vqmods'] as $vqmod){
-								if( substr($vqmod['vqmod_id'], -5) != '.xml_') {
+							
+							foreach ($data['vqmods'] as $vqmod) {
+								if (substr($vqmod['vqmod_id'], -5) != '.xml_') {
 									# enable VQMOD
 									$modification_vqmod [] = $vqmod;
 								}
 							}
 						}
+						
 						$modification_vqmod [] = $modification;
 				   }
-
                 }
 
-                if(empty($vqmod_add)){
-                    foreach($data['vqmods'] as $vqmod){
-                        if( substr($vqmod['vqmod_id'], -5) != '.xml_') {
+                if (empty($vqmod_add)) {
+                    foreach ($data['vqmods'] as $vqmod) {
+                        if (substr($vqmod['vqmod_id'], -5) != '.xml_') {
                             # enable VQMOD
                             $modification_vqmod [] = $vqmod;
                         }
                     }
                 }
 
-				foreach($data['vqmods'] as $vqmod){
-					if( substr($vqmod['vqmod_id'], -5) == '.xml_') {
+				foreach ($data['vqmods'] as $vqmod) {
+					if (substr($vqmod['vqmod_id'], -5) == '.xml_') {
 						# disable VQMOD
 						$modification_vqmod [] = $vqmod;
 					}
 				}
 
 				$data['modifications'] = $modification_vqmod;
-
 			}
         }
 
@@ -520,6 +508,14 @@ class ControllerExtensionModification extends Controller {
 
         $modification_total = count($data['modifications']);
 
+		$filter_data = array(
+			'sort'  => $sort,
+			'order' => $order,
+			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_limit_admin')
+		);
+
+		$data['modifications'] = $this->filter($data['modifications'], $filter_data, $modification_total);
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_list'] = $this->language->get('text_list');
@@ -587,9 +583,9 @@ class ControllerExtensionModification extends Controller {
 
 		$data['sort_name'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
 		$data['sort_author'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=author' . $url, 'SSL');
-		$data['sort_version'] = $this->url->link('extension/version', 'token=' . $this->session->data['token'] . '&sort=author' . $url, 'SSL');
+		$data['sort_version'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=version' . $url, 'SSL');
+		$data['sort_type'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=type' . $url, 'SSL');
 		$data['sort_status'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
-		$data['sort_date_added'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, 'SSL');
 
 		$url = '';
 
@@ -640,7 +636,7 @@ class ControllerExtensionModification extends Controller {
 		return !$this->error;
 	}
 
-	protected function _checkVqmodfile(){
+	protected function _checkVqmodfile() {
         $files_enable  = glob(DIR_VQMOD . 'xml/*.xml');
         $files_disable = glob(DIR_VQMOD . 'xml/*.xml_');
 
@@ -706,6 +702,7 @@ class ControllerExtensionModification extends Controller {
 						'author'          => $author,
 						'version'         => $version,
 						'link'            => $link,
+						'type'            => 'VQMOD',
 						'status'          => ($status) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 						'enable'          => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $vqmod_id, 'SSL'),
 						'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $vqmod_id, 'SSL'),
@@ -722,4 +719,29 @@ class ControllerExtensionModification extends Controller {
 
         return $data;
     }
+	protected function filter($modifications, $filter, $total) {
+		$count = 0;
+
+		$sort_order = array();
+
+		foreach ($modifications as $key => $value) {
+			$sort_order[$key] = $value[$filter['sort']];
+		}
+
+		if ($filter['order'] == 'ASC') {
+			array_multisort($sort_order, SORT_ASC, $modifications);
+		} else {
+			array_multisort($sort_order, SORT_DESC, $modifications);
+		}
+
+		foreach ($modifications as $key => $modification) {
+			if ($count < $filter['limit'] && $key >= $filter['start']) {
+				$data[] = $modification;
+				$count++;
+			}
+		}
+
+
+		return $data;
+	}
 }

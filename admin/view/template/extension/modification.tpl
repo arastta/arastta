@@ -56,7 +56,11 @@
                         <?php } else { ?>
                         <a href="<?php echo $sort_version; ?>"><?php echo $column_version; ?></a>
                         <?php } ?></td>
-					 <td class="text-left"><?php echo $column_type; ?></td>
+					  <td class="text-left"><?php if ($sort == 'type') { ?>
+                        <a href="<?php echo $sort_type; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_type; ?></a>
+                        <?php } else { ?>
+                        <a href="<?php echo $sort_type; ?>"><?php echo $column_type; ?></a>
+                        <?php } ?></td>
                       <td class="text-left"><?php if ($sort == 'status') { ?>
                         <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                         <?php } else { ?>
@@ -84,7 +88,7 @@
                       <td class="text-left"><?php echo $modification['name']; ?><br /><div class="text-danger"><?php echo $modification['invalid_xml']; ?><div></td>
                       <td class="text-left"><?php echo $modification['author']; ?></td>
                       <td class="text-left"><?php echo $modification['version']; ?></td>
-                      <td class="text-left"><?php echo empty($modification['modification_id']) ? 'VQMOD' : 'OCMOD'; ?></td>
+                      <td class="text-left"><?php echo $modification['type']; ?></td>
                       <td class="text-left"><?php echo $modification['status']; ?></td>
                       <td class="text-right"><?php if ($modification['link']) { ?>
                         <a href="<?php echo $modification['link']; ?>" data-toggle="tooltip" title="<?php echo $button_link; ?>" class="btn btn-info" target="_blank"><i class="fa fa-link"></i></a>
