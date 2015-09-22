@@ -38,14 +38,21 @@
         "label": "text_menu_color_label",
         "description": "text_menu_color_description",
         "default": "#FFFFFF",
-        "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav li a"
+        "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav li a:first-child"
       },      
-      "menu-text-hover_color": {
+      "menu-text-dropdown-menu_color": {
         "type": "color",
-        "label": "text_menu_text_hover_color_label",
-        "description": "text_menu_text_hover_color_description",
+        "label": "text_menu_text_dropdown_color_label",
+        "description": "text_menu_text_dropdown_color_description",
+        "default": "#333333",
+        "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav .dropdown-menu li a, .dropdown-menu a"
+      },
+	  "menu-text-dropdown-menu-hover_color": {
+        "type": "color",
+        "label": "text_menu_text_dropdown_hover_color_label",
+        "description": "text_menu_text_dropdown_hover_color_description",
         "default": "#FFFFFF",
-        "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav li a:hover",
+        "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav .dropdown-menu li a:hover, #menu .dropdown-menu .see-all:hover",
         "advance": "true"
       },
       "menu-dropdown-menu_background-color": {
@@ -58,18 +65,10 @@
       },
       "menu-dropdown-menu-item_background-color": {
         "type": "color",
-        "label": "text_menu_dropdown_menu_item_hover_background_color_label",
-        "description": "text_menu_dropdown_menu_item_hover_background_color_description",
-        "default": "#FFFFFF",
-        "selector": ".collapse.navbar-collapse .nav.navbar-nav .dropdown-menu .dropdown-inner .list-unstyled li a:hover",
-        "advance": "true"
-      },
-      "menu-dropdown-menu-item_background-color": {
-        "type": "color",
         "label": "text_menu_dropdown_menu_item_background_color_label",
         "description": "text_menu_dropdown_menu_item_background_color_description",
         "default": "#008db9",
-        "selector": ".collapse.navbar-collapse .nav.navbar-nav .dropdown-menu .dropdown-inner .list-unstyled li a:hover",
+        "selector": ".collapse.navbar-collapse .nav.navbar-nav .dropdown-menu .dropdown-inner .list-unstyled li a:hover, #menu .dropdown-menu .see-all:hover",
         "advance": "true"
       },
       "breadcrumbs_background-color": {
@@ -246,14 +245,14 @@
       "primary-button_background-color": {
         "type": "color",
         "label": "text_primary_button_background_label",
-        "default": "#1e91cf",
+        "default": "#008db9",
         "selector": ".btn-primary",
         "advance": "true"
       },
       "primary-button-hover_background-color": {
         "type": "color",
         "label": "text_primary_button_hover_background_label",
-        "default": "#1872a2",
+        "default": "#1f90bb",
         "selector": ".btn-primary:hover",
         "advance": "true"
       },
@@ -267,14 +266,14 @@
       "primary-button-text_color": {
         "type": "color",
         "label": "text_primary_button_text_color_label",
-        "default": "#1e91cf",
+        "default": "#ffffff",
         "selector": ".btn-primary",
         "advance": "true"
       },
       "primary-button-text-hover_color": {
         "type": "color",
         "label": "text_primary_button_text_hover_color_label",
-        "default": "#1872a2",
+        "default": "#ffffff",
         "selector": ".btn-primary:hover",
         "advance": "true"
       },
