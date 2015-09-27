@@ -137,7 +137,7 @@ class ModelSystemEmailtemplate extends Model {
 	}
 	
 	protected function _getEmailTypes($item) {
-		$result = array ( 'order', 'customer', 'affiliate', 'Contact', 'contact', 'cron', 'mail' );
+		$result = array ( 'order', 'customer', 'affiliate', 'review', 'contact', 'cron', 'mail' );
 
         if ($item < 1  || $item > 7) {
 			$item = 1;
