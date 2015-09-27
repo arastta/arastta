@@ -712,6 +712,7 @@ class ControllerAccountOrder extends Controller {
             );
 
             $data['logo'] = $this->config->get('config_logo');
+            $data['store_name'] = $order_info['store_name'];
 
             $name = !empty($invoice_no) ? $invoice_no : $order_id;
 
