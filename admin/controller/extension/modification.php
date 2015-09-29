@@ -446,7 +446,7 @@ class ControllerExtensionModification extends Controller {
 					'author'          => $author,
 					'version'         => $version,
 					'link'            => $link,
-					'type'            => 'OCMOD',
+					'type'            => 'OCmod',
 					'status'          => ($status) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'enable'          => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $modification_id, 'SSL'),
 					'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $modification_id, 'SSL'),
@@ -466,7 +466,7 @@ class ControllerExtensionModification extends Controller {
 
 				foreach ($data['modifications'] as $modification) {
 					if (substr($modification['modification_id'], -5) != '.xml_') {
-						# enable OCMOD
+						# enable OCmod
 						$modification_vqmod [] = $modification;
 				    } else {
 						if (empty($vqmod_add)) {
@@ -474,7 +474,7 @@ class ControllerExtensionModification extends Controller {
 							
 							foreach ($data['vqmods'] as $vqmod) {
 								if (substr($vqmod['vqmod_id'], -5) != '.xml_') {
-									# enable VQMOD
+									# enable vQmod
 									$modification_vqmod [] = $vqmod;
 								}
 							}
@@ -487,7 +487,7 @@ class ControllerExtensionModification extends Controller {
                 if (empty($vqmod_add)) {
                     foreach ($data['vqmods'] as $vqmod) {
                         if (substr($vqmod['vqmod_id'], -5) != '.xml_') {
-                            # enable VQMOD
+                            # enable vQmod
                             $modification_vqmod [] = $vqmod;
                         }
                     }
@@ -495,7 +495,7 @@ class ControllerExtensionModification extends Controller {
 
 				foreach ($data['vqmods'] as $vqmod) {
 					if (substr($vqmod['vqmod_id'], -5) == '.xml_') {
-						# disable VQMOD
+						# disable vQmod
 						$modification_vqmod [] = $vqmod;
 					}
 				}
@@ -702,7 +702,7 @@ class ControllerExtensionModification extends Controller {
 						'author'          => $author,
 						'version'         => $version,
 						'link'            => $link,
-						'type'            => 'VQMOD',
+						'type'            => 'vQmod',
 						'status'          => ($status) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 						'enable'          => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $vqmod_id, 'SSL'),
 						'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $vqmod_id, 'SSL'),
@@ -719,6 +719,7 @@ class ControllerExtensionModification extends Controller {
 
         return $data;
     }
+	
 	protected function filter($modifications, $filter, $total) {
 		$count = 0;
 
@@ -740,7 +741,6 @@ class ControllerExtensionModification extends Controller {
 				$count++;
 			}
 		}
-
 
 		return $data;
 	}
