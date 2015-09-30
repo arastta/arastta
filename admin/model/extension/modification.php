@@ -19,7 +19,7 @@ class ModelExtensionModification extends Model {
 
     public function applyMod() {
         // To catch XML syntax errors
-        set_error_handler(array('Modification', 'handleXMLError'));
+        set_error_handler(array('ModelExtensionModification', 'handleXMLError'));
 
         if (class_exists('VQMod')) {
             $files = glob(DIR_SYSTEM . 'xml/*.xml');
