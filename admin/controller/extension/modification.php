@@ -724,6 +724,8 @@ class ControllerExtensionModification extends Controller {
 		$count = 0;
 
 		$sort_order = array();
+		
+		$data = array();
 
 		foreach ($modifications as $key => $value) {
 			$sort_order[$key] = $value[$filter['sort']];
