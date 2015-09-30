@@ -462,9 +462,6 @@ class ControllerCatalogManufacturer extends Controller {
             $data['status'] = true;
         }
 
-        // Text Editor
-        $data['text_editor'] = $this->config->get('config_text_editor', 'tinymce');
-
         $this->load->model('appearance/layout');
 
         $data['layouts'] = $this->model_appearance_layout->getLayouts();

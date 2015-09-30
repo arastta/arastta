@@ -447,13 +447,6 @@ class ControllerCatalogInformation extends Controller {
 			$data['information_layout'] = array();
 		}
 
-		// Text Editor
-		$data['text_editor'] = $this->config->get('config_text_editor');
-		
-		if(empty($data['text_editor'])) {
-			$data['text_editor'] = 'tinymce';
-		}		
-		
 		$this->load->model('appearance/layout');
 
 		$data['layouts'] = $this->model_appearance_layout->getLayouts();

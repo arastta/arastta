@@ -1274,13 +1274,6 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['product_layout'] = array();
 		}
-
-		// Text Editor
-		$data['text_editor'] = $this->config->get('config_text_editor');
-		
-		if(empty($data['text_editor'])) {
-			$data['text_editor'] = 'tinymce';
-		}		
 		
 		$this->load->model('appearance/layout');
 

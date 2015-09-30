@@ -28,7 +28,6 @@
 <?php if ($bootstrap_select_lang) { ?>
 <script type="text/javascript" src="view/javascript/bootstrap-select/js/i18n/defaults-<?php echo $bootstrap_select_lang; ?>.min.js"></script>
 <?php } ?>
-<script type="text/javascript" src="view/javascript/tinymce/jquery.tinymce.min.js"></script>
 <script src="view/javascript/common.js" type="text/javascript"></script>
 
 <?php foreach ($styles as $style) { ?>
@@ -37,8 +36,14 @@
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
-
+<?php if ($text_editor == 'tinymce') { ?>
+<script type="text/javascript" src="view/javascript/tinymce/tinymce.min.js"></script>
+<?php } else { ?>
 <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+  <?php if (!empty($editor_lang)) { ?>
+  <script type="text/javascript" src="view/javascript/summernote/lang/summernote-<?php echo $editor_lang; ?>.js"></script>
+  <?php } ?>
+<?php } ?>
 <script type="text/javascript" src="view/javascript/jquery/moment/moment.js" ></script>
 <script type="text/javascript" src="view/javascript/jquery/moment/locale/<?php echo $moment_lang; ?>.js" ></script>
 <script type="text/javascript" src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js"></script>
@@ -46,7 +51,10 @@
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
-
+<script type="text/javascript">
+  var text_editor = '<?php echo $text_editor; ?>';
+  var editor_language = '<?php echo $editor_language; ?>';
+</script>
 </head>
 <body>
 <div id="container">

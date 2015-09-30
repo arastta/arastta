@@ -386,13 +386,6 @@ class ControllerSystemEmailtemplate extends Controller {
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
-		// Text Editor
-		$data['text_editor'] = $this->config->get('config_text_editor');
-		
-		if(empty($data['text_editor'])) {
-			$data['text_editor'] = 'tinymce';
-		}
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
