@@ -187,7 +187,7 @@ class ControllerCommonHeader extends Controller {
 
         $lang_tag = str_replace('-', '_', $this->config->get('config_language_dir'));
 
-        if (is_file(DIR_ADMIN . 'view/javascript/bootstrap-select/js/i18n/defaults-'.$lang_tag.'.min.js')) {
+        if (is_file(DIR_ADMIN . 'view/javascript/bootstrap-select/js/i18n/defaults-' . $lang_tag . '.min.js')) {
             $data['bootstrap_select_lang'] = $lang_tag;
         }
 
@@ -205,6 +205,8 @@ class ControllerCommonHeader extends Controller {
 				$data['editor_language'] = $this->config->get('config_language_dir');
 			} else if (is_file(DIR_ADMIN . 'view/javascript/tinymce/langs/' . $data['lang'] . '.js')) {
 				$data['editor_language'] = $data['lang'];
+			} else if (is_file(DIR_ADMIN . 'view/javascript/tinymce/langs/' . $lang_tag . '.js')) {
+				$data['editor_language'] = $lang_tag;
 			}
 		} else {
 			if (is_file(DIR_ADMIN . 'view/javascript/summernote/lang/summernote-' . $this->config->get('config_language_dir') . '.js')) {
