@@ -57,13 +57,6 @@ class ControllerMarketingContact extends Controller {
 		);
 
 		$data['cancel'] = $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], 'SSL');
-
-		// Text Editor
-		$data['text_editor'] = $this->config->get('config_text_editor');
-		
-		if(empty($data['text_editor'])) {
-			$data['text_editor'] = 'tinymce';
-		}		
 		
 		$this->load->model('setting/store');
 

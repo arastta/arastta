@@ -64,27 +64,11 @@
     </div>
   </div>
 </div>
-  <script type="text/javascript"><!--
+<script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
-	<?php if( $text_editor == 'summernote' ) { ?>
-		$('#input-description<?php echo $language['language_id']; ?>').summernote({
-			height: 300
-		});
-	<?php } else if ( $text_editor == 'tinymce' ) { ?>
-		$('#input-description<?php echo $language['language_id']; ?>').tinymce({
-			script_url : 'view/javascript/tinymce/tinymce.min.js',
-			plugins: "visualblocks,textpattern,table,media,pagebreak,link,image",
-		      target_list: [
-		       {title: 'None', value: ''},
-		       {title: 'Same page', value: '_self'},
-		       {title: 'New page', value: '_blank'},
-		       {title: 'LIghtbox', value: '_lightbox'}
-		      ],
-			height : 500  
-		});
-	<?php } ?>
+	textEditor('#input-description<?php echo $language['language_id']; ?>');
 <?php } ?>
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#language a:first').tab('show');
 //--></script>

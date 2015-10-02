@@ -119,13 +119,6 @@ class ControllerModuleHTML extends Controller {
 		} else {
 			$data['module_description'] = '';
 		}
-
-		// Text Editor
-		$data['text_editor'] = $this->config->get('config_text_editor');
-		
-		if(empty($data['text_editor'])) {
-			$data['text_editor'] = 'tinymce';
-		}
 		
 		$this->load->model('localisation/language');
 

@@ -585,9 +585,6 @@ class ControllerCatalogCategory extends Controller {
 		if (isset($this->request->get['category_id'])) { 
 			$data['menu_name_override'] = '1';
 		}
-		
-		// Text Editor
-		$data['text_editor'] = $this->config->get('config_text_editor', 'tinymce');
 			
 		$this->load->model('appearance/layout');
 
