@@ -92,24 +92,9 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
-<?php if( $text_editor == 'summernote' ) { ?>
-	$('#input-message').summernote({
-		height: 300
-	});
-<?php } else if ( $text_editor == 'tinymce' ) { ?>
-	$('#input-message').tinymce({
-		script_url : 'view/javascript/tinymce/tinymce.min.js',
-		plugins: "visualblocks,textpattern,table,media,pagebreak,link,image",
-		  target_list: [
-		   {title: 'None', value: ''},
-		   {title: 'Same page', value: '_self'},
-		   {title: 'New page', value: '_blank'},
-		   {title: 'LIghtbox', value: '_lightbox'}
-		  ]
-	});
-<?php } ?>
-//--></script> 
+<script type="text/javascript"><!--
+	textEditor('#input-message');
+//--></script>
   <script type="text/javascript"><!--	
 $('select[name=\'to\']').on('change', function() {
 	$('.to').hide();

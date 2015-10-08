@@ -369,13 +369,6 @@ class ControllerLocalisationOrderStatus extends Controller {
 			$data['email_template'] = '';
 		}
 
-        // Text Editor
-        $data['text_editor'] = $this->config->get('config_text_editor');
-
-        if(empty($data['text_editor'])) {
-            $data['text_editor'] = 'tinymce';
-        }
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
