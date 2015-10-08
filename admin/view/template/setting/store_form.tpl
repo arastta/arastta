@@ -792,6 +792,7 @@ $('select[name=\'config_country_id\']').on('change', function() {
 			}
 
 			$('select[name=\'config_zone_id\']').html(html);
+			$('select[name=\'config_zone_id\']').selectpicker('refresh');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
