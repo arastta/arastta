@@ -141,7 +141,7 @@ class ModelMarketingAffiliate extends Model {
             $message = $this->emailtemplate->getMessage('Affiliate', 'affiliate_4', $affiliate_info);
 
             $mail = new Mail($this->config->get('config_mail'));
-            $mail->setTo(html_entity_decode($this->request->post['email'], ENT_QUOTES, 'UTF-8'));
+            $mail->setTo(html_entity_decode($affiliate_info['email'], ENT_QUOTES, 'UTF-8'));
             $mail->setFrom(html_entity_decode($this->config->get('config_email'), ENT_QUOTES, 'UTF-8'));
             $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
             $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
@@ -224,7 +224,7 @@ class ModelMarketingAffiliate extends Model {
             $message = $this->emailtemplate->getMessage('Affiliate', 'affiliate_5', $affiliate_info);
 
             $mail = new Mail($this->config->get('config_mail'));
-            $mail->setTo(html_entity_decode($this->request->post['email'], ENT_QUOTES, 'UTF-8'));
+            $mail->setTo(html_entity_decode($affiliate_info['email'], ENT_QUOTES, 'UTF-8'));
             $mail->setFrom(html_entity_decode($this->config->get('config_email'), ENT_QUOTES, 'UTF-8'));
             $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
             $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
@@ -304,7 +304,7 @@ class ModelMarketingAffiliate extends Model {
         }
 
         $mail = new Mail($this->config->get('config_mail'));
-        $mail->setTo(html_entity_decode($this->request->post['email'], ENT_QUOTES, 'UTF-8'));
+        $mail->setTo(html_entity_decode($data['email'], ENT_QUOTES, 'UTF-8'));
         $mail->setFrom(html_entity_decode($this->config->get('config_email'), ENT_QUOTES, 'UTF-8'));
         $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
         $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
