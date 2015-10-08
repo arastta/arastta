@@ -160,15 +160,15 @@
       "button-group-first-button_background-color": {
         "type": "color",
         "label": "text_button_group_first_button_background_label",
-        "default": "#008db9",
-        "selector": ".button-group button:first-of-type",
+        "default": "#1f90bb",
+        "selector": ".product-thumb .button-group button:first-of-type",
         "advance": "true"
       },
       "button-group-first-button-hover_background-color": {
         "type": "color",
         "label": "text_button_group_first_button_hover_background_label",
-        "default": "#1872a2",
-        "selector": ".button-group button:first-of-type:hover",
+        "default": "#1f90bb",
+        "selector": ".product-thumb .button-group button:first-of-type:hover",
         "advance": "true"
       },
       "button-group-first-border_border": {
@@ -176,70 +176,70 @@
         "label": "text_button_group_first_border_label",
         "default": "",
         "placeholder": "1px solid #ddd",
-        "selector": ".button-group button:first-of-type:hover",
+        "selector": ".product-thumb .button-group button:first-of-type:hover",
         "advance": "true"
       },
       "button-group-first-button-border_border-color": {
         "type": "color",
         "label": "text_button_group_first_button_border_color_label",
         "default": "",
-        "selector": ".button-group button:first-of-type",
+        "selector": ".product-thumb .button-group button:first-of-type",
         "advance": "true"
       },
       "button-group-first-button-border-hover_border-color": {
         "type": "color",
         "label": "text_button_group_first_button_border_hover_color_label",
         "default": "",
-        "selector": ".button-group button:first-of-type:hover",
+        "selector": ".product-thumb .button-group button:first-of-type:hover",
         "advance": "true"
       },
       "button-group-first-button-text_color": {
         "type": "color",
         "label": "text_button_group_first_button_text_color_label",
         "default": "#fff",
-        "selector": ".button-group button:first-of-type",
+        "selector": ".product-thumb .button-group button:first-of-type",
         "advance": "true"
       },
       "button-group-first-button-text-hover_color": {
         "type": "color",
         "label": "text_button_group_first_button_text_hover_color_label",
-        "default": "#444",
-        "selector": ".button-group button:first-of-type:hover",
+        "default": "#fff",
+        "selector": ".product-thumb .button-group button:first-of-type:hover",
         "advance": "true"
       },
       "button-group-other-button_background-color": {
         "type": "color",
         "label": "text_button_group_other_button_background_color_label",
         "default": "#eee",
-        "selector": ".button-group button",
+        "selector": ".product-thumb .button-group button",
         "advance": "true"
       },
       "button-group-other-button-hover_background-color": {
         "type": "color",
         "label": "text_button_group_other_button_hover_background_color_label",
         "default": "#ddd",
-        "selector": ".button-group button:hover",
+        "selector": ".product-thumb .button-group button:hover",
         "advance": "true"
       },
       "button-group-other-button-border_border-color": {
         "type": "color",
         "label": "text_button_group_other_button_border_color_label",
         "default": "#ddd",
-        "selector": ".button-group button:hover",
+        "selector": ".product-thumb .button-group button:hover",
         "advance": "true"
       },
       "button-group-other-button-text_color": {
         "type": "color",
         "label": "text_button_group_other_button_text_color_label",
         "default": "#888",
-        "selector": ".button-group button",
+        "selector": ".product-thumb .button-group button",
         "advance": "true"
       },
       "button-group-other-button-text-hover_color": {
         "type": "color",
         "label": "text_button_group_other_button_text_hover_color_label",
         "default": "#444",
-        "selector": ".button-group button:hover",
+        "selector": ".product-thumb .button-group button:hover",
         "advance": "true"
       },
       "primary-button_background-color": {
