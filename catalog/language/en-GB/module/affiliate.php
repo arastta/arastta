@@ -12,7 +12,7 @@ $_['heading_title']    = 'Affiliate';
 // Text
 $_['text_register']    = 'Register';
 $_['text_login']       = 'Login';
-$_['text_logou']      = 'Logout';
+$_['text_logout']      = 'Logout';
 $_['text_forgotten']   = 'Forgotten Password';
 $_['text_account']     = 'My Account';
 $_['text_edit']        = 'Edit Account';
