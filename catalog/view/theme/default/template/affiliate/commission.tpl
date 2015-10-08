@@ -26,12 +26,12 @@
             </tr>
           </thead>
           <tbody>
-            <?php if ($credits) { ?>
-            <?php foreach ($credits  as $credit) { ?>
+            <?php if ($commissions) { ?>
+            <?php foreach ($commissions  as $commission) { ?>
             <tr>
-              <td class="text-left"><?php echo $credit['date_added']; ?></td>
-              <td class="text-left"><?php echo $credit['description']; ?></td>
-              <td class="text-right"><?php echo $credit['amount']; ?></td>
+              <td class="text-left"><?php echo $commission['date_added']; ?></td>
+              <td class="text-left"><?php echo $commission['description']; ?></td>
+              <td class="text-right"><?php echo $commission['amount']; ?></td>
             </tr>
             <?php } ?>
             <?php } else { ?>
