@@ -2367,3 +2367,15 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
 .hidden-option {
     display: none;
 }
+
+#content .note-dialog .note-help-dialog .modal-close {
+	color: #00A0D2;
+}
+
+#content  .note-dialog .note-help-dialog .note-shortcut-key {
+	color: #00A0D2;
+}
+
+#content  .note-dialog .note-help-dialog .note-shortcut-title {
+	color: #008DB9;
+}

@@ -42,8 +42,8 @@
 <script type="text/javascript" src="view/javascript/tinymce/tinymce.min.js"></script>
 <?php } else { ?>
 <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
-  <?php if (!empty($editor_lang)) { ?>
-  <script type="text/javascript" src="view/javascript/summernote/lang/summernote-<?php echo $editor_lang; ?>.js"></script>
+  <?php if (!empty($editor_language)) { ?>
+  <script type="text/javascript" src="view/javascript/summernote/lang/summernote-<?php echo $editor_language; ?>.js"></script>
   <?php } ?>
 <?php } ?>
 <script type="text/javascript" src="view/javascript/jquery/moment/moment.js" ></script>
