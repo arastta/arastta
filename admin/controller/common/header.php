@@ -221,7 +221,7 @@ class ControllerCommonHeader extends Controller {
 			'br' => 'pt-br',
 			'zh' => 'zh-cn',
 			'tw' => 'zh-tw',
-			'no' => 'nn'
+			'no' => 'nb'
 		);
 
         $data['moment_lang'] = $data['lang'];
