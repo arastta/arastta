@@ -77,12 +77,16 @@ class ModelDatabase extends Model {
     }
 
     private function _validatePdo($data) {
-        $pdo = new \PDO("mysql:host=" . $data['db_hostname'] . ";port=3306;dbname=" . $data['db_database'], $data['db_username'], $data['db_password']);
+        try {
+            $pdo = new \PDO("mysql:host=" . $data['db_hostname'] . ";port=3306;dbname=" . $data['db_database'], $data['db_username'], $data['db_password']);
 
-        //$status = $pdo->getAttribute(PDO::ATTR_CONNECTION_STATUS);
-        $status = ($pdo->getAttribute(PDO::ATTR_DRIVER_NAME) == 'mysql') ? true : false;
+            //$status = $pdo->getAttribute(PDO::ATTR_CONNECTION_STATUS);
+            $status = ($pdo->getAttribute(PDO::ATTR_DRIVER_NAME) == 'mysql') ? true : false;
 
-        $pdo = null;
+            unset($pdo);
+        } catch (\PDOException $e) {
+            $status = false;
+        }
 
         return $status;
     }
