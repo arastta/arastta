@@ -161,7 +161,7 @@ class ControllerModuleFeatured extends Controller {
 		
 		if (isset($this->request->post['random_product'])) {
 			$data['random_product'] = $this->request->post['random_product'];
-		} elseif (!empty($module_info)) {
+		} else if (!empty($module_info) && isset($module_info['random_product'])) {
 			$data['random_product'] = $module_info['random_product'];
 		} else {
 			$data['random_product'] = '0';
