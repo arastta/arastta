@@ -29,7 +29,7 @@ class ControllerModuleFeatured extends Controller {
 		}
 
 		if (!empty($setting['product'])) {
-			if ($setting['random_product']) {
+			if (isset($setting['random_product']) && !empty($setting['random_product'])) {
 				shuffle($setting['product']);
 			}
 			
