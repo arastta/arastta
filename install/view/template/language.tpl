@@ -77,4 +77,10 @@
       }
     });
   }
+
+  $('#install-body select').keydown(function(e) {
+    if (e.keyCode == 13) {
+      saveLanguage();
+    }
+  });
 </script>

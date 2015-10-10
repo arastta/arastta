@@ -84,4 +84,10 @@ $('#advanced-settings').on('shown.bs.collapse', function() {
 });
 
 $('#btn-show-advanced').tooltip();
+
+$('#install-body input').keydown(function(e) {
+	if (e.keyCode == 13) {
+		saveSettings();
+	}
+});
 </script>
