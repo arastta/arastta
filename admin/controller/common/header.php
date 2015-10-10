@@ -224,10 +224,10 @@ class ControllerCommonHeader extends Controller {
 			'no' => 'nb'
 		);
 
-        $data['moment_lang'] = $data['lang'];
+        $data['moment_lang'] = $this->session->data['admin_language'];
 
-        if (array_key_exists($data['lang'], $moment_special)) {
-            $data['moment_lang'] = $moment_special[$data['lang']];
+        if (array_key_exists($this->session->data['admin_language'], $moment_special)) {
+            $data['moment_lang'] = $moment_special[$this->session->data['admin_language']];
         }
 		
         $data['search'] = $this->load->controller('search/search');
