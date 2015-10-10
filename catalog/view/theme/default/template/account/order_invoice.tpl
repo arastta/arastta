@@ -14,7 +14,7 @@
     <div id="content">
       <div class="container-fluid">
         <div class="col-lg-12 text-left">
-          <img src="image/<?php echo $logo; ?>" title="<?php echo $store_name; ?>" alt="<?php echo $store_name; ?>" class="img-responsive invoice-logo">
+          <img src="image/<?php echo $logo; ?>" title="<?php echo $order['store_name']; ?>" alt="<?php echo $order['store_name']; ?>" class="img-responsive invoice-logo">
         </div>
         <div class="col-lg-12">
           <table class="table table-bordered">
