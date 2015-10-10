@@ -51,7 +51,7 @@ class ControllerAppearanceCustomizer extends Controller {
         }
 
         $data['direction'] = $this->language->get('direction');
-        $data['language'] = $this->session->data['language'];
+        $data['language'] = $this->session->data['admin_language'];
 
         $data['action'] = $this->url->link('appearance/customizer', 'token=' . $this->session->data['token'], 'SSL');
         $data['reset'] = $this->url->link('appearance/customizer/reset', 'token=' . $this->session->data['token'], 'SSL');
@@ -335,7 +335,7 @@ class ControllerAppearanceCustomizer extends Controller {
         }
 
         $data['direction'] = $this->language->get('direction');
-        $data['language'] = $this->session->data['language'];
+        $data['language'] = $this->session->data['admin_language'];
 
         $data['action'] = $this->url->link('appearance/customizer', 'token=' . $this->session->data['token'], 'SSL');
         $data['reset'] = $this->url->link('appearance/customizer/reset', 'token=' . $this->session->data['token'], 'SSL');

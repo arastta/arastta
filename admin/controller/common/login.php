@@ -132,7 +132,7 @@ class ControllerCommonLogin extends Controller {
             $data['languages'] = $this->model_localisation_language->getLanguages();
         } else {
             $data['languages'] = '';
-            $this->session->data['language'] = $this->config->get('config_admin_language');
+            $this->session->data['admin_language'] = $this->config->get('config_admin_language');
         }
 
 		$data['config_admin_language'] = $this->config->get('config_admin_language');
