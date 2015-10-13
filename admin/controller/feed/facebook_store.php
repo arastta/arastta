@@ -186,7 +186,7 @@ class ControllerFeedFacebookStore extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		$data['data_feed'] = htmlspecialchars('<iframe src="' . HTTPS_CATALOG . 'index.php?route=facebook_store/home&filter_name=" frameborder="0" scrolling="no" width="810" height="1400"></iframe>');
+		$data['data_feed'] = htmlspecialchars('<iframe src="' . HTTPS_CATALOG . 'index.php?route=feed/facebook_store" frameborder="0" scrolling="no" width="810" height="1400"></iframe>');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
