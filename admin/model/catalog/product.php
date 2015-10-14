@@ -125,8 +125,8 @@ class ModelCatalogProduct extends Model {
             }
         }
 
-		if (isset($data['product_recurrings'])) {
-			foreach ($data['product_recurrings'] as $recurring) {
+		if (isset($data['product_recurring'])) {
+			foreach ($data['product_recurring'] as $recurring) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_recurring` SET `product_id` = " . (int)$product_id . ", customer_group_id = " . (int)$recurring['customer_group_id'] . ", `recurring_id` = " . (int)$recurring['recurring_id']);
 			}
 		}
@@ -284,8 +284,8 @@ class ModelCatalogProduct extends Model {
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_recurring` WHERE product_id = " . (int)$product_id);
 
-		if (isset($data['product_recurrings'])) {
-			foreach ($data['product_recurrings'] as $recurring) {
+		if (isset($data['product_recurring'])) {
+			foreach ($data['product_recurring'] as $recurring) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_recurring` SET `product_id` = " . (int)$product_id . ", customer_group_id = " . (int)$recurring['customer_group_id'] . ", `recurring_id` = " . (int)$recurring['recurring_id']);
 			}
 		}
@@ -320,7 +320,7 @@ class ModelCatalogProduct extends Model {
 			$data['product_download'] = $this->getProductDownloads($product_id);
 			$data['product_layout'] = $this->getProductLayouts($product_id);
 			$data['product_store'] = $this->getProductStores($product_id);
-			$data['product_recurrings'] = $this->getRecurrings($product_id);
+			$data['product_recurring'] = $this->getRecurrings($product_id);
 
 			$this->addProduct($data);
 		}
