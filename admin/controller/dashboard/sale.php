@@ -44,6 +44,8 @@ class ControllerDashboardSale extends Controller {
 			$data['total'] = round($sale_total);
 		}
 
+		$data['total'] = $this->currency->format($sale_total, $this->config->get('config_currency'));
+		
 		$data['sale'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
 
 		return $this->load->view('dashboard/sale.tpl', $data);
