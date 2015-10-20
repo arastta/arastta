@@ -7,7 +7,7 @@
  */
 
 class ModelToolImage extends Model {
-	public function resize($filename, $width, $height) {
+	public function resize($filename, $width, $height, $fill = false) {
 		if (!is_file(DIR_IMAGE . $filename)) {
 			return;
 		}
@@ -33,8 +33,14 @@ class ModelToolImage extends Model {
 			list($width_orig, $height_orig) = getimagesize(DIR_IMAGE . $old_image);
 
 			if ($width_orig != $width || $height_orig != $height) {
+				if ($fill) {
+					$dimension = $width_orig > $height_orig ? 'h' : 'w';
+				} else {
+					$dimension = '';
+				}
+
 				$image = new Image(DIR_IMAGE . $old_image);
-				$image->resize($width, $height);
+				$image->resize($width, $height, $dimension);
 				$image->save(DIR_IMAGE . $new_image);
 			} else {
 				copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);
