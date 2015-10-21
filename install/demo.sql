@@ -76,8 +76,8 @@ INSERT INTO `ar_banner_image_description` (`banner_image_id`, `language_id`, `ba
 (107, 1, 7, 'Logitech Mouse');
 
 INSERT INTO `ar_category` (`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES
-(18, 'catalog/demo/hp_2.jpg', 0, 1, 0, 2, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
-(20, 'catalog/demo/compaq_presario.jpg', 0, 1, 1, 1, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
+(18, '', 0, 1, 0, 2, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
+(20, '', 0, 1, 1, 1, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (24, '', 0, 1, 1, 5, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (25, '', 0, 1, 1, 3, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (26, '', 20, 0, 0, 1, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
@@ -88,7 +88,7 @@ INSERT INTO `ar_category` (`category_id`, `image`, `parent_id`, `top`, `column`,
 (31, '', 25, 0, 0, 1, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (32, '', 25, 0, 0, 1, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (33, '', 0, 1, 1, 6, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
-(34, 'catalog/demo/ipod_touch_4.jpg', 0, 1, 4, 7, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
+(34, '', 0, 1, 4, 7, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (35, '', 28, 0, 0, 0, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (36, '', 28, 0, 0, 0, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (37, '', 34, 0, 0, 0, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
@@ -823,7 +823,7 @@ INSERT INTO `ar_url_alias` (`url_alias_id`, `query`, `keyword`, `language_id`) V
 INSERT INTO `ar_voucher_theme` (`voucher_theme_id`, `image`) VALUES
 (6, 'catalog/demo/apple_logo.jpg'),
 (7, 'catalog/demo/gift-voucher-birthday.jpg'),
-(8, 'catalog/demo/canon_eos_5d_2.jpg');
+(8, 'catalog/demo/canon_logo.jpg');
 
 INSERT INTO `ar_voucher_theme_description` (`voucher_theme_id`, `language_id`, `name`) VALUES
 (6, 1, 'Christmas'),
