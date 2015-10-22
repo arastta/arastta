@@ -1405,7 +1405,7 @@ class ControllerCatalogProduct extends Controller {
 							'name'                 => $option_info['name'],
 							'type'                 => $option_info['type'],
 							'value'                => $product_option['value'],
-							'required'             => $product_option['required']
+							'required'             => (int)$product_option['required']
 						);
 					}
 				}
