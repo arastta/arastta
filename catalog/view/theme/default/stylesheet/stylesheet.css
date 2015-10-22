@@ -883,17 +883,26 @@ h2.price {
     }
 }
 
-#content .row .col-sm-9 ul li {
+#content .row .col-sm-12 ul li, #content .row .col-sm-3 ul li {
 	list-style-type : none!important;
 	text-align: center !important;
 }
 
-#content .row .col-sm-9  {
+#content .row .col-sm-12 ul li a, #content .row .col-sm-3 ul li a {
+	text-decoration:none;
+	margin:10px;
+	float:left;
+	padding:0px 5px;
+	text-align:center;
+	white-space:nowrap;
+}
+
+#content .row .col-sm-12  {
     margin: 0;
     padding: 0;
 }
 
-#content .row .col-sm-9  li {
+#content .row .col-sm-12  li {
     display: block;
     float: left;
     margin: 0;
