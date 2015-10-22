@@ -1263,7 +1263,7 @@ $('#button-customer').on('click', function() {
 				// Highlight any found errors
 				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
-				$.ajax({
+				var ajax1 = $.ajax({
 					url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 					type: 'post',
 					data: $('#cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
@@ -1287,34 +1287,38 @@ $('#button-customer').on('click', function() {
 					}
 				});		
 					
-				$.ajax({
-					url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/voucher/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-					type: 'post',
-					data: $('#cart input[name^=\'voucher\'][type=\'text\'], #cart input[name^=\'voucher\'][type=\'hidden\'], #cart input[name^=\'voucher\'][type=\'radio\']:checked, #cart input[name^=\'voucher\'][type=\'checkbox\']:checked, #cart select[name^=\'voucher\'], #cart textarea[name^=\'voucher\']'),
-					dataType: 'json',
-					beforeSend: function() {
-						$('#button-voucher-add').button('loading');
-					},
-					complete: function() {
-						$('#button-voucher-add').button('reset');
-					},
-					success: function(json) {
-						$('.alert, .text-danger').remove();
-						$('.form-group').removeClass('has-error');
-					
-						if (json['error'] && json['error']['warning']) {
-							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				var ajax2 = ajax1.then(function() {
+					$.ajax({
+						url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/voucher/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+						type: 'post',
+						data: $('#cart input[name^=\'voucher\'][type=\'text\'], #cart input[name^=\'voucher\'][type=\'hidden\'], #cart input[name^=\'voucher\'][type=\'radio\']:checked, #cart input[name^=\'voucher\'][type=\'checkbox\']:checked, #cart select[name^=\'voucher\'], #cart textarea[name^=\'voucher\']'),
+						dataType: 'json',
+						beforeSend: function() {
+							$('#button-voucher-add').button('loading');
+						},
+						complete: function() {
+							$('#button-voucher-add').button('reset');
+						},
+						success: function(json) {
+							$('.alert, .text-danger').remove();
+							$('.form-group').removeClass('has-error');
+						
+							if (json['error'] && json['error']['warning']) {
+								$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+							}
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 						}
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-					}
+					});	
 				});	
+				
+				ajax2.done(function() {
+					// Refresh products, vouchers and totals
+					$('#button-refresh').trigger('click');
 
-				// Refresh products, vouchers and totals
-				$('#button-refresh').trigger('click');
-
-				$('a[href=\'#tab-cart\']').tab('show');
+					$('a[href=\'#tab-cart\']').tab('show');
+				});	
 
                 $('select[name=\'payment_address\']').selectpicker('refresh');
                 $('select[name=\'shipping_address\']').selectpicker('refresh');
@@ -1827,17 +1831,17 @@ $('#button-payment-address').on('click', function() {
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
-				});	
-				
-				// Refresh products, vouchers and totals
-				$('#button-refresh').trigger('click');
-								
-				// If shipping required got to shipping tab else total tabs
-				if ($('select[name=\'shipping_method\']').prop('disabled')) {
-					$('a[href=\'#tab-total\']').tab('show');		
-				} else {
-					$('a[href=\'#tab-shipping\']').tab('show');							
-				}
+				}).done(function() {
+                    // Refresh products, vouchers and totals
+                    $('#button-refresh').trigger('click');
+
+                    // If shipping required got to shipping tab else total tabs
+                    if ($('select[name=\'shipping_method\']').prop('disabled')) {
+                        $('a[href=\'#tab-total\']').tab('show');
+                    } else {
+                        $('a[href=\'#tab-shipping\']').tab('show');
+                    }
+                });
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -2024,12 +2028,12 @@ $('#button-shipping-address').on('click', function() {
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
-				});	
-				
-				// Refresh products, vouchers and totals
-				$('#button-refresh').trigger('click');
-								
-				$('a[href=\'#tab-total\']').tab('show');							
+				}).done(function() {
+                    // Refresh products, vouchers and totals
+                    $('#button-refresh').trigger('click');
+
+                    $('a[href=\'#tab-total\']').tab('show');
+                });						
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
