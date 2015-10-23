@@ -236,7 +236,7 @@ class Seo extends Object {
 
             $data[$category_id][] = $query->row['parent_id'];
 
-            $data[$category_id] = array_merge($data[$category_id], $this->getParentCategoriesIds($query->row['parent_id']));
+			$data[$category_id] = array_merge($this->getParentCategoriesIds($query->row['parent_id']), $data[$category_id]);
         }
 
         return $data[$category_id];
