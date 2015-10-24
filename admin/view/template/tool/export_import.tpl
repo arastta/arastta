@@ -65,13 +65,22 @@
 										<?php } ?>
 										<?php echo $text_export_type_option; ?>
 										<br />
-										<?php if ($export_type==$text_export_type_attribute) { ?>
+										<?php if ($export_type=='a') { ?>
 										<input type="radio" name="export_type" value="a" checked="checked" />
 										<?php } else { ?>
 										<input type="radio" name="export_type" value="a" />
 										<?php } ?>
 										<?php echo $text_export_type_attribute; ?>
 										<br />
+										<?php if ($exist_filter) { ?>
+										<?php if ($export_type=='f') { ?>
+										<input type="radio" name="export_type" value="f" checked="checked" />
+										<?php } else { ?>
+										<input type="radio" name="export_type" value="f" />
+										<?php } ?>
+										<?php echo $text_export_type_filter; ?>
+										<br />
+										<?php } ?>
 									</td>
 								</tr>
 
@@ -184,6 +193,30 @@
 										</label>
 									</td>
 								</tr>
+								<?php if ($exist_filter) { ?>
+								<tr>
+									<td>
+										<label>
+										<?php if ($settings_use_filter_group_id) { ?>
+										<input type="checkbox" name="export_import_settings_use_filter_group_id" value="1" checked="checked" /> <?php echo $entry_settings_use_filter_group_id; ?>
+										<?php } else { ?>
+										<input type="checkbox" name="export_import_settings_use_filter_group_id" value="1" /> <?php echo $entry_settings_use_filter_group_id; ?>
+										<?php } ?>
+										</label>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label>
+										<?php if ($settings_use_filter_id) { ?>
+										<input type="checkbox" name="export_import_settings_use_filter_id" value="1" checked="checked" /> <?php echo $entry_settings_use_filter_id; ?>
+										<?php } else { ?>
+										<input type="checkbox" name="export_import_settings_use_filter_id" value="1" /> <?php echo $entry_settings_use_filter_id; ?>
+										<?php } ?>
+										</label>
+									</td>
+								</tr>
+								<?php } ?>
 								<tr>
 									<td>
 										<label>
@@ -252,6 +285,10 @@ $(document).ready(function() {
 
 	$('span.close').click(function() {
 		$(this).parent().remove();
+	});
+	
+	$('a[data-toggle="tab"]').click(function() {
+		$('#export_import_notification').remove();
 	});
 });
 

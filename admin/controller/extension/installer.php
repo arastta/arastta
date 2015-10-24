@@ -794,6 +794,7 @@ class ControllerExtensionInstaller extends Controller {
                     $json['overwrite'][] = 'system/xml/'.$zip_name;
 				}
 			}
+			
 			// PHP
 			if (substr($zip_name, 0, 11) == 'install.php') {
 				$json['step'][] = array(
@@ -802,6 +803,7 @@ class ControllerExtensionInstaller extends Controller {
 					'path' => $path
 				);
 			}
+			
 			// JSON
 			if (substr($zip_name, 0, 12) == 'install.json') {
 				$json['step'][] = array(
