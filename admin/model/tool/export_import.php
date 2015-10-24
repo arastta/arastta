@@ -173,10 +173,10 @@ class ModelToolExportImport extends Model {
 
 	protected function getManufacturers() {
 		// find all manufacturers already stored in the database
+		$default_language_id = $this->getDefaultLanguageId();
 		$manufacturer_ids = array();
 		$sql  = "SELECT ms.manufacturer_id, ms.store_id, md.`name` FROM `".DB_PREFIX."manufacturer_to_store` ms ";
-		$sql .= "INNER JOIN `".DB_PREFIX."manufacturer` m ON m.manufacturer_id=ms.manufacturer_id ";
-		$sql .= "INNER JOIN `".DB_PREFIX."manufacturer_description` md ON md.manufacturer_id=ms.manufacturer_id";
+		$sql .= "INNER JOIN `".DB_PREFIX."manufacturer_description` md ON md.manufacturer_id=ms.manufacturer_id ";
 		$result = $this->db->query( $sql );
 		$manufacturers = array();
 		foreach ($result->rows as $row) {
@@ -204,26 +204,52 @@ class ModelToolExportImport extends Model {
 			if (!in_array( $store_id, $available_store_ids )) {
 				continue;
 			}
-			if (!isset($manufacturers[$name]['manufacturer_id'])) {
-                $language_id = $this->getDefaultLanguageId();
-                $this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer SET sort_order = '0', status = '1', date_modified = NOW(), date_added = NOW()");
-                $manufacturer_id = $this->db->getLastId();
-                $this->db->query("INSERT INTO ".DB_PREFIX."manufacturer_description SET manufacturer_id = '" . $manufacturer_id . "', name = '".$this->db->escape($name)."', language_id = '" . $language_id . "'");
-                if (!isset($manufacturers[$name])) {
-					$manufacturers[$name] = array();
+			// find the installed languages
+			$languages = $this->getLanguages();
+
+			$old_manufacturer = false;
+			foreach ($name as $manufacturer_name) {
+				if (isset($manufacturers[$manufacturer_name]['manufacturer_id'])) {
+					$old_manufacturer = true;
+					$manufacturer_id = $manufacturers[$manufacturer_name]['manufacturer_id'];
 				}
-				$manufacturers[$name]['manufacturer_id'] = $manufacturer_id;
 			}
-			if (!isset($manufacturers[$name]['store_ids'])) {
-				$manufacturers[$name]['store_ids'] = array();
-			}
-			if (!in_array($store_id,$manufacturers[$name]['store_ids'])) {
-				$manufacturer_id = $manufacturers[$name]['manufacturer_id'];
-				$sql = "INSERT INTO `".DB_PREFIX."manufacturer_to_store` SET manufacturer_id='".(int)$manufacturer_id."', store_id='".(int)$store_id."'";
-				$this->db->query( $sql );
-				$manufacturers[$name]['store_ids'][] = $store_id;
+
+			if (!$old_manufacturer) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer SET sort_order = '0', status = '1', date_modified = NOW(), date_added = NOW()");
+				$manufacturer_id = $this->db->getLastId();
+
+				foreach ($languages as $language) {
+					$language_code = $language['code'];
+					$language_id = $language['language_id'];
+					$manufacturer_name = isset($name[$language_code]) ? $this->db->escape($name[$language_code]) : '';
+					$this->db->query("INSERT INTO ".DB_PREFIX."manufacturer_description SET manufacturer_id = '" . $manufacturer_id . "', name = '".$this->db->escape($manufacturer_name)."', language_id = '" . $language_id . "'");
+
+					if (!isset($manufacturers[$name]['store_ids'])) {
+						$manufacturers[$name]['store_ids'] = array();
+					}
+				}
+
+				if (!in_array($store_id, $manufacturers[$name]['store_ids'])) {
+					$sql = "INSERT INTO `".DB_PREFIX."manufacturer_to_store` SET manufacturer_id='".(int)$manufacturer_id."', store_id='".(int)$store_id."'";
+					$this->db->query( $sql );
+					$manufacturers[$name]['store_ids'][] = $store_id;
+				}
+			} else {
+				foreach ($name as $key => $manufacturer_name) {
+					foreach($languages as $language) {
+						if ($language['code'] == $key) {
+							$language_id = $language['language_id'];
+							break;
+						}
+					}
+					$sql = "UPDATE ".DB_PREFIX."manufacturer_description SET name='" . $this->db->escape($manufacturer_name) . "' WHERE manufacturer_id=". $manufacturer_id . " AND language_id=".$language_id;
+					$this->db->query( $sql );
+				}
 			}
 		}
+
+		return $manufacturer_id;
 	}
 
 	protected function getWeightClassIds() {
@@ -484,6 +510,7 @@ class ModelToolExportImport extends Model {
 			unset($url_alias_ids[$category_id]);
 		}
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreCategoryCells( $i, &$j, &$worksheet, &$category ) {
 		return;
@@ -657,6 +684,7 @@ class ModelToolExportImport extends Model {
 			$this->db->query( $sql );
 		}
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreCategoryFilterCells( $i, &$j, &$worksheet, &$category_filter ) {
 		return;
@@ -824,13 +852,8 @@ class ModelToolExportImport extends Model {
 		$tags = $product['tags'];
 		$sort_order = $product['sort_order'];
         foreach($manufacturers as $key => $value){
-            if (in_array($key, $manufacturer_name)) {
-                $this->storeManufacturerIntoDatabase( $manufacturers, $manufacturer_name, $store_ids, $available_store_ids );
-                $manufacturer_id = $value['manufacturer_id'];
-                break;
-            } else {
-                $manufacturer_id = 0;
-            }
+			$manufacturer_id = $this->storeManufacturerIntoDatabase( $manufacturers, $manufacturer_name, $store_ids, $available_store_ids );
+			break;
         }
 
         $manufacturer_id = empty($manufacturer_id) ? 0 : $manufacturer_id;
@@ -993,6 +1016,7 @@ class ModelToolExportImport extends Model {
 		}
 		$this->multiquery( $sql );
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreProductCells( $i, &$j, &$worksheet, &$product ) {
 		return;
@@ -1302,6 +1326,7 @@ class ModelToolExportImport extends Model {
 			$this->db->query( $sql );
 		}
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreAdditionalImageCells( $i, &$j, &$worksheet, &$image ) {
 		return;
@@ -1414,6 +1439,7 @@ class ModelToolExportImport extends Model {
 			$this->db->query( $sql );
 		}
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreSpecialCells( $i, &$j, &$worksheet, &$special ) {
 		return;
@@ -1531,6 +1557,7 @@ class ModelToolExportImport extends Model {
 			$this->db->query( $sql );
 		}
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreDiscountCells( $i, &$j, &$worksheet, &$discount ) {
 		return;
@@ -1645,6 +1672,7 @@ class ModelToolExportImport extends Model {
 			$this->db->query( $sql );
 		}
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreRewardCells( $i, &$j, &$worksheet, &$reward ) {
 		return;
@@ -1779,6 +1807,7 @@ class ModelToolExportImport extends Model {
 			$this->db->query( $sql );
 		}
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreProductOptionCells( $i, &$j, &$worksheet, &$product_option ) {
 		return;
@@ -1933,6 +1962,7 @@ class ModelToolExportImport extends Model {
 			$this->db->query( $sql );
 		}
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreProductOptionValueCells( $i, &$j, &$worksheet, &$product_option_value ) {
 		return;
@@ -2091,6 +2121,7 @@ class ModelToolExportImport extends Model {
 			$this->db->query( $sql );
 		}
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreProductAttributeCells( $i, &$j, &$worksheet, &$product_attribute ) {
 		return;
@@ -2235,6 +2266,7 @@ class ModelToolExportImport extends Model {
 			$this->db->query( $sql );
 		}
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreProductFilterCells( $i, &$j, &$worksheet, &$product_filter ) {
 		return;
@@ -2348,6 +2380,7 @@ class ModelToolExportImport extends Model {
 		$sql = "DELETE FROM `".DB_PREFIX."option_description` WHERE option_id='".(int)$option_id."'";
 		$this->db->query( $sql );
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreOptionCells( $i, &$j, &$worksheet, &$option ) {
 		return;
@@ -2446,6 +2479,7 @@ class ModelToolExportImport extends Model {
 		$sql = "DELETE FROM `".DB_PREFIX."option_value_description` WHERE option_value_id='".(int)$option_value_id."'";
 		$this->db->query( $sql );
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreOptionValueCells( $i, &$j, &$worksheet, &$option ) {
 		return;
@@ -2549,6 +2583,7 @@ class ModelToolExportImport extends Model {
 		$sql = "DELETE FROM `".DB_PREFIX."attribute_group_description` WHERE attribute_group_id='".(int)$attribute_group_id."'";
 		$this->db->query( $sql );
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreAttributeGroupCells( $i, &$j, &$worksheet, &$attribute_group ) {
 		return;
@@ -2637,6 +2672,7 @@ class ModelToolExportImport extends Model {
 		$sql = "DELETE FROM `".DB_PREFIX."attribute_description` WHERE attribute_id='".(int)$attribute_id."'";
 		$this->db->query( $sql );
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreAttributeCells( $i, &$j, &$worksheet, &$option ) {
 		return;
@@ -2729,6 +2765,7 @@ class ModelToolExportImport extends Model {
 		$sql = "DELETE FROM `".DB_PREFIX."filter_group_description` WHERE filter_group_id='".(int)$filter_group_id."'";
 		$this->db->query( $sql );
 	}
+
 	// function for reading additional cells in class extensions
 	protected function moreFilterGroupCells( $i, &$j, &$worksheet, &$filter_group ) {
 		return;
@@ -4827,12 +4864,12 @@ class ModelToolExportImport extends Model {
     protected function getManufacturerDescriptions( &$languages, $manufacturer_id ) {
         $manufacturer_descriptions = array();
         foreach ($languages as $language) {
-            $language_id = $language['language_id'];
+			$language_id = $language['language_id'];
             $language_code = $language['code'];
             $sql  = "SELECT * FROM `".DB_PREFIX."manufacturer_description` md ";
-            $sql .= "WHERE md.manufacturer_id = " . $manufacturer_id;
+			$sql .= "WHERE md.manufacturer_id = " . $manufacturer_id . " AND language_id=" . $language_id;
             $query = $this->db->query( $sql );
-            $manufacturer_descriptions[$language_code] = $query->rows;
+			$manufacturer_descriptions[$language_code] = $query->rows;
         }
         return $manufacturer_descriptions;
     }

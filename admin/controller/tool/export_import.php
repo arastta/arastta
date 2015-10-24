@@ -135,17 +135,19 @@ class ControllerToolExportImport extends Controller {
 	protected function getForm() {
 		$data = $this->language->all();
 
+		$data['exist_filter'] = $this->model_tool_export_import->existFilter();
+
+		$data['text_export_type_category'] = ($data['exist_filter']) ? $this->language->get('text_export_type_category') : $this->language->get('text_export_type_category_old');
+		$data['text_export_type_product'] = ($data['exist_filter']) ? $this->language->get('text_export_type_product') : $this->language->get('text_export_type_product_old');
+		
 		$data['help_import'] = ($data['exist_filter']) ? $this->language->get( 'help_import' ) : $this->language->get( 'help_import_old' );
 		$data['error_post_max_size'] = str_replace( '%1', ini_get('post_max_size'), $this->language->get('error_post_max_size') );
 		$data['error_upload_max_filesize'] = str_replace( '%1', ini_get('upload_max_filesize'), $this->language->get('error_upload_max_filesize') );
-		if (!empty($this->session->data['export_import_error']['errstr'])) {
-			$this->error['warning'] = $this->session->data['export_import_error']['errstr'];
-		}
 
  		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 			if (!empty($this->session->data['export_import_nochange'])) {
-				$data['error_warning'] .= "<br />\n".$this->language->get( 'text_nochange' );
+				$data['error_warning'] .= $this->language->get( 'text_nochange' );
 			}
 		} else {
 			$data['error_warning'] = '';
@@ -161,15 +163,7 @@ class ControllerToolExportImport extends Controller {
 
 		unset($this->session->data['export_import_error']);
 		unset($this->session->data['export_import_nochange']);
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
 		
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
@@ -265,6 +259,7 @@ class ControllerToolExportImport extends Controller {
 		} else {
 			$data['settings_use_filter_id'] = '0';
 		}
+		
 		if (isset($this->request->post['export_import_settings_use_export_cache'])) {
 			$data['settings_use_export_cache'] = $this->request->post['export_import_settings_use_export_cache'];
 		} else if ($this->config->get( 'export_import_settings_use_export_cache' )) {

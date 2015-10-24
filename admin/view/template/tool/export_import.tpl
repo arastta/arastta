@@ -24,12 +24,6 @@
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 		</div>
 		<?php } ?>
-		<?php if ((!$error_warning) && (!$success)) { ?>
-		<div id="export_import_notification" class="alert alert-info"><i class="fa fa-info-circle"></i>
-			<div id="export_import_loading"><img src="<?php echo HTTP_SERVER; ?>/view/image/export-import/loading.gif" /><?php echo $text_loading_notifications; ?></div>
-			<button type="button" class="close" data-dismiss="alert">&times;</button>
-		</div>
-		<?php } ?>
 		<div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-table"></i> <?php echo $text_list; ?></h3>
