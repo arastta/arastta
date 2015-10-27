@@ -80,7 +80,7 @@ class Language {
 
 		// Step 2: Load the store's default language translation (it's the store owner preferred fallback)
 		// Don't load twice if it's en-GB
-		if ($this->default != 'en-GB') {
+        if (($this->directory != 'en-GB') && ($this->directory != $this->default)) {
 			$file = $dir . 'language/' . $this->default . '/' . $filename . '.php';
 
 			if (file_exists($file)) {
@@ -90,7 +90,7 @@ class Language {
 
 		// Step 3: Load the user's selected language translation (it's the user preferred language)
 		// Dont't load twice if it's en-GB or same as default
-		if (($this->directory != 'en-GB') and ($this->directory != $this->default)) {
+		if (($this->directory != 'en-GB') && ($this->directory != $this->default)) {
 			$file = $dir . 'language/' . $this->directory . '/' . $filename . '.php';
 
 			if (file_exists($file)) {
