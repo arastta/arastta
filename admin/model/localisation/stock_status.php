@@ -10,9 +10,9 @@ class ModelLocalisationStockStatus extends Model {
 	public function addStockStatus($data) {
 		foreach ($data['stock_status'] as $language_id => $value) {
 			if (isset($stock_status_id)) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "stock_status SET stock_status_id = '" . (int)$stock_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "stock_status SET stock_status_id = '" . (int)$stock_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', color = '" . $this->db->escape($value['color']) . "'");
 			} else {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "stock_status SET language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "stock_status SET language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', color = '" . $this->db->escape($value['color']) . "'");
 
 				$stock_status_id = $this->db->getLastId();
 			}
@@ -26,7 +26,7 @@ class ModelLocalisationStockStatus extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "stock_status WHERE stock_status_id = '" . (int)$stock_status_id . "'");
 
 		foreach ($data['stock_status'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "stock_status SET stock_status_id = '" . (int)$stock_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "stock_status SET stock_status_id = '" . (int)$stock_status_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', color = '" . $this->db->escape($value['color']) . "'");
 		}
 
 		$this->cache->delete('stock_status');
@@ -92,7 +92,7 @@ class ModelLocalisationStockStatus extends Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "stock_status WHERE stock_status_id = '" . (int)$stock_status_id . "'");
 
 		foreach ($query->rows as $result) {
-			$stock_status_data[$result['language_id']] = array('name' => $result['name']);
+			$stock_status_data[$result['language_id']] = array('name' => $result['name'], 'color' => $result['color']);
 		}
 
 		return $stock_status_data;
