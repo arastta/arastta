@@ -265,7 +265,7 @@ class ControllerProductProduct extends Controller {
 			$data['button_wishlist'] = $this->language->get('button_wishlist');
 			$data['button_compare'] = $this->language->get('button_compare');
 			$data['button_quantity_plus'] = $this->language->get('button_quantity_plus');
-			$data['button_quantity_minus'] = $this->language->get('button_quantity_minus');			
+			$data['button_quantity_minus'] = $this->language->get('button_quantity_minus');
 			$data['button_upload'] = $this->language->get('button_upload');
 			$data['button_continue'] = $this->language->get('button_continue');
 
@@ -284,11 +284,16 @@ class ControllerProductProduct extends Controller {
 
 			if ($product_info['quantity'] <= 0) {
 				$data['stock'] = $product_info['stock_status'];
+				$stock_color = $product_info['stock_color'];
 			} elseif ($this->config->get('config_stock_display')) {
 				$data['stock'] = $product_info['quantity'];
+				$stock_color = '#008000';
 			} else {
 				$data['stock'] = $this->language->get('text_instock');
+				$stock_color = '#008000';
 			}
+
+			$data['stock_color'] = $stock_color;
 
 			$this->load->model('tool/image');
 
@@ -473,12 +478,12 @@ class ControllerProductProduct extends Controller {
 
 			if ($this->config->get('config_google_captcha_status')) {
 				$this->document->addScript('https://www.google.com/recaptcha/api.js');
-				
+
 				$data['site_key'] = $this->config->get('config_google_captcha_public');
 			} else {
                 $data['site_key'] = '';
             }
-		
+
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
@@ -662,7 +667,7 @@ class ControllerProductProduct extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
+
 	public function getRecurringDescription() {
 		$this->language->load('product/product');
 		$this->load->model('catalog/product');
