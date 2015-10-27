@@ -5462,6 +5462,7 @@ div.modal {
     width:auto !important;
     margin-left : auto !important;
     left: 0 !important;
+    overflow-y: scroll !important;
 }
 /* arastta */
 

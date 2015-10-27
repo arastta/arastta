@@ -22,10 +22,7 @@ class ModelCommonUpdate extends Model {
     public function changelog() {
         $output = '';
 
-        // Get remote data
-        $version = $this->request->get['version'];
-
-        $url = 'https://api.github.com/repos/arastta/arastta/releases/latest';
+        $url = 'https://api.github.com/repos/arastta/arastta/releases';
 
         $json = $this->utility->getRemoteData($url);
 
@@ -33,18 +30,28 @@ class ModelCommonUpdate extends Model {
             return $output;
         }
 
-        $data = json_decode($json);
-
-        if (empty($data->body)) {
-            return $output;
-        }
-
-        // Parse markdown output
-        $markdown = str_replace('## Changelog', '', $data->body);
-
         $parsedown = new ParsedownExtra();
 
-        $output = $parsedown->text($markdown);
+        $releases = json_decode($json);
+
+        foreach ($releases as $release) {
+            if ($release->tag_name <= VERSION) {
+                continue;
+            }
+
+            if (empty($release->body)) {
+                continue;
+            }
+
+            $output .= '<h2><span class="label label-primary">'.$release->tag_name.'</span></h2>';
+
+            // Parse markdown output
+            $markdown = str_replace('## Changelog', '', $release->body);
+
+            $output .= $parsedown->text($markdown);
+
+            $output .= '<hr>';
+        }
 
         return $output;
     }
