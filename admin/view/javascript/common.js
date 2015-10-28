@@ -653,6 +653,20 @@ function textEditor(text_id) {
 	// Editor Set Language
 	if (text_editor == 'summernote') {
 		$(text_id).summernote({
+			toolbar: [
+				['style', ['style']],
+				['font', ['bold', 'italic', 'underline', 'clear']],
+				['fontname', ['fontname']],
+				['fontsize', ['fontsize']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['height', ['height']],
+				['table', ['table']],
+				['insert', ['link', 'picture', 'hr']],
+				['view', ['fullscreen', 'codeview']],
+				['help', ['help']],
+				['readmore', ['readmore']]
+			],
 			height: 300,
 			lang: editor_language
 		});
@@ -665,9 +679,9 @@ function textEditor(text_id) {
 				"advlist autolink lists link image charmap print preview anchor",
 				"searchreplace visualblocks code fullscreen",
 				"insertdatetime media table contextmenu paste imagetools",
-				"emoticons autoresize textcolor template"
+				"emoticons autoresize textcolor template readmore"
 			],
-			toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | emoticons autoresize imagetools",
+			toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | emoticons autoresize imagetools | readmore",
 			language: editor_language
 		});
 	}

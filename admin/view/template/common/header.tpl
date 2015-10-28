@@ -31,7 +31,6 @@
 <script type="text/javascript" src="view/javascript/bootstrap-select/js/i18n/defaults-<?php echo $bootstrap_select_lang; ?>.min.js"></script>
 <?php } ?>
 <script src="view/javascript/common.js" type="text/javascript"></script>
-
 <?php foreach ($styles as $style) { ?>
 <link type="text/css" href="<?php echo $style['href']; ?>" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
@@ -39,9 +38,11 @@
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
 <?php if ($text_editor == 'tinymce') { ?>
-<script type="text/javascript" src="view/javascript/tinymce/tinymce.min.js"></script>
+  <script src="view/javascript/tinymce/plugins/readmore/plugin.js" type="text/javascript"></script>
+  <script type="text/javascript" src="view/javascript/tinymce/tinymce.min.js"></script>
 <?php } else { ?>
-<script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+  <script src="view/javascript/summernote/plugins/readmore/plugin.js" type="text/javascript"></script>
+  <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
   <?php if (!empty($editor_language)) { ?>
   <script type="text/javascript" src="view/javascript/summernote/lang/summernote-<?php echo $editor_language; ?>.js"></script>
   <?php } ?>

@@ -2379,3 +2379,17 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
 #content  .note-dialog .note-help-dialog .note-shortcut-title {
 	color: #008DB9;
 }
+
+.mce-ico.mce-i-readmore {
+	display: inline-block;
+	font: normal normal normal 14px/1 FontAwesome;
+	font-size: inherit;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	transform: translate(0, 0);
+}
+
+.mce-ico.mce-i-readmore:before {
+	content: "\f03c";
+}
