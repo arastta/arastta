@@ -31,7 +31,6 @@ $_['text_documentation']   = 'Documentation';
 $_['text_logout']          = 'Logout';
 $_['text_search_options']  = 'Search Options';
 
-$_['text_language']        = 'Change Language';
 $_['text_update']  		   = 'Updates Available';
 
 $_['text_new']  		   = 'New';
