@@ -79,24 +79,18 @@ class Language {
         }
 
 		// Step 2: Load the store's default language translation (it's the store owner preferred fallback)
-		// Don't load twice if it's en-GB
-		if ($this->default != 'en-GB') {
-			$file = $dir . 'language/' . $this->default . '/' . $filename . '.php';
+        $file = $dir . 'language/' . $this->default . '/' . $filename . '.php';
 
-			if (file_exists($file)) {
-				require($file);
-			}
-		}
+        if (file_exists($file)) {
+            require($file);
+        }
 
 		// Step 3: Load the user's selected language translation (it's the user preferred language)
-		// Dont't load twice if it's en-GB or same as default
-		if (($this->directory != 'en-GB') and ($this->directory != $this->default)) {
-			$file = $dir . 'language/' . $this->directory . '/' . $filename . '.php';
+        $file = $dir . 'language/' . $this->directory . '/' . $filename . '.php';
 
-			if (file_exists($file)) {
-				require($file);
-			}
-		}
+        if (file_exists($file)) {
+            require($file);
+        }
 
 		// Step 4: Load the user's selected language override (it's the store owner preferred language)
         $file = $dir . 'language/' . 'override/' . $this->directory . '/' . $filename . '.php';
