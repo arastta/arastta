@@ -280,6 +280,8 @@ class ControllerUserUserPermission extends Controller {
 	}
 
 	protected function getForm() {
+		$this->trigger->fire('pre.admin.editor.button.add');
+	
 		$data['heading_title'] = $this->language->get('heading_title');
 
         $data['tab_general'] = $this->language->get('tab_general');

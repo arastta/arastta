@@ -147,6 +147,8 @@ class ControllerAppearanceLayout extends Controller {
 	}
 	
 	protected function getForm() {
+		$this->trigger->fire('pre.admin.editor.button.add');
+	
 		$data = $this->language->all();
 		
 		if (isset($this->request->get['layout_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {

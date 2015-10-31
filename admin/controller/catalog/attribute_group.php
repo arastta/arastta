@@ -283,6 +283,8 @@ class ControllerCatalogAttributeGroup extends Controller {
 	}
 
 	protected function getForm() {
+		$this->trigger->fire('pre.admin.editor.button.add');
+	
 		$data['heading_title'] = $this->language->get('heading_title');
 	
 		$data['text_form'] = !isset($this->request->get['attribute_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');

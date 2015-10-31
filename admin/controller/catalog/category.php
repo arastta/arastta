@@ -352,6 +352,8 @@ class ControllerCatalogCategory extends Controller {
 	}
 
 	protected function getForm() {
+		$this->trigger->fire('pre.admin.editor.button.add');
+	
         $data = $this->language->all();
         // leaving the followings for extension B/C purpose
 		$data['heading_title'] = $this->language->get('heading_title');

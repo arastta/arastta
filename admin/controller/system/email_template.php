@@ -288,6 +288,8 @@ class ControllerSystemEmailtemplate extends Controller {
 	}
 	
 	protected function getForm() {
+		$this->trigger->fire('pre.admin.editor.button.add');
+	
 		$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_form'] = $this->language->get('text_edit');

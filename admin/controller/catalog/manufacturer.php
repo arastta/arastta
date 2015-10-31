@@ -310,6 +310,8 @@ class ControllerCatalogManufacturer extends Controller {
 	}
 
 	protected function getForm() {
+		$this->trigger->fire('pre.admin.editor.button.add');
+	
         $data = $this->language->all();
 
         $data['text_form'] = !isset($this->request->get['manufacturer_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');

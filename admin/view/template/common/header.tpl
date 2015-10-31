@@ -14,16 +14,11 @@
 <link href="<?php echo $icon; ?>" rel="icon" />
 <?php } ?>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
 <link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
 <link href="view/javascript/bootstrap/arastta/arastta.css" type="text/css" rel="stylesheet" />
 <link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
-<?php if ($text_editor == 'summernote') { ?>
-<link href="view/javascript/summernote/summernote.css" rel="stylesheet">
-<?php } ?>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
 <link href="view/javascript/bootstrap-select/css/bootstrap-select.min.css" type="text/css" rel="stylesheet" />
-
 <script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="view/javascript/bootstrap-select/js/bootstrap-select.min.js"></script>
@@ -37,26 +32,16 @@
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
-<?php if ($text_editor == 'tinymce') { ?>
-  <script src="view/javascript/tinymce/plugins/readmore/plugin.js" type="text/javascript"></script>
-  <script type="text/javascript" src="view/javascript/tinymce/tinymce.min.js"></script>
-<?php } else { ?>
-  <script src="view/javascript/summernote/plugins/readmore/plugin.js" type="text/javascript"></script>
-  <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
-  <?php if (!empty($editor_language)) { ?>
-  <script type="text/javascript" src="view/javascript/summernote/lang/summernote-<?php echo $editor_language; ?>.js"></script>
-  <?php } ?>
-<?php } ?>
 <script type="text/javascript" src="view/javascript/jquery/moment/moment.js" ></script>
 <script type="text/javascript" src="view/javascript/jquery/moment/locale/<?php echo $moment_lang; ?>.js" ></script>
 <script type="text/javascript" src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js"></script>
-
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
 <script type="text/javascript">
-  var text_editor = '<?php echo $text_editor; ?>';
-  var editor_language = '<?php echo $editor_language; ?>';
+  <?php foreach ($script_declarations as $script) { ?>
+  <?php echo $script; ?>
+  <?php } ?>
 </script>
 </head>
 <body>

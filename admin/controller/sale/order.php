@@ -457,6 +457,8 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function getForm() {
+		$this->trigger->fire('pre.admin.editor.button.add');
+	
 		$this->load->model('sale/customer');
 
 		$data['heading_title'] = $this->language->get('heading_title');

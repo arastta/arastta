@@ -10,6 +10,7 @@ class ControllerCommonHeader extends Controller {
 	public function index() {
 		$data['title'] = $this->document->getTitle();
 
+		$this->trigger->fire('pre.admin.editor');
 		if ($this->request->server['HTTPS']) {
 			$data['base'] = HTTPS_SERVER;
 		} else {
@@ -19,7 +20,9 @@ class ControllerCommonHeader extends Controller {
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
 		$data['links'] = $this->document->getLinks();
+		$data['style_declarations'] = $this->document->getStyleDeclarations();
 		$data['styles'] = $this->document->getStyles();
+		$data['script_declarations'] = $this->document->getScriptDeclarations();
 		$data['scripts'] = $this->document->getScripts();
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
@@ -114,7 +117,7 @@ class ControllerCommonHeader extends Controller {
 
 			$data['review'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . '&filter_status=0', 'SSL');
 
-			// Affliate
+			// Affiliate
 			$this->load->model('marketing/affiliate');
 
 			$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates(array('filter_approved' => false));
@@ -190,29 +193,6 @@ class ControllerCommonHeader extends Controller {
         if (is_file(DIR_ADMIN . 'view/javascript/bootstrap-select/js/i18n/defaults-' . $lang_tag . '.min.js')) {
             $data['bootstrap_select_lang'] = $lang_tag;
         }
-
-		// Text Editor
-		$data['text_editor'] = $this->config->get('config_text_editor');
-
-		if (empty($data['text_editor'])) {
-			$data['text_editor'] = 'tinymce';
-		}
-
-		$data['editor_language'] = '';
-
-		if ($data['text_editor'] == 'tinymce') {
-			if (is_file(DIR_ADMIN . 'view/javascript/tinymce/langs/' . $this->config->get('config_language_dir') . '.js')) {
-				$data['editor_language'] = $this->config->get('config_language_dir');
-			} else if (is_file(DIR_ADMIN . 'view/javascript/tinymce/langs/' . $data['lang'] . '.js')) {
-				$data['editor_language'] = $data['lang'];
-			} else if (is_file(DIR_ADMIN . 'view/javascript/tinymce/langs/' . $lang_tag . '.js')) {
-				$data['editor_language'] = $lang_tag;
-			}
-		} else {
-			if (is_file(DIR_ADMIN . 'view/javascript/summernote/lang/summernote-' . $this->config->get('config_language_dir') . '.js')) {
-				$data['editor_language'] = $this->config->get('config_language_dir');
-			}
-		}
 
 		$data['langauge_dir'] = $this->config->get('config_language_dir');
 

@@ -648,7 +648,7 @@ $(document).ready(function() {
 		});
 	}
 })(window.jQuery);
-
+/*
 function textEditor(text_id) {
 	// Editor Set Language
 	if (text_editor == 'summernote') {
@@ -670,6 +670,24 @@ function textEditor(text_id) {
 			height: 300,
 			lang: editor_language
 		});
+
+ $(text_id).summernote({
+	 toolbar: [
+	 ['style'], [['style']],
+	 ['font'], [['bold'],['italic'],['underline'],['clear']],
+	 ['fontname'], [['fontname']],
+	 ['fontsize'], [['fontsize']],
+	 ['color'], [['color']],
+	 ['para'], [['ol'],['ul'],['paragraph']],
+	 ['height'], [['height']],
+	 ['table'], [['table']],
+	 ['insert'], [['link'],['picture'],['hr']],
+	 ['view'], [['fullscreen'],['codeview']],
+	 ['help'], [['help']],
+	 ],
+	 height: 300,
+	 lang: 'en-US'
+ });
 	} else {
 		tinymce.init({
 			selector: text_id,
@@ -685,4 +703,4 @@ function textEditor(text_id) {
 			language: editor_language
 		});
 	}
-}
+}*/
