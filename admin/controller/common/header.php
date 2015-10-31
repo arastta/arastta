@@ -140,6 +140,22 @@ class ControllerCommonHeader extends Controller {
             $data['alert_product'] = $product_total + $review_total + $affiliate_total;
             $data['alert_update'] = $this->update->countUpdates();
 
+			// Languages
+			$this->load->model('localisation/language');
+
+			$languages = $this->model_localisation_language->getLanguages();
+			if (count($languages) > 1) {
+				$route = !empty($this->request->get['route']) ? $this->request->get['route'] : 'common/dashboard';
+
+				foreach ($languages as $language) {
+					$data['languages'][] = array(
+						'name' => $language['name'],
+						'image' => $language['image'],
+						'link' => $this->url->link($route, 'token=' . $this->session->data['token'].'&lang='.$language['code'], 'SSL')
+					);
+				}
+			}
+
             $this->load->language('common/menu');
 
             $this->load->model('user/user');
