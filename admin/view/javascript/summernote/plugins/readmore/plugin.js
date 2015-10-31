@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 		buttons: {
 			readmore: function (lang) {
-				return tmpl.iconButton('fa fa-indent', {
+				return tmpl.iconButton('arastta-readmore', {
 					event : 'readmore',
 					title: lang.readmore.title,
 					hide: true

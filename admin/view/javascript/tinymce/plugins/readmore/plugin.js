@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	tinymce.PluginManager.add('readmore', function(editor, url) {
 		editor.addButton('readmore', {
-			text: 'Read More',
+			text: '',
 			tooltip: "Read More",
 			icon: 'readmore',
 			onclick: function() {
@@ -15,7 +15,7 @@ $(document).ready(function() {
 
 		editor.addMenuItem('readmore', {
 			text: 'Read More',
-			icon: 'readmore fa fa-indent',
+			icon: 'readmore',
 			context: 'tools',
 			onclick: function() {
 				var html  = '<p></p>';
