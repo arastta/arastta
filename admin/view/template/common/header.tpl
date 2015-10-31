@@ -109,17 +109,7 @@
         <li><a href="<?php echo $affiliate_approval; ?>"><span class="label label-danger pull-right"><?php echo $affiliate_total; ?></span><?php echo $text_approval; ?></a></li>
       </ul>
     </li>
-    <?php if ($languages) { ?>
-    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag fa-lg"></i></a>
-      <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
-        <li class="dropdown-header"><?php echo $text_language; ?></li>
-        <?php foreach ($languages as $language) { ?>
-        <li><a href="<?php echo $language['link']; ?>"><span class="pull-right"><img src="../image/flags/<?php echo $language['image']; ?>" /></span><?php echo $language['name']; ?></a></li>
-        <?php } ?>
-      </ul>
-    </li>
-    <?php } ?>
-    <?php if ($preturn_update) { ?>
+    <?php if($preturn_update) { ?>
     <li><a href="<?php echo $update; ?>" title="<?php echo $alert_update . ' ' . $text_update; ?>"><?php if(!empty($alert_update)) { ?><span class="label label-danger pull-left"><?php echo $alert_update; ?></span><?php } ?><i class="fa fa-refresh fa-lg"></i></a></li>
     <?php } ?>
     <li class="dropdown"><a href="http://arastta.org/learn" target="_blank"><i class="fa fa-life-ring fa-lg"></i></a></li>
