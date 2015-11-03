@@ -487,7 +487,7 @@ class ModelCatalogProduct extends Model {
 				'meta_title'       => $result['meta_title'],
 				'meta_description' => $result['meta_description'],
 				'meta_keyword'     => $result['meta_keyword'],
-				'tag'              => $result['tag']
+				'tag'              => !empty($result['tag']) ? explode(',', $result['tag']) : $result['tag'] 
 			);
 		}
 

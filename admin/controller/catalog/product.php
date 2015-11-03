@@ -704,25 +704,6 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_description'] = array();
 		}
 
-        // Tags
-        if (!empty($data['product_description'])) {
-            foreach ($data['product_description'] as $language_id => $product_description_data) {
-                if (!empty($data['product_description'][$language_id]['tag'])) {
-                    $check = strpos($product_description_data['tag'], ',');
-
-                    if ($check !== false) {
-                        $tags = explode(',' , $product_description_data['tag']);
-
-                        foreach ($tags as $tag) {
-                            $tag_result[] = $tag;
-                        }
-                    }
-
-                    $data['product_description'][$language_id]['tag'] = $tag_result;
-                }
-            }
-        }
-
 		if (isset($this->request->post['image'])) {
 			$data['image'] = $this->request->post['image'];
 		} elseif (!empty($product_info)) {
