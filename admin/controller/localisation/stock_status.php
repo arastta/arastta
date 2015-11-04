@@ -44,14 +44,14 @@ class ControllerLocalisationStockStatus extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			
+
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
                 $this->response->redirect($this->url->link('localisation/stock_status/edit', 'stock_status_id='.$stock_status_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                 $this->response->redirect($this->url->link('localisation/stock_status/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-            }			
+            }
 
 			$this->response->redirect($this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
@@ -92,7 +92,7 @@ class ControllerLocalisationStockStatus extends Controller {
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                 $this->response->redirect($this->url->link('localisation/stock_status/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
             }
-			
+
 			$this->response->redirect($this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
@@ -198,12 +198,13 @@ class ControllerLocalisationStockStatus extends Controller {
 			$data['stock_statuses'][] = array(
 				'stock_status_id' => $result['stock_status_id'],
 				'name'            => $result['name'],
+                'color'           => empty($result['color']) ? '#ddd' : $result['color'],
 				'edit'            => $this->url->link('localisation/stock_status/edit', 'token=' . $this->session->data['token'] . '&stock_status_id=' . $result['stock_status_id'] . $url, 'SSL')
 			);
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -281,18 +282,25 @@ class ControllerLocalisationStockStatus extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_form'] = !isset($this->request->get['stock_status_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		
+
 		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_default'] = $this->language->get('entry_name');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_savenew'] = $this->language->get('button_savenew');
-        $data['button_saveclose'] = $this->language->get('button_saveclose');		
+        $data['button_saveclose'] = $this->language->get('button_saveclose');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
-		if (isset($this->error['warning'])) {
+        $this->document->addStyle('view/stylesheet/color-picker.css');
+
+        $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
+        $this->document->addScript('view/javascript/colorpicker/color-picker.js');
+        $this->document->addScript('view/javascript/colorpicker/iris.min.js');
+
+        if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
@@ -304,14 +312,6 @@ class ControllerLocalisationStockStatus extends Controller {
 			$data['error_name'] = array();
 		}
 
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-		
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
