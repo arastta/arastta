@@ -125,13 +125,13 @@
     <li class="dropdown"><a href="http://arastta.org/learn" target="_blank"><i class="fa fa-life-ring fa-lg"></i></a></li>
     <li id="header-profile" class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown">
-        <img width="25" height="25" src="<?php echo $image; ?>" alt="<?php echo $firstname; ?> <?php echo $lastname; ?>" title="<?php echo $username; ?>" class="img-circle" />
-        <span class="online-user"><?php echo $firstname; ?> <?php echo $lastname; ?></span>
+        <img width="25" height="25" src="<?php echo $image; ?>" alt="<?php echo $name ?>" title="<?php echo $name; ?>" class="img-circle" />
+        <span class="online-user"><?php echo $name; ?></span>
       </a>
         <ul class="dropdown-menu dropdown-menu-right">
         <li>
           <div class="header-profile">
-            <h4><a href="<?php echo $url_user ?>"><?php echo $firstname; ?> <?php echo $lastname; ?></a></h4>
+            <h4><a href="<?php echo $url_user ?>"><?php echo $name; ?></a></h4>
             <small><?php echo $user_group; ?></small>
           </div>
         </li>
