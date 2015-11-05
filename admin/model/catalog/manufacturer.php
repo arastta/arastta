@@ -154,7 +154,7 @@ class ModelCatalogManufacturer extends Model {
             $sql = "SELECT * FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON (m.manufacturer_id = md.manufacturer_id) WHERE md.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
             if (!empty($data['filter_name'])) {
-                $sql .= " AND md.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+                $sql .= " AND LOWER(md.name) LIKE '%" . $this->db->escape( mb_strtolower( $data['filter_name'] ) ) . "%'";
             }
             
             if (isset($data['filter_status']) and !is_null($data['filter_status'])) {
@@ -258,14 +258,14 @@ class ModelCatalogManufacturer extends Model {
 	}
 
     public function getTotalManufacturersFilter($data) {
-        $sql = ("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON m.category_id = md.category_id");
+        $sql = ("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON m.manufacturer_id = md.manufacturer_id");
 
         $isWhere = 0;
         $_sql = array();
 
         if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
             $isWhere = 1;
-            $_sql[] = "	md.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+            $_sql[] = "	LOWER(md.name) LIKE '%" . $this->db->escape( mb_strtolower( $data['filter_name'] ) ) . "%'";
         }
 
         if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
