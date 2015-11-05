@@ -37,8 +37,6 @@ $_['entry_store_email']         = 'Store E-Mail';
 $_['entry_admin_username']      = 'Admin Username';
 $_['entry_admin_email']         = 'Admin E-Mail';
 $_['entry_admin_password']      = 'Admin Password';
-$_['entry_admin_first_name']    = 'Admin First Name';
-$_['entry_admin_last_name']     = 'Admin Last Name';
 $_['entry_install_demo_data']   = 'Install demo data';
 
 // Help

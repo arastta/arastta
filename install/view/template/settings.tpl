@@ -42,18 +42,6 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="input-admin-first-name" class="control-label col-xs-4"><?php echo $entry_admin_first_name; ?></label>
-				<div class="col-xs-8">
-					<input type="text" name="admin_first_name" value="<?php echo $admin_first_name; ?>" placeholder="<?php echo $help_admin_first_name; ?>" id="input-admin-first-name" class="form-control" />
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="input-admin-last-name" class="control-label col-xs-4"><?php echo $entry_admin_last_name; ?></label>
-				<div class="col-xs-8">
-					<input type="text" name="admin_last_name" value="<?php echo $admin_last_name; ?>" placeholder="<?php echo $help_admin_last_name; ?>" id="input-admin-last-name" class="form-control" />
-				</div>
-			</div>
-			<div class="form-group">
 				<label for="input-install-demo-data" class="control-label col-xs-4"><?php echo $entry_install_demo_data; ?></label>
 				<div class="col-xs-8">
 					<input type="checkbox" name="install_demo_data" id="input-install-demo-data" <?php echo $install_demo_data ? 'checked ' : ''; ?>/>
