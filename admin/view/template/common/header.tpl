@@ -126,7 +126,6 @@
     <li id="header-profile" class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown">
         <img width="25" height="25" src="<?php echo $image; ?>" alt="<?php echo $name ?>" title="<?php echo $name; ?>" class="img-circle" />
-        <span class="online-user"><?php echo $name; ?></span>
       </a>
         <ul class="dropdown-menu dropdown-menu-right">
         <li>

@@ -16,7 +16,7 @@ $_['text_forgotten']  = 'Forgotten Password';
 $_['text_back_to']	  = 'Back to';
 
 // Entry
-$_['entry_username']  = 'Username';
+$_['entry_email']     = 'Email';
 $_['entry_password']  = 'Password';
 $_['entry_language']  = 'Language';
 
@@ -24,5 +24,5 @@ $_['entry_language']  = 'Language';
 $_['button_login']    = 'Login';
 
 // Error
-$_['error_login']     = 'No match for Username and/or Password.';
+$_['error_login']     = 'No match for Email and/or Password.';
 $_['error_token']     = 'Invalid token session. Please login again.';

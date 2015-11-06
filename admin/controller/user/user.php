@@ -134,28 +134,22 @@ class ControllerUserUser extends Controller {
 	}
 
 	protected function getList() {
-		if (isset($this->request->get['filter_user_name'])) {
-			$filter_user_name = $this->request->get['filter_user_name'];
-		} else {
-			$filter_user_name = null;
-		}
-
 		if (isset($this->request->get['filter_user_group'])) {
 			$filter_user_group = $this->request->get['filter_user_group'];
 		} else {
 			$filter_user_group = null;
 		}
 
-		if (isset($this->request->get['filter_first_name'])) {
-			$filter_first_name = $this->request->get['filter_first_name'];
+		if (isset($this->request->get['filter_firstname'])) {
+			$filter_firstname = $this->request->get['filter_firstname'];
 		} else {
-			$filter_first_name = null;
+			$filter_firstname = null;
 		}
 
-		if (isset($this->request->get['filter_last_name'])) {
-			$filter_last_name = $this->request->get['filter_last_name'];
+		if (isset($this->request->get['filter_lastname'])) {
+			$filter_lastname = $this->request->get['filter_lastname'];
 		} else {
-			$filter_last_name = null;
+			$filter_lastname = null;
 		}
 
 		if (isset($this->request->get['filter_email'])) {
@@ -173,7 +167,7 @@ class ControllerUserUser extends Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'username';
+			$sort = 'firstname';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -190,20 +184,16 @@ class ControllerUserUser extends Controller {
 
 		$url = '';
 		
-		if (isset($this->request->get['filter_user_name'])) {
-			$url .= '&filter_user_name=' . urlencode(html_entity_decode($this->request->get['filter_user_name'], ENT_QUOTES, 'UTF-8'));
-		}
-		
 		if (isset($this->request->get['filter_user_group'])) {
 			$url .= '&filter_user_group=' . urlencode(html_entity_decode($this->request->get['filter_user_group'], ENT_QUOTES, 'UTF-8'));
 		}
 		
-		if (isset($this->request->get['filter_first_name'])) {
-			$url .= '&filter_first_name=' . urlencode(html_entity_decode($this->request->get['filter_first_name'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['filter_firstname'])) {
+			$url .= '&filter_firstname=' . urlencode(html_entity_decode($this->request->get['filter_firstname'], ENT_QUOTES, 'UTF-8'));
 		}
 		
-		if (isset($this->request->get['filter_last_name'])) {
-			$url .= '&filter_last_name=' . urlencode(html_entity_decode($this->request->get['filter_last_name'], ENT_QUOTES, 'UTF-8'));
+		if (isset($this->request->get['filter_lastname'])) {
+			$url .= '&filter_lastname=' . urlencode(html_entity_decode($this->request->get['filter_lastname'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_email'])) {
@@ -226,28 +216,15 @@ class ControllerUserUser extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, 'SSL')
-		);
-
 		$data['add'] = $this->url->link('user/user/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('user/user/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['users'] = array();
 
 		$filter_data = array(
-			'filter_user_name' => $filter_user_name,
 			'filter_user_group' => $filter_user_group,
-			'filter_first_name' => $filter_first_name,
-			'filter_last_name' => $filter_last_name,
+			'filter_firstname' => $filter_firstname,
+			'filter_lastname' => $filter_lastname,
 			'filter_email' => $filter_email,
 			'filter_status' => $filter_status,
 			'sort'  => $sort,
@@ -256,50 +233,32 @@ class ControllerUserUser extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		if(!empty($filter_user_name) || !empty($filter_user_group) || !empty($filter_first_name) || !empty($filter_last_name) || !empty($filter_email) || !empty($filter_status)) {
+		if (!empty($filter_user_name) || !empty($filter_user_group) || !empty($filter_firstname) || !empty($filter_lastname) || !empty($filter_email) || !empty($filter_status)) {
 			$user_total = $this->model_user_user->getTotalUsersFilter($filter_data);
 		} else {
 			$user_total = $this->model_user_user->getTotalUsers();
-		}		
+		}
+
+        $this->load->model('user/user_group');
 		
 		$results = $this->model_user_user->getUsers($filter_data);
 
 		foreach ($results as $result) {
+            $group = $this->model_user_user_group->getUserGroup($result['user_group_id']);
+
 			$data['users'][] = array(
 				'user_id'    => $result['user_id'],
-				'username'   => $result['username'],
+				'firstname'  => $result['firstname'],
+				'lastname'   => $result['lastname'],
+				'email'      => $result['email'],
+				'user_group' => $group['name'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('user/user/edit', 'token=' . $this->session->data['token'] . '&user_id=' . $result['user_id'] . $url, 'SSL')
 			);
 		}
 
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_user_group'] = $this->language->get('entry_user_group');
-		$data['entry_firstname'] = $this->language->get('entry_firstname');
-		$data['entry_lastname'] = $this->language->get('entry_lastname');
-		$data['entry_email'] = $this->language->get('entry_email');		
-		$data['entry_status'] = $this->language->get('entry_status');		
-		
-        $data['text_enabled']  = $this->language->get('text_enabled');
-        $data['text_disabled'] = $this->language->get('text_disabled');		
-		$data['text_list'] = $this->language->get('text_list');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-
-		$data['column_username'] = $this->language->get('column_username');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_add'] = $this->language->get('button_add');
-		$data['button_edit'] = $this->language->get('button_edit');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_filter'] = $this->language->get('button_filter');
-		$data['button_show_filter'] = $this->language->get('button_show_filter');
-		$data['button_hide_filter'] = $this->language->get('button_hide_filter');		
+        $data = $this->language->all($data);
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -333,7 +292,9 @@ class ControllerUserUser extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_username'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=username' . $url, 'SSL');
+		$data['sort_firstname'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=firstname' . $url, 'SSL');
+		$data['sort_lastname'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=lastname' . $url, 'SSL');
+		$data['sort_email'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=email' . $url, 'SSL');
 		$data['sort_status'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
 		$data['sort_date_added'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, 'SSL');
 
@@ -357,11 +318,10 @@ class ControllerUserUser extends Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($user_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($user_total - $this->config->get('config_limit_admin'))) ? $user_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $user_total, ceil($user_total / $this->config->get('config_limit_admin')));
 
-		$data['filter_user_name'] = $filter_user_name;
-		$data['filter_user_group'] = $filter_user_group;
-		$data['filter_first_name'] = $filter_first_name;
-		$data['filter_last_name'] = $filter_last_name;
+		$data['filter_firstname'] = $filter_firstname;
+		$data['filter_lastname'] = $filter_lastname;
 		$data['filter_email'] = $filter_email;
+        $data['filter_user_group'] = $filter_user_group;
 		$data['filter_status'] = $filter_status;		
 		
 		$data['sort'] = $sort;
@@ -377,37 +337,14 @@ class ControllerUserUser extends Controller {
 	}
 
 	protected function getForm() {
-		$data['heading_title'] = $this->language->get('heading_title');
-		
+        $data = $this->language->all();
+
 		$data['text_form'] = !isset($this->request->get['user_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
-
-		$data['entry_username'] = $this->language->get('entry_username');
-		$data['entry_user_group'] = $this->language->get('entry_user_group');
-		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_confirm'] = $this->language->get('entry_confirm');
-		$data['entry_firstname'] = $this->language->get('entry_firstname');
-		$data['entry_lastname'] = $this->language->get('entry_lastname');
-		$data['entry_email'] = $this->language->get('entry_email');
-		$data['entry_image'] = $this->language->get('entry_image');
-		$data['entry_status'] = $this->language->get('entry_status');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_savenew'] = $this->language->get('button_savenew');
-        $data['button_saveclose'] = $this->language->get('button_saveclose');		
-		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['username'])) {
-			$data['error_username'] = $this->error['username'];
-		} else {
-			$data['error_username'] = '';
 		}
 
 		if (isset($this->error['password'])) {
@@ -456,18 +393,6 @@ class ControllerUserUser extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, 'SSL')
-		);
-
 		if (!isset($this->request->get['user_id'])) {
 			$data['action'] = $this->url->link('user/user/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
@@ -478,14 +403,6 @@ class ControllerUserUser extends Controller {
 
 		if (isset($this->request->get['user_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$user_info = $this->model_user_user->getUser($this->request->get['user_id']);
-		}
-
-		if (isset($this->request->post['username'])) {
-			$data['username'] = $this->request->post['username'];
-		} elseif (!empty($user_info)) {
-			$data['username'] = $user_info['username'];
-		} else {
-			$data['username'] = '';
 		}
 
 		if (isset($this->request->post['user_group_id'])) {
@@ -576,8 +493,8 @@ class ControllerUserUser extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen($this->request->post['username']) < 3) || (utf8_strlen($this->request->post['username']) > 20)) {
-			$this->error['username'] = $this->language->get('error_username');
+		if (utf8_strlen($this->request->post['email']) < 3) {
+			$this->error['email'] = $this->language->get('error_email');
 		}
 
 		$user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);
@@ -630,7 +547,7 @@ class ControllerUserUser extends Controller {
 	public function autocomplete() {
 		$json = array();
 
-		if (isset($this->request->get['filter_user_name']) || isset($this->request->get['filter_user_group']) || isset($this->request->get['filter_first_name']) || isset($this->request->get['filter_last_name']) || isset($this->request->get['filter_email'])) {
+		if (isset($this->request->get['filter_user_name']) || isset($this->request->get['filter_user_group']) || isset($this->request->get['filter_firstname']) || isset($this->request->get['filter_lastname']) || isset($this->request->get['filter_email'])) {
 			$this->load->model('user/user');
 
 			if (isset($this->request->get['filter_user_name'])) {
@@ -648,16 +565,16 @@ class ControllerUserUser extends Controller {
 				$filter_user_group = '';
 			}
 			
-			if (isset($this->request->get['filter_first_name'])) {
-				$filter_first_name = $this->request->get['filter_first_name'];
+			if (isset($this->request->get['filter_firstname'])) {
+				$filter_firstname = $this->request->get['filter_firstname'];
 			} else {
-				$filter_first_name = '';
+				$filter_firstname = '';
 			}
 			
-			if (isset($this->request->get['filter_last_name'])) {
-				$filter_last_name = $this->request->get['filter_last_name'];
+			if (isset($this->request->get['filter_lastname'])) {
+				$filter_lastname = $this->request->get['filter_lastname'];
 			} else {
-				$filter_last_name = '';
+				$filter_lastname = '';
 			}
 			
 			if (isset($this->request->get['filter_email'])) {
@@ -675,8 +592,8 @@ class ControllerUserUser extends Controller {
 			$filter_data = array(
 				'filter_user_name'  => $filter_user_name,
 				'filter_user_group' => $filter_user_group,
-				'filter_first_name' => $filter_first_name,
-				'filter_last_name' => $filter_last_name,
+				'filter_firstname' => $filter_firstname,
+				'filter_lastname' => $filter_lastname,
 				'filter_email' => $filter_email,
 				'start'        => 0,
 				'limit'        => $limit

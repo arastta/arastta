@@ -22,7 +22,7 @@ class ModelDatabase extends Model {
         $symbols = array_merge($numbers, $chars);
         shuffle($symbols);
 
-        for ($i = 0, $j = 3 - 1; $i < $j; ++$i) {
+        for ($i = 0, $j = 2; $i < $j; $i++) {
             $prefix .= $symbols[$i];
         }
 

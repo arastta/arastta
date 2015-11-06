@@ -132,7 +132,6 @@ class ControllerCommonHeader extends Controller {
 				'href' => HTTP_CATALOG
 			);
 
-
             $processing_total = $this->model_sale_order->getTotalOrdersByProcessingStatus();
 
             $data['alert_order'] = $return_total + $processing_total;
@@ -170,10 +169,8 @@ class ControllerCommonHeader extends Controller {
 				if (!empty($user_info['firstname'])) {
 					$data['name'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
 				} else {
-					$data['name'] = $user_info['username'];
+					$data['name'] = $user_info['email'];
 				}
-
-                $data['username'] = $user_info['username'];
 
                 $data['user_group'] = $user_info['user_group'] ;
 
@@ -183,7 +180,7 @@ class ControllerCommonHeader extends Controller {
 					$data['image'] = 'https://www.gravatar.com/avatar/' . md5(strtolower($user_info['email'])).'?size=45&d=mm';
 				}
             } else {
-                $data['username'] = '';
+                $data['name'] = '';
                 $data['image'] = '';
             }
             

@@ -96,7 +96,7 @@
 			},
 			success: function(json) {
 				$('#install-content').html(json['output']);
-                $('.loading-bar').css({"height": $('.panel-body').height()-84});
+        $('.loading-bar').css({"height": $('.panel-body').height()-84});
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -144,7 +144,7 @@
 					// Reset the height of loading bar
 					$('.loading-bar').css({"height": $('.panel-body').height()-84});
 				} else if (json['output']) {
-					$('.loading-bar').css({"height": "115%"});
+					$('.loading-bar').css({"height": "118%"});
 
 					$('#step-database').addClass('text-success');
 					$('#step-settings').addClass('text-primary');

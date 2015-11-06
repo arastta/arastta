@@ -24,12 +24,6 @@ class ControllerSetting extends Controller {
 			$data['store_email'] = '';
 		}
 
-		if (isset($this->session->data['admin_username'])) {
-			$data['admin_username'] = $this->session->data['admin_username'];
-		} else {
-			$data['admin_username'] = '';
-		}
-
 		if (isset($this->session->data['admin_email'])) {
 			$data['admin_email'] = $this->session->data['admin_email'];
 		} else {
@@ -88,10 +82,6 @@ class ControllerSetting extends Controller {
 
 		if (empty($this->request->post['store_email'])) {
 			$json['error']['store-email'] = $this->language->get('error_store_email');
-		}
-
-		if ((utf8_strlen(trim($this->request->post['admin_username'])) < 3) || (utf8_strlen(trim($this->request->post['admin_username'])) > 32)) {
-			$json['error']['admin-username'] = $this->language->get('error_admin_username');
 		}
 
 		if (empty($this->request->post['admin_email'])) {

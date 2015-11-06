@@ -72,3 +72,11 @@ if (version_compare(VERSION, '1.1.3', '<')) {
 	// Delete modification table
 	$this->db->query("DROP TABLE `" . DB_PREFIX . "modification`");
 }
+
+// 1.2.0 changes;
+if (version_compare(VERSION, '1.2.0', '<')) {
+	// Update user table
+	$this->db->query("ALTER TABLE `" . DB_PREFIX . "user` MODIFY `username` VARCHAR(100)");
+	$this->db->query("ALTER TABLE `" . DB_PREFIX . "user` MODIFY `password` VARCHAR(100)");
+	$this->db->query("ALTER TABLE `" . DB_PREFIX . "user` MODIFY `email` VARCHAR(100)");
+}

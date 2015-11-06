@@ -21,10 +21,10 @@
 				   <h4 class="form-title"><i class="fa fa-lock"></i> <?php echo $text_login; ?></h4>
 				   <br />
 				   <div class="form-group">
-					<label for="input-username"><?php echo $entry_username; ?></label>
+					<label for="input-email"><?php echo $entry_email; ?></label>
 					<div class="input-icon">
-					  <i class="fa fa-user"></i>
-					  <input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" />
+					  <i class="fa fa-envelope"></i>
+					  <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
 					</div>
 				  </div>
 				  <div class="form-group">
