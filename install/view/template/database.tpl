@@ -29,16 +29,16 @@
 				<input type="text" name="db_database" value="<?php echo $db_database; ?>" placeholder="<?php echo $help_db_database; ?>" id="input-database-database" class="form-control" />
 			</div>
 		</div>
-		<div class="form-group">
-			<label for="input-database-prefix" class="control-label col-xs-4"><?php echo $entry_db_prefix; ?></label>
-			<div class="col-xs-8">
-				<input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" placeholder="<?php echo $help_db_prefix; ?>" id="input-database-prefix" class="form-control" />
-			</div>
-		</div>
 		<div class="collapse" id="advanced-settings">
 			<div class="form-group">
 				<div class="col-xs-offset-4 col-xs-8">
 					<h4><?php echo $text_advanced; ?></h4>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input-database-prefix" class="control-label col-xs-4"><?php echo $entry_db_prefix; ?></label>
+				<div class="col-xs-8">
+					<input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" placeholder="<?php echo $help_db_prefix; ?>" id="input-database-prefix" class="form-control" />
 				</div>
 			</div>
 			<div class="form-group">

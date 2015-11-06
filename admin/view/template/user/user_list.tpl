@@ -37,29 +37,19 @@
           <div class="row">
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="input-username"><?php echo $entry_username; ?></label>
-                <input type="text" name="filter_user_name" value="<?php echo $filter_user_name; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" />
-              </div>
-              <div class="form-group">
+                <div class="form-group">
+                  <label class="control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
+                  <input type="text" name="filter_firstname" value="<?php echo $filter_firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control" />
+                </div>
                 <label class="control-label" for="input-user-group"><?php echo $entry_user_group; ?></label>
                 <input type="text" name="filter_user_group" value="<?php echo $filter_user_group; ?>" placeholder="<?php echo $entry_user_group; ?>" id="input-user-group" class="form-control" />
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
-                <input type="text" name="filter_first_name" value="<?php echo $filter_first_name; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control" />
-              </div>
-              <div class="form-group">
                 <label class="control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
-                <input type="text" name="filter_last_name" value="<?php echo $filter_last_name; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" class="form-control" />
+                <input type="text" name="filter_lastname" value="<?php echo $filter_lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" class="form-control" />
               </div>
-            </div>
-            <div class="col-sm-4">
-              <div class="form-group">
-                <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
-                <input type="text" name="filter_email" value="<?php echo $filter_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
-              </div>			
               <div class="form-group">
                 <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                 <select name="filter_status" id="input-status" class="form-control">
@@ -76,6 +66,12 @@
                   <?php } ?>
                 </select>
               </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
+                <input type="text" name="filter_email" value="<?php echo $filter_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
+              </div>
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
             </div>
           </div>
@@ -86,11 +82,22 @@
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left"><?php if ($sort == 'username') { ?>
-                    <a href="<?php echo $sort_username; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_username; ?></a>
+                  <td class="text-left"><?php if ($sort == 'firstname') { ?>
+                    <a href="<?php echo $sort_firstname; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_firstname; ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_username; ?>"><?php echo $column_username; ?></a>
+                    <a href="<?php echo $sort_firstname; ?>"><?php echo $column_firstname; ?></a>
                     <?php } ?></td>
+                  <td class="text-left"><?php if ($sort == 'lastname') { ?>
+                    <a href="<?php echo $sort_lastname; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_lastname; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_lastname; ?>"><?php echo $column_lastname; ?></a>
+                    <?php } ?></td>
+                  <td class="text-left"><?php if ($sort == 'email') { ?>
+                    <a href="<?php echo $sort_email; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_email; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_email; ?>"><?php echo $column_email; ?></a>
+                    <?php } ?></td>
+                  <td class="text-left"><?php echo $column_user_group; ?></td>
                   <td class="text-left"><?php if ($sort == 'status') { ?>
                     <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                     <?php } else { ?>
@@ -113,7 +120,10 @@
                     <?php } else { ?>
                     <input type="checkbox" name="selected[]" value="<?php echo $user['user_id']; ?>" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $user['username']; ?></td>
+                  <td class="text-left"><?php echo $user['firstname']; ?></td>
+                  <td class="text-left"><?php echo $user['lastname']; ?></td>
+                  <td class="text-left"><?php echo $user['email']; ?></td>
+                  <td class="text-left"><?php echo $user['user_group']; ?></td>
                   <td class="text-left"><?php echo $user['status']; ?></td>
                   <td class="text-left"><?php echo $user['date_added']; ?></td>
                   <td class="text-right"><a href="<?php echo $user['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
@@ -121,7 +131,7 @@
                 <?php } ?>
                 <?php } else { ?>
                 <tr>
-                  <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+                  <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>
@@ -140,28 +150,22 @@
 $('#button-filter').on('click', function() {
 	var url = 'index.php?route=user/user&token=<?php echo $token; ?>';
 
-	var filter_user_name = $('input[name=\'filter_user_name\']').val();
-
-	if (filter_user_name) {
-		url += '&filter_user_name=' + encodeURIComponent(filter_user_name);
-	}
-
 	var filter_user_group = $('input[name=\'filter_user_group\']').val();
 
 	if (filter_user_group) {
 		url += '&filter_user_group=' + encodeURIComponent(filter_user_group);
 	}
 
-	var filter_first_name = $('input[name=\'filter_first_name\']').val();
+	var filter_firstname = $('input[name=\'filter_firstname\']').val();
 	
-	if (filter_first_name) {
-		url += '&filter_first_name=' + encodeURIComponent(filter_first_name);
+	if (filter_firstname) {
+		url += '&filter_firstname=' + encodeURIComponent(filter_firstname);
 	}
 	
-	var filter_last_name = $('input[name=\'filter_last_name\']').val();
+	var filter_lastname = $('input[name=\'filter_lastname\']').val();
 	
-	if (filter_last_name) {
-		url += '&filter_last_name=' + encodeURIComponent(filter_last_name);
+	if (filter_lastname) {
+		url += '&filter_lastname=' + encodeURIComponent(filter_lastname);
 	}
 	
 	var filter_email = $('input[name=\'filter_email\']').val();
@@ -179,27 +183,7 @@ $('#button-filter').on('click', function() {
 	location = url;
 });
 //--></script>
-  <script type="text/javascript"><!--
-$('input[name=\'filter_user_name\']').autocomplete({
-	'source': function(request, response) {
-		$.ajax({
-			url: 'index.php?route=user/user/autocomplete&token=<?php echo $token; ?>&filter_user_name=' +  encodeURIComponent(request),
-			dataType: 'json',
-			success: function(json) {
-				response($.map(json, function(item) {
-					return {
-						label: item['username'],
-						value: item['user_id']
-					}
-				}));
-			}
-		});
-	},
-	'select': function(item) {
-		$('input[name=\'filter_user_name\']').val(item['label']);
-	}
-});
-
+<script type="text/javascript"><!--
 $('input[name=\'filter_user_group\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
@@ -220,10 +204,10 @@ $('input[name=\'filter_user_group\']').autocomplete({
 	}
 });
 
-$('input[name=\'filter_first_name\']').autocomplete({
+$('input[name=\'filter_firstname\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=user/user/autocomplete&token=<?php echo $token; ?>&filter_first_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=user/user/autocomplete&token=<?php echo $token; ?>&filter_firstname=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -237,14 +221,14 @@ $('input[name=\'filter_first_name\']').autocomplete({
 		});
 	},
 	'select': function(item) {
-		$('input[name=\'filter_first_name\']').val(item['label']);
+		$('input[name=\'filter_firstname\']').val(item['label']);
 	}
 });
 
-$('input[name=\'filter_last_name\']').autocomplete({
+$('input[name=\'filter_lastname\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=user/user/autocomplete&token=<?php echo $token; ?>&filter_last_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=user/user/autocomplete&token=<?php echo $token; ?>&filter_lastname=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -258,7 +242,7 @@ $('input[name=\'filter_last_name\']').autocomplete({
 		});
 	},
 	'select': function(item) {
-		$('input[name=\'filter_last_name\']').val(item['label']);
+		$('input[name=\'filter_lastname\']').val(item['label']);
 	}
 });
 

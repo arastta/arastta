@@ -33,29 +33,6 @@
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-user" class="form-horizontal">
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-username"><?php echo $entry_username; ?></label>
-            <div class="col-sm-10">
-              <input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" />
-              <?php if ($error_username) { ?>
-              <div class="text-danger"><?php echo $error_username; ?></div>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-user-group"><?php echo $entry_user_group; ?></label>
-            <div class="col-sm-10">
-              <select name="user_group_id" id="input-user-group" class="form-control">
-                <?php foreach ($user_groups as $user_group) { ?>
-                <?php if ($user_group['user_group_id'] == $user_group_id) { ?>
-                <option value="<?php echo $user_group['user_group_id']; ?>" selected="selected"><?php echo $user_group['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $user_group['user_group_id']; ?>"><?php echo $user_group['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
             <div class="col-sm-10">
               <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control" />
@@ -73,10 +50,24 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
             <div class="col-sm-10">
               <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-user-group"><?php echo $entry_user_group; ?></label>
+            <div class="col-sm-10">
+              <select name="user_group_id" id="input-user-group" class="form-control">
+                <?php foreach ($user_groups as $user_group) { ?>
+                <?php if ($user_group['user_group_id'] == $user_group_id) { ?>
+                <option value="<?php echo $user_group['user_group_id']; ?>" selected="selected"><?php echo $user_group['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $user_group['user_group_id']; ?>"><?php echo $user_group['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
             </div>
           </div>
           <div class="form-group">
@@ -104,17 +95,16 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+            <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_enabled; ?></label>
             <div class="col-sm-10">
-              <select name="status" id="input-status" class="form-control">
-                <?php if ($status) { ?>
-                <option value="0"><?php echo $text_disabled; ?></option>
-                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                <?php } else { ?>
-                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                <option value="1"><?php echo $text_enabled; ?></option>
-                <?php } ?>
-              </select>
+              <label class="radio-inline">
+                <input type="radio" name="status" id="input-status" value="1" <?php echo ($status) ? 'checked="checked"' : ''; ?>/>
+                <?php echo $text_yes; ?>
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="status" id="input-status" value="0" <?php echo (!$status) ? 'checked="checked"' : ''; ?>/>
+                <?php echo $text_no; ?>
+              </label>
             </div>
           </div>
         </form>

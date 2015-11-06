@@ -27,9 +27,9 @@ class ControllerCommonLogin extends Controller {
             }
 
             if ($this->config->get('config_sec_admin_login')) {
-
                 $mailData = array(
-                    'username'   => $this->request->post['username'],
+                    'email'   => $this->request->post['email'],
+                    'username'   => $this->request->post['email'],
                     'store_name' => $this->config->get('config_name'),
                     'ip_address' => $this->request->server['REMOTE_ADDR'],
                 );
@@ -76,10 +76,10 @@ class ControllerCommonLogin extends Controller {
 
 		$data['action'] = $this->url->link('common/login', '', 'SSL');
 
-		if (isset($this->request->post['username'])) {
-			$data['username'] = $this->request->post['username'];
+		if (isset($this->request->post['email'])) {
+			$data['email'] = $this->request->post['email'];
 		} else {
-			$data['username'] = '';
+			$data['email'] = '';
 		}
 
 		if (isset($this->request->post['password'])) {
@@ -144,7 +144,7 @@ class ControllerCommonLogin extends Controller {
 	}
 
 	protected function validate() {
-		if (!isset($this->request->post['username']) || !isset($this->request->post['password']) || !$this->user->login($this->request->post['username'], $this->request->post['password'])) {
+		if (!isset($this->request->post['email']) || !isset($this->request->post['password']) || !$this->user->login($this->request->post['email'], $this->request->post['password'])) {
 			$this->error['warning'] = $this->language->get('error_login');
 		}
 

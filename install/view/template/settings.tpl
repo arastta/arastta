@@ -24,12 +24,6 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="input-admin-username" class="control-label col-xs-4"><?php echo $entry_admin_username; ?></label>
-			<div class="col-xs-8">
-				<input type="text" name="admin_username" value="<?php echo $admin_username; ?>" placeholder="<?php echo $help_admin_username; ?>" id="input-admin-username" class="form-control" />
-			</div>
-		</div>
-		<div class="form-group">
 			<label for="input-admin-password" class="control-label col-xs-4"><?php echo $entry_admin_password; ?></label>
 			<div class="col-xs-8">
 				<input type="password" name="admin_password" value="<?php echo $admin_password; ?>" placeholder="<?php echo $help_admin_password; ?>" id="input-admin-password" class="form-control" />

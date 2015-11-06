@@ -13,7 +13,7 @@
                 <div class="form-group">
                   <div class="col-xs-12">
                     <select name="lang_code" id="lang_code" size="20" class="form-control lang_select">
-                      <option value="en-GB" selected="selected" data-next="Next">English (United Kingdom)</option>
+                      <option value="en-GB" selected="selected" data-next="Next">English (UK)</option>
                       <?php foreach ($languages as $language) { ?>
                       <option value="<?php echo $language['crowdin_code']; ?>" data-next="<?php echo $language['native_next']; ?>"><?php echo $language['native_name']; ?></option>
                       <?php } ?>
