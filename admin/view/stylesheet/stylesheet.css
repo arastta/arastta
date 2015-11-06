@@ -2406,3 +2406,7 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
 	float: left;
 	margin-top: -3px;
 }
+
+.note-editor.codeview .note-editing-area .note-codable {
+    max-width: 100% !important;
+}

@@ -403,6 +403,8 @@ class ControllerProductProduct extends Controller {
 			$data['rating'] = (int)$product_info['rating'];
 			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 			$data['attribute_groups'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
+			
+			$this->trigger->fire('pre.product.display', array(&$data, 'product'), true);
 
 			$data['products'] = array();
 
@@ -438,12 +440,14 @@ class ControllerProductProduct extends Controller {
 				} else {
 					$rating = false;
 				}
+				
+				$this->trigger->fire('pre.product.display', array(&$result, 'related'), true);
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
+					'description' => $result['description'],
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,

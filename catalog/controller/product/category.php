@@ -224,17 +224,19 @@ class ControllerProductCategory extends Controller {
 				} else {
 					$rating = false;
 				}
+				
+				$this->trigger->fire('pre.product.display', array(&$result, 'category'), true);
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
+					'description' => $result['description'],
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-					'rating'      => $result['rating'],
+					'rating'      => $rating,
 					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
 				);
 			}
