@@ -77,7 +77,7 @@ class ModelCommonUpdate extends Model {
         }
 
         // Fire event
-        $this->trigger->fire('pre.admin.update.update', $product_id);
+        $this->trigger->fire('pre.admin.update.update', array(&$product_id));
 
         // Force enable maintenance mode
         $maintenance_mode = $this->config->get('maintenance_mode');
@@ -124,7 +124,7 @@ class ModelCommonUpdate extends Model {
         $this->config->set('maintenance_mode', $maintenance_mode);
 
         // Fire event
-        $this->trigger->fire('post.admin.update.update', $product_id);
+        $this->trigger->fire('post.admin.update.update', array(&$product_id));
 
         return true;
     }

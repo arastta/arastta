@@ -8,7 +8,7 @@
 
 class ModelCatalogFilter extends Model {
 	public function addFilter($data) {
-		$this->trigger->fire('pre.admin.filter.add', $data);
+		$this->trigger->fire('pre.admin.filter.add', array(&$data));
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group` SET sort_order = '" . (int)$data['sort_order'] . "'");
 
@@ -30,13 +30,13 @@ class ModelCatalogFilter extends Model {
 			}
 		}
 
-		$this->trigger->fire('post.admin.filter.add', $filter_group_id);
+		$this->trigger->fire('post.admin.filter.add', array(&$filter_group_id));
 
 		return $filter_group_id;
 	}
 
 	public function editFilter($filter_group_id, $data) {
-		$this->trigger->fire('pre.admin.filter.edit', $data);
+		$this->trigger->fire('pre.admin.filter.edit', array(&$data));
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "filter_group` SET sort_order = '" . (int)$data['sort_order'] . "' WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 
@@ -65,18 +65,18 @@ class ModelCatalogFilter extends Model {
 			}
 		}
 
-		$this->trigger->fire('post.admin.filter.edit', $filter_group_id);
+		$this->trigger->fire('post.admin.filter.edit', array(&$filter_group_id));
 	}
 
 	public function deleteFilter($filter_group_id) {
-		$this->trigger->fire('pre.admin.filter.delete', $filter_group_id);
+		$this->trigger->fire('pre.admin.filter.delete', array(&$filter_group_id));
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group_description` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 
-		$this->trigger->fire('post.admin.filter.delete', $filter_group_id);
+		$this->trigger->fire('post.admin.filter.delete', array(&$filter_group_id));
 	}
 
 	public function getFilterGroup($filter_group_id) {

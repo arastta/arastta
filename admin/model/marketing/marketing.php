@@ -8,31 +8,31 @@
 
 class ModelMarketingMarketing extends Model {
 	public function addMarketing($data) {
-		$this->trigger->fire('pre.admin.marketing.add', $data);
+		$this->trigger->fire('pre.admin.marketing.add', array(&$data));
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "marketing SET name = '" . $this->db->escape($data['name']) . "', description = '" . $this->db->escape($data['description']) . "', code = '" . $this->db->escape($data['code']) . "', date_added = NOW()");
 
 		$marketing_id = $this->db->getLastId();
 
-		$this->trigger->fire('post.admin.marketing.add', $marketing_id);
+		$this->trigger->fire('post.admin.marketing.add', array(&$marketing_id));
 
 		return $marketing_id;
 	}
 
 	public function editMarketing($marketing_id, $data) {
-		$this->trigger->fire('pre.admin.marketing.edit', $data);
+		$this->trigger->fire('pre.admin.marketing.edit', array(&$data));
 
 		$this->db->query("UPDATE " . DB_PREFIX . "marketing SET name = '" . $this->db->escape($data['name']) . "', description = '" . $this->db->escape($data['description']) . "', code = '" . $this->db->escape($data['code']) . "' WHERE marketing_id = '" . (int)$marketing_id . "'");
 
-		$this->trigger->fire('post.admin.marketing.edit', $marketing_id);
+		$this->trigger->fire('post.admin.marketing.edit', array(&$marketing_id));
 	}
 
 	public function deleteMarketing($marketing_id) {
-		$this->trigger->fire('pre.admin.marketing.delete', $marketing_id);
+		$this->trigger->fire('pre.admin.marketing.delete', array(&$marketing_id));
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "marketing WHERE marketing_id = '" . (int)$marketing_id . "'");
 
-		$this->trigger->fire('post.admin.marketing.delete', $marketing_id);
+		$this->trigger->fire('post.admin.marketing.delete', array(&$marketing_id));
 	}
 
 	public function getMarketing($marketing_id) {

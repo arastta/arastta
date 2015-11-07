@@ -8,7 +8,7 @@
 
 class ModelCatalogCategory extends Model {
 	public function addCategory($data) {
-		$this->trigger->fire('pre.admin.category.add', $data);
+		$this->trigger->fire('pre.admin.category.add', array(&$data));
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW(), date_added = NOW()");
 
@@ -104,13 +104,13 @@ class ModelCatalogCategory extends Model {
 
 		$this->cache->delete('category');
 
-		$this->trigger->fire('post.admin.category.add', $category_id);
+		$this->trigger->fire('post.admin.category.add', array(&$category_id));
 
 		return $category_id;
 	}
 
 	public function editCategory($category_id, $data) {
-		$this->trigger->fire('pre.admin.category.edit', $data);
+		$this->trigger->fire('pre.admin.category.edit', array(&$data));
 
         $isTop = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category` WHERE category_id = '" . (int)$category_id . "'");
 
@@ -333,11 +333,11 @@ class ModelCatalogCategory extends Model {
 
 		$this->cache->delete('category');
 
-		$this->trigger->fire('post.admin.category.edit', $category_id);
+		$this->trigger->fire('post.admin.category.edit', array(&$category_id));
 	}
 
 	public function deleteCategory($category_id) {
-		$this->trigger->fire('pre.admin.category.delete', $category_id);
+		$this->trigger->fire('pre.admin.category.delete', array(&$category_id));
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "category_path WHERE category_id = '" . (int)$category_id . "'");
 
@@ -379,7 +379,7 @@ class ModelCatalogCategory extends Model {
 
 		$this->cache->delete('category');
 
-		$this->trigger->fire('post.admin.category.delete', $category_id);
+		$this->trigger->fire('post.admin.category.delete', array(&$category_id));
 	}
 
 	public function repairCategories($parent_id = 0) {

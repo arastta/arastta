@@ -36,7 +36,7 @@ class ModelToolBackup extends Model {
 	}
 
 	public function backup($tables) {
-		$this->trigger->fire('pre.admin.backup', $tables);
+		$this->trigger->fire('pre.admin.backup', array(&$tables));
 
 		$output = '';
 

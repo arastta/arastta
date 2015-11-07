@@ -8,7 +8,7 @@
 
 class ModelAppearanceLayout extends Model {
 	public function addLayout($data) {
-		$this->trigger->fire('pre.admin.layout.add', $data);
+		$this->trigger->fire('pre.admin.layout.add', array(&$data));
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = '" . $this->db->escape($data['name']) . "'");
 
@@ -34,7 +34,7 @@ class ModelAppearanceLayout extends Model {
 			}
 		}
 		
-		$this->trigger->fire('post.admin.layout.add', $layout_id);
+		$this->trigger->fire('post.admin.layout.add', array(&$layout_id));
 
 		return $layout_id;
 	}
@@ -48,7 +48,7 @@ class ModelAppearanceLayout extends Model {
             $data['layout_module'] = $this->getLayoutModules($layout_id, false);
         }
 
-		$this->trigger->fire('pre.admin.layout.edit', $data);
+		$this->trigger->fire('pre.admin.layout.edit', array(&$data));
 
 		$this->db->query("UPDATE " . DB_PREFIX . "layout SET name = '" . $this->db->escape($data['name']) . "' WHERE layout_id = '" . (int)$layout_id . "'");
 
@@ -68,7 +68,7 @@ class ModelAppearanceLayout extends Model {
 			}
 		}
 		
-		$this->trigger->fire('post.admin.layout.edit', $layout_id);
+		$this->trigger->fire('post.admin.layout.edit', array(&$layout_id));
 	}
 
 	public function removeLayout($layout_id) {
@@ -90,7 +90,7 @@ class ModelAppearanceLayout extends Model {
 	}
 
 	public function deleteLayout($layout_id) {
-		$this->trigger->fire('pre.admin.layout.delete', $layout_id);
+		$this->trigger->fire('pre.admin.layout.delete', array(&$layout_id));
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "layout WHERE layout_id = '" . (int)$layout_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "layout_route WHERE layout_id = '" . (int)$layout_id . "'");
@@ -99,7 +99,7 @@ class ModelAppearanceLayout extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_layout WHERE layout_id = '" . (int)$layout_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_layout WHERE layout_id = '" . (int)$layout_id . "'");
 
-		$this->trigger->fire('post.admin.layout.delete', $layout_id);
+		$this->trigger->fire('post.admin.layout.delete', array(&$layout_id));
 	}
 
 	public function getLayout($layout_id) {
