@@ -47,7 +47,6 @@ class Trigger extends Object {
      *
      * @param   string  $event      The event to trigger.
      * @param   array   $args       An array of arguments.
-     * @param   array   $extract    Option to extract arguments or not.
      *
      * @return  array  An array of results from each function call.
      *
