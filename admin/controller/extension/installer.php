@@ -187,7 +187,7 @@ class ControllerExtensionInstaller extends Controller {
 
 		if (!$json) {
             // Fire event
-            $this->trigger->fire('pre.admin.extension.unzip', $file);
+            $this->trigger->fire('pre.admin.extension.unzip', array(&$file));
 
             $installer = new Installer($this->registry);
 
@@ -246,7 +246,7 @@ class ControllerExtensionInstaller extends Controller {
 
 		if (!$json) {
             // Fire event
-            $this->trigger->fire('pre.admin.extension.ftp', $directory);
+            $this->trigger->fire('pre.admin.extension.ftp', array(&$directory));
 
             $replaceFolderName = array(
                 'admin/language/english' => 'admin/language/en-GB',
@@ -374,27 +374,31 @@ class ControllerExtensionInstaller extends Controller {
     }
 
     public function replaceFile($file) {
+		if (!is_file($file)){
+			return;
+		}
+
         $replace_text = array(
             'VQMod::modCheck' => 'modification',
-            '$this->event->trigger' => '$this->trigger->fire',
             'new Mail()' => 'new Mail($this->config->get(\'config_mail\'))'
         );
 
-        if(is_file($file)){
-            $content = file_get_contents($file);
+		$content = file_get_contents($file);
 
-			// Just add admin file in content.
-			if(strpos($file, 'admin') !== false && strpos($content, 'design/layout') !== false){
-                $replace_text['design/layout'] = 'appearance/layout';
-                $replace_text['design_layout'] = 'appearance_layout';
-            }
+		// Just add admin file in content.
+		if (strpos($file, 'admin') !== false && strpos($content, 'design/layout') !== false){
+			$replace_text['design/layout'] = 'appearance/layout';
+			$replace_text['design_layout'] = 'appearance_layout';
+		}
 
-            foreach($replace_text as $key => $value){
-                $content = str_replace($key, $value, $content);
-            }
+		foreach ($replace_text as $key => $value){
+			$content = str_replace($key, $value, $content);
+		}
 
-            file_put_contents($file, $content);
-        }
+        $content = preg_replace("/\\\\$this->trigger->fire('$1', array(&$2));/", "\$this->trigger->fire('$1', array(&$2));", $content);
+        $content = preg_replace("/\\\$this->event->trigger\('(.*)',[\s]*(.*)\);/", "\$this->trigger->fire('$1', array(&$2));", $content);
+
+		file_put_contents($file, $content);
     }
 
     public function replaceFolderName($originalName, $changeName) {
@@ -423,7 +427,7 @@ class ControllerExtensionInstaller extends Controller {
 
 			if ($lines) {
                 // Fire event
-                $this->trigger->fire('pre.admin.extension.sql', $lines);
+                $this->trigger->fire('pre.admin.extension.sql', array(&$lines));
 
                 try {
 					$sql = '';
@@ -484,7 +488,7 @@ class ControllerExtensionInstaller extends Controller {
 
 			if ($xml) {
                 // Fire event
-                $this->trigger->fire('pre.admin.extension.xml', $xml);
+                $this->trigger->fire('pre.admin.extension.xml', array(&$xml));
 
                 if (!empty($this->session->data['vqmod_file_name'])) {
                     $msmod = DIR_VQMOD . 'xml/'. $this->session->data['vqmod_file_name'];
@@ -526,7 +530,7 @@ class ControllerExtensionInstaller extends Controller {
 
 		if (!$json) {
             // Fire event
-            $this->trigger->fire('pre.admin.extension.php', $file);
+            $this->trigger->fire('pre.admin.extension.php', array(&$file));
 
             try {
 				include($file);
@@ -557,7 +561,7 @@ class ControllerExtensionInstaller extends Controller {
 
 		if (!$json) {
             // Fire event
-            $this->trigger->fire('pre.admin.extension.json', $file);
+            $this->trigger->fire('pre.admin.extension.json', array(&$file));
 
 			$data = file_get_contents($file);
 			$data = json_decode($data, true);
@@ -600,7 +604,7 @@ class ControllerExtensionInstaller extends Controller {
 
 		if (!$json) {
             // Fire event
-            $this->trigger->fire('pre.admin.extension.remove', $directory);
+            $this->trigger->fire('pre.admin.extension.remove', array(&$directory));
 
 			// Add addon to addon table
 			if (isset($this->request->post['product_id']) and isset($this->request->post['product_name']) and isset($this->request->post['store']) and isset($this->request->post['product_version'])) {
@@ -910,7 +914,7 @@ class ControllerExtensionInstaller extends Controller {
 			$files = json_decode($addon['addon_files']);
 
             // Fire event
-            $this->trigger->fire('pre.admin.extension.uninstall', $files);
+            $this->trigger->fire('pre.admin.extension.uninstall', array(&$files));
 
             $absolutePaths = $codes = array();
 			foreach ($files as $file) {

@@ -8,7 +8,7 @@
 
 class ModelAccountAddress extends Model {
 	public function addAddress($data) {
-		$this->trigger->fire('pre.customer.add.address', $data);
+		$this->trigger->fire('pre.customer.add.address', array(&$data));
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '" . (int)$this->customer->getId() . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', company = '" . $this->db->escape($data['company']) . "', address_1 = '" . $this->db->escape($data['address_1']) . "', address_2 = '" . $this->db->escape($data['address_2']) . "', postcode = '" . $this->db->escape($data['postcode']) . "', city = '" . $this->db->escape($data['city']) . "', zone_id = '" . (int)$data['zone_id'] . "', country_id = '" . (int)$data['country_id'] . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? serialize($data['custom_field']) : '') . "'");
 
@@ -18,13 +18,13 @@ class ModelAccountAddress extends Model {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 		}
 
-		$this->trigger->fire('post.customer.add.address', $address_id);
+		$this->trigger->fire('post.customer.add.address', array(&$address_id));
 
 		return $address_id;
 	}
 
 	public function editAddress($address_id, $data) {
-		$this->trigger->fire('pre.customer.edit.address', $data);
+		$this->trigger->fire('pre.customer.edit.address', array(&$data));
 
 		$this->db->query("UPDATE " . DB_PREFIX . "address SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', company = '" . $this->db->escape($data['company']) . "', address_1 = '" . $this->db->escape($data['address_1']) . "', address_2 = '" . $this->db->escape($data['address_2']) . "', postcode = '" . $this->db->escape($data['postcode']) . "', city = '" . $this->db->escape($data['city']) . "', zone_id = '" . (int)$data['zone_id'] . "', country_id = '" . (int)$data['country_id'] . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? serialize($data['custom_field']) : '') . "' WHERE address_id  = '" . (int)$address_id . "' AND customer_id = '" . (int)$this->customer->getId() . "'");
 
@@ -32,15 +32,15 @@ class ModelAccountAddress extends Model {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 		}
 
-		$this->trigger->fire('post.customer.edit.address', $address_id);
+		$this->trigger->fire('post.customer.edit.address', array(&$address_id));
 	}
 
 	public function deleteAddress($address_id) {
-		$this->trigger->fire('pre.customer.delete.address', $address_id);
+		$this->trigger->fire('pre.customer.delete.address', array(&$address_id));
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "address WHERE address_id = '" . (int)$address_id . "' AND customer_id = '" . (int)$this->customer->getId() . "'");
 
-		$this->trigger->fire('post.customer.delete.address', $address_id);
+		$this->trigger->fire('post.customer.delete.address', array(&$address_id));
 	}
 
 	public function getAddress($address_id) {

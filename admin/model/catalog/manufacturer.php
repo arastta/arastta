@@ -9,7 +9,7 @@
 class ModelCatalogManufacturer extends Model {
     
 	public function addManufacturer($data) {
-		$this->trigger->fire('pre.admin.manufacturer.add', $data);
+		$this->trigger->fire('pre.admin.manufacturer.add', array(&$data));
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer SET sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW(), date_added = NOW()");
 
@@ -45,13 +45,13 @@ class ModelCatalogManufacturer extends Model {
 
 		$this->cache->delete('manufacturer');
 
-		$this->trigger->fire('post.admin.manufacturer.add', $manufacturer_id);
+		$this->trigger->fire('post.admin.manufacturer.add', array(&$manufacturer_id));
 
 		return $manufacturer_id;
 	}
 
 	public function editManufacturer($manufacturer_id, $data) {
-		$this->trigger->fire('pre.admin.manufacturer.edit', $data);
+		$this->trigger->fire('pre.admin.manufacturer.edit', array(&$data));
 
 		$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 
@@ -92,11 +92,11 @@ class ModelCatalogManufacturer extends Model {
 
 		$this->cache->delete('manufacturer');
 
-		$this->trigger->fire('post.admin.manufacturer.edit', $manufacturer_id);
+		$this->trigger->fire('post.admin.manufacturer.edit', array(&$manufacturer_id));
 	}
 
 	public function deleteManufacturer($manufacturer_id) {
-		$this->trigger->fire('pre.admin.manufacturer.delete', $manufacturer_id);
+		$this->trigger->fire('pre.admin.manufacturer.delete', array(&$manufacturer_id));
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer_description WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
@@ -128,7 +128,7 @@ class ModelCatalogManufacturer extends Model {
 
 		$this->cache->delete('manufacturer');
 
-		$this->trigger->fire('post.admin.manufacturer.delete', $manufacturer_id);
+		$this->trigger->fire('post.admin.manufacturer.delete', array(&$manufacturer_id));
 	}
 
 	public function getManufacturer($manufacturer_id) {

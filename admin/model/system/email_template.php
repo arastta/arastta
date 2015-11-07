@@ -9,7 +9,7 @@
 class ModelSystemEmailtemplate extends Model {
 
 	public function editEmailTemplate($email_template, $email_template_description) {
-		$this->trigger->fire('pre.admin.emailtemplate.edit', $email_template_description);
+		$this->trigger->fire('pre.admin.emailtemplate.edit', array(&$email_template_description));
 
 		$item = explode("_", $email_template);
 		
@@ -23,7 +23,7 @@ class ModelSystemEmailtemplate extends Model {
             $this->db->query("INSERT INTO " . DB_PREFIX . "email_description SET  email_id = '" . (int)$email_id . "', name = '". $this->db->escape($value['name']) . "', description = '". $this->db->escape($value['description']) . "', status = '1', language_id = '". (int)$language_id . "'");
         }
 
-		$this->trigger->fire('post.admin.emailtemplate.edit', $email_template_description);
+		$this->trigger->fire('post.admin.emailtemplate.edit', array(&$email_template_description));
 	}
 
 	public function getEmailTemplate($email_template) {

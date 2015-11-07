@@ -8,7 +8,7 @@
 
 class ModelDesignBanner extends Model {
 	public function addBanner($data) {
-		$this->trigger->fire('pre.admin.banner.add', $data);
+		$this->trigger->fire('pre.admin.banner.add', array(&$data));
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "banner SET name = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "'");
 
@@ -26,13 +26,13 @@ class ModelDesignBanner extends Model {
 			}
 		}
 
-		$this->trigger->fire('post.admin.banner.add', $banner_id);
+		$this->trigger->fire('post.admin.banner.add', array(&$banner_id));
 
 		return $banner_id;
 	}
 
 	public function editBanner($banner_id, $data) {
-		$this->trigger->fire('pre.admin.banner.edit', $data);
+		$this->trigger->fire('pre.admin.banner.edit', array(&$data));
 
 		$this->db->query("UPDATE " . DB_PREFIX . "banner SET name = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "' WHERE banner_id = '" . (int)$banner_id . "'");
 
@@ -51,19 +51,19 @@ class ModelDesignBanner extends Model {
 			}
 		}
 
-		$this->trigger->fire('post.admin.banner.edit', $banner_id);
+		$this->trigger->fire('post.admin.banner.edit', array(&$banner_id));
 		
 		return $banner_id;
 	}
 
 	public function deleteBanner($banner_id) {
-		$this->trigger->fire('pre.admin.banner.delete', $banner_id);
+		$this->trigger->fire('pre.admin.banner.delete', array(&$banner_id));
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "banner WHERE banner_id = '" . (int)$banner_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "banner_image WHERE banner_id = '" . (int)$banner_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "banner_image_description WHERE banner_id = '" . (int)$banner_id . "'");
 
-		$this->trigger->fire('post.admin.banner.delete', $banner_id);
+		$this->trigger->fire('post.admin.banner.delete', array(&$banner_id));
 	}
 
 	public function getBanner($banner_id) {

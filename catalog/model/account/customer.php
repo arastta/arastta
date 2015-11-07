@@ -8,7 +8,7 @@
 
 class ModelAccountCustomer extends Model {
 	public function addCustomer($data) {
-		$this->trigger->fire('pre.customer.add', $data);
+		$this->trigger->fire('pre.customer.add', array(&$data));
 
 		if (isset($data['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($data['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $data['customer_group_id'];
@@ -66,19 +66,19 @@ class ModelAccountCustomer extends Model {
             }
         }
 
-		$this->trigger->fire('post.customer.add', $customer_id);
+		$this->trigger->fire('post.customer.add', array(&$customer_id));
 
 		return $customer_id;
 	}
 
 	public function editCustomer($data) {
-		$this->trigger->fire('pre.customer.edit', $data);
+		$this->trigger->fire('pre.customer.edit', array(&$data));
 
 		$customer_id = $this->customer->getId();
 
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? serialize($data['custom_field']) : '') . "' WHERE customer_id = '" . (int)$customer_id . "'");
 
-		$this->trigger->fire('post.customer.edit', $customer_id);
+		$this->trigger->fire('post.customer.edit', array(&$customer_id));
 	}
 
 	public function editPassword($email, $password) {

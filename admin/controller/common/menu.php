@@ -729,7 +729,7 @@ class ControllerCommonMenu extends Controller {
 			)
 		);
 
-		$this->trigger->fire('pre.admin.menu.render', $this);
+		$this->trigger->fire('pre.admin.menu.render', array(&$this));
 
 		foreach ($this->menu as $id=>$item) {
 			if (isset($item['children'])) {

@@ -30,7 +30,12 @@ class ModelExtensionModification extends Model {
 
         if (!empty($files) && $files) {
             foreach ($files as $file) {
-                $xmls[$file] = file_get_contents($file);
+                $xml_content = file_get_contents($file);
+
+                $xml_content = preg_replace("/\\\\$this->trigger->fire('$1', array(&$2));/", "\$this->trigger->fire('$1', array(&$2));", $xml_content);
+                $xml_content = preg_replace("/\\\$this->event->trigger\('(.*)',[\s]*(.*)\);/", "\$this->trigger->fire('$1', array(&$2));", $xml_content);
+
+                $xmls[$file] = $xml_content;
             }
         }
 
@@ -43,7 +48,7 @@ class ModelExtensionModification extends Model {
             return false;
         }
 
-        $dom                     = new DOMDocument('1.0', 'UTF-8');
+        $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
 
         foreach ($xmls as $file => $xml) {

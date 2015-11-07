@@ -8,7 +8,7 @@
 
 class ModelCatalogInformation extends Model {
 	public function addInformation($data) {
-		$this->trigger->fire('pre.admin.information.add', $data);
+		$this->trigger->fire('pre.admin.information.add', array(&$data));
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "information SET sort_order = '" . (int)$data['sort_order'] . "', bottom = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', status = '" . (int)$data['status'] . "'");
 
@@ -39,13 +39,13 @@ class ModelCatalogInformation extends Model {
 
 		$this->cache->delete('information');
 
-		$this->trigger->fire('post.admin.information.add', $information_id);
+		$this->trigger->fire('post.admin.information.add', array(&$information_id));
 
 		return $information_id;
 	}
 
 	public function editInformation($information_id, $data) {
-		$this->trigger->fire('pre.admin.information.edit', $data);
+		$this->trigger->fire('pre.admin.information.edit', array(&$data));
 
 		$this->db->query("UPDATE " . DB_PREFIX . "information SET sort_order = '" . (int)$data['sort_order'] . "', bottom = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', status = '" . (int)$data['status'] . "' WHERE information_id = '" . (int)$information_id . "'");
 
@@ -82,11 +82,11 @@ class ModelCatalogInformation extends Model {
 
 		$this->cache->delete('information');
 
-		$this->trigger->fire('post.admin.information.edit', $information_id);
+		$this->trigger->fire('post.admin.information.edit', array(&$information_id));
 	}
 
 	public function deleteInformation($information_id) {
-		$this->trigger->fire('pre.admin.information.delete', $information_id);
+		$this->trigger->fire('pre.admin.information.delete', array(&$information_id));
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information WHERE information_id = '" . (int)$information_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_description WHERE information_id = '" . (int)$information_id . "'");
@@ -118,7 +118,7 @@ class ModelCatalogInformation extends Model {
 
 		$this->cache->delete('information');
 
-		$this->trigger->fire('post.admin.information.delete', $information_id);
+		$this->trigger->fire('post.admin.information.delete', array(&$information_id));
 	}
 
 	public function getInformation($information_id) {

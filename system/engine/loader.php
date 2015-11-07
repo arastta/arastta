@@ -23,14 +23,13 @@ final class Loader {
     }
 
 	public function controller($route, $args = array()) {
-        $event_args = array(&$route, &$args);
-        $this->trigger->fire('pre.load.controller', $event_args);
+        $this->trigger->fire('pre.load.controller', array(&$route, &$args));
 
         $action = new Action($route, $args);
 
 		$ret = $action->execute($this->registry);
 
-        $this->trigger->fire('post.load.controller', $ret);
+        $this->trigger->fire('post.load.controller', array(&$ret));
 
         return $ret;
     }
@@ -40,7 +39,7 @@ final class Loader {
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
 
 		if (file_exists($file)) {
-            $this->trigger->fire('pre.load.model', $model);
+            $this->trigger->fire('pre.load.model', array(&$model));
 
             include_once($file);
 
@@ -48,7 +47,7 @@ final class Loader {
 
 			$this->registry->set('model_' . str_replace('/', '_', $model), $model_class);
 
-            $this->trigger->fire('post.load.model', $model_class);
+            $this->trigger->fire('post.load.model', array(&$model_class));
 		} else {
 			trigger_error('Error: Could not load model ' . $file . '!');
 			exit();
@@ -61,8 +60,7 @@ final class Loader {
         $file = Client::getDir() . 'view/' . $theme_dir . '/' . $template;
 
 		if (file_exists($file)) {
-            $event_args = array(&$template, &$data);
-            $this->trigger->fire('pre.load.view', $event_args);
+            $this->trigger->fire('pre.load.view', array(&$template, &$data));
 
             extract($data);
 
@@ -74,7 +72,7 @@ final class Loader {
 
 			ob_end_clean();
 
-            $this->trigger->fire('post.load.view', $output);
+            $this->trigger->fire('post.load.view', array(&$output));
 
 			return $output;
 		} else {
@@ -101,11 +99,11 @@ final class Loader {
         $file = DIR_SYSTEM . 'library/' . $library . '.php';
 
 		if (file_exists($file)) {
-            $this->trigger->fire('pre.load.library', $library);
+            $this->trigger->fire('pre.load.library', array(&$library));
 
             include_once($file);
 
-            $this->trigger->fire('post.load.library', $library);
+            $this->trigger->fire('post.load.library', array(&$library));
 		} else {
 			trigger_error('Error: Could not load library ' . $file . '!');
 			exit();
@@ -116,11 +114,11 @@ final class Loader {
         $file = DIR_SYSTEM . 'helper/' . $helper . '.php';
 
 		if (file_exists($file)) {
-            $this->trigger->fire('pre.load.helper', $helper);
+            $this->trigger->fire('pre.load.helper', array(&$helper));
 
             include_once($file);
 
-            $this->trigger->fire('post.load.helper', $helper);
+            $this->trigger->fire('post.load.helper', array(&$helper));
 		} else {
 			trigger_error('Error: Could not load helper ' . $file . '!');
 			exit();
@@ -128,19 +126,19 @@ final class Loader {
 	}
 
 	public function config($config) {
-        $this->trigger->fire('pre.load.config', $config);
+        $this->trigger->fire('pre.load.config', array(&$config));
 
         $this->registry->get('config')->load($config);
 
-        $this->trigger->fire('post.load.config', $config);
+        $this->trigger->fire('post.load.config', array(&$config));
 	}
 
 	public function language($language) {
-        $this->trigger->fire('pre.load.language', $language);
+        $this->trigger->fire('pre.load.language', array(&$language));
 
 		$lang = $this->registry->get('language')->load($language);
 
-        $this->trigger->fire('post.load.language', $language);
+        $this->trigger->fire('post.load.language', array(&$language));
 
         return $lang;
     }
