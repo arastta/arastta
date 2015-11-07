@@ -11,7 +11,6 @@ class ModelSetting extends Model {
     public function createDatabaseTables($data) {
         $this->session->data['store_name'] = $data['store_name'];
         $this->session->data['store_email'] = $data['store_email'];
-        $this->session->data['admin_username'] = $data['admin_username'];
         $this->session->data['admin_email'] = $data['admin_email'];
         $this->session->data['admin_password'] = $data['admin_password'];
         $this->session->data['install_demo_data'] = isset($data['install_demo_data']);
