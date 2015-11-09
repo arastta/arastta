@@ -579,9 +579,7 @@ class ControllerSaleReturn extends Controller {
 		$this->response->setOutput($this->load->view('sale/return_list.tpl', $data));
 	}
 
-	protected function getForm() {
-		$this->trigger->fire('pre.admin.editor.button.add');
-	
+	protected function getForm() {		
 		$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_form'] = !isset($this->request->get['return_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');

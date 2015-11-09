@@ -287,9 +287,7 @@ class ControllerSystemEmailtemplate extends Controller {
 		$this->response->setOutput($this->load->view('system/email_template_list.tpl', $data));
 	}
 	
-	protected function getForm() {
-		$this->trigger->fire('pre.admin.editor.button.add');
-	
+	protected function getForm() {	
 		$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_form'] = $this->language->get('text_edit');

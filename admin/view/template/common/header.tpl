@@ -32,17 +32,26 @@
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>
+<?php if ($style_declarations) { ?>
+<style type="text/css">
+  <?php foreach ($style_declarations as $style) { ?>
+  <?php echo $style; ?>
+  <?php } ?>
+</style>
+<?php } ?>
 <script type="text/javascript" src="view/javascript/jquery/moment/moment.js" ></script>
 <script type="text/javascript" src="view/javascript/jquery/moment/locale/<?php echo $moment_lang; ?>.js" ></script>
 <script type="text/javascript" src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>
+<?php if ($script_declarations) { ?>
 <script type="text/javascript">
   <?php foreach ($script_declarations as $script) { ?>
   <?php echo $script; ?>
   <?php } ?>
 </script>
+<?php } ?>
 </head>
 <body>
 <div id="container">

@@ -70,7 +70,6 @@
     </div>
   </div>
 </div>
-
 <script type="text/javascript"><!--
 function save(type){
 	var input = document.createElement('input');
@@ -81,5 +80,4 @@ function save(type){
 	form.submit();
 }
 //--></script>
-            
 <?php echo $footer; ?>
