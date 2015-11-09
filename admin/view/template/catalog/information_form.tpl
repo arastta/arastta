@@ -228,8 +228,10 @@
     </div>
   </div>
     <script type="text/javascript"><!--
-    <?php foreach ($languages as $language) { ?>
-        textEditor('#input-description<?php echo $language["language_id"]; ?>');
+    $(document).ready(function() {	
+		<?php foreach ($languages as $language) { ?>
+			textEditor('#input-description<?php echo $language["language_id"]; ?>');
+		});		
     <?php } ?>
     //--></script>
   <script type="text/javascript"><!--
