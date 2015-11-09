@@ -45,11 +45,9 @@ $_['help_db_password']          = 'Your MySQL password';
 $_['help_db_database']          = 'Database you want to run Arastta in';
 $_['help_db_prefix']            = 'Prefix for multiple installs in one db';
 $_['help_store_name']           = 'Name of your store, used everywhere';
-$_['help_store_email']          = 'E-mail of your store, used everywhere';
-$_['help_admin_email']          = 'E-mail of admin account';
+$_['help_store_email']          = 'Email of your store, used everywhere';
+$_['help_admin_email']          = 'Email of admin account';
 $_['help_admin_password']       = 'Password of admin account';
-$_['help_admin_first_name']     = 'Administrator first name';
-$_['help_admin_last_name']      = 'Administrator last name';
 
 // Error
 $_['error_db_hostname'] 	    = 'Hostname required!';
@@ -58,9 +56,7 @@ $_['error_db_prefix'] 		    = 'Table Prefix can only contain lowercase character
 $_['error_db_connect'] 		    = '<br/>Error: Could not connect to the database! Please, make sure the details are correct.';
 $_['error_config'] 			    = 'Error: Could not write to config.php file. Please, check you have set the correct CHMOD permissions!';
 $_['error_store_name'] 		    = 'Store name required!';
-$_['error_store_email'] 		= 'Store email required!';
-$_['error_admin_username'] 		= 'Username required!';
-$_['error_admin_email'] 		= 'Invalid Email!';
+$_['error_email'] 				= 'Invalid email address!';
 $_['error_admin_password'] 		= 'Password required!';
 $_['error_remove_install'] 		= 'Failed to remove the install directory. Please remove this manually for security reasons.';
 $_['error_lang_code'] 		    = 'Language selection required, please, select one.';

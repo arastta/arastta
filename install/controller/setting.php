@@ -80,12 +80,12 @@ class ControllerSetting extends Controller {
 			$json['error']['store-name'] = $this->language->get('error_store_name');
 		}
 
-		if (empty($this->request->post['store_email'])) {
-			$json['error']['store-email'] = $this->language->get('error_store_email');
+		if (empty($this->request->post['store_email']) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['store_email'])) {
+			$json['error']['store-email'] = $this->language->get('error_email');
 		}
 
-		if (empty($this->request->post['admin_email'])) {
-			$json['error']['admin-email'] = $this->language->get('error_admin_email');
+		if (empty($this->request->post['admin_email']) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['admin_email'])) {
+			$json['error']['admin-email'] = $this->language->get('error_email');
 		}
 
 		if (empty($this->request->post['admin_password'])) {
