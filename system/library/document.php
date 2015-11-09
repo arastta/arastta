@@ -15,6 +15,8 @@ class Document {
 	private $links = array();
 	private $styles = array();
 	private $scripts = array();
+	private $style_declarations = array();
+	private $script_declarations = array();
 
 	public function setTitle($title) {
 		$this->title = $title;
@@ -74,11 +76,39 @@ class Document {
 		return $this->styles;
 	}
 
+	public function addStyleDeclaration($content, $type = 'text/css') {
+		if (!isset($this->style_declarations[strtolower($type)])) {
+			$this->style_declarations[strtolower($type)] = $content;
+		} else {
+			$this->style_declarations[strtolower($type)] .= chr(13) . $content;
+		}
+
+		return $this;
+	}
+
+	public function getStyleDeclarations() {
+		return $this->style_declarations;
+	}
+
 	public function addScript($script) {
 		$this->scripts[md5($script)] = $script;
 	}
 
 	public function getScripts() {
 		return $this->scripts;
+	}
+
+	public function addScriptDeclarations($content, $type = 'text/javascript') {
+		if (!isset($this->script_declarations[strtolower($type)])) {
+			$this->script_declarations[strtolower($type)] = $content;
+		} else {
+			$this->script_declarations[strtolower($type)] .= chr(13) . $content;
+		}
+
+		return $this->script_declarations;
+	}
+
+	public function getScriptDeclarations() {
+		return $this->script_declarations;
 	}
 }

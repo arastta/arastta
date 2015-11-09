@@ -648,27 +648,3 @@ $(document).ready(function() {
 		});
 	}
 })(window.jQuery);
-
-function textEditor(text_id) {
-	// Editor Set Language
-	if (text_editor == 'summernote') {
-		$(text_id).summernote({
-			height: 300,
-			lang: editor_language
-		});
-	} else {
-		tinymce.init({
-			selector: text_id,
-			height: 300,
-			theme: 'modern',
-			plugins: [
-				"advlist autolink lists link image charmap print preview anchor",
-				"searchreplace visualblocks code fullscreen",
-				"insertdatetime media table contextmenu paste imagetools",
-				"emoticons autoresize textcolor template"
-			],
-			toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | emoticons autoresize imagetools",
-			language: editor_language
-		});
-	}
-}
