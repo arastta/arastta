@@ -181,18 +181,20 @@ class ControllerFeedFacebookStore extends Controller {
                 } else {
                     $rating = false;
                 }
+				
+				$this->trigger->fire('pre.product.display', array(&$result, 'facebook_store'));
 
                 $data['products'][] = array(
-                    'product_id' => $result['product_id'],
-                    'thumb' => $image,
-                    'name' => $result['name'],
-                    'description' => substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
-                    'price' => $price,
-                    'special' => $special,
-                    'tax' => $tax,
-                    'rating' => $rating,
-                    'reviews' => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-                    'href' => $this->url->link('product/product', '&product_id=' . $result['product_id'], 'SSL')
+                    'product_id'  => $result['product_id'],
+                    'thumb' 	  => $image,
+                    'name' 		  => $result['name'],
+                    'description' => $result['description'],
+                    'price' 	  => $price,
+                    'special' 	  => $special,
+                    'tax'		  => $tax,
+                    'rating'      => $rating,
+                    'reviews' 	  => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
+                    'href' 		  => $this->url->link('product/product', '&product_id=' . $result['product_id'], 'SSL')
                 );
             }
 

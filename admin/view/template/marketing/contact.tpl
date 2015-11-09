@@ -93,7 +93,9 @@
     </div>
   </div>
 <script type="text/javascript"><!--
+$(document).ready(function() {
 	textEditor('#input-message');
+});
 //--></script>
   <script type="text/javascript"><!--	
 $('select[name=\'to\']').on('change', function() {

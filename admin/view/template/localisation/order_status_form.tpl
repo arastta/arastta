@@ -84,9 +84,11 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+$(document).ready(function() {
 <?php foreach ($languages as $language) { ?>
 	textEditor('#input-message-<?php echo $language['language_id']; ?>, #input-email-template-<?php echo $language['language_id']; ?>');
 <?php } ?>
+});
 //--></script>
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');

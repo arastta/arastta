@@ -2379,3 +2379,35 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
 #content  .note-dialog .note-help-dialog .note-shortcut-title {
 	color: #008DB9;
 }
+
+
+.arastta-readmore:before {
+	-webkit-mask-image: url(../image/read-more.svg) !important;
+	mask-image: url(../image/read-more.svg) !important;
+	background-color: #555555 !important;
+	font-size: 21px;
+	font-weight: 600;
+	content: "\f209";
+}
+
+.note-readmore.btn-group button {
+	padding: 0px 9px 0px 7px !important;
+	height: 28px !important;
+}
+
+.mce-i-readmore {
+	display: block !important;
+	-webkit-mask-image: url(../image/read-more.svg) !important;
+	mask-image: url(../image/read-more.svg) !important;
+	background-color: #333 !important;
+	font-size: 14px;
+}
+
+.mce-menu-item i.mce-ico.mce-i-readmore {
+	float: left;
+	margin-top: -3px;
+}
+
+.note-editor.codeview .note-editing-area .note-codable {
+    max-width: 100% !important;
+}
