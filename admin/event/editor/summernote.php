@@ -42,9 +42,9 @@ class EventEditorSummernote extends Event {
         $this->trigger->addFolder('editor-xtd');
         // $this->trigger->fire('pre.admin.editor.menu.add');
         // $this->trigger->fire('pre.admin.editor.button.add');
-        $this->trigger->fire('pre.admin.editor.toolbar.add', array(&$this->toolbar), true);
-        $this->trigger->fire('pre.admin.editor.height.edit', array(&$this->height), true);
-        $this->trigger->fire('pre.admin.editor.other.edit', array(&$this->other_options), true);
+        $this->trigger->fire('pre.admin.editor.toolbar.add', array(&$this->toolbar));
+        $this->trigger->fire('pre.admin.editor.height.edit', array(&$this->height));
+        $this->trigger->fire('pre.admin.editor.other.edit', array(&$this->other_options));
 
         $this->document->addStyle('view/javascript/summernote/summernote.css');
         $this->document->addScript('view/javascript/summernote/summernote.js');

@@ -50,12 +50,10 @@ class EventEditorTinymce extends Event {
 
         $this->trigger->addFolder('editor-xtd');
         $this->trigger->fire('pre.admin.editor.button.add');
-        $this->trigger->fire('pre.admin.editor.menu.add', array(&$this->menu), true);
-        $this->trigger->fire('pre.admin.editor.toolbar.add', array(&$this->toolbar), true);
-        $this->trigger->fire('pre.admin.editor.height.edit', array(&$this->height), true);
-        $this->trigger->fire('pre.admin.editor.other.edit', array(&$this->other_options), true);
-
-        //<script src="view/javascript/tinymce/plugins/readmore/plugin.js" type="text/javascript"></script>
+        $this->trigger->fire('pre.admin.editor.menu.add', array(&$this->menu));
+        $this->trigger->fire('pre.admin.editor.toolbar.add', array(&$this->toolbar));
+        $this->trigger->fire('pre.admin.editor.height.edit', array(&$this->height));
+        $this->trigger->fire('pre.admin.editor.other.edit', array(&$this->other_options));
 
         $this->document->addScript('view/javascript/tinymce/tinymce.min.js');
 
