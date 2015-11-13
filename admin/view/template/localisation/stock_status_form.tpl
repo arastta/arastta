@@ -32,24 +32,55 @@
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-stock-status" class="form-horizontal">
-          <div class="form-group required">
-            <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
-            <div class="col-sm-10">
-              <?php foreach ($languages as $language) { ?>
-              <div class="input-group"> <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-                <input type="text" name="stock_status[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($stock_status[$language['language_id']]) ? $stock_status[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
+		 <ul class="nav nav-tabs" id="language">
+			<?php foreach ($languages as $language) { ?>
+            <li><a href="#language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
+            <?php } ?>
+          </ul>
+          <div class="tab-content">
+            <?php foreach ($languages as $language) { ?>
+            <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
+              <div class="form-group required">
+                <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input type="text" name="stock_status[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($stock_status[$language['language_id']]) ? $stock_status[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
+                  </div>
+                  <?php if (isset($error_name[$language['language_id']])) { ?>
+                  <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
+                  <?php } ?>
+                </div>
               </div>
-              <?php if (isset($error_name[$language['language_id']])) { ?>
-              <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
-              <?php } ?>
-              <?php } ?>
-            </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
+                <div class="col-sm-10">
+                  <div class="customizer-control-content">
+                    <div class="wp-picker-container">
+                      <span class="wp-picker-input-wrap">
+                       <div class="input-group">
+                         <input type="text" name="stock_status[<?php echo $language['language_id']; ?>][color]" id="stock_status_color_<?php echo $language['language_id']; ?>" class="color-picker-hex wp-color-picker" maxlength="7" value="<?php echo $stock_status[$language['language_id']]['color']; ?>" data-default-color="<?php echo $stock_status[$language['language_id']]['color']; ?>" style="display: none;">
+                         <input type="button" class="button button-small hidden wp-picker-default" value="<?php echo $entry_default; ?>">
+                       </div>
+                      </span>
+                      <div class="wp-picker-holder"></div>
+                    </div>
+                  </div>
+                </div>
+			   </div>
+             </div>
+		    <?php } ?>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  var wpColorPickerL10n = {"clear":"Clear","defaultString":"Default","pick":"Select Color","current":"Current Color"};
+</script>
+<script type="text/javascript"><!--
+$('#language a:first').tab('show');
+//--></script>
 <script type="text/javascript"><!--
 function save(type){
 	var input = document.createElement('input');
@@ -60,4 +91,10 @@ function save(type){
 	form.submit();
 }
 //--></script>
+<script type="text/javascript">
+  <?php foreach ($languages as $language) { ?>
+  picker = $('#stock_status_color_<?php echo $language["language_id"]; ?>');
+  picker.val('<?php echo $stock_status[$language["language_id"]]["color"]; ?>').wpColorPicker();
+  <?php } ?>
+</script>
 <?php echo $footer; ?>
