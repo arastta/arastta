@@ -35,10 +35,24 @@
 <?php foreach ($styles as $style) { ?>
 <link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
+<?php if ($style_declarations) { ?>
+<style type="text/css">
+  <?php foreach ($style_declarations as $style) { ?>
+  <?php echo $style; ?>
+  <?php } ?>
+</style>
+<?php } ?>
 <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
 <script src="catalog/view/javascript/arastta.js" type="text/javascript"></script>
 <?php foreach ($scripts as $script) { ?>
 <script src="<?php echo $script; ?>" type="text/javascript"></script>
+<?php } ?>
+<?php if ($script_declarations) { ?>
+<script type="text/javascript">
+  <?php foreach ($script_declarations as $script) { ?>
+  <?php echo $script; ?>
+  <?php } ?>
+</script>
 <?php } ?>
 <?php echo $google_analytics; ?>
 </head>

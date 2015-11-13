@@ -48,7 +48,9 @@ class ControllerCommonHeader extends Controller {
         $data['metas'] = $this->document->getMetas();
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();
+		$data['style_declarations'] = $this->document->getStyleDeclarations();
 		$data['scripts'] = $this->document->getScripts();
+		$data['script_declarations'] = $this->document->getScriptDeclarations();
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
 		

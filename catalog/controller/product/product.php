@@ -284,12 +284,17 @@ class ControllerProductProduct extends Controller {
 
 			if ($product_info['quantity'] <= 0) {
 				$data['stock'] = $product_info['stock_status'];
+				$stock_color = $product_info['stock_color'];
 			} elseif ($this->config->get('config_stock_display')) {
 				$data['stock'] = $product_info['quantity'];
+				$stock_color = '#008000';
 			} else {
 				$data['stock'] = $this->language->get('text_instock');
+				$stock_color = '#008000';
 			}
-
+			
+			$this->document->addStyleDeclaration('.stock-status { color: ' . $stock_color . '; font-weight: bold;}');
+			
 			$this->load->model('tool/image');
 
 			if ($product_info['image']) {

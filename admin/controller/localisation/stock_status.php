@@ -198,6 +198,7 @@ class ControllerLocalisationStockStatus extends Controller {
 			$data['stock_statuses'][] = array(
 				'stock_status_id' => $result['stock_status_id'],
 				'name'            => $result['name'],
+				'color'           => empty($result['color']) ? '#ddd' : $result['color'],
 				'edit'            => $this->url->link('localisation/stock_status/edit', 'token=' . $this->session->data['token'] . '&stock_status_id=' . $result['stock_status_id'] . $url, 'SSL')
 			);
 		}
@@ -285,12 +286,19 @@ class ControllerLocalisationStockStatus extends Controller {
 		$data['text_form'] = !isset($this->request->get['stock_status_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		
 		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_default'] = $this->language->get('entry_default');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_savenew'] = $this->language->get('button_savenew');
         $data['button_saveclose'] = $this->language->get('button_saveclose');		
 		$data['button_cancel'] = $this->language->get('button_cancel');
+		
+		$this->document->addStyle('view/stylesheet/color-picker.css');
+
+        $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
+        $this->document->addScript('view/javascript/colorpicker/color-picker.js');
+        $this->document->addScript('view/javascript/colorpicker/iris.min.js');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

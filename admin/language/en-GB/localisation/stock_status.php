@@ -21,6 +21,7 @@ $_['column_action']    = 'Action';
 
 // Entry
 $_['entry_name']       = 'Stock Status Name';
+$_['entry_default']    = 'Default';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify stock statuses!';
