@@ -62,8 +62,10 @@
 							<p class="description customizer-section-description"><?php echo 'Change Themes'; ?></p>
 							<select name="customizer_themes" id="customizer_themes" class="form-control">
 								<?php foreach ($templates as $template) { ?>
-								<?php if ($template == $config_template) { ?>
+								<?php if (!isset($theme) && $template == $config_template) { ?>
 								<option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
+								<?php } elseif ($template == $theme)  { ?>
+                <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
 								<?php } else { ?>
 								<option value="<?php echo $template; ?>"><?php echo $template; ?></option>
 								<?php } ?>
@@ -317,7 +319,7 @@
 </div>
 </body>
 </html>
-<script type="text/javascript">
+<script type="text/javascript"><!--
 $(function() {
 	var collapse = 'open'; 
 	$('.ds_accordion .ds_content').css('display', 'none');
@@ -352,8 +354,32 @@ $(function() {
 			collapse = 'open';
 		}
 	});
-	
 });
+
+function getURLVar(key) {
+  var value = [];
+
+  var query = String(document.location).split('?');
+
+  if (query[1]) {
+    var part = query[1].split('&');
+
+    for (i = 0; i < part.length; i++) {
+      var data = part[i].split('=');
+
+      if (data[0] && data[1]) {
+        value[data[0]] = data[1];
+      }
+    }
+
+    if (value[key]) {
+      return value[key];
+    } else {
+      return '';
+    }
+  }
+}
+
 $(document).ready(function() {
 	// Image Manager
 	$(document).delegate('.img-thumbnail', 'click', function(e) {
@@ -457,21 +483,39 @@ $(document).ready(function() {
     <?php  } ?>
 
     $.ajax({
-        url: '<?php echo $frontend; ?>',
-        type: 'post',
-        beforeSend: function() {
-            $('#customizer-preview').html('<div id="customizer-loading" class="text-center"><i class="fa fa-spinner fa-spin checkout-spin"></i></div>');
-        },
-        success: function(response) {
-            $('#customizer-loading').remove();
-            iframe = $('<iframe />').appendTo( $('#customizer-preview') );
-            iframe[0].contentWindow.document.open();
-            iframe[0].contentWindow.document.write( response );
-            iframe[0].contentWindow.document.close();
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
+      url: '<?php echo str_replace("amp;", "", $changeTheme); ?>',
+      type: 'post',
+      data: {template : '<?php echo $theme; ?>'},
+      error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    }).done(function() {
+      $.ajax({
+          url: '<?php echo $frontend; ?>',
+          type: 'post',
+          beforeSend: function() {
+              $('#customizer-preview').html('<div id="customizer-loading" class="text-center"><i class="fa fa-spinner fa-spin checkout-spin"></i></div>');
+          },
+          success: function(response) {
+              $('#customizer-loading').remove();
+              iframe = $('<iframe />').appendTo( $('#customizer-preview') );
+              iframe[0].contentWindow.document.open();
+              iframe[0].contentWindow.document.write( response );
+              iframe[0].contentWindow.document.close();
+          },
+          error: function(xhr, ajaxOptions, thrownError) {
+              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
+      }).done(function() {
+        $.ajax({
+          url: '<?php echo str_replace("amp;", "", $changeTheme); ?>',
+          type: 'post',
+          data: {template : '<?php echo $config_template; ?>'},
+          error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
+          }
+        });
+      });
     });
 
     $( "#customizer_themes" ).change(function() {
@@ -516,4 +560,4 @@ $(document).ready(function() {
         });
     });
 });
-</script>
+//--></script>
