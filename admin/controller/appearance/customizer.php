@@ -88,14 +88,6 @@ class ControllerAppearanceCustomizer extends Controller {
             $data['config_template'] = $this->config->get('config_template');
         }
 
-        if (isset($this->request->get['theme'])) {
-            $data['theme'] = $this->request->get['theme'];
-        } else if (isset($this->request->post['config_template'])) {
-            $data['theme'] = $this->request->post['config_template'];
-        } else {
-            $data['theme'] = $this->config->get('config_template');
-        }
-
         $data['templates'] = array();
 
         $directories = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
@@ -313,7 +305,7 @@ class ControllerAppearanceCustomizer extends Controller {
         }
     }
 
-    public function menu() {
+    public function menu(){
         $this->load->language('appearance/customizer');
 
         $this->load->model('appearance/customizer');

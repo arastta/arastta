@@ -109,7 +109,6 @@ class ControllerCommonMenu extends Controller {
 		$p_return_appearance_customizer = $this->user->hasPermission('access','appearance/customizer');
 		$p_return_appearance_layout = $this->user->hasPermission('access','appearance/layout');
 		$p_return_appearance_menu = $this->user->hasPermission('access','appearance/menu');
-		$p_return_theme = $this->user->hasPermission('access','appearance/theme');
 
 		#Top-level menu
 		$this->menu = array(
@@ -152,7 +151,7 @@ class ControllerCommonMenu extends Controller {
 			'appearance' => array(
 				'text' => $data['text_appearance'],
 				'icon' => 'fa-desktop',
-				'permission' => $p_return_appearance_customizer || $p_return_appearance_layout || $p_return_appearance_menu || $p_return_design_banner || $p_return_theme,
+				'permission' => $p_return_appearance_customizer || $p_return_appearance_layout || $p_return_appearance_menu || $p_return_design_banner,
 				'position' => 7
 			),
 			'marketplace' => array(
@@ -485,34 +484,28 @@ class ControllerCommonMenu extends Controller {
 
 		#Appearance
 		$this->menu['appearance']['children'] = array(
-			'theme' => array(
-				'text' => $data['text_theme'],
-				'href' => $this->url->link('appearance/theme', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1,
-				'permission' => $p_return_theme
-			),
 			'customizer' => array(
 				'text' => $data['text_customizer'],
 				'href' => $this->url->link('appearance/customizer', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 2,
+				'position' => 1,
 				'permission' => $p_return_appearance_customizer
 			),
 			'layouts' => array(
 				'text' => $data['text_layout'],
 				'href' => $this->url->link('appearance/layout', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 3,
+				'position' => 2,
 				'permission' => $p_return_appearance_layout
 			),
 			'menus' => array(
 				'text' => $data['text_menu'],
 				'href' => $this->url->link('appearance/menu', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 4,
+				'position' => 3,
 				'permission' => $p_return_appearance_menu
 			),
 			'banners' => array(
 				'text' => $data['text_banner'],
 				'href' => $this->url->link('design/banner', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 5,
+				'position' => 4,
 				'permission' => $p_return_design_banner
 			)
 		);

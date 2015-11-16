@@ -108,5 +108,4 @@ $_['text_appearance']                  = 'Appearance';
 $_['text_customizer']                  = 'Customizer';
 $_['text_layout']                      = 'Layouts';
 $_['text_menu']                        = 'Menus';
-$_['text_theme']                       = 'Themes';
 $_['text_collapse']                    = 'Collapse';
