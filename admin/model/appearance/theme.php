@@ -7,51 +7,79 @@
  */
 
 class ModelAppearanceTheme extends Model {
-	public function editTheme($theme, $data) {
-		$this->trigger->fire('pre.admin.theme.edit', array(&$theme));
+	public function addTheme($data) {
+		$this->trigger->fire('pre.admin.theme.edit', array(&$data));
 
-		$this->trigger->fire('pre.admin.theme.edit', array(&$theme));
+		$this->db->query("INSERT INTO " . DB_PREFIX . "theme SET code = '" . $this->db->escape($data['info']['theme']['code']) . "', files = '" . $this->db->escape(json_encode($data['files'])) . "', info = '" . $this->db->escape(json_encode($data['info'])) . "', params = '" . $this->db->escape(json_encode($data['params'])) . "'");
+
+		$theme_id = $this->db->getLastId();
+
+		$this->trigger->fire('pre.admin.theme.edit', array(&$data));
+
+		return $theme_id;
 	}
 
-	public function deleteTheme($theme) {
-		$this->trigger->fire('pre.admin.theme.delete', array(&$theme));
+	public function editTheme($theme_id, $data) {
+		$this->trigger->fire('pre.admin.theme.edit', array(&$data));
 
+		$this->db->query("UPDATE " . DB_PREFIX . "theme SET code = '" . $this->db->escape($data['code']) . "', files = '" . $this->db->escape(json_encode($data['files'])) . "', info = '" . $this->db->escape(json_encode($data['info'])) . "', params = '" . $this->db->escape(json_encode($data['params'])) . "' WHERE theme_id = '" . (int)$theme_id . "'");
+
+		$this->trigger->fire('pre.admin.theme.edit', array(&$theme_id));
+
+		return $theme_id;
+	}
+
+	public function deleteTheme($code) {
+		$this->trigger->fire('pre.admin.theme.delete', array(&$code));
+
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE `code` = '" . $code . "'");
 		$this->cache->delete('theme');
 
-		$this->trigger->fire('post.admin.theme.delete', array(&$theme));
+		$this->trigger->fire('post.admin.theme.delete', array(&$code));
 	}
 
-	public function getTheme($theme) {
-		return $themes = array(
-			'theme'       => $theme,
-			'name'        => 'Test Name',
-			'author'      => 'Cüneyt Þentürk',
-			'description' => 'Test Description',
-			'version'	  => '1.0.0',
-			'status'      => 1
+	public function getTheme($code) {
+		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "theme WHERE code = '" . $code . "'");
+
+		$result = $query->row;
+		$info = json_decode($result['info'], true);
+
+		return $theme = array(
+			'code'        => $result['code'],
+			'author'      => $info['author']['name'],
+			'name'        => $info['theme']['name'],
+			'description' => $info['theme']['description'],
+			'version' 	  => $info['theme']['version'],
+			'product_id'  => $info['theme']['product_id'],
+			'status'	  => 1
 		);
 	}
 
 	public function getThemes() {
         $themes = array();
 
-        $directories = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "theme");
 
 		$sort = 1;
-        foreach($directories as $directory) {
+
+        foreach($query->rows as $theme) {
 			$key = 0;
 
-			if ($this->config->get('config_template') != basename($directory)) {
+			if ($this->config->get('config_template') != $theme['code']) {
 				$key = $sort;
 				$sort++;
 			}
 
+			$info = json_decode($theme['info'], true);
+
 			$themes[$key] = array(
-				'theme'       => basename($directory),
-				'name'        => 'Test Name',
-				'author'      => 'Cüneyt Þentürk',
-				'description' => 'Test Description',
-				'status'      => 1
+				'code'        => $theme['code'],
+				'author'      => $info['author']['name'],
+				'name'        => $info['theme']['name'],
+				'description' => $info['theme']['description'],
+				'version' 	  => $info['theme']['version'],
+				'product_id'  => $info['theme']['product_id'],
+				'status'	  => 1
 			);
         }
 
@@ -60,9 +88,9 @@ class ModelAppearanceTheme extends Model {
 		return $themes;
 	}
 
-	public function getTotalThemes($data = array()) {
-        $directories = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
+	public function getTotalThemes() {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "theme");
 
-        return count($directories);
+		return $query->row['total'];
 	}
 }

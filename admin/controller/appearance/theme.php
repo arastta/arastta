@@ -65,6 +65,10 @@ class ControllerAppearanceTheme extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (isset($this->request->get['theme']) && $this->validateDelete() && file_exists(DIR_CATALOG . 'view/theme/' . $this->request->get['theme'])) {
+			$this->load->model('appearance/theme');
+
+			$this->model_appearance_theme->deleteTheme($this->request->get['theme']);
+
 			$this->filesystem->remove(DIR_CATALOG . 'view/theme/' . $this->request->get['theme']);
 
 			if (is_file(DIR_IMAGE . 'templates/' . $this->request->get['theme'] . '.png')) {
@@ -94,7 +98,7 @@ class ControllerAppearanceTheme extends Controller {
 			'href' => $this->url->link('appearance/theme', 'token=' . $this->session->data['token'], 'SSL')
 		);
 		
-		$data['add'] = $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'], 'SSL');
+		$data['add'] = $this->url->link('extension/marketplace', 'store=themes&token=' . $this->session->data['token'], 'SSL');
 		$data['upload'] = $this->url->link('extension/installer', 'token=' . $this->session->data['token'], 'SSL');
 		$data['delete'] = $this->url->link('appearance/theme/delete', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -105,22 +109,22 @@ class ControllerAppearanceTheme extends Controller {
 		$this->load->model('tool/image');
 
 		foreach ($results as $result) {
-			if (is_file(DIR_IMAGE . 'templates/' . $result['theme'] . '.png')) {
-				$image = $this->model_tool_image->resize('templates/' . $result['theme'] . '.png', 880, 660);
+			if (is_file(DIR_IMAGE . 'templates/' . $result['code'] . '.png')) {
+				$image = $this->model_tool_image->resize('templates/' . $result['code'] . '.png', 880, 660);
 			} else {
 				$image = $this->model_tool_image->resize('no_image.png', 880, 660);
 			}
 
 			$data['themes'][] = array(
-				'theme' 	  => $result['theme'],
+				'code' 	  	  => $result['code'],
 				'name'        => $result['name'],
 				'author'      => $result['author'],
-				'description' => $result['description'],
+				'description' => html_entity_decode($result['description']),
 				'thumb'	      => $image,
 				'status'      => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'edit'        => $this->url->link('appearance/theme/edit', 'token=' . $this->session->data['token'], 'SSL'),
-				'activate'    => $this->url->link('appearance/theme/activate', 'token=' . $this->session->data['token'] . '&theme=' . $result['theme'], 'SSL'),
-				'customizer'  => $this->url->link('appearance/customizer', 'token=' . $this->session->data['token'] . '&theme=' . $result['theme'], 'SSL')
+				'activate'    => $this->url->link('appearance/theme/activate', 'token=' . $this->session->data['token'] . '&theme=' . $result['code'], 'SSL'),
+				'customizer'  => $this->url->link('appearance/customizer', 'token=' . $this->session->data['token'] . '&theme=' . $result['code'], 'SSL')
 			);
 		}
 
@@ -167,7 +171,7 @@ class ControllerAppearanceTheme extends Controller {
 		} else {
 			$data['success'] = '';
 		}
-		
+
 		$url = '';
 
 		$data['breadcrumbs'] = array();
@@ -181,7 +185,7 @@ class ControllerAppearanceTheme extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('appearance/theme', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
+
 		if (!isset($this->request->get['category_id'])) {
 			$data['action'] = $this->url->link('appearance/theme/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
@@ -326,11 +330,11 @@ class ControllerAppearanceTheme extends Controller {
 		} else {
 			$data['category_layout'] = array();
 		}
-		
-		if (isset($this->request->get['category_id'])) { 
+
+		if (isset($this->request->get['category_id'])) {
 			$data['menu_name_override'] = '1';
 		}
-			
+
 		$this->load->model('appearance/layout');
 
 		$data['layouts'] = $this->model_appearance_layout->getLayouts();
@@ -364,8 +368,8 @@ class ControllerAppearanceTheme extends Controller {
 		if ($theme_info) {
 			$this->load->model('tool/image');
 
-			if (is_file(DIR_IMAGE . 'templates/' . $theme_info['theme'] . '.png')) {
-				$image = $this->model_tool_image->resize('templates/' . $theme_info['theme'] . '.png', 880, 660);
+			if (is_file(DIR_IMAGE . 'templates/' . $theme_info['code'] . '.png')) {
+				$image = $this->model_tool_image->resize('templates/' . $theme_info['code'] . '.png', 880, 660);
 			} else {
 				$image = $this->model_tool_image->resize('no_image.png', 880, 660);
 			}
@@ -373,16 +377,16 @@ class ControllerAppearanceTheme extends Controller {
 			$data['active_theme'] = $this->config->get('config_template');
 
 			$data['theme'] = array(
-				'theme' 	  => $theme_info['theme'],
+				'code' 	  	  => $theme_info['code'],
 				'name'        => $theme_info['name'],
 				'author'      => $theme_info['author'],
-				'description' => $theme_info['description'],
+				'description' => html_entity_decode($theme_info['description']),
 				'thumb'	      => $image,
 				'version'     => $theme_info['version'],
 				'action'      => $action,
-				'delete'      => $this->url->link('appearance/theme/delete', 'token=' . $this->session->data['token'] . '&theme=' . $theme_info['theme'], 'SSL'),
-				'activate'    => $this->url->link('appearance/theme/activate', 'token=' . $this->session->data['token'] . '&theme=' . $theme_info['theme'], 'SSL'),
-				'customizer'  => $this->url->link('appearance/customizer', 'token=' . $this->session->data['token'] . '&theme=' . $theme_info['theme'], 'SSL')
+				'delete'      => $this->url->link('appearance/theme/delete', 'token=' . $this->session->data['token'] . '&theme=' . $theme_info['code'], 'SSL'),
+				'activate'    => $this->url->link('appearance/theme/activate', 'token=' . $this->session->data['token'] . '&theme=' . $theme_info['code'], 'SSL'),
+				'customizer'  => $this->url->link('appearance/customizer', 'token=' . $this->session->data['token'] . '&theme=' . $theme_info['code'], 'SSL')
 			);
 		}
 
@@ -423,7 +427,7 @@ class ControllerAppearanceTheme extends Controller {
 				'theme' 	  => $theme_info['theme'],
 				'name'        => $theme_info['name'],
 				'author'      => $theme_info['author'],
-				'description' => $theme_info['description'],
+				'description' => html_entity_decode($theme_info['description']),
 				'thumb'	      => $image,
 				'version'     => $theme_info['version'],
 				'edit'        => $this->url->link('appearance/theme/edit', 'token=' . $this->session->data['token'], 'SSL'),
@@ -459,8 +463,8 @@ class ControllerAppearanceTheme extends Controller {
 		if ($theme_info) {
 			$this->load->model('tool/image');
 
-			if (is_file(DIR_IMAGE . 'templates/' . $theme_info['theme'] . '.png')) {
-				$image = $this->model_tool_image->resize('templates/' . $theme_info['theme'] . '.png', 880, 660);
+			if (is_file(DIR_IMAGE . 'templates/' . $theme_info['code'] . '.png')) {
+				$image = $this->model_tool_image->resize('templates/' . $theme_info['code'] . '.png', 880, 660);
 			} else {
 				$image = $this->model_tool_image->resize('no_image.png', 880, 660);
 			}
@@ -468,10 +472,10 @@ class ControllerAppearanceTheme extends Controller {
 			$data['active_theme'] = $this->config->get('config_template');
 
 			$data['theme'] = array(
-				'theme' 	  => $theme_info['theme'],
+				'code' 	  	  => $theme_info['code'],
 				'name'        => $theme_info['name'],
 				'author'      => $theme_info['author'],
-				'description' => $theme_info['description'],
+				'description' => html_entity_decode($theme_info['description']),
 				'thumb'	      => $image,
 				'version'     => $theme_info['version'],
 				'edit'        => $this->url->link('appearance/theme/edit', 'token=' . $this->session->data['token'], 'SSL'),

@@ -2,8 +2,8 @@
 	<div class="theme-backdrop"></div>
 	<div class="theme-wrap">
 		<div class="theme-header">
-			<button type="button" class="left" onclick="previous('<?php echo $theme['theme']; ?>');" data-toggle="tooltip" data-original-title="<?php echo( 'Show previous theme' ); ?>"><i class="fa fa-chevron-left"></i></button>
-			<button type="button" class="right" onclick="next('<?php echo $theme['theme']; ?>');" data-toggle="tooltip" data-original-title="<?php echo( 'Show next theme' ); ?>"><i class="fa fa-chevron-right"></i></button>
+			<button type="button" class="left" onclick="previous('<?php echo $theme['code']; ?>');" data-toggle="tooltip" data-original-title="<?php echo( 'Show previous theme' ); ?>"><i class="fa fa-chevron-left"></i></button>
+			<button type="button" class="right" onclick="next('<?php echo $theme['code']; ?>');" data-toggle="tooltip" data-original-title="<?php echo( 'Show next theme' ); ?>"><i class="fa fa-chevron-right"></i></button>
 			<button type="button" class="close" data-toggle="tooltip" data-original-title="<?php echo( 'Close overlay' ); ?>"><i class="fa fa-times"></i></button>
 		</div>
 		<div class="theme-about">
@@ -12,12 +12,12 @@
 			</div>
 
 			<div class="theme-info">
-				<?php if ($active_theme == $theme['theme']) { ?>
+				<?php if ($active_theme == $theme['code']) { ?>
 					<span class="label label-success"><?php echo( 'Current Theme' ); ?></span>
 				<?php } ?>
 				<h3 class="theme-name"><?php echo $theme['name']; ?><span class="theme-version"><?php echo $theme['version']; ?></span></h3>
 				<h4 class="theme-author"><?php echo $theme['author']; ?></h4>
-
+				<hr>
 				<p class="theme-description"><?php echo $theme['description']; ?></p>
 
 				<?php /*if ( data.parent ) { ?>
@@ -31,7 +31,7 @@
 		</div>
 
 		<div class="theme-actions">
-		<?php if ( $active_theme == $theme['theme'] ) { ?>
+		<?php if ( $active_theme == $theme['code'] ) { ?>
 			<div class="active-theme">
 				<a href="<?php echo $theme['customizer']; ?>" class="btn btn-primary btn-sm customize load-customize hide-if-no-customize"><?php echo $entry_customize; ?></a>
 				<?php if ($action) { ?>
@@ -53,13 +53,13 @@
 </div>
 <script type="text/javascript"><!--
 $(document).ready(function() {
-	var previous_theme = $('#theme-' + '<?php echo $theme['theme']; ?>').prev().attr('id');
+	var previous_theme = $('#theme-' + '<?php echo $theme["code"]; ?>').prev().attr('id');
 
 	if (previous_theme == undefined) {
 		$('.theme-header .left').addClass('disabled');
 	}
 
-	var next_theme = $('#theme-' + '<?php echo $theme['theme']; ?>').next().attr('id');
+	var next_theme = $('#theme-' + '<?php echo $theme["code"]; ?>').next().attr('id');
 
 	if (next_theme == undefined) {
 		$('.theme-header .right').addClass('disabled');

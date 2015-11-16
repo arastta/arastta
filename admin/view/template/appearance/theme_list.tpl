@@ -23,34 +23,35 @@
     </div>
     <?php } ?>
     <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-theme">
-      <?php if ($themes) { ?>
       <div class="theme-browser">
+        <?php if ($themes) { ?>
           <?php foreach ($themes as $theme) { ?>
-          <div class="theme<?php if ( $active_theme == $theme['theme'] ) echo ' active'; ?>" id ="theme-<?php echo $theme['theme']; ?>">
+          <div class="theme<?php if ( $active_theme == $theme['code'] ) echo ' active'; ?>" id ="theme-<?php echo $theme['code']; ?>">
             <div class="theme-screenshot">
               <img src="<?php echo $theme['thumb']; ?>" alt="" />
             </div>
 
-            <span class="more-details" id="more-details-<?php echo $theme['theme']; ?>"><?php echo 'Theme Details' ; ?></span>
+            <span class="more-details" id="more-details-<?php echo $theme['code']; ?>"><?php echo 'Theme Details' ; ?></span>
             <div class="theme-author"><?php echo $theme['author']; ?></div>
 
-            <?php if ( $active_theme == $theme['theme'] ) { ?>
-            <h3 class="theme-name" id="theme-name-<?php echo $theme['theme']; ?>"><span><?php echo $entry_active; ?></span> <?php echo $theme['name']; ?></h3>
+            <?php if ( $active_theme == $theme['code'] ) { ?>
+            <h3 class="theme-name" id="theme-name-<?php echo $theme['code']; ?>"><span><?php echo $entry_active; ?></span> <?php echo $theme['name']; ?></h3>
             <?php } else { ?>
-            <h3 class="theme-name" id="theme-name-<?php echo $theme['theme']; ?>"><?php echo $theme['name']; ?></h3>
+            <h3 class="theme-name" id="theme-name-<?php echo $theme['code']; ?>"><?php echo $theme['name']; ?></h3>
             <?php } ?>
 
             <div class="theme-actions">
-              <?php if ( $active_theme == $theme['theme'] ) { ?>
+              <?php if ( $active_theme == $theme['code'] ) { ?>
                 <a class="btn btn-primary btn-sm customize load-customize hide-if-no-customize" href="<?php echo $theme['customizer']; ?>"><?php echo $entry_customize; ?></a>
               <?php } else { ?>
                 <a class="btn btn-default btn-sm activate" href="<?php echo $theme['activate']; ?>"><?php echo $text_active; ?></a>
                 <a class="btn btn-primary btn-sm load-customize hide-if-no-customize" href="<?php echo $theme['customizer']; ?>"><?php echo $text_preview; ?></a>
               <?php } ?>
             </div>
-            <input type="hidden" name="theme-<?php echo $theme['theme']; ?>" id="<?php echo $theme['theme']; ?>" value="<?php echo $theme['theme']; ?>">
+            <input type="hidden" name="theme-<?php echo $theme['code']; ?>" id="<?php echo $theme['code']; ?>" value="<?php echo $theme['code']; ?>">
           </div>
           <?php } ?>
+        <?php } ?>
           <div class="theme add-new-theme">
             <a href="<?php echo $add; ?>"><div class="theme-screenshot"><span></span></div><h3 class="theme-name">Add New Theme</h3></a>
           </div>
@@ -58,13 +59,12 @@
         </div>
       </div>
       <div class="theme-overlay"></div>
-      <?php } ?>
     </form>
   </div>
 </div>
 <script type="text/javascript"><!--
-function previous(theme) {
-  var theme = $('#theme-' + theme).prev().attr('id');
+function previous(code) {
+  var theme = $('#theme-' + code).prev().attr('id');
 
   theme = theme.replace("theme-", "");
 
@@ -85,8 +85,8 @@ function previous(theme) {
   });
 }
 
-function next(theme) {
-  var theme = $('#theme-' + theme).next().attr('id');
+function next(code) {
+  var theme = $('#theme-' + code).next().attr('id');
 
   theme = theme.replace("theme-", "");
 
@@ -123,11 +123,6 @@ $(".themes .theme .theme-screenshot, .more-details, .theme-name").click(function
       }
     }
   });
-});
-
-// Set last page opened on the menu
-$(document).on('click', '.add-new-theme a, .pull-right .btn.btn-success', function() {
-  sessionStorage.setItem('marketplace-menu', "Marketplace.loadweb(baseUrl + 'index.php?route=extension/marketplace/api&api=api/marketplace&store=themes')");
 });
 //--></script>
 <?php echo $footer; ?>
