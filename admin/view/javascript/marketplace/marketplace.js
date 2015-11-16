@@ -37,7 +37,7 @@ Marketplace.loadweb = function(url) {
 				.css("width", $('.panel-body').outerWidth())
 				.css("height", $('.panel-body').outerHeight())
 				.css("position", "fixed")
-				.css("z-index", "1000")
+				.css("z-index", "100")
 				.css("opacity", "0.80")
 				.css("-ms-filter", "progid:DXImageTransform.Microsoft.Alpha(Opacity = 80)")
 				.css("filter", "alpha(opacity = 80)")
