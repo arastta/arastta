@@ -12,12 +12,14 @@ $_['heading_title']             = 'Themes';
 // Text
 $_['text_success']              = 'Success: You have modified Theme!';
 $_['text_list']                 = 'Theme List';
+$_['text_form']                 = 'Theme Edit';
 
 $_['text_new_menu_item']        = 'New Menu Item';
 $_['text_details']              = 'Theme Details';
 $_['text_active']               = 'Activate';
 $_['text_preview']              = 'Live Preview';
 $_['text_delete']               = 'Delete';
+$_['text_setting']              = 'Setting';
 
 // Column
 $_['column_sort_order']         = 'Sort Order';
@@ -37,5 +39,4 @@ $_['button_upload']             = 'Manuel Upload';
 
 // Error
 $_['error_permission']          = 'Warning: You do not have permission to modify top headers !';
-$_['error_name']                = 'Menu Name must be between 1 and 64 characters!';
-$_['error_link']                = 'Menu Link Can not be empty!';
+$_['error_warning']             = 'Warning: Please check the form carefully for errors!';

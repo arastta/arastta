@@ -43,6 +43,11 @@
             <div class="theme-actions">
               <?php if ( $active_theme == $theme['code'] ) { ?>
                 <a class="btn btn-primary btn-sm customize load-customize hide-if-no-customize" href="<?php echo $theme['customizer']; ?>"><?php echo $entry_customize; ?></a>
+                <?php if ($theme['action']) { ?>
+                <?php foreach ($theme['action'] as $action) { ?>
+                <a class="btn btn-default btn-sm " href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a>
+                <?php } ?>
+                <?php } ?>
               <?php } else { ?>
                 <a class="btn btn-default btn-sm activate" href="<?php echo $theme['activate']; ?>"><?php echo $text_active; ?></a>
                 <a class="btn btn-primary btn-sm load-customize hide-if-no-customize" href="<?php echo $theme['customizer']; ?>"><?php echo $text_preview; ?></a>

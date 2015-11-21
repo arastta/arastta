@@ -34,9 +34,9 @@
 		<?php if ( $active_theme == $theme['code'] ) { ?>
 			<div class="active-theme">
 				<a href="<?php echo $theme['customizer']; ?>" class="btn btn-primary btn-sm customize load-customize hide-if-no-customize"><?php echo $entry_customize; ?></a>
-				<?php if ($action) { ?>
-				<?php foreach ($action as $link) { ?>
-					<a href="<?php echo $link['href']; ?>" class="btn btn-<?php echo $link['class']; ?> btn-sm"><?php echo $link['text']; ?></a>
+				<?php if ($theme['action']) { ?>
+				<?php foreach ($theme['action'] as $action) { ?>
+				<a class="btn btn-default btn-sm " href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a>
 				<?php } ?>
 				<?php } ?>
 			</div>
