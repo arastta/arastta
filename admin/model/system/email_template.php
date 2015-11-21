@@ -205,4 +205,53 @@ class ModelSystemEmailtemplate extends Model {
 		
 		return $query->row['total'];
 	}
+
+	public function getShortCodes($email_template) {
+		$item = explode("_", $email_template);
+
+		$result = array();
+
+		switch($item[0]) {
+			case 'admin':
+				$codes = $this->emailtemplate->getLoginFind();
+				break;
+			case 'affiliate':
+				$codes = $this->emailtemplate->getAffiliateFind();
+				break;
+			case 'contact':
+				$codes = $this->emailtemplate->getContactFind();
+				break;
+			case 'customer':
+				$codes = $this->emailtemplate->getCustomerFind();
+				break;
+			case 'order':
+				$codes = $this->emailtemplate->getOrderAllFind();
+				break;
+			case 'reviews':
+				$codes = $this->emailtemplate->getReviewFind();
+				break;
+			case 'voucher':
+				$codes = $this->emailtemplate->getVoucherFind();
+				break;
+		}
+
+		foreach ($codes as $code) {
+			$result[] = array(
+				'code' => $code,
+				'text' => $this->language->get($code)
+			);
+		}
+
+		return $result;
+	}
+
+	public function getDemoData() {
+		$this->load->language('mail/shortcode');
+
+		$data = $this->language->all();
+
+		$this->trigger->fire('post.emailtemplate.demo.data', array(&$data));
+
+		return $data;
+	}
 }
