@@ -326,30 +326,31 @@ class Emailtemplate {
     }
     
     //Return
-  public function getReturnFind() {
-    $result = array( '{store_name}', '{order_id}', '{date_ordered}', '{firstname}', '{lastname}', '{email}', '{telephone}', '{product}', '{model}', '{quantity}', '{return_reason}', '{opened}', '{comment}' );
-    return $result;
-  }
+    public function getReturnFind() {
+		$result = array( '{store_name}', '{order_id}', '{date_ordered}', '{firstname}', '{lastname}', '{email}', '{telephone}', '{product}', '{model}', '{quantity}', '{return_reason}', '{opened}', '{comment}' );
+		
+		return $result;
+    }
   
-  public function getReturnReplace($data) {
-    $result = array(
-      'store_name' => $this->config->get('config_name'),
-      'order_id' => $data['order_id'],
-      'date_ordered' => $data['date_ordered'],
-      'firstname' => $data['firstname'],
-      'lastname' => $data['lastname'],
-      'email' => $data['email'],
-      'telephone' => $data['telephone'],
-      'product' => $data['product'],
-      'model' => $data['model'],
-      'quantity' => $data['quantity'],
-      'return_reason' => $data['return_reason'],
-      'opened' => $data['opened'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
-      'comment' => nl2br($data['comment'])
-    );
+    public function getReturnReplace($data) {
+        $result = array(
+            'store_name' => $this->config->get('config_name'),
+			'order_id' => $data['order_id'],
+			'date_ordered' => $data['date_ordered'],
+		    'firstname' => $data['firstname'],
+		    'lastname' => $data['lastname'],
+		    'email' => $data['email'],
+		    'telephone' => $data['telephone'],
+		    'product' => $data['product'],
+		    'model' => $data['model'],
+		    'quantity' => $data['quantity'],
+		    'return_reason' => $data['return_reason'],
+		    'opened' => $data['opened'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
+		    'comment' => nl2br($data['comment'])
+        );
     
-    return $result;
-  }
+		return $result;
+    }
 
 	// Review
 	public function getReviewFind() {
@@ -1169,36 +1170,36 @@ class Emailtemplate {
         return $html;
     }
     
-  public function getDefaultReturnSubject($type_id, $data) {
-    $this->load->language('mail/return');
+    public function getDefaultReturnSubject($type_id, $data) {
+		$this->load->language('mail/return');
 
-    $subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
+		$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
 
-    return $subject;
-  }
+		return $subject;
+    }
 
-  public function getDefaultReturnMessage($type_id, $data) {
-    $this->load->language('mail/return');
+    public function getDefaultReturnMessage($type_id, $data) {
+		$this->load->language('mail/return');
 
-    $message  = $this->language->get('text_request') . "\n";
-    $message .= "\n";
-    $message .= sprintf($this->language->get('text_order_id'), $data['order_id']) . "\n";
-    $message .= sprintf($this->language->get('text_date_ordered'), $this->db->escape(strip_tags($data['date_ordered']))) . "\n";
-    $message .= sprintf($this->language->get('text_customer'), $this->db->escape(strip_tags($data['firstname'])), $this->db->escape(strip_tags($data['lastname']))) . "\n";
-    $message .= sprintf($this->language->get('text_email'), $this->db->escape(strip_tags($data['email']))) . "\n";
-    $message .= sprintf($this->language->get('text_telephone'), $this->db->escape(strip_tags($data['telephone']))) . "\n";
-    $message .= "\n";
-    $message .= sprintf($this->language->get('text_product'), $this->db->escape(strip_tags($data['product']))) . "\n";
-    $message .= sprintf($this->language->get('text_model'), $this->db->escape(strip_tags($data['model']))) . "\n";
-    $message .= sprintf($this->language->get('text_quantity'), $data['quantity']) . "\n";
-    $message .= "\n";
-    $message .= sprintf($this->language->get('text_return_reason'), $data['return_reason']) . "\n";
-    $message .= sprintf($this->language->get('text_opened'), ($data['opened'] ? $this->language->get('text_yes') : $this->language->get('text_no'))) . "\n";
-    $message .= "\n";
-    $message .= strip_tags($data['comment']);
+		$message  = $this->language->get('text_request') . "\n";
+		$message .= "\n";
+		$message .= sprintf($this->language->get('text_order_id'), $data['order_id']) . "\n";
+		$message .= sprintf($this->language->get('text_date_ordered'), $this->db->escape(strip_tags($data['date_ordered']))) . "\n";
+		$message .= sprintf($this->language->get('text_customer'), $this->db->escape(strip_tags($data['firstname'])), $this->db->escape(strip_tags($data['lastname']))) . "\n";
+		$message .= sprintf($this->language->get('text_email'), $this->db->escape(strip_tags($data['email']))) . "\n";
+		$message .= sprintf($this->language->get('text_telephone'), $this->db->escape(strip_tags($data['telephone']))) . "\n";
+		$message .= "\n";
+		$message .= sprintf($this->language->get('text_product'), $this->db->escape(strip_tags($data['product']))) . "\n";
+		$message .= sprintf($this->language->get('text_model'), $this->db->escape(strip_tags($data['model']))) . "\n";
+		$message .= sprintf($this->language->get('text_quantity'), $data['quantity']) . "\n";
+		$message .= "\n";
+		$message .= sprintf($this->language->get('text_return_reason'), $data['return_reason']) . "\n";
+		$message .= sprintf($this->language->get('text_opened'), ($data['opened'] ? $this->language->get('text_yes') : $this->language->get('text_no'))) . "\n";
+		$message .= "\n";
+		$message .= strip_tags($data['comment']);
 
-    return nl2br($message);
-  }
+		return nl2br($message);
+    }
 
     public function getDefaultReviewSubject($type_id, $data) {
         $this->load->language('mail/review');
