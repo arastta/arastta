@@ -32,8 +32,7 @@ class ModelExtensionModification extends Model {
             foreach ($files as $file) {
                 $xml_content = file_get_contents($file);
 
-                $xml_content = preg_replace("/\\\\$this->trigger->fire('$1', array(&$2));/", "\$this->trigger->fire('$1', array(&$2));", $xml_content);
-                $xml_content = preg_replace("/\\\$this->event->trigger\('(.*)',[\s]*(.*)\);/", "\$this->trigger->fire('$1', array(&$2));", $xml_content);
+                $xml_content = preg_replace('/\$this->(trigger|event)->(fire|trigger)\(\'(.*)\',[\s]*(.*)\);/', '\$this->trigger->fire("$3", array(&$4));', $xml_content);
 
                 $xmls[$file] = $xml_content;
             }
