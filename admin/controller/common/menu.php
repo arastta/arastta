@@ -751,7 +751,7 @@ class ControllerCommonMenu extends Controller {
 		return $this->load->view('common/menu.tpl', $data);
 	}
 
-	protected function compareMenuItems($item1, $item2) {
+	protected function compareMenuItems ($item1, $item2) {
 		if (!isset($item1['position'])) {
 			return 1;
 		}
@@ -763,7 +763,7 @@ class ControllerCommonMenu extends Controller {
 		return ($item1['position'] < $item2['position']) ? -1 : 1;
 	}
 
-	public function addMenuItem($id, $text, $href='', $parent_id='', $permission=true, $icon='', $position=0) {
+	public function addMenuItem ($id, $text, $href = '', $parent_id = '', $permission = true, $icon = '', $position = 0) {
 		$new_item = array(
 			'text' => $text,
 			'href' => $href,
@@ -785,6 +785,23 @@ class ControllerCommonMenu extends Controller {
 			}
 		} else {
 			$this->menu[$id] = $new_item;
+		}
+	}
+		
+	public function removeMenuItem($id, $parent_id = '') {
+		if ($parent_id) {
+			if (isset($this->menu[$parent_id])) {
+				unset($this->menu[$parent_id]['children'][$id]);
+			} else {
+				foreach ($this->menu as $menu_id=>$item) {
+					if (isset($item['children']) && isset($item['children'][$parent_id])) {
+						unset($this->menu[$menu_id]['children'][$parent_id]['children'][$id]);
+						break;
+					}
+				}
+			}
+		} else {
+			unset($this->menu[$id]);
 		}
 	}
 }
