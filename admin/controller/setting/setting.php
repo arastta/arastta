@@ -760,6 +760,14 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_return_status_id'] = $this->config->get('config_return_status_id');
 		}
+    
+    if (isset($this->request->post['config_return_mail'])) {
+			$data['config_return_mail'] = $this->request->post['config_return_mail'];
+		} elseif ($this->config->has('config_return_mail')) {
+			$data['config_return_mail'] = $this->config->get('config_return_mail');
+		} else {
+			$data['config_return_mail'] = '';
+		}
 
 		$this->load->model('localisation/return_status');
 
