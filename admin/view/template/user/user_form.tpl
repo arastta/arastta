@@ -67,6 +67,20 @@
             </div>
           </div>
           <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-theme"><?php echo $entry_theme; ?></label>
+            <div class="col-sm-10">
+              <select name="params[theme]" id="input-theme" class="form-control">
+                <?php foreach ($themes as $theme) { ?>
+                <?php if ($theme['theme'] == $use_theme) { ?>
+                <option value="<?php echo $theme['theme']; ?>" selected="selected"><?php echo $theme['text']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $theme['theme']; ?>"><?php echo $theme['text']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
+          </div>		  
+          <div class="form-group">
             <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
             <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
               <input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />

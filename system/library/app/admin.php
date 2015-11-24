@@ -136,6 +136,11 @@ class Admin extends App {
         // User
         $this->registry->set('user', new User($this->registry));
 
+        // Theme
+        if (isset($this->request->get['theme'])) {
+            $this->session->data['theme'] = $this->request->get['theme'];
+        }
+
         $this->trigger->fire('post.app.ecommerce');
     }
 

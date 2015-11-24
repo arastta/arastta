@@ -143,9 +143,12 @@ class ControllerCommonHeader extends Controller {
             $data['alert_update'] = $this->update->countUpdates();
 
 			// Languages
+			$data['languages'] = array();
+			
 			$this->load->model('localisation/language');
 
 			$languages = $this->model_localisation_language->getLanguages();
+			
 			if (count($languages) > 1) {
 				$route = !empty($this->request->get['route']) ? $this->request->get['route'] : 'common/dashboard';
 
@@ -156,8 +159,27 @@ class ControllerCommonHeader extends Controller {
 						'link' => $this->url->link($route, 'token=' . $this->session->data['token'].'&lang='.$language['code'], 'SSL')
 					);
 				}
-			} else {
-				$data['languages'] = '';
+			}
+
+			$this->load->language('user/user');
+
+			$data['entry_theme'] = $this->language->get('entry_theme');
+			
+			// Themes
+			$data['themes'][] = array(
+				'theme'	   => 'advanced',
+				'text'	   => $this->language->get('text_theme_advanced'),
+				'link'	   => $this->url->link($route, 'token=' . $this->session->data['token'].'&theme=advanced', 'SSL')
+			);
+
+			$templates = glob(DIR_ADMIN . 'view/theme/*', GLOB_ONLYDIR);
+
+			foreach ($templates as $template) {
+				$data['themes'][] = array(
+					'theme'	   => basename($template),
+					'text'	   => $this->language->get('text_theme_' . basename($template)),
+					'link'	   => $this->url->link($route, 'token=' . $this->session->data['token'].'&theme=' . basename($template), 'SSL')
+				);
 			}
 
             $this->load->language('common/menu');
