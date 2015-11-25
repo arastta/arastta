@@ -376,6 +376,26 @@ class ModelCatalogProduct extends Model {
 		$this->trigger->fire('post.admin.product.delete', array(&$product_id));
 	}
 
+	public function updateProduct($product_id, $key, $value){
+		$this->db->query("UPDATE " . DB_PREFIX . "product SET date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
+
+		if ($key == 'name') {
+			$this->db->query("UPDATE " . DB_PREFIX . "product_description SET " . $key . " = '" . $this->db->escape($value) . "' WHERE product_id = '" . (int)$product_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		} elseif ($key == 'special') {
+			$product_specials = $this->getProductSpecials($product_id);
+
+			foreach ($product_specials  as $product_special) {
+				if (($product_special['date_start'] == '0000-00-00' || strtotime($product_special['date_start']) < time()) && ($product_special['date_end'] == '0000-00-00' || strtotime($product_special['date_end']) > time())) {
+					$this->db->query("UPDATE " . DB_PREFIX . "product_special SET price = '" . $this->db->escape($value) . "' WHERE product_id = '" . (int)$product_id . "'");
+
+					break;
+				}
+			}
+		} else {
+			$this->db->query("UPDATE " . DB_PREFIX . "product SET " . $key . " = '" . $this->db->escape($value) . "' WHERE product_id = '" . (int)$product_id . "'");
+		}
+	}
+
 	public function getProduct($product_id) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 

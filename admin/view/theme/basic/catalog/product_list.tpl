@@ -2,11 +2,8 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
-		<button type="button" data-toggle="tooltip" title="<?php echo $button_copy; ?>" class="btn btn-default" onclick="$('#form-product').attr('action', '<?php echo $copy; ?>').submit()"><i class="fa fa-copy"></i></button>
-        <button type="button" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-default" onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i></button>
-		<button type="button" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-default" onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i></button>
-		<button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-product').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      <div class="pull-right">
+        <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -43,7 +40,6 @@
                 <div class="input-group-btn">
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $entry_name; ?></div></button>
                   <ul class="dropdown-menu">
@@ -55,9 +51,9 @@
                     <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_status; ?>', 'filter_status');"><?php echo $entry_status; ?></a></li>
                   </ul>
                 </div>
-                <input type="text" name="filter_model"  value="<?php echo $filter_model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" class="form-control hidden">
-                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control">
-                <select name="filter_category" id="input-category" class="form-control hidden">
+                <input type="text" name="filter_model"  value="<?php echo $filter_model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" class="form-control filter hidden">
+                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control filter">
+                <select name="filter_category" id="input-category" class="form-control filter hidden">
                   <option value="*"></option>
                   <?php foreach ($categories as $category) { ?>
                   <?php if ($category['category_id'] == $filter_category) { ?>
@@ -67,9 +63,9 @@
                   <?php } ?>
                   <?php } ?>
                 </select>
-                <input type="text" name="filter_price" value="<?php echo $filter_price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control hidden" />
-                <input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control hidden" />
-                <select name="filter_status" id="input-status" class="form-control hidden">
+                <input type="text" name="filter_price" value="<?php echo $filter_price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control filter hidden" />
+                <input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control filter hidden" />
+                <select name="filter_status" id="input-status" class="form-control filter hidden">
                   <option value="*"></option>
                   <?php if ($filter_status) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -123,8 +119,34 @@
               </thead>
               <thead class="table-quick-edit">
                 <tr>
-                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-center" colspan="5"></td>
+                  <td style="width: 70px;" class="text-center">
+                    <div class="bulk-action-activate">
+                    <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
+                      <span class="item-selected"></span>
+                      <span class="bulk-action-button">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                          <b><?php echo $text_bulk_action; ?></b>
+                          <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
+                          <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
+                          <li><a onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i> <?php echo $button_enable; ?></a></li>
+                          <li><a onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i> <?php echo $button_disable; ?></a></li>
+                          <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-product').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                        </ul>
+                      </span>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <?php echo $column_image; ?></td>
+                  <td class="text-left">
+                    <?php echo $column_name; ?></td>
+                  <td class="text-left">
+                    <?php echo $column_price; ?></td>
+                  <td class="text-right">
+                   <?php echo $column_quantity; ?></td>
+                  <td class="text-left">
+                    <?php echo $column_status; ?></td>
                 </tr>
               </thead>
               <tbody>
@@ -136,35 +158,39 @@
                     <?php } else { ?>
                     <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" />
                     <?php } ?></td>
-                  <td class="text-center"><?php if ($product['image']) { ?>
-                    <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="img-thumbnail" />
+                  <td class="text-center">
+                    <a href="" id="thumb-image-<?php echo $product['product_id']; ?>" data-toggle="thumb-image">
+                    <?php if ($product['image']) { ?>
+                    <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="img-thumbnail bulk-action-image" />
                     <?php } else { ?>
-                    <span class="img-thumbnail list"><i class="fa fa-camera fa-2x"></i></span>
-                    <?php } ?></td>
+                    <span class="img-thumbnail list bulk-action-image"><i class="fa fa-camera fa-2x"></i></span>
+                    <?php } ?>
+                    </a>
+                    <input type="hidden" name="image" value="<?php echo $product['image']; ?>" id="input-image-<?php echo $product['product_id']; ?>" /></td>
                   <td class="text-left">
-                    <div class="col-sm-1">
                       <a href="<?php echo $product['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
-                    </div>
-                    <div class="col-sm-11">
-                      <span class="product-name">
+                      <span class="product-name" id="name[<?php echo $product['product_id']; ?>]">
                         <?php echo $product['name']; ?>
                       </span>
-                    </div>
                   </td>
                   <td class="text-left"><?php if ($product['special']) { ?>
-                    <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
-                    <div class="text-danger"><?php echo $product['special']; ?></div>
+                    <span class="product-price" style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
+                    <div class="text-danger"><span class="product-special"><?php echo $product['special']; ?></span></div>
                     <?php } else { ?>
-                    <?php echo $product['price']; ?>
+                    <span class="product-price">
+                      <?php echo $product['price']; ?>
+                    </span>
                     <?php } ?></td>
                   <td class="text-right"><?php if ($product['quantity'] <= 0) { ?>
-                    <span class="label label-warning"><?php echo $product['quantity']; ?></span>
+                    <span class="label label-warning"><span class="product-quantity"><?php echo $product['quantity']; ?></span></span>
                     <?php } elseif ($product['quantity'] <= 5) { ?>
-                    <span class="label label-danger"><?php echo $product['quantity']; ?></span>
+                    <span class="label label-danger"><span class="product-quantity"><?php echo $product['quantity']; ?></span></span>
                     <?php } else { ?>
-                    <span class="label label-success"><?php echo $product['quantity']; ?></span>
+                    <span class="label label-success"><span class="product-quantity"><?php echo $product['quantity']; ?></span></span>
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $product['status']; ?></td>
+                  <td class="text-left">
+                    <span class="product-status" data-prepend="<?php echo $text_select; ?>" data-source="{'1': '<?php echo $text_enabled; ?>', '0': '<?php echo $text_disabled; ?>'}"><?php echo $product['status']; ?></span>
+                  </td>
                 </tr>
                 <?php } ?>
                 <?php } else { ?>
@@ -191,11 +217,60 @@
       display: none;
     }
 
+    .table-quick-edit td {
+      color: #FFF;
+    }
+
+    .item-selected {
+      position: absolute;
+      color: #000;
+      padding-top: 5px;
+      padding-left: 35px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+      padding-right: 10px;
+      height: 26px;
+      margin-left: -27px;
+      margin-top: -1px;
+    }
+
     .bulk-action {
       border: 1px solid #ddd;
       border-radius: 3px;
       -webkit-appearance: none!important;
       -moz-appearance: none!important;
+    }
+
+    .bulk-action-activate {
+      -webkit-appearance: none!important;
+      -moz-appearance: none!important;
+      border: 1px solid #ffffff;
+    }
+
+    .bulk-action-activate input[type="checkbox"] {
+      margin-top: 5px;
+    }
+
+    .bulk-action-button a {
+      margin-top: -5px;
+    }
+
+    .bulk-action-activate input[type="checkbox"] {
+      z-index: 999;
+    }
+
+    .bulk-action-button {
+      position: absolute;
+      margin-left: 142px;
+      height: 26px;
+      margin-top: -1px;
+      padding-top: 5px;
+      border: 1px solid #ddd;
+      border-bottom-right-radius: 3px;
+      border-top-right-radius: 3px;
+      width: 100px;
     }
 
     .bulk-action i {
@@ -221,18 +296,102 @@
     .checkbox-inline input[type="checkbox"]:checked::after {
       top: -4px !important;
     }
+
+    .bulk-action-image {
+      width: 50px;
+      height: 50px;
+    }
   </style>
   <script type="text/javascript"><!--
-  $('.bulk-action').on('click', function() {
-  //  var check = $(this).children().find('input[type=\'checkbox\']').checked();
+  // Image Manager
+  $(document).delegate('a[data-toggle=\'thumb-image\']', 'click', function(e) {
+    e.preventDefault();
 
-    if ($('.bulk-action input[type=\'checkbox\']').is(':checked')) {
-      $('.bulk-action input[type=\'checkbox\']').prop('checked', false);
-      $('input[name*=\'selected\']').prop('checked', false);
+    $('.popover').popover('hide', function() {
+      $('.popover').remove();
+    });
+
+    var element = this;
+    $(element).popover({
+      html: true,
+      placement: 'right',
+      trigger: 'manual',
+      content: function() {
+        return '<button type="button" id="button-image" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>';
+      }
+    });
+
+    $(element).popover('toggle');
+
+    $('#button-image').on('click', function() {
+      $('#modal-image').remove();
+
+      $.ajax({
+        url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&target=' + $(element).parent().find('input').attr('id') + '&thumb=' + $(element).attr('id'),
+        dataType: 'html',
+        beforeSend: function() {
+          $('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+          $('#button-image').prop('disabled', true);
+        },
+        complete: function() {
+          $('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+          $('#button-image').prop('disabled', false);
+        },
+        success: function(html) {
+          $('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+
+          $('#modal-image').modal('show');
+        }
+      });
+
+      $(element).popover('hide', function() {
+        $('.popover').remove();
+      });
+    });
+
+    $('#button-clear').on('click', function() {
+      $(element).find('img').attr('src', $(element).find('img').attr('data-placeholder'));
+
+      $(element).parent().find('input').attr('value', '');
+      $(element).popover('hide', function() {
+        $('.popover').remove();
+      });
+    });
+  });
+
+  $('input[name=\'image\']').change(function (){
+    var image_path = $(this).val();
+
+    $.ajax({
+      type: 'post',
+      url: 'index.php?route=catalog/product/inline&token=<?php echo $token; ?>&product_id=' + $(this).parent().parent().find( "input[name*=\'selected\']").val(),
+      data: {image: image_path},
+      async: false,
+      error: function (xhr, ajaxOptions, thrownError) {
+        return false;
+      }
+    });
+  });
+
+  $('input[type=\'checkbox\']').click (function() {
+    var checkboxs = $('#form-product input[type=\'checkbox\']');
+    var selected = 0;
+
+    $.each(checkboxs, function( index, value ) {
+      var thisCheck = $(value);
+
+      if (thisCheck.is(':checked')) {
+        selected = selected + 1;
+      }
+    });
+
+    if (selected) {
+      $('.table-name').hide();
+      $('.table-quick-edit tr td').show();
+      $('.item-selected').html(selected + ' <?php echo $text_selected_product; ?>');
     } else {
-      $('.bulk-action input[type=\'checkbox\']').prop('checked', true);
-      $('input[name*=\'selected\']').prop('checked', true);
-
+      $('.table-name').show();
+      $('.table-quick-edit tr td').hide();
     }
   });
 
@@ -279,21 +438,11 @@
   }
 
   function changeFilterType(text, filter_type) {
-      $('.filter-type').text(text);
+    $('.filter-type').text(text);
 
-      if (filter_type == 'filter_name') {
-        $('input[name=\'filter_text\']').addClass('hidden');
-        $('input[name=\'filter_model\']').addClass('hidden');
-        $('input[name=\'filter_name\']').removeClass('hidden');
-      } else if (filter_type == 'filter_model') {
-        $('input[name=\'filter_text\']').addClass('hidden');
-        $('input[name=\'filter_name\']').addClass('hidden');
-        $('input[name=\'filter_model\']').removeClass('hidden');
-      } else {
-        $('input[name=\'filter_name\']').addClass('hidden');
-        $('input[name=\'filter_model\']').addClass('hidden');
-        $('input[name=\'filter_text\']').removeClass('hidden');
-      }
+    $('.filter').addClass('hidden');
+    $('input[name=\'' + filter_type + '\']').removeClass('hidden');
+    $('select[name=\'' + filter_type + '\']').removeClass('hidden');
   }
 //--></script> 
   <script type="text/javascript"><!--
@@ -338,6 +487,87 @@
   });
 //--></script></div>
   <script type="text/javascript"><!--
+  $(document).ready(function() {
+    $.fn.editable.defaults.mode = 'inline';
+
+    $('.product-name').editable({
+      url: function (params) {
+        $.ajax({
+          type: 'post',
+          url: 'index.php?route=catalog/product/inline&token=<?php echo $token; ?>&product_id=' + $(this).parent().parent().find( "input[name*=\'selected\']").val(),
+          data: {name: params.value},
+          async: false,
+          error: function (xhr, ajaxOptions, thrownError) {
+            return false;
+          }
+        })
+      },
+      showbuttons: false,
+    });
+
+    $('.product-price').editable({
+      url: function (params) {
+        $.ajax({
+          type: 'post',
+          url: 'index.php?route=catalog/product/inline&token=<?php echo $token; ?>&product_id=' + $(this).parent().parent().find( "input[name*=\'selected\']").val(),
+          data: {price: params.value},
+          async: false,
+          error: function (xhr, ajaxOptions, thrownError) {
+            return false;
+          }
+        })
+      },
+      showbuttons: false,
+    });
+
+    $('.product-special').editable({
+      url: function (params) {
+        $.ajax({
+          type: 'post',
+          url: 'index.php?route=catalog/product/inline&token=<?php echo $token; ?>&product_id=' + $(this).parent().parent().parent().find( "input[name*=\'selected\']").val(),
+          data: {special: params.value},
+          async: false,
+          error: function (xhr, ajaxOptions, thrownError) {
+            return false;
+          }
+        })
+      },
+      showbuttons: false,
+    });
+
+    $('.product-quantity').editable({
+      url: function (params) {
+        $.ajax({
+          type: 'post',
+          url: 'index.php?route=catalog/product/inline&token=<?php echo $token; ?>&product_id=' + $(this).parent().parent().parent().find( "input[name*=\'selected\']").val(),
+          data: {quantity: params.value},
+          async: false,
+          error: function (xhr, ajaxOptions, thrownError) {
+            return false;
+          }
+        })
+      },
+      showbuttons: false,
+    });
+
+    $('.product-status').editable({
+      type: 'select',
+      url: function (params) {
+        $.ajax({
+          type: 'post',
+          url: 'index.php?route=catalog/product/inline&token=<?php echo $token; ?>&product_id=' + $(this).parent().parent().find( "input[name*=\'selected\']").val(),
+          data: {status: params.value},
+          async: false,
+          error: function (xhr, ajaxOptions, thrownError) {
+            return false;
+          }
+        })
+      },
+      showbuttons: false,
+    });
+  });
+  //--></script>
+<script type="text/javascript"><!--
     function changeStatus(status){
       $.ajax({
         url: 'index.php?route=common/edit/changeStatus&type=product&status='+ status +'&token=<?php echo $token; ?>',
@@ -355,3 +585,5 @@
     }
   //--></script>
 <?php echo $footer; ?>
+<link href="view/javascript/bootstrap3-editable/css/bootstrap-editable.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="view/javascript/bootstrap3-editable/js/bootstrap-editable.js" ></script>
