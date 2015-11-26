@@ -231,7 +231,7 @@ class ControllerCatalogCategory extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		if (!empty($filter_name) || !empty($filter_status)) {
+		if (!empty($filter_name) || !empty($filter_status) || !(is_null($filter_status))) {
 			$category_total = $this->model_catalog_category->getTotalCategoriesFilter($filter_data);
 		} else {
 			$category_total = $this->model_catalog_category->getTotalCategories();
