@@ -231,7 +231,7 @@ class ControllerCatalogCategory extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		if (!empty($filter_name) || !empty($filter_status)) {
+		if (!empty($filter_name) || isset($filter_status)) {
 			$category_total = $this->model_catalog_category->getTotalCategoriesFilter($filter_data);
 		} else {
 			$category_total = $this->model_catalog_category->getTotalCategories();
@@ -257,6 +257,9 @@ class ControllerCatalogCategory extends Controller {
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_select'] = $this->language->get('text_select');
+		$data['text_selected_category'] = $this->language->get('text_selected_category');
+		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
@@ -687,5 +690,32 @@ class ControllerCatalogCategory extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function inline() {
+		$json = array();
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateInline()) {
+			$this->load->model('catalog/category');
+
+			foreach ($this->request->post as $key => $value) {
+				$this->model_catalog_category->updateCategory($this->request->get['category_id'], $key, $value);
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	protected function validateInline() {
+		if (!$this->user->hasPermission('modify', 'catalog/category')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!isset($this->request->post['name']) && !isset($this->request->post['status'])) {
+			$this->error['warning'] = $this->language->get('error_inline_field');
+		}
+
+		return !$this->error;
 	}
 }
