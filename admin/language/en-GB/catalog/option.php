@@ -26,6 +26,8 @@ $_['text_file']           = 'File';
 $_['text_date']           = 'Date';
 $_['text_datetime']       = 'Date &amp; Time';
 $_['text_time']           = 'Time';
+$_['text_bulk_action']    = 'Bulk Action';
+$_['text_selected_option'] = 'Selected Option(s)';
 
 // Column
 $_['column_name']         = 'Option Name';
