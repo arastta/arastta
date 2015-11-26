@@ -710,6 +710,14 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_stock_checkout'] = $this->config->get('config_stock_checkout');
 		}
+		
+		if (isset($this->request->post['config_stock_mail'])) {
+			$data['config_stock_mail'] = $this->request->post['config_stock_mail'];
+		} elseif ($this->config->has('config_stock_mail')) {
+			$data['config_stock_mail'] = $this->config->get('config_stock_mail');
+		} else {
+			$data['config_stock_mail'] = '';
+		}
 
 		if (isset($this->request->post['config_affiliate_auto'])) {
 			$data['config_affiliate_approval'] = $this->request->post['config_affiliate_approval'];
