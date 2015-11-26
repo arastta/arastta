@@ -131,6 +131,16 @@ class ModelCatalogManufacturer extends Model {
 		$this->trigger->fire('post.admin.manufacturer.delete', array(&$manufacturer_id));
 	}
 
+    public function updateManufacturer($manufacturer_id, $key, $value) {
+        $this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET date_modified = NOW() WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+
+        if ($key == 'name') {
+            $this->db->query("UPDATE " . DB_PREFIX . "manufacturer_description SET " . $key . " = '" . $this->db->escape($value) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+        } else {
+            $this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET " . $key . " = '" . $this->db->escape($value) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+        }
+    }
+
 	public function getManufacturer($manufacturer_id) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON (m.manufacturer_id = md.manufacturer_id) WHERE m.manufacturer_id = '" . (int)$manufacturer_id . "' AND md.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -258,7 +268,7 @@ class ModelCatalogManufacturer extends Model {
 	}
 
     public function getTotalManufacturersFilter($data) {
-        $sql = ("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON m.category_id = md.category_id");
+        $sql = ("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON m.manufacturer_id = md.manufacturer_id");
 
         $isWhere = 0;
         $_sql = array();

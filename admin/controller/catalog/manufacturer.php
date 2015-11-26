@@ -552,4 +552,31 @@ class ControllerCatalogManufacturer extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	public function inline() {
+		$json = array();
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateInline()) {
+			$this->load->model('catalog/manufacturer');
+
+			foreach ($this->request->post as $key => $value) {
+				$this->model_catalog_manufacturer->updateManufacturer($this->request->get['manufacturer_id'], $key, $value);
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	protected function validateInline() {
+		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!isset($this->request->post['name']) && !isset($this->request->post['status'])) {
+			$this->error['warning'] = $this->language->get('error_inline_field');
+		}
+
+		return !$this->error;
+	}
 }
