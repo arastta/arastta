@@ -41,6 +41,10 @@ class ModelCatalogReview extends Model {
 		$this->trigger->fire('post.admin.review.delete', array(&$review_id));
 	}
 
+	public function updateReview($review_id, $key, $value) {
+		$this->db->query("UPDATE " . DB_PREFIX . "review SET " . $key . " = '" . $this->db->escape($value) . "', date_modified = NOW() WHERE review_id = '" . (int)$review_id . "'");
+	}
+
 	public function getReview($review_id) {
 		$query = $this->db->query("SELECT DISTINCT *, (SELECT pd.name FROM " . DB_PREFIX . "product_description pd WHERE pd.product_id = r.product_id AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS product FROM " . DB_PREFIX . "review r WHERE r.review_id = '" . (int)$review_id . "'");
 

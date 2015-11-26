@@ -306,6 +306,9 @@ class ControllerCatalogReview extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
+		$data['text_select'] = $this->language->get('text_select');
+		$data['text_selected_review'] = $this->language->get('text_selected_review');
 
 		$data['column_product'] = $this->language->get('column_product');
 		$data['column_author'] = $this->language->get('column_author');
@@ -620,6 +623,33 @@ class ControllerCatalogReview extends Controller {
 	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'catalog/review')) {
 			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}
+
+	public function inline() {
+		$json = array();
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateInline()) {
+			$this->load->model('catalog/review');
+
+			foreach ($this->request->post as $key => $value) {
+				$this->model_catalog_review->updateReview($this->request->get['review_id'], $key, $value);
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	protected function validateInline() {
+		if (!$this->user->hasPermission('modify', 'catalog/review')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!isset($this->request->post['author']) && !isset($this->request->post['rating']) && !isset($this->request->post['status']) && !isset($this->request->post['date_added'])) {
+			$this->error['warning'] = $this->language->get('error_inline_field');
 		}
 
 		return !$this->error;
