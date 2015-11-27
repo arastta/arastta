@@ -19,6 +19,8 @@ $_['text_unopened']       = 'Unopened';
 $_['text_order']          = 'Order Information';
 $_['text_product']        = 'Product Information &amp; Reason for Return';
 $_['text_history']        = 'Add Return History';
+$_['text_bulk_action']    = 'Bulk Action';
+$_['text_selected_return']= 'Selected Return(s)';
 
 // Column
 $_['column_return_id']     = 'Return ID';

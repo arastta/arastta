@@ -292,6 +292,8 @@ class ControllerSaleOrder extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_missing'] = $this->language->get('text_missing');
+		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
+		$data['text_selected_order'] = $this->language->get('text_selected_order');
 
 		$data['column_order_id'] = $this->language->get('column_order_id');
 		$data['column_customer'] = $this->language->get('column_customer');

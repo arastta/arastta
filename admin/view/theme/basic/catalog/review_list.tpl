@@ -64,10 +64,11 @@
 				  <option value="0"><?php echo $text_disabled; ?></option>
 				  <?php } ?>
 			    </select>
+				<div class="input-group filter hidden date">
 				<input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-added" class="date form-control hidden filter" />
 			    <span class="input-group-btn filter hidden">
 			    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-			    </span>
+			    </span></div>
 			  </div>
 		    </div>
 		  </div>
@@ -321,7 +322,8 @@ function changeFilterType(text, filter_type) {
   $('input[name=\'' + filter_type + '\']').removeClass('hidden');
   $('select[name=\'' + filter_type + '\']').removeClass('hidden');
   if (filter_type == 'filter_date_added') {
-	$('.input-group-btn').removeClass('hidden');
+	$('.well .input-group-btn').removeClass('hidden');
+	$('.well .input-group').removeClass('hidden');
   }
 }
 //--></script> 
