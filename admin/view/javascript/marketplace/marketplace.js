@@ -37,7 +37,7 @@ Marketplace.loadweb = function(url) {
 				.css("width", $('.panel-body').outerWidth())
 				.css("height", $('.panel-body').outerHeight())
 				.css("position", "fixed")
-				.css("z-index", "1000")
+				.css("z-index", "100")
 				.css("opacity", "0.80")
 				.css("-ms-filter", "progid:DXImageTransform.Microsoft.Alpha(Opacity = 80)")
 				.css("filter", "alpha(opacity = 80)")
@@ -48,6 +48,9 @@ Marketplace.loadweb = function(url) {
 				$('.panel.panel-default').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+response.error.warning+'<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			} else {
 				$('.panel-body').html(response.html);
+				uri = decodeURIComponent(ArrayToURL(URLToArray(url)));
+				uri = uri.replace('route=extension/marketplace/api', 'route=extension/marketplace');
+				window.history.pushState({"html":response.html}, "", window.location.origin + window.location.pathname + '?' + uri);
 			}
 		},
 		fail: function() {
@@ -61,6 +64,29 @@ Marketplace.loadweb = function(url) {
 	});
 	return true;
 };
+
+function URLToArray(url) {
+	var request = {};
+	var pairs = url.substring(url.indexOf('?') + 1).split('&');
+	for (var i = 0; i < pairs.length; i++) {
+		if(!pairs[i])
+			continue;
+		var pair = pairs[i].split('=');
+		if(pair[0] == 'list' || pair[0] == 'version' || pair[0] == 'length')
+			continue;
+		request[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+	}
+	return request;
+}
+
+function ArrayToURL(array) {
+	var pairs = [];
+	for (var key in array)
+		if (array.hasOwnProperty(key))
+
+			pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(array[key]));
+	return pairs.join('&');
+}
 
 var step = new Array();
 Marketplace.installfromweb = function (product_id, product_name, product_version, obj) {
@@ -92,9 +118,14 @@ Marketplace.installfromweb = function (product_id, product_name, product_version
 	return true;
 };
 
-Marketplace.apps.initialize = function() {
+Marketplace.apps.initialize = function(url_data) {
 	Marketplace.apps.loaded = 1;
-	Marketplace.loadweb(baseUrl+'index.php?route=extension/marketplace/api&api=api/marketplace');
+	if ($.param(url_data).search('api=api%2F') == -1) {
+		url_data = 'api=api/marketplace&' + $.param(url_data);
+	} else {
+		url_data = $.param(url_data);
+	}
+	Marketplace.loadweb(baseUrl+'index.php?route=extension/marketplace/api&' + decodeURIComponent(url_data));
 };
 
 $(document).on('keypress', '#marketplace-search-input', function(event) {
@@ -152,7 +183,7 @@ function next(product_id, product_name, product_version) {
 
 $(document).on('click', '.uninstall-button', function(e) {
 	$.ajax({
-		url: 'index.php?route=extension/installer/uninstall&product_id=' + $(this).attr('data-product-id') + '&token=' + token,
+		url: 'index.php?route=extension/marketplace/uninstall&product_id=' + $(this).attr('data-product-id') + '&token=' + token,
 		dataType: 'json',
 		beforeSend: function() {
 			if(!confirm('Are you sure ?')) {
@@ -186,7 +217,7 @@ $(document).on('click', '.uninstall-button', function(e) {
 $(document).on('click', '.uninstall-button-product', function() {
 	clicked_button = $('.uninstall-button-product');
 	$.ajax({
-		url: 'index.php?route=extension/installer/uninstall&product_id=' + $(this).attr('data-product-id') + '&token=' + token,
+		url: 'index.php?route=extension/marketplace/uninstall&product_id=' + $(this).attr('data-product-id') + '&token=' + token,
 		dataType: 'json',
 		beforeSend: function() {
 			if(!confirm('Are you sure ?')) {
@@ -216,6 +247,9 @@ $(document).on('click', '.uninstall-button-product', function() {
 });
 
 // Set last page opened on the menu
-$(document).on('click', '#marketplace-menu a[onclick]', function() {
-	sessionStorage.setItem('marketplace-menu', $(this).attr('onclick'));
+$(document).on('click', '.panel-body a[onclick]', function() {
+	url = $(this).attr('onclick').replace("Marketplace.loadweb(baseUrl + '", "");
+	url = $(this).attr('onclick').replace("')", "");
+	uri = decodeURIComponent(ArrayToURL(URLToArray(url)));
+	sessionStorage.setItem('marketplace-menu', uri);
 });

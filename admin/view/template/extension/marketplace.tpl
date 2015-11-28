@@ -7,11 +7,6 @@
         <a href="<?php echo $extension_modifications; ?>" data-toggle="tooltip" title="<?php echo $button_modifications; ?>" class="btn btn-default" data-original-title="<?php echo $button_modifications; ?>"><i class="fa fa-random"></i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
-      <ul class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-        <?php } ?>
-      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -30,7 +25,7 @@
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
       </div>
       <div class="panel-body">
-        <?php if (empty($data['api_key']) or isset($data['error']) or $data['changeApiKey']) { ?>
+        <?php if (empty($data['api_key']) || isset($data['error']) || $data['changeApiKey']) { ?>
           <form action="<?php echo $action; ?>" method="post" class="form-horizontal" enctype="multipart/form-data" id="form-api_key">
             <fieldset>
               <div class="form-group">
@@ -58,7 +53,7 @@
   baseUrl = '<?php echo HTTP_SERVER; ?>';
   apps_version = '<?php echo VERSION; ?>';
   token = '<?php echo $token; ?>';
-  <?php if ($error_warning or $data['changeApiKey']) { ?>
+  <?php if ($error_warning || $data['changeApiKey']) { ?>
     error = true;
   <?php } else { ?>
     error = false;
@@ -66,18 +61,18 @@
 
   $(document).ready(function() {
       if (!Marketplace.apps.loaded && !error) {
-        Marketplace.apps.initialize();
+        url_data = <?php echo json_encode($url_data); ?>;
+        Marketplace.apps.initialize(url_data);
         checkMenu();
       }
   });
   function checkMenu() {
     if (Marketplace.apps.loaded && !error) {
       if($('#marketplace-header').is(':visible')) {
-        if (sessionStorage.getItem('marketplace-menu')) {
-          // Sets active and open to selected page in the left column menu.
-          $('#marketplace-menu a[onclick="'+sessionStorage.getItem('marketplace-menu')+'"]').parents('li').addClass('active');
-          $('#marketplace-menu a[onclick="'+sessionStorage.getItem('marketplace-menu')+'"]').trigger('click');
-        }
+          if (sessionStorage.getItem('marketplace-menu')) {
+            // Open the last visited page.
+            Marketplace.loadweb(window.location.origin + window.location.pathname + '?' + sessionStorage.getItem('marketplace-menu'));
+          }
       } else {
         setTimeout(checkMenu, 50);
       }

@@ -30,6 +30,7 @@ class ControllerCommonMenu extends Controller {
 
 		#Extensions permissions
 		$p_return_installer = $this->user->hasPermission('access','extension/installer');
+		$p_return_extension = $this->user->hasPermission('access','extension/extension');
 		$p_return_modification = $this->user->hasPermission('access','extension/modification');
 		$p_return_module = $this->user->hasPermission('access','extension/module');
 		$p_return_shipping = $this->user->hasPermission('access','extension/shipping');
@@ -51,13 +52,14 @@ class ControllerCommonMenu extends Controller {
 		$p_return_paypal = $this->user->hasPermission('access','payment/pp_express');
 
 		#Marketing permissions
-		$p_return_affiliate = $this->user->hasPermission('access','marketing/affiliate');
+		$p_return_marketing_affiliate = $this->user->hasPermission('access','marketing/affiliate');
 		$p_return_contact = $this->user->hasPermission('access','marketing/contact');
 		$p_return_coupon = $this->user->hasPermission('access','marketing/coupon');
-		$p_return_marketing = $this->user->hasPermission('access','marketing/marketing');
+		$p_return_marketing_marketing = $this->user->hasPermission('access','marketing/marketing');
 
 		#System permissions
-		$p_return_setting = $this->user->hasPermission('access','setting/store');
+		$p_return_setting = $this->user->hasPermission('access','setting/setting');
+		$p_return_setting_store = $this->user->hasPermission('access','setting/store');
 		$p_return_design_banner = $this->user->hasPermission('access','design/banner');
 		$p_return_user = $this->user->hasPermission('access','user/user');
 		$p_return_user_permission = $this->user->hasPermission('access','user/user_permission');
@@ -101,9 +103,9 @@ class ControllerCommonMenu extends Controller {
 		$p_return_customer_order = $this->user->hasPermission('access','report/customer_order');
 		$p_return_customer_reward = $this->user->hasPermission('access','report/customer_reward');
 		$p_return_customer_credit = $this->user->hasPermission('access','report/customer_credit');
-		$p_return_marketing = $this->user->hasPermission('access','report/marketing');
-		$p_return_affiliate = $this->user->hasPermission('access','report/affiliate');
-		$p_return_affiliate_activity = $this->user->hasPermission('access','report/affiliate_activity');
+		$p_return_report_marketing = $this->user->hasPermission('access','report/marketing');
+		$p_return_report_affiliate = $this->user->hasPermission('access','report/affiliate');
+		$p_return_report_affiliate_activity = $this->user->hasPermission('access','report/affiliate_activity');
 
 		#Appearance permissions
 		$p_return_appearance_customizer = $this->user->hasPermission('access','appearance/customizer');
@@ -140,13 +142,13 @@ class ControllerCommonMenu extends Controller {
 			'marketing' => array(
 				'text' => $data['text_marketing'],
 				'icon' => 'fa-share-alt',
-				'permission' => $p_return_marketing || $p_return_affiliate || $p_return_coupon || $p_return_voucher || $p_return_voucher_theme || $p_return_contact,
+				'permission' => $p_return_marketing_marketing || $p_return_marketing_affiliate || $p_return_coupon || $p_return_voucher || $p_return_voucher_theme || $p_return_contact,
 				'position' => 5
 			),
 			'reports' => array(
 				'text' => $data['text_reports'],
 				'icon' => 'fa-bar-chart-o',
-				'permission' => $p_return_sale_order || $p_return_sale_tax || $p_return_sale_shipping || $p_return_sale_return || $p_return_sale_coupon || $p_return_product_viewed || $p_return_product_purchased || $p_return_customer_online || $p_return_customer_activity || $p_return_customer_order || $p_return_customer_reward || $p_return_customer_credit || $p_return_marketing || $p_return_affiliate || $p_return_affiliate_activity,
+				'permission' => $p_return_sale_order || $p_return_sale_tax || $p_return_sale_shipping || $p_return_sale_return || $p_return_sale_coupon || $p_return_product_viewed || $p_return_product_purchased || $p_return_customer_online || $p_return_customer_activity || $p_return_customer_order || $p_return_customer_reward || $p_return_customer_credit || $p_return_report_marketing || $p_return_report_affiliate || $p_return_report_affiliate_activity,
 				'position' => 6
 			),
 			'appearance' => array(
@@ -155,31 +157,36 @@ class ControllerCommonMenu extends Controller {
 				'permission' => $p_return_appearance_customizer || $p_return_appearance_layout || $p_return_appearance_menu || $p_return_design_banner || $p_return_theme,
 				'position' => 7
 			),
+			'extension' => array(
+				'text' => $data['text_extension'],
+				'icon' => 'fa-puzzle-piece',
+				'permission' => $p_return_modification || $p_return_extension || $p_return_payment || $p_return_shipping || $p_return_total,
+				'position' => 8
+			),
 			'marketplace' => array(
 				'text' => $data['text_marketplace'],
-				'icon' => 'fa-puzzle-piece',
-				'href' => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'], 'SSL'),
-				'permission' => $p_return_payment || $p_return_shipping || $p_return_total || $p_return_feed,
-				'position' => 8
+				'icon' => 'fa-plug',
+				'permission' => $p_return_marketplace,
+				'position' => 9
 			),
 			'localisation' => array(
 				'text' => $data['text_localisation'],
 				'icon' => 'fa-flag',
 				'permission' => $p_return_localisation || $p_return_language || $p_return_currency || $p_return_stock_status || $p_return_order_status || $p_return_return_status || $p_return_return_action || $p_return_return_reason || $p_return_country || $p_return_zone || $p_return_geo_zone || $p_return_tax_class || $p_return_tax_rate || $p_return_length_class || $p_return_weight_class,
-				'position' => 9
+				'position' => 10
 			),
 			'system' => array(
 				'text' => $data['text_system'],
 				'icon' => 'fa-cog',
 				'class' => 'parent',
 				'permission' => $p_return_user || $p_return_user_permission || $p_return_user_api || $p_return_email_template || $p_return_language_override,
-				'position' => 10
+				'position' => 11
 			),
 			'tools' => array(
 				'text' => $data['text_tools'],
 				'icon' => 'fa-wrench',
 				'permission' => $p_return_backup || $p_return_export_import || $p_return_file_manager || $p_return_upload || $p_return_error_log || $p_return_system_info,
-				'position' => 11
+				'position' => 12
 			)
 		);
 
@@ -322,13 +329,13 @@ class ControllerCommonMenu extends Controller {
 				'text' => $data['text_campaign'],
 				'href' => $data['marketing'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'], 'SSL'),
 				'position' => 1,
-				'permission' => $p_return_marketing
+				'permission' => $p_return_marketing_marketing
 			),
 			'affiliate' => array(
 				'text' => $data['text_affiliate'],
 				'href' => $data['affiliate'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'], 'SSL'),
 				'position' => 2,
-				'permission' => $p_return_affiliate
+				'permission' => $p_return_marketing_affiliate
 			),
 			'coupon' => array(
 				'text' => $data['text_coupon'],
@@ -459,25 +466,25 @@ class ControllerCommonMenu extends Controller {
 			'marketing' => array(
 				'text' => $data['text_marketing'],
 				'position' => 4,
-				'permission' => $p_return_marketing || $p_return_affiliate || $p_return_affiliate_activity,
+				'permission' => $p_return_report_marketing || $p_return_report_affiliate || $p_return_report_affiliate_activity,
 				'children' => array(
 					'marketing' => array(
 						'text' => $data['text_marketing'],
 						'href' => $this->url->link('report/marketing', 'token=' . $this->session->data['token'], 'SSL'),
 						'position' => 1,
-						'permission' => $p_return_marketing
+						'permission' => $p_return_report_marketing
 					),
 					'affiliates' => array(
 						'text' => $data['text_report_affiliate'],
 						'href' => $this->url->link('report/affiliate', 'token=' . $this->session->data['token'], 'SSL'),
 						'position' => 2,
-						'permission' => $p_return_affiliate
+						'permission' => $p_return_report_affiliate
 					),
 					'affiliate_activity' => array(
 						'text' => $data['text_report_affiliate_activity'],
 						'href' => $this->url->link('report/affiliate_activity', 'token=' . $this->session->data['token'], 'SSL'),
 						'position' => 3,
-						'permission' => $p_return_affiliate_activity
+						'permission' => $p_return_report_affiliate_activity
 					),
 				)
 			)
@@ -517,31 +524,71 @@ class ControllerCommonMenu extends Controller {
 			)
 		);
 
-		#Marketplace
-		$this->menu['marketplace']['children'] = array(
-			'payments' => array(
+		#Extensions
+		$this->menu['extension']['children'] = array(
+			'modification' => array(
+				'text' => $data['text_modification'],
+				'href' => $this->url->link('extension/modification', 'token=' . $this->session->data['token'], 'SSL'),
+				'position' => 1,
+				'permission' => $p_return_modification
+			),
+			'payment' => array(
 				'text' => $data['text_payment'],
-				'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
+				'href' => $this->url->link('extension/extension', 'filter_type=payment&token=' . $this->session->data['token'], 'SSL'),
 				'position' => 1,
 				'permission' => $p_return_payment
 			),
 			'shipping' => array(
 				'text' => $data['text_shipping'],
-				'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'),
+				'href' => $this->url->link('extension/extension', 'filter_type=shipping&token=' . $this->session->data['token'], 'SSL'),
 				'position' => 2,
 				'permission' => $p_return_shipping
 			),
-			'order_totals' => array(
+			'order_total' => array(
 				'text' => $data['text_total'],
-				'href' => $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL'),
+				'href' => $this->url->link('extension/extension', 'filter_type=total&token=' . $this->session->data['token'], 'SSL'),
 				'position' => 3,
 				'permission' => $p_return_total
 			),
-			'feeds' => array(
-				'text' => $data['text_feed'],
-				'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL'),
+			'all' => array(
+				'text' => $data['text_all'],
+				'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], 'SSL'),
 				'position' => 4,
-				'permission' => $p_return_feed
+				'permission' => $p_return_extension
+			)
+		);
+
+		#Marketplace
+		$this->menu['marketplace']['children'] = array(
+			'theme' => array(
+				'text' => $data['text_theme'],
+				'href' => $this->url->link('extension/marketplace', 'store=themes&token=' . $this->session->data['token'], 'SSL'),
+				'position' => 1,
+				'permission' => $p_return_marketplace
+			),
+			'extension' => array(
+				'text' => $data['text_extension'],
+				'href' => $this->url->link('extension/marketplace', 'store=extensions&token=' . $this->session->data['token'], 'SSL'),
+				'position' => 2,
+				'permission' => $p_return_marketplace
+			),
+			'translation' => array(
+				'text' => $data['text_translation'],
+				'href' => $this->url->link('extension/marketplace', 'store=translations&token=' . $this->session->data['token'], 'SSL'),
+				'position' => 3,
+				'permission' => $p_return_marketplace
+			),
+			'resource' => array(
+				'text' => $data['text_resource'],
+				'href' => $this->url->link('extension/marketplace', 'store=resources&token=' . $this->session->data['token'], 'SSL'),
+				'position' => 4,
+				'permission' => $p_return_marketplace
+			),
+			'all' => array(
+				'text' => $data['text_all'],
+				'href' => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'], 'SSL'),
+				'position' => 4,
+				'permission' => $p_return_marketplace
 			)
 		);
 
@@ -652,12 +699,14 @@ class ControllerCommonMenu extends Controller {
 			'settings' => array(
 				'text' => $data['text_setting'],
 				'href' => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1
+				'position' => 1,
+				'permission' => $p_return_setting
 			),
 			'stores' => array(
 				'text' => $data['text_store'],
 				'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 2
+				'position' => 2,
+				'permission' => $p_return_setting_store
 			),
 			'users' => array(
 				'text' => $data['text_users'],
