@@ -7,7 +7,7 @@
  */
 
 // Heading
-$_['heading_title']          = 'Extension Installer';
+$_['heading_title']          = 'Installer';
 
 // Text
 $_['text_success']           = 'Success: You have installed your add-on!';

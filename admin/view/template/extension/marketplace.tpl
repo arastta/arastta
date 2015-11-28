@@ -7,11 +7,6 @@
         <a href="<?php echo $extension_modifications; ?>" data-toggle="tooltip" title="<?php echo $button_modifications; ?>" class="btn btn-default" data-original-title="<?php echo $button_modifications; ?>"><i class="fa fa-random"></i></a>
       </div>
       <h1><?php echo $heading_title; ?></h1>
-      <ul class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-        <?php } ?>
-      </ul>
     </div>
   </div>
   <div class="container-fluid">

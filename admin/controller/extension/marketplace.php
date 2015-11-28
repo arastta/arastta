@@ -7,6 +7,7 @@
  */
 
 class ControllerExtensionMarketplace extends Controller {
+
 	private $error = array();
 	public $apiBaseUrl = 'http://arastta.pro/';
 
@@ -69,17 +70,6 @@ class ControllerExtensionMarketplace extends Controller {
 		}
 
 		$data['apiBaseUrl'] = $this->apiBaseUrl;
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'], 'SSL')
-		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['text_list'] = $this->language->get('text_list');
@@ -146,8 +136,9 @@ class ControllerExtensionMarketplace extends Controller {
 					$this->apiBaseUrl = str_replace(parse_url($this->apiBaseUrl, PHP_URL_HOST), $this->request->get['store'] . '.' . parse_url($this->apiBaseUrl, PHP_URL_HOST), $this->apiBaseUrl);
 				}
 
-				$addon_lib = new Addon($this->registry);
-				$addons = $addon_lib->getAddons();
+				$this->load->model('extension/marketplace');
+
+				$addons = $this->model_extension_marketplace->getAddons();
 				foreach ($addons as $addon) {
 					$data[$addon['product_id']] = $addon['product_version'];
 				}
@@ -193,6 +184,112 @@ class ControllerExtensionMarketplace extends Controller {
 			$this->response->addHeader('Content-Type: text/plain');
 			$this->response->setOutput($json);
 		}
+	}
+
+	public function uninstall() {
+		$this->load->model('extension/marketplace');
+
+        $json = array();
+
+        if (empty($this->request->get['product_id'])) {
+			return;
+		}
+
+		$addon = $this->model_extension_marketplace->getAddon($this->request->get['product_id']);
+
+		if (empty($addon)) {
+			$json['error'] = $this->language->get('error_uninstall_already');
+
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode($json));
+
+			return;
+		}
+
+		$params = json_decode($addon['params'], true);
+
+		if ($addon['product_type'] == 'translation') {
+			$this->load->model('localisation/language');
+
+			$lang = $this->model_localisation_language->getLanguage($params['language_id']);
+
+			if (empty($lang['directory'])) {
+				return;
+			}
+
+			$this->model_localisation_language->deleteLanguage($params['language_id']);
+
+			$this->filesystem->remove(DIR_ROOT . 'admin/language/'. $lang['directory']);
+			$this->filesystem->remove(DIR_ROOT . 'catalog/language/'. $lang['directory']);
+		} else {
+            // Uninstall extensions
+			if (!empty($params['extension_ids'])) {
+                $this->load->model('extension/extension');
+
+                foreach ($params['extension_ids'] as $extension_id) {
+                    $extension = $this->model_extension_extension->getExtension($extension_id);
+
+                    if (!$extension) {
+                        continue;
+                    }
+
+                    // Call uninstall method if it exsits
+                    $this->load->controller($extension['type'] . '/' . $extension['code'] . '/uninstall');
+
+                    // Delete extension
+                    $this->model_extension_extension->deleteExtension($extension_id);
+                }
+			}
+
+            // Uninstall themes
+			if (!empty($params['theme_ids'])) {
+                $this->load->model('appearance/theme');
+
+                foreach ($params['theme_ids'] as $theme_id) {
+                    $theme = $this->model_appearance_theme->getTheme($theme_id);
+
+                    if (!$theme) {
+                        continue;
+                    }
+
+                    // Delete theme
+                    $this->model_appearance_theme->deleteTheme($theme_id);
+                }
+
+			}
+
+			// No files to delete
+			if (!empty($addon['files'])) {
+                $absolute_paths = array();
+
+                $files = json_decode($addon['files'], true);
+
+                foreach ($files as $file) {
+                    $absolute_paths[] = DIR_ROOT . $file;
+                }
+
+                // Remove files
+                $this->filesystem->remove($absolute_paths);
+			}
+		}
+
+        // Delete addon
+        $this->model_extension_marketplace->deleteAddon($addon['addon_id']);
+
+        $json['success'] = $this->language->get('text_uninstall_success');
+
+        // Refresh modifications
+        $this->request->get['extensionInstaller'] = 1;
+        $this->load->controller('extension/modification/refresh');
+        unset($this->request->get['extensionInstaller']);
+
+        // Clear cache
+        $this->cache->remove('addon');
+        $this->cache->remove('update');
+        $this->cache->remove('version');
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	protected function validate() {

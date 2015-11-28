@@ -43,10 +43,11 @@ class ControllerCommonUpdate extends Controller {
         $data['update'] = $this->url->link('common/update/update', 'token=' . $this->session->data['token'], 'SSL');
         $data['changelog'] = $this->url->link('common/update/changelog', 'token=' . $this->session->data['token'], 'SSL');
 
-        $addon = new Addon($this->registry);
-        $data['addons'] = $addon->getAddons();
+        $this->load->model('extension/marketplace');
+        $data['addons'] = $this->model_extension_marketplace->getAddons();
 
-        $data['updates'] = $this->update->getUpdates();
+        $this->load->model('common/update');
+        $data['updates'] = $this->model_common_update->getUpdates();
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
