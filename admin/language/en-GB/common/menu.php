@@ -109,3 +109,7 @@ $_['text_customizer']                  = 'Customizer';
 $_['text_layout']                      = 'Layouts';
 $_['text_menu']                        = 'Menus';
 $_['text_collapse']                    = 'Collapse';
+$_['text_theme']                       = 'Themes';
+$_['text_translation']                 = 'Translations';
+$_['text_resource']                    = 'Resources';
+$_['text_all']                         = 'View All..';

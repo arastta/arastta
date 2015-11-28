@@ -183,7 +183,7 @@ function next(product_id, product_name, product_version) {
 
 $(document).on('click', '.uninstall-button', function(e) {
 	$.ajax({
-		url: 'index.php?route=extension/installer/uninstall&product_id=' + $(this).attr('data-product-id') + '&token=' + token,
+		url: 'index.php?route=extension/marketplace/uninstall&product_id=' + $(this).attr('data-product-id') + '&token=' + token,
 		dataType: 'json',
 		beforeSend: function() {
 			if(!confirm('Are you sure ?')) {
@@ -217,7 +217,7 @@ $(document).on('click', '.uninstall-button', function(e) {
 $(document).on('click', '.uninstall-button-product', function() {
 	clicked_button = $('.uninstall-button-product');
 	$.ajax({
-		url: 'index.php?route=extension/installer/uninstall&product_id=' + $(this).attr('data-product-id') + '&token=' + token,
+		url: 'index.php?route=extension/marketplace/uninstall&product_id=' + $(this).attr('data-product-id') + '&token=' + token,
 		dataType: 'json',
 		beforeSend: function() {
 			if(!confirm('Are you sure ?')) {

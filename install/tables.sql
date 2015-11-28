@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `ar_addon` (
   `product_name` varchar(255) NOT NULL,
   `product_type` varchar(32) NOT NULL,
   `product_version` varchar(32) NOT NULL DEFAULT '1.0.0',
-  `addon_files` text NOT NULL,
+  `files` text NULL,
   `params` text DEFAULT NULL,
   PRIMARY KEY (`addon_id`),
   KEY `product_id` (`product_id`)
@@ -1158,6 +1158,8 @@ CREATE TABLE IF NOT EXISTS `ar_extension` (
   `extension_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(32) NOT NULL,
   `code` varchar(32) NOT NULL,
+  `info` text NULL,
+  `params` text NULL,
   PRIMARY KEY (`extension_id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -2858,6 +2860,20 @@ CREATE TABLE IF NOT EXISTS `ar_tax_rule` (
   PRIMARY KEY (`tax_rule_id`),
   KEY `tax_class_id` (`tax_class_id`),
   KEY `tax_rate_id` (`tax_rate_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_extension`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_theme` (
+  `theme_id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(32) NOT NULL,
+  `info` text NULL,
+  `params` text NULL,
+  PRIMARY KEY (`theme_id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
