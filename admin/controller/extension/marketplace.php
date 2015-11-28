@@ -89,7 +89,7 @@ class ControllerExtensionMarketplace extends Controller {
 		$data['button_installer'] = $this->language->get('button_installer');
 		$data['button_modifications'] = $this->language->get('button_modifications');
 
-		if ((isset($this->request->get['changeApiKey']) and $this->request->get['changeApiKey']) or (empty($data['api_key']) or isset($data['error']))) {
+		if ((isset($this->request->get['changeApiKey']) && $this->request->get['changeApiKey']) || (empty($data['api_key']) || isset($data['error']))) {
 			$data['entry_api_key'] = $this->language->get('entry_api_key');
 			$data['button_continue'] = $this->language->get('button_continue');
 			$data['help_api_key'] = $this->language->get('help_api_key');
@@ -98,6 +98,14 @@ class ControllerExtensionMarketplace extends Controller {
 			$data['api_key_href'] = 'http://extensions.arastta.pro/index.php?route=account/api';
 			$data['action'] = $this->url->link('extension/marketplace/saveApiKey', 'token=' . $this->session->data['token'], 'SSL');
 		}
+
+		$data['url_data'] = array();
+		foreach ($this->request->get as $key => $value) {
+			if ($key != 'route' && $key != 'token') {
+				$data['url_data'][$key] = $value;
+			}
+		}
+
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
@@ -132,7 +140,7 @@ class ControllerExtensionMarketplace extends Controller {
 					}
 				}
 
-				if (isset($this->request->get['store']) and !empty($this->request->get['store'])) {
+				if (isset($this->request->get['store']) && !empty($this->request->get['store'])) {
 					$this->apiBaseUrl = str_replace(parse_url($this->apiBaseUrl, PHP_URL_HOST), $this->request->get['store'] . '.' . parse_url($this->apiBaseUrl, PHP_URL_HOST), $this->apiBaseUrl);
 				}
 

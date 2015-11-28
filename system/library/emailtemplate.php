@@ -226,6 +226,7 @@ class Emailtemplate {
         // Products
         preg_match('/{product:start}(.*){product:stop}/Uis', $emailTemplate['description'], $template_product);
 
+
         if (sizeof($template_product) > 0) {
             $getProducts = $this->getOrderProducts($order_info['order_id']);
 
@@ -323,6 +324,33 @@ class Emailtemplate {
 
         return $result;
     }
+    
+    //Return
+    public function getReturnFind() {
+		$result = array( '{store_name}', '{order_id}', '{date_ordered}', '{firstname}', '{lastname}', '{email}', '{telephone}', '{product}', '{model}', '{quantity}', '{return_reason}', '{opened}', '{comment}' );
+		
+		return $result;
+    }
+  
+    public function getReturnReplace($data) {
+        $result = array(
+            'store_name' => $this->config->get('config_name'),
+			'order_id' => $data['order_id'],
+			'date_ordered' => $data['date_ordered'],
+		    'firstname' => $data['firstname'],
+		    'lastname' => $data['lastname'],
+		    'email' => $data['email'],
+		    'telephone' => $data['telephone'],
+		    'product' => $data['product'],
+		    'model' => $data['model'],
+		    'quantity' => $data['quantity'],
+		    'return_reason' => $data['return_reason'],
+		    'opened' => $data['opened'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
+		    'comment' => nl2br($data['comment'])
+        );
+    
+		return $result;
+    }
 
 	// Review
 	public function getReviewFind() {
@@ -409,6 +437,7 @@ class Emailtemplate {
             }
         }
 
+
         foreach ($getVouchers as $voucher) {
             $text .= '1x ' . $voucher['description'] . ' ' . $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']);
         }
@@ -421,12 +450,14 @@ class Emailtemplate {
             $text .= $total['title'] . ': ' . html_entity_decode($this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
         }
 
+
         $text .= "\n";
 
         if ($order_info['customer_id']) {
             $text .= $language->get('text_new_link') . "\n";
             $text .= $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id . "\n\n";
         }
+
 
         /*
          if ($download_status) {
@@ -599,6 +630,7 @@ class Emailtemplate {
 
         $result = array();
 
+
         foreach ($getVouchers as $voucher) {
             // Replace Product Short Code to Values
             $voucher_find = $this->getOrderVoucherFind();
@@ -630,6 +662,7 @@ class Emailtemplate {
 
         $result = array();
 
+
         // Replace Product Short Code to Values
         $comment_find = $this->getCommentFind();
         $comment_replace = $this->getCommentReplace($comment);
@@ -657,6 +690,7 @@ class Emailtemplate {
     public function getTaxTemplate($totals, $template_tax) {
 
         $result = array();
+
 
         if (isset($totals['tax'])) {
             foreach ($totals['tax'] as $tax) {
@@ -738,6 +772,9 @@ class Emailtemplate {
 			case 'OrderAll':
                 $subject = $this->getDefaultOrderSubject($template_id, $data);
                 break;
+            case 'Return':
+                $subject = $this->getDefaultReturnSubject($template_id, $data);
+                break;
             case 'Review':
                 $subject = $this->getDefaultReviewSubject($template_id, $data);
                 break;
@@ -768,6 +805,9 @@ class Emailtemplate {
                 break;
             case 'OrderAll':
                 $subject = $this->getDefaultOrderMessage($template_id, $data);
+                break;
+            case 'Return':
+                $subject = $this->getDefaultReturnMessage($template_id, $data);
                 break;
             case 'Review':
                 $subject = $this->getDefaultReviewMessage($template_id, $data);
@@ -882,6 +922,7 @@ class Emailtemplate {
         if ($type_id == 'customer_4') {
             $store_name = $this->config->get('config_name');
             $store_url = HTTP_CATALOG . 'index.php?route=account/login';
+
 
             $message = sprintf($this->language->get('text_approve_welcome'), $store_name) . "\n\n";
             $message .= $this->language->get('text_approve_login') . "\n";
@@ -1006,6 +1047,7 @@ class Emailtemplate {
             '{country}'
         );
 
+
         $replace = array(
             'firstname' => $order_info['payment_firstname'],
             'lastname'  => $order_info['payment_lastname'],
@@ -1054,6 +1096,7 @@ class Emailtemplate {
         );
 
         $html_data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+
 
         $this->load->model('tool/upload');
 
@@ -1125,6 +1168,37 @@ class Emailtemplate {
         }
 
         return $html;
+    }
+    
+    public function getDefaultReturnSubject($type_id, $data) {
+		$this->load->language('mail/return');
+
+		$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
+
+		return $subject;
+    }
+
+    public function getDefaultReturnMessage($type_id, $data) {
+		$this->load->language('mail/return');
+
+		$message  = $this->language->get('text_request') . "\n";
+		$message .= "\n";
+		$message .= sprintf($this->language->get('text_order_id'), $data['order_id']) . "\n";
+		$message .= sprintf($this->language->get('text_date_ordered'), $this->db->escape(strip_tags($data['date_ordered']))) . "\n";
+		$message .= sprintf($this->language->get('text_customer'), $this->db->escape(strip_tags($data['firstname'])), $this->db->escape(strip_tags($data['lastname']))) . "\n";
+		$message .= sprintf($this->language->get('text_email'), $this->db->escape(strip_tags($data['email']))) . "\n";
+		$message .= sprintf($this->language->get('text_telephone'), $this->db->escape(strip_tags($data['telephone']))) . "\n";
+		$message .= "\n";
+		$message .= sprintf($this->language->get('text_product'), $this->db->escape(strip_tags($data['product']))) . "\n";
+		$message .= sprintf($this->language->get('text_model'), $this->db->escape(strip_tags($data['model']))) . "\n";
+		$message .= sprintf($this->language->get('text_quantity'), $data['quantity']) . "\n";
+		$message .= "\n";
+		$message .= sprintf($this->language->get('text_return_reason'), $data['return_reason']) . "\n";
+		$message .= sprintf($this->language->get('text_opened'), ($data['opened'] ? $this->language->get('text_yes') : $this->language->get('text_no'))) . "\n";
+		$message .= "\n";
+		$message .= strip_tags($data['comment']);
+
+		return nl2br($message);
     }
 
     public function getDefaultReviewSubject($type_id, $data) {
@@ -1216,6 +1290,7 @@ class Emailtemplate {
 
              list($width_orig, $height_orig) = getimagesize(DIR_IMAGE . $old_image);
 
+
              if ($width_orig != $width || $height_orig != $height) {
                  $image = new Image(DIR_IMAGE . $old_image);
                  $image->resize($width, $height);
@@ -1234,6 +1309,7 @@ class Emailtemplate {
 
     public function getUploadByCode($code) {
          $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE code = '" . $this->db->escape($code) . "'");
+
 
          return $query->row;
      }

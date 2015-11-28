@@ -258,7 +258,7 @@ class ModelCatalogManufacturer extends Model {
 	}
 
     public function getTotalManufacturersFilter($data) {
-        $sql = ("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON m.category_id = md.category_id");
+        $sql = ("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON m.manufacturer_id = md.manufacturer_id");
 
         $isWhere = 0;
         $_sql = array();
