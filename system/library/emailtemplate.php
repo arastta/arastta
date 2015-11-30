@@ -108,6 +108,7 @@ class Emailtemplate {
             $message = $this->getDefaultMessage($type, $template_id, $data);
         }
 
+
         return $message;
 	}
 
@@ -139,6 +140,7 @@ class Emailtemplate {
                 'status'       => $result['status']
             );
         }
+
 
         return $email_template_data;
     }
@@ -224,6 +226,7 @@ class Emailtemplate {
 
     // Order
     public function getOrderAllFind() {
+
 
         $result = array (
             '{firstname}', '{lastname}', '{delivery_address}', '{shipping_address}', '{payment_address}', '{order_date}', '{product:start}', '{product:stop}',
@@ -397,6 +400,21 @@ class Emailtemplate {
         return $result;
     }
 	
+	// Stock
+	public function getStockFind() {
+		$result = array( '{store_name}', '{total_products}' );
+		return $result;
+	}
+	
+	public function getStockReplace($data) {
+		$result = array(
+			'store_name'     => $this->config->get('config_name'),
+			'total_products' => $data['outofstock']
+		);
+		
+		return $result;
+	}
+	
 	// Voucher
     public function getVoucherFind() {
         $result = array( '{recip_name}', '{recip_email}', '{date}', '{store_name}', '{name}', '{amount}', '{message}', '{store_href}', '{image}', '{code}' );
@@ -556,6 +574,7 @@ class Emailtemplate {
                 }
             }
 
+
             $getProduct = $this->getProduct($product['product_id']);
 
             // Product Image Order
@@ -687,6 +706,7 @@ class Emailtemplate {
     // Order Comment
     public function getCommentTemplate($comment, $template_comment) {
 
+
         $result = array();
 
 
@@ -805,6 +825,9 @@ class Emailtemplate {
             case 'Review':
                 $subject = $this->getDefaultReviewSubject($template_id, $data);
                 break;
+			case 'Stock':
+				$subject = $this->getDefaultStockSubject($template_id, $data);
+				break;
             case 'Voucher':
                 $subject = $this->getDefaultVoucherSubject($template_id, $data);
                 break;
@@ -839,6 +862,9 @@ class Emailtemplate {
             case 'Review':
                 $subject = $this->getDefaultReviewMessage($template_id, $data);
                 break;
+			case 'Stock':
+				$subject = $this->getDefaultStockMessage($template_id, $data);
+				break;
             case 'Voucher':
                 $subject = $this->getDefaultVoucherMessage($template_id, $data);
                 break;
@@ -917,6 +943,7 @@ class Emailtemplate {
     public function getCommissionTotal($affiliate_id) {
         $query = $this->db->query("SELECT SUM(amount) AS total FROM " . DB_PREFIX . "affiliate_commission WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 
+
         return $query->row['total'];
     }
 
@@ -970,6 +997,7 @@ class Emailtemplate {
         } else {
             $message = 'Customer Mail Description';
         }
+
 
         return $message;
     }
@@ -1060,6 +1088,7 @@ class Emailtemplate {
         } else {
             $format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
         }
+
 
         $find = array(
             '{firstname}',
@@ -1169,6 +1198,7 @@ class Emailtemplate {
         // Vouchers
         $html_data['vouchers'] = array();
 
+
         $order_voucher_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_voucher WHERE order_id = '" . (int)$order_info['order_id'] . "'");
 
         foreach ($order_voucher_query->rows as $voucher) {
@@ -1251,6 +1281,24 @@ class Emailtemplate {
 
         return $message;
     }
+	
+	public function getDefaultStockSubject($type_id, $data) {
+		$this->load->language('mail/stock');
+
+		$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'), $data['outofstock']);
+
+		return $subject;
+	}
+
+	public function getDefaultStockMessage($type_id, $data) {
+		$this->load->language('mail/stock');
+
+		$message  = sprintf($this->language->get('text_notify'), $data['outofstock'], $this->config->get('config_name')) . "\n";
+		$message .= $this->language->get('text_view') . "\n";
+		$message .= sprintf($this->language->get('text_signature'), $this->config->get('config_name'));
+
+		return nl2br($message);
+	}
 
     public function getDefaultVoucherSubject($type_id, $data) {
         $this->load->language('mail/review');
@@ -1259,6 +1307,7 @@ class Emailtemplate {
 
         return $subject;
     }
+
 
     public function getDefaultVoucherMessage($type_id, $data) {
         $this->load->language('mail/voucher');
@@ -1343,6 +1392,7 @@ class Emailtemplate {
 
     public function getProduct($product_id) {
          $query = $this->db->query("SELECT DISTINCT p.*, pd.*, md.name AS manufacturer, (SELECT price FROM " . DB_PREFIX . "product_discount pd2 WHERE pd2.product_id = p.product_id AND pd2.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND pd2.quantity = '1' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())) ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, (SELECT price FROM " . DB_PREFIX . "product_special ps WHERE ps.product_id = p.product_id AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special, (SELECT points FROM " . DB_PREFIX . "product_reward pr WHERE pr.product_id = p.product_id AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "') AS reward, (SELECT ss.name FROM " . DB_PREFIX . "stock_status ss WHERE ss.stock_status_id = p.stock_status_id AND ss.language_id = '" . (int)$this->config->get('config_language_id') . "') AS stock_status, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating, (SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r2 WHERE r2.product_id = p.product_id AND r2.status = '1' GROUP BY r2.product_id) AS reviews, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON (p.manufacturer_id = md.manufacturer_id AND md.language_id = '" . (int)$this->config->get('config_language_id') . "') WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+
 
          if ($query->num_rows) {
              return array(
