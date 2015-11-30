@@ -27,7 +27,7 @@ class ControllerExtensionExtension extends Controller {
         $this->load->model('setting/setting');
         $this->load->model('extension/marketplace');
 
-        $extension_types = array('captcha', 'editor', 'feed', 'module', 'payment', 'shipping', 'total');
+        $extension_types = array('captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total');
 
         $extensions = $this->model_extension_extension->getDiscoverExtensions();
 
@@ -44,7 +44,7 @@ class ControllerExtensionExtension extends Controller {
 
             $code = str_replace('.php', '', $file->getFilename());
 
-            if (empty($extensions[$type]) || array_key_exists($code, $extensions[$type])) {
+            if (isset($extensions[$type]) && array_key_exists($code, $extensions[$type])) {
                 continue;
             }
 
@@ -103,7 +103,7 @@ class ControllerExtensionExtension extends Controller {
                 $files[] = $admin . $l;
             }
 
-            if (file_exists(DIR_ADMIN . $l)) {
+            if (file_exists(DIR_CATALOG . $l)) {
                 $files[] = $catalog . $l;
             }
         }
