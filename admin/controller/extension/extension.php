@@ -50,11 +50,10 @@ class ControllerExtensionExtension extends Controller {
 
             // Add extension
             $extension = array();
-            $extension['info'] = null;
-            $extension['params'] = '';
-
             $extension['type'] = $type;
             $extension['code'] = $code;
+            $extension['info'] = array();
+            $extension['params'] = array();
 
             $extension_id = $this->model_extension_extension->addExtension($extension);
 
@@ -64,8 +63,7 @@ class ControllerExtensionExtension extends Controller {
             // Add addon
             $params = array();
             $params['theme_ids'] = array();
-            $params['extension_ids'] = array();
-            $params['extension_ids'][] = $extension_id;
+            $params['extension_ids'] = array($extension_id);
 
             $files = $this->_getExtensionFiles($type, $code);
 
@@ -224,7 +222,7 @@ class ControllerExtensionExtension extends Controller {
         }
 
 		$data['add'] = $add_link;
-		$data['installer'] = $this->url->link('extension/installer', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['upload'] = $this->url->link('extension/installer', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$filter_data = array(
 			'filter_name' => $filter_name,
@@ -249,14 +247,14 @@ class ControllerExtensionExtension extends Controller {
                 $status = 0;
             }
 
-			$info = json_decode($result['info']);
+			$info = json_decode($result['info'], true);
 
             $this->language->load($result['type'] . '/' . $result['code']);
 
-			if (is_object($info)) {
-				$name = !empty($info->name) ? $info->name : $this->language->get('heading_title');
-				$author = $info->author;
-				$version = $info->version;
+			if (!empty($info)) {
+				$name = !empty($info['extension']['name']) ? $info['extension']['name'] : $this->language->get('heading_title');
+				$author = $info['author']['name'];
+				$version = $info['extension']['version'];
 			} else {
 				$this->load->language($result['type'] . '/' . $result['code']);
 

@@ -22,7 +22,7 @@ $_['text_captcha']      = 'Captcha';
 $_['text_other']        = 'Other';
 
 // Button
-$_['button_installer']  = 'Installer';
+$_['button_upload']     = 'Upload Extension';
 
 // Column
 $_['column_name']       = 'Name';
