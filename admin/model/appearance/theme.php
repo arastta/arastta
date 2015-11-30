@@ -11,7 +11,10 @@ class ModelAppearanceTheme extends Model {
 	public function addTheme($data) {
 		$this->trigger->fire('pre.admin.theme.edit', array(&$data));
 
-		$this->db->query("INSERT INTO " . DB_PREFIX . "theme SET code = '" . $this->db->escape($data['info']['theme']['code']) . "', files = '" . $this->db->escape(json_encode($data['files'])) . "', info = '" . $this->db->escape(json_encode($data['info'])) . "', params = '" . $this->db->escape(json_encode($data['params'])) . "'");
+		$info = json_encode($data['info']);
+		$params = json_encode($data['params']);
+
+		$this->db->query("INSERT INTO " . DB_PREFIX . "theme SET code = '" . $this->db->escape($data['code']) . "', info = '" . $this->db->escape($info) . "', params = '" . $this->db->escape($params) . "'");
 
 		$theme_id = $this->db->getLastId();
 
@@ -23,43 +26,57 @@ class ModelAppearanceTheme extends Model {
 	public function editTheme($theme_id, $data) {
 		$this->trigger->fire('pre.admin.theme.edit', array(&$data));
 
-		$this->db->query("UPDATE " . DB_PREFIX . "theme SET code = '" . $this->db->escape($data['code']) . "', files = '" . $this->db->escape(json_encode($data['files'])) . "', info = '" . $this->db->escape(json_encode($data['info'])) . "', params = '" . $this->db->escape(json_encode($data['params'])) . "' WHERE theme_id = '" . (int)$theme_id . "'");
+        $info = json_encode($data['info']);
+        $params = json_encode($data['params']);
+
+		$this->db->query("UPDATE " . DB_PREFIX . "theme SET code = '" . $this->db->escape($data['code']) . "', info = '" . $this->db->escape($info) . "', params = '" . $this->db->escape($params) . "' WHERE theme_id = '" . (int)$theme_id . "'");
 
 		$this->trigger->fire('pre.admin.theme.edit', array(&$theme_id));
 
 		return $theme_id;
 	}
 
-	public function deleteTheme($code) {
-		$this->trigger->fire('pre.admin.theme.delete', array(&$code));
+	public function deleteTheme($theme_id) {
+		$this->trigger->fire('pre.admin.theme.delete', array(&$theme_id));
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE `code` = '" . $code . "'");
-
-		$this->filesystem->remove(DIR_CATALOG . 'view/theme/' . $this->request->get['theme']);
-
-		if (is_file(DIR_IMAGE . 'templates/' . $this->request->get['theme'] . '.png')) {
-			$this->filesystem->remove(DIR_IMAGE . 'templates/' . $this->request->get['theme'] . '.png');
-		}
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "theme` WHERE `theme_id` = '" . $theme_id . "'");
 
 		$this->cache->delete('theme');
 
-		$this->trigger->fire('post.admin.theme.delete', array(&$code));
+		$this->trigger->fire('post.admin.theme.delete', array(&$theme_id));
 	}
 
-	public function getTheme($code) {
+	public function getTheme($theme_id) {
+		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "theme WHERE theme_id = '" . $theme_id . "'");
+
+		$result = $query->row;
+		$info = json_decode($result['info'], true);
+
+		return $theme = array(
+			'theme_id'    => $result['theme_id'],
+			'code'        => $result['code'],
+			'author'      => $info['author']['name'],
+			'name'        => $info['theme']['name'],
+			'description' => $info['theme']['description'],
+			'version' 	  => $info['theme']['version'],
+			'product_id'  => $info['theme']['product_id']
+		);
+	}
+
+	public function getThemeByCode($code) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "theme WHERE code = '" . $code . "'");
 
 		$result = $query->row;
 		$info = json_decode($result['info'], true);
 
 		return $theme = array(
+			'theme_id'    => $result['theme_id'],
 			'code'        => $result['code'],
 			'author'      => $info['author']['name'],
 			'name'        => $info['theme']['name'],
 			'description' => $info['theme']['description'],
 			'version' 	  => $info['theme']['version'],
-			'product_id'  => $info['theme']['product_id'],
-			'status'	  => 1
+			'product_id'  => $info['theme']['product_id']
 		);
 	}
 
@@ -185,5 +202,17 @@ class ModelAppearanceTheme extends Model {
         if (!empty($tab)) {
             $form->addElement(new Arastta\Component\Form\Element\HTML('</div>'));
         }
+	}
+
+	public function getDiscoverThemes() {
+		$themes = array();
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "theme");
+
+		foreach($query->rows as $theme) {
+			$themes[$theme['code']] = $theme;
+		}
+
+		return $themes;
 	}
 }

@@ -529,46 +529,48 @@ class ControllerExtensionInstaller extends Controller {
             $addon_params = array();
             $product_id = $product_name = $product_type = $product_version = '';
 
-			$data = file_get_contents($file);
-			$data = json_decode($data, true);
+			$content = file_get_contents($file);
+			$install_data = json_decode($content, true);
 
 			if (json_last_error() != JSON_ERROR_NONE) {
 				$json['error'] = $this->language->get('error_json_' . json_last_error());
-			} elseif (count($data) and array_key_exists('extension', $data)) {
+			} elseif (count($install_data) and array_key_exists('extension', $install_data)) {
                 $product_type = 'extension';
-			} elseif (count($data) and array_key_exists('theme', $data)) {
+			} elseif (count($install_data) and array_key_exists('theme', $install_data)) {
                 $product_type = 'theme';
-            } elseif (count($data) and array_key_exists('translation', $data)) {
+            } elseif (count($install_data) and array_key_exists('translation', $install_data)) {
 				$this->load->model('localisation/language');
 
                 $product_type = 'translation';
 
-				$data['translation']['locale'] = null;
-				$data['translation']['status'] = 1;
-				$data['translation']['sort_order'] = 0;
+				$translation_data = $install_data['translation'];
 
-				$language_id = $this->model_extension_installer->languageExist($data['translation']['directory']);
+				$translation_data['locale'] = null;
+				$translation_data['status'] = 1;
+				$translation_data['sort_order'] = 0;
+
+				$language_id = $this->model_extension_installer->languageExist($translation_data['directory']);
 				if (!$language_id) {
-					$language_id = $this->model_localisation_language->addLanguage($data['translation']);
+					$language_id = $this->model_localisation_language->addLanguage($translation_data);
 				}
 				$addon_params['language_id'] = $language_id;
 			}
 
             // Add to addon table
             if (!$json && $product_type) {
-                if (isset($data[$product_type]['product_id'])) {
-                    $product_id = $data[$product_type]['product_id'];
+                if (isset($install_data[$product_type]['product_id'])) {
+                    $product_id = $install_data[$product_type]['product_id'];
                 }
 
                 if ($product_id) {
                     $this->load->model('extension/marketplace');
 
-                    if (isset($data[$product_type]['name'])) {
-                        $product_name = $data[$product_type]['name'];
+                    if (isset($install_data[$product_type]['name'])) {
+                        $product_name = $install_data[$product_type]['name'];
                     }
 
-                    if (isset($data[$product_type]['version'])) {
-                        $product_version = $data[$product_type]['version'];
+                    if (isset($install_data[$product_type]['version'])) {
+                        $product_version = $install_data[$product_type]['version'];
                     }
 
                     $addon_params['theme_ids'] = array();
@@ -589,14 +591,8 @@ class ControllerExtensionInstaller extends Controller {
                     $this->cache->remove('update');
                     $this->cache->remove('version');
 
-                    // Set these to use in the next step, addExtensionTheme
-                    if (isset($data['author'])) {
-                        $this->session->data['author_name'] = $data['author']['name'];
-                        $this->session->data['author_email'] = $data['author']['email'];
-                    }
-
-                    $this->session->data['product_id'] = $product_id;
-                    $this->session->data['product_version'] = $product_version;
+                    // Set it to use in the next step, addExtensionTheme
+                    $this->session->data['installer_info'] = $install_data;
                 }
             }
 		}
@@ -850,36 +846,31 @@ class ControllerExtensionInstaller extends Controller {
 
         $addon_files = array();
 
-        $author = $version = '';
-
-        if (isset($this->session->data['author_name'])) {
-            $author = $this->session->data['author_name'];
-        }
-
-        if (isset($this->session->data['product_version'])) {
-            $version = $this->session->data['product_version'];
-        }
-
         // Get all files
         $files = $this->_indexFiles($directory);
 
         foreach ($files as $id => $file) {
             $addon_files[] = $file['relative_path_name'];
 
-            $type = $this->_getAddonType($file['relative_path']);
+            $type = $this->_getAddonType($file['relative_path_name']);
 
             if (empty($type)) {
                 continue;
             }
 
             $data = array();
-            $data['info'] = null;
-            $data['params'] = '';
+            $data['params'] = array();
 
-            if (!empty($author)) {
-                $data['info'] = array();
-                $data['info']['author'] = $author;
-                $data['info']['version'] = $version;
+            if (isset($this->session->data['installer_info'])) {
+                $data['info'] = $this->session->data['installer_info'];
+            } else {
+                $data['info'] = array(
+                    'author' => array(
+                        'name' => '',
+                        'email' => '',
+                        'website' => ''
+                    )
+                );
             }
 
             if (strstr($type, 'theme_')) {
@@ -888,6 +879,22 @@ class ControllerExtensionInstaller extends Controller {
                 $tmp = explode('_', $type);
 
                 $data['code'] = $tmp[1];
+
+                if (empty($data['info']['author']['name'])) {
+                    $info = $directory . '/upload/catalog/view/theme/' . $data['code'] . '/info.json';
+                    if (file_exists($info)) {
+                        $content = file_get_contents($info);
+
+                        $data['info'] = json_decode($content, true);
+                    } else {
+                        $data['info']['theme'] = array(
+                            'name' => ucfirst($data['code']),
+                            'description' => '',
+                            'version' => '',
+                            'product_id' => ''
+                        );
+                    }
+                }
 
                 $theme_id = $this->model_extension_installer->themeExist($data['code']);
                 if (!$theme_id) {
@@ -902,6 +909,17 @@ class ControllerExtensionInstaller extends Controller {
 
                 $data['type'] = $type;
                 $data['code'] = $code;
+
+                if (empty($data['info']['author']['name'])) {
+                    $data['info']['extension'] = array(
+                        'description' => '',
+                        'version' => '',
+                        'product_id' => ''
+                    );
+                }
+
+                // Will use the heading_title of the language file
+                $data['info']['extension']['name'] = '';
 
                 $extension_id = $this->model_extension_installer->extensionExist($type, $code);
                 if (!$extension_id) {
@@ -932,10 +950,7 @@ class ControllerExtensionInstaller extends Controller {
             $this->model_extension_marketplace->addAddon($addon);
         }
 
-        unset($this->session->data['author_name']);
-        unset($this->session->data['author_email']);
-        unset($this->session->data['product_id']);
-        unset($this->session->data['product_version']);
+        unset($this->session->data['installer_info']);
     }
 
     protected function _indexFiles($path) {
@@ -990,7 +1005,7 @@ class ControllerExtensionInstaller extends Controller {
 
         $tmp = explode('\\', $path);
 
-        $ext_types = array('payment', 'shipping', 'total', 'feed', 'module', 'report', 'tool', 'editor', 'captcha');
+        $ext_types = array('captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total');
 
         if (isset($tmp[2]) && in_array($tmp[2], $ext_types)) {
             $type = $tmp[2];

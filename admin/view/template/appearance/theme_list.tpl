@@ -2,13 +2,11 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a> <a href="<?php echo $upload; ?>" data-toggle="tooltip" title="<?php echo $button_upload; ?>" class="btn btn-primary"><i class="fa fa-upload"></i></a></div>
+      <div class="pull-right">
+        <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
+        <a href="<?php echo $upload; ?>" data-toggle="tooltip" title="<?php echo $button_upload; ?>" class="btn btn-default"><i class="fa fa-upload"></i></a>
+      </div>
       <h1><?php echo $heading_title; ?></h1>
-      <ul class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-        <?php } ?>
-      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -22,7 +20,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-theme">
+    <form action="<?php echo $add; ?>" method="post" enctype="multipart/form-data" id="form-theme">
       <div class="theme-browser">
         <?php if ($themes) { ?>
           <?php foreach ($themes as $theme) { ?>
@@ -31,26 +29,26 @@
               <img src="<?php echo $theme['thumb']; ?>" alt="" />
             </div>
 
-            <span class="more-details" id="more-details-<?php echo $theme['code']; ?>"><?php echo 'Theme Details' ; ?></span>
+            <span class="more-details" id="more-details-<?php echo $theme['code']; ?>"><?php echo $text_details; ?></span>
             <div class="theme-author"><?php echo $theme['author']; ?></div>
 
             <?php if ( $active_theme == $theme['code'] ) { ?>
-            <h3 class="theme-name" id="theme-name-<?php echo $theme['code']; ?>"><span><?php echo $entry_active; ?></span> <?php echo $theme['name']; ?></h3>
+            <h3 class="theme-name" id="theme-name-<?php echo $theme['code']; ?>"><?php echo $theme['name']; ?></h3>
             <?php } else { ?>
             <h3 class="theme-name" id="theme-name-<?php echo $theme['code']; ?>"><?php echo $theme['name']; ?></h3>
             <?php } ?>
 
             <div class="theme-actions">
               <?php if ( $active_theme == $theme['code'] ) { ?>
-                <a class="btn btn-primary btn-sm customize load-customize hide-if-no-customize" href="<?php echo $theme['customizer']; ?>"><?php echo $entry_customize; ?></a>
+                <a class="btn btn-primary btn-sm customize load-customize hide-if-no-customize" href="<?php echo $theme['customizer']; ?>"><?php echo $button_customize; ?></a>
                 <?php if ($theme['action']) { ?>
                 <?php foreach ($theme['action'] as $action) { ?>
                 <a class="btn btn-default btn-sm " href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a>
                 <?php } ?>
                 <?php } ?>
               <?php } else { ?>
-                <a class="btn btn-default btn-sm activate" href="<?php echo $theme['activate']; ?>"><?php echo $text_active; ?></a>
-                <a class="btn btn-primary btn-sm load-customize hide-if-no-customize" href="<?php echo $theme['customizer']; ?>"><?php echo $text_preview; ?></a>
+                <a class="btn btn-default btn-sm activate" href="<?php echo $theme['default']; ?>"><?php echo $button_default; ?></a>
+                <a class="btn btn-primary btn-sm load-customize hide-if-no-customize" href="<?php echo $theme['customizer']; ?>"><?php echo $button_preview; ?></a>
               <?php } ?>
             </div>
             <input type="hidden" name="theme-<?php echo $theme['code']; ?>" id="<?php echo $theme['code']; ?>" value="<?php echo $theme['code']; ?>">
@@ -58,7 +56,7 @@
           <?php } ?>
         <?php } ?>
           <div class="theme add-new-theme">
-            <a href="<?php echo $add; ?>"><div class="theme-screenshot"><span></span></div><h3 class="theme-name">Add New Theme</h3></a>
+            <a href="<?php echo $add; ?>"><div class="theme-screenshot"><span></span></div><h3 class="theme-name"><?php echo $button_new_theme; ?></h3></a>
           </div>
           <br class="clear" />
         </div>

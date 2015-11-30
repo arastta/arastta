@@ -1219,7 +1219,7 @@ body.folded .theme-overlay .theme-wrap {
 	margin-bottom: 5px;
 }
 
-.theme-overlay .theme-actions .delete-theme {
+.theme-overlay .theme-actions .uninstall-theme {
 	color: #a00;
 	position: absolute;
 	right: 10px;
@@ -1231,8 +1231,8 @@ body.folded .theme-overlay .theme-wrap {
 	background: transparent;
 }
 
-.theme-overlay .theme-actions .delete-theme:hover,
-.theme-overlay .theme-actions .delete-theme:focus {
+.theme-overlay .theme-actions .uninstall-theme:hover,
+.theme-overlay .theme-actions .uninstall-theme:focus {
 	background: #d54e21;
 	color: #fff;
 	border-color: #d54e21;

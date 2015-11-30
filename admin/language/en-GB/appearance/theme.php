@@ -14,29 +14,21 @@ $_['text_success']              = 'Success: You have modified Theme!';
 $_['text_list']                 = 'Theme List';
 $_['text_form']                 = 'Theme Edit';
 
-$_['text_new_menu_item']        = 'New Menu Item';
+$_['text_current']              = 'Current Theme';
 $_['text_details']              = 'Theme Details';
-$_['text_active']               = 'Activate';
-$_['text_preview']              = 'Live Preview';
-$_['text_delete']               = 'Delete';
-$_['text_setting']              = 'Setting';
-
-// Column
-$_['column_sort_order']         = 'Sort Order';
-$_['column_action']             = 'Action';
-
-$_['column_name']               = 'Theme Name';
-
-// Entry
-$_['entry_active']              = 'Activate :';
-$_['entry_customize']           = 'Customize';
-$_['entry_columns']             = 'Columns';
-$_['entry_sort_order']          = 'Sort Order';
-$_['entry_store']         		= 'Stores';
 
 // Buttons
-$_['button_upload']             = 'Manuel Upload';
+$_['button_default']            = 'Set Default';
+$_['button_preview']            = 'Live Preview';
+$_['button_customize']          = 'Customize';
+$_['button_uninstall']          = 'Uninstall';
+$_['button_setting']            = 'Settings';
+$_['button_new_theme']          = 'Add New Theme';
+$_['button_upload']             = 'Upload Theme';
+$_['button_previous']           = 'Show previous theme';
+$_['button_next']               = 'Show next theme';
+$_['button_close']              = 'Close';
 
 // Error
-$_['error_permission']          = 'Warning: You do not have permission to modify top headers !';
+$_['error_permission']          = 'Warning: You do not have permission to modify themes!';
 $_['error_warning']             = 'Warning: Please check the form carefully for errors!';
