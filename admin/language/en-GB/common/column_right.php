@@ -7,4 +7,4 @@
  */
 
 // Heading
-$_['heading_title']                = 'Profile';
+$_['heading_title']                = 'Column Right';
