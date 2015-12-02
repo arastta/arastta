@@ -126,7 +126,9 @@
 				if (json['error']) {
 					for (i in json['error']) {
 						var element = $('#input-database-' + i.replace(/_/g, '-'));
-
+						if ($('#advanced-settings').hasClass('collapse')) {
+							$('#btn-show-advanced').trigger('click');
+						}
 						if ($(element).parent().hasClass('input-group')) {
 							$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
 						} else {
