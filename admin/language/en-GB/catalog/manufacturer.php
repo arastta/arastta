@@ -17,8 +17,6 @@ $_['text_edit']             = 'Edit Manufacturer';
 $_['text_default']          = 'Default';
 $_['text_percent']          = 'Percentage';
 $_['text_amount']           = 'Fixed Amount';
-$_['text_bulk_action']      = 'Bulk Action';
-$_['text_selected_manufacturer'] = 'Selected Manufacturer(s)';
 
 // Column
 $_['column_name']           = 'Manufacturer Name';

@@ -211,6 +211,8 @@ class ControllerDesignBanner extends Controller {
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
+		$data['text_selected'] = $this->language->get('text_selected');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_status'] = $this->language->get('column_status');
@@ -292,6 +294,8 @@ class ControllerDesignBanner extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_default'] = $this->language->get('text_default');
+		$data['text_publish'] = $this->language->get('text_publish');
+		$data['tab_image'] = $this->language->get('tab_image');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_title'] = $this->language->get('entry_title');

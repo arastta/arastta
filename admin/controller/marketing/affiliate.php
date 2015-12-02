@@ -452,6 +452,8 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_none'] = $this->language->get('text_none');
+		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
+		$data['text_selected'] = $this->language->get('text_selected');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_email'] = $this->language->get('column_email');
@@ -601,6 +603,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['text_cheque'] = $this->language->get('text_cheque');
 		$data['text_paypal'] = $this->language->get('text_paypal');
 		$data['text_bank'] = $this->language->get('text_bank');
+		$data['text_publish'] = $this->language->get('text_publish');
 
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');

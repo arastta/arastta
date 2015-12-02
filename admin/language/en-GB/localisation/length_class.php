@@ -14,6 +14,7 @@ $_['text_success']     = 'Success: You have modified length classes!';
 $_['text_list']        = 'Length Class List';
 $_['text_add']         = 'Add Length Class';
 $_['text_edit']        = 'Edit Length Class';
+$_['text_items'] 	   = 'Items';
 
 // Column
 $_['column_title']     = 'Length Title';

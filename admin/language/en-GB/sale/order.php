@@ -125,8 +125,6 @@ $_['text_maxmind_id']                         = 'Maxmind ID:';
 $_['text_error']                              = 'Error:';
 $_['text_picklist']                           = 'Dispatch note';
 $_['text_history']                            = 'Add Order History';
-$_['text_bulk_action']                        = 'Bulk Action';
-$_['text_selected_order']                     = 'Selected Order(s)';
 
 // Column
 $_['column_order_id']                         = 'Order ID';

@@ -16,8 +16,6 @@ $_['text_list']              = 'Information List';
 $_['text_add']               = 'Add Information';
 $_['text_edit']              = 'Edit Information';
 $_['text_default']           = 'Default';
-$_['text_bulk_action']       = 'Bulk Action';
-$_['text_selected_information'] = 'Selected Information(s)';
 
 // Column
 $_['column_title']           = 'Information Title';

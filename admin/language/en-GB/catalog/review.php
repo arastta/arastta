@@ -14,9 +14,7 @@ $_['text_success']          = 'Success: You have modified reviews!';
 $_['text_list']             = 'Review List';
 $_['text_add']              = 'Add Review';
 $_['text_edit']             = 'Edit Review';
-$_['text_bulk_action']      = 'Bulk Action';
 $_['text_select']           = 'Please Select';
-$_['text_selected_review']  = 'Selected Review(s)';
 
 // Column
 $_['column_product']        = 'Product';

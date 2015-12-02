@@ -210,7 +210,7 @@ class ControllerCatalogInformation extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
-		$data['text_selected_information'] = $this->language->get('text_selected_information');
+		$data['text_selected'] = $this->language->get('text_selected');
 
 		$data['column_title'] = $this->language->get('column_title');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
@@ -449,6 +449,12 @@ class ControllerCatalogInformation extends Controller {
 			$data['information_layout'] = array();
 		}
 
+		foreach ($data['languages'] as $language) {
+			$data['preview'][$language['language_id']] = $this->getSeoLink($this->request->get['information_id'], $language['code']);
+		}
+
+		$data['information_id'] = $this->request->get['information_id'];
+
 		$this->load->model('appearance/layout');
 
 		$data['layouts'] = $this->model_appearance_layout->getLayouts();
@@ -528,5 +534,24 @@ class ControllerCatalogInformation extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function getSeoLink($information_id, $language_code) {
+		// Change the client
+		Client::setName('catalog');
+		$app = new Catalog();
+		$app->initialise();
+		$app->ecommerce();
+		$app->route();
+
+		$site_url = $app->url->link('information/information', 'information_id=' . $information_id . '&lang=' . $language_code, 'SSL');
+
+		$admin_folder = str_replace(DIR_ROOT, '', DIR_ADMIN);
+
+		$seo_url = str_replace($admin_folder, '', $site_url);
+		// Return back to admin
+		Client::setName('admin');
+
+		return $seo_url;
 	}
 }

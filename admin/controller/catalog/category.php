@@ -231,7 +231,7 @@ class ControllerCatalogCategory extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		if (!empty($filter_name) || isset($filter_status)) {
+		if (!empty($filter_name) || !empty($filter_status) || !(is_null($filter_status))) {
 			$category_total = $this->model_catalog_category->getTotalCategoriesFilter($filter_data);
 		} else {
 			$category_total = $this->model_catalog_category->getTotalCategories();
@@ -258,8 +258,8 @@ class ControllerCatalogCategory extends Controller {
         $data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_select'] = $this->language->get('text_select');
-		$data['text_selected_category'] = $this->language->get('text_selected_category');
 		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
+		$data['text_selected'] = $this->language->get('text_selected');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
@@ -588,6 +588,12 @@ class ControllerCatalogCategory extends Controller {
 		if (isset($this->request->get['category_id'])) { 
 			$data['menu_name_override'] = '1';
 		}
+
+		foreach ($data['languages'] as $language) {
+			$data['preview'][$language['language_id']] = $this->getSeoLink($this->request->get['category_id'], $language['code']);
+		}
+
+		$data['category_id'] = $this->request->get['category_id'];
 			
 		$this->load->model('appearance/layout');
 
@@ -717,5 +723,24 @@ class ControllerCatalogCategory extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function getSeoLink($category_id, $language_code) {
+		// Change the client
+		Client::setName('catalog');
+		$app = new Catalog();
+		$app->initialise();
+		$app->ecommerce();
+		$app->route();
+
+		$site_url = $app->url->link('product/category', 'category_id=' . $category_id . '&lang=' . $language_code, 'SSL');
+
+		$admin_folder = str_replace(DIR_ROOT, '', DIR_ADMIN);
+
+		$seo_url = str_replace($admin_folder, '', $site_url);
+		// Return back to admin
+		Client::setName('admin');
+
+		return $seo_url;
 	}
 }

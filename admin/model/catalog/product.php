@@ -376,7 +376,7 @@ class ModelCatalogProduct extends Model {
 		$this->trigger->fire('post.admin.product.delete', array(&$product_id));
 	}
 
-	public function updateProduct($product_id, $key, $value){
+	public function updateProduct($product_id, $key, $value) {
 		$this->db->query("UPDATE " . DB_PREFIX . "product SET date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
 
 		if ($key == 'name') {
@@ -394,6 +394,10 @@ class ModelCatalogProduct extends Model {
 		} else {
 			$this->db->query("UPDATE " . DB_PREFIX . "product SET " . $key . " = '" . $this->db->escape($value) . "' WHERE product_id = '" . (int)$product_id . "'");
 		}
+	}
+
+	public function deleteImage($product_id, $image) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$product_id . "' AND image = '" . $this->db->escape($image) . "'");
 	}
 
 	public function getProduct($product_id) {

@@ -423,8 +423,8 @@ class ControllerCatalogProduct extends Controller {
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
-		$data['text_selected_product'] = $this->language->get('text_selected_product');
 		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
+		$data['text_selected'] = $this->language->get('text_selected');
 
 		$data['column_image'] = $this->language->get('column_image');
 		$data['column_name'] = $this->language->get('column_name');
@@ -542,6 +542,10 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
+
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		$pagination = new Pagination();
 		$pagination->total = $product_total;
@@ -1258,7 +1262,14 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['product_layout'] = array();
 		}
-		
+
+		foreach ($data['languages'] as $language) {
+			$data['preview'][$language['language_id']] = $this->getSeoLink($this->request->get['product_id'], $language['code']);
+		}
+
+		$data['product_id'] = $this->request->get['product_id'];
+		$data['language_code'] = $this->config->get('config_admin_language');
+
 		$this->load->model('appearance/layout');
 
 		$data['layouts'] = $this->model_appearance_layout->getLayouts();
@@ -1460,5 +1471,131 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function uploads() {
+		$this->load->language('common/filemanager');
+
+		$json = array();
+
+		// Check user has permission
+		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		// Make sure we have the correct directory
+		if (isset($this->request->get['directory'])) {
+			$directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->get['directory']), '/');
+		} else {
+			$directory = DIR_IMAGE . 'catalog';
+		}
+
+		// Check its a directory
+		if (!is_dir($directory)) {
+			$json['error'] = $this->language->get('error_directory');
+		}
+
+		if (!$json) {
+			if (!empty($this->request->files['file']['name'][0]) && is_file($this->request->files['file']['tmp_name'][0])) {
+				// Sanitize the filename
+				$filename = basename(html_entity_decode($this->request->files['file']['name'][0], ENT_QUOTES, 'UTF-8'));
+
+				// Validate the filename length
+				if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 255)) {
+					$json['error'] = $this->language->get('error_filename');
+				}
+
+				// Allowed file extension types
+				$allowed = array(
+					'jpg',
+					'jpeg',
+					'gif',
+					'png'
+				);
+
+				if (!in_array(utf8_strtolower(utf8_substr(strrchr($filename, '.'), 1)), $allowed)) {
+					$json['error'] = $this->language->get('error_filetype');
+				}
+
+				// Allowed file mime types
+				$allowed = array(
+					'image/jpeg',
+					'image/pjpeg',
+					'image/png',
+					'image/x-png',
+					'image/gif'
+				);
+
+				if (!in_array($this->request->files['file']['type'][0], $allowed)) {
+					$json['error'] = $this->language->get('error_filetype');
+				}
+
+				// Check to see if any PHP files are trying to be uploaded
+				$content = file_get_contents($this->request->files['file']['tmp_name'][0]);
+
+				if (preg_match('/\<\?php/i', $content)) {
+					$json['error'] = $this->language->get('error_filetype');
+				}
+
+				// Return any upload error
+				if ($this->request->files['file']['error'][0] != UPLOAD_ERR_OK) {
+					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error'][0]);
+				}
+			} else {
+				$json['error'] = $this->language->get('error_upload');
+			}
+		}
+
+		if (!$json) {
+			$_filename = explode('.', $filename);
+			$filename = $_filename[0] . '-' . rand(1,10000) . '-' . '.' . $_filename[1];
+
+			move_uploaded_file($this->request->files['file']['tmp_name'][0], $directory . '/' . $filename);
+
+			if (isset($this->request->get['product_id'])) {
+				$this->session->data['edit_product'][] =  $filename;
+			} else {
+				$this->session->data['new_product'][] =  $filename;
+			}
+
+			$json['success'] = $this->language->get('text_uploaded');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function deleteImage() {
+		$json = array();
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateDelete()) {
+			$this->load->model('catalog/product');
+
+			$this->model_catalog_product->deleteImage($this->request->get['product_id'], $this->request->get['image']);
+
+			$json['success'] = $this->language->get('text_delete_image');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function getSeoLink($product_id, $language_code) {
+		// Change the client
+		Client::setName('catalog');
+		$app = new Catalog();
+		$app->initialise();
+		$app->ecommerce();
+		$app->route();
+
+		$site_url = $app->url->link('product/product', 'product_id=' . $product_id . '&lang=' . $language_code, 'SSL');
+
+		$admin_folder = str_replace(DIR_ROOT, '', DIR_ADMIN);
+
+		$seo_url = str_replace($admin_folder, '', $site_url);
+		// Return back to admin
+		Client::setName('admin');
+
+		return $seo_url;
 	}
 }

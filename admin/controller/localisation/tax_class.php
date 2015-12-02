@@ -207,6 +207,8 @@ class ControllerLocalisationTaxClass extends Controller {
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
+		$data['text_selected'] = $this->language->get('text_selected');
 
 		$data['column_title'] = $this->language->get('column_title');
 		$data['column_action'] = $this->language->get('column_action');
@@ -286,6 +288,8 @@ class ControllerLocalisationTaxClass extends Controller {
 		$data['text_shipping'] = $this->language->get('text_shipping');
 		$data['text_payment'] = $this->language->get('text_payment');
 		$data['text_store'] = $this->language->get('text_store');
+		$data['text_publish'] = $this->language->get('text_publish');
+		$data['text_items'] = $this->language->get('text_items');
 
 		$data['entry_title'] = $this->language->get('entry_title');
 		$data['entry_description'] = $this->language->get('entry_description');

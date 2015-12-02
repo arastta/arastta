@@ -462,6 +462,12 @@ class ControllerCatalogManufacturer extends Controller {
             $data['status'] = true;
         }
 
+		foreach ($data['languages'] as $language) {
+			$data['preview'][$language['language_id']] = $this->getSeoLink($this->request->get['manufacturer_id'], $language['code']);
+		}
+
+		$data['manufacturer_id'] = $this->request->get['manufacturer_id'];
+
         $this->load->model('appearance/layout');
 
         $data['layouts'] = $this->model_appearance_layout->getLayouts();
@@ -578,5 +584,24 @@ class ControllerCatalogManufacturer extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function getSeoLink($manufacturer_id, $language_code) {
+		// Change the client
+		Client::setName('catalog');
+		$app = new Catalog();
+		$app->initialise();
+		$app->ecommerce();
+		$app->route();
+
+		$site_url = $app->url->link('product/manufacturer', 'manufacturer_id=' . $manufacturer_id . '&lang=' . $language_code, 'SSL');
+
+		$admin_folder = str_replace(DIR_ROOT, '', DIR_ADMIN);
+
+		$seo_url = str_replace($admin_folder, '', $site_url);
+		// Return back to admin
+		Client::setName('admin');
+
+		return $seo_url;
 	}
 }
