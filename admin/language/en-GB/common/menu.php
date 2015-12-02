@@ -51,6 +51,7 @@ $_['text_manufacturer']                = 'Manufacturers';
 $_['text_module']                      = 'Modules';
 $_['text_option']                      = 'Options';
 $_['text_order']                       = 'Orders';
+$_['text_invoice']                     = 'Invoices';
 $_['text_order_status']                = 'Order Statuses';
 $_['text_payment']                     = 'Payments';
 $_['text_paypal']                      = 'PayPal';

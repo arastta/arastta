@@ -73,8 +73,6 @@ class ControllerAccountOrder extends Controller {
 
 		$results = $this->model_account_order->getOrders(($page - 1) * 10, 10);
 
-        $complete_statuses = $this->config->get('config_complete_status');
-
 		foreach ($results as $result) {
 			$product_total = $this->model_account_order->getTotalOrderProductsByOrderId($result['order_id']);
 			$voucher_total = $this->model_account_order->getTotalOrderVouchersByOrderId($result['order_id']);
@@ -87,7 +85,7 @@ class ControllerAccountOrder extends Controller {
 				'products'   => ($product_total + $voucher_total),
 				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'href'       => $this->url->link('account/order/info', 'order_id=' . $result['order_id'], 'SSL'),
-				'invoice'    => (in_array($result['order_status_id'], $complete_statuses) && !empty($result['invoice_no'])) ? $this->url->link('account/order/invoice', 'order_id=' . $result['order_id'], 'SSL') : ''
+				'invoice'    => !empty($result['invoice_no']) ? $this->url->link('account/order/invoice', 'order_id=' . $result['order_id'], 'SSL') : ''
 			);
 		}
 
@@ -537,8 +535,9 @@ class ControllerAccountOrder extends Controller {
         $order_id = $this->request->get['order_id'];
 
         $order_info = $this->model_account_order->getOrder($order_id);
+        $invoice_info = $this->model_account_order->getOrderInvoice($order_id);
 
-        if ($order_info) {
+        if ($order_info && $invoice_info) {
             $store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
 
             if ($store_info) {
@@ -553,11 +552,7 @@ class ControllerAccountOrder extends Controller {
                 $store_fax = $this->config->get('config_fax');
             }
 
-            if ($order_info['invoice_no']) {
-                $invoice_no = $order_info['invoice_prefix'] . $order_info['invoice_no'];
-            } else {
-                $invoice_no = '';
-            }
+            $invoice_number = $order_info['invoice_prefix'] . $order_info['invoice_no'];
 
             if ($order_info['payment_address_format']) {
                 $format = $order_info['payment_address_format'];
@@ -691,8 +686,9 @@ class ControllerAccountOrder extends Controller {
 
             $data['order'] = array(
                 'order_id'	         => $order_id,
-                'invoice_no'         => $invoice_no,
-                'date_added'         => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
+                'invoice_number'     => $invoice_number,
+                'order_date'         => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
+                'invoice_date'       => date($this->language->get('date_format_short'), strtotime($invoice_info['invoice_date'])),
                 'store_name'         => $order_info['store_name'],
                 'store_url'          => rtrim($order_info['store_url'], '/'),
                 'store_address'      => nl2br($store_address),
@@ -713,8 +709,6 @@ class ControllerAccountOrder extends Controller {
 
             $data['logo'] = $this->config->get('config_logo');
 
-            $name = !empty($invoice_no) ? $invoice_no : $order_id;
-
             $html = $this->load->output('account/order_invoice', $data);
 
             include(DIR_SYSTEM . "mpdf/mpdf.php");
@@ -723,9 +717,28 @@ class ControllerAccountOrder extends Controller {
 
             $mpdf->WriteHTML($html);
 
-            $mpdf->Output($name.'.pdf', 'D');
+            // What do we want?
+            $dest = !empty($this->request->get['dest']) ? $this->request->get['dest'] : 'D';
 
-            exit();
+            $file_name = $invoice_number . '.pdf';
+
+            // http://mpdf1.com/manual/index.php?tid=125
+            switch ($dest) {
+                case 'D':
+                case 'I':
+                    $mpdf->Output($file_name, $dest);
+                    exit();
+
+                    break;
+                case 'F':
+                    $mpdf->Output(DIR_UPLOAD . $file_name, $dest);
+
+                    break;
+                case 'S':
+                    return $mpdf->Output('', $dest);
+
+                    break;
+            }
         }
     }
 }

@@ -226,8 +226,6 @@ class Emailtemplate {
 
     // Order
     public function getOrderAllFind() {
-
-
         $result = array (
             '{firstname}', '{lastname}', '{delivery_address}', '{shipping_address}', '{payment_address}', '{order_date}', '{product:start}', '{product:stop}',
             '{total:start}', '{total:stop}', '{voucher:start}', '{voucher:stop}', '{special}', '{date}', '{payment}', '{shipment}', '{order_id}', '{total}', '{invoice_number}',
@@ -354,7 +352,39 @@ class Emailtemplate {
 
         return $result;
     }
-    
+
+    // Invoice
+    public function getInvoiceFind() {
+        $result = array(
+            '{invoice_id}', '{invoice_date}', '{invoice_no}', '{invoice_prefix}', '{order_id}',
+            '{store_name}', '{customer}', '{email}', '{telephone}', '{fax}', '{comment}', '{ip}',
+            '{date_added}', '{date_modified}'
+        );
+
+        return $result;
+    }
+
+    public function getInvoiceReplace($data) {
+        $result = array(
+            'invoice_id' => $data['invoice_id'],
+            'invoice_date' => $data['invoice_date'],
+            'invoice_no' => $data['invoice_no'],
+            'invoice_prefix' => $data['invoice_prefix'],
+            'order_id' => $data['order_id'],
+            'store_name' => $data['store_name'],
+            'customer' => $data['customer'],
+            'email' => $data['email'],
+            'telephone' => $data['telephone'],
+            'fax' => $data['fax'],
+            'comment' => $data['comment'],
+            'ip' => $data['ip'],
+            'date_added' => $data['date_added'],
+            'date_modified' => $data['date_modified']
+        );
+
+        return $result;
+    }
+
     //Return
     public function getReturnFind() {
 		$result = array( '{store_name}', '{order_id}', '{date_ordered}', '{firstname}', '{lastname}', '{email}', '{telephone}', '{product}', '{model}', '{quantity}', '{return_reason}', '{opened}', '{comment}' );

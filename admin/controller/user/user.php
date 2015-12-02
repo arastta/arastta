@@ -497,7 +497,7 @@ class ControllerUserUser extends Controller {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
-		$user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);
+		$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
 
 		if (!isset($this->request->get['user_id'])) {
 			if ($user_info) {
