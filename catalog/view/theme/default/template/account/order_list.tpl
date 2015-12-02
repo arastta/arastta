@@ -40,7 +40,7 @@
               <td class="text-right"><?php echo $order['total']; ?></td>
               <td class="text-right">
                 <?php if ($order['invoice']) { ?>
-                <a href="<?php echo $order['invoice']; ?>" data-toggle="tooltip" title="<?php echo $button_invoice; ?>" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i></a>
+                <a href="<?php echo $order['invoice']; ?>" data-toggle="tooltip" title="<?php echo $button_invoice; ?>" class="btn btn-warning"><i class="fa fa-file-pdf-o"></i></a>
                 <?php } ?>
                 <a href="<?php echo $order['href']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
               </td>

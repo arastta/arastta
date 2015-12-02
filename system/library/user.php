@@ -96,6 +96,14 @@ class User extends Object {
 		}
 	}
 
+	public function validate($action = 'modify', $route = '') {
+		if (empty($route) && isset($this->request->get['route'])) {
+			$route = $this->request->get['route'];
+		}
+
+		return $this->user->hasPermission($action, $route);
+	}
+
 	public function isLogged() {
 		return $this->user_id;
 	}

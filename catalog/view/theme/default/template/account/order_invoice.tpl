@@ -40,11 +40,10 @@
                   <b><?php echo $text_website; ?></b> <a href="<?php echo $order['store_url']; ?>"><?php echo $order['store_url']; ?></a>
                 </td>
                 <td class="invoice-50">
-                  <?php if ($order['invoice_no']) { ?>
-                  <b><?php echo $text_invoice_no; ?></b> <?php echo $order['invoice_no']; ?><br />
-                  <?php } ?>
+                  <b><?php echo $text_invoice_no; ?></b> <?php echo $order['invoice_number']; ?><br />
+                  <b><?php echo $text_invoice_date; ?></b> <?php echo $order['invoice_date']; ?><br />
                   <b><?php echo $text_order_id; ?></b> <?php echo $order['order_id']; ?><br />
-                  <b><?php echo $text_date_added; ?></b> <?php echo $order['date_added']; ?><br />
+                  <b><?php echo $text_order_date; ?></b> <?php echo $order['order_date']; ?><br />
                   <b><?php echo $text_payment_method; ?></b> <?php echo $order['payment_method']; ?><br />
                   <?php if ($order['shipping_method']) { ?>
                   <b><?php echo $text_shipping_method; ?></b> <?php echo $order['shipping_method']; ?><br />

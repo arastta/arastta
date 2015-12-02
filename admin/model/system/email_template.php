@@ -233,6 +233,15 @@ class ModelSystemEmailtemplate extends Model {
 			case 'voucher':
 				$codes = $this->emailtemplate->getVoucherFind();
 				break;
+			case 'invoice':
+				$codes = $this->emailtemplate->getInvoiceFind();
+				break;
+			case 'stock':
+				$codes = $this->emailtemplate->getStockFind();
+				break;
+			case 'return':
+				$codes = $this->emailtemplate->getReturnFind();
+				break;
 		}
 
 		foreach ($codes as $code) {
