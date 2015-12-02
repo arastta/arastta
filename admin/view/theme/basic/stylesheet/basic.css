@@ -193,3 +193,7 @@ a.editable-click:hover {
 .file-input .input-group {
 	max-width: 100% !important;
 }
+
+.file-preview-frame {
+    margin: 4px !important;
+}

@@ -536,6 +536,34 @@ class ControllerCatalogInformation extends Controller {
 		return !$this->error;
 	}
 
+	public function inline() {
+		$json = array();
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateInline()) {
+			if (isset($this->request->post['seo_url'])) {
+				$this->load->model('catalog/url_alias');
+
+				$this->model_catalog_url_alias->addAlias('information', $this->request->get['information_id'], $this->request->post['seo_url'], $this->request->post['language_id']);
+				$json['language_id'] = $this->request->post['language_id'];
+			}
+		}		
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	protected function validateInline() {
+		if (!$this->user->hasPermission('modify', 'catalog/information')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!isset($this->request->post['seo_url'])) {
+			$this->error['warning'] = $this->language->get('error_inline_field');
+		}
+
+		return !$this->error;
+	}	
+	
 	public function getSeoLink($information_id, $language_code) {
 		// Change the client
 		Client::setName('catalog');

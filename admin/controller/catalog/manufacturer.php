@@ -466,7 +466,7 @@ class ControllerCatalogManufacturer extends Controller {
 			$data['preview'][$language['language_id']] = $this->getSeoLink($this->request->get['manufacturer_id'], $language['code']);
 		}
 
-		$data['manufacturer_id'] = $this->request->get['manufacturer_id'];
+		$data['manufacturer_id'] = isset($this->request->get['manufacturer_id']) ? $this->request->get['manufacturer_id'] : 0;
 
         $this->load->model('appearance/layout');
 
@@ -564,9 +564,16 @@ class ControllerCatalogManufacturer extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateInline()) {
 			$this->load->model('catalog/manufacturer');
+			
+			if (isset($this->request->post['seo_url'])) {
+				$this->load->model('catalog/url_alias');
 
-			foreach ($this->request->post as $key => $value) {
-				$this->model_catalog_manufacturer->updateManufacturer($this->request->get['manufacturer_id'], $key, $value);
+				$this->model_catalog_url_alias->addAlias('manufacturer', $this->request->get['manufacturer_id'], $this->request->post['seo_url'], $this->request->post['language_id']);
+				$json['language_id'] = $this->request->post['language_id'];
+			} else {
+				foreach ($this->request->post as $key => $value) {
+					$this->model_catalog_manufacturer->updateManufacturer($this->request->get['manufacturer_id'], $key, $value);
+				}
 			}
 		}
 
@@ -579,7 +586,7 @@ class ControllerCatalogManufacturer extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!isset($this->request->post['name']) && !isset($this->request->post['status'])) {
+		if (!isset($this->request->post['name']) && !isset($this->request->post['status']) && !isset($this->request->post['seo_url'])) {
 			$this->error['warning'] = $this->language->get('error_inline_field');
 		}
 
@@ -594,7 +601,7 @@ class ControllerCatalogManufacturer extends Controller {
 		$app->ecommerce();
 		$app->route();
 
-		$site_url = $app->url->link('product/manufacturer', 'manufacturer_id=' . $manufacturer_id . '&lang=' . $language_code, 'SSL');
+		$site_url = $app->url->link('product/manufacturer/info', 'manufacturer_id=' . $manufacturer_id . '&lang=' . $language_code, 'SSL');
 
 		$admin_folder = str_replace(DIR_ROOT, '', DIR_ADMIN);
 

@@ -52,10 +52,11 @@
 									<div class="form-group">
 										<label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><?php echo $entry_seo_url; ?></span></label>
 										<div class="col-sm-10" style="padding-top: 5px;">
-								  <span>
-								  <?php $link = str_replace($seo_url[$language['language_id']], '', $preview[$language['language_id']]);
-										echo $link; ?><span class="seo-url"><?php echo $seo_url[$language['language_id']]; ?></span>
-								  </span>
+										    <span>
+												<?php $link = str_replace($seo_url[$language['language_id']], '', $preview[$language['language_id']]);
+												echo $link; ?><span class="seo-url" data-lang="<?php echo $language['language_id']; ?> "><?php echo $seo_url[$language['language_id']]; ?></span>
+										    </span>
+										    <input type="hidden" name="seo_url[<?php echo $language['language_id']; ?>]" value="<?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?>" placeholder="<?php echo $entry_seo_url; ?>" id="input-seo-url-<?php echo $language['language_id']; ?>" class="form-control" />
 											<div class="pull-right">
 												<a href="<?php echo $preview[$language['language_id']]; ?>" data-toggle="tooltip" title="<?php echo $text_preview; ?>" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
 											</div>
@@ -84,7 +85,7 @@
 						<div class="images">
 							<div class="form-group">
 								<div class="col-sm-3">
-									<a href="" id="thumb-image" data-toggle="image" class="img-thumbnail">
+									<a href="" id="thumb-image" data-toggle="image" class="img-thumbnail" style="display: block;">
 										<img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
 									<input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
 								</div>
@@ -334,7 +335,7 @@
 											<input type="hidden" name="product_option[<?php echo $option_row; ?>][name]" value="<?php echo $product_option['name']; ?>" />
 											<input type="hidden" name="product_option[<?php echo $option_row; ?>][option_id]" value="<?php echo $product_option['option_id']; ?>" />
 											<input type="hidden" name="product_option[<?php echo $option_row; ?>][type]" value="<?php echo $product_option['type']; ?>" />
-											<div class="form-group hidden">
+											<div class="hidden">
 												<label class="col-sm-2 control-label" for="input-required<?php echo $option_row; ?>"><?php echo $entry_required; ?></label>
 												<div class="col-sm-10">
 													<select name="product_option[<?php echo $option_row; ?>][required]" id="input-required<?php echo $option_row; ?>" class="form-control">
@@ -587,7 +588,7 @@
     </div>
 	<style>
 		#thumb-image img {
-			width: 240px !important;
+			width: 100% !important;
 		}
 	</style>
     <script type="text/javascript"><!--
@@ -602,8 +603,11 @@
                 $.ajax({
                     type: 'post',
                     url: 'index.php?route=catalog/product/inline&token=<?php echo $token; ?>&product_id=<?php echo $product_id;?>',
-                    data: {status: params.value},
+                    data: {seo_url: params.value, language_id : $(this).attr('data-lang')},
                     async: false,
+					success: function(json) {
+						$('#input-seo-url-' +  json['language_id']).val(params.value);
+					},
                     error: function (xhr, ajaxOptions, thrownError) {
                         return false;
                     }
@@ -783,7 +787,7 @@
             html += '	<input type="hidden" name="product_option[' + option_row + '][option_id]" value="' + item['value'] + '" />';
             html += '	<input type="hidden" name="product_option[' + option_row + '][type]" value="' + item['type'] + '" />';
 
-            html += '	<div class="form-group hidden">';
+            html += '	<div class="hidden">';
             html += '	  <label class="col-sm-2 control-label" for="input-required' + option_row + '"><?php echo $entry_required; ?></label>';
             html += '	  <div class="col-sm-10"><select name="product_option[' + option_row + '][required]" id="input-required' + option_row + '" class="form-control">';
             html += '	      <option value="1"><?php echo $text_yes; ?></option>';

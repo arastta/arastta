@@ -592,8 +592,8 @@ class ControllerCatalogCategory extends Controller {
 		foreach ($data['languages'] as $language) {
 			$data['preview'][$language['language_id']] = $this->getSeoLink($this->request->get['category_id'], $language['code']);
 		}
-
-		$data['category_id'] = $this->request->get['category_id'];
+		
+		$data['category_id'] = isset($this->request->get['category_id']) ? $this->request->get['category_id'] : 0;
 			
 		$this->load->model('appearance/layout');
 
@@ -704,10 +704,17 @@ class ControllerCatalogCategory extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateInline()) {
 			$this->load->model('catalog/category');
 
-			foreach ($this->request->post as $key => $value) {
-				$this->model_catalog_category->updateCategory($this->request->get['category_id'], $key, $value);
+			if (isset($this->request->post['seo_url'])) {
+				$this->load->model('catalog/url_alias');
+
+				$this->model_catalog_url_alias->addAlias('category', $this->request->get['category_id'], $this->request->post['seo_url'], $this->request->post['language_id']);
+				$json['language_id'] = $this->request->post['language_id'];
+			} else {
+				foreach ($this->request->post as $key => $value) {
+					$this->model_catalog_category->updateCategory($this->request->get['category_id'], $key, $value);
+				}
 			}
-		}
+		}		
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -718,7 +725,7 @@ class ControllerCatalogCategory extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!isset($this->request->post['name']) && !isset($this->request->post['status'])) {
+		if (!isset($this->request->post['name']) && !isset($this->request->post['status']) && !isset($this->request->post['seo_url'])) {
 			$this->error['warning'] = $this->language->get('error_inline_field');
 		}
 
@@ -733,7 +740,7 @@ class ControllerCatalogCategory extends Controller {
 		$app->ecommerce();
 		$app->route();
 
-		$site_url = $app->url->link('product/category', 'category_id=' . $category_id . '&lang=' . $language_code, 'SSL');
+		$site_url = $app->url->link('product/category', 'path=' . $category_id . '&lang=' . $language_code, 'SSL');
 
 		$admin_folder = str_replace(DIR_ROOT, '', DIR_ADMIN);
 

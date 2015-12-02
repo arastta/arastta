@@ -1452,8 +1452,15 @@ class ControllerCatalogProduct extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateInline()) {
 			$this->load->model('catalog/product');
 
-			foreach ($this->request->post as $key => $value) {
-				$this->model_catalog_product->updateProduct($this->request->get['product_id'], $key, $value);
+			if (isset($this->request->post['seo_url'])) {
+				$this->load->model('catalog/url_alias');
+
+				$this->model_catalog_url_alias->addAlias('product', $this->request->get['product_id'], $this->request->post['seo_url'], $this->request->post['language_id']);
+				$json['language_id'] = $this->request->post['language_id'];
+			} else {
+				foreach ($this->request->post as $key => $value) {
+					$this->model_catalog_product->updateProduct($this->request->get['product_id'], $key, $value);
+				}
 			}
 		}
 
@@ -1466,7 +1473,7 @@ class ControllerCatalogProduct extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!isset($this->request->post['image']) && !isset($this->request->post['name']) && !isset($this->request->post['price']) && !isset($this->request->post['special']) && !isset($this->request->post['quantity']) && !isset($this->request->post['status'])) {
+		if (!isset($this->request->post['image']) && !isset($this->request->post['name']) && !isset($this->request->post['price']) && !isset($this->request->post['special']) && !isset($this->request->post['quantity']) && !isset($this->request->post['status']) && !isset($this->request->post['seo_url'])) {
 			$this->error['warning'] = $this->language->get('error_inline_field');
 		}
 
