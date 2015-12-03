@@ -159,8 +159,8 @@ if (version_compare(VERSION, '1.2.0', '<')) {
 	$this->db->query("INSERT INTO `" . DB_PREFIX . "email` SET `text` = 'Invoice History', `text_id` = '2', `context` = 'invoice.history', `type` = 'invoice', `status` = '1'");
 	$email_id = $this->db->getLastId();
 	$this->db->query("INSERT INTO `" . DB_PREFIX . "email_description` SET `email_id` = '" . $email_id . "', `name` = '{store_name} Invoice - {invoice_no} History', `description` = '&lt;p&gt;Invoice No.:&amp;nbsp;{invoice_no}&lt;/p&gt;&lt;p&gt;Invoice Date:&amp;nbsp;{date_added}&lt;br&gt;&lt;/p&gt;&lt;p&gt;The comments for your invoice are:&lt;/p&gt;&lt;p&gt;{comment}&lt;/p&gt;&lt;p&gt;Please reply to this email if you have any questions.&lt;br&gt;&lt;/p&gt;', `status` = '1', `language_id` = '1'");
-		
-	// Update the user groups
+	
+	// Update user groups
 	$user_groups = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group");
 
 	foreach ($user_groups->rows as $user_group) {
@@ -176,5 +176,14 @@ if (version_compare(VERSION, '1.2.0', '<')) {
 		$user_group['permission']['modify'][] = 'sale/invoice';
 		
 		$this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
+	}
+	
+	// Update users
+	$users = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user");
+
+	foreach ($users->rows as $user) {
+		$params = '{"theme":"basic","basic_mode_message":"show","language":"' . $this->session->data['admin_language'] . '","editor":"summernote"}';
+		
+		$this->db->query("UPDATE " . DB_PREFIX . "user SET params = '" . $this->db->escape($params) . "' WHERE user_id = '" . (int)$user['user_id'] . "'");
 	}
 }

@@ -96,10 +96,12 @@ class ModelSetting extends Model {
 		} else {
 			$user_image = 'admin-default.png';
 		}
+		
+		$params = '{"theme":"basic","basic_mode_message":"show","language":"' . $this->session->data['lang_code'] . '","editor":"summernote"}';
 
         $db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE user_id = '1'");
 
-        $db->query("INSERT INTO `" . DB_PREFIX . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($data['admin_email']) . "', salt = '" . $db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $db->escape(sha1($salt . sha1($salt . sha1($data['admin_password'])))) . "', image = '" . $db->escape($user_image) . "', email = '" . $db->escape($data['admin_email']) . "', status = '1', date_added = NOW()");
+        $db->query("INSERT INTO `" . DB_PREFIX . "user` SET user_id = '1', user_group_id = '1', username = '" . $db->escape($data['admin_email']) . "', salt = '" . $db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $db->escape(sha1($salt . sha1($salt . sha1($data['admin_password'])))) . "', image = '" . $db->escape($user_image) . "', email = '" . $db->escape($data['admin_email']) . "', params = '" . $db->escape($params) . "', status = '1', date_added = NOW()");
 
         $db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_name'");
         $db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_name', value = '" . $db->escape($data['store_name']) . "'");
