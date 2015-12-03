@@ -17,6 +17,7 @@ $_['text_edit']         = 'Edit Tax Class';
 $_['text_shipping']     = 'Shipping Address';
 $_['text_payment']      = 'Payment Address';
 $_['text_store']        = 'Store Address';
+$_['text_items']  		= 'Items';
 
 // Column
 $_['column_title']      = 'Tax Class Title';

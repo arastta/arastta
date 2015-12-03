@@ -209,6 +209,8 @@ class ControllerCatalogInformation extends Controller {
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
+		$data['text_selected'] = $this->language->get('text_selected');
 
 		$data['column_title'] = $this->language->get('column_title');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
@@ -447,6 +449,12 @@ class ControllerCatalogInformation extends Controller {
 			$data['information_layout'] = array();
 		}
 
+		foreach ($data['languages'] as $language) {
+			$data['preview'][$language['language_id']] = $this->getSeoLink($this->request->get['information_id'], $language['code']);
+		}
+
+		$data['information_id'] = $this->request->get['information_id'];
+
 		$this->load->model('appearance/layout');
 
 		$data['layouts'] = $this->model_appearance_layout->getLayouts();
@@ -526,5 +534,52 @@ class ControllerCatalogInformation extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function inline() {
+		$json = array();
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateInline()) {
+			if (isset($this->request->post['seo_url'])) {
+				$this->load->model('catalog/url_alias');
+
+				$this->model_catalog_url_alias->addAlias('information', $this->request->get['information_id'], $this->request->post['seo_url'], $this->request->post['language_id']);
+				$json['language_id'] = $this->request->post['language_id'];
+			}
+		}		
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	protected function validateInline() {
+		if (!$this->user->hasPermission('modify', 'catalog/information')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!isset($this->request->post['seo_url'])) {
+			$this->error['warning'] = $this->language->get('error_inline_field');
+		}
+
+		return !$this->error;
+	}	
+	
+	public function getSeoLink($information_id, $language_code) {
+		// Change the client
+		Client::setName('catalog');
+		$app = new Catalog();
+		$app->initialise();
+		$app->ecommerce();
+		$app->route();
+
+		$site_url = $app->url->link('information/information', 'information_id=' . $information_id . '&lang=' . $language_code, 'SSL');
+
+		$admin_folder = str_replace(DIR_ROOT, '', DIR_ADMIN);
+
+		$seo_url = str_replace($admin_folder, '', $site_url);
+		// Return back to admin
+		Client::setName('admin');
+
+		return $seo_url;
 	}
 }

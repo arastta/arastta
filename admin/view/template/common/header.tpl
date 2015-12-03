@@ -104,6 +104,16 @@
         <li><a href="<?php echo $affiliate_approval; ?>"><span class="label label-danger pull-right"><?php echo $affiliate_total; ?></span><?php echo $text_approval; ?></a></li>
       </ul>
     </li>
+    <?php if ($themes) { ?>
+    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-toggle-on"></i></a>
+      <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
+        <li class="dropdown-header"><?php echo $entry_theme; ?></li>
+        <?php foreach ($themes as $theme) { ?>
+        <li><a href="<?php echo $theme['link']; ?>"><?php echo $theme['text']; ?></a></li>
+        <?php } ?>
+      </ul>
+    </li>
+    <?php } ?>
     <?php if ($languages) { ?>
     <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag fa-lg"></i></a>
       <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">

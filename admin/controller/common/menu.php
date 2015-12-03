@@ -10,10 +10,10 @@ class ControllerCommonMenu extends Controller {
 
 	protected $menu;
 
-	public function index() {
+	public function index($data) {
 		$this->load->language('common/menu');
 
-		$data = $this->language->all();
+		$data = $this->language->all($data);
 
 		#Catalog permissions
 		$p_return_category = $this->user->hasPermission('access','catalog/category');
@@ -34,7 +34,6 @@ class ControllerCommonMenu extends Controller {
 		$p_return_order_recurring = $this->user->hasPermission('access','sale/recurring');
 		$p_return_return = $this->user->hasPermission('access','sale/return');
 		$p_return_paypal = $this->user->hasPermission('access','payment/pp_express');
-
 		#Customers permissions
 		$p_return_customer = $this->user->hasPermission('access','sale/customer');
 		$p_return_customer_group = $this->user->hasPermission('access','sale/customer_group');
@@ -50,18 +49,18 @@ class ControllerCommonMenu extends Controller {
 		$p_return_voucher_theme = $this->user->hasPermission('access','sale/voucher_theme');
 
         #Extensions permissions
-        $p_return_installer = $this->user->hasPermission('access','extension/installer');
-        $p_return_extension = $this->user->hasPermission('access','extension/extension');
-        $p_return_modification = $this->user->hasPermission('access','extension/modification');
-        $p_return_module = $this->user->hasPermission('access','extension/module');
-        $p_return_shipping = $this->user->hasPermission('access','extension/shipping');
-        $p_return_payment = $this->user->hasPermission('access','extension/payment');
-        $p_return_total = $this->user->hasPermission('access','extension/total');
-        $p_return_feed = $this->user->hasPermission('access','extension/feed');
-
-        #Marketplace permissions
+		$p_return_installer = $this->user->hasPermission('access','extension/installer');
+		$p_return_extension = $this->user->hasPermission('access','extension/extension');
+		$p_return_modification = $this->user->hasPermission('access','extension/modification');
+		$p_return_module = $this->user->hasPermission('access','extension/module');
+		$p_return_shipping = $this->user->hasPermission('access','extension/shipping');
+		$p_return_payment = $this->user->hasPermission('access','extension/payment');
+		$p_return_total = $this->user->hasPermission('access','extension/total');
+		$p_return_feed = $this->user->hasPermission('access','extension/feed');        
+		
+		#Marketplace permissions
         $p_return_marketplace = $this->user->hasPermission('access','extension/marketplace');
-
+		
 		#System permissions
 		$p_return_setting = $this->user->hasPermission('access','setting/setting');
 		$p_return_setting_store = $this->user->hasPermission('access','setting/store');
@@ -124,74 +123,86 @@ class ControllerCommonMenu extends Controller {
 				'text' => $data['text_dashboard'],
 				'icon' => 'fa-dashboard',
 				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1
+				'sort_order' => 1,
+				'position' => 'left'
 			),
 			'catalog' => array(
 				'text' => $data['text_catalog'],
 				'icon' => 'fa-tags',
 				'permission' => $p_return_category || $p_return_product || $p_return_recurring || $p_return_filter || $p_return_attribute || $p_return_attribute_group || $p_return_option || $p_return_manufacturer || $p_return_download || $p_return_review || $p_return_information,
-				'position' => 2
+				'sort_order' => 2,
+                'position' => 'left'
 			),
 			'sale' => array(
 				'text' => $data['text_sale'],
 				'icon' => 'fa-shopping-cart',
 				'permission' => $p_return_order || $p_return_order_recurring || $p_return_return || $p_return_paypal,
-				'position' => 3
+				'sort_order' => 3,
+                'position' => 'left'
 			),
 			'customer' => array(
 				'text' => $data['text_customers'],
 				'icon' => 'fa-user',
 				'permission' => $p_return_customer || $p_return_customer_group || $p_return_custom_field || $p_return_customer_ban_ip,
-				'position' => 4
+				'sort_order' => 4,
+                'position' => 'left'
 			),
 			'marketing' => array(
 				'text' => $data['text_marketing'],
 				'icon' => 'fa-share-alt',
 				'permission' => $p_return_marketing_marketing || $p_return_marketing_affiliate || $p_return_coupon || $p_return_voucher || $p_return_voucher_theme || $p_return_contact,
-				'position' => 5
+				'sort_order' => 5,
+                'position' => 'left'
 			),
 			'reports' => array(
 				'text' => $data['text_reports'],
 				'icon' => 'fa-bar-chart-o',
 				'permission' => $p_return_sale_order || $p_return_sale_tax || $p_return_sale_shipping || $p_return_sale_return || $p_return_sale_coupon || $p_return_product_viewed || $p_return_product_purchased || $p_return_customer_online || $p_return_customer_activity || $p_return_customer_order || $p_return_customer_reward || $p_return_customer_credit || $p_return_report_marketing || $p_return_report_affiliate || $p_return_report_affiliate_activity,
-				'position' => 6
+				'sort_order' => 6,
+                'position' => 'left'
 			),
 			'appearance' => array(
 				'text' => $data['text_appearance'],
 				'icon' => 'fa-desktop',
 				'permission' => $p_return_appearance_customizer || $p_return_appearance_layout || $p_return_appearance_menu || $p_return_design_banner || $p_return_theme,
-				'position' => 7
+				'sort_order' => 7,
+                'position' => 'right'
 			),
 			'extension' => array(
 				'text' => $data['text_extension'],
 				'icon' => 'fa-puzzle-piece',
 				'permission' => $p_return_modification || $p_return_extension || $p_return_payment || $p_return_shipping || $p_return_total,
-				'position' => 8
+				'sort_order' => 8,
+                'position' => 'right'
 			),
 			'marketplace' => array(
 				'text' => $data['text_marketplace'],
 				'icon' => 'fa-plug',
 				'permission' => $p_return_marketplace,
-				'position' => 9
+				'sort_order' => 9,
+                'position' => 'right'
 			),
 			'localisation' => array(
 				'text' => $data['text_localisation'],
 				'icon' => 'fa-flag',
 				'permission' => $p_return_localisation || $p_return_language || $p_return_currency || $p_return_stock_status || $p_return_order_status || $p_return_return_status || $p_return_return_action || $p_return_return_reason || $p_return_country || $p_return_zone || $p_return_geo_zone || $p_return_tax_class || $p_return_tax_rate || $p_return_length_class || $p_return_weight_class,
-				'position' => 10
+				'sort_order' => 10,
+                'position' => 'right'
 			),
 			'system' => array(
 				'text' => $data['text_system'],
 				'icon' => 'fa-cog',
 				'class' => 'parent',
 				'permission' => $p_return_user || $p_return_user_permission || $p_return_user_api || $p_return_email_template || $p_return_language_override,
-				'position' => 11
+				'sort_order' => 11,
+                'position' => 'right'
 			),
 			'tools' => array(
 				'text' => $data['text_tools'],
 				'icon' => 'fa-wrench',
 				'permission' => $p_return_backup || $p_return_export_import || $p_return_file_manager || $p_return_upload || $p_return_error_log || $p_return_system_info,
-				'position' => 12
+				'sort_order' => 12,
+                'position' => 'right'
 			)
 		);
 
@@ -200,42 +211,42 @@ class ControllerCommonMenu extends Controller {
 			'category' => array(
 				'text' => $data['text_category'],
 				'href' => $this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1,
+				'sort_order' => 1,
 				'permission' => $p_return_category
 			),
 			'product' => array(
 				'text' => $data['text_product'],
 				'href' => $this->url->link('catalog/product', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 2,
+				'sort_order' => 2,
 				'permission' => $p_return_product
 			),
 			'recurring' => array(
 				'text' => $data['text_recurring'],
 				'href' => $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 3,
+				'sort_order' => 3,
 				'permission' => $p_return_recurring
 			),
 			'filter' => array(
 				'text' => $data['text_filter'],
 				'href' => $this->url->link('catalog/filter', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 4,
+				'sort_order' => 4,
 				'permission' => $p_return_filter
 			),
 			'attribute' => array(
 				'text' => $data['text_attribute'],
-				'position' => 5,
+				'sort_order' => 5,
 				'permission' => $p_return_attribute || $p_return_attribute_group,
 				'children' => array(
 					'attribute' => array(
 						'text' => $data['text_attribute'],
 						'href' => $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 1,
+						'sort_order' => 1,
 						'permission' => $p_return_attribute
 					),
 					'attribute_group' => array(
 						'text' => $data['text_attribute_group'],
 						'href' => $this->url->link('catalog/attribute_group', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 2,
+						'sort_order' => 2,
 						'permission' => $p_return_attribute_group
 					),
 				)
@@ -243,31 +254,31 @@ class ControllerCommonMenu extends Controller {
 			'option' => array(
 				'text' => $data['text_option'],
 				'href' => $this->url->link('catalog/option', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 6,
+				'sort_order' => 6,
 				'permission' => $p_return_option
 			),
 			'manufacturer' => array(
 				'text' => $data['text_manufacturer'],
 				'href' => $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 7,
+				'sort_order' => 7,
 				'permission' => $p_return_manufacturer
 			),
 			'download' => array(
 				'text' => $data['text_download'],
 				'href' => $this->url->link('catalog/download', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 8,
+				'sort_order' => 8,
 				'permission' => $p_return_download
 			),
 			'review' => array(
 				'text' => $data['text_review'],
 				'href' => $this->url->link('catalog/review', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 9,
+				'sort_order' => 9,
 				'permission' => $p_return_review
 			),
 			'information' => array(
 				'text' => $data['text_information'],
 				'href' => $this->url->link('catalog/information', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 10,
+				'sort_order' => 10,
 				'permission' => $p_return_information
 			)
 		);
@@ -277,31 +288,31 @@ class ControllerCommonMenu extends Controller {
 			'order' => array(
 				'text' => $data['text_order'],
 				'href' => $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1,
+				'sort_order' => 1,
 				'permission' => $p_return_order
-			),
-			'invoice' => array(
-				'text' => $data['text_invoice'],
-				'href' => $this->url->link('sale/invoice', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 2,
-				'permission' => $p_return_invoice
 			),
 			'order_recurring' => array(
 				'text' => $data['text_order_recurring'],
 				'href' => $this->url->link('sale/recurring', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 3,
+				'sort_order' => 2,
 				'permission' => $p_return_order_recurring
 			),
+			'invoice' => array(
+				'text' => $data['text_invoice'],
+				'href' => $this->url->link('sale/invoice', 'token=' . $this->session->data['token'], 'SSL'),
+				'sort_order' => 3,
+				'permission' => $p_return_invoice
+			),			
 			'return' => array(
 				'text' => $data['text_return'],
 				'href' => $this->url->link('sale/return', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 4,
+				'sort_order' => 4,
 				'permission' => $p_return_return
 			),
 			'paypal_search' => array(
 				'text' => $data['text_paypal_search'],
 				'href' => $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 5,
+				'sort_order' => 5,
 				'permission' => $p_return_paypal
 			)
 		);
@@ -311,25 +322,25 @@ class ControllerCommonMenu extends Controller {
 			'customer' => array(
 				'text' => $data['text_customer'],
 				'href' => $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1,
+				'sort_order' => 1,
 				'permission' => $p_return_customer
 			),
 			'customer_group' => array(
 				'text' => $data['text_customer_group'],
 				'href' => $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 2,
+				'sort_order' => 2,
 				'permission' => $p_return_customer_group
 			),
 			'custom_fields' => array(
 				'text' => $data['text_custom_field'],
 				'href' => $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 3,
+				'sort_order' => 3,
 				'permission' => $p_return_custom_field
 			),
 			'customer_ban_ip' => array(
 				'text' => $data['text_customer_ban_ip'],
 				'href' => $this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 4,
+				'sort_order' => 4,
 				'permission' => $p_return_customer_ban_ip
 			)
 		);
@@ -339,24 +350,24 @@ class ControllerCommonMenu extends Controller {
 			'campaigns' => array(
 				'text' => $data['text_campaign'],
 				'href' => $data['marketing'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1,
+				'sort_order' => 1,
 				'permission' => $p_return_marketing_marketing
 			),
 			'affiliate' => array(
 				'text' => $data['text_affiliate'],
 				'href' => $data['affiliate'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 2,
+				'sort_order' => 2,
 				'permission' => $p_return_marketing_affiliate
 			),
 			'coupon' => array(
 				'text' => $data['text_coupon'],
 				'href' => $data['coupon'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 3,
+				'sort_order' => 3,
 				'permission' => $p_return_coupon
 			),
 			'gift_vouchers' => array(
 				'text' => $data['text_voucher'],
-				'position' => 4,
+				'sort_order' => 4,
 				'permission' => $p_return_voucher || $p_return_voucher_theme,
 				'children' => array(
 					'voucher' => array(
@@ -374,7 +385,7 @@ class ControllerCommonMenu extends Controller {
 			'contact' => array(
 				'text' => $data['text_contact'],
 				'href' => $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 5,
+				'sort_order' => 5,
 				'permission' => $p_return_contact
 			)
 		);
@@ -383,118 +394,118 @@ class ControllerCommonMenu extends Controller {
 		$this->menu['reports']['children'] = array(
 			'sales' => array(
 				'text' => $data['text_sale'],
-				'position' => 1,
+				'sort_order' => 1,
 				'permission' => $p_return_sale_order || $p_return_sale_tax || $p_return_sale_shipping || $p_return_sale_return || $p_return_sale_coupon,
 				'children' => array(
 					'orders' => array(
 						'text' => $data['text_report_sale_order'],
 						'href' => $this->url->link('report/sale_order', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 1,
+						'sort_order' => 1,
 						'permission' => $p_return_sale_order
 					),
 					'tax' => array(
 						'text' => $data['text_report_sale_tax'],
 						'href' => $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 2,
+						'sort_order' => 2,
 						'permission' => $p_return_sale_tax
 					),
 					'shipping' => array(
 						'text' => $data['text_report_sale_shipping'],
 						'href' => $this->url->link('report/sale_shipping', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 3,
+						'sort_order' => 3,
 						'permission' => $p_return_sale_shipping
 					),
 					'returns' => array(
 						'text' => $data['text_report_sale_return'],
 						'href' => $this->url->link('report/sale_return', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 4,
+						'sort_order' => 4,
 						'permission' => $p_return_sale_return
 					),
 					'coupons' => array(
 						'text' => $data['text_report_sale_coupon'],
 						'href' => $this->url->link('report/sale_coupon', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 5,
+						'sort_order' => 5,
 						'permission' => $p_return_sale_coupon
 					),
 				)
 			),
 			'products' => array(
 				'text' => $data['text_product'],
-				'position' => 2,
+				'sort_order' => 2,
 				'permission' => $p_return_product_viewed || $p_return_product_purchased,
 				'children' => array(
 					'viewed' => array(
 						'text' => $data['text_report_product_viewed'],
 						'href' => $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 1,
+						'sort_order' => 1,
 						'permission' => $p_return_product_viewed
 					),
 					'purchased' => array(
 						'text' => $data['text_report_product_purchased'],
 						'href' => $this->url->link('report/product_purchased', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 2,
+						'sort_order' => 2,
 						'permission' => $p_return_product_purchased
 					),
 				)
 			),
 			'customers' => array(
 				'text' => $data['text_customer'],
-				'position' => 3,
+				'sort_order' => 3,
 				'permission' => $p_return_customer_online || $p_return_customer_activity || $p_return_customer_order || $p_return_customer_reward || $p_return_customer_credit,
 				'children' => array(
 					'customers_online' => array(
 						'text' => $data['text_report_customer_online'],
 						'href' => $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 1,
+						'sort_order' => 1,
 						'permission' => $p_return_customer_online
 					),
 					'customer_activity' => array(
 						'text' => $data['text_report_customer_activity'],
 						'href' => $this->url->link('report/customer_activity', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 2,
+						'sort_order' => 2,
 						'permission' => $p_return_customer_activity
 					),
 					'orders' => array(
 						'text' => $data['text_report_customer_order'],
 						'href' => $this->url->link('report/customer_order', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 3,
+						'sort_order' => 3,
 						'permission' => $p_return_customer_order
 					),
 					'reward_points' => array(
 						'text' => $data['text_report_customer_reward'],
 						'href' => $this->url->link('report/customer_reward', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 4,
+						'sort_order' => 4,
 						'permission' => $p_return_customer_reward
 					),
 					'credit' => array(
 						'text' => $data['text_report_customer_credit'],
 						'href' => $this->url->link('report/customer_credit', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 5,
+						'sort_order' => 5,
 						'permission' => $p_return_customer_credit
 					),
 				)
 			),
 			'marketing' => array(
 				'text' => $data['text_marketing'],
-				'position' => 4,
+				'sort_order' => 4,
 				'permission' => $p_return_report_marketing || $p_return_report_affiliate || $p_return_report_affiliate_activity,
 				'children' => array(
 					'marketing' => array(
 						'text' => $data['text_marketing'],
 						'href' => $this->url->link('report/marketing', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 1,
+						'sort_order' => 1,
 						'permission' => $p_return_report_marketing
 					),
 					'affiliates' => array(
 						'text' => $data['text_report_affiliate'],
 						'href' => $this->url->link('report/affiliate', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 2,
+						'sort_order' => 2,
 						'permission' => $p_return_report_affiliate
 					),
 					'affiliate_activity' => array(
 						'text' => $data['text_report_affiliate_activity'],
 						'href' => $this->url->link('report/affiliate_activity', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 3,
+						'sort_order' => 3,
 						'permission' => $p_return_report_affiliate_activity
 					),
 				)
@@ -506,31 +517,31 @@ class ControllerCommonMenu extends Controller {
 			'theme' => array(
 				'text' => $data['text_theme'],
 				'href' => $this->url->link('appearance/theme', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1,
+				'sort_order' => 1,
 				'permission' => $p_return_theme
 			),
 			'customizer' => array(
 				'text' => $data['text_customizer'],
 				'href' => $this->url->link('appearance/customizer', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 2,
+				'sort_order' => 2,
 				'permission' => $p_return_appearance_customizer
 			),
 			'layouts' => array(
 				'text' => $data['text_layout'],
 				'href' => $this->url->link('appearance/layout', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 3,
+				'sort_order' => 3,
 				'permission' => $p_return_appearance_layout
 			),
 			'menus' => array(
 				'text' => $data['text_menu'],
 				'href' => $this->url->link('appearance/menu', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 4,
+				'sort_order' => 4,
 				'permission' => $p_return_appearance_menu
 			),
 			'banners' => array(
 				'text' => $data['text_banner'],
 				'href' => $this->url->link('design/banner', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 5,
+				'sort_order' => 5,
 				'permission' => $p_return_design_banner
 			)
 		);
@@ -540,31 +551,31 @@ class ControllerCommonMenu extends Controller {
 			'modification' => array(
 				'text' => $data['text_modification'],
 				'href' => $this->url->link('extension/modification', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1,
+				'sort_order' => 1,
 				'permission' => $p_return_modification
 			),
 			'payment' => array(
 				'text' => $data['text_payment'],
 				'href' => $this->url->link('extension/extension', 'filter_type=payment&token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1,
+				'sort_order' => 2,
 				'permission' => $p_return_payment
 			),
 			'shipping' => array(
 				'text' => $data['text_shipping'],
 				'href' => $this->url->link('extension/extension', 'filter_type=shipping&token=' . $this->session->data['token'], 'SSL'),
-				'position' => 2,
+				'sort_order' => 3,
 				'permission' => $p_return_shipping
 			),
 			'order_total' => array(
 				'text' => $data['text_total'],
 				'href' => $this->url->link('extension/extension', 'filter_type=total&token=' . $this->session->data['token'], 'SSL'),
-				'position' => 3,
+				'sort_order' => 4,
 				'permission' => $p_return_total
 			),
 			'all' => array(
 				'text' => $data['text_all'],
 				'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 4,
+				'sort_order' => 5,
 				'permission' => $p_return_extension
 			)
 		);
@@ -574,31 +585,31 @@ class ControllerCommonMenu extends Controller {
 			'theme' => array(
 				'text' => $data['text_theme'],
 				'href' => $this->url->link('extension/marketplace', 'store=themes&token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1,
+				'sort_order' => 1,
 				'permission' => $p_return_marketplace
 			),
 			'extension' => array(
 				'text' => $data['text_extension'],
 				'href' => $this->url->link('extension/marketplace', 'store=extensions&token=' . $this->session->data['token'], 'SSL'),
-				'position' => 2,
+				'sort_order' => 2,
 				'permission' => $p_return_marketplace
 			),
 			'translation' => array(
 				'text' => $data['text_translation'],
 				'href' => $this->url->link('extension/marketplace', 'store=translations&token=' . $this->session->data['token'], 'SSL'),
-				'position' => 3,
+				'sort_order' => 3,
 				'permission' => $p_return_marketplace
 			),
 			'resource' => array(
 				'text' => $data['text_resource'],
 				'href' => $this->url->link('extension/marketplace', 'store=resources&token=' . $this->session->data['token'], 'SSL'),
-				'position' => 4,
+				'sort_order' => 4,
 				'permission' => $p_return_marketplace
 			),
 			'all' => array(
 				'text' => $data['text_all'],
 				'href' => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 4,
+				'sort_order' => 5,
 				'permission' => $p_return_marketplace
 			)
 		);
@@ -608,48 +619,48 @@ class ControllerCommonMenu extends Controller {
 			'languages' => array(
 				'text' => $data['text_language'],
 				'href' => $this->url->link('localisation/language', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1,
+				'sort_order' => 1,
 				'permission' => $p_return_language
 			),
 			'currencies' => array(
 				'text' => $data['text_currency'],
 				'href' => $this->url->link('localisation/currency', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 2,
+				'sort_order' => 2,
 				'permission' => $p_return_currency
 			),
 			'stock_statuses' => array(
 				'text' => $data['text_stock_status'],
 				'href' => $this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 3,
+				'sort_order' => 3,
 				'permission' => $p_return_stock_status
 			),
 			'order_statuses' => array(
 				'text' => $data['text_order_status'],
 				'href' => $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 4,
+				'sort_order' => 4,
 				'permission' => $p_return_order_status
 			),
 			'returns' => array(
 				'text' => $data['text_return'],
-				'position' => 5,
+				'sort_order' => 5,
 				'permission' => $p_return_return_status || $p_return_return_action || $p_return_return_reason,
 				'children' => array(
 					'return_statuses' => array(
 						'text' => $data['text_return_status'],
 						'href' => $this->url->link('localisation/return_status', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 1,
+						'sort_order' => 1,
 						'permission' => $p_return_return_status
 					),
 					'return_actions' => array(
 						'text' => $data['text_return_action'],
 						'href' => $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 2,
+						'sort_order' => 2,
 						'permission' => $p_return_return_action
 					),
 					'return_reasons' => array(
 						'text' => $data['text_return_reason'],
 						'href' => $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 3,
+						'sort_order' => 3,
 						'permission' => $p_return_return_reason
 					),
 				)
@@ -657,36 +668,36 @@ class ControllerCommonMenu extends Controller {
 			'countries' => array(
 				'text' => $data['text_country'],
 				'href' => $this->url->link('localisation/country', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 6,
+				'sort_order' => 6,
 				'permission' => $p_return_country
 			),
 			'zones' => array(
 				'text' => $data['text_zone'],
 				'href' => $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 7,
+				'sort_order' => 7,
 				'permission' => $p_return_zone
 			),
 			'geo_zones' => array(
 				'text' => $data['text_geo_zone'],
 				'href' => $this->url->link('localisation/geo_zone', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 8,
+				'sort_order' => 8,
 				'permission' => $p_return_geo_zone
 			),
 			'taxes' => array(
 				'text' => $data['text_tax'],
-				'position' => 9,
+				'sort_order' => 9,
 				'permission' => $p_return_tax_rate || $p_return_tax_class,
 				'children' => array(
 					'tax_classes' => array(
 						'text' => $data['text_tax_class'],
 						'href' => $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 1,
+						'sort_order' => 1,
 						'permission' => $p_return_tax_rate
 					),
 					'tax_rates' => array(
 						'text' => $data['text_tax_rate'],
 						'href' => $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'], 'SSL'),
-						'position' => 2,
+						'sort_order' => 2,
 						'permission' => $p_return_tax_class
 					),
 				)
@@ -694,13 +705,13 @@ class ControllerCommonMenu extends Controller {
 			'length_classes' => array(
 				'text' => $data['text_length_class'],
 				'href' => $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 10,
+				'sort_order' => 10,
 				'permission' => $p_return_length_class
 			),
 			'weight_classes' => array(
 				'text' => $data['text_weight_class'],
 				'href' => $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 11,
+				'sort_order' => 11,
 				'permission' => $p_return_weight_class
 			)
 		);
@@ -710,18 +721,18 @@ class ControllerCommonMenu extends Controller {
 			'settings' => array(
 				'text' => $data['text_setting'],
 				'href' => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1,
+				'sort_order' => 1,
 				'permission' => $p_return_setting
 			),
 			'stores' => array(
 				'text' => $data['text_store'],
 				'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 2,
+				'sort_order' => 2,
 				'permission' => $p_return_setting_store
 			),
 			'users' => array(
 				'text' => $data['text_users'],
-				'position' => 3,
+				'sort_order' => 3,
 				'permission' => $p_return_user || $p_return_user_permission,
 				'children' => array(
 					'users' => array(
@@ -739,19 +750,19 @@ class ControllerCommonMenu extends Controller {
 			'api' => array(
 				'text' => $data['text_api'],
 				'href' => $this->url->link('user/api', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 4,
+				'sort_order' => 4,
 				'permission' => $p_return_user_api
 			),
 			'email_templates' => array(
 				'text' => $data['text_email_template'],
 				'href' => $this->url->link('system/email_template', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 5,
+				'sort_order' => 5,
 				'permission' => $p_return_email_template
 			),
 			'language_overrides' => array(
 				'text' => $data['text_language_override'],
 				'href' => $this->url->link('system/language_override', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 6,
+				'sort_order' => 6,
 				'permission' => $p_return_language_override
 			)
 		);
@@ -761,37 +772,37 @@ class ControllerCommonMenu extends Controller {
 			'backup_restore' => array(
 				'text' => $data['text_backup'],
 				'href' => $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1,
+				'sort_order' => 1,
 				'permission' => $p_return_backup
 			),
 			'export_import' => array(
 				'text' => $data['text_export_import'],
 				'href' => $this->url->link('tool/export_import', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 2,
+				'sort_order' => 2,
 				'permission' => $p_return_export_import
 			),
 			'file_manager' => array(
 				'text' => $data['text_file_manager'],
 				'href' => $this->url->link('tool/file_manager', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 3,
+				'sort_order' => 3,
 				'permission' => $p_return_file_manager
 			),
 			'uploads' => array(
 				'text' => $data['text_upload'],
 				'href' => $this->url->link('tool/upload', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 4,
+				'sort_order' => 4,
 				'permission' => $p_return_upload
 			),
 			'error_logs' => array(
 				'text' => $data['text_error_log'],
 				'href' => $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 5,
+				'sort_order' => 5,
 				'permission' => $p_return_error_log
 			),
 			'system_info' => array(
 				'text' => $data['text_system_info'],
 				'href' => $this->url->link('tool/system_info', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 6,
+				'sort_order' => 6,
 				'permission' => $p_return_system_info
 			)
 		);
@@ -816,24 +827,25 @@ class ControllerCommonMenu extends Controller {
 	}
 
 	protected function compareMenuItems($item1, $item2) {
-		if (!isset($item1['position'])) {
+		if (!isset($item1['sort_order'])) {
 			return 1;
 		}
 
-		if (!isset($item2['position'])) {
+		if (!isset($item2['sort_order'])) {
 			return -1;
 		}
 
-		return ($item1['position'] < $item2['position']) ? -1 : 1;
+		return ($item1['sort_order'] < $item2['sort_order']) ? -1 : 1;
 	}
 
-	public function addMenuItem($id, $text, $href='', $parent_id='', $permission=true, $icon='', $position=0) {
+	public function addMenuItem ($id, $text, $href = '', $parent_id = '', $permission = true, $icon = '', $sort_order = 0, $position = 'left') {
 		$new_item = array(
-			'text' => $text,
-			'href' => $href,
+			'text'       => $text,
+			'href'       => $href,
 			'permission' => $permission,
-			'icon' => $icon,
-			'position' => $position
+			'icon'       => $icon,
+			'sort_order' => $sort_order,
+			'position'   => $position
 		);
 
 		if ($parent_id) {
@@ -849,6 +861,23 @@ class ControllerCommonMenu extends Controller {
 			}
 		} else {
 			$this->menu[$id] = $new_item;
+		}
+	}
+	
+	public function removeMenuItem($id, $parent_id = '') {
+		if ($parent_id) {
+			if (isset($this->menu[$parent_id])) {
+				unset($this->menu[$parent_id]['children'][$id]);
+			} else {
+				foreach ($this->menu as $menu_id=>$item) {
+					if (isset($item['children']) && isset($item['children'][$parent_id])) {
+						unset($this->menu[$menu_id]['children'][$parent_id]['children'][$id]);
+						break;
+					}
+				}
+			}
+		} else {
+			unset($this->menu[$id]);
 		}
 	}
 }

@@ -207,6 +207,8 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
+		$data['text_selected'] = $this->language->get('text_selected');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_action'] = $this->language->get('column_action');
@@ -283,6 +285,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_form'] = !isset($this->request->get['order_status_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_publish'] = $this->language->get('text_publish');
 		
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_message'] = $this->language->get('entry_message');

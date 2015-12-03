@@ -236,6 +236,8 @@ class ControllerLocalisationGeoZone extends Controller {
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
+		$data['text_selected'] = $this->language->get('text_selected');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_description'] = $this->language->get('column_description');
@@ -323,6 +325,8 @@ class ControllerLocalisationGeoZone extends Controller {
 		
 		$data['text_form'] = !isset($this->request->get['geo_zone_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
+		$data['text_publish'] = $this->language->get('text_publish');
+		$data['text_items'] = $this->language->get('text_items');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_description'] = $this->language->get('entry_description');

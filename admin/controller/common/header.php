@@ -162,6 +162,28 @@ class ControllerCommonHeader extends Controller {
 				$data['languages'] = '';
 			}
 
+			$this->load->language('user/user');
+
+			$data['entry_theme'] = $this->language->get('entry_theme');
+			// Themes
+			$data['themes'][] = array(
+				'theme'	   => 'advanced',
+				'text'	   => $this->language->get('text_theme_advanced'),
+				'link'	   => $this->url->link($route, 'token=' . $this->session->data['token'].'&theme=advanced', 'SSL')
+			);
+
+			$templates = glob(DIR_ADMIN . 'view/theme/*', GLOB_ONLYDIR);
+
+			foreach ($templates as $template) {
+				$data['themes'][] = array(
+					'theme'	   => basename($template),
+					'text'	   => $this->language->get('text_theme_' . basename($template)),
+					'link'	   => $this->url->link($route, 'token=' . $this->session->data['token'].'&theme=' . basename($template), 'SSL')
+				);
+			}
+			
+			$data['theme'] = $this->session->data['theme'];
+
             $this->load->language('common/menu');
 
             $this->load->model('user/user');

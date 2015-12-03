@@ -14,6 +14,7 @@ $_['text_success']     = 'Success: You have modified weight classes!';
 $_['text_list']        = 'Weight Class List';
 $_['text_add']         = 'Add Weight Class';
 $_['text_edit']        = 'Edit Weight Class';
+$_['text_items'] 	   = 'Items';
 
 // Column
 $_['column_title']     = 'Weight Title';

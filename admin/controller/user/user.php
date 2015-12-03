@@ -452,6 +452,34 @@ class ControllerUserUser extends Controller {
 		} else {
 			$data['email'] = '';
 		}
+		
+		// Params
+		if (!empty($user_info)) {
+			$params = json_decode($user_info['params'], true);
+		}
+
+		if (isset($this->request->post['params']) && isset($this->request->post['params']['theme'])) {
+			$data['use_theme'] = $this->request->post['params']['theme'];
+		} elseif (!empty($user_info)) {
+			$data['use_theme'] = $params['theme'];
+		} else {
+			$data['use_theme'] = 'basic';
+		}
+
+		// Themes
+		$data['themes'][] = array(
+			'theme' => 'advanced',
+			'text'	=> $this->language->get('text_theme_advanced')
+		);
+
+		$themes = glob(DIR_ADMIN . 'view/theme/*', GLOB_ONLYDIR);
+
+		foreach ($themes as $theme) {
+			$data['themes'][] = array(
+				'theme' => basename($theme),
+				'text'  => $this->language->get('text_theme_' . basename($theme))
+			);
+		}		
 
 		if (isset($this->request->post['image'])) {
 			$data['image'] = $this->request->post['image'];
@@ -472,6 +500,7 @@ class ControllerUserUser extends Controller {
 		}
 		
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+
 
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];

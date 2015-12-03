@@ -406,6 +406,16 @@ class ModelCatalogCategory extends Model {
 		}
 	}
 
+	public function updateCategory($category_id, $key, $value) {
+		$this->db->query("UPDATE " . DB_PREFIX . "category SET date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");
+
+		if ($key == 'name') {
+			$this->db->query("UPDATE " . DB_PREFIX . "category_description SET " . $key . " = '" . $this->db->escape($value) . "' WHERE category_id = '" . (int)$category_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		} else {
+			$this->db->query("UPDATE " . DB_PREFIX . "category SET " . $key . " = '" . $this->db->escape($value) . "' WHERE category_id = '" . (int)$category_id . "'");
+		}
+	}
+
 	public function getCategory($category_id) {
 		$query = $this->db->query("SELECT DISTINCT *, (SELECT GROUP_CONCAT(cd1.name ORDER BY level SEPARATOR '&nbsp;&nbsp;&gt;&nbsp;&nbsp;') FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "category_description cd1 ON (cp.path_id = cd1.category_id AND cp.category_id != cp.path_id) WHERE cp.category_id = c.category_id AND cd1.language_id = '" . (int)$this->config->get('config_language_id') . "' GROUP BY cp.category_id) AS path FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd2 ON (c.category_id = cd2.category_id) WHERE c.category_id = '" . (int)$category_id . "' AND cd2.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 

@@ -462,6 +462,12 @@ class ControllerCatalogManufacturer extends Controller {
             $data['status'] = true;
         }
 
+		foreach ($data['languages'] as $language) {
+			$data['preview'][$language['language_id']] = $this->getSeoLink($this->request->get['manufacturer_id'], $language['code']);
+		}
+
+		$data['manufacturer_id'] = isset($this->request->get['manufacturer_id']) ? $this->request->get['manufacturer_id'] : 0;
+
         $this->load->model('appearance/layout');
 
         $data['layouts'] = $this->model_appearance_layout->getLayouts();
@@ -551,5 +557,58 @@ class ControllerCatalogManufacturer extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function inline() {
+		$json = array();
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateInline()) {
+			$this->load->model('catalog/manufacturer');
+			
+			if (isset($this->request->post['seo_url'])) {
+				$this->load->model('catalog/url_alias');
+
+				$this->model_catalog_url_alias->addAlias('manufacturer', $this->request->get['manufacturer_id'], $this->request->post['seo_url'], $this->request->post['language_id']);
+				$json['language_id'] = $this->request->post['language_id'];
+			} else {
+				foreach ($this->request->post as $key => $value) {
+					$this->model_catalog_manufacturer->updateManufacturer($this->request->get['manufacturer_id'], $key, $value);
+				}
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	protected function validateInline() {
+		if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!isset($this->request->post['name']) && !isset($this->request->post['status']) && !isset($this->request->post['seo_url'])) {
+			$this->error['warning'] = $this->language->get('error_inline_field');
+		}
+
+		return !$this->error;
+	}
+
+	public function getSeoLink($manufacturer_id, $language_code) {
+		// Change the client
+		Client::setName('catalog');
+		$app = new Catalog();
+		$app->initialise();
+		$app->ecommerce();
+		$app->route();
+
+		$site_url = $app->url->link('product/manufacturer/info', 'manufacturer_id=' . $manufacturer_id . '&lang=' . $language_code, 'SSL');
+
+		$admin_folder = str_replace(DIR_ROOT, '', DIR_ADMIN);
+
+		$seo_url = str_replace($admin_folder, '', $site_url);
+		// Return back to admin
+		Client::setName('admin');
+
+		return $seo_url;
 	}
 }

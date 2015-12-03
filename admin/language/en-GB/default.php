@@ -33,6 +33,9 @@ $_['text_loading']                  = 'Loading...';
 $_['text_no_results']               = 'No results!';
 $_['text_confirm']                  = 'Are you sure?';
 $_['text_home']                     = 'Home';
+$_['text_bulk_action']       		= 'Bulk Action';
+$_['text_selected']  				= 'Selected';
+$_['text_publish']           		= 'Publish';
 
 // Column
 $_['column_status']       		    = 'Status';

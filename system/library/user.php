@@ -12,6 +12,8 @@ class User extends Object {
     protected $username;
     protected $email;
     protected $user_group_id;
+    protected $theme;
+    protected $params;
     protected $permission = array();
 
     protected $db;
@@ -36,6 +38,15 @@ class User extends Object {
 				$this->email = $user_query->row['email'];
 				$this->user_group_id = $user_query->row['user_group_id'];
 
+				$params = json_decode($user_query->row['params'], true);
+
+				if (!isset($this->session->data['theme'])) {
+					$this->session->data['theme'] = !empty($params['theme']) ? $params['theme'] : 'basic';
+				}
+				
+				$this->theme = !empty($params['theme']) ? $params['theme'] : 'basic';
+				$this->params = $params;
+
 				$this->db->query("UPDATE " . DB_PREFIX . "user SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE user_id = '" . (int)$this->session->data['user_id'] . "'");
 
 				$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
@@ -59,10 +70,16 @@ class User extends Object {
 		if ($user_query->num_rows) {
 			$this->session->data['user_id'] = $user_query->row['user_id'];
 
+			$params = json_decode($user_query->row['params'], true);
+
+			$this->session->data['theme'] = !empty($params['theme']) ? $params['theme'] : 'basic';
+
 			$this->user_id = $user_query->row['user_id'];
 			$this->username = $user_query->row['username'];
             $this->email = $user_query->row['email'];
 			$this->user_group_id = $user_query->row['user_group_id'];
+			$this->theme = !empty($params['theme']) ? $params['theme'] : 'basic';
+			$this->params = $params;
 
 			$user_group_query = $this->db->query("SELECT permission FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
 
@@ -82,10 +99,13 @@ class User extends Object {
 
 	public function logout() {
 		unset($this->session->data['user_id']);
+		unset($this->session->data['theme']);
 
 		$this->user_id = '';
 		$this->username = '';
 		$this->email = '';
+		$this->theme = '';
+		$this->params = '';
 	}
 
 	public function hasPermission($key, $value) {
@@ -122,5 +142,13 @@ class User extends Object {
 	
 	public function getGroupId() {
 		return $this->user_group_id;
-	}	
+	}
+
+	public function getTheme() {
+		return $this->theme;
+	}
+	
+	public function getParams() {
+		return $this->params;
+	}
 }

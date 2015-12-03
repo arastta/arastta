@@ -257,6 +257,9 @@ class ControllerCatalogCategory extends Controller {
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_select'] = $this->language->get('text_select');
+		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
+		$data['text_selected'] = $this->language->get('text_selected');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
@@ -585,6 +588,12 @@ class ControllerCatalogCategory extends Controller {
 		if (isset($this->request->get['category_id'])) { 
 			$data['menu_name_override'] = '1';
 		}
+
+		foreach ($data['languages'] as $language) {
+			$data['preview'][$language['language_id']] = $this->getSeoLink($this->request->get['category_id'], $language['code']);
+		}
+		
+		$data['category_id'] = isset($this->request->get['category_id']) ? $this->request->get['category_id'] : 0;
 			
 		$this->load->model('appearance/layout');
 
@@ -687,5 +696,58 @@ class ControllerCatalogCategory extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	public function inline() {
+		$json = array();
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateInline()) {
+			$this->load->model('catalog/category');
+
+			if (isset($this->request->post['seo_url'])) {
+				$this->load->model('catalog/url_alias');
+
+				$this->model_catalog_url_alias->addAlias('category', $this->request->get['category_id'], $this->request->post['seo_url'], $this->request->post['language_id']);
+				$json['language_id'] = $this->request->post['language_id'];
+			} else {
+				foreach ($this->request->post as $key => $value) {
+					$this->model_catalog_category->updateCategory($this->request->get['category_id'], $key, $value);
+				}
+			}
+		}		
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	protected function validateInline() {
+		if (!$this->user->hasPermission('modify', 'catalog/category')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!isset($this->request->post['name']) && !isset($this->request->post['status']) && !isset($this->request->post['seo_url'])) {
+			$this->error['warning'] = $this->language->get('error_inline_field');
+		}
+
+		return !$this->error;
+	}
+
+	public function getSeoLink($category_id, $language_code) {
+		// Change the client
+		Client::setName('catalog');
+		$app = new Catalog();
+		$app->initialise();
+		$app->ecommerce();
+		$app->route();
+
+		$site_url = $app->url->link('product/category', 'path=' . $category_id . '&lang=' . $language_code, 'SSL');
+
+		$admin_folder = str_replace(DIR_ROOT, '', DIR_ADMIN);
+
+		$seo_url = str_replace($admin_folder, '', $site_url);
+		// Return back to admin
+		Client::setName('admin');
+
+		return $seo_url;
 	}
 }

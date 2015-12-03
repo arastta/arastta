@@ -14,6 +14,7 @@ $_['text_success']       = 'Success: You have modified geo zones!';
 $_['text_list']          = 'Geo Zone List';
 $_['text_add']           = 'Add Geo Zone';
 $_['text_edit']          = 'Edit Geo Zone';
+$_['text_items']   		 = 'Items';
 
 // Column
 $_['column_name']        = 'Geo Zone Name';

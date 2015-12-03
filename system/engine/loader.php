@@ -29,7 +29,7 @@ final class Loader {
 
 		$ret = $action->execute($this->registry);
 
-        $this->trigger->fire('post.load.controller', array(&$ret));
+        $this->trigger->fire('post.load.controller', array(&$route, &$ret));
 
         return $ret;
     }
@@ -56,6 +56,12 @@ final class Loader {
 
 	public function view($template, $data = array()) {
         $theme_dir = Client::isCatalog() ? 'theme' : 'template';
+		
+		if (Client::isAdmin() && isset($this->session->data['theme']) && $this->session->data['theme'] != 'advanced') {
+			if (file_exists(Client::getDir() . 'view/theme/' . $this->session->data['theme'] . '/template/' . $template)) {
+				$theme_dir = 'theme/' . $this->session->data['theme'] . '/template';
+			}
+		}
 
         $file = Client::getDir() . 'view/' . $theme_dir . '/' . $template;
 

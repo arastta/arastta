@@ -522,6 +522,8 @@ class ControllerExtensionModification extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_refresh'] = $this->language->get('text_refresh');
+		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
+		$data['text_selected_modification'] = $this->language->get('text_selected_modification');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_author'] = $this->language->get('column_author');
