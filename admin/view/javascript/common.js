@@ -635,9 +635,11 @@ $(document).ready(function() {
 	// Basic mode
 	$(document).on('click', '.ba-message .close', function() {
 		$.ajax({
-			url: 'index.php?route=user/user/hide&message=basic_mode_message=hide&token=' +  getURLVar('token') + '&user_id=' + getURLVar('user_id'),
+			url: 'index.php?route=user/user/hide&basic_mode_message=hide&token=' +  getURLVar('token') + '&user_id=' + getURLVar('user_id'),
 			dataType: 'json',
-			success: function(json) {}
+			success: function(json) {
+				$('.ba-message').remove();
+			}
 		});
 	});
 });

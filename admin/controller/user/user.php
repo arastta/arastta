@@ -693,7 +693,9 @@ class ControllerUserUser extends Controller {
 
 			$data['basic_mode_message'] = $this->request->get['basic_mode_message'];
 
-			$this->model_user_user_editUserParams($this->request->get['user_id'], $data);
+			$user_id = !empty($this->request->get['user_id']) ? $this->request->get['user_id'] : $this->user->getId();
+
+			$this->model_user_user->editUserParams($user_id, $data);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
