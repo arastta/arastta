@@ -15,6 +15,7 @@ $_['text_list']              = 'Category List';
 $_['text_add']               = 'Add Category';
 $_['text_edit']              = 'Edit Category';
 $_['text_default']           = 'Default';
+$_['text_preview']           = 'View Category';
 
 // Column
 $_['column_name']            = 'Category Name';

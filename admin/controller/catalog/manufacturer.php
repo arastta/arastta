@@ -462,11 +462,11 @@ class ControllerCatalogManufacturer extends Controller {
             $data['status'] = true;
         }
 
-		foreach ($data['languages'] as $language) {
-			$data['preview'][$language['language_id']] = $this->getSeoLink($this->request->get['manufacturer_id'], $language['code']);
-		}
-
 		$data['manufacturer_id'] = isset($this->request->get['manufacturer_id']) ? $this->request->get['manufacturer_id'] : 0;
+
+		foreach ($data['languages'] as $language) {
+			$data['preview'][$language['language_id']] = $this->getSeoLink($data['manufacturer_id'], $language['code']);
+		}
 
         $this->load->model('appearance/layout');
 

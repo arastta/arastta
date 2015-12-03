@@ -449,11 +449,11 @@ class ControllerCatalogInformation extends Controller {
 			$data['information_layout'] = array();
 		}
 
+		$data['information_id'] = isset($this->request->get['information_id']) ? $this->request->get['information_id'] : 0;
+		
 		foreach ($data['languages'] as $language) {
-			$data['preview'][$language['language_id']] = $this->getSeoLink($this->request->get['information_id'], $language['code']);
+			$data['preview'][$language['language_id']] = $this->getSeoLink($data['information_id'], $language['code']);
 		}
-
-		$data['information_id'] = $this->request->get['information_id'];
 
 		$this->load->model('appearance/layout');
 

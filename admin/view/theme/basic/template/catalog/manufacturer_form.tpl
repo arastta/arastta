@@ -54,7 +54,7 @@
 									<div class="col-sm-10" style="padding-top: 5px;">
 									  <span>
 										<?php $link = str_replace(basename($preview[$language['language_id']]), '', $preview[$language['language_id']]);
-										echo $link; ?><span class="seo-url" data-lang="<?php echo $language['language_id']; ?> "><?php echo $seo_url[$language['language_id']]; ?></span>
+											echo $link; ?><span class="seo-url" data-lang="<?php echo $language['language_id']; ?> "><?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?></span>
 									  </span>
 									  <input type="hidden" name="seo_url[<?php echo $language['language_id']; ?>]" value="<?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?>" placeholder="<?php echo $entry_seo_url; ?>" id="input-seo-url-<?php echo $language['language_id']; ?>" class="form-control" />
 									  <div class="pull-right">

@@ -1155,7 +1155,6 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 	position: fixed;
 	top: 9%;
 	left: 240px;
-	right: 30px;
 	bottom: 3%;
 	background: #fff;
 	-webkit-box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);

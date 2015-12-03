@@ -1263,11 +1263,12 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_layout'] = array();
 		}
 
+		$data['product_id'] = isset($this->request->get['product_id']) ? $this->request->get['product_id'] : 0;
+		
 		foreach ($data['languages'] as $language) {
-			$data['preview'][$language['language_id']] = $this->getSeoLink($this->request->get['product_id'], $language['code']);
+			$data['preview'][$language['language_id']] = $this->getSeoLink($data['product_id'], $language['code']);
 		}
-
-		$data['product_id'] = $this->request->get['product_id'];
+		
 		$data['language_code'] = $this->config->get('config_admin_language');
 
 		$this->load->model('appearance/layout');
