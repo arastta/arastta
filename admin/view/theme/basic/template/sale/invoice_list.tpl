@@ -132,9 +132,9 @@
                 <?php foreach ($invoices as $invoice) { ?>
                 <tr>
                   <td class="text-right">
-					<a href="<?php echo $invoice['info']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
-                    <a href="<?php echo $invoice['email']; ?>" data-toggle="tooltip" title="<?php echo $button_email; ?>" class="btn btn-success"><i class="fa fa-envelope"></i></a>
-                    <a href="<?php echo $invoice['pdf']; ?>" data-toggle="tooltip" title="<?php echo $button_pdf; ?>" class="btn btn-warning"><i class="fa fa-file-pdf-o"></i></a>
+					<a href="<?php echo $invoice['info']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>"><i class="fa fa-eye"></i></a>
+                    <a href="<?php echo $invoice['email']; ?>" data-toggle="tooltip" title="<?php echo $button_email; ?>"><i class="fa fa-envelope"></i></a>
+                    <a href="<?php echo $invoice['pdf']; ?>" data-toggle="tooltip" title="<?php echo $button_pdf; ?>"><i class="fa fa-file-pdf-o"></i></a>
 					<?php echo $invoice['invoice_number']; ?></td>
                   <td class="text-left"><?php echo $invoice['invoice_date']; ?></td>
                   <td class="text-right"><?php echo $invoice['order_id']; ?></td>

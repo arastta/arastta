@@ -53,8 +53,8 @@
 										<label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><?php echo $entry_seo_url; ?></span></label>
 										<div class="col-sm-10" style="padding-top: 5px;">
 										    <span>
-												<?php $link = str_replace($seo_url[$language['language_id']], '', $preview[$language['language_id']]);
-												echo $link; ?><span class="seo-url" data-lang="<?php echo $language['language_id']; ?> "><?php echo $seo_url[$language['language_id']]; ?></span>
+												<?php $link = str_replace(basename($preview[$language['language_id']]), '', $preview[$language['language_id']]);
+													echo $link; ?><span class="seo-url" data-lang="<?php echo $language['language_id']; ?> "><?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?></span>
 										    </span>
 										    <input type="hidden" name="seo_url[<?php echo $language['language_id']; ?>]" value="<?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?>" placeholder="<?php echo $entry_seo_url; ?>" id="input-seo-url-<?php echo $language['language_id']; ?>" class="form-control" />
 											<div class="pull-right">
@@ -158,7 +158,7 @@
 								<legend><?php echo $entry_shipping_group; ?></legend>
 								<div class="form-group required">
 									<label class="col-sm-3 col-md-2 control-label" for="input-weight"><?php echo $entry_weight; ?></label>
-									<div class="col-sm-9 col-md-10">
+									<div class="col-sm-9 col-md-4">
 										<div class="input-group price">
 											<input type="text" name="weight" value="<?php echo $weight; ?>" placeholder="<?php echo $entry_weight; ?>" id="input-weight" class="form-control" />
 											<select name="weight_class_id" id="input-weight-class" class="form-control">
@@ -172,10 +172,8 @@
 											</select>
 										</div>
 									</div>
-								</div>
-								<div class="form-group">
 									<label class="col-sm-3 col-md-2 control-label"><?php echo $entry_shipping; ?></label>
-									<div class="col-sm-9 col-md-10">
+									<div class="col-sm-9 col-md-4">
 										<label class="radio-inline">
 											<?php if ($shipping) { ?>
 											<input type="radio" name="shipping" value="1" checked="checked" />
@@ -521,70 +519,70 @@
 					</div>
                 </div>
             </div>
-					<input type="hidden" name="sku" value="<?php echo $sku; ?>" placeholder="<?php echo $entry_sku; ?>" id="input-sku" class="form-control" />
-					<input type="hidden" name="upc" value="<?php echo $upc; ?>" placeholder="<?php echo $entry_upc; ?>" id="input-upc" class="form-control" />
-					<input type="hidden" name="ean" value="<?php echo $ean; ?>" placeholder="<?php echo $entry_ean; ?>" id="input-ean" class="form-control" />
-					<input type="hidden" name="jan" value="<?php echo $jan; ?>" placeholder="<?php echo $entry_jan; ?>" id="input-jan" class="form-control" />
-					<input type="hidden" name="isbn" value="<?php echo $isbn; ?>" placeholder="<?php echo $entry_isbn; ?>" id="input-isbn" class="form-control" />
-					<input type="hidden" name="mpn" value="<?php echo $mpn; ?>" placeholder="<?php echo $entry_mpn; ?>" id="input-mpn" class="form-control" />
-					<input type="hidden" name="location" value="<?php echo $location; ?>" placeholder="<?php echo $entry_location; ?>" id="input-location" class="form-control" />
-					<input type="hidden" name="minimum" value="<?php echo $minimum; ?>" placeholder="<?php echo $entry_minimum; ?>" id="input-minimum" class="form-control" />
-					<select name="subtract" id="input-subtract" class="form-control hidden">
-						<?php if ($subtract) { ?>
-						<option value="1" selected="selected"><?php echo $text_yes; ?></option>
-						<option value="0"><?php echo $text_no; ?></option>
-						<?php } else { ?>
-						<option value="1"><?php echo $text_yes; ?></option>
-						<option value="0" selected="selected"><?php echo $text_no; ?></option>
-						<?php } ?>
-					</select>
-					<input type="hidden" name="length" value="<?php echo $length; ?>" placeholder="<?php echo $entry_length; ?>" id="input-length" class="form-control" />
-					<input type="hidden" name="width" value="<?php echo $width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-width" class="form-control" />
-					<input type="hidden" name="height" value="<?php echo $height; ?>" placeholder="<?php echo $entry_height; ?>" id="input-height" class="form-control" />
-					<select name="length_class_id" id="input-length-class" class="form-control hidden">
-						<?php foreach ($length_classes as $length_class) { ?>
-						<?php if ($length_class['length_class_id'] == $length_class_id) { ?>
-						<option value="<?php echo $length_class['length_class_id']; ?>" selected="selected"><?php echo $length_class['title']; ?></option>
-						<?php } else { ?>
-						<option value="<?php echo $length_class['length_class_id']; ?>"><?php echo $length_class['title']; ?></option>
-						<?php } ?>
-						<?php } ?>
-					</select>
-					<input type="hidden" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
-					<?php foreach ($languages as $language) { ?>
-						<input type="hidden" name="product_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($product_description[$language['language_id']]['meta_title']) ? $product_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control" />
-						<textarea name="product_description[<?php echo $language['language_id']; ?>][meta_description]" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control hidden"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
-						<textarea name="product_description[<?php echo $language['language_id']; ?>][meta_keyword]" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control hidden"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
-					<?php } ?>
-					<?php foreach ($product_filters as $product_filter) { ?>
-						<input type="hidden" name="product_filter[]" value="<?php echo $product_filter['filter_id']; ?>" />
-					<?php } ?>
-					<?php if (in_array(0, $product_store)) { ?>
-					<input type="hidden" name="product_store[]" value="0" checked="checked" />
+			<input type="hidden" name="sku" value="<?php echo $sku; ?>" placeholder="<?php echo $entry_sku; ?>" id="input-sku" class="form-control" />
+			<input type="hidden" name="upc" value="<?php echo $upc; ?>" placeholder="<?php echo $entry_upc; ?>" id="input-upc" class="form-control" />
+			<input type="hidden" name="ean" value="<?php echo $ean; ?>" placeholder="<?php echo $entry_ean; ?>" id="input-ean" class="form-control" />
+			<input type="hidden" name="jan" value="<?php echo $jan; ?>" placeholder="<?php echo $entry_jan; ?>" id="input-jan" class="form-control" />
+			<input type="hidden" name="isbn" value="<?php echo $isbn; ?>" placeholder="<?php echo $entry_isbn; ?>" id="input-isbn" class="form-control" />
+			<input type="hidden" name="mpn" value="<?php echo $mpn; ?>" placeholder="<?php echo $entry_mpn; ?>" id="input-mpn" class="form-control" />
+			<input type="hidden" name="location" value="<?php echo $location; ?>" placeholder="<?php echo $entry_location; ?>" id="input-location" class="form-control" />
+			<input type="hidden" name="minimum" value="<?php echo $minimum; ?>" placeholder="<?php echo $entry_minimum; ?>" id="input-minimum" class="form-control" />
+			<select name="subtract" id="input-subtract" class="form-control hidden">
+				<?php if ($subtract) { ?>
+				<option value="1" selected="selected"><?php echo $text_yes; ?></option>
+				<option value="0"><?php echo $text_no; ?></option>
+				<?php } else { ?>
+				<option value="1"><?php echo $text_yes; ?></option>
+				<option value="0" selected="selected"><?php echo $text_no; ?></option>
+				<?php } ?>
+			</select>
+			<input type="hidden" name="length" value="<?php echo $length; ?>" placeholder="<?php echo $entry_length; ?>" id="input-length" class="form-control" />
+			<input type="hidden" name="width" value="<?php echo $width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-width" class="form-control" />
+			<input type="hidden" name="height" value="<?php echo $height; ?>" placeholder="<?php echo $entry_height; ?>" id="input-height" class="form-control" />
+			<select name="length_class_id" id="input-length-class" class="form-control hidden">
+				<?php foreach ($length_classes as $length_class) { ?>
+				<?php if ($length_class['length_class_id'] == $length_class_id) { ?>
+				<option value="<?php echo $length_class['length_class_id']; ?>" selected="selected"><?php echo $length_class['title']; ?></option>
+				<?php } else { ?>
+				<option value="<?php echo $length_class['length_class_id']; ?>"><?php echo $length_class['title']; ?></option>
+				<?php } ?>
+				<?php } ?>
+			</select>
+			<input type="hidden" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+			<?php foreach ($languages as $language) { ?>
+				<input type="hidden" name="product_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($product_description[$language['language_id']]['meta_title']) ? $product_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control" />
+				<textarea name="product_description[<?php echo $language['language_id']; ?>][meta_description]" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control hidden"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
+				<textarea name="product_description[<?php echo $language['language_id']; ?>][meta_keyword]" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control hidden"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
+			<?php } ?>
+			<?php foreach ($product_filters as $product_filter) { ?>
+				<input type="hidden" name="product_filter[]" value="<?php echo $product_filter['filter_id']; ?>" />
+			<?php } ?>
+			<?php if (in_array(0, $product_store)) { ?>
+			<input type="hidden" name="product_store[]" value="0" checked="checked" />
+			<?php } else { ?>
+			<input type="hidden" name="product_store[]" value="0" />
+			<?php } ?>
+			<?php foreach ($stores as $store) { ?>
+					<?php if (in_array($store['store_id'], $product_store)) { ?>
+					<input type="hidden" name="product_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
 					<?php } else { ?>
-					<input type="hidden" name="product_store[]" value="0" />
+					<input type="hidden" name="product_store[]" value="<?php echo $store['store_id']; ?>" />
 					<?php } ?>
-					<?php foreach ($stores as $store) { ?>
-							<?php if (in_array($store['store_id'], $product_store)) { ?>
-							<input type="hidden" name="product_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-							<?php } else { ?>
-							<input type="hidden" name="product_store[]" value="<?php echo $store['store_id']; ?>" />
-							<?php } ?>
-					<?php } ?>
-					<?php foreach ($product_downloads as $product_download) { ?>
-						<input type="hidden" name="product_download[]" value="<?php echo $product_download['download_id']; ?>" />
-					<?php } ?>
-					<?php foreach ($product_relateds as $product_related) { ?>
-						<input type="hidden" name="product_related[]" value="<?php echo $product_related['product_id']; ?>" />
-					<?php } ?>
-					<?php $image_row = 0; ?>
-					<?php foreach ($product_images as $product_image) { ?>
-					<input type="hidden" name="product_image[<?php echo $image_row; ?>][image]" value="<?php echo $product_image['image']; ?>" id="input-image<?php echo $image_row; ?>" />
-					<input type="hidden" name="product_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $product_image['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" />
-					</tr>
-					<?php $image_row++; ?>
-					<?php } ?>
-				</form>
+			<?php } ?>
+			<?php foreach ($product_downloads as $product_download) { ?>
+				<input type="hidden" name="product_download[]" value="<?php echo $product_download['download_id']; ?>" />
+			<?php } ?>
+			<?php foreach ($product_relateds as $product_related) { ?>
+				<input type="hidden" name="product_related[]" value="<?php echo $product_related['product_id']; ?>" />
+			<?php } ?>
+			<?php $image_row = 0; ?>
+			<?php foreach ($product_images as $product_image) { ?>
+			<input type="hidden" name="product_image[<?php echo $image_row; ?>][image]" value="<?php echo $product_image['image']; ?>" id="input-image<?php echo $image_row; ?>" />
+			<input type="hidden" name="product_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $product_image['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" />
+			</tr>
+			<?php $image_row++; ?>
+			<?php } ?>
+		</form>
     </div>
 	<style>
 		#thumb-image img {
@@ -977,36 +975,35 @@
         form.submit();
     }
     //--></script>
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$("#input-image-addon").fileinput({
-					allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
-					uploadUrl: "index.php?route=catalog/product/uploads&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>",
-					uploadAsync: true,
-					overwriteInitial: false,
-					initialPreview: [
-					<?php foreach ($product_images as $product_image) { ?>
-						"<img src='<?php echo $product_image['thumb']; ?>' data-code='<?php echo $product_image['image']; ?>'/>",
-					<?php } ?>
-					],
-					initialPreviewConfig: [
-					<?php foreach ($product_images as $product_image) { ?>
-						<?php $name = explode('/', $product_image['image']); ?>
-						{caption: "<?php echo $name[1]; ?>", url: "index.php?route=catalog/product/deleteImage&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>&image=<?php echo $product_image['image'] ; ?>", key: <?php echo $product_image['sort_order']; ?>},
-					<?php } ?>
-					]
-				});
-				$("#input-image-addon").on("filepredelete", function(jqXHR) {
-					var abort = true;
-					if (confirm("Are you sure you want to delete this image?")) {
-						abort = false;
-					}
-					return abort; // you can also send any data/object that you can receive on `filecustomerror` event
-				});
-
-				BasicImage.init();
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#input-image-addon").fileinput({
+				allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
+				uploadUrl: "index.php?route=catalog/product/uploads&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>",
+				uploadAsync: true,
+				overwriteInitial: false,
+				initialPreview: [
+				<?php foreach ($product_images as $product_image) { ?>
+					"<img src='<?php echo $product_image['thumb']; ?>' data-code='<?php echo $product_image['image']; ?>'/>",
+				<?php } ?>
+				],
+				initialPreviewConfig: [
+				<?php foreach ($product_images as $product_image) { ?>
+					{caption: "<?php echo basename($product_image['image']); ?>", url: "index.php?route=catalog/product/deleteImage&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>&image=<?php echo $product_image['image'] ; ?>", key: <?php echo $product_image['sort_order']; ?>},
+				<?php } ?>
+				]
 			});
-		</script>
+			$("#input-image-addon").on("filepredelete", function(jqXHR) {
+				var abort = true;
+				if (confirm("<?php echo $text_delete_image; ?>")) {
+					abort = false;
+				}
+				return abort; // you can also send any data/object that you can receive on `filecustomerror` event
+			});
+
+			BasicImage.init();
+		});
+	</script>
 <?php echo $footer; ?>
 <link href="view/javascript/jquery/layout/jquery-ui.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="view/javascript/jquery/layout/jquery-ui.js" ></script>

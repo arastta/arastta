@@ -42,7 +42,7 @@ var BasicImage = function() {
                     var image_full_path = $(ev['draggable']).children('img').prop('src');
                     var image = $(ev['draggable']).children('img').attr('data-code');
 
-                    var html  = '<a href="" id="thumb-image" data-toggle="image" class="img-thumbnail">';
+                    var html  = '<a href="" id="thumb-image" data-toggle="image" class="img-thumbnail" style="display: inherit;">';
                         html += '   <img src="' + image_full_path + '" alt="" title="" data-placeholder="' + image_full_path + '" />';
                         html += '</a>';
                         html += '<input type="hidden" name="image" value="' + image + '" id="input-image" />';

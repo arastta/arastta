@@ -589,11 +589,11 @@ class ControllerCatalogCategory extends Controller {
 			$data['menu_name_override'] = '1';
 		}
 
-		foreach ($data['languages'] as $language) {
-			$data['preview'][$language['language_id']] = $this->getSeoLink($this->request->get['category_id'], $language['code']);
-		}
-		
 		$data['category_id'] = isset($this->request->get['category_id']) ? $this->request->get['category_id'] : 0;
+
+		foreach ($data['languages'] as $language) {
+			$data['preview'][$language['language_id']] = $this->getSeoLink($data['category_id'], $language['code']);
+		}
 			
 		$this->load->model('appearance/layout');
 

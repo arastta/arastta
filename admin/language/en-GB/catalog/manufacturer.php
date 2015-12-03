@@ -17,6 +17,7 @@ $_['text_edit']             = 'Edit Manufacturer';
 $_['text_default']          = 'Default';
 $_['text_percent']          = 'Percentage';
 $_['text_amount']           = 'Fixed Amount';
+$_['text_preview']          = 'View Manufacturer';
 
 // Column
 $_['column_name']           = 'Manufacturer Name';

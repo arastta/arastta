@@ -22,6 +22,7 @@ $_['text_option_value']      = 'Option Value';
 $_['text_percent']           = 'Percentage';
 $_['text_amount']            = 'Fixed Amount';
 $_['text_preview']           = 'View Product';
+$_['text_delete_image']      = 'Are you sure you want to delete this image?';
 
 // Column
 $_['column_name']            = 'Name';
