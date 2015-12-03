@@ -165,11 +165,12 @@ class ControllerCommonHeader extends Controller {
 			$this->load->language('user/user');
 
 			$data['entry_theme'] = $this->language->get('entry_theme');
+
 			// Themes
 			$data['themes'][] = array(
 				'theme'	   => 'advanced',
 				'text'	   => $this->language->get('text_theme_advanced'),
-				'link'	   => $this->url->link($route, 'token=' . $this->session->data['token'].'&theme=advanced', 'SSL')
+				'link'	   => $this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'].'&theme=advanced', 'SSL')
 			);
 
 			$templates = glob(DIR_ADMIN . 'view/theme/*', GLOB_ONLYDIR);
@@ -178,7 +179,7 @@ class ControllerCommonHeader extends Controller {
 				$data['themes'][] = array(
 					'theme'	   => basename($template),
 					'text'	   => $this->language->get('text_theme_' . basename($template)),
-					'link'	   => $this->url->link($route, 'token=' . $this->session->data['token'].'&theme=' . basename($template), 'SSL')
+					'link'	   => $this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'].'&theme=' . basename($template), 'SSL')
 				);
 			}
 			
