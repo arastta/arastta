@@ -897,7 +897,7 @@ h2.price {
 	white-space:nowrap;
 }
 
-#content .row .col-sm-12  {
+#content.col-sm-9 .row .col-sm-12  {
     margin: 0;
     padding: 0;
 }

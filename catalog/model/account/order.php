@@ -175,4 +175,10 @@ class ModelAccountOrder extends Model {
 
 		return $query->row['total'];
 	}
+
+	public function getOrderInvoice($order_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "invoice WHERE order_id = '" . (int)$order_id . "'");
+
+		return $query->row;
+	}
 }

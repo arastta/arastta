@@ -331,6 +331,38 @@ class ModelCheckoutOrder extends Model {
                         $this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
                     }
                 }
+				
+				// Send out of stock email to admin
+				if ($this->config->get('config_stock_mail')) {
+					$stock_query = $this->db->query("SELECT COUNT(DISTINCT product_id) AS total FROM " . DB_PREFIX . "product WHERE quantity < 1");
+					$outofstock = $stock_query->row['total'];
+					
+					if ($outofstock > 0) {
+						$stock_data = array('outofstock' => $outofstock);
+						
+						$subject = $this->emailtemplate->getSubject('Stock', 'stock_1', $stock_data);
+						$message = $this->emailtemplate->getMessage('Stock', 'stock_1', $stock_data);
+
+						$mail = new Mail($this->config->get('config_mail'));
+						$mail->setFrom($this->config->get('config_email'));
+						$mail->setSender($this->config->get('config_name'));
+						$mail->setTo($this->config->get('config_email'));
+						$mail->setSubject($subject);
+						$mail->setHtml(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+						$mail->send();
+						
+						if ($this->config->get('config_alert_emails')) {
+							$emails = explode(',', $this->config->get('config_alert_emails'));
+							
+							foreach ($emails as $email) {
+								if ($email && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
+									$mail->setTo($email);
+									$mail->send();
+								}
+							}
+						}
+					}
+				}
 
                 // Redeem coupon, vouchers and reward points
                 $order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");

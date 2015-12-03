@@ -60,6 +60,7 @@ class ControllerCommonMenu extends Controller {
 		
 		#Marketplace permissions
         $p_return_marketplace = $this->user->hasPermission('access','extension/marketplace');
+		
 		#System permissions
 		$p_return_setting = $this->user->hasPermission('access','setting/setting');
 		$p_return_setting_store = $this->user->hasPermission('access','setting/store');
@@ -550,31 +551,31 @@ class ControllerCommonMenu extends Controller {
 			'modification' => array(
 				'text' => $data['text_modification'],
 				'href' => $this->url->link('extension/modification', 'token=' . $this->session->data['token'], 'SSL'),
-				'position' => 1,
+				'sort_order' => 1,
 				'permission' => $p_return_modification
 			),
 			'payment' => array(
 				'text' => $data['text_payment'],
 				'href' => $this->url->link('extension/extension', 'filter_type=payment&token=' . $this->session->data['token'], 'SSL'),
-				'sort_order' => 1,
+				'sort_order' => 2,
 				'permission' => $p_return_payment
 			),
 			'shipping' => array(
 				'text' => $data['text_shipping'],
 				'href' => $this->url->link('extension/extension', 'filter_type=shipping&token=' . $this->session->data['token'], 'SSL'),
-				'sort_order' => 2,
+				'sort_order' => 3,
 				'permission' => $p_return_shipping
 			),
 			'order_total' => array(
 				'text' => $data['text_total'],
 				'href' => $this->url->link('extension/extension', 'filter_type=total&token=' . $this->session->data['token'], 'SSL'),
-				'sort_order' => 3,
+				'sort_order' => 4,
 				'permission' => $p_return_total
 			),
 			'all' => array(
 				'text' => $data['text_all'],
 				'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'], 'SSL'),
-				'sort_order' => 4,
+				'sort_order' => 5,
 				'permission' => $p_return_extension
 			)
 		);
@@ -608,7 +609,7 @@ class ControllerCommonMenu extends Controller {
 			'all' => array(
 				'text' => $data['text_all'],
 				'href' => $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'], 'SSL'),
-				'sort_order' => 4,
+				'sort_order' => 5,
 				'permission' => $p_return_marketplace
 			)
 		);
@@ -862,6 +863,7 @@ class ControllerCommonMenu extends Controller {
 			$this->menu[$id] = $new_item;
 		}
 	}
+	
 	public function removeMenuItem($id, $parent_id = '') {
 		if ($parent_id) {
 			if (isset($this->menu[$parent_id])) {

@@ -6,6 +6,8 @@
  * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
+use Symfony\Component\Finder\Finder as SFinder;
+
 class ControllerExtensionInstaller extends Controller {
 
 	private $error = array();
@@ -13,33 +15,9 @@ class ControllerExtensionInstaller extends Controller {
 	public function index() {
 		$this->load->language('extension/installer');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+        $data = $this->language->all();
 
-		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['entry_upload'] = $this->language->get('entry_upload');
-		$data['entry_overwrite'] = $this->language->get('entry_overwrite');
-		$data['entry_progress'] = $this->language->get('entry_progress');
-
-		$data['help_upload'] = $this->language->get('help_upload');
-
-		$data['button_upload'] = $this->language->get('button_upload');
-		$data['button_clear'] = $this->language->get('button_clear');
-		$data['button_continue'] = $this->language->get('button_continue');
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], 'SSL')
-		);
+		$this->document->setTitle($data['heading_title']);
 
 		$data['token'] = $this->session->data['token'];
 
@@ -319,7 +297,9 @@ class ControllerExtensionInstaller extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function permissionControl($edit_page_url){
+	public function permissionControl($edit_page_url) {
+        $this->load->model('extension/installer');
+
         $search_page = array(
             'appearance' 			=> 'appearance',
             'catalog' 			    => 'catalog',
@@ -346,31 +326,15 @@ class ControllerExtensionInstaller extends Controller {
         );
 
         foreach($search_page as $page) {
-			if (strpos($edit_page_url, 'upload/admin/controller/'.$page)!== false){
-
-				$permissions_page = explode($page,$edit_page_url);
-				$permissions_page = $page.str_replace('.php','',$permissions_page[1]);
-
-				$this->permission($permissions_page);
-
+			if (strpos($edit_page_url, 'upload/admin/controller/'.$page) === false){
+				continue;
 			}
+
+            $permissions_page = explode($page,$edit_page_url);
+            $permissions_page = $page.str_replace('.php','',$permissions_page[1]);
+
+            $this->model_extension_installer->addPermission($permissions_page);
         }
-    }
-
-    public function permission($page){
-        //insert permission for support/support
-        $permission = $this->db->query("SELECT permission FROM `" . DB_PREFIX . "user_group` WHERE `user_group_id` = 1");
-
-        $permission = unserialize($permission->row['permission']);
-
-        if (!array_search($page, $permission['access'])){
-            $permission['access'][] = $page;
-            $permission['modify'][] = $page;
-        }
-
-        $permission = serialize($permission);
-
-        $this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '".$permission."' WHERE `user_group_id` = 1");
     }
 
     public function replaceFile($file) {
@@ -395,8 +359,7 @@ class ControllerExtensionInstaller extends Controller {
 			$content = str_replace($key, $value, $content);
 		}
 
-        $content = preg_replace("/\\\\$this->trigger->fire('$1', array(&$2));/", "\$this->trigger->fire('$1', array(&$2));", $content);
-        $content = preg_replace("/\\\$this->event->trigger\('(.*)',[\s]*(.*)\);/", "\$this->trigger->fire('$1', array(&$2));", $content);
+        $content = preg_replace('/\$this->(trigger|event)->(fire|trigger)\(\'(.*)\',[\s]*(.*)\);/', '\$this->trigger->fire("$3", array(&$4));', $content);
 
 		file_put_contents($file, $content);
     }
@@ -491,7 +454,7 @@ class ControllerExtensionInstaller extends Controller {
                 $this->trigger->fire('pre.admin.extension.xml', array(&$xml));
 
                 if (!empty($this->session->data['vqmod_file_name'])) {
-                    $msmod = DIR_VQMOD . 'xml/'. $this->session->data['vqmod_file_name'];
+                    $arastta_mod = DIR_VQMOD . 'xml/'. $this->session->data['vqmod_file_name'];
                 } else {
                     $dom = new DOMDocument('1.0', 'UTF-8');
                     $dom->loadXml($xml);
@@ -499,10 +462,10 @@ class ControllerExtensionInstaller extends Controller {
                     $code = $dom->getElementsByTagName('code')->item(0);
                     $code = $code->nodeValue;
 
-                    $msmod = DIR_SYSTEM . 'xml/' . $code . '.xml';
+                    $arastta_mod = DIR_SYSTEM . 'xml/' . $code . '.xml';
                 }
 
-                if (!copy($file, $msmod)) {
+                if (!copy($file, $arastta_mod)) {
                     $json['error'] =   $this->language->get('error_copy_xmls_file');
                 }
 			}
@@ -563,24 +526,75 @@ class ControllerExtensionInstaller extends Controller {
             // Fire event
             $this->trigger->fire('pre.admin.extension.json', array(&$file));
 
-			$data = file_get_contents($file);
-			$data = json_decode($data, true);
+            $addon_params = array();
+            $product_id = $product_name = $product_type = $product_version = '';
+
+			$content = file_get_contents($file);
+			$install_data = json_decode($content, true);
 
 			if (json_last_error() != JSON_ERROR_NONE) {
 				$json['error'] = $this->language->get('error_json_' . json_last_error());
-			} elseif (count($data) and array_key_exists('translation', $data)) {
+			} elseif (count($install_data) and array_key_exists('extension', $install_data)) {
+                $product_type = 'extension';
+			} elseif (count($install_data) and array_key_exists('theme', $install_data)) {
+                $product_type = 'theme';
+            } elseif (count($install_data) and array_key_exists('translation', $install_data)) {
 				$this->load->model('localisation/language');
 
-				$data['translation']['locale'] = null;
-				$data['translation']['status'] = 1;
-				$data['translation']['sort_order'] = 0;
+                $product_type = 'translation';
 
-				$language_id = $this->model_extension_installer->languageExist($data['translation']['directory']);
+				$translation_data = $install_data['translation'];
+
+				$translation_data['locale'] = null;
+				$translation_data['status'] = 1;
+				$translation_data['sort_order'] = 0;
+
+				$language_id = $this->model_extension_installer->languageExist($translation_data['directory']);
 				if (!$language_id) {
-					$language_id = $this->model_localisation_language->addLanguage($data['translation']);
+					$language_id = $this->model_localisation_language->addLanguage($translation_data);
 				}
-				$this->session->data['addon_params']['localisation/language'][] = $language_id;
+				$addon_params['language_id'] = $language_id;
 			}
+
+            // Add to addon table
+            if (!$json && $product_type) {
+                if (isset($install_data[$product_type]['product_id'])) {
+                    $product_id = $install_data[$product_type]['product_id'];
+                }
+
+                if ($product_id) {
+                    $this->load->model('extension/marketplace');
+
+                    if (isset($install_data[$product_type]['name'])) {
+                        $product_name = $install_data[$product_type]['name'];
+                    }
+
+                    if (isset($install_data[$product_type]['version'])) {
+                        $product_version = $install_data[$product_type]['version'];
+                    }
+
+                    $addon_params['theme_ids'] = array();
+                    $addon_params['extension_ids'] = array();
+
+                    $addon_data = array(
+                        'product_id' => $product_id,
+                        'product_name' => $product_name,
+                        'product_type' => $product_type,
+                        'product_version' => $product_version,
+                        'files' => '',
+                        'params' => $addon_params
+                    );
+
+                    $this->model_extension_marketplace->addAddon($addon_data);
+
+                    $this->cache->remove('addon');
+                    $this->cache->remove('update');
+                    $this->cache->remove('version');
+
+                    // Set it to use in the next step, addExtensionTheme
+                    $this->session->data['installer_info'] = $install_data;
+                }
+            }
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -606,61 +620,11 @@ class ControllerExtensionInstaller extends Controller {
             // Fire event
             $this->trigger->fire('pre.admin.extension.remove', array(&$directory));
 
-			// Add addon to addon table
-			if (isset($this->request->post['product_id']) and isset($this->request->post['product_name']) and isset($this->request->post['store']) and isset($this->request->post['product_version'])) {
-				$addon = new Addon($this->registry);
-				$data = array(
-					'product_id' => $this->request->post['product_id'],
-					'product_name' => $this->request->post['product_name'],
-					'product_type' => rtrim($this->request->post['store'], 's'),
-					'product_version' => $this->request->post['product_version'],
-					'addon_params' => isset($this->session->data['addon_params']) ? $this->session->data['addon_params'] : null,
-					'dir' => $directory,
-				);
+            // Add to extension or theme tables
+            $this->addExtensionTheme($directory);
 
-				$addon->addAddon($data);
-
-				unset($this->session->data['addon_params']);
-
-				$this->cache->remove('addon');
-				$this->cache->remove('update');
-				$this->cache->remove('version');
-			}
-
-			// Get a list of files ready to upload
-			$files = array();
-
-			$path = array($directory);
-
-			while (count($path) != 0) {
-				$next = array_shift($path);
-
-				// We have to use scandir function because glob will not pick up dot files.
-				foreach (array_diff(scandir($next), array('.', '..')) as $file) {
-					$file = $next . '/' . $file;
-
-					if (is_dir($file)) {
-						$path[] = $file;
-					}
-
-					$files[] = $file;
-				}
-			}
-
-			sort($files);
-			rsort($files);
-
-			foreach ($files as $file) {
-				if (is_file($file)) {
-					unlink($file);
-				} elseif (is_dir($file)) {
-					rmdir($file);
-				}
-			}
-
-			if (file_exists($directory)) {
-				rmdir($directory);
-			}
+            // Remove dir
+            $this->filesystem->remove($directory);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -681,41 +645,8 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$json) {
 			$directories = glob(DIR_UPLOAD . 'temp-*', GLOB_ONLYDIR);
 
-			foreach ($directories as $directory) {
-				// Get a list of files ready to upload
-				$files = array();
-
-				$path = array($directory);
-
-				while (count($path) != 0) {
-					$next = array_shift($path);
-
-					// We have to use scandir function because glob will not pick up dot files.
-					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
-						$file = $next . '/' . $file;
-
-						if (is_dir($file)) {
-							$path[] = $file;
-						}
-
-						$files[] = $file;
-					}
-				}
-
-				rsort($files);
-
-				foreach ($files as $file) {
-					if (is_file($file)) {
-						unlink($file);
-					} elseif (is_dir($file)) {
-						rmdir($file);
-					}
-				}
-
-				if (file_exists($directory)) {
-					rmdir($directory);
-				}
-			}
+            // Remove dirs
+            $this->filesystem->remove($directories);
 
 			$json['success'] = $this->language->get('text_clear');
 		}
@@ -898,74 +829,192 @@ class ControllerExtensionInstaller extends Controller {
 		}
 	}
 
-	public function uninstall() {
-		$this->load->language('extension/installer');
+    public function addExtensionTheme($directory) {
+        $this->load->model('extension/installer');
 
-		$json = array();
+        if (isset($this->session->data['product_id'])) {
+            $this->load->model('extension/marketplace');
 
-		$addon_lib = new Addon($this->registry);
-		$addon = $addon_lib->getAddon($this->request->get['product_id']);
+            $addon = $this->model_extension_marketplace->getAddon($this->session->data['product_id']);
+            $params = json_decode($addon['params'], true);
+        } else {
+            $addon = array();
+            $params = array();
+            $params['theme_ids'] = array();
+            $params['extension_ids'] = array();
+        }
 
-		if (empty($addon)) {
-			$json['error'] = $this->language->get('error_uninstall_already');
+        $addon_files = array();
+
+        // Get all files
+        $files = $this->_indexFiles($directory);
+
+        foreach ($files as $id => $file) {
+            $addon_files[] = $file['relative_path_name'];
+
+            $type = $this->_getAddonType($file['relative_path_name']);
+
+            if (empty($type)) {
+                continue;
+            }
+
+            $data = array();
+            $data['params'] = array();
+
+            if (isset($this->session->data['installer_info'])) {
+                $data['info'] = $this->session->data['installer_info'];
+            } else {
+                $data['info'] = array(
+                    'author' => array(
+                        'name' => '',
+                        'email' => '',
+                        'website' => ''
+                    )
+                );
+            }
+
+            if (strstr($type, 'theme_')) {
+                $this->load->model('appearance/theme');
+
+                $tmp = explode('_', $type);
+
+                $data['code'] = $tmp[1];
+
+                if (empty($data['info']['author']['name'])) {
+                    $info = $directory . '/upload/catalog/view/theme/' . $data['code'] . '/info.json';
+                    if (file_exists($info)) {
+                        $content = file_get_contents($info);
+
+                        $data['info'] = json_decode($content, true);
+                    } else {
+                        $data['info']['theme'] = array(
+                            'name' => ucfirst($data['code']),
+                            'description' => '',
+                            'version' => '',
+                            'product_id' => ''
+                        );
+                    }
+                }
+
+                $theme_id = $this->model_extension_installer->themeExist($data['code']);
+                if (!$theme_id) {
+                    $theme_id = $this->model_appearance_theme->addTheme($data);
+                }
+
+                $params['theme_ids'][] = $theme_id;
+            } else {
+                $this->load->model('extension/extension');
+
+                $code = str_replace('.php', '', $file['file_name']);
+
+                $data['type'] = $type;
+                $data['code'] = $code;
+
+                if (empty($data['info']['author']['name'])) {
+                    $data['info']['extension'] = array(
+                        'description' => '',
+                        'version' => '',
+                        'product_id' => ''
+                    );
+                }
+
+                // Will use the heading_title of the language file
+                $data['info']['extension']['name'] = '';
+
+                $extension_id = $this->model_extension_installer->extensionExist($type, $code);
+                if (!$extension_id) {
+                    $extension_id = $this->model_extension_extension->addExtension($data);
+                }
+
+                $params['extension_ids'][] = $extension_id;
+            }
+        }
+
+        if (empty($params)) {
+            // What do you do :)
+        }
+
+        $addon['params'] = $params;
+		$addon['files'] = json_encode($addon_files);
+
+        if (!empty($addon['addon_id'])) {
+            $this->model_extension_marketplace->editAddon($addon['addon_id'], $addon);
+        } else {
+            $this->load->model('extension/marketplace');
+
+            $addon['product_id'] = '';
+            $addon['product_name'] = '';
+            $addon['product_type'] = '';
+            $addon['product_version'] = '';
+
+            $this->model_extension_marketplace->addAddon($addon);
+        }
+
+        unset($this->session->data['installer_info']);
+    }
+
+    protected function _indexFiles($path) {
+		$data = array();
+
+		$upload_path = $path;
+		if (file_exists($path . '/upload')) {
+			$upload_path = $path . '/upload';
 		}
 
-		if (!$json) {
-			$files = json_decode($addon['addon_files']);
+        if (!file_exists($upload_path)) {
+            return $data;
+        }
 
-            // Fire event
-            $this->trigger->fire('pre.admin.extension.uninstall', array(&$files));
+		$finder = new SFinder();
+		$finder->files()->in($upload_path);
 
-            $absolutePaths = $codes = array();
-			foreach ($files as $file) {
-				$absolutePaths[] = DIR_ROOT . $file;
-			}
+		foreach ($finder as $file) {
+            $f = array();
+            $f['file_name'] = $file->getFilename(); // amazon_button.php
+            $f['relative_path'] = $file->getRelativePath(); // admin\controller\module
+            $f['relative_path_name'] = $file->getRelativePathname(); // admin\controller\module\amazon_button.php
 
-			// Remove files
-			$this->filesystem->remove($absolutePaths);
-
-			$params = json_decode($addon['params'], true);
-			if (count($params) and $addon['product_type'] == 'translation') {
-				$this->load->model('localisation/language');
-				foreach ($params['localisation/language'] as $id) {
-					$lang = $this->model_localisation_language->getLanguage($id);
-					if (isset($lang['directory'])) {
-						$this->filesystem->remove(array(DIR_ROOT . 'admin/language/'. $lang['directory'], DIR_ROOT . 'catalog/language/'. $lang['directory']));
-					}
-				}
-
-			}
-
-			// Remove addon and its related row from tables
-			$addon_lib->removeAddon($this->request->get['product_id']);
-			if (count($params)) {
-				foreach ($params as $model => $foreign_ids) {
-					$this->load->model($model);
-					$array = explode('/', $model);
-					$function_name = 'delete' . ucfirst($array[1]);
-					$model = 'model_' . implode('_', $array);
-					foreach ($foreign_ids as $foreign_id) {
-						$this->$model->$function_name($foreign_id);
-					}
-				}
-			}
-
-			// Refresh modifications
-			$this->request->get['extensionInstaller'] = 1;
-			$this->load->controller('extension/modification/refresh');
-			unset($this->request->get['extensionInstaller']);
-
-			$json['success'] = $this->language->get('text_uninstall_success');
-
-			unset($this->session->data['addon_params']);
-
-			$this->cache->remove('addon');
-			$this->cache->remove('update');
-			$this->cache->remove('version');
+            $data[] = $f;
 		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+        if (file_exists($path . '/install.xml')) {
+            $dom = new DOMDocument('1.0', 'UTF-8');
+            $xml = file_get_contents($path . '/install.xml');
+            $dom->loadXml($xml);
+
+            $code = $dom->getElementsByTagName('code')->item(0);
+            $code = $code->nodeValue;
+
+            $f = array();
+            $f['file_name'] = $code . '.xml';
+            $f['relative_path'] = 'system' . DIRECTORY_SEPARATOR . 'xml';
+            $f['relative_path_name'] = $f['relative_path'] . DIRECTORY_SEPARATOR . $f['file_name'];
+
+            $data[] = $f;
+        }
+
+		return $data;
 	}
 
+    protected function _getAddonType($path) {
+        $type = '';
+
+        if (!strstr($path, 'admin' . DIRECTORY_SEPARATOR . 'controller') && !strstr($path, 'common' . DIRECTORY_SEPARATOR . 'header.tpl')) {
+            return $type;
+        }
+
+        $tmp = explode('\\', $path);
+
+        $ext_types = array('captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total');
+
+        if (isset($tmp[2]) && in_array($tmp[2], $ext_types)) {
+            $type = $tmp[2];
+        } elseif (isset($tmp[4]) && isset($tmp[5]) && isset($tmp[6]) && ($tmp[6] == 'header.tpl')) { // catalog/view/theme/xyz/template/common/header.tpl
+            $type = 'theme_'.$tmp[3];
+        } else {
+            $type = 'other';
+        }
+
+        return $type;
+    }
 }

@@ -8,77 +8,43 @@
 
 class ModelExtensionMarketplace extends Model {
 
-	public function addMarketplace($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "marketplace SET code = '" . $this->db->escape($data['code']) . "', name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', link = '" . $this->db->escape($data['link']) . "', xml = '" . $this->db->escape($data['xml']) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
+	public function getAddons() {
+		$data = $this->cache->get('addon');
+
+		if (empty($data)) {
+			$data = array();
+
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "addon ORDER BY product_type, addon_id");
+
+			foreach ($query->rows as $result) {
+				$data[$result['product_id']] = $result;
+			}
+
+			$this->cache->set('addon', $data);
+		}
+
+		return $data;
 	}
 
-	public function deleteMarketplace($marketplace_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "marketplace WHERE marketplace_id = '" . (int)$marketplace_id . "'");
-	}
-
-	public function enableMarketplace($marketplace_id) {
-		$this->db->query("UPDATE " . DB_PREFIX . "marketplace SET status = '1' WHERE marketplace_id = '" . (int)$marketplace_id . "'");
-	}
-
-	public function disableMarketplace($marketplace_id) {
-		$this->db->query("UPDATE " . DB_PREFIX . "marketplace SET status = '0' WHERE marketplace_id = '" . (int)$marketplace_id . "'");
-	}
-
-	public function getMarketplace($marketplace_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "marketplace WHERE marketplace_id = '" . (int)$marketplace_id . "'");
+	public function getAddon($product_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "addon WHERE `product_id` = " . $product_id);
 
 		return $query->row;
 	}
 
-	public function getMarketplaces($data = array()) {
-		$sql = "SELECT * FROM " . DB_PREFIX . "marketplace";
+	public function addAddon($data) {
+		$params = json_encode($data['params']);
 
-		$sort_data = array(
-			'name',
-			'author',
-			'version',
-			'status',
-			'date_added'
-		);
-
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
-		} else {
-			$sql .= " ORDER BY name";
-		}
-
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
-
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
-
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
-
-		$query = $this->db->query($sql);
-
-		return $query->rows;
+		$this->db->query("INSERT INTO " . DB_PREFIX . "addon SET `product_id` = " . (int) $data['product_id'] . ", `product_name` = '" . $this->db->escape($data['product_name']) . "', `product_type` = '" . $this->db->escape($data['product_type']) . "', `product_version` = '" . $this->db->escape($data['product_version']) . "', `files` = '" . $this->db->escape($data['files']) . "', `params` = '" . $this->db->escape($params) . "'");
 	}
 
-	public function getTotalMarketplaces() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "marketplace");
+	public function editAddon($addon_id, $data) {
+		$params = json_encode($data['params']);
 
-		return $query->row['total'];
+		$this->db->query("UPDATE " . DB_PREFIX . "addon SET `product_id` = '" . (int)$data['product_id'] . "', `product_name` = '" . $this->db->escape($data['product_name']) . "', `product_type` = '" . $this->db->escape($data['product_type']) . "', `product_version` = '" . $this->db->escape($data['product_version']) . "', `files` = '" . $this->db->escape($data['files']) . "', `params` = '" . $this->db->escape($params) . "' WHERE `addon_id` = '" . (int)$addon_id . "'");
 	}
-	
-	public function getMarketplaceByCode($code) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "marketplace WHERE code = '" . $this->db->escape($code) . "'");
 
-		return $query->row;
-	}	
+	public function deleteAddon($addon_id) {
+		$this->db->query("DELETE FROM ". DB_PREFIX . "addon WHERE `addon_id` = " . $addon_id);
+	}
 }

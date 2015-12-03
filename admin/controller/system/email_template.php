@@ -295,12 +295,18 @@ class ControllerSystemEmailtemplate extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_default'] = $this->language->get('text_default');
+		$data['text_short_codes'] = $this->language->get('text_short_codes');
+		$data['text_show_hide'] = $this->language->get('text_show_hide');
+		$data['text_html_preview'] = $this->language->get('text_html_preview');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_description'] = $this->language->get('entry_description');
 
+		$data['button_show_shortcode'] = $this->language->get('button_show_shortcode');
+		$data['button_hide_shortcode'] = $this->language->get('button_hide_shortcode');
+
 		$data['button_save'] = $this->language->get('button_save');
-        $data['button_saveclose'] = $this->language->get('button_saveclose');   		
+        $data['button_saveclose'] = $this->language->get('button_saveclose');
 		$data['button_cancel'] = $this->language->get('button_cancel');   
 
 		if (isset($this->error['warning'])) {
@@ -355,6 +361,7 @@ class ControllerSystemEmailtemplate extends Controller {
 			$data['action'] = $this->url->link('system/email_template/edit', 'token=' . $this->session->data['token'] . '&email_template=' . $this->request->get['email_template'] . $url, 'SSL');
 		}
 
+		$data['html_preview'] = $this->url->link('system/email_template/html', 'token=' . $this->session->data['token'] . '&email_template=' . $this->request->get['email_template'] . $url, 'SSL');
 		$data['cancel'] = $this->url->link('system/email_template', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		if (isset($this->request->get['email_template']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
@@ -383,6 +390,8 @@ class ControllerSystemEmailtemplate extends Controller {
 			$data['email_template_description'] = '';
 		}
 
+		$data['short_codes'] = $this->model_system_email_template->getShortCodes($this->request->get['email_template']);
+
 		$this->load->model('setting/store');
 
 		$data['stores'] = $this->model_setting_store->getStores();
@@ -393,6 +402,80 @@ class ControllerSystemEmailtemplate extends Controller {
 
 		$this->response->setOutput($this->load->view('system/email_template_form.tpl', $data));
 	}
+
+    public function html() {
+		$this->load->language('mail/shortcode');
+
+		$this->load->model('system/email_template');
+
+		$message = $this->model_system_email_template->getEmailTemplate($this->request->get['email_template']);
+
+		$codes = $this->model_system_email_template->getShortCodes($this->request->get['email_template']);
+
+		foreach ($codes as $code) {
+			$find[] = $code['code'];
+			$replace[] = $this->language->get('demo_' . preg_replace('~\{([\w]*)\}~', '$1', $code['code']));
+		}
+
+		preg_match('/{comment:start}(.*){comment:stop}/Uis', $message[$this->request->get['language_id']]['description'], $template_comment);
+
+		if (sizeof($template_comment) > 0) {
+			$message[$this->request->get['language_id']]['description'] = str_replace($template_comment[1], '', $message[$this->request->get['language_id']]['description']);
+		}
+
+		if (!empty($template_comment)) {
+			$message[$this->request->get['language_id']]['description'] = str_replace('{comment:start}{comment:stop}', $template_comment[1], $message[$this->request->get['language_id']]['description']);
+		}
+
+		// Products
+		preg_match('/{product:start}(.*){product:stop}/Uis', $message[$this->request->get['language_id']]['description'], $template_product);
+
+		if (sizeof($template_product) > 0) {
+			$message[$this->request->get['language_id']]['description'] = str_replace($template_product[1], '', $message[$this->request->get['language_id']]['description']);
+		}
+
+		$find_products = $this->emailtemplate->getProductFind();
+
+		foreach ($find_products as $product_code) {
+			$find_product[] = $product_code;
+			$replace_product[] = $this->language->get('demo_' . preg_replace('~\{([\w]*)\}~', '$1', $product_code));
+		}
+
+		if (!empty($template_product)) {
+			$template_product = trim(str_replace($find_product, $replace_product, $template_product[1]));
+		}
+
+		// Total
+		preg_match('/{total:start}(.*){total:stop}/Uis', $message[$this->request->get['language_id']]['description'], $template_total);
+
+		if (sizeof($template_total) > 0) {
+			$message[$this->request->get['language_id']]['description'] = str_replace($template_total[1], '', $message[$this->request->get['language_id']]['description']);
+		}
+
+		$find_totals = $this->emailtemplate->getTotalFind();
+
+		foreach ($find_totals as $total_code) {
+			$find_total[] = $total_code;
+			$replace_total[] = $this->language->get('demo_' . preg_replace('~\{([\w]*)\}~', '$1', $total_code));
+		}
+
+		if (!empty($template_total)) {
+			$template_total[1] = trim(str_replace($find_total, $replace_total, $template_total[1]));
+		}
+
+		if (!empty($template_total)) {
+			$message[$this->request->get['language_id']]['description'] = str_replace('{total:start}{total:stop}', $template_total[1], $message[$this->request->get['language_id']]['description']);
+		}
+
+		$message = trim(str_replace($find, $replace, $message[$this->request->get['language_id']]['description']));
+
+		if (!empty($template_product)) {
+			$message = str_replace('demo_{product:start}demo_{product:stop}', $template_product, $message);
+		}
+        $data['message'] = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
+
+        $this->response->setOutput($this->load->view('system/email_template_html.tpl', $data));
+    }
 
 	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'system/email_template')) {

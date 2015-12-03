@@ -111,9 +111,6 @@ class Admin extends App {
         // Document
         $this->registry->set('document', new Document());
 
-        // Update
-        $this->registry->set('update', new Update($this->registry));
-
         // SEO
         $this->registry->set('seo', new SEO($this->registry));
 		

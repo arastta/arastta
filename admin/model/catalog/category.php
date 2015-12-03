@@ -542,7 +542,7 @@ class ModelCatalogCategory extends Model {
 	}
 
 	public function getTotalCategoriesFilter($data) {
-		$sql = ("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd ON c.category_id = cd.category_id");
+		$sql = ("SELECT COUNT(distinct c.category_id) AS total FROM " . DB_PREFIX . "category c LEFT JOIN " . DB_PREFIX . "category_description cd ON c.category_id = cd.category_id");
 
 		$isWhere = 0;
 		$_sql = array();	

@@ -137,10 +137,12 @@ class ControllerCommonHeader extends Controller {
 
             $processing_total = $this->model_sale_order->getTotalOrdersByProcessingStatus();
 
+			$this->load->model('common/update');
+
             $data['alert_order'] = $return_total + $processing_total;
             $data['alert_customer'] = $customer_total;
             $data['alert_product'] = $product_total + $review_total + $affiliate_total;
-            $data['alert_update'] = $this->update->countUpdates();
+            $data['alert_update'] = $this->model_common_update->countUpdates();
 
 			// Languages
 			$this->load->model('localisation/language');
