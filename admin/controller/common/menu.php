@@ -28,7 +28,27 @@ class ControllerCommonMenu extends Controller {
 		$p_return_review = $this->user->hasPermission('access','catalog/review');
 		$p_return_information = $this->user->hasPermission('access','catalog/information');
 
-		#Extensions permissions
+		#Sales permissions
+		$p_return_order = $this->user->hasPermission('access','sale/order');
+		$p_return_invoice = $this->user->hasPermission('access','sale/invoice');
+		$p_return_order_recurring = $this->user->hasPermission('access','sale/recurring');
+		$p_return_return = $this->user->hasPermission('access','sale/return');
+		$p_return_paypal = $this->user->hasPermission('access','payment/pp_express');
+		#Customers permissions
+		$p_return_customer = $this->user->hasPermission('access','sale/customer');
+		$p_return_customer_group = $this->user->hasPermission('access','sale/customer_group');
+		$p_return_customer_ban_ip = $this->user->hasPermission('access','sale/customer_ban_ip');
+		$p_return_custom_field = $this->user->hasPermission('access','sale/custom_field');
+
+		#Marketing permissions
+		$p_return_marketing_affiliate = $this->user->hasPermission('access','marketing/affiliate');
+		$p_return_contact = $this->user->hasPermission('access','marketing/contact');
+		$p_return_coupon = $this->user->hasPermission('access','marketing/coupon');
+		$p_return_marketing_marketing = $this->user->hasPermission('access','marketing/marketing');
+		$p_return_voucher = $this->user->hasPermission('access','sale/voucher');
+		$p_return_voucher_theme = $this->user->hasPermission('access','sale/voucher_theme');
+
+        #Extensions permissions
 		$p_return_installer = $this->user->hasPermission('access','extension/installer');
 		$p_return_extension = $this->user->hasPermission('access','extension/extension');
 		$p_return_modification = $this->user->hasPermission('access','extension/modification');
@@ -36,27 +56,10 @@ class ControllerCommonMenu extends Controller {
 		$p_return_shipping = $this->user->hasPermission('access','extension/shipping');
 		$p_return_payment = $this->user->hasPermission('access','extension/payment');
 		$p_return_total = $this->user->hasPermission('access','extension/total');
-		$p_return_feed = $this->user->hasPermission('access','extension/feed');
-		$p_return_marketplace = $this->user->hasPermission('access','extension/marketplace');
-
-		#Sales permissions
-		$p_return_order = $this->user->hasPermission('access','sale/order');
-		$p_return_order_recurring = $this->user->hasPermission('access','sale/recurring');
-		$p_return_return = $this->user->hasPermission('access','sale/return');
-		$p_return_customer = $this->user->hasPermission('access','sale/customer');
-		$p_return_customer_group = $this->user->hasPermission('access','sale/customer_group');
-		$p_return_customer_ban_ip = $this->user->hasPermission('access','sale/customer_ban_ip');
-		$p_return_custom_field = $this->user->hasPermission('access','sale/custom_field');
-		$p_return_voucher = $this->user->hasPermission('access','sale/voucher');
-		$p_return_voucher_theme = $this->user->hasPermission('access','sale/voucher_theme');
-		$p_return_paypal = $this->user->hasPermission('access','payment/pp_express');
-
-		#Marketing permissions
-		$p_return_marketing_affiliate = $this->user->hasPermission('access','marketing/affiliate');
-		$p_return_contact = $this->user->hasPermission('access','marketing/contact');
-		$p_return_coupon = $this->user->hasPermission('access','marketing/coupon');
-		$p_return_marketing_marketing = $this->user->hasPermission('access','marketing/marketing');
-
+		$p_return_feed = $this->user->hasPermission('access','extension/feed');        
+		
+		#Marketplace permissions
+        $p_return_marketplace = $this->user->hasPermission('access','extension/marketplace');
 		#System permissions
 		$p_return_setting = $this->user->hasPermission('access','setting/setting');
 		$p_return_setting_store = $this->user->hasPermission('access','setting/store');
@@ -293,16 +296,22 @@ class ControllerCommonMenu extends Controller {
 				'sort_order' => 2,
 				'permission' => $p_return_order_recurring
 			),
+			'invoice' => array(
+				'text' => $data['text_invoice'],
+				'href' => $this->url->link('sale/invoice', 'token=' . $this->session->data['token'], 'SSL'),
+				'sort_order' => 3,
+				'permission' => $p_return_invoice
+			),			
 			'return' => array(
 				'text' => $data['text_return'],
 				'href' => $this->url->link('sale/return', 'token=' . $this->session->data['token'], 'SSL'),
-				'sort_order' => 3,
+				'sort_order' => 4,
 				'permission' => $p_return_return
 			),
 			'paypal_search' => array(
 				'text' => $data['text_paypal_search'],
 				'href' => $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL'),
-				'sort_order' => 4,
+				'sort_order' => 5,
 				'permission' => $p_return_paypal
 			)
 		);
