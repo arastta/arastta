@@ -173,7 +173,6 @@ class ControllerSettingStore extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
-		$data['text_selected'] = $this->language->get('text_selected');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_url'] = $this->language->get('column_url');

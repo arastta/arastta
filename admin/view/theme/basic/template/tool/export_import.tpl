@@ -420,5 +420,3 @@ function updateSettings() {
 //--></script>
 </div>
 <?php echo $footer; ?>
-<link href="view/theme/basic/stylesheet/basic.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="view/theme/basic/javascript/basic.js" ></script>

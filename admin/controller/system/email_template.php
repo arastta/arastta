@@ -188,7 +188,6 @@ class ControllerSystemEmailtemplate extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_selected'] = $this->language->get('text_selected');
 
 		#Column
 		$data['column_text'] = $this->language->get('column_text');

@@ -473,6 +473,31 @@ class ControllerUserUser extends Controller {
 		);
 
 		$themes = glob(DIR_ADMIN . 'view/theme/*', GLOB_ONLYDIR);
+		
+		if (isset($this->request->post['params']) && isset($this->request->post['params']['basic_mode_message'])) {
+			$data['basic_mode_message'] = $this->request->post['params']['basic_mode_message'];
+		} elseif (!empty($user_info)) {
+			$data['basic_mode_message'] = $params['basic_mode_message'];
+		} else {
+			$data['basic_mode_message'] = 'show';
+		}
+
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
+		if (isset($this->request->post['params']) && isset($this->request->post['params']['language'])) {
+			$data['use_language'] = $this->request->post['params']['language'];
+		} elseif (!empty($user_info)) {
+			$data['use_language'] = $params['language'];
+		} else {
+			$data['use_language'] = $this->session->data['admin_language'];
+		}
+
+		// This code changes
+		$data['editors'] = array(
+			'summernote', 'tinymce'
+		);		
 
 		foreach ($themes as $theme) {
 			$data['themes'][] = array(
@@ -659,4 +684,19 @@ class ControllerUserUser extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}	
+	
+	public function hide() {
+		$json = array();
+
+		if (isset($this->request->get['basic_mode_message'])) {
+			$this->load->model('user/user');
+
+			$data['basic_mode_message'] = $this->request->get['basic_mode_message'];
+
+			$this->model_user_user_editUserParams($this->request->get['user_id'], $data);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

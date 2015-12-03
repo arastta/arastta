@@ -47,5 +47,6 @@ function save(type){
 	form = $("form[id^='form-']").append(input);
 	form.submit();
 }
+$('ul.nav.nav-tabs a:first').tab('show');
 //--></script>
 <?php echo $footer; ?>

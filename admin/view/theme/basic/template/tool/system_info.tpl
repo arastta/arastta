@@ -170,5 +170,3 @@ $(document).ready(function() {
 	$('.php-info-chevron').toggleClass('rotate');
 });
 </script>
-<link href="view/theme/basic/stylesheet/basic.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="view/theme/basic/javascript/basic.js" ></script>

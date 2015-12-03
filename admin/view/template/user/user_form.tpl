@@ -79,6 +79,48 @@
                 <?php } ?>
               </select>
             </div>
+          </div>
+          <div class="form-group hidden">
+            <label class="col-sm-2 control-label" for="input-basic-mode-message"><?php echo $entry_basic_mode_message; ?></label>
+            <div class="col-sm-10">
+              <select name="params[basic_mode_message]" id="input-basic-mode-message" class="form-control">
+                <?php if ($basic_mode_message == 'show') { ?>
+                <option value="show" selected="selected"><?php echo $text_show; ?></option>
+                <option value="hide"><?php echo $text_hide; ?></option>
+                <?php } else { ?>
+                <option value="show"><?php echo $text_show; ?></option>
+                <option value="hide" selected="selected"><?php echo $text_hide; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-language"><?php echo $entry_language; ?></label>
+            <div class="col-sm-10">
+              <select name="params[language]" id="input-language" class="form-control">
+                <?php foreach ($languages as $language) { ?>
+                <?php if ($language['code'] == $use_language) { ?>
+                <option value="<?php echo $language['code']; ?>" selected="selected"><?php echo $language['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $language['code']; ?>"><?php echo $language['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-editor"><?php echo $entry_editor; ?></label>
+            <div class="col-sm-10">
+              <select name="params[editor]" id="input-editor" class="form-control">
+                <?php foreach ($editors as $editor) { ?>
+                <?php if ($editor == $use_editor) { ?>
+                <option value="<?php echo $editor; ?>" selected="selected"><?php echo ($use_editor != 'tinymce') ? 'Summernote' : 'Tinymce'; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $editor; ?>"><?php echo ($use_editor == 'tinymce') ? 'Summernote' : 'Tinymce'; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
           </div>		  
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>

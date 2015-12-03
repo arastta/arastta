@@ -16,6 +16,8 @@ $_['text_add']              = 'Add User';
 $_['text_edit']             = 'Edit User';
 $_['text_theme_advanced']   = 'Advanced';
 $_['text_theme_basic']      = 'Basic';
+$_['text_show']      		= 'Show';
+$_['text_hide']      		= 'Hide';
 
 // Column
 $_['column_firstname']      = 'First Name';
@@ -37,6 +39,7 @@ $_['entry_image']      	    = 'Image';
 $_['entry_status']     	    = 'Status';
 $_['entry_enabled']         = 'Enabled';
 $_['entry_theme']           = 'Theme';
+$_['entry_basic_mode_message'] = 'Basic Mode Message';
 
 // Error
 $_['error_permission'] 	    = 'Warning: You do not have permission to modify users!';

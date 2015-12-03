@@ -278,39 +278,6 @@ $('a[id^=\'button-delete\']').on('click', function(e) {
 		location = $(this).attr('href');
 	}
 });
-
-$(document).ready(function() {
-  $('input[type=\'checkbox\']').click (function() {
-    var checkboxes = $('#form-order input[type=\'checkbox\']');
-    var selected = 0;
-
-    $.each(checkboxes, function( index, value ) {
-      var thisCheck = $(value);
-
-      if (thisCheck.is(':checked')) {
-        selected = selected + 1;
-      }
-    });
-
-    if (selected) {
-      $('.bulk-caret').hide();
-      $('.bulk-action').addClass('bulk-action-activate');
-      $('.bulk-action-activate').removeClass('bulk-action');
-	  
-      $('thead td:not(:first)').hide();
-      $('.item-selected').css('display', 'inline');
-      $('.bulk-action-button').css('display', 'inline');
-      $('.item-selected').html(selected + ' <?php echo $text_selected; ?>');
-    } else {
-	  $('thead td').show();
-      $('.item-selected').css('display', 'none');
-      $('.bulk-action-button').css('display', 'none');
-	  $('.bulk-caret').show();
-	  $('.bulk-action-activate').addClass('bulk-action');
-      $('.bulk-action').removeClass('bulk-action-activate');
-    }
-  });
-});
 //--></script> 
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
@@ -320,4 +287,3 @@ $('.date').datetimepicker({
 });
 //--></script></div>
 <?php echo $footer; ?>
-<link href="view/theme/basic/stylesheet/basic.css" type="text/css" rel="stylesheet" />

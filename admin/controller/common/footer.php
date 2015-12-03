@@ -12,6 +12,7 @@ class ControllerCommonFooter extends Controller {
 
         $data['text_yes']  = $this->language->get('text_yes');
         $data['text_no']  = $this->language->get('text_no');
+        $data['text_selected']  = $this->language->get('text_selected');
 
 		if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
 			$data['text_footer']  = $this->language->get('text_footer');

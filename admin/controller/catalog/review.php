@@ -308,7 +308,6 @@ class ControllerCatalogReview extends Controller {
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_bulk_action'] = $this->language->get('text_bulk_action');
-		$data['text_selected'] = $this->language->get('text_selected');
 
 		$data['column_product'] = $this->language->get('column_product');
 		$data['column_author'] = $this->language->get('column_author');

@@ -64,4 +64,3 @@
   </div>
 </div>
 <?php echo $footer; ?>
-<link href="view/theme/basic/stylesheet/basic.css" type="text/css" rel="stylesheet" />

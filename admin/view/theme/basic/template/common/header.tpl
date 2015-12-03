@@ -42,6 +42,10 @@
 <script type="text/javascript" src="view/javascript/jquery/moment/moment.js" ></script>
 <script type="text/javascript" src="view/javascript/jquery/moment/locale/<?php echo $moment_lang; ?>.js" ></script>
 <script type="text/javascript" src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<link href="view/theme/basic/stylesheet/basic.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="view/theme/basic/javascript/basic.js" ></script>
+<link href="view/javascript/bootstrap3-editable/css/bootstrap-editable.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="view/javascript/bootstrap3-editable/js/bootstrap-editable.js" ></script>
 <?php foreach ($scripts as $script) { ?>
 <script type="text/javascript" src="<?php echo $script; ?>"></script>
 <?php } ?>

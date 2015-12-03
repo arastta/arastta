@@ -142,7 +142,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-  function changeStatus(url ,id) {
+function changeStatus(url ,id) {
 	var html = "";
 	$.ajax({
 		url: url,	
@@ -271,39 +271,4 @@ function deleteFile() {
 	});
 } 
 //--></script>
-<script type="text/javascript"><!--
-$(document).ready(function() {
-  $('input[type=\'checkbox\']').click (function() {
-    var checkboxes = $('#form-modification input[type=\'checkbox\']');
-    var selected = 0;
-
-    $.each(checkboxes, function( index, value ) {
-      var thisCheck = $(value);
-
-      if (thisCheck.is(':checked')) {
-        selected = selected + 1;
-      }
-    });
-
-    if (selected) {
-      $('.bulk-caret').hide();
-      $('.bulk-action').addClass('bulk-action-activate');
-      $('.bulk-action-activate').removeClass('bulk-action');
-	  
-      $('thead td:not(:first)').hide();
-      $('.item-selected').css('display', 'inline');
-      $('.bulk-action-button').css('display', 'inline');
-      $('.item-selected').html(selected + ' <?php echo $text_selected; ?>');
-    } else {
-	  $('thead td').show();
-      $('.item-selected').css('display', 'none');
-      $('.bulk-action-button').css('display', 'none');
-	  $('.bulk-caret').show();
-	  $('.bulk-action-activate').addClass('bulk-action');
-      $('.bulk-action').removeClass('bulk-action-activate');
-    }
-  });  
-});
-//--></script> 
 <?php echo $footer; ?>
-<link href="view/theme/basic/stylesheet/basic.css" type="text/css" rel="stylesheet" />

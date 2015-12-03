@@ -28,6 +28,20 @@ class ModelUserUser extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET code = '" . $this->db->escape($code) . "' WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 	}
 
+	public function editUserParams($user_id, $data) {
+		$query = $this->db->query("SELECT *, (SELECT ug.name FROM `" . DB_PREFIX . "user_group` ug WHERE ug.user_group_id = u.user_group_id) AS user_group FROM `" . DB_PREFIX . "user` u WHERE u.user_id = '" . (int)$user_id . "'");
+
+		$params = json_decode($query->row['params'], true);
+
+		foreach ($data as $key => $value) {
+			$params[$key] = $value;
+		}
+
+		$params = json_encode($params);
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "user` SET params = '" . $this->db->escape($params) . "' WHERE user_id = '" . (int)$user_id . "'");
+	}	
+	
 	public function deleteUser($user_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE user_id = '" . (int)$user_id . "'");
 	}

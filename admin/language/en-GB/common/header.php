@@ -30,6 +30,7 @@ $_['text_support']         = 'Support Forum';
 $_['text_documentation']   = 'Documentation';
 $_['text_logout']          = 'Logout';
 $_['text_search_options']  = 'Search Options';
+$_['text_basic_mode']  	   = 'You can switch between Basic/Advanced modes via this toggle.';
 
 $_['text_language']        = 'Change Language';
 $_['text_update']  		   = 'Updates Available';

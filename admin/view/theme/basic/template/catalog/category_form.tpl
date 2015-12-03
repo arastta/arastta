@@ -279,20 +279,5 @@ $('#category-filter').delegate('.fa-minus-circle', 'click', function() {
   <script type="text/javascript"><!--
 $('#language a:first').tab('show');
 $('#seo-language a:first').tab('show');
-//--></script></div>
-
-<script type="text/javascript"><!--
-function save(type){
-	var input = document.createElement('input');
-	input.type = 'hidden';
-	input.name = 'button';
-	input.value = type;
-	form = $("form[id^='form-']").append(input);
-	form.submit();
-}
-//--></script>      
+//--></script></div>    
 <?php echo $footer; ?>
-<link href="view/theme/basic/stylesheet/basic.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="view/theme/basic/javascript/basic.js" ></script>
-<link href="view/javascript/bootstrap3-editable/css/bootstrap-editable.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="view/javascript/bootstrap3-editable/js/bootstrap-editable.js" ></script>

@@ -2663,3 +2663,30 @@ li.settings {
 #checkbox1:checked + .checkbox-label:after { 
 	color: #fff; 
 }
+li.basic-advanced {
+  position: relative;
+}
+.ba-message {
+  position: absolute;
+  background: #00A0D2;
+  color: #fff;
+  border: 1px solid #00A0D2;
+  font-size: 14px;
+  padding: 20px;
+  top: 55px;
+  left: -50px;
+  width: 200px;
+}
+.ba-message:before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 45%;
+  border-bottom: 10px solid #00A0D2;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+.ba-message .close {
+  color: #fff;	 
+  opacity: 0.9; 
+}

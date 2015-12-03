@@ -304,45 +304,10 @@ $('input[name=\'filter_email\']').autocomplete({
 		$('input[name=\'filter_email\']').val(item['label']);
 	}	
 });
-
-$(document).ready(function() {
-  $('input[type=\'checkbox\']').click (function() {
-    var checkboxes = $('#form-customer input[type=\'checkbox\']');
-    var selected = 0;
-
-    $.each(checkboxes, function( index, value ) {
-      var thisCheck = $(value);
-
-      if (thisCheck.is(':checked')) {
-        selected = selected + 1;
-      }
-    });
-
-    if (selected) {
-      $('.bulk-caret').hide();
-      $('.bulk-action').addClass('bulk-action-activate');
-      $('.bulk-action-activate').removeClass('bulk-action');
-	  
-      $('thead td:not(:first)').hide();
-      $('.item-selected').css('display', 'inline');
-      $('.bulk-action-button').css('display', 'inline');
-      $('.item-selected').html(selected + ' <?php echo $text_selected; ?>');
-    } else {
-	  $('thead td').show();
-      $('.item-selected').css('display', 'none');
-      $('.bulk-action-button').css('display', 'none');
-	  $('.bulk-caret').show();
-	  $('.bulk-action-activate').addClass('bulk-action');
-      $('.bulk-action').removeClass('bulk-action-activate');
-    }
-  });
-});
 //--></script> 
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
 });
 //--></script></div>
-<?php echo $footer; ?> 
-<link href="view/theme/basic/stylesheet/basic.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="view/theme/basic/javascript/basic.js" ></script>
+<?php echo $footer; ?>

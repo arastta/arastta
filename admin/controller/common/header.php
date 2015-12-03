@@ -43,6 +43,8 @@ class ControllerCommonHeader extends Controller {
 		$data['text_order'] = $this->language->get('text_order');
 		$data['text_logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
 		$data['text_logout'] = $this->language->get('text_logout');
+		$data['text_basic_mode'] = $this->language->get('text_basic_mode');
+		$data['text_close'] = $this->language->get('text_close');
 
 		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
 			$data['logged'] = '';
@@ -207,11 +209,14 @@ class ControllerCommonHeader extends Controller {
 				} else {
 					$data['image'] = 'https://www.gravatar.com/avatar/' . md5(strtolower($user_info['email'])).'?size=45&d=mm';
 				}
+				
+				$user_params =  json_decode($user_info['params'], true);
+				$data['basic_mode_message'] = isset($user_params['basic_mode_message']) ? $user_params['basic_mode_message'] : 'show';
             } else {
                 $data['name'] = '';
                 $data['image'] = '';
+				$data['basic_mode_message'] = 'hide';
             }
-            
 			$this->load->model('setting/store');
 
             $data['url_user'] = $this->url->link('user/user/edit', 'user_id='.$this->user->getId().'&token=' . $this->session->data['token'], 'SSL');

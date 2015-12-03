@@ -468,17 +468,5 @@ $('#button-commission').on('click', function() {
 		}
 	});
 });
-//--></script>
-<script type="text/javascript"><!--
-function save(type){
-	var input = document.createElement('input');
-	input.type = 'hidden';
-	input.name = 'button';
-	input.value = type;
-	form = $("form[id^='form-']").append(input);
-	form.submit();
-}
 //--></script></div>
 <?php echo $footer; ?>
-<link href="view/theme/basic/stylesheet/basic.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="view/theme/basic/javascript/basic.js" ></script>
