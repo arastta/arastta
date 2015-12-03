@@ -104,16 +104,6 @@
         <li><a href="<?php echo $affiliate_approval; ?>"><span class="label label-danger pull-right"><?php echo $affiliate_total; ?></span><?php echo $text_approval; ?></a></li>
       </ul>
     </li>
-    <?php if ($themes) { ?>
-    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-toggle-on"></i></a>
-      <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
-        <li class="dropdown-header"><?php echo $entry_theme; ?></li>
-        <?php foreach ($themes as $theme) { ?>
-        <li><a href="<?php echo $theme['link']; ?>"><?php echo $theme['text']; ?></a></li>
-        <?php } ?>
-      </ul>
-    </li>
-    <?php } ?>
     <?php if ($languages) { ?>
     <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag fa-lg"></i></a>
       <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
@@ -128,6 +118,16 @@
     <li><a href="<?php echo $update; ?>" title="<?php echo $alert_update . ' ' . $text_update; ?>"><?php if(!empty($alert_update)) { ?><span class="label label-danger pull-left"><?php echo $alert_update; ?></span><?php } ?><i class="fa fa-refresh fa-lg"></i></a></li>
     <?php } ?>
     <li class="dropdown"><a href="http://arastta.org/learn" target="_blank"><i class="fa fa-life-ring fa-lg"></i></a></li>
+	
+	<li class="basic-advanced">
+		<?php if ($theme == 'basic') { ?>
+		<input type="checkbox" name="checkbox1" id="checkbox1" class="ios-toggle" checked/>
+		<?php } else { ?>
+		<input type="checkbox" name="checkbox1" id="checkbox1" class="ios-toggle"/>
+		<?php } ?>
+		<label for="checkbox1" class="checkbox-label" data-off="off" data-on="on"></label>
+	</li>
+	
     <li id="header-profile" class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown">
         <img width="25" height="25" src="<?php echo $image; ?>" alt="<?php echo $name ?>" title="<?php echo $name; ?>" class="img-circle" />
@@ -150,6 +150,9 @@
         <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>				
       </ul>
     </li>
+	<li id="settings-menu" class="settings">
+		<a><i class="fa fa-cogs"></i></a>
+	</li>
   </ul>
 </header>
 <?php } ?>

@@ -2964,6 +2964,7 @@ CREATE TABLE IF NOT EXISTS `ar_user` (
   `ip` varchar(40) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
+  `params` text,
   PRIMARY KEY (`user_id`),
   KEY `user_group_id` (`user_group_id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

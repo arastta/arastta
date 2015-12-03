@@ -79,6 +79,7 @@ if (version_compare(VERSION, '1.2.0', '<')) {
 	$this->db->query("ALTER TABLE `" . DB_PREFIX . "user` MODIFY `username` VARCHAR(100)");
 	$this->db->query("ALTER TABLE `" . DB_PREFIX . "user` MODIFY `password` VARCHAR(100)");
 	$this->db->query("ALTER TABLE `" . DB_PREFIX . "user` MODIFY `email` VARCHAR(100)");
+	$this->db->query("ALTER TABLE `" . DB_PREFIX . "user` ADD `params` text AFTER `date_added`");
 	
 	// Update stock status table
 	$this->db->query("ALTER TABLE `" . DB_PREFIX . "stock_status` ADD `color` VARCHAR(32) NOT NULL AFTER `name`");
