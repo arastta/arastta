@@ -127,7 +127,7 @@ class ControllerSaleRecurring extends Controller {
 		$filter_data = array(
 			'filter_order_recurring_id' => $filter_order_recurring_id,
 			'filter_order_id'           => $filter_order_id,
-			'filter_reference'  => $filter_reference,
+			'filter_reference'  		=> $filter_reference,
 			'filter_customer'           => $filter_customer,
 			'filter_status'             => $filter_status,
 			'filter_date_added'         => $filter_date_added,
