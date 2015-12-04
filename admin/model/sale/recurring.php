@@ -143,52 +143,54 @@ class ModelSaleRecurring extends Model {
 	public function getRecurringTransactions($order_recurring_id) {
 		$transactions = array();
 
-		$query = $this->db->query("SELECT amount, type, date_added FROM " . DB_PREFIX . "order_recurring_transaction WHERE order_recurring_id = " . (int)$order_recurring_id . " ORDER BY date_added DESC")->rows;
+		$query = $this->db->query("SELECT amount, type, date_added FROM " . DB_PREFIX . "order_recurring_transaction WHERE order_recurring_id = " . (int)$order_recurring_id . " ORDER BY date_added DESC");
 
-		foreach ($query->rows as $result) {
-			switch ($result['type']) {
-				case 0:
-					$type = $this->language->get('text_transaction_date_added');
-					break;
-				case 1:
-					$type = $this->language->get('text_transaction_payment');
-					break;
-				case 2:
-					$type = $this->language->get('text_transaction_outstanding_payment');
-					break;
-				case 3:
-					$type = $this->language->get('text_transaction_skipped');
-					break;
-				case 4:
-					$type = $this->language->get('text_transaction_failed');
-					break;
-				case 5:
-					$type = $this->language->get('text_transaction_cancelled');
-					break;
-				case 6:
-					$type = $this->language->get('text_transaction_suspended');
-					break;
-				case 7:
-					$type = $this->language->get('text_transaction_suspended_failed');
-					break;
-				case 8:
-					$type = $this->language->get('text_transaction_outstanding_failed');
-					break;
-				case 9:
-					$type = $this->language->get('text_transaction_expired');
-					break;
-				default:
-					$type = '';
-					break;
+		if ($query->num_rows) {
+			foreach ($query->rows as $result) {
+				switch ($result['type']) {
+					case 0:
+						$type = $this->language->get('text_transaction_date_added');
+						break;
+					case 1:
+						$type = $this->language->get('text_transaction_payment');
+						break;
+					case 2:
+						$type = $this->language->get('text_transaction_outstanding_payment');
+						break;
+					case 3:
+						$type = $this->language->get('text_transaction_skipped');
+						break;
+					case 4:
+						$type = $this->language->get('text_transaction_failed');
+						break;
+					case 5:
+						$type = $this->language->get('text_transaction_cancelled');
+						break;
+					case 6:
+						$type = $this->language->get('text_transaction_suspended');
+						break;
+					case 7:
+						$type = $this->language->get('text_transaction_suspended_failed');
+						break;
+					case 8:
+						$type = $this->language->get('text_transaction_outstanding_failed');
+						break;
+					case 9:
+						$type = $this->language->get('text_transaction_expired');
+						break;
+					default:
+						$type = '';
+						break;
+				}
+
+				$transactions[] = array(
+					'date_added' => $result['date_added'],
+					'amount'     => $result['amount'],
+					'type'       => $type
+				);
 			}
-
-			$transactions[] = array(
-				'date_added' => $result['date_added'],
-				'amount'     => $result['amount'],
-				'type'       => $type
-			);
 		}
-
+		
 		return $transactions;
 	}
 
