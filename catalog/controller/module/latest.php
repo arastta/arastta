@@ -76,7 +76,7 @@ class ControllerModuleLatest extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}
 

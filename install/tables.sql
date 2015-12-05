@@ -487,7 +487,7 @@ INSERT INTO `ar_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (110, 'Kenya', 'KE', 'KEN', '', 0, 1),
 (111, 'Kiribati', 'KI', 'KIR', '', 0, 1),
 (112, 'North Korea', 'KP', 'PRK', '', 0, 1),
-(113, 'Korea, Republic of', 'KR', 'KOR', '', 0, 1),
+(113, 'South Korea', 'KR', 'KOR', '', 0, 1),
 (114, 'Kuwait', 'KW', 'KWT', '', 0, 1),
 (115, 'Kyrgyzstan', 'KG', 'KGZ', '', 0, 1),
 (116, 'Lao People''s Democratic Republic', 'LA', 'LAO', '', 0, 1),
@@ -4560,7 +4560,7 @@ INSERT INTO `ar_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (1496, 99, 'Mizoram', 'MI', 1),
 (1497, 99, 'Nagaland', 'NA', 1),
 (1498, 99, 'Orissa', 'OR', 1),
-(1499, 99, 'Pondicherry', 'PO', 1),
+(1499, 99, 'Puducherry', 'PO', 1),
 (1500, 99, 'Punjab', 'PU', 1),
 (1501, 99, 'Rajasthan', 'RA', 1),
 (1502, 99, 'Sikkim', 'SI', 1),
@@ -7231,6 +7231,7 @@ INSERT INTO `ar_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4228, 118, 'Nabatieh', 'LB-NB', 1),
 (4229, 118, 'North', 'LB-NR', 1),
 (4230, 118, 'South', 'LB-ST', 1);
+(4231, 99, 'Telangana', 'TS', 1);
 
 -- --------------------------------------------------------
 

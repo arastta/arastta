@@ -142,7 +142,7 @@ $_['column_notify']                           = 'Customer Notified';
 $_['column_location']                         = 'Location';
 $_['column_reference']                        = 'Reference';
 $_['column_action']                           = 'Action';
-$_['column_weight']                           = 'Product weight';
+$_['column_weight']                           = 'Product Weight';
 
 // Button
 $_['button_invoice_pdf']                      = 'PDF Invoice';

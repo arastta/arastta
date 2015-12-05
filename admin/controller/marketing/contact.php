@@ -101,6 +101,12 @@ class ControllerMarketingContact extends Controller {
 				} else {
 					$store_name = $this->config->get('config_name');
 				}
+				
+				$this->load->model('setting/setting');
+				
+				$setting = $this->model_setting_setting->getSetting('config', $this->request->post['store_id']);
+				
+				$store_email = !empty($setting['config_email']) ? $setting['config_email'] : $this->config->get('config_email');
 
 				$this->load->model('sale/customer');
 
@@ -242,7 +248,7 @@ class ControllerMarketingContact extends Controller {
 						if (preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $email)) {
 							$mail = new Mail($this->config->get('config_mail'));
 							$mail->setTo($email);
-							$mail->setFrom($this->config->get('config_email'));
+							$mail->setFrom($store_email);
 							$mail->setSender($store_name);
 							$mail->setSubject($this->request->post['subject']);
 							$mail->setHtml($message);
