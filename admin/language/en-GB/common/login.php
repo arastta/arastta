@@ -24,5 +24,9 @@ $_['entry_language']  = 'Language';
 $_['button_login']    = 'Login';
 
 // Error
-$_['error_login']     = 'No match for Email and/or Password.';
+$_['error_match']	  = 'No match for Email and/or Password.';
 $_['error_token']     = 'Invalid token session. Please login again.';
+
+// B/C
+$_['entry_username']  = 'Username';
+$_['error_login']     = 'No match for Username and/or Password.';

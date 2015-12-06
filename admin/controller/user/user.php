@@ -548,18 +548,18 @@ class ControllerUserUser extends Controller {
 		}
 
 		if (utf8_strlen($this->request->post['email']) < 3) {
-			$this->error['email'] = $this->language->get('error_email');
+			$this->error['email'] = $this->language->get('error_email_short');
 		}
 
 		$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
 
 		if (!isset($this->request->get['user_id'])) {
 			if ($user_info) {
-				$this->error['warning'] = $this->language->get('error_exists');
+				$this->error['warning'] = $this->language->get('error_email_exists');
 			}
 		} else {
 			if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
-				$this->error['warning'] = $this->language->get('error_exists');
+				$this->error['warning'] = $this->language->get('error_email_exists');
 			}
 		}
 
