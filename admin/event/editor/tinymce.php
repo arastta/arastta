@@ -1,12 +1,13 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class EventEditorTinymce extends Event {
+class EventEditorTinymce extends Event
+{
     public $menu = array(
         'edit'          => array('insertfile', 'undo', 'redo'),
         'styleselect'   => array('styleselect'),
@@ -28,7 +29,8 @@ class EventEditorTinymce extends Event {
 
     public $other_options = array();
 
-    public function preAdminEditor() {
+    public function preAdminEditor()
+    {
         $editor = $this->config->get('config_text_editor');
 
         if ($editor != 'tinymce') {
@@ -42,9 +44,9 @@ class EventEditorTinymce extends Event {
 
         if (is_file(DIR_ADMIN . 'view/javascript/tinymce/langs/' . $this->config->get('config_language_dir') . '.js')) {
             $editor_language = $this->config->get('config_language_dir');
-        } else if (is_file(DIR_ADMIN . 'view/javascript/tinymce/langs/' . $lang_code . '.js')) {
+        } elseif (is_file(DIR_ADMIN . 'view/javascript/tinymce/langs/' . $lang_code . '.js')) {
             $editor_language = $lang_code;
-        } else if (is_file(DIR_ADMIN . 'view/javascript/tinymce/langs/' . $lang_tag . '.js')) {
+        } elseif (is_file(DIR_ADMIN . 'view/javascript/tinymce/langs/' . $lang_tag . '.js')) {
             $editor_language = $lang_tag;
         }
 

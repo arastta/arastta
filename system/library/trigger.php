@@ -1,14 +1,15 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 use Symfony\Component\Finder\Finder;
 
-class Trigger extends Object {
+class Trigger extends Object
+{
 
     protected $registry;
     protected $stop = false;
@@ -17,27 +18,33 @@ class Trigger extends Object {
     protected $add_listeners = array();
     protected $skip_listeners = array();
 
-    public function __construct($registry) {
+    public function __construct($registry)
+    {
         $this->registry = $registry;
     }
 
-    public function __get($key) {
+    public function __get($key)
+    {
         return $this->registry->get($key);
     }
 
-    public function __set($key, $value) {
+    public function __set($key, $value)
+    {
         $this->registry->set($key, $value);
     }
 
-    public function addFolder($folder) {
+    public function addFolder($folder)
+    {
         $this->folders[] = $folder;
     }
 
-    public function addListener($event, $path) {
+    public function addListener($event, $path)
+    {
         $this->add_listeners[$event][] = $path;
     }
 
-    public function skipListener($event, $path) {
+    public function skipListener($event, $path)
+    {
         $this->skip_listeners[$event][] = $path;
     }
 
@@ -52,7 +59,8 @@ class Trigger extends Object {
      *
      * @since   1.0
      */
-    public function fire($event, $args = array()) {
+    public function fire($event, $args = array())
+    {
         $result = array();
 
         $this->set('stop', false);
@@ -82,7 +90,8 @@ class Trigger extends Object {
         return $result;
     }
 
-    public function loadListeners($event) {
+    public function loadListeners($event)
+    {
         if (!empty($this->listeners[$event])) {
             return;
         }
@@ -116,7 +125,8 @@ class Trigger extends Object {
         }
     }
 
-    public function getFolderListeners() {
+    public function getFolderListeners()
+    {
         $listeners = array();
 
         if (empty($this->folders)) {
@@ -145,7 +155,8 @@ class Trigger extends Object {
         return $listeners;
     }
 
-    public function getCallbackListeners() {
+    public function getCallbackListeners()
+    {
         $listeners = array();
 
         $folder = $this->getCallbackFolder();
@@ -167,14 +178,15 @@ class Trigger extends Object {
         return $listeners;
     }
 
-    public function getCallbackFolder() {
+    public function getCallbackFolder()
+    {
         $class = '';
 
         //get the trace
         $trace = debug_backtrace();
 
         // Get the class that is asking for who awoke it
-        $trace_class = (isset($trace[4]['class']) ? $trace[4]['class'] : NULL);
+        $trace_class = (isset($trace[4]['class']) ? $trace[4]['class'] : null);
 
         // +4 to i cos we have to account for calling this function
         for ($i = 4; $i < count($trace); $i++) {
@@ -202,7 +214,8 @@ class Trigger extends Object {
         return $class;
     }
 
-    public function getEventMethod($event) {
+    public function getEventMethod($event)
+    {
         $method = '';
 
         $tmp = explode('.', $event);
@@ -214,8 +227,7 @@ class Trigger extends Object {
 
             if ($i == 0) {
                 $method .= $tmp[$i];
-            }
-            else {
+            } else {
                 $method .= ucfirst($tmp[$i]);
             }
         }

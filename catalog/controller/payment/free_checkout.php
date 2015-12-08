@@ -1,31 +1,31 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 class ControllerPaymentFreeCheckout extends Controller {
-	public function index() {
-		$data['button_confirm'] = $this->language->get('button_confirm');
-		
-		$data['text_loading'] = $this->language->get('text_loading');
+    public function index() {
+        $data['button_confirm'] = $this->language->get('button_confirm');
+        
+        $data['text_loading'] = $this->language->get('text_loading');
 
-		$data['continue'] = $this->url->link('checkout/success');
+        $data['continue'] = $this->url->link('checkout/success');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/free_checkout.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/free_checkout.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/free_checkout.tpl', $data);
-		}
-	}
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/free_checkout.tpl')) {
+            return $this->load->view($this->config->get('config_template') . '/template/payment/free_checkout.tpl', $data);
+        } else {
+            return $this->load->view('default/template/payment/free_checkout.tpl', $data);
+        }
+    }
 
-	public function confirm() {
-		if ($this->session->data['payment_method']['code'] == 'free_checkout') {
-			$this->load->model('checkout/order');
+    public function confirm() {
+        if ($this->session->data['payment_method']['code'] == 'free_checkout') {
+            $this->load->model('checkout/order');
 
-			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('free_checkout_order_status_id'));
-		}
-	}
+            $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('free_checkout_order_status_id'));
+        }
+    }
 }

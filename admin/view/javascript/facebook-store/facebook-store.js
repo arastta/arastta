@@ -37,16 +37,16 @@ var FaceBook = function() {
                     sort_order_value = $(this).find('.mblock').length;
 
                     var html  = '<div class="mblock ui-draggable ui-draggable-handle" data-code="' + data_code + '">';
-                        html += ' 	<div class="mblock-header">';
-                        html += ' 		<div class="mblock-header-title"><i class="fa fa-arrows-alt"></i><span class="module-name">' + ev['draggable']['text']() + '</span></div>';
-                        html += '	</div>';
-                        html += '	<div class="mblock-control-menu ui-sortable-handle">';
-                        html += '		<div class="mblock-action pull-right">';
-                        html += '			<a class="btn btn-xs btn-remove" onclick="confirm(\'' + confirm_text + '\')  ? removeFeed($(this)) : false;"><i class="fa fa-trash-o"></i></a>';
-                        html += '		</div>';
-                        html += '	</div>';
-                        html += '	<input type="hidden" name="facebook_store_feed[]" value="' + data_code + '"/>';
-                        html += '</div>';
+                    html += ' 	<div class="mblock-header">';
+                    html += ' 		<div class="mblock-header-title"><i class="fa fa-arrows-alt"></i><span class="module-name">' + ev['draggable']['text']() + '</span></div>';
+                    html += '	</div>';
+                    html += '	<div class="mblock-control-menu ui-sortable-handle">';
+                    html += '		<div class="mblock-action pull-right">';
+                    html += '			<a class="btn btn-xs btn-remove" onclick="confirm(\'' + confirm_text + '\')  ? removeFeed($(this)) : false;"><i class="fa fa-trash-o"></i></a>';
+                    html += '		</div>';
+                    html += '	</div>';
+                    html += '	<input type="hidden" name="facebook_store_feed[]" value="' + data_code + '"/>';
+                    html += '</div>';
 
                     $(this).append(html);
                 }
@@ -239,16 +239,16 @@ function addProduct(product_id) {
             sort_order_value = $(this).find('.mblock').length;
 
             var html  = '<div class="mblock ui-draggable ui-draggable-handle" data-code="product-' + json['product_id'] + '">';
-                html += ' 	<div class="mblock-header">';
-                html += ' 		<div class="mblock-header-title"><i class="fa fa-arrows-alt"></i><span class="module-name">' + json['name'] + '</span></div>';
-                html += '	</div>';
-                html += '	<div class="mblock-control-menu ui-sortable-handle">';
-                html += '		<div class="mblock-action pull-right">';
-                html += '			<a class="btn btn-xs btn-remove" onclick="confirm(\'' + confirm_text + '\')  ? removeFeed($(this)) : false;"><i class="fa fa-trash-o"></i></a>';
-                html += '		</div>';
-                html += '	</div>';
-                html += '	<input type="hidden" name="facebook_store_feed[]" value="product-' + json['product_id'] + '"/>';
-                html += '</div>';
+            html += ' 	<div class="mblock-header">';
+            html += ' 		<div class="mblock-header-title"><i class="fa fa-arrows-alt"></i><span class="module-name">' + json['name'] + '</span></div>';
+            html += '	</div>';
+            html += '	<div class="mblock-control-menu ui-sortable-handle">';
+            html += '		<div class="mblock-action pull-right">';
+            html += '			<a class="btn btn-xs btn-remove" onclick="confirm(\'' + confirm_text + '\')  ? removeFeed($(this)) : false;"><i class="fa fa-trash-o"></i></a>';
+            html += '		</div>';
+            html += '	</div>';
+            html += '	<input type="hidden" name="facebook_store_feed[]" value="product-' + json['product_id'] + '"/>';
+            html += '</div>';
 
             $('.dashed').append(html);
 

@@ -1,13 +1,15 @@
 <?php
 /**
  * @package     Arastta eCommerce
- * @copyright   Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
  * @license     GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerLanguage extends Controller {
+class ControllerLanguage extends Controller
+{
 
-    public function index() {
+    public function index()
+    {
         $this->load->model('language');
 
         $data = $this->language->all();
@@ -22,7 +24,8 @@ class ControllerLanguage extends Controller {
         $this->response->setOutput($this->load->view('language.tpl', $data));
     }
 
-    public function save() {
+    public function save()
+    {
         $this->load->model('language');
 
         $json = $this->validate();
@@ -41,7 +44,8 @@ class ControllerLanguage extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    protected function validate() {
+    protected function validate()
+    {
         $json = array();
 
         if (empty($this->request->post['lang_code'])) {

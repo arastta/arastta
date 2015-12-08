@@ -8,14 +8,14 @@
 <?php if (!$shipping_method['error']) { ?>
 <?php foreach ($shipping_method['quote'] as $quote) { ?>
 <div class="radio">
-  <label>
-    <?php if ($quote['code'] == $code || !$code) { ?>
-    <?php $code = $quote['code']; ?>
-    <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" checked="checked" />
-    <?php } else { ?>
-    <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" />
-    <?php } ?>
-    <?php echo $quote['title']; ?> - <?php echo $quote['text']; ?></label>
+    <label>
+        <?php if ($quote['code'] == $code || !$code) { ?>
+        <?php $code = $quote['code']; ?>
+        <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" checked="checked" />
+        <?php } else { ?>
+        <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" />
+        <?php } ?>
+        <?php echo $quote['title']; ?> - <?php echo $quote['text']; ?></label>
 </div>
 <?php } ?>
 <?php } else { ?>

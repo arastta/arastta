@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -20,15 +20,15 @@ $_['text_preview']           = 'View Information';
 
 // Column
 $_['column_title']           = 'Information Title';
-$_['column_sort_order']	     = 'Sort Order';
+$_['column_sort_order']      = 'Sort Order';
 $_['column_action']          = 'Action';
 
 // Entry
 $_['entry_title']            = 'Information Title';
 $_['entry_description']      = 'Description';
 $_['entry_store']            = 'Stores';
-$_['entry_meta_title'] 	     = 'Meta Tag Title';
-$_['entry_meta_keyword'] 	 = 'Meta Tag Keywords';
+$_['entry_meta_title']       = 'Meta Tag Title';
+$_['entry_meta_keyword']     = 'Meta Tag Keywords';
 $_['entry_meta_description'] = 'Meta Tag Description';
 $_['entry_seo_url']          = 'SEO URL';
 $_['entry_bottom']           = 'Bottom';
@@ -51,4 +51,4 @@ $_['error_account']          = 'Warning: This information page cannot be deleted
 $_['error_checkout']         = 'Warning: This information page cannot be deleted as it is currently assigned as the store checkout terms!';
 $_['error_affiliate']        = 'Warning: This information page cannot be deleted as it is currently assigned as the store affiliate terms!';
 $_['error_return']           = 'Warning: This information page cannot be deleted as it is currently assigned as the store return terms!';
-$_['error_store']            = 'Warning: This information page cannot be deleted as it is currently used by %s stores!';
+$_['error_store']            = 'Warning: This information page cannot be deleted as its currently used by %s stores!';

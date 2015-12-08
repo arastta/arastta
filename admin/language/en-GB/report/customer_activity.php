@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -13,7 +13,7 @@ $_['heading_title']       = 'Customer Activity Report';
 $_['text_list']           = 'Customer Activity List';
 $_['text_address_add']    = '<a href="customer_id=%d">%s</a> added a new address.';
 $_['text_address_edit']   = '<a href="customer_id=%d">%s</a> updated their address.';
-$_['text_address_delete'] = '<a href="customer_id=%d">%s</a> deleted one of their addresses.';
+$_['text_address_delete'] = '<a href="customer_id=%d">%s</a> deleted one of their address.';
 $_['text_edit']           = '<a href="customer_id=%d">%s</a> updated their account details.';
 $_['text_forgotten']      = '<a href="customer_id=%d">%s</a> requested a new password.';
 $_['text_login']          = '<a href="customer_id=%d">%s</a> logged in.';

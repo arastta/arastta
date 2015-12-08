@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -24,7 +24,7 @@ $_['text_status_pending']                  = 'Pending';
 $_['text_transactions']                    = 'Transactions';
 $_['text_cancel_confirm']                  = 'Profile\'s cancellation cannot be undone! Are you sure want to do this?';
 $_['text_transaction_date_added']          = 'Date added';
-$_['text_transaction_payment'] 			   = 'Payment';
+$_['text_transaction_payment']             = 'Payment';
 $_['text_transaction_outstanding_payment'] = 'Outstanding payment';
 $_['text_transaction_skipped']             = 'Payment skipped';
 $_['text_transaction_failed']              = 'Payment failed';

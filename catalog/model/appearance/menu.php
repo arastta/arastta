@@ -1,14 +1,16 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class ModelAppearanceMenu extends Model {
+class ModelAppearanceMenu extends Model
+{
 
-    public function getMenus() {
+    public function getMenus()
+    {
         $data = array();
 
         $store_id = $this->config->get('config_store_id', 0);
@@ -26,7 +28,8 @@ class ModelAppearanceMenu extends Model {
         return $data;
     }
 
-    public function getChildMenus() {
+    public function getChildMenus()
+    {
         $data = array();
 
         $store_id = $this->config->get('config_store_id', 0);
@@ -43,5 +46,4 @@ class ModelAppearanceMenu extends Model {
 
         return $data;
     }
-	
 }

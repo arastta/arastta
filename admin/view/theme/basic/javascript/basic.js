@@ -1,11 +1,11 @@
 $(document).ready(function() {
     $(document).on('click', '.panel-chevron', function(e) {
         e.preventDefault();
-				
-		var content =  $(this).parent().parent().parent().find('.panel-body');
-		
-		$(content).slideToggle();
-		$(this).toggleClass('rotate');
+
+        var content =  $(this).parent().parent().parent().find('.panel-body');
+
+        $(content).slideToggle();
+        $(this).toggleClass('rotate');
     });
 
     $('input[type=\'checkbox\']').click (function() {
@@ -85,9 +85,9 @@ var BasicImage = function() {
                     var image = $(ev['draggable']).children('img').attr('data-code');
 
                     var html  = '<a href="" id="thumb-image" data-toggle="image" class="img-thumbnail">';
-                        html += '   <img src="' + image_full_path + '" alt="" title="" data-placeholder="' + image_full_path + '" />';
-                        html += '</a>';
-                        html += '<input type="hidden" name="image" value="' + image + '" id="input-image" />';
+                    html += '   <img src="' + image_full_path + '" alt="" title="" data-placeholder="' + image_full_path + '" />';
+                    html += '</a>';
+                    html += '<input type="hidden" name="image" value="' + image + '" id="input-image" />';
 
                     $(this).html(html);
                 }

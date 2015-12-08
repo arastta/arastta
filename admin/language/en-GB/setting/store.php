@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -28,7 +28,7 @@ $_['text_secure_all']                  = 'All Site (Catalog + Admin)';
 
 // Column
 $_['column_name']                      = 'Store Name';
-$_['column_url']	                   = 'Store URL';
+$_['column_url']                       = 'Store URL';
 $_['column_action']                    = 'Action';
 
 // Entry
@@ -54,7 +54,7 @@ $_['entry_country']                    = 'Country';
 $_['entry_zone']                       = 'Region / State';
 $_['entry_language']                   = 'Language';
 $_['entry_currency']                   = 'Currency';
-$_['entry_product_limit'] 	           = 'Default Items Per Page (Catalog)';
+$_['entry_product_limit']              = 'Default Items Per Page (Catalog)';
 $_['entry_product_description_length'] = 'List Description Limit (Catalog)';
 $_['entry_tax']                        = 'Display Prices With Tax';
 $_['entry_tax_default']                = 'Use Store Tax Address';
@@ -93,10 +93,10 @@ $_['help_open']                        = 'Fill in your stores opening times.';
 $_['help_comment']                     = 'This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.';
 $_['help_location']                    = 'The different store locations you have that you want displayed on the contact us form.';
 $_['help_currency']                    = 'Change the default currency. Clear your browser cache to see the change and reset your existing cookie.';
-$_['help_product_limit'] 	           = 'Determines how many catalog items are shown per page (products, categories, etc)';
+$_['help_product_limit']               = 'Determines how many catalog items are shown per page (products, categories, etc)';
 $_['help_product_description_length']  = 'In the list view, short description character limit (categories, special etc)';
-$_['help_tax_default']                 = 'Use the store address to calculate taxes if customer is not logged in. You can choose to use the store address for the customer\'s shipping or payment address.';
-$_['help_tax_customer']                = 'Use the customers default address when they login to calculate taxes. You can choose to use the default address for the customer\'s shipping or payment address.';
+$_['help_tax_default']                 = 'Use the store address to calculate taxes if no one is logged in. You can choose to use the store address for the customers shipping or payment address.';
+$_['help_tax_customer']                = 'Use the customers default address when they login to calculate taxes. You can choose to use the default address for the customers shipping or payment address.';
 $_['help_customer_group']              = 'Default customer group.';
 $_['help_customer_group_display']      = 'Display customer groups that new customers can select to use such as wholesale and business when signing up.';
 $_['help_customer_price']              = 'Only show prices when a customer is logged in.';
@@ -119,7 +119,7 @@ $_['error_email']                      = 'E-Mail Address does not appear to be v
 $_['error_telephone']                  = 'Telephone must be between 3 and 32 characters!';
 $_['error_url']                        = 'Store URL required!';
 $_['error_meta_title']                 = 'Title must be between 3 and 32 characters!';
-$_['error_limit']       	           = 'Limit required!';
+$_['error_limit']                      = 'Limit required!';
 $_['error_customer_group_display']     = 'You must include the default customer group if you are going to use this feature!';
 $_['error_image_thumb']                = 'Product Image Thumb Size dimensions required!';
 $_['error_image_popup']                = 'Product Image Popup Size dimensions required!';

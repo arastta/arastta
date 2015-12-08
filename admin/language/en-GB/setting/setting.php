@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -32,12 +32,12 @@ $_['text_google_captcha']              = 'Google reCAPTCHA';
 $_['text_smtp_encryption_n']           = 'None';
 $_['text_smtp_encryption_s']           = 'SSL';
 $_['text_smtp_encryption_t']           = 'TLS';
-$_['text_common']           		   = 'Common';
-$_['text_summernote']        		   = 'Summernote';
-$_['text_tinymce']  		           = 'TinyMCE';
-$_['text_seo_urls']  		           = 'SEO URLs';
-$_['text_seo_metadata']  		       = 'Metadata';
-$_['text_seo_sitemap']  		       = 'Sitemap';
+$_['text_common']                      = 'Common';
+$_['text_summernote']                  = 'Summernote';
+$_['text_tinymce']                     = 'TinyMCE';
+$_['text_seo_urls']                    = 'SEO URLs';
+$_['text_seo_metadata']                = 'Metadata';
+$_['text_seo_sitemap']                 = 'Sitemap';
 $_['text_seo_category_last']           = 'Only Last Category';
 $_['text_seo_category_all']            = 'All Parent + Child Categories';
 $_['text_seo_www_red_with']            = 'With www';
@@ -153,7 +153,7 @@ $_['entry_fraud_status']               = 'MaxMind Fraud Order Status';
 $_['entry_secure']                     = 'Use SSL';
 $_['entry_shared']                     = 'Use Shared Sessions';
 $_['entry_robots']                     = 'Robots';
-$_['entry_file_max_size']	           = 'Max File Size';
+$_['entry_file_max_size']              = 'Max File Size';
 $_['entry_file_ext_allowed']           = 'Allowed File Extensions';
 $_['entry_file_mime_allowed']          = 'Allowed File Mime Types';
 $_['entry_maintenance']                = 'Maintenance Mode';
@@ -206,16 +206,16 @@ $_['help_comment']                     = 'This field is for any special notes yo
 $_['help_location']                    = 'The different store locations you have that you want displayed on the contact us form.';
 $_['help_currency']                    = 'Change the default currency. Clear your browser cache to see the change and reset your existing cookie.';
 $_['help_currency_auto']               = 'Set your store to automatically update currencies daily.';
-$_['help_product_limit'] 	           = 'Determines how many catalog items are shown per page (products, categories, etc).';
+$_['help_product_limit']               = 'Determines how many catalog items are shown per page (products, categories, etc).';
 $_['help_product_description_length']  = 'In the list view, short description character limit (categories, special etc).';
-$_['help_limit_admin']   	           = 'Determines how many admin items are shown per page (orders, customers, etc).';
+$_['help_limit_admin']                 = 'Determines how many admin items are shown per page (orders, customers, etc).';
 $_['help_product_count']               = 'Show the number of products inside the subcategories in the storefront header category menu. Be warned, this will cause an extreme performance hit for stores with a lot of subcategories!';
-$_['help_review']       	           = 'Enable/Disable new review entry and display of existing reviews.';
-$_['help_review_guest']       	       = 'Allow guests to post reviews.';
+$_['help_review']                      = 'Enable/Disable new review entry and display of existing reviews.';
+$_['help_review_guest']                = 'Allow guests to post reviews.';
 $_['help_review_mail']                 = 'Send an email to the store owner when a new review is created.';
 $_['help_voucher_min']                 = 'Minimum amount a customer can purchase a voucher for.';
 $_['help_voucher_max']                 = 'Maximum amount a customer can purchase a voucher for.';
-$_['help_tax_default']                 = 'Use the store address to calculate taxes if customer is not logged in. You can choose to use the store address for the customer\'s shipping or payment address.';
+$_['help_tax_default']                 = 'Use the store address to calculate taxes if no one is logged in. You can choose to use the store address for the customer\'s shipping or payment address.';
 $_['help_tax_customer']                = 'Use the customer\'s default address when they login to calculate taxes. You can choose to use the default address for the customer\'s shipping or payment address.';
 $_['help_customer_online']             = 'Track customers online via the customer reports section.';
 $_['help_customer_group']              = 'Default customer group.';
@@ -256,7 +256,7 @@ $_['help_fraud_status']                = 'Orders over your set score will be ass
 $_['help_secure']                      = 'To use SSL check with your host if a SSL certificate is installed.';
 $_['help_shared']                      = 'Try to share the session cookie between stores so the cart can be passed between different domains.';
 $_['help_robots']                      = 'A list of web crawler user agents that shared sessions will not be used with. Use separate lines for each user agent.';
-$_['help_file_max_size']		       = 'The maximum image file size you can upload in Image Manager. Enter as byte.';
+$_['help_file_max_size']               = 'The maximum image file size you can upload in Image Manager. Enter as byte.';
 $_['help_file_ext_allowed']            = 'Add which file extensions are allowed to be uploaded. Use a new line for each value.';
 $_['help_file_mime_allowed']           = 'Add which file mime types are allowed to be uploaded. Use a new line for each value.';
 $_['help_maintenance']                 = 'Prevents customers from browsing your store. They will instead see a maintenance message. If logged in as admin, you will see the store as normal.';
@@ -306,8 +306,8 @@ $_['error_address']                    = 'Store Address must be between 10 and 2
 $_['error_email']                      = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']                  = 'Telephone must be between 3 and 32 characters!';
 $_['error_meta_title']                 = 'Title must be between 3 and 32 characters!';
-$_['error_limit']       	           = 'Limit required!';
-$_['error_login_attempts']       	   = 'Login Attempts must be greater than 0!';
+$_['error_limit']                      = 'Limit required!';
+$_['error_login_attempts']             = 'Login Attempts must be greater than 0!';
 $_['error_customer_group_display']     = 'You must include the default customer group if you are going to use this feature!';
 $_['error_voucher_min']                = 'Minimum voucher amount required!';
 $_['error_voucher_max']                = 'Maximum voucher amount required!';

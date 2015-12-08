@@ -1,26 +1,30 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class ModelSaleInvoice extends Model {
+class ModelSaleInvoice extends Model
+{
 
-	public function getInvoice($invoice_id) {
+    public function getInvoice($invoice_id)
+    {
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "invoice WHERE invoice_id = '" . (int)$invoice_id . "'");
 
         return $query->row;
     }
 
-	public function getInvoiceByOrder($order_id) {
+    public function getInvoiceByOrder($order_id)
+    {
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "invoice WHERE order_id = '" . (int)$order_id . "'");
 
         return $query->row;
     }
 
-    public function getOrders($data = array()) {
+    public function getOrders($data = array())
+    {
         $sql = "SELECT o.order_id, CONCAT(o.firstname, ' ', o.lastname) AS customer, (SELECT os.name FROM " . DB_PREFIX . "order_status os WHERE os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, o.currency_code, o.currency_value, o.date_added AS order_date FROM `" . DB_PREFIX . "order` o";
 
         if (isset($data['filter_order_status'])) {
@@ -94,7 +98,8 @@ class ModelSaleInvoice extends Model {
         return $query->rows;
     }
 
-    public function getInvoices($data = array()) {
+    public function getInvoices($data = array())
+    {
         $sql = "SELECT i.invoice_id, i.invoice_date, o.order_id, CONCAT(o.invoice_prefix, '', o.invoice_no) AS invoice_number, CONCAT(o.firstname, ' ', o.lastname) AS customer, (SELECT os.name FROM " . DB_PREFIX . "order_status os WHERE os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, o.total, o.currency_code, o.currency_value, o.date_added AS order_date FROM `" . DB_PREFIX . "invoice` AS i LEFT JOIN `" . DB_PREFIX . "order` AS o ON i.order_id = o.order_id";
 
         if (isset($data['filter_order_status'])) {
@@ -174,7 +179,8 @@ class ModelSaleInvoice extends Model {
         return $query->rows;
     }
 
-    public function getTotalInvoices($data = array()) {
+    public function getTotalInvoices($data = array())
+    {
         $sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "invoice` AS i LEFT JOIN `" . DB_PREFIX . "order` AS o ON i.order_id = o.order_id";
 
         if (!empty($data['filter_order_status'])) {
@@ -222,7 +228,8 @@ class ModelSaleInvoice extends Model {
         return $query->row['total'];
     }
 
-    public function getHistories($invoice_id, $start = 0, $limit = 10) {
+    public function getHistories($invoice_id, $start = 0, $limit = 10)
+    {
         if ($start < 0) {
             $start = 0;
         }
@@ -236,13 +243,15 @@ class ModelSaleInvoice extends Model {
         return $query->rows;
     }
 
-    public function getTotalHistories($invoice_id) {
+    public function getTotalHistories($invoice_id)
+    {
         $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "invoice_history WHERE invoice_id = '" . (int)$invoice_id . "'");
 
         return $query->row['total'];
     }
 
-    public function addHistory($data) {
+    public function addHistory($data)
+    {
         $this->db->query("INSERT INTO " . DB_PREFIX . "invoice_history SET `invoice_id` = '" . (int) $data['invoice_id'] . "', `comment` = '" . $this->db->escape($data['comment']) . "', `notify` = '" . (int) $data['notify'] . "', `date_added` = NOW()");
 
         $history_id = $this->db->getLastId();

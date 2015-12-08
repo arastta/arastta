@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -21,11 +21,11 @@ $_['text_content_bottom'] = 'Content Bottom';
 $_['text_column_left']    = 'Column Left';
 $_['text_column_right']   = 'Column Right';
 $_['text_module']         = 'Modules';
-$_['text_header']   	  = 'Header';
-$_['text_footer']   	  = 'Footer';
+$_['text_header']         = 'Header';
+$_['text_footer']         = 'Footer';
 $_['text_drag_and_drop']  = 'Drag &amp; drop modules here';
-$_['text_confirm'] 		  = 'Are you sure?';
-$_['text_close'] 		  = 'Close';
+$_['text_confirm']        = 'Are you sure?';
+$_['text_close']          = 'Close';
 
 // Button
 $_['button_new']         = 'New';

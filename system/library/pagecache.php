@@ -1,12 +1,13 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class Pagecache extends Object {
+class Pagecache extends Object
+{
 
     protected $key = null;
     protected $uri = null;
@@ -15,7 +16,8 @@ class Pagecache extends Object {
     protected $request = null;
     protected $session = null;
 
-    public function __construct($registry) {
+    public function __construct($registry)
+    {
         $this->uri = $registry->get('uri');
         $this->cache = $registry->get('cache');
         $this->config = $registry->get('config');
@@ -29,7 +31,8 @@ class Pagecache extends Object {
         $this->key = $this->getKey();
     }
 
-    public function getPage() {
+    public function getPage()
+    {
         if (!$this->canCache()) {
             return false;
         }
@@ -45,7 +48,8 @@ class Pagecache extends Object {
         return false;
     }
 
-    public function setPage($response) {
+    public function setPage($response)
+    {
         if (!$this->canCache()) {
             return false;
         }
@@ -58,17 +62,16 @@ class Pagecache extends Object {
         $this->cache->set($this->key, $response);
     }
 
-    public function getKey() {
+    public function getKey()
+    {
         $language = '_'.$this->config->get('config_language');
 
         // Currency class not instantiated yet so we should get data from GET or SESSION or CONFIG
         if (!empty($this->request->get['currency'])) {
             $currency = '_'.$this->request->get['currency'];
-        }
-        else if (!empty($this->session->data['currency'])) {
+        } elseif (!empty($this->session->data['currency'])) {
             $currency = '_'.$this->session->data['currency'];
-        }
-        else {
+        } else {
             $currency = '_'.$this->config->get('config_currency');
         }
 
@@ -77,7 +80,8 @@ class Pagecache extends Object {
         return $key;
     }
 
-    public function canCache() {
+    public function canCache()
+    {
         // Don't cache if disabled
         if (!$this->config->get('config_pagecache', 0)) {
             return false;
@@ -99,7 +103,7 @@ class Pagecache extends Object {
         }
 
         // Don't cache if GET has affiliate, tracking, redirect
-        if (!empty($this->request->get['affiliate']) or !empty($this->request->get['tracking']) or !empty($this->request->get['redirect']))  {
+        if (!empty($this->request->get['affiliate']) or !empty($this->request->get['tracking']) or !empty($this->request->get['redirect'])) {
             return false;
         }
 

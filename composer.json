@@ -1,12 +1,12 @@
 {
-	"name": "arastta/arastta",
+    "name": "arastta/arastta",
     "type": "project",
     "description": "Arastta eCommerce",
     "keywords": ["arastta", "ecommerce"],
     "homepage": "https://github.com/arastta/arastta",
     "license": "GPL-3.0+",
     "config": {
-      "vendor-dir": "system/vendor"
+        "vendor-dir": "system/vendor"
     },
     "require": {
         "php": ">=5.3.10",
@@ -17,13 +17,14 @@
         "joomla/cache": "1.*@dev",
         "joomla/profiler": "1.*@dev",
         "joomla/uri": "1.*@dev",
-        "psr/log": "1.0.0",       
-		"kartik-v/bootstrap-fileinput": "4.2.*",
+        "psr/log": "1.0.0",
+        "kartik-v/bootstrap-fileinput": "4.2.*",
         "symfony/console": "2.6.*",
         "symfony/debug": "2.6.*",
         "symfony/dom-crawler": "2.6.*",
         "symfony/filesystem": "2.6.*",
         "symfony/finder": "2.6.*",
         "swiftmailer/swiftmailer": "5.4.*"
+
     }
 }

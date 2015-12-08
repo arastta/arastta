@@ -1,14 +1,16 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerCheckoutTotals extends Controller {
-	public function index() {
-		$this->load->language('checkout/cart');
+class ControllerCheckoutTotals extends Controller
+{
+    public function index()
+    {
+        $this->load->language('checkout/cart');
 
         // Totals
         $this->load->model('extension/extension');
@@ -60,5 +62,5 @@ class ControllerCheckoutTotals extends Controller {
         } else {
             $this->response->setOutput($this->load->view('default/template/checkout/totals.tpl', $data));
         }
-	}
+    }
 }

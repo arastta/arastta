@@ -1,13 +1,15 @@
 <?php
 /**
  * @package     Arastta eCommerce
- * @copyright   Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
  * @license     GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerFinish extends Controller {
+class ControllerFinish extends Controller
+{
 
-	public function index() {
+    public function index()
+    {
         $data = $this->language->all();
 
         $data['store'] = HTTP_CATALOG;
@@ -19,14 +21,15 @@ class ControllerFinish extends Controller {
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
-	}
+    }
 
-	public function removeInstall() {
-		$this->load->model('finish');
+    public function removeInstall()
+    {
+        $this->load->model('finish');
 
-		$json['success'] = $this->model_finish->removeInstall();
+        $json['success'] = $this->model_finish->removeInstall();
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
 }

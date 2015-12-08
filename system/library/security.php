@@ -1,17 +1,19 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class Security extends Object {
+class Security extends Object
+{
 
     protected $uri;
     protected $config;
 
-    public function __construct($registry = '') {
+    public function __construct($registry = '')
+    {
         if (empty($registry)) {
             return;
         }
@@ -20,7 +22,8 @@ class Security extends Object {
         $this->config = $registry->get('config');
     }
 
-    public function checkRequest($data, $request = 'get') {
+    public function checkRequest($data, $request = 'get')
+    {
         if (!is_object($this->config)) {
             return;
         }
@@ -28,23 +31,24 @@ class Security extends Object {
         $uri = urldecode(http_build_query($data));
 
         if ($this->config->get('config_sec_lfi')) {
-            $this->_request('lfi', $request, $uri);
+            $this->request('lfi', $request, $uri);
         }
 
         if ($this->config->get('config_sec_rfi')) {
-            $this->_request('rfi', $request, $uri);
+            $this->request('rfi', $request, $uri);
         }
 
         if ($this->config->get('config_sec_sql')) {
-            $this->_request('sql', $request, $uri);
+            $this->request('sql', $request, $uri);
         }
 
         if ($this->config->get('config_sec_xss')) {
-            $this->_request('xss', $request, $uri);
+            $this->request('xss', $request, $uri);
         }
     }
 
-    public function _request($type, $request, $uri) {
+    public function request($type, $request, $uri)
+    {
         $config = $this->config->get('config_sec_'.$type);
 
         if (!is_array($config) or !in_array($request, $config)) {
@@ -58,7 +62,8 @@ class Security extends Object {
         }
     }
 
-    public function isLFI($uri) {
+    public function isLFI($uri)
+    {
         if (preg_match('#\.\/#is', $uri, $match)) {
             return true;
         }
@@ -66,7 +71,8 @@ class Security extends Object {
         return false;
     }
 
-    public function isRFI($uri) {
+    public function isRFI($uri)
+    {
         static $exceptions;
 
         if (!is_array($exceptions)) {
@@ -81,7 +87,7 @@ class Security extends Object {
             $exceptions[] = 'http://&';
             $exceptions[] = 'https://&';
 
-			// Remove arastta.pro links for PayPal Express In-Context Checkout
+            // Remove arastta.pro links for PayPal Express In-Context Checkout
             $exceptions[] = 'http://arastta.pro';
             $exceptions[] = 'https://arastta.pro';
         }
@@ -95,7 +101,8 @@ class Security extends Object {
         return false;
     }
 
-    public function isSQL($uri) {
+    public function isSQL($uri)
+    {
         if (preg_match('#[\d\W](union select|union join|union distinct)[\d\W]#is', $uri, $match)) {
             return true;
         }
@@ -108,7 +115,8 @@ class Security extends Object {
         return false;
     }
 
-    public function isXSS($uri) {
+    public function isXSS($uri)
+    {
         if (preg_match('#<[^>]*\w*\"?[^>]*>#is', $uri, $match)) {
             return true;
         }

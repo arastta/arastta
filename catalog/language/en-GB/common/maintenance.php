@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -15,7 +15,7 @@ $_['text_maintenance'] = 'Maintenance';
 $_['text_message']     = '<h1 style="text-align:center;">We are currently performing some scheduled maintenance. <br/>We will be back as soon as possible. Please check back soon.</h1>';
 $_['text_login']       = 'Please enter your login details.';
 $_['text_forgotten']   = 'Forgotten Password';
-$_['text_back_to']	   = 'Back to';
+$_['text_back_to']     = 'Back to';
 
 // Entry
 $_['entry_email']      = 'Email';

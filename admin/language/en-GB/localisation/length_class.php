@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -14,7 +14,7 @@ $_['text_success']     = 'Success: You have modified length classes!';
 $_['text_list']        = 'Length Class List';
 $_['text_add']         = 'Add Length Class';
 $_['text_edit']        = 'Edit Length Class';
-$_['text_items'] 	   = 'Items';
+$_['text_items']       = 'Items';
 
 // Column
 $_['column_title']     = 'Length Title';

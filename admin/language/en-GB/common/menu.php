@@ -1,13 +1,13 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
  
 // Heading
-$_['heading_title']    				   = 'Menu';
+$_['heading_title']                    = 'Menu';
 
 // Text
 $_['text_affiliate']                   = 'Affiliates';
@@ -102,8 +102,8 @@ $_['text_order_recurring']             = 'Recurring Orders';
 $_['text_paypal_manage']               = 'PayPal';
 $_['text_paypal_search']               = 'Search';
 $_['text_file_manager']                = 'File Manager';
-$_['text_update']               	   = 'Update';
-$_['text_support']               	   = 'Support';
+$_['text_update']                      = 'Update';
+$_['text_support']                     = 'Support';
 
 $_['text_appearance']                  = 'Appearance';
 $_['text_customizer']                  = 'Customizer';

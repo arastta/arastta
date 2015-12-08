@@ -1,17 +1,19 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
 
-class Admin extends App {
+class Admin extends App
+{
 
-    public function initialise() {
+    public function initialise()
+    {
         // File System
         $this->registry->set('filesystem', new Filesystem());
 
@@ -24,15 +26,13 @@ class Admin extends App {
         // Store
         if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) {
             $store_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`ssl`, 'www.', '') = '" . $this->db->escape('https://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname(dirname($_SERVER['PHP_SELF'])), '/.\\') . '/') . "'");
-        }
-        else {
+        } else {
             $store_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape('http://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname(dirname($_SERVER['PHP_SELF'])), '/.\\') . '/') . "'");
         }
 
         if ($store_query->num_rows) {
             $this->config->set('config_store_id', $store_query->row['store_id']);
-        }
-        else {
+        } else {
             $this->config->set('config_store_id', 0);
         }
 
@@ -42,8 +42,7 @@ class Admin extends App {
         foreach ($query->rows as $setting) {
             if (!$setting['serialized']) {
                 $this->config->set($setting['key'], $setting['value']);
-            }
-            else {
+            } else {
                 $this->config->set($setting['key'], unserialize($setting['value']));
             }
         }
@@ -67,8 +66,7 @@ class Admin extends App {
         if ($this->config->get('config_error_display', 0) == 2) {
             ErrorHandler::register();
             ExceptionHandler::register();
-        }
-        else {
+        } else {
             set_error_handler(array($this, 'errorHandler'));
         }
 
@@ -113,14 +111,15 @@ class Admin extends App {
 
         // SEO
         $this->registry->set('seo', new SEO($this->registry));
-		
+        
         $this->trigger->fire('post.app.initialise');
     }
 
-    public function ecommerce() {
+    public function ecommerce()
+    {
         // Currency
         $this->registry->set('currency', new Currency($this->registry));
-		
+        
         // Email Template
         $this->registry->set('emailtemplate', new Emailtemplate($this->registry));
 
@@ -141,9 +140,10 @@ class Admin extends App {
         $this->trigger->fire('post.app.ecommerce');
     }
 
-    public function dispatch() {
-		# B/C start
-		global $registry;
+    public function dispatch()
+    {
+        # B/C start
+        global $registry;
         $registry = $this->registry;
 
         global $config;
@@ -154,14 +154,14 @@ class Admin extends App {
 
         global $log;
         $log = $this->registry->get('log');
-		# B/C end
+        # B/C end
 
-        if (!$this->_canAccessAdmin()) {
+        if (!$this->canAccessAdmin()) {
             $catalog = Client::isAdmin() ? HTTPS_CATALOG : HTTPS_SERVER;
 
             $this->response->redirect($catalog);
         }
-		
+        
         // Front Controller
         $controller = new Front($this->registry);
 
@@ -184,7 +184,8 @@ class Admin extends App {
         $this->trigger->fire('post.app.dispatch');
     }
 
-    protected function _canAccessAdmin() {
+    protected function canAccessAdmin()
+    {
         if (isset($this->session->data['user_id'])) {
             return true;
         }
