@@ -1,77 +1,77 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright    Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 class ControllerCommonCurrency extends Controller {
-	public function index() {
-		$this->load->language('common/currency');
+    public function index() {
+        $this->load->language('common/currency');
 
-		$data['text_currency'] = $this->language->get('text_currency');
+        $data['text_currency'] = $this->language->get('text_currency');
 
-		$data['action'] = $this->url->link('common/currency/currency', '', $this->request->server['HTTPS']);
+        $data['action'] = $this->url->link('common/currency/currency', '', $this->request->server['HTTPS']);
 
-		$data['code'] = $this->currency->getCode();
+        $data['code'] = $this->currency->getCode();
 
-		$this->load->model('localisation/currency');
+        $this->load->model('localisation/currency');
 
-		$data['currencies'] = array();
+        $data['currencies'] = array();
 
-		$results = $this->model_localisation_currency->getCurrencies();
+        $results = $this->model_localisation_currency->getCurrencies();
 
-		foreach ($results as $result) {
-			if ($result['status']) {
-				$data['currencies'][] = array(
-					'title'        => $result['title'],
-					'code'         => $result['code'],
-					'symbol_left'  => $result['symbol_left'],
-					'symbol_right' => $result['symbol_right']
-				);
-			}
-		}
+        foreach ($results as $result) {
+            if ($result['status']) {
+                $data['currencies'][] = array(
+                    'title'        => $result['title'],
+                    'code'         => $result['code'],
+                    'symbol_left'  => $result['symbol_left'],
+                    'symbol_right' => $result['symbol_right']
+                );
+            }
+        }
 
-		if (!isset($this->request->get['route'])) {
-			$data['redirect'] = $this->url->link('common/home');
-		} else {
-			$url_data = $this->request->get;
+        if (!isset($this->request->get['route'])) {
+            $data['redirect'] = $this->url->link('common/home');
+        } else {
+            $url_data = $this->request->get;
 
-			unset($url_data['_route_']);
+            unset($url_data['_route_']);
 
-			$route = $url_data['route'];
+            $route = $url_data['route'];
 
-			unset($url_data['route']);
+            unset($url_data['route']);
 
-			$url = '';
+            $url = '';
 
-			if ($url_data) {
-				$url = '&' . urldecode(http_build_query($url_data, '', '&'));
-			}
+            if ($url_data) {
+                $url = '&' . urldecode(http_build_query($url_data, '', '&'));
+            }
 
-			$data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
-		}
+            $data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
+        }
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/currency.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/common/currency.tpl', $data);
-		} else {
-			return $this->load->view('default/template/common/currency.tpl', $data);
-		}
-	}
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/currency.tpl')) {
+            return $this->load->view($this->config->get('config_template') . '/template/common/currency.tpl', $data);
+        } else {
+            return $this->load->view('default/template/common/currency.tpl', $data);
+        }
+    }
 
-	public function currency() {
-		if (isset($this->request->post['code'])) {
-			$this->currency->set($this->request->post['code']);
+    public function currency() {
+        if (isset($this->request->post['code'])) {
+            $this->currency->set($this->request->post['code']);
 
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-		}
+            unset($this->session->data['shipping_method']);
+            unset($this->session->data['shipping_methods']);
+        }
 
-		if (isset($this->request->post['redirect'])) {
-			$this->response->redirect($this->request->post['redirect']);
-		} else {
-			$this->response->redirect($this->url->link('common/home'));
-		}
-	}
+        if (isset($this->request->post['redirect'])) {
+            $this->response->redirect($this->request->post['redirect']);
+        } else {
+            $this->response->redirect($this->url->link('common/home'));
+        }
+    }
 }

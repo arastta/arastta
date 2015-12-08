@@ -1,63 +1,63 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright    Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 class ModelSaleCustomerBanIp extends Model {
-	public function addCustomerBanIp($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_ban_ip` SET `ip` = '" . $this->db->escape($data['ip']) . "'");
-		
-		return $this->db->getLastId();
-	}
+    public function addCustomerBanIp($data) {
+        $this->db->query("INSERT INTO `" . DB_PREFIX . "customer_ban_ip` SET `ip` = '" . $this->db->escape($data['ip']) . "'");
+        
+        return $this->db->getLastId();
+    }
 
-	public function editCustomerBanIp($customer_ban_ip_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "customer_ban_ip` SET `ip` = '" . $this->db->escape($data['ip']) . "' WHERE customer_ban_ip_id = '" . (int)$customer_ban_ip_id . "'");
-	}
+    public function editCustomerBanIp($customer_ban_ip_id, $data) {
+        $this->db->query("UPDATE `" . DB_PREFIX . "customer_ban_ip` SET `ip` = '" . $this->db->escape($data['ip']) . "' WHERE customer_ban_ip_id = '" . (int)$customer_ban_ip_id . "'");
+    }
 
-	public function deleteCustomerBanIp($customer_ban_ip_id) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_ban_ip` WHERE customer_ban_ip_id = '" . (int)$customer_ban_ip_id . "'");
-	}
+    public function deleteCustomerBanIp($customer_ban_ip_id) {
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "customer_ban_ip` WHERE customer_ban_ip_id = '" . (int)$customer_ban_ip_id . "'");
+    }
 
-	public function getCustomerBanIp($customer_ban_ip_id) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_ban_ip` WHERE customer_ban_ip_id = '" . (int)$customer_ban_ip_id . "'");
+    public function getCustomerBanIp($customer_ban_ip_id) {
+        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_ban_ip` WHERE customer_ban_ip_id = '" . (int)$customer_ban_ip_id . "'");
 
-		return $query->row;
-	}
+        return $query->row;
+    }
 
-	public function getCustomerBanIps($data = array()) {
-		$sql = "SELECT *, (SELECT COUNT(DISTINCT customer_id) FROM `" . DB_PREFIX . "customer_ip` ci WHERE ci.ip = cbi.ip) AS total FROM `" . DB_PREFIX . "customer_ban_ip` cbi";
+    public function getCustomerBanIps($data = array()) {
+        $sql = "SELECT *, (SELECT COUNT(DISTINCT customer_id) FROM `" . DB_PREFIX . "customer_ip` ci WHERE ci.ip = cbi.ip) AS total FROM `" . DB_PREFIX . "customer_ban_ip` cbi";
 
-		$sql .= " ORDER BY `ip`";
+        $sql .= " ORDER BY `ip`";
 
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
+        if (isset($data['order']) && ($data['order'] == 'DESC')) {
+            $sql .= " DESC";
+        } else {
+            $sql .= " ASC";
+        }
 
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
+        if (isset($data['start']) || isset($data['limit'])) {
+            if ($data['start'] < 0) {
+                $data['start'] = 0;
+            }
 
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
+            if ($data['limit'] < 1) {
+                $data['limit'] = 20;
+            }
 
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
+            $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+        }
 
-		$query = $this->db->query($sql);
+        $query = $this->db->query($sql);
 
-		return $query->rows;
-	}
+        return $query->rows;
+    }
 
-	public function getTotalCustomerBanIps($data = array()) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_ban_ip`");
+    public function getTotalCustomerBanIps($data = array()) {
+        $query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_ban_ip`");
 
-		return $query->row['total'];
-	}
+        return $query->row['total'];
+    }
 }

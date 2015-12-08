@@ -1,18 +1,18 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright    Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 class ModelCatalogUrlAlias extends Model {
 
-	public function getUrlAlias($keyword, $language_id = 1) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($keyword) . "' AND language_id = '" . $this->db->escape($language_id) . "'");
+    public function getUrlAlias($keyword, $language_id = 1) {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($keyword) . "' AND language_id = '" . $this->db->escape($language_id) . "'");
 
-		return $query->row;
-	}
+        return $query->row;
+    }
 
     public function addAlias($type, $id, $alias, $language_id) {
         $alias = $this->seo->generateAlias($alias, $id, $language_id);
