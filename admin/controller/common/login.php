@@ -145,7 +145,7 @@ class ControllerCommonLogin extends Controller {
 
     protected function validate() {
         if (!isset($this->request->post['email']) || !isset($this->request->post['password']) || !$this->user->login($this->request->post['email'], $this->request->post['password'])) {
-            $this->error['warning'] = $this->language->get('error_login');
+            $this->error['warning'] = $this->language->get('error_match');
         }
 
         return !$this->error;

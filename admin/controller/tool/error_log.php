@@ -103,7 +103,7 @@ class ControllerToolErrorLog extends Controller {
         $this->response->addheader('Content-Disposition: attachment; filename=' . $this->config->get('config_name') . '_' . date('Y-m-d_H-i-s', time()) . '_error.log');
         $this->response->addheader('Content-Transfer-Encoding: binary');
 
-        $this->response->setOutput(file_get_contents(DIR_LOGS . $this->config->get('config_error_filename'), FILE_USE_INCLUDE_PATH, null));
+        $this->response->setOutput(file_get_contents(DIR_LOG . $this->config->get('config_error_filename'), FILE_USE_INCLUDE_PATH, null));
     }    
     
     public function clear() {

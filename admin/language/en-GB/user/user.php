@@ -44,9 +44,14 @@ $_['entry_basic_mode_message'] = 'Basic Mode Message';
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify users!';
 $_['error_account']         = 'Warning: You can not delete your own account!';
-$_['error_exists']          = 'Warning: Email is already in use!';
-$_['error_email']           = 'Email must be higher than 3 characters!';
+$_['error_email_exists']    = 'Warning: Email is already in use!';
+$_['error_email_short']     = 'Email must be higher than 3 characters!';
 $_['error_password']        = 'Password must be between 4 and 20 characters!';
 $_['error_confirm']         = 'Password and password confirmation do not match!';
 $_['error_firstname']       = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']        = 'Last Name must be between 1 and 32 characters!';
+
+// B/C
+$_['column_username']       = 'Username';
+$_['error_username']        = 'Username must be between 3 and 20 characters!';
+$_['error_exists']          = 'Warning: Username is already in use!';
