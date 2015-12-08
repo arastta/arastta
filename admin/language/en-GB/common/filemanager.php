@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -20,8 +20,8 @@ $_['entry_folder']     = 'Folder Name';
 
 // Error
 $_['error_permission'] = 'Warning: Permission Denied!';
-$_['error_filename']   = 'Warning: Filename must be between 3 and 255!';
-$_['error_folder']     = 'Warning: Folder name must be between 3 and 255!';
+$_['error_filename']   = 'Warning: Filename must be a between 3 and 255!';
+$_['error_folder']     = 'Warning: Folder name must be a between 3 and 255!';
 $_['error_exists']     = 'Warning: A file or directory with the same name already exists!';
 $_['error_directory']  = 'Warning: Directory does not exist!';
 $_['error_filetype']   = 'Warning: Incorrect file type!';

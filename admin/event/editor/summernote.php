@@ -1,12 +1,13 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
-class EventEditorSummernote extends Event {
+class EventEditorSummernote extends Event
+{
 
     public $toolbar = array(
         'style'     => array('style'),
@@ -26,7 +27,8 @@ class EventEditorSummernote extends Event {
 
     public $other_options = array();
 
-    public function preAdminEditor() {
+    public function preAdminEditor()
+    {
         $editor = $this->config->get('config_text_editor');
 
         if ($editor != 'summernote') {

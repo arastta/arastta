@@ -1,22 +1,25 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
-class Object {
+class Object
+{
 
-	public function get($property, $default = null) {
+    public function get($property, $default = null)
+    {
         if (isset($this->$property)) {
             return $this->$property;
         }
 
         return $default;
-	}
+    }
 
-    public function getProperties($public = true) {
+    public function getProperties($public = true)
+    {
         $vars = get_object_vars($this);
 
         if ($public) {
@@ -30,11 +33,13 @@ class Object {
         return $vars;
     }
 
-    public function has($property) {
+    public function has($property)
+    {
         return isset($this->$property);
     }
 
-    public function set($property, $value = null) {
+    public function set($property, $value = null)
+    {
         $previous = isset($this->$property) ? $this->$property : null;
 
         $this->$property = $value;
@@ -42,7 +47,8 @@ class Object {
         return $previous;
     }
 
-    public function setProperties($properties) {
+    public function setProperties($properties)
+    {
         if (is_array($properties) || is_object($properties)) {
             foreach ((array) $properties as $k => $v) {
                 // Use the set function which might be overridden.

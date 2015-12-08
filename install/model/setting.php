@@ -1,14 +1,16 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
-class ModelSetting extends Model {
+class ModelSetting extends Model
+{
 
-    public function createDatabaseTables($data) {
+    public function createDatabaseTables($data)
+    {
         $this->session->data['store_name'] = $data['store_name'];
         $this->session->data['store_email'] = $data['store_email'];
         $this->session->data['admin_email'] = $data['admin_email'];
@@ -87,17 +89,17 @@ class ModelSetting extends Model {
         $db->query("SET CHARACTER SET utf8");
 
         $db->query("SET @@session.sql_mode = 'MYSQL40'");
-		
-		// Check if admin uses Gravatar
-		$gravatar = $this->utility->getRemoteData('https://www.gravatar.com/avatar/' . md5(strtolower($data['admin_email'])).'?size=45&d=404', array('timeout' => 3));
+        
+        // Check if admin uses Gravatar
+        $gravatar = $this->utility->getRemoteData('https://www.gravatar.com/avatar/' . md5(strtolower($data['admin_email'])).'?size=45&d=404', array('timeout' => 3));
 
-		if ($gravatar) {
-			$user_image = '';
-		} else {
-			$user_image = 'admin-default.png';
-		}
-		
-		$params = '{"theme":"basic","basic_mode_message":"show","language":"' . $this->session->data['lang_code'] . '","editor":"summernote"}';
+        if ($gravatar) {
+            $user_image = '';
+        } else {
+            $user_image = 'admin-default.png';
+        }
+        
+        $params = '{"theme":"basic","basic_mode_message":"show","language":"' . $this->session->data['lang_code'] . '","editor":"summernote"}';
 
         $db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE user_id = '1'");
 

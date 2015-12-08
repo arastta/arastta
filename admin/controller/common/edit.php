@@ -1,14 +1,16 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerCommonEdit extends Controller {
+class ControllerCommonEdit extends Controller
+{
 
-    public function changeStatus() {
+    public function changeStatus()
+    {
         $type   = $this->request->get['type'];
         $select = $this->request->get['selected'];
         $status = $this->request->get['status'];
@@ -20,7 +22,7 @@ class ControllerCommonEdit extends Controller {
         $route = '';
         $is_extension = false;
 
-        switch($type) {
+        switch ($type) {
             case 'review':
             case 'product':
             case 'category':
@@ -41,6 +43,7 @@ class ControllerCommonEdit extends Controller {
                 break;
             case 'coupon':
                 $route = 'sale/'.$type;
+                break;
             default:
                 break;
         }
@@ -65,8 +68,9 @@ class ControllerCommonEdit extends Controller {
         exit();
     }
 
-    private function validate($route) {
-        if ($route == 'extension/extension'){
+    private function validate($route)
+    {
+        if ($route == 'extension/extension') {
             return true;
         }
 

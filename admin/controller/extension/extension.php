@@ -1,19 +1,21 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 use Symfony\Component\Finder\Finder as SFinder;
 
-class ControllerExtensionExtension extends Controller {
+class ControllerExtensionExtension extends Controller
+{
 
-	private $error = array();
+    private $error = array();
 
-	public function index() {
-		$this->document->setTitle($this->language->get('heading_title'));
+    public function index()
+    {
+        $this->document->setTitle($this->language->get('heading_title'));
 
         $this->load->model('extension/extension');
 
@@ -21,9 +23,10 @@ class ControllerExtensionExtension extends Controller {
         $this->discover();
 
         $this->getList();
-	}
+    }
 
-    public function discover() {
+    public function discover()
+    {
         $this->load->model('setting/setting');
         $this->load->model('extension/marketplace');
 
@@ -65,7 +68,7 @@ class ControllerExtensionExtension extends Controller {
             $params['theme_ids'] = array();
             $params['extension_ids'] = array($extension_id);
 
-            $files = $this->_getExtensionFiles($type, $code);
+            $files = $this->getExtensionFiles($type, $code);
 
             $addon = array();
             $addon['params'] = $params;
@@ -79,7 +82,8 @@ class ControllerExtensionExtension extends Controller {
         }
     }
 
-    protected function _getExtensionFiles($type, $code) {
+    protected function getExtensionFiles($type, $code)
+    {
         $files = array();
 
         $DS = DIRECTORY_SEPARATOR;
@@ -109,84 +113,85 @@ class ControllerExtensionExtension extends Controller {
         return $files;
     }
 
-	public function getList() {
-		$data = $this->language->all();
+    public function getList()
+    {
+        $data = $this->language->all();
 
-		if (isset($this->request->get['filter_name'])) {
-			$filter_name = $this->request->get['filter_name'];
-		} else {
-			$filter_name = null;
-		}
+        if (isset($this->request->get['filter_name'])) {
+            $filter_name = $this->request->get['filter_name'];
+        } else {
+            $filter_name = null;
+        }
 
-		if (isset($this->request->get['filter_author'])) {
-			$filter_author = $this->request->get['filter_author'];
-		} else {
-			$filter_author = null;
-		}
+        if (isset($this->request->get['filter_author'])) {
+            $filter_author = $this->request->get['filter_author'];
+        } else {
+            $filter_author = null;
+        }
 
-		if (isset($this->request->get['filter_type'])) {
-			$filter_type = $this->request->get['filter_type'];
+        if (isset($this->request->get['filter_type'])) {
+            $filter_type = $this->request->get['filter_type'];
 
-			$data['heading_title'] = $this->language->get('text_'.$filter_type);
+            $data['heading_title'] = $this->language->get('text_'.$filter_type);
 
-			$this->document->setTitle($data['heading_title']);
-		} else {
-			$filter_type = null;
-		}
+            $this->document->setTitle($data['heading_title']);
+        } else {
+            $filter_type = null;
+        }
 
-		if (isset($this->request->get['filter_status'])) {
-			$filter_status = $this->request->get['filter_status'];
-		} else {
-			$filter_status = null;
-		}
+        if (isset($this->request->get['filter_status'])) {
+            $filter_status = $this->request->get['filter_status'];
+        } else {
+            $filter_status = null;
+        }
 
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'name';
-		}
+        if (isset($this->request->get['sort'])) {
+            $sort = $this->request->get['sort'];
+        } else {
+            $sort = 'name';
+        }
 
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
+        if (isset($this->request->get['order'])) {
+            $order = $this->request->get['order'];
+        } else {
+            $order = 'ASC';
+        }
 
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
+        if (isset($this->request->get['page'])) {
+            $page = $this->request->get['page'];
+        } else {
+            $page = 1;
+        }
 
-		$url = '';
+        $url = '';
 
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
+        if (isset($this->request->get['filter_name'])) {
+            $url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+        }
 
-		if (isset($this->request->get['filter_author'])) {
-			$url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
-		}
+        if (isset($this->request->get['filter_author'])) {
+            $url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
+        }
 
-		if (isset($this->request->get['filter_type'])) {
-			$url .= '&filter_type=' . $this->request->get['filter_type'];
-		}
+        if (isset($this->request->get['filter_type'])) {
+            $url .= '&filter_type=' . $this->request->get['filter_type'];
+        }
 
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
+        if (isset($this->request->get['filter_status'])) {
+            $url .= '&filter_status=' . $this->request->get['filter_status'];
+        }
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
+        if (isset($this->request->get['sort'])) {
+            $url .= '&sort=' . $this->request->get['sort'];
+        }
 
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+        if (isset($this->request->get['order'])) {
+            $url .= '&order=' . $this->request->get['order'];
+        }
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+        if (isset($this->request->get['page'])) {
+            $url .= '&page=' . $this->request->get['page'];
+        }
 
         if (isset($this->request->get['filter_type'])) {
             switch ($this->request->get['filter_type']) {
@@ -221,25 +226,25 @@ class ControllerExtensionExtension extends Controller {
             $add_link = $this->url->link('extension/marketplace', 'token=' . $this->session->data['token'] . $url, 'SSL');
         }
 
-		$data['add'] = $add_link;
-		$data['upload'] = $this->url->link('extension/installer', 'token=' . $this->session->data['token'] . $url, 'SSL');
+        $data['add'] = $add_link;
+        $data['upload'] = $this->url->link('extension/installer', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		$filter_data = array(
-			'filter_name' => $filter_name,
-			'filter_author' => $filter_author,
-			'filter_type' => $filter_type,
-			'filter_status' => $filter_status,
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit' => $this->config->get('config_limit_admin')
-		);
+        $filter_data = array(
+            'filter_name' => $filter_name,
+            'filter_author' => $filter_author,
+            'filter_type' => $filter_type,
+            'filter_status' => $filter_status,
+            'sort'  => $sort,
+            'order' => $order,
+            'start' => ($page - 1) * $this->config->get('config_limit_admin'),
+            'limit' => $this->config->get('config_limit_admin')
+        );
 
-		$data['extensions'] = array();
+        $data['extensions'] = array();
 
-		$results = $this->model_extension_extension->getExtensions($filter_data);
+        $results = $this->model_extension_extension->getExtensions($filter_data);
 
-		foreach ($results as $result) {
+        foreach ($results as $result) {
             $status = $this->config->get($result['code'] . '_status');
 
             // Happens when there is db record
@@ -247,21 +252,21 @@ class ControllerExtensionExtension extends Controller {
                 $status = 0;
             }
 
-			$info = json_decode($result['info'], true);
+            $info = json_decode($result['info'], true);
 
             $this->language->load($result['type'] . '/' . $result['code']);
 
-			if (!empty($info)) {
-				$name = !empty($info['extension']['name']) ? $info['extension']['name'] : $this->language->get('heading_title');
-				$author = $info['author']['name'];
-				$version = $info['extension']['version'];
-			} else {
-				$this->load->language($result['type'] . '/' . $result['code']);
+            if (!empty($info)) {
+                $name = !empty($info['extension']['name']) ? $info['extension']['name'] : $this->language->get('heading_title');
+                $author = $info['author']['name'];
+                $version = $info['extension']['version'];
+            } else {
+                $this->load->language($result['type'] . '/' . $result['code']);
 
-				$name = $this->language->get('heading_title');
-				$author = '';
-				$version = '';
-			}
+                $name = $this->language->get('heading_title');
+                $author = '';
+                $version = '';
+            }
 
             // Name search
             if ($filter_name && !strstr(strtolower($name), strtolower($filter_name))) {
@@ -278,23 +283,23 @@ class ControllerExtensionExtension extends Controller {
                 continue;
             }
 
-			$instances = $this->getInstances($result['type'], $result['code']);
+            $instances = $this->getInstances($result['type'], $result['code']);
 
-			$data['extensions'][] = array(
-				'extension_id'		=> $result['extension_id'],
-				'name'				=> $name,
-				'author'			=> $author,
-				'type'				=> $result['type'],
-				'type_name'			=> $this->language->get('text_' . $result['type']),
-				'code'				=> $result['code'],
-				'version'			=> $version,
-				'instances'			=> $instances,
-				'sort_order'		=> $this->config->get($result['code'] . '_sort_order'),
-				'status'			=> $status ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'edit'				=> $this->url->link($result['type'] . '/' . $result['code'], 'token=' . $this->session->data['token'] . $url, 'SSL'),
-				'uninstall'			=> $this->url->link('extension/extension/uninstall', 'type=' . $result['type'] . '&code=' . $result['code'] . '&token=' . $this->session->data['token'] . $url, 'SSL')
-			);
-		}
+            $data['extensions'][] = array(
+                'extension_id'      => $result['extension_id'],
+                'name'              => $name,
+                'author'            => $author,
+                'type'              => $result['type'],
+                'type_name'             => $this->language->get('text_' . $result['type']),
+                'code'              => $result['code'],
+                'version'           => $version,
+                'instances'             => $instances,
+                'sort_order'        => $this->config->get($result['code'] . '_sort_order'),
+                'status'            => $status ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+                'edit'              => $this->url->link($result['type'] . '/' . $result['code'], 'token=' . $this->session->data['token'] . $url, 'SSL'),
+                'uninstall'             => $this->url->link('extension/extension/uninstall', 'type=' . $result['type'] . '&code=' . $result['code'] . '&token=' . $this->session->data['token'] . $url, 'SSL')
+            );
+        }
 
         $extension_total = count($data['extensions']);
 
@@ -307,96 +312,97 @@ class ControllerExtensionExtension extends Controller {
         array_multisort($a_names, $a_sort, $data['extensions']);
 
         // Success & Warning
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
+        if (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
 
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
+        if (isset($this->session->data['success'])) {
+            $data['success'] = $this->session->data['success'];
 
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
+            unset($this->session->data['success']);
+        } else {
+            $data['success'] = '';
+        }
 
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = array();
-		}
+        if (isset($this->request->post['selected'])) {
+            $data['selected'] = (array)$this->request->post['selected'];
+        } else {
+            $data['selected'] = array();
+        }
 
-		$url = '';
+        $url = '';
 
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
+        if ($order == 'ASC') {
+            $url .= '&order=DESC';
+        } else {
+            $url .= '&order=ASC';
+        }
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+        if (isset($this->request->get['page'])) {
+            $url .= '&page=' . $this->request->get['page'];
+        }
 
-		$data['sort_name'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
-		$data['sort_author'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&sort=author' . $url, 'SSL');
-		$data['sort_type'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&sort=type' . $url, 'SSL');
-		$data['sort_status'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
-		$data['sort_sort_order'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&sort=sort_order' . $url, 'SSL');
+        $data['sort_name'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
+        $data['sort_author'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&sort=author' . $url, 'SSL');
+        $data['sort_type'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&sort=type' . $url, 'SSL');
+        $data['sort_status'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
+        $data['sort_sort_order'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&sort=sort_order' . $url, 'SSL');
 
-		$url = '';
+        $url = '';
 
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
+        if (isset($this->request->get['filter_name'])) {
+            $url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+        }
 
-		if (isset($this->request->get['filter_author'])) {
-			$url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
-		}
+        if (isset($this->request->get['filter_author'])) {
+            $url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
+        }
 
-		if (isset($this->request->get['filter_type'])) {
-			$url .= '&filter_type=' . $this->request->get['filter_type'];
-		}
+        if (isset($this->request->get['filter_type'])) {
+            $url .= '&filter_type=' . $this->request->get['filter_type'];
+        }
 
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
+        if (isset($this->request->get['filter_status'])) {
+            $url .= '&filter_status=' . $this->request->get['filter_status'];
+        }
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
+        if (isset($this->request->get['sort'])) {
+            $url .= '&sort=' . $this->request->get['sort'];
+        }
 
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+        if (isset($this->request->get['order'])) {
+            $url .= '&order=' . $this->request->get['order'];
+        }
 
-		$pagination = new Pagination();
-		$pagination->total = $extension_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+        $pagination = new Pagination();
+        $pagination->total = $extension_total;
+        $pagination->page = $page;
+        $pagination->limit = $this->config->get('config_limit_admin');
+        $pagination->url = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
-		$data['pagination'] = $pagination->render();
+        $data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($extension_total - $this->config->get('config_limit_admin'))) ? $extension_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $extension_total, ceil($extension_total / $this->config->get('config_limit_admin')));
+        $data['results'] = sprintf($this->language->get('text_pagination'), ($extension_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($extension_total - $this->config->get('config_limit_admin'))) ? $extension_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $extension_total, ceil($extension_total / $this->config->get('config_limit_admin')));
 
-		$data['filter_name'] = $filter_name;
-		$data['filter_author'] = $filter_author;
-		$data['filter_type'] = $filter_type;
-		$data['filter_status'] = $filter_status;
-		$data['sort'] = $sort;
-		$data['order'] = $order;
-		$data['token'] = $this->session->data['token'];
+        $data['filter_name'] = $filter_name;
+        $data['filter_author'] = $filter_author;
+        $data['filter_type'] = $filter_type;
+        $data['filter_status'] = $filter_status;
+        $data['sort'] = $sort;
+        $data['order'] = $order;
+        $data['token'] = $this->session->data['token'];
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/extension.tpl', $data));
-	}
+        $this->response->setOutput($this->load->view('extension/extension.tpl', $data));
+    }
 
-    public function uninstall() {
+    public function uninstall()
+    {
         $this->document->setTitle($this->language->get('heading_title'));
 
         $type = $this->request->get['type'];
@@ -452,7 +458,8 @@ class ControllerExtensionExtension extends Controller {
         $this->getList();
     }
 
-    public function uninstallExtension($type, $code) {
+    public function uninstallExtension($type, $code)
+    {
         $this->load->model('extension/extension');
         $this->load->model('extension/marketplace');
 
@@ -527,7 +534,8 @@ class ControllerExtensionExtension extends Controller {
         $this->cache->remove('version');
     }
 
-    public function changeStatus() {
+    public function changeStatus()
+    {
         $select = $this->request->get['selected'];
         $status = $this->request->get['status'];
 
@@ -537,7 +545,7 @@ class ControllerExtensionExtension extends Controller {
 
         $this->load->model('extension/extension');
 
-        foreach($select as $id) {
+        foreach ($select as $id) {
             list($type, $code) = explode('/', $id);
 
             $route = 'extension/'.$type;
@@ -556,31 +564,33 @@ class ControllerExtensionExtension extends Controller {
         exit();
     }
 
-	public function getInstances($type, $code) {
-		$instances = array();
-		$instances_types = array('module');
+    public function getInstances($type, $code)
+    {
+        $instances = array();
+        $instances_types = array('module');
 
-		if (!in_array($type, $instances_types)) {
-			return $instances;
-		}
+        if (!in_array($type, $instances_types)) {
+            return $instances;
+        }
 
-		$instances = $this->model_extension_extension->getInstances($type, $code);
+        $instances = $this->model_extension_extension->getInstances($type, $code);
 
-		foreach ($instances as $id => $row) {
-			$var = $type.'_id';
+        foreach ($instances as $id => $row) {
+            $var = $type.'_id';
 
-			$instances[$id]['edit'] = $this->url->link($type . '/' . $code, 'token=' . $this->session->data['token'] . '&' . $var . '=' . $row[$var], 'SSL');
-			$instances[$id]['delete'] = $this->url->link('extension/' . $type . '/delete', 'token=' . $this->session->data['token'] . '&' . $var . '=' . $row[$var], 'SSL');
-		}
+            $instances[$id]['edit'] = $this->url->link($type . '/' . $code, 'token=' . $this->session->data['token'] . '&' . $var . '=' . $row[$var], 'SSL');
+            $instances[$id]['delete'] = $this->url->link('extension/' . $type . '/delete', 'token=' . $this->session->data['token'] . '&' . $var . '=' . $row[$var], 'SSL');
+        }
 
-		return $instances;
-	}
+        return $instances;
+    }
 
-	protected function validate($route = 'extension/extension') {
-		if (!$this->user->hasPermission('modify', $route)) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
+    protected function validate($route = 'extension/extension')
+    {
+        if (!$this->user->hasPermission('modify', $route)) {
+            $this->error['warning'] = $this->language->get('error_permission');
+        }
 
-		return !$this->error;
-	}
+        return !$this->error;
+    }
 }

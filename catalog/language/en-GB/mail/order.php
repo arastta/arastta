@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 // Text
@@ -18,9 +18,9 @@ $_['text_new_date_added']       = 'Date Added:';
 $_['text_new_order_status']     = 'Order Status:';
 $_['text_new_payment_method']   = 'Payment Method:';
 $_['text_new_shipping_method']  = 'Shipping Method:';
-$_['text_new_email']  			= 'E-mail:';
-$_['text_new_telephone']  		= 'Telephone:';
-$_['text_new_ip']  				= 'IP Address:';
+$_['text_new_email']            = 'E-mail:';
+$_['text_new_telephone']        = 'Telephone:';
+$_['text_new_ip']               = 'IP Address:';
 $_['text_new_payment_address']  = 'Payment Address';
 $_['text_new_shipping_address'] = 'Shipping Address';
 $_['text_new_products']         = 'Products';

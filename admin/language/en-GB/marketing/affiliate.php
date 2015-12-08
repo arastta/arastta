@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -65,12 +65,12 @@ $_['entry_description']         = 'Description';
 $_['entry_name']                = 'Affiliate Name';
 $_['entry_approved']            = 'Approved';
 $_['entry_date_added']          = 'Date Added';
-$_['entry_send_email']      	= 'Send Email';
+$_['entry_send_email']          = 'Send Email';
 
 // Help
 $_['help_code']                 = 'The tracking code that will be used to track referrals.';
 $_['help_commission']           = 'Percentage the affiliate receives on each order.';
-$_['help_send_email']			= 'Send an information email to the affiliate after being saved.';
+$_['help_send_email']           = 'Send an information email to the affiliate after being saved.';
 
 // Error
 $_['error_permission']          = 'Warning: You do not have permission to modify affiliates!';
@@ -79,7 +79,7 @@ $_['error_firstname']           = 'First Name must be between 1 and 32 character
 $_['error_lastname']            = 'Last Name must be between 1 and 32 characters!';
 $_['error_email']               = 'E-Mail Address does not appear to be valid!';
 $_['error_cheque']              = 'Cheque Payee Name required!';
-$_['error_paypal']              = 'PayPal Email Address does not appear to be valid!';
+$_['error_paypal']              = 'PayPal Email Address does not appear to be valid!!';
 $_['error_bank_account_name']   = 'Account Name required!';
 $_['error_bank_account_number'] = 'Account Number required!';
 $_['error_telephone']           = 'Telephone must be between 3 and 32 characters!';

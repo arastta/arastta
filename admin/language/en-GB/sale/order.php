@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -142,7 +142,7 @@ $_['column_notify']                           = 'Customer Notified';
 $_['column_location']                         = 'Location';
 $_['column_reference']                        = 'Reference';
 $_['column_action']                           = 'Action';
-$_['column_weight']                           = 'Product Weight';
+$_['column_weight']                           = 'Product weight';
 
 // Button
 $_['button_invoice_pdf']                      = 'PDF Invoice';
@@ -169,9 +169,9 @@ $_['entry_product']                           = 'Choose Product';
 $_['entry_option']                            = 'Choose Option(s)';
 $_['entry_quantity']                          = 'Quantity';
 $_['entry_to_name']                           = 'Recipient\'s Name';
-$_['entry_to_email']                          = 'Recipient\'s E-mail';
-$_['entry_from_name']                         = 'Sender\'s Name';
-$_['entry_from_email']                        = 'Sender\'s E-mail';
+$_['entry_to_email']                          = 'Recipient\'s Email';
+$_['entry_from_name']                         = 'Senders Name';
+$_['entry_from_email']                        = 'Senders Email';
 $_['entry_theme']                             = 'Gift Certificate Theme';
 $_['entry_message']                           = 'Message';
 $_['entry_amount']                            = 'Amount';

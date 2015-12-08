@@ -1,19 +1,21 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 use Joomla\Profiler\Profiler;
 
-class App extends Object {
+class App extends Object
+{
 
     protected $registry;
 
-	public function __construct() {
-		$this->registry = new Registry();
+    public function __construct()
+    {
+        $this->registry = new Registry();
 
         // Config
         if (file_exists(DIR_ROOT . 'config.php')) {
@@ -21,33 +23,40 @@ class App extends Object {
         }
 
         $this->registry->set('profiler', new Profiler('Trigger'));
-	}
+    }
 
-    public function __get($key) {
+    public function __get($key)
+    {
         return $this->registry->get($key);
     }
 
-    public function __set($key, $value) {
+    public function __set($key, $value)
+    {
         $this->registry->set($key, $value);
     }
 
-    public function initialise() {
+    public function initialise()
+    {
         $this->trigger->fire('post.app.initialise');
     }
 
-    public function ecommerce() {
+    public function ecommerce()
+    {
         $this->trigger->fire('post.app.ecommerce');
     }
 
-    public function route() {
+    public function route()
+    {
         $this->trigger->fire('post.app.route');
     }
 
-    public function dispatch() {
+    public function dispatch()
+    {
         $this->trigger->fire('post.app.dispatch');
     }
 
-    public function render() {
+    public function render()
+    {
         // Render
         $this->response->output();
 
@@ -58,7 +67,8 @@ class App extends Object {
         }
     }
 
-    public function errorHandler($errno, $errstr, $errfile, $errline) {
+    public function errorHandler($errno, $errstr, $errfile, $errline)
+    {
         // error suppressed with @
         if (error_reporting() === 0) {
             return false;

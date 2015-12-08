@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -22,7 +22,7 @@ $_['text_settings']             = 'Settings';
 $_['text_finish']               = 'Finish';
 $_['text_database_header']      = 'Enter your database details.';
 $_['text_settings_header']      = 'Enter your store settings.';
-$_['text_advanced']    			= 'Advanced';
+$_['text_advanced']             = 'Advanced';
 $_['text_finish_header']        = 'Congratulations! Arastta is now installed.';
 
 // Entry
@@ -50,14 +50,14 @@ $_['help_admin_email']          = 'Email of admin account';
 $_['help_admin_password']       = 'Password of admin account';
 
 // Error
-$_['error_db_hostname'] 	    = 'Hostname required!';
-$_['error_db_database']		    = 'Database Name required!';
-$_['error_db_prefix'] 		    = 'Table Prefix can only contain lowercase characters in the a-z range, 0-9 and underscores';
-$_['error_db_connect'] 		    = '<br/>Error: Could not connect to the database! Please, make sure the details are correct.';
-$_['error_config'] 			    = 'Error: Could not write to config.php file. Please, check you have set the correct CHMOD permissions!';
-$_['error_store_name'] 		    = 'Store name required!';
-$_['error_email'] 				= 'Invalid email address!';
-$_['error_admin_password'] 		= 'Password required!';
-$_['error_remove_install'] 		= 'Failed to remove the install directory. Please remove this manually for security reasons.';
-$_['error_lang_code'] 		    = 'Language selection required, please, select one.';
-$_['error_lang_download'] 		= 'Not able to download the selected language, please, select another one.';
+$_['error_db_hostname']         = 'Hostname required!';
+$_['error_db_database']         = 'Database Name required!';
+$_['error_db_prefix']           = 'Table Prefix can only contain lowercase characters in the a-z range, 0-9 and underscores';
+$_['error_db_connect']          = '<br/>Error: Could not connect to the database! Please, make sure the details are correct.';
+$_['error_config']              = 'Error: Could not write to config.php file. Please, check you have set the correct CHMOD permissions!';
+$_['error_store_name']          = 'Store name required!';
+$_['error_email']               = 'Invalid email address!';
+$_['error_admin_password']      = 'Password required!';
+$_['error_remove_install']      = 'Failed to remove the install directory. Please remove this manually for security reasons.';
+$_['error_lang_code']           = 'Language selection required, please, select one.';
+$_['error_lang_download']       = 'Not able to download the selected language, please, select another one.';

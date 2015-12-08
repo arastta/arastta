@@ -1,41 +1,44 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerSaleInvoice extends Controller {
+class ControllerSaleInvoice extends Controller
+{
 
-	private $error = array();
+    private $error = array();
 
-	public function index() {
-		$this->load->language('sale/order');
-		$this->load->language('sale/invoice');
+    public function index()
+    {
+        $this->load->language('sale/order');
+        $this->load->language('sale/invoice');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+        $this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('sale/order');
-		$this->load->model('sale/invoice');
+        $this->load->model('sale/order');
+        $this->load->model('sale/invoice');
 
-		$this->getList();
-	}
+        $this->getList();
+    }
 
-	protected function getList() {
+    protected function getList()
+    {
         $data = $this->language->all();
 
-		if (isset($this->request->get['filter_order_id'])) {
-			$filter_order_id = $this->request->get['filter_order_id'];
-		} else {
-			$filter_order_id = null;
-		}
+        if (isset($this->request->get['filter_order_id'])) {
+            $filter_order_id = $this->request->get['filter_order_id'];
+        } else {
+            $filter_order_id = null;
+        }
 
-		if (isset($this->request->get['filter_invoice_number'])) {
-			$filter_invoice_number = $this->request->get['filter_invoice_number'];
-		} else {
+        if (isset($this->request->get['filter_invoice_number'])) {
+            $filter_invoice_number = $this->request->get['filter_invoice_number'];
+        } else {
             $filter_invoice_number = null;
-		}
+        }
 
         if (isset($this->request->get['filter_order_status'])) {
             $filter_order_status = $this->request->get['filter_order_status'];
@@ -43,189 +46,43 @@ class ControllerSaleInvoice extends Controller {
             $filter_order_status = null;
         }
 
-		if (isset($this->request->get['filter_customer'])) {
-			$filter_customer = $this->request->get['filter_customer'];
-		} else {
-			$filter_customer = null;
-		}
-
-		if (isset($this->request->get['filter_order_date'])) {
-			$filter_order_date = $this->request->get['filter_order_date'];
-		} else {
-            $filter_order_date = null;
-		}
-
-		if (isset($this->request->get['filter_invoice_date'])) {
-			$filter_invoice_date = $this->request->get['filter_invoice_date'];
-		} else {
-            $filter_invoice_date = null;
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'invoice_number';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'DESC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['filter_order_id'])) {
-			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-		}
-
-		if (isset($this->request->get['filter_invoice_number'])) {
-			$url .= '&filter_invoice_number=' . urlencode(html_entity_decode($this->request->get['filter_invoice_number'], ENT_QUOTES, 'UTF-8'));
-		}
-
-        if (isset($this->request->get['filter_order_status'])) {
-            $url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
+        if (isset($this->request->get['filter_customer'])) {
+            $filter_customer = $this->request->get['filter_customer'];
+        } else {
+            $filter_customer = null;
         }
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_order_date'])) {
-			$url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
-		}
-
-		if (isset($this->request->get['filter_invoice_date'])) {
-			$url .= '&filter_invoice_date=' . $this->request->get['filter_invoice_date'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		$data['generate'] = $this->url->link('sale/invoice/generate', 'token=' . $this->session->data['token'] . $url, 'SSL');
-
-		$data['invoices'] = array();
-
-		$filter_data = array(
-			'filter_order_id'      => $filter_order_id,
-			'filter_invoice_number'=> $filter_invoice_number,
-            'filter_order_status'  => $filter_order_status,
-			'filter_customer'	   => $filter_customer,
-			'filter_order_date'    => $filter_order_date,
-			'filter_invoice_date'  => $filter_invoice_date,
-			'sort'                 => $sort,
-			'order'                => $order,
-			'start'                => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit'                => $this->config->get('config_limit_admin')
-		);
-
-		$order_total = $this->model_sale_invoice->getTotalInvoices($filter_data);
-
-		$results = $this->model_sale_invoice->getInvoices($filter_data);
-
-		foreach ($results as $result) {
-			$data['invoices'][] = array(
-				'order_id'      => $result['order_id'],
-				'invoice_number'=> $result['invoice_number'],
-				'customer'      => $result['customer'],
-				'status'        => $result['status'],
-                'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
-				'order_date'    => date($this->language->get('date_format_short'), strtotime($result['order_date'])),
-				'invoice_date'  => date($this->language->get('date_format_short'), strtotime($result['invoice_date'])),
-				'info'          => $this->url->link('sale/invoice/info', 'token=' . $this->session->data['token'] . '&invoice_id=' . $result['invoice_id'] . $url, 'SSL'),
-				'pdf'           => $this->url->link('sale/invoice/pdf', 'token=' . $this->session->data['token'] . '&invoice_id=' . $result['invoice_id'] . $url, 'SSL'),
-				'email'         => $this->url->link('sale/invoice/email', 'token=' . $this->session->data['token'] . '&invoice_id=' . $result['invoice_id'] . $url, 'SSL')
-			);
-		}
-
-		$data['token'] = $this->session->data['token'];
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->session->data['error'])) {
-			$data['error_warning'] = $this->session->data['error'];
-
-			unset($this->session->data['error']);
-		}
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->request->post['selected'])) {
-			$data['selected'] = (array)$this->request->post['selected'];
-		} else {
-			$data['selected'] = array();
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['filter_order_id'])) {
-			$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-		}
-
-        if (isset($this->request->get['filter_invoice_number'])) {
-            $url .= '&filter_invoice_number=' . urlencode(html_entity_decode($this->request->get['filter_invoice_number'], ENT_QUOTES, 'UTF-8'));
-        }
-
-        if (isset($this->request->get['filter_order_status'])) {
-            $url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
-        }
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
 
         if (isset($this->request->get['filter_order_date'])) {
-            $url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
+            $filter_order_date = $this->request->get['filter_order_date'];
+        } else {
+            $filter_order_date = null;
         }
 
         if (isset($this->request->get['filter_invoice_date'])) {
-            $url .= '&filter_invoice_date=' . $this->request->get['filter_invoice_date'];
+            $filter_invoice_date = $this->request->get['filter_invoice_date'];
+        } else {
+            $filter_invoice_date = null;
         }
 
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
+        if (isset($this->request->get['sort'])) {
+            $sort = $this->request->get['sort'];
+        } else {
+            $sort = 'invoice_number';
+        }
 
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+        if (isset($this->request->get['order'])) {
+            $order = $this->request->get['order'];
+        } else {
+            $order = 'DESC';
+        }
 
-		$data['sort_order_id'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=o.order_id' . $url, 'SSL');
-		$data['sort_invoice_number'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=invoice_number' . $url, 'SSL');
-		$data['sort_customer'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=customer' . $url, 'SSL');
-		$data['sort_status'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
-		$data['sort_total'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=o.total' . $url, 'SSL');
-		$data['sort_order_date'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=order_date' . $url, 'SSL');
-		$data['sort_invoice_date'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=i.invoice_date' . $url, 'SSL');
+        if (isset($this->request->get['page'])) {
+            $page = $this->request->get['page'];
+        } else {
+            $page = 1;
+        }
 
-		$url = '';
+        $url = '';
 
         if (isset($this->request->get['filter_order_id'])) {
             $url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
@@ -239,58 +96,205 @@ class ControllerSaleInvoice extends Controller {
             $url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
         }
 
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
+        if (isset($this->request->get['filter_customer'])) {
+            $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+        }
 
-		if (isset($this->request->get['filter_order_date'])) {
-			$url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
-		}
+        if (isset($this->request->get['filter_order_date'])) {
+            $url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
+        }
 
-		if (isset($this->request->get['filter_invoice_date'])) {
-			$url .= '&filter_invoice_date=' . $this->request->get['filter_invoice_date'];
-		}
+        if (isset($this->request->get['filter_invoice_date'])) {
+            $url .= '&filter_invoice_date=' . $this->request->get['filter_invoice_date'];
+        }
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
+        if (isset($this->request->get['sort'])) {
+            $url .= '&sort=' . $this->request->get['sort'];
+        }
 
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+        if (isset($this->request->get['order'])) {
+            $url .= '&order=' . $this->request->get['order'];
+        }
 
-		$pagination = new Pagination();
-		$pagination->total = $order_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+        if (isset($this->request->get['page'])) {
+            $url .= '&page=' . $this->request->get['page'];
+        }
 
-		$data['pagination'] = $pagination->render();
+        $data['generate'] = $this->url->link('sale/invoice/generate', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($order_total - $this->config->get('config_limit_admin'))) ? $order_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $order_total, ceil($order_total / $this->config->get('config_limit_admin')));
+        $data['invoices'] = array();
 
-		$data['filter_order_id'] = $filter_order_id;
+        $filter_data = array(
+            'filter_order_id'      => $filter_order_id,
+            'filter_invoice_number'=> $filter_invoice_number,
+            'filter_order_status'  => $filter_order_status,
+            'filter_customer'      => $filter_customer,
+            'filter_order_date'    => $filter_order_date,
+            'filter_invoice_date'  => $filter_invoice_date,
+            'sort'                 => $sort,
+            'order'                => $order,
+            'start'                => ($page - 1) * $this->config->get('config_limit_admin'),
+            'limit'                => $this->config->get('config_limit_admin')
+        );
+
+        $order_total = $this->model_sale_invoice->getTotalInvoices($filter_data);
+
+        $results = $this->model_sale_invoice->getInvoices($filter_data);
+
+        foreach ($results as $result) {
+            $data['invoices'][] = array(
+                'order_id'      => $result['order_id'],
+                'invoice_number'=> $result['invoice_number'],
+                'customer'      => $result['customer'],
+                'status'        => $result['status'],
+                'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
+                'order_date'    => date($this->language->get('date_format_short'), strtotime($result['order_date'])),
+                'invoice_date'  => date($this->language->get('date_format_short'), strtotime($result['invoice_date'])),
+                'info'          => $this->url->link('sale/invoice/info', 'token=' . $this->session->data['token'] . '&invoice_id=' . $result['invoice_id'] . $url, 'SSL'),
+                'pdf'           => $this->url->link('sale/invoice/pdf', 'token=' . $this->session->data['token'] . '&invoice_id=' . $result['invoice_id'] . $url, 'SSL'),
+                'email'         => $this->url->link('sale/invoice/email', 'token=' . $this->session->data['token'] . '&invoice_id=' . $result['invoice_id'] . $url, 'SSL')
+            );
+        }
+
+        $data['token'] = $this->session->data['token'];
+
+        if (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
+
+        if (isset($this->session->data['error'])) {
+            $data['error_warning'] = $this->session->data['error'];
+
+            unset($this->session->data['error']);
+        }
+
+        if (isset($this->session->data['success'])) {
+            $data['success'] = $this->session->data['success'];
+
+            unset($this->session->data['success']);
+        } else {
+            $data['success'] = '';
+        }
+
+        if (isset($this->request->post['selected'])) {
+            $data['selected'] = (array)$this->request->post['selected'];
+        } else {
+            $data['selected'] = array();
+        }
+
+        $url = '';
+
+        if (isset($this->request->get['filter_order_id'])) {
+            $url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+        }
+
+        if (isset($this->request->get['filter_invoice_number'])) {
+            $url .= '&filter_invoice_number=' . urlencode(html_entity_decode($this->request->get['filter_invoice_number'], ENT_QUOTES, 'UTF-8'));
+        }
+
+        if (isset($this->request->get['filter_order_status'])) {
+            $url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
+        }
+
+        if (isset($this->request->get['filter_customer'])) {
+            $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+        }
+
+        if (isset($this->request->get['filter_order_date'])) {
+            $url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
+        }
+
+        if (isset($this->request->get['filter_invoice_date'])) {
+            $url .= '&filter_invoice_date=' . $this->request->get['filter_invoice_date'];
+        }
+
+        if ($order == 'ASC') {
+            $url .= '&order=DESC';
+        } else {
+            $url .= '&order=ASC';
+        }
+
+        if (isset($this->request->get['page'])) {
+            $url .= '&page=' . $this->request->get['page'];
+        }
+
+        $data['sort_order_id'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=o.order_id' . $url, 'SSL');
+        $data['sort_invoice_number'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=invoice_number' . $url, 'SSL');
+        $data['sort_customer'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=customer' . $url, 'SSL');
+        $data['sort_status'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
+        $data['sort_total'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=o.total' . $url, 'SSL');
+        $data['sort_order_date'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=order_date' . $url, 'SSL');
+        $data['sort_invoice_date'] = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . '&sort=i.invoice_date' . $url, 'SSL');
+
+        $url = '';
+
+        if (isset($this->request->get['filter_order_id'])) {
+            $url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+        }
+
+        if (isset($this->request->get['filter_invoice_number'])) {
+            $url .= '&filter_invoice_number=' . urlencode(html_entity_decode($this->request->get['filter_invoice_number'], ENT_QUOTES, 'UTF-8'));
+        }
+
+        if (isset($this->request->get['filter_order_status'])) {
+            $url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
+        }
+
+        if (isset($this->request->get['filter_customer'])) {
+            $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+        }
+
+        if (isset($this->request->get['filter_order_date'])) {
+            $url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
+        }
+
+        if (isset($this->request->get['filter_invoice_date'])) {
+            $url .= '&filter_invoice_date=' . $this->request->get['filter_invoice_date'];
+        }
+
+        if (isset($this->request->get['sort'])) {
+            $url .= '&sort=' . $this->request->get['sort'];
+        }
+
+        if (isset($this->request->get['order'])) {
+            $url .= '&order=' . $this->request->get['order'];
+        }
+
+        $pagination = new Pagination();
+        $pagination->total = $order_total;
+        $pagination->page = $page;
+        $pagination->limit = $this->config->get('config_limit_admin');
+        $pagination->url = $this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+
+        $data['pagination'] = $pagination->render();
+
+        $data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($order_total - $this->config->get('config_limit_admin'))) ? $order_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $order_total, ceil($order_total / $this->config->get('config_limit_admin')));
+
+        $data['filter_order_id'] = $filter_order_id;
         $data['filter_invoice_number'] = $filter_invoice_number;
         $data['filter_order_status'] = $filter_order_status;
-		$data['filter_customer'] = $filter_customer;
-		$data['filter_order_date'] = $filter_order_date;
-		$data['filter_invoice_date'] = $filter_invoice_date;
+        $data['filter_customer'] = $filter_customer;
+        $data['filter_order_date'] = $filter_order_date;
+        $data['filter_invoice_date'] = $filter_invoice_date;
 
-		$this->load->model('localisation/order_status');
+        $this->load->model('localisation/order_status');
 
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+        $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
-		$data['sort'] = $sort;
-		$data['order'] = $order;
+        $data['sort'] = $sort;
+        $data['order'] = $order;
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('sale/invoice_list.tpl', $data));
-	}
+        $this->response->setOutput($this->load->view('sale/invoice_list.tpl', $data));
+    }
 
-	public function generate() {
+    public function generate()
+    {
         if (isset($this->request->get['filter_order_id'])) {
             $filter_order_id = $this->request->get['filter_order_id'];
         } else {
@@ -358,7 +362,7 @@ class ControllerSaleInvoice extends Controller {
 
         $filter_data = array(
             'filter_order_id'      => $filter_order_id,
-            'filter_customer'	   => $filter_customer,
+            'filter_customer'      => $filter_customer,
             'filter_order_status'  => $filter_order_status,
             'filter_order_date'    => $filter_order_date
         );
@@ -377,9 +381,10 @@ class ControllerSaleInvoice extends Controller {
         }
 
         $this->response->redirect($this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-	}
+    }
 
-    public function info() {
+    public function info()
+    {
         $this->load->language('sale/order');
         $this->load->language('sale/invoice');
 
@@ -598,8 +603,8 @@ class ControllerSaleInvoice extends Controller {
             }
 
             $data['invoice'] = array(
-                'order_id'	         => $order_id,
-                'invoice_number'	 => $invoice_number,
+                'order_id'           => $order_id,
+                'invoice_number'     => $invoice_number,
                 'order_date'         => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
                 'invoice_date'       => date($this->language->get('date_format_short'), strtotime($invoice_info['invoice_date'])),
                 'store_name'         => $order_info['store_name'],
@@ -628,7 +633,8 @@ class ControllerSaleInvoice extends Controller {
         $this->response->setOutput($this->load->view('sale/invoice_info.tpl', $data));
     }
 
-    public function getHistories() {
+    public function getHistories()
+    {
         $this->load->language('sale/order');
         $this->load->language('sale/invoice');
 
@@ -673,7 +679,8 @@ class ControllerSaleInvoice extends Controller {
         $this->response->setOutput($this->load->view('sale/invoice_history.tpl', $data));
     }
 
-    public function addHistory() {
+    public function addHistory()
+    {
         $this->load->language('sale/invoice');
 
         $this->load->model('sale/order');
@@ -734,7 +741,8 @@ class ControllerSaleInvoice extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function email() {
+    public function email()
+    {
         $url = '';
 
         if (isset($this->request->get['filter_invoice_number'])) {
@@ -825,7 +833,8 @@ class ControllerSaleInvoice extends Controller {
         $this->response->redirect($this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . $url, 'SSL'));
     }
 
-	public function pdf($dest = 'D') {
+    public function pdf($dest = 'D')
+    {
         $url = '';
 
         if (isset($this->request->get['filter_invoice_number'])) {
@@ -884,7 +893,7 @@ class ControllerSaleInvoice extends Controller {
             $this->response->redirect($this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
 
-		Client::setName('catalog');
+        Client::setName('catalog');
 
         $app = new Catalog();
 
@@ -903,9 +912,10 @@ class ControllerSaleInvoice extends Controller {
 
         // Return back to admin
         Client::setName('admin');
-	}
+    }
 
-    protected function validate($route = 'sale/invoice') {
+    protected function validate($route = 'sale/invoice')
+    {
         if (!$this->user->hasPermission('modify', $route)) {
             $this->error['warning'] = $this->language->get('error_permission');
         }

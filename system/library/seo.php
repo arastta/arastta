@@ -1,12 +1,13 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
-class Seo extends Object {
+class Seo extends Object
+{
 
     protected $db;
     protected $config;
@@ -14,7 +15,8 @@ class Seo extends Object {
     protected $session;
     protected $language;
 
-    public function __construct($registry = '') {
+    public function __construct($registry = '')
+    {
         if (empty($registry)) {
             return;
         }
@@ -26,7 +28,8 @@ class Seo extends Object {
         $this->language = $registry->get('language');
     }
 
-    public function getAlias($id, $type = 'product') {
+    public function getAlias($id, $type = 'product')
+    {
         $id = intval($id);
 
         if (empty($id)) {
@@ -63,8 +66,7 @@ class Seo extends Object {
                 }
 
                 $alias = !empty($found) ? $found : $tmp;
-            }
-            else {
+            } else {
                 $alias = $type.'-'.$id;
             }
 
@@ -74,7 +76,8 @@ class Seo extends Object {
         return $rows[$type][$id];
     }
 
-    public function getAliasQuery($keyword) {
+    public function getAliasQuery($keyword)
+    {
         $query = false;
 
         $results = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($keyword) . "'");
@@ -103,8 +106,7 @@ class Seo extends Object {
             }
 
             $query = !empty($found) ? $found : $tmp;
-        }
-        elseif (strpos($keyword, '-')) {
+        } elseif (strpos($keyword, '-')) {
             $tmp = explode('-', $keyword);
             $routes = array('product', 'category', 'manufacturer', 'information');
 
@@ -116,13 +118,13 @@ class Seo extends Object {
         return $query;
     }
 
-    public function getLanguageId() {
+    public function getLanguageId()
+    {
         static $data = array();
 
         if ($this->config->get('config_seo_translate')) {
             $code = $this->session->data['language'];
-        }
-        else {
+        } else {
             $code = $this->config->get('config_language');
         }
 
@@ -131,8 +133,7 @@ class Seo extends Object {
 
             if ($sql->num_rows) {
                 $data[$code] = $sql->row['language_id'];
-            }
-            else {
+            } else {
                 $data[$code] = 1;
             }
         }
@@ -140,7 +141,8 @@ class Seo extends Object {
         return $data[$code];
     }
 
-    public function generateAlias($title, $id = null, $language_id = null) {
+    public function generateAlias($title, $id = null, $language_id = null)
+    {
         $title = html_entity_decode($title, ENT_QUOTES, 'UTF-8');
 
         $alias = $this->safeAlias($title);
@@ -164,7 +166,8 @@ class Seo extends Object {
     }
 
     // From Joomla.Platform
-    public function safeAlias($string) {
+    public function safeAlias($string)
+    {
         // Replace double byte whitespaces by single byte (East Asian languages)
         $str = preg_replace('/\xE3\x80\x80/', ' ', $string);
 
@@ -188,7 +191,8 @@ class Seo extends Object {
         return $str;
     }
 
-    public function getCategoryIdBySortOrder($product_id) {
+    public function getCategoryIdBySortOrder($product_id)
+    {
         static $data = array();
 
         if (!isset($data[$product_id])) {
@@ -215,7 +219,8 @@ class Seo extends Object {
         return $data[$product_id];
     }
 
-    public function getParentCategoriesIds($category_id = 0) {
+    public function getParentCategoriesIds($category_id = 0)
+    {
         static $data = array();
 
         if (!isset($data[$category_id])) {
@@ -230,13 +235,13 @@ class Seo extends Object {
 
             $query = $this->db->query($sql);
 
-            if (!$query->num_rows || ($query->row['parent_id'] == 0)) {
+            if (!$query->num_rows) {
                 return $data[$category_id];
             }
 
             $data[$category_id][] = $query->row['parent_id'];
 
-			$data[$category_id] = array_merge($this->getParentCategoriesIds($query->row['parent_id']), $data[$category_id]);
+            $data[$category_id] = array_merge($this->getParentCategoriesIds($query->row['parent_id']), $data[$category_id]);
         }
 
         return $data[$category_id];

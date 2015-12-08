@@ -1,16 +1,16 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 // Error Reporting
 error_reporting(E_ALL);
 
 if (version_compare(PHP_VERSION, '5.3.10', '<')) {
-	die('Your host needs to use PHP 5.3.10 or higher to run Arastta.');
+    die('Your host needs to use PHP 5.3.10 or higher to run Arastta.');
 }
 
 define('AREXE', 1);
@@ -86,7 +86,7 @@ $registry->set('language', $language);
 
 // Config
 if (file_exists(DIR_ROOT . 'config.php') && filesize(DIR_ROOT . 'config.php') > 0) {
-	require_once(DIR_ROOT . 'config.php');
+    require_once(DIR_ROOT . 'config.php');
 }
 
 // Front Controller
@@ -96,7 +96,7 @@ $controller = new Front($registry);
 if (isset($request->get['route'])) {
     $action = new Action($request->get['route']);
 } else {
-	$action = new Action($route);
+    $action = new Action($route);
 }
 
 // Dispatch

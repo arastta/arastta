@@ -1,14 +1,16 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
-class ModelAppearanceMenu extends Model {
+class ModelAppearanceMenu extends Model
+{
 
-    public function getMenus() {
+    public function getMenus()
+    {
         $data = array();
 
         $sql = "SELECT * FROM `" . DB_PREFIX . "menu` m LEFT JOIN " . DB_PREFIX . "menu_description md ON (m.menu_id = md.menu_id) WHERE md.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY m.sort_order";
@@ -24,7 +26,8 @@ class ModelAppearanceMenu extends Model {
         return $data;
     }
 
-    public function getChildMenus() {
+    public function getChildMenus()
+    {
         $data = array();
 
         $sql = "SELECT * FROM `" . DB_PREFIX . "menu_child` mc LEFT JOIN " . DB_PREFIX . "menu_child_description mcd ON (mc.menu_child_id = mcd.menu_child_id) WHERE mcd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY mc.sort_order";
@@ -40,7 +43,8 @@ class ModelAppearanceMenu extends Model {
         return $data;
     }
 
-    public function getMenuStores($menu_id){
+    public function getMenuStores($menu_id)
+    {
         $menu_store_data = array();
 
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_to_store WHERE menu_id = '" . (int)$menu_id . "'");
@@ -53,7 +57,8 @@ class ModelAppearanceMenu extends Model {
 
     }
 
-    public function getChildMenuStores($menu_child_id){
+    public function getChildMenuStores($menu_child_id)
+    {
 
         $menu_child_store_data = array();
 
@@ -66,7 +71,8 @@ class ModelAppearanceMenu extends Model {
         return $menu_child_store_data;
     }
 
-    public function add($data, $languages){
+    public function add($data, $languages)
+    {
         $this->db->query("INSERT INTO " . DB_PREFIX . "menu SET  sort_order= '1', columns = '1', menu_type = '" . $this->db->escape($data['type']) . "', status = '1'");
 
         $menu_id = $this->db->getLastId();
@@ -80,8 +86,7 @@ class ModelAppearanceMenu extends Model {
             foreach ($languages as $language) {
                 $query->rows[] = array('name' => $data['name'], 'language_id' => $language['language_id']);
             }
-        }
-        else {
+        } else {
             $link = (int)$data['id'];
 
             if ($data['type'] == 'information') {
@@ -110,8 +115,9 @@ class ModelAppearanceMenu extends Model {
         return $menu;
     }
 
-    public function save($data){
-        foreach($data['menu-item-typeMenu'] as $key => $value){
+    public function save($data)
+    {
+        foreach ($data['menu-item-typeMenu'] as $key => $value) {
             $_menu_id = explode('-', $key);
         }
         $menu_id = $_menu_id[1];
@@ -120,21 +126,22 @@ class ModelAppearanceMenu extends Model {
 
         $this->db->query("DELETE FROM " . DB_PREFIX . "menu_description WHERE menu_id = '" . (int)$menu_id . "'");
 
-        foreach($data['menu_name'] as $language_id => $value){
+        foreach ($data['menu_name'] as $language_id => $value) {
             $this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value) . "', link = '" . $this->db->escape($data['menu_link'][$language_id]) . "'");
         }
 
-        if(!empty($data['menu_store'] )){
+        if (!empty($data['menu_store'])) {
             $this->db->query("DELETE FROM " . DB_PREFIX . "menu_to_store WHERE menu_id = '" . (int)$menu_id . "'");
 
-            foreach($data['menu_store'] as $store_id) {
+            foreach ($data['menu_store'] as $store_id) {
                 $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET menu_id = '" . (int)$menu_id . "', store_id = '" . (int)$store_id . "'");
             }
         }
     }
 
-    public function saveChild($data){
-        foreach($data['menu-item-typeMenu'] as $key => $value){
+    public function saveChild($data)
+    {
+        foreach ($data['menu-item-typeMenu'] as $key => $value) {
             $_menu_id = explode('-', $key);
         }
         $menu_child_id = $_menu_id[1];
@@ -145,11 +152,11 @@ class ModelAppearanceMenu extends Model {
 
         $this->db->query("DELETE FROM " . DB_PREFIX . "menu_child_description WHERE menu_child_id = '" . (int)$menu_child_id . "'");
 
-        foreach($data['menu_child_name'] as $language_id => $value){
+        foreach ($data['menu_child_name'] as $language_id => $value) {
             $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_description SET menu_id = '" . (int)$menu_id . "', menu_child_id = '" . (int)$menu_child_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value) . "', link = '" . $this->db->escape($data['menu_child_link'][$language_id]) . "'");
         }
 
-        if(!empty($data['menu_store'] )) {
+        if (!empty($data['menu_store'])) {
             $this->db->query("DELETE FROM " . DB_PREFIX . "menu_child_to_store WHERE menu_child_id = '" . (int)$menu_child_id . "'");
 
             foreach ($data['menu_store'] as $store_id) {
@@ -158,28 +165,31 @@ class ModelAppearanceMenu extends Model {
         }
     }
 
-    public function deleteMenu($menu_id) {
+    public function deleteMenu($menu_id)
+    {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "menu` WHERE menu_id = '" . (int)$menu_id . "'");
         $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_description` WHERE menu_id = '" . (int)$menu_id . "'");
         $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = '" . (int)$menu_id . "'");
-		
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_child WHERE menu_id = '" . (int)$menu_id . "'");
-		
+        
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_child WHERE menu_id = '" . (int)$menu_id . "'");
+        
         $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child` WHERE menu_id = '" . (int)$menu_id . "'");
         $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_description` WHERE menu_id = '" . (int)$menu_id . "'");
-		
-		if(!empty($query->num_rows)){
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = '" . (int)$query->row['menu_child_id'] . "'");
-		}
+        
+        if (!empty($query->num_rows)) {
+            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = '" . (int)$query->row['menu_child_id'] . "'");
+        }
     }
 
-    public function deleteChildMenu($menu_child_id) {
+    public function deleteChildMenu($menu_child_id)
+    {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child` WHERE menu_child_id = '" . (int)$menu_child_id . "'");
         $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_description` WHERE menu_child_id = '" . (int)$menu_child_id . "'");
         $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = '" . (int)$menu_child_id . "'");
     }
 
-    public function getMenuDesc() {
+    public function getMenuDesc()
+    {
         $data = array();
 
         $link = array();
@@ -204,7 +214,8 @@ class ModelAppearanceMenu extends Model {
         return $data;
     }
 
-    public function getMenuChildDesc() {
+    public function getMenuChildDesc()
+    {
         $data = array();
 
         $link = array();
@@ -229,32 +240,37 @@ class ModelAppearanceMenu extends Model {
         return $data;
     }
 
-	public function enableMenu($menu_id) {
+    public function enableMenu($menu_id)
+    {
         $this->db->query("UPDATE `" . DB_PREFIX . "menu` SET status = '1' WHERE menu_id = '" . (int)$menu_id . "'");
     }
 
-	public function enableChildMenu($menu_child_id) {
+    public function enableChildMenu($menu_child_id)
+    {
         $this->db->query("UPDATE `" . DB_PREFIX . "menu_child` SET status = '1' WHERE menu_child_id = '" . (int)$menu_child_id . "'");
     }
 
-	public function disableMenu($menu_id) {
+    public function disableMenu($menu_id)
+    {
         $this->db->query("UPDATE `" . DB_PREFIX . "menu` SET status = '0' WHERE menu_id = '" . (int)$menu_id . "'");
     }
 
-	public function disableChildMenu($menu_child_id) {
+    public function disableChildMenu($menu_child_id)
+    {
         $this->db->query("UPDATE `" . DB_PREFIX . "menu_child` SET status = '0' WHERE menu_child_id = '" . (int)$menu_child_id . "'");
     }
-	
-	public function changeMenuPosition($data){
+    
+    public function changeMenuPosition($data)
+    {
         $menuOrder = 1;
         $menuSubOrder = 1;
 
-        foreach($data['menu-item-db-id'] as $key => $value){
+        foreach ($data['menu-item-db-id'] as $key => $value) {
             $menuType = explode('-', $key);
-			
+            
             $subMenu = 0;
 
-            if(($menuType[0] == 'ChildMenu') && $data['menu-item-parent-id'][$key] == 0){
+            if (($menuType[0] == 'ChildMenu') && $data['menu-item-parent-id'][$key] == 0) {
                 $insertData = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_child` WHERE menu_child_id = '" . $menuType[1] . "'");
                 $insertDataDesc = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_child_description` WHERE menu_child_id = '" . $menuType[1] . "'");
 
@@ -262,13 +278,13 @@ class ModelAppearanceMenu extends Model {
 
                 $menu_id = $this->db->getLastId();
 
-                foreach($insertDataDesc->rows as $dataDesc) {
+                foreach ($insertDataDesc->rows as $dataDesc) {
                     $this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$dataDesc['language_id'] . "', name = '" . $this->db->escape($dataDesc['name']) . "', link = '" . $this->db->escape($dataDesc['link']) . "'");
                 }
 
                 $childStore = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = '" . $menuType[1] . "'");
-                if(!empty($childStore->num_rows)){
-                    foreach($childStore->rows as $storeData) {
+                if (!empty($childStore->num_rows)) {
+                    foreach ($childStore->rows as $storeData) {
                         $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET menu_id = '" . (int)$menu_id . "', store_id = '" . $storeData['store_id'] . "'");
                     }
                 }
@@ -281,7 +297,7 @@ class ModelAppearanceMenu extends Model {
                 $menuType[1] = $menu_id;
             }
 
-            if(($menuType[0] == 'MainMenu') && $data['menu-item-parent-id'][$key] <> 0){
+            if (($menuType[0] == 'MainMenu') && $data['menu-item-parent-id'][$key] <> 0) {
                 $insertData = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu` WHERE menu_id = '" . $menuType[1] . "'");
                 $insertDataDesc = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` WHERE menu_id = '" . $menuType[1] . "'");
 
@@ -289,13 +305,13 @@ class ModelAppearanceMenu extends Model {
 
                 $menu_child_id = $this->db->getLastId();
 
-                foreach($insertDataDesc->rows as $dataDesc) {
+                foreach ($insertDataDesc->rows as $dataDesc) {
                     $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_description SET menu_id = '" . $data['menu-item-parent-id'][$key] . "', menu_child_id = '" . (int)$menu_child_id . "', language_id = '" . (int)$dataDesc['language_id'] . "', name = '" . $this->db->escape($dataDesc['name']) . "', link = '" . $this->db->escape($dataDesc['link']) . "'");
                 }
 
                 $mainStore = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = '" . $menuType[1] . "'");
-                if(!empty($mainStore->num_rows)){
-                    foreach($mainStore->rows as $storeData) {
+                if (!empty($mainStore->num_rows)) {
+                    foreach ($mainStore->rows as $storeData) {
                         $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_to_store SET menu_child_id = '" . (int)$menu_child_id . "', store_id = '" . $storeData['store_id'] . "'");
                     }
                 }
@@ -309,7 +325,7 @@ class ModelAppearanceMenu extends Model {
                 $subMenu = '1';
             }
 
-            if($menuType[0] == 'MainMenu' && empty($subMenu)) {
+            if ($menuType[0] == 'MainMenu' && empty($subMenu)) {
                 $this->db->query("UPDATE `" . DB_PREFIX . "menu` SET sort_order = '" . (int)$menuOrder . "' WHERE menu_id = '" . $menuType[1] . "'");
                 $menuOrder++;
                 $menuSubOrder = 1;
@@ -319,5 +335,5 @@ class ModelAppearanceMenu extends Model {
                 $menuSubOrder++;
             }
         }
-	}
+    }
 }

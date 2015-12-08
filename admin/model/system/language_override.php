@@ -1,20 +1,21 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 use Symfony\Component\Finder\Finder;
 
-class ModelSystemLanguageoverride extends Model {
+class ModelSystemLanguageoverride extends Model
+{
 
-	public function getLanguages($filter_data = array()) {
+    public function getLanguages($filter_data = array())
+    {
         if (isset($filter_data['filter_client']) and ($filter_data['filter_client'] != 'admin')) {
             $lang_dir = DIR_CATALOG.'language/';
-        }
-        else {
+        } else {
             $lang_dir = DIR_LANGUAGE;
         }
 
@@ -30,13 +31,13 @@ class ModelSystemLanguageoverride extends Model {
         return $data;
     }
 
-	public function getStrings($filter_data = array()) {
+    public function getStrings($filter_data = array())
+    {
         $temp_data = array();
 
         if (isset($filter_data['filter_client']) and ($filter_data['filter_client'] != 'admin')) {
             $lang_dir = DIR_CATALOG.'language/';
-        }
-        else {
+        } else {
             $lang_dir = DIR_ADMIN.'language/';
         }
 
@@ -92,8 +93,7 @@ class ModelSystemLanguageoverride extends Model {
                 }
 
                 $temp_data[$key] = $_temp;
-            }
-            else {
+            } else {
                 $temp_data[$key] = $_;
             }
 
@@ -125,17 +125,17 @@ class ModelSystemLanguageoverride extends Model {
         }
 
         return array($data, $total);
-	}
+    }
 
-    public function saveStrings($files) {
+    public function saveStrings($files)
+    {
         if (empty($files)) {
             return;
         }
 
         if (isset($this->request->get['filter_client']) and ($this->request->get['filter_client'] != 'admin')) {
             $lang_dir = DIR_CATALOG.'language/';
-        }
-        else {
+        } else {
             $lang_dir = DIR_ADMIN.'language/';
         }
 

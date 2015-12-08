@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
  
 // Heading
@@ -31,12 +31,12 @@ $_['entry_show_product_description'] = 'Show Product Description';
 $_['entry_show_product_price']       = 'Show Product Price';
 $_['entry_show_product_rating']      = 'Show Product Rating';
 $_['entry_show_addtocart']           = 'Show Product AddtoCart Button';
-$_['entry_status']     		         = 'Status';
+$_['entry_status']                   = 'Status';
 $_['entry_data_feed']                = 'Generated Code';
 
 // Help
-$_['help_ssl']  			         = 'This feed works only with SSL enabled!';
-$_['help_data_feed']  		         = 'Just copy-paste this code to Facebook.';
+$_['help_ssl']                       = 'This feed works only with SSL enabled!';
+$_['help_data_feed']                 = 'Just copy-paste this code to Facebook.';
 
 // Error
 $_['error_permission']               = 'Warning: You do not have permission to modify Facebook Store feed!';

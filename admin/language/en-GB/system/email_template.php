@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -24,7 +24,7 @@ $_['text_html_preview']  = 'HTML Preview';
 // Column
 $_['column_text']        = 'Name';
 $_['column_type']        = 'Type';
-$_['column_context'] 	 = 'Context';
+$_['column_context']     = 'Context';
 $_['column_status']      = 'Status';
 $_['column_action']      = 'Action';
 

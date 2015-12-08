@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -30,12 +30,12 @@ $_['text_support']         = 'Support Forum';
 $_['text_documentation']   = 'Documentation';
 $_['text_logout']          = 'Logout';
 $_['text_search_options']  = 'Search Options';
-$_['text_basic_mode']  	   = 'You can switch between Basic/Advanced modes via this toggle.';
+$_['text_basic_mode']      = 'You can switch between Basic/Advanced modes via this toggle.';
 
 $_['text_language']        = 'Change Language';
-$_['text_update']  		   = 'Updates Available';
+$_['text_update']          = 'Updates Available';
 
-$_['text_new']  		   = 'New';
+$_['text_new']             = 'New';
 $_['text_new_category']    = 'Category';
 $_['text_new_customer']    = 'Customer';
 $_['text_new_download']    = 'Download';

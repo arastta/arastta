@@ -1,50 +1,51 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerSearchSearch extends Controller {
-	public function index() {
-		if(empty($this->session->data['token'])) {
-			return;
-		}
-	
-		$this->load->language('search/search');
+class ControllerSearchSearch extends Controller
+{
+    public function index()
+    {
+        if (empty($this->session->data['token'])) {
+            return;
+        }
+    
+        $this->load->language('search/search');
 
         $data = array();
 
         $data = $this->language->all();
 
-		$data['search_link'] = $this->url->link('search/search/search', 'token=' . $this->session->data['token'], 'SSL');
-		
-		return $this->load->view('search/search.tpl', $data);
-	}
+        $data['search_link'] = $this->url->link('search/search/search', 'token=' . $this->session->data['token'], 'SSL');
+        
+        return $this->load->view('search/search.tpl', $data);
+    }
 
-    public function search(){
+    public function search()
+    {
         $this->load->language('search/search');
         
         $data = $this->language->all();
 
         $data['token'] = $this->session->data['token'];
 
-        if(!empty($this->request->get['query'])) {
+        if (!empty($this->request->get['query'])) {
             $_data['query'] = $this->request->get['query'];
-        }
-        else{
+        } else {
             $json['error'] = $this->language->get('text_empty_query');
         }
 
-        if(!empty($this->request->get['search-option'])) {
+        if (!empty($this->request->get['search-option'])) {
             $search_option = $this->request->get['search-option'];
-        }
-        else{
+        } else {
             $search_option = 'catalog';
         }
 
-        if(!empty($json['error'])) {
+        if (!empty($json['error'])) {
             $this->response->setOutput(json_encode($json));
             return;
         }
@@ -54,16 +55,15 @@ class ControllerSearchSearch extends Controller {
 
         $this->load->model('search/search');
 
-        switch($search_option) {
+        switch ($search_option) {
             case 'catalog':
                 // Get products
                 $data['products'] = $this->model_search_search->getProducts($_data);
 
-                foreach($data['products'] as $key => $product){
-                    if(!empty($product['image'])) {
+                foreach ($data['products'] as $key => $product) {
+                    if (!empty($product['image'])) {
                         $data['products'][$key]['image'] = $this->model_tool_image->resize($product['image'], 30, 30);
-                    }
-                    else{
+                    } else {
                         $data['products'][$key]['image'] = $this->model_tool_image->resize('no_image.png', 30, 30);
                     }
 
@@ -73,11 +73,10 @@ class ControllerSearchSearch extends Controller {
                 // Get categories
                 $data['categories'] = $this->model_search_search->getCategories($_data);
 
-                foreach($data['categories'] as $key => $category){
-                    if(!empty($category['image'])) {
+                foreach ($data['categories'] as $key => $category) {
+                    if (!empty($category['image'])) {
                         $data['categories'][$key]['image'] = $this->model_tool_image->resize($category['image'], 30, 30);
-                    }
-                    else{
+                    } else {
                         $data['categories'][$key]['image'] = $this->model_tool_image->resize('no_image.png', 30, 30);
                     }
 
@@ -87,11 +86,10 @@ class ControllerSearchSearch extends Controller {
                 // Get manufacturers
                 $data['manufacturers'] = $this->model_search_search->getManufacturers($_data);
 
-                foreach($data['manufacturers'] as $key => $manufacturer){
-                    if(!empty($category['image'])) {
+                foreach ($data['manufacturers'] as $key => $manufacturer) {
+                    if (!empty($category['image'])) {
                         $data['manufacturers'][$key]['image'] = $this->model_tool_image->resize($manufacturer['image'], 30, 30);
-                    }
-                    else{
+                    } else {
                         $data['manufacturers'][$key]['image'] = $this->model_tool_image->resize('no_image.png', 30, 30);
                     }
 
@@ -104,7 +102,7 @@ class ControllerSearchSearch extends Controller {
             case 'customers':
                 $data['customers'] = $this->model_search_search->getCustomers($_data);
 
-                foreach($data['customers'] as $key => $customer){
+                foreach ($data['customers'] as $key => $customer) {
                     $data['customers'][$key]['url'] = $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $customer['customer_id'], 'SSL');
                 }
 
@@ -113,7 +111,7 @@ class ControllerSearchSearch extends Controller {
             case 'orders':
                 $data['orders'] = $this->model_search_search->getOrders($_data);
 
-                foreach($data['orders'] as $key => $order){
+                foreach ($data['orders'] as $key => $order) {
                     $data['orders'][$key]['url'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $order['order_id'], 'SSL');
                 }
 

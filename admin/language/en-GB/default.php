@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 // Locale
@@ -33,12 +33,12 @@ $_['text_loading']                  = 'Loading...';
 $_['text_no_results']               = 'No results!';
 $_['text_confirm']                  = 'Are you sure?';
 $_['text_home']                     = 'Home';
-$_['text_bulk_action']       		= 'Bulk Action';
-$_['text_selected']  				= ' Selected';
-$_['text_publish']           		= 'Publish';
+$_['text_bulk_action']              = 'Bulk Action';
+$_['text_selected']                 = ' Selected';
+$_['text_publish']                  = 'Publish';
 
 // Column
-$_['column_status']       		    = 'Status';
+$_['column_status']                 = 'Status';
 
 // Button
 $_['button_add']                    = 'Add New';
@@ -66,8 +66,8 @@ $_['button_download']               = 'Download';
 $_['button_rebuild']                = 'Rebuild';
 $_['button_upload']                 = 'Upload';
 $_['button_submit']                 = 'Submit';
-$_['button_savenew']         		= 'Save & New';
-$_['button_saveclose']       		= 'Save & Close';     
+$_['button_savenew']                = 'Save & New';
+$_['button_saveclose']              = 'Save & Close';
 $_['button_invoice_print']          = 'Print Invoice';
 $_['button_shipping_print']         = 'Print Shipping List';
 $_['button_address_add']            = 'Add Address';
@@ -84,7 +84,7 @@ $_['button_special_add']            = 'Add Special';
 $_['button_image_add']              = 'Add Image';
 $_['button_geo_zone_add']           = 'Add Geo Zone';
 $_['button_history_add']            = 'Add History';
-$_['button_credit_add']        		= 'Add Credit';
+$_['button_credit_add']             = 'Add Credit';
 $_['button_route_add']              = 'Add Route';
 $_['button_rule_add']               = 'Add Rule';
 $_['button_module_add']             = 'Add Module';
@@ -147,7 +147,7 @@ $_['tab_product']                   = 'Products';
 $_['tab_reward']                    = 'Reward Points';
 $_['tab_shipping']                  = 'Shipping Details';
 $_['tab_total']                     = 'Totals';
-$_['tab_credit']               		= 'Credits';
+$_['tab_credit']                    = 'Credits';
 $_['tab_voucher']                   = 'Vouchers';
 $_['tab_sale']                      = 'Sales';
 $_['tab_marketing']                 = 'Marketing';

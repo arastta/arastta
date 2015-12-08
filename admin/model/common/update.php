@@ -1,14 +1,16 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
-class ModelCommonUpdate extends Model {
+class ModelCommonUpdate extends Model
+{
 
-    public function check() {
+    public function check()
+    {
         // Fire event
         $this->trigger->fire('pre.admin.update.check');
 
@@ -19,7 +21,8 @@ class ModelCommonUpdate extends Model {
         return true;
     }
 
-    public function changelog() {
+    public function changelog()
+    {
         $output = '';
 
         $url = 'https://api.github.com/repos/arastta/arastta/releases';
@@ -57,7 +60,8 @@ class ModelCommonUpdate extends Model {
     }
 
     // Upgrade
-    public function update() {
+    public function update()
+    {
         $version = $this->request->get['version'];
         $product_id = $this->request->get['product_id'];
 
@@ -90,7 +94,7 @@ class ModelCommonUpdate extends Model {
         }
 
         // Remove Zip
-		$this->filesystem->remove($file);
+        $this->filesystem->remove($file);
 
         if ($product_id == 'core') {
             $temp_path = DIR_UPLOAD . $path;
@@ -109,8 +113,7 @@ class ModelCommonUpdate extends Model {
 
             // Delete the temp path
             $this->filesystem->remove($temp_path);
-        }
-        else {
+        } else {
             // Required for ftp & remove extension functions
             $this->request->post['path'] = $path;
 
@@ -129,11 +132,13 @@ class ModelCommonUpdate extends Model {
         return true;
     }
 
-    public function countUpdates() {
+    public function countUpdates()
+    {
         return array_sum(array_map("count", $this->getUpdates()));
     }
 
-    public function getUpdates() {
+    public function getUpdates()
+    {
         $data = $this->cache->get('update');
 
         if (empty($data)) {
@@ -156,8 +161,7 @@ class ModelCommonUpdate extends Model {
                             $data[$type][$addon['product_id']] = $addon_version;
                         }
                     }
-                }
-                elseif ($key == 'core') {
+                } elseif ($key == 'core') {
                     if (version_compare(VERSION, $version) != 0) {
                         $data['core'] = $version;
                     }
@@ -170,7 +174,8 @@ class ModelCommonUpdate extends Model {
         return $data;
     }
 
-    public function getVersions($addons = array()) {
+    public function getVersions($addons = array())
+    {
         $data = $this->cache->get('version');
 
         if (empty($data)) {
@@ -201,7 +206,8 @@ class ModelCommonUpdate extends Model {
         return $data;
     }
 
-    public function getRemoteVersion($url) {
+    public function getRemoteVersion($url)
+    {
         $remote_data = $this->utility->getRemoteData($url, array('referrer' => true));
 
         if (is_string($remote_data)) {
@@ -209,27 +215,25 @@ class ModelCommonUpdate extends Model {
 
             if (is_object($version)) {
                 $latest = $version->latest;
-            }
-            else {
+            } else {
                 $latest = '0.0.0';
             }
-        }
-        else {
+        } else {
             $latest = '0.0.0';
         }
 
         return $latest;
     }
 
-    public function downloadUpdate($product_id, $version) {
+    public function downloadUpdate($product_id, $version)
+    {
         // Check core first
         $info = $this->utility->getInfo();
         $base_url = 'http://arastta.io';
 
         if ($product_id == 'core') {
             $url = $base_url.'/core/1.0/update/'.$version.'/'.$info['php'].'/'.$info['mysql'];
-        }
-        else {
+        } else {
             $addons = $this->addon->getAddons();
             $type = $addons[$product_id]['product_type'];
 

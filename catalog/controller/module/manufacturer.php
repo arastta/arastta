@@ -1,13 +1,15 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerModuleManufacturer extends Controller {
-    public function index() {
+class ControllerModuleManufacturer extends Controller
+{
+    public function index()
+    {
         $this->load->language('module/manufacturer');
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -20,17 +22,17 @@ class ControllerModuleManufacturer extends Controller {
         }
 
         $this->load->model('catalog/manufacturer');
-				
+                
         $data['manufacturers'] = array();
 
         $results = $this->model_catalog_manufacturer->getManufacturers();
 
         foreach ($results as $result) {
-						
-			$data['manufacturers'][] = array(
+                        
+            $data['manufacturers'][] = array(
                 'manufacturer_id' => $result['manufacturer_id'],
-                'name'       	  => $result['name'],
-				'href' => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $result['manufacturer_id'])
+                'name'            => $result['name'],
+                'href' => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $result['manufacturer_id'])
             );
         }
 

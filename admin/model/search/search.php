@@ -1,14 +1,16 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
-class ModelSearchSearch extends Model {
+class ModelSearchSearch extends Model
+{
 
-    public function getProducts($data = array()) {
+    public function getProducts($data = array())
+    {
         $sql = "SELECT p.product_id, pd.name, p.model, p.image
                 FROM " . DB_PREFIX . "product p
                 LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id)
@@ -26,7 +28,8 @@ class ModelSearchSearch extends Model {
         return $query->rows;
     }
 
-    public function getCategories($data = array()) {
+    public function getCategories($data = array())
+    {
         $sql = "SELECT cp.category_id AS category_id, GROUP_CONCAT(cdpath.name ORDER BY cp.level SEPARATOR '&nbsp;&nbsp;&gt;&nbsp;&nbsp;') AS name, cmain.image
                 FROM " . DB_PREFIX . "category_path cp
                 LEFT JOIN " . DB_PREFIX . "category cmain ON (cp.category_id = cmain.category_id)
@@ -45,7 +48,8 @@ class ModelSearchSearch extends Model {
         return $query->rows;
     }
 
-    public function getManufacturers($data = array()) {
+    public function getManufacturers($data = array())
+    {
         $sql = "SELECT m.manufacturer_id, md.name, m.image
                 FROM " . DB_PREFIX . "manufacturer m
                 LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON (m.manufacturer_id = md.manufacturer_id)
@@ -58,7 +62,8 @@ class ModelSearchSearch extends Model {
         return $query->rows;
     }
 
-    public function getCustomers($data = array()) {
+    public function getCustomers($data = array())
+    {
         $sql = "SELECT customer_id, email, CONCAT(c.firstname, ' ', c.lastname) AS name
                 FROM " . DB_PREFIX . "customer c
                 WHERE c.firstname LIKE '" . $this->db->escape($data['query']) . "%'
@@ -72,7 +77,8 @@ class ModelSearchSearch extends Model {
         return $query->rows;
     }
 
-    public function getOrders($data = array()) {
+    public function getOrders($data = array())
+    {
         $sql = "SELECT o.order_id, CONCAT(o.firstname, ' ', o.lastname) AS customer, o.total, o.currency_code, o.currency_value, o.date_added, o.email
                 FROM `" . DB_PREFIX . "order` o
                 WHERE o.order_status_id > '0'

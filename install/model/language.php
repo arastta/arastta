@@ -1,14 +1,16 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
-class ModelLanguage extends Model {
+class ModelLanguage extends Model
+{
 
-    public function getLanguages() {
+    public function getLanguages()
+    {
         static $data = array();
 
         if (empty($data)) {
@@ -24,7 +26,8 @@ class ModelLanguage extends Model {
         return $data;
     }
 
-    public function downloadLanguage($data) {
+    public function downloadLanguage($data)
+    {
         $code = $data['lang_code'];
 
         if ($code == 'en-GB') {
@@ -32,8 +35,8 @@ class ModelLanguage extends Model {
             $this->session->data['lang_code'] = 'en';
             $this->session->data['lang_image'] = 'gb.png';
             $this->session->data['lang_directory'] = 'en-GB';
-			
-			// Workaround to mutual session ids
+            
+            // Workaround to mutual session ids
             $this->session->data['config_language'] = 'en';
             $this->session->data['config_admin_language'] = 'en';
 
@@ -68,7 +71,7 @@ class ModelLanguage extends Model {
         }
 
         // Remove Zip
-		$this->filesystem->remove($file);
+        $this->filesystem->remove($file);
 
         $temp_path = DIR_UPLOAD . $path;
 
@@ -78,10 +81,10 @@ class ModelLanguage extends Model {
         $this->session->data['lang_code'] = $json['translation']['code'];
         $this->session->data['lang_image'] = $json['translation']['image'];
         $this->session->data['lang_directory'] = $json['translation']['directory'];
-			
-		// Workaround to mutual session ids
-		$this->session->data['config_language'] = $json['translation']['code'];
-		$this->session->data['config_admin_language'] = $json['translation']['code'];
+            
+        // Workaround to mutual session ids
+        $this->session->data['config_language'] = $json['translation']['code'];
+        $this->session->data['config_admin_language'] = $json['translation']['code'];
 
         $lang_dir = $json['translation']['directory'];
 

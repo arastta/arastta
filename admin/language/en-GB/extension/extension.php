@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -28,7 +28,7 @@ $_['button_upload']     = 'Upload Extension';
 $_['column_name']       = 'Name';
 $_['column_author']     = 'Author';
 $_['column_version']    = 'Version';
-$_['column_type']   	= 'Type';
+$_['column_type']       = 'Type';
 $_['column_status']     = 'Status';
 $_['column_date_added'] = 'Date Added';
 $_['column_sort_order'] = 'Sort Order';

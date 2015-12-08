@@ -1,16 +1,18 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerDashboardCharts extends Controller {
-	public function index() {
-		$this->load->language('dashboard/charts');
+class ControllerDashboardCharts extends Controller
+{
+    public function index()
+    {
+        $this->load->language('dashboard/charts');
 
-		$data['heading_title'] = $this->language->get('heading_title');
+        $data['heading_title'] = $this->language->get('heading_title');
 
         $data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->user->getUsername());
         $data['text_new_order'] = $this->language->get('text_new_order');
@@ -70,7 +72,7 @@ class ControllerDashboardCharts extends Controller {
         $data['column_product_name'] = $this->language->get('column_product_name');
         $data['column_product_id'] = $this->language->get('column_product_id');
 
-		$data['token'] = $this->session->data['token'];
+        $data['token'] = $this->session->data['token'];
         
         $this->load->model('localisation/currency');
 
@@ -88,15 +90,16 @@ class ControllerDashboardCharts extends Controller {
         $data['link_affiliate_waiting'] = $this->url->link('sale/affiliate', 'token=' . $this->session->data['token'] . '&filter_approved=0', 'SSL');
 
 
-		return $this->load->view('dashboard/charts.tpl', $data);
-	}
+        return $this->load->view('dashboard/charts.tpl', $data);
+    }
 
 
         # Ajax Functions
     /**********************************************************************************************************************/
 
-    public function orders() {
-    	$this->load->language('dashboard/charts');
+    public function orders()
+    {
+        $this->load->language('dashboard/charts');
 
         $json = $this->getChartData('getOrders');
         $json['order']['label'] = $this->language->get('text_order');
@@ -104,7 +107,8 @@ class ControllerDashboardCharts extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function customers() {
+    public function customers()
+    {
         $this->load->language('dashboard/charts');
         $this->load->model('dashboard/charts');
 
@@ -114,7 +118,8 @@ class ControllerDashboardCharts extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function sales() {
+    public function sales()
+    {
         $this->load->language('dashboard/charts');
         $this->load->model('dashboard/charts');
 
@@ -124,7 +129,8 @@ class ControllerDashboardCharts extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function affiliates() {
+    public function affiliates()
+    {
         $this->load->language('dashboard/charts');
         $this->load->model('dashboard/charts');
 
@@ -134,7 +140,8 @@ class ControllerDashboardCharts extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function reviews() {
+    public function reviews()
+    {
         $this->load->language('dashboard/charts');
         $this->load->model('dashboard/charts');
 
@@ -144,7 +151,8 @@ class ControllerDashboardCharts extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function rewards() {
+    public function rewards()
+    {
         $this->load->language('dashboard/charts');
         $this->load->model('dashboard/charts');
 
@@ -154,22 +162,23 @@ class ControllerDashboardCharts extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function getChartData($modelFunction, $currency_format = false ) {
+    public function getChartData($modelFunction, $currency_format = false)
+    {
         $this->load->model('dashboard/charts');
 
         $json   = array();
 
-		if(isset($this->request->get['start'])) {
-			$start  = $this->request->get['start'];
-		} else {
-			$start  = '';
-		}
+        if (isset($this->request->get['start'])) {
+            $start  = $this->request->get['start'];
+        } else {
+            $start  = '';
+        }
 
-		if(!empty($this->request->get['end'])) {
-			$end  = $this->request->get['end'];
-		} else {
-			$end  = '';
-		}
+        if (!empty($this->request->get['end'])) {
+            $end  = $this->request->get['end'];
+        } else {
+            $end  = '';
+        }
 
         $date_start = date_create($start)->format('Y-m-d H:i:s');
         $date_end   = date_create($end)->format('Y-m-d H:i:s');
@@ -224,7 +233,7 @@ class ControllerDashboardCharts extends Controller {
 
                 foreach ($results->rows as $result) {
                     $total = $result['total'];
-                    if($currency_format) {
+                    if ($currency_format) {
                         $total = $this->currency->format($result['total'], $this->config->get('config_currency'), '', false);
                     }
 
@@ -242,7 +251,7 @@ class ControllerDashboardCharts extends Controller {
                 break;
             case 'month':
                 $results    = $this->model_dashboard_charts->{$modelFunction}($date_start, $date_end, 'MONTH');
-                $months     = $this->getMonths($date_start,$date_end);
+                $months     = $this->getMonths($date_start, $date_end);
                 $order_data = array();
 
                 for ($i = 0; $i < count($months); $i++) {
@@ -301,7 +310,7 @@ class ControllerDashboardCharts extends Controller {
         $result         = $this->model_dashboard_charts->{$modelFunction}($date_start, $date_end);
 
         $total = $result['total'];
-        if($currency_format) {
+        if ($currency_format) {
             $total = $this->currency->format($result['total'], $this->config->get('config_currency'));
         }
 
@@ -311,50 +320,51 @@ class ControllerDashboardCharts extends Controller {
     }
 
     # extra functions
-    ######################################################################################################################################################
-    function getMonths($date1, $date2) {
-       $time1  = strtotime($date1);
-       $time2  = strtotime($date2);
-       $my     = date('n-Y', $time2);
-       $mesi = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+    ###################################################################################################################
+    public function getMonths($date1, $date2)
+    {
+        $time1  = strtotime($date1);
+        $time2  = strtotime($date2);
+        $my     = date('n-Y', $time2);
+        $mesi = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
        //$mesi = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec');
 
-       $months = array();
-       $f      = '';
+        $months = array();
+        $f      = '';
 
-       while($time1 < $time2) {
-          if(date('n-Y', $time1) != $f) {
-             $f = date('n-Y', $time1);
-             if(date('n-Y', $time1) != $my && ($time1 < $time2)) {
-                 $str_mese=$mesi[(date('n', $time1)-1)];
-                $months[] = $str_mese." ".date('Y', $time1);
-             }
-          }
-          $time1 = strtotime((date('Y-n-d', $time1).' +15days'));
-       }
+        while ($time1 < $time2) {
+            if (date('n-Y', $time1) != $f) {
+                $f = date('n-Y', $time1);
+                if (date('n-Y', $time1) != $my && ($time1 < $time2)) {
+                    $str_mese=$mesi[(date('n', $time1)-1)];
+                    $months[] = $str_mese." ".date('Y', $time1);
+                }
+            }
+            $time1 = strtotime((date('Y-n-d', $time1).' +15days'));
+        }
 
-       $str_mese=$mesi[(date('n', $time2)-1)];
-       $months[] = $str_mese." ".date('Y', $time2);
-       return $months;
+        $str_mese=$mesi[(date('n', $time2)-1)];
+        $months[] = $str_mese." ".date('Y', $time2);
+        return $months;
     }
 
-    public function getRange($diff){
-        if (isset($this->request->get['range']) and !empty($this->request->get['range']) and $this->request->get['range'] != 'undefined' ){
+    public function getRange($diff)
+    {
+        if (isset($this->request->get['range']) and !empty($this->request->get['range']) and $this->request->get['range'] != 'undefined') {
             $range = $this->request->get['range'];
-        }
-        else {
+        } else {
             $range = 'day';
         }
 
-        if($diff < 365 and $range == 'year') {
+        if ($diff < 365 and $range == 'year') {
             $range = 'month';
         }
 
-        if( $diff < 28 ) {
+        if ($diff < 28) {
             $range = 'day';
         }
 
-        if($diff == 1) {
+        if ($diff == 1) {
             $range = 'hour';
         }
 

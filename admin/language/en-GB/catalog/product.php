@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -37,8 +37,8 @@ $_['column_action']          = 'Action';
 // Entry
 $_['entry_name']             = 'Name';
 $_['entry_description']      = 'Description';
-$_['entry_meta_title'] 	     = 'Meta Tag Title';
-$_['entry_meta_keyword'] 	 = 'Meta Tag Keywords';
+$_['entry_meta_title']       = 'Meta Tag Title';
+$_['entry_meta_keyword']     = 'Meta Tag Keywords';
 $_['entry_meta_description'] = 'Meta Tag Description';
 $_['entry_seo_url']          = 'SEO URL';
 $_['entry_model']            = 'Model';
@@ -53,7 +53,7 @@ $_['entry_shipping']         = 'Requires Shipping';
 $_['entry_manufacturer']     = 'Manufacturer';
 $_['entry_store']            = 'Stores';
 $_['entry_date_available']   = 'Date Available';
-$_['entry_date']   			 = 'Date';
+$_['entry_date']             = 'Date';
 $_['entry_quantity']         = 'Quantity';
 $_['entry_minimum']          = 'Minimum Quantity';
 $_['entry_stock_status']     = 'Out Of Stock Status';
@@ -86,7 +86,7 @@ $_['entry_category']         = 'Categories';
 $_['entry_filter']           = 'Filters';
 $_['entry_download']         = 'Downloads';
 $_['entry_related']          = 'Related Products';
-$_['entry_tag']          	 = 'Tags';
+$_['entry_tag']              = 'Tags';
 $_['entry_reward']           = 'Reward Points';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_recurring']        = 'Recurring Profile';
@@ -111,7 +111,7 @@ $_['help_category']          = '(Autocomplete)';
 $_['help_filter']            = '(Autocomplete)';
 $_['help_download']          = '(Autocomplete)';
 $_['help_related']           = '(Autocomplete)';
-$_['help_tag']          	 = 'Comma separated';
+$_['help_tag']               = 'comma separated';
 
 // Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';

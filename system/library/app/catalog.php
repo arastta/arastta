@@ -1,17 +1,19 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package         Arastta eCommerce
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits         See CREDITS.txt for credits and other copyright notices.
+ * @license         GNU General Public License version 3; see LICENSE.txt
  */
 
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
 
-class Catalog extends App {
+class Catalog extends App
+{
 
-    public function initialise() {
+    public function initialise()
+    {
         // File System
         $this->registry->set('filesystem', new Filesystem());
 
@@ -24,15 +26,13 @@ class Catalog extends App {
         // Store
         if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) {
             $store_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`ssl`, 'www.', '') = '" . $this->db->escape('https://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
-        }
-        else {
+        } else {
             $store_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape('http://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
         }
 
         if ($store_query->num_rows) {
             $this->config->set('config_store_id', $store_query->row['store_id']);
-        }
-        else {
+        } else {
             $this->config->set('config_store_id', 0);
         }
 
@@ -42,8 +42,7 @@ class Catalog extends App {
         foreach ($query->rows as $result) {
             if (!$result['serialized']) {
                 $this->config->set($result['key'], $result['value']);
-            }
-            else {
+            } else {
                 $this->config->set($result['key'], unserialize($result['value']));
             }
         }
@@ -72,8 +71,7 @@ class Catalog extends App {
         if ($this->config->get('config_error_display', 0) == 2) {
             ErrorHandler::register();
             ExceptionHandler::register();
-        }
-        else {
+        } else {
             set_error_handler(array($this, 'errorHandler'));
         }
 
@@ -129,23 +127,22 @@ class Catalog extends App {
         $this->trigger->fire('post.app.initialise');
     }
 
-    public function ecommerce() {
+    public function ecommerce()
+    {
         // Customer
         $this->registry->set('customer', new Customer($this->registry));
 
         // Customer Group
         if ($this->customer->isLogged()) {
             $this->config->set('config_customer_group_id', $this->customer->getGroupId());
-        }
-        elseif (isset($this->session->data['customer']) && isset($this->session->data['customer']['customer_group_id'])) {
+        } elseif (isset($this->session->data['customer']) && isset($this->session->data['customer']['customer_group_id'])) {
             // For API calls
             $this->config->set('config_customer_group_id', $this->session->data['customer']['customer_group_id']);
-        }
-        elseif (isset($this->session->data['guest']) && isset($this->session->data['guest']['customer_group_id'])) {
+        } elseif (isset($this->session->data['guest']) && isset($this->session->data['guest']['customer_group_id'])) {
             $this->config->set('config_customer_group_id', $this->session->data['guest']['customer_group_id']);
         }
-		
-		// Email Template
+        
+        // Email Template
         $this->registry->set('emailtemplate', new Emailtemplate($this->registry));
 
         // Tracking Code
@@ -179,7 +176,8 @@ class Catalog extends App {
         $this->trigger->fire('post.app.ecommerce');
     }
 
-    public function route() {
+    public function route()
+    {
         // Route
         $route = new Route($this->registry);
 
@@ -192,9 +190,10 @@ class Catalog extends App {
         $this->trigger->fire('post.app.route');
     }
 
-    public function dispatch() {
-		# B/C start
-		global $registry;
+    public function dispatch()
+    {
+        # B/C start
+        global $registry;
         $registry = $this->registry;
 
         global $config;
@@ -208,8 +207,8 @@ class Catalog extends App {
 
         global $loader;
         $loader = $this->registry->get('load');
-		# B/C end
-		
+        # B/C end
+        
         // Front Controller
         $controller = new Front($this->registry);
 
