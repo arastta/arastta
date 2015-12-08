@@ -13,9 +13,9 @@
 <a href="<?php echo $forgotten; ?>" title="<?php echo $text_forgotten; ?>" class="login-forgotten-link"><?php echo $text_forgotten; ?></a>
 
 <script type="text/javascript"><!--
-    $('#ar-right-1 input').keydown(function(e) {
-        if (e.keyCode == 13) {
-            $('#button-login').click();
-        }
-    });
+$('#ar-right-1 input').keydown(function(e) {
+    if (e.keyCode == 13) {
+        $('#button-login').click();
+    }
+});
 //--></script>

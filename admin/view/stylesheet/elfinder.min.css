@@ -346,8 +346,8 @@
 }
 
 .elfinder-workzone {
-	margin : -15px;
-	padding: 0;
+    margin : -15px;
+    padding: 0;
     position: relative;
     overflow: hidden
 }
@@ -1454,7 +1454,7 @@
 
 .elfinder-quicklook-fullscreen .elfinder-quicklook-navbar {
     width: 200px;
-	height: 45px;
+    height: 45px;
     margin-left: -94px;
     padding: 5px;
     border: 1px solid #eee;
@@ -1549,7 +1549,7 @@ embed.elfinder-quicklook-preview-audio {
 .elfinder-statusbar {
     text-align: center;
     font-weight: 400;
-	padding-top: 25px;
+    padding-top: 25px;
     border-right: 0 solid transparent;
     border-bottom: 0 solid transparent;
     border-left: 0 solid transparent
@@ -1585,7 +1585,7 @@ embed.elfinder-quicklook-preview-audio {
 
 .elfinder-ltr .elfinder-stat-size {
     float: right;
-	margin-right: 15px;
+    margin-right: 15px;
 }
 
 .elfinder-rtl .elfinder-stat-size {
@@ -1601,8 +1601,8 @@ embed.elfinder-quicklook-preview-audio {
     border-left: 0 solid transparent;
     border-top: 0 solid transparent;
     border-right: 0 solid transparent;
-	float: right;
-	margin-top: -50px;
+    float: right;
+    margin-top: -50px;
 }
 
 .elfinder-buttonset {
@@ -1617,7 +1617,7 @@ embed.elfinder-quicklook-preview-audio {
 
 .elfinder .elfinder-button {
     width: 25px;
-	height: 25px;
+    height: 25px;
     margin: 0;
     padding: 4px;
     float: left;
@@ -1878,7 +1878,7 @@ embed.elfinder-quicklook-preview-audio {
 
 .elfinder-button-search input {
     width: 160px;
-	height: 26px !important;
+    height: 26px !important;
     padding: 0 20px;
     font-size: .8em;
     line-height: 22px;
@@ -1916,49 +1916,49 @@ embed.elfinder-quicklook-preview-audio {
 
 
 .elfinder-dialog-error .ui-dialog-titlebar {
-	padding-left: 65px !important;
+    padding-left: 65px !important;
 }
 
 .elfinder-dialog-error {
-	width : 300px !important;
-	height: 110px !important;
+    width : 300px !important;
+    height: 110px !important;
 }
 
 .elfinder-dialog-error .ui-dialog-content {
-	padding: 0.5em 7em !important;
+    padding: 0.5em 7em !important;
 }
 
 #fileManager, .elfinder-navbar, .elfinder-cwd-wrapper, .elfinder-workzone {
-		height: 100% !important;
+    height: 100% !important;
 }
 
 .elfinder-quicklook-preview.ui-helper-clearfix {
-  margin-top: 22px;
-  padding-bottom: 60px;
+    margin-top: 22px;
+    padding-bottom: 60px;
 }
 
 .ui-widget .ui-widget {
-  font-size: 1em;
+    font-size: 1em;
 }
 .elfinder-resize-rotate-slider {
-  float: left;
-  width: 195px;
-  margin: 7px 7px 0;
+    float: left;
+    width: 195px;
+    margin: 7px 7px 0;
 }
 .ui-slider-horizontal {
-  height: .8em;
+    height: .8em;
 }
 .ui-slider {
-  position: relative;
-  text-align: left;
+    position: relative;
+    text-align: left;
 }
 
 .elfinder-resize-row .ui-widget-content {
-  border: 1px solid #aaaaaa;
-  background: #ffffff url(images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
-  color: #222222;
+    border: 1px solid #aaaaaa;
+    background: #ffffff url(images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+    color: #222222;
 }
 
 .ui-helper-reset.ui-widget.elfinder-quicklook.ui-draggable.ui-resizable.elfinder-quicklook-fullscreen.ui-resizable-disabled {
-  z-index: 99999 !important;
+    z-index: 99999 !important;
 }
