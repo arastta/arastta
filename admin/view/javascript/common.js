@@ -149,6 +149,7 @@ $(document).ready(function() {
             var parentMenuHeight =  position.top;
             var windowHeight = $(window).height();
 
+
             if (windowHeight < parentMenuHeight + parentMenu) {
                 var topHeight = ( ( parentMenuHeight + parentMenu ) - windowHeight ) + 10;
                 $(this).parent().children("ul").css({
@@ -276,6 +277,7 @@ $(document).ready(function() {
         } else {
             menu = $('#column-left #menu').height();
 
+
             if ((menu + height.header > height.window || height.container < height.window) || (menu + height.header > height.window && height.container > height.window)) {
                 menuTop = parseInt($(window).scrollTop())+parseInt(height.header);
                 columnLeft.css({
@@ -307,17 +309,25 @@ $(document).ready(function() {
 
     // right menu
     $('#settings-menu').on('click', function() {
-        left_menu_width = $('#column-left #menu').width();
+        left_menu_width = $('#column-left').width();
 
         if (left_menu_width > 0) {
-            $('#column-left').hide();
-            $('#column-right').show();
+            $('#column-left').addClass('width-zero');
+            $('#column-left #menu').css('margin-left', '-500px');
+            $('#column-right').css('margin-right', '0px');
+            $('#column-right').removeClass('width-zero');
             $('#column-right').addClass('right-active');
             sessionStorage.setItem('active-menu', 'right');
         } else {
-            $('#column-right').hide();
             $('#column-left').show();
+            $('#column-right').addClass('width-zero');
             $('#column-right').removeClass('right-active');
+            $('#column-left').removeClass('width-zero');
+            
+            setTimeout( function(){
+                $('#column-left #menu').css('margin-left', '0px');
+            },200);
+            
             sessionStorage.setItem('active-menu', 'left');
         }
     });
@@ -335,6 +345,7 @@ $(document).ready(function() {
 
             $('#column-right #right-menu li span').hide();
 
+
             $('#column-right #right-menu > li > ul').removeClass('in collapse');
             $('#column-right #right-menu > li > ul').removeAttr('style');
         } else {
@@ -344,6 +355,7 @@ $(document).ready(function() {
             // Add the slide down to open menu items
             $('#column-right #right-menu li.open').has('ul').children('ul').addClass('collapse in');
             $('#column-right #right-menu li').not('.open').has('ul').children('ul').addClass('collapse');
+
 
             $('#column-right').addClass('active');
             $('#header').addClass('wide');

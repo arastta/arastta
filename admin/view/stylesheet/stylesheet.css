@@ -239,7 +239,7 @@ a, div {
     position:fixed;
 }
 #column-right.active {
-    width: 185px;
+    width: 184.5px;
 
 }
 #column-right #right-menu li:first-child {
