@@ -313,7 +313,7 @@
                                         <input type="text" name="option" value="" placeholder="<?php echo $entry_option; ?>" id="input-option" class="form-control input-full-width" />
                                     </div>
                                 </div>
-                                <div class="form-group hidden">
+                                <div class="form-group <?php if (empty($product_options)) { ?>hidden <?php } ?>">
                                     <div class="col-sm-3">
                                         <ul class="nav nav-pills nav-stacked" id="option">
                                             <?php $option_row = 0; ?>
@@ -349,32 +349,32 @@
                                                 </div>
                                                 <?php if ($product_option['type'] == 'text') { ?>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-4 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
+                                                    <div class="col-sm-8">
                                                         <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" id="input-value<?php echo $option_row; ?>" class="form-control input-full-width" />
                                                     </div>
                                                 </div>
                                                 <?php } ?>
                                                 <?php if ($product_option['type'] == 'textarea') { ?>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-4 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
+                                                    <div class="col-sm-8">
                                                         <textarea name="product_option[<?php echo $option_row; ?>][value]" rows="5" placeholder="<?php echo $entry_option_value; ?>" id="input-value<?php echo $option_row; ?>" class="form-control input-full-width"><?php echo $product_option['value']; ?></textarea>
                                                     </div>
                                                 </div>
                                                 <?php } ?>
                                                 <?php if ($product_option['type'] == 'file') { ?>
-                                                <div class="form-group" style="display: none;">
-                                                    <label class="col-sm-2 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
-                                                    <div class="col-sm-10">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
+                                                    <div class="col-sm-8">
                                                         <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" id="input-value<?php echo $option_row; ?>" class="form-control input-full-width" />
                                                     </div>
                                                 </div>
                                                 <?php } ?>
                                                 <?php if ($product_option['type'] == 'date') { ?>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
-                                                    <div class="col-sm-3">
+                                                    <label class="col-sm-4 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
+                                                    <div class="col-sm-8">
                                                         <div class="input-group date">
                                                             <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" data-date-format="YYYY-MM-DD" id="input-value<?php echo $option_row; ?>" class="form-control input-full-width" />
                                                         <span class="input-group-btn">
@@ -385,8 +385,8 @@
                                                 <?php } ?>
                                                 <?php if ($product_option['type'] == 'time') { ?>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-4 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
+                                                    <div class="col-sm-8">
                                                         <div class="input-group time">
                                                             <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" data-date-format="HH:mm" id="input-value<?php echo $option_row; ?>" class="form-control input-full-width" />
                                                         <span class="input-group-btn">
@@ -397,8 +397,8 @@
                                                 <?php } ?>
                                                 <?php if ($product_option['type'] == 'datetime') { ?>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-4 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
+                                                    <div class="col-sm-8">
                                                         <div class="input-group datetime">
                                                             <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-value<?php echo $option_row; ?>" class="form-control input-full-width" />
                                                         <span class="input-group-btn">
@@ -409,7 +409,7 @@
                                                 <?php } ?>
                                                 <?php if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') { ?>
                                                 <div class="table-responsive">
-                                                    <table id="option-value<?php echo $option_row; ?>" class="table table-striped table-bordered table-hover">
+                                                    <table id="option-value<?php echo $option_row; ?>" class="table table-striped table-hover">
                                                         <thead>
                                                         <tr>
                                                             <td class="text-left"><?php echo $entry_option_value; ?></td>
@@ -795,43 +795,43 @@
 
             if (item['type'] == 'text') {
                 html += '   <div class="form-group">';
-                html += '     <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
-                html += '     <div class="col-sm-10"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" id="input-value' + option_row + '" class="form-control input-full-width" /></div>';
+                html += '     <label class="col-sm-4 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
+                html += '     <div class="col-sm-8"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" id="input-value' + option_row + '" class="form-control input-full-width" /></div>';
                 html += '   </div>';
             }
 
             if (item['type'] == 'textarea') {
                 html += '   <div class="form-group">';
-                html += '     <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
-                html += '     <div class="col-sm-10"><textarea name="product_option[' + option_row + '][value]" rows="5" placeholder="<?php echo $entry_option_value; ?>" id="input-value' + option_row + '" class="form-control input-full-width"></textarea></div>';
+                html += '     <label class="col-sm-4 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
+                html += '     <div class="col-sm-8"><textarea name="product_option[' + option_row + '][value]" rows="5" placeholder="<?php echo $entry_option_value; ?>" id="input-value' + option_row + '" class="form-control input-full-width"></textarea></div>';
                 html += '   </div>';
             }
 
             if (item['type'] == 'file') {
-                html += '   <div class="form-group" style="display: none;">';
-                html += '     <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
-                html += '     <div class="col-sm-10"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" id="input-value' + option_row + '" class="form-control input-full-width" /></div>';
+                html += '   <div class="form-group">';
+                html += '     <label class="col-sm-4 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
+                html += '     <div class="col-sm-8"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" id="input-value' + option_row + '" class="form-control input-full-width" /></div>';
                 html += '   </div>';
             }
 
             if (item['type'] == 'date') {
                 html += '   <div class="form-group">';
-                html += '     <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
-                html += '     <div class="col-sm-3"><div class="input-group date"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" data-date-format="YYYY-MM-DD" id="input-value' + option_row + '" class="form-control input-full-width" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+                html += '     <label class="col-sm-4 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
+                html += '     <div class="col-sm-8"><div class="input-group date"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" data-date-format="YYYY-MM-DD" id="input-value' + option_row + '" class="form-control input-full-width" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
                 html += '   </div>';
             }
 
             if (item['type'] == 'time') {
                 html += '   <div class="form-group">';
-                html += '     <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
-                html += '     <div class="col-sm-10"><div class="input-group time"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" data-date-format="HH:mm" id="input-value' + option_row + '" class="form-control input-full-width" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+                html += '     <label class="col-sm-4 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
+                html += '     <div class="col-sm-8"><div class="input-group time"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" data-date-format="HH:mm" id="input-value' + option_row + '" class="form-control input-full-width" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
                 html += '   </div>';
             }
 
             if (item['type'] == 'datetime') {
                 html += '   <div class="form-group">';
-                html += '     <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
-                html += '     <div class="col-sm-10"><div class="input-group datetime"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-value' + option_row + '" class="form-control input-full-width" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+                html += '     <label class="col-sm-4 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
+                html += '     <div class="col-sm-8"><div class="input-group datetime"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-value' + option_row + '" class="form-control input-full-width" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
                 html += '   </div>';
             }
 
@@ -907,7 +907,7 @@
         html += '  <td class="text-right">';
         html += '   <div class="input-group price">';
         html += '     <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price]" value="" placeholder="<?php echo $entry_price; ?>" class="form-control" />';
-        html += '     <select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price_prefix]" class="form-control">';
+        html += '     <select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price_prefix]" class="selectpicker">';
         html += '       <option value="+">+</option>';
         html += '       <option value="-">-</option>';
         html += '     </select>';
@@ -929,6 +929,8 @@
         $('#option-value' + option_row + ' tbody').append(html);
         $('[rel=tooltip]').tooltip();
 
+        $('#option-value-row' + option_value_row + ' select').selectpicker('refresh');
+        $('#option-value-row' + option_value_row + ' .input-group.price .form-control').selectpicker('refresh');
         option_value_row++;
     }
     //--></script>

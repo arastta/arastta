@@ -224,7 +224,7 @@ header ul.dropdown-menu.dropdown-menu-right:after {
     transition: all 0.3s;
     top: 0;
     position: fixed;
-    display: none;
+    margin-right: -500px;
     top: 44px;
     bottom: 0px;
     right: 0;
@@ -2253,10 +2253,10 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
 
 
 @media (max-width: 573px) {
-    #header .nav.pull-left{
+    #header .nav.pull-left {
         display:none;
     }
-    .menu-logo{
+    .menu-logo {
         width: auto;
     }
 }
@@ -2266,11 +2266,11 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
         display: none;
     }
 
-    .breadcrumb{
+    .breadcrumb {
         display: none;
     }
 
-    #header .nav.pull-left{
+    #header .nav.pull-left {
         display:none;
     }
 
@@ -2280,20 +2280,20 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
 }
 
 @media (max-width: 315px) {
-    #header .nav.pull-right .dropdown{
+    #header .nav.pull-right .dropdown {
         margin-right: -15px;
         margin-left: -0px;
     }
 }
 
 @media (max-width: 478px) {
-    .page-header h1{
+    .page-header h1 {
         display: none;
     }
 }
 
 @media (max-width: 595px) {
-    .breadcrumb{
+    .breadcrumb {
         display: none;
     }
 }
@@ -2310,17 +2310,17 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
         width: 100% !important;
     }
 
-    #block-range li{
+    #block-range li {
         width: 33.33333% !important;
     }
 
-    #reportrange{
+    #reportrange {
         margin-top: 10px !important;
         width: 100% !important;
         text-align: right;
     }
 
-    #chart-date-range{
+    #chart-date-range {
         width: 100% !important;
     }
 }
@@ -2359,7 +2359,7 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
 #profiler {
     padding: 20px 0px 20px 250px;
 }
-.breadcrumb{
+.breadcrumb {
     display: none !important;
 }
 
@@ -2689,4 +2689,7 @@ li.basic-advanced {
 .ba-message .close {
     color: #fff;
     opacity: 0.9;
+}
+.width-zero {
+    width: 0px !important;
 }

@@ -108,15 +108,11 @@ a.editable-click:hover {
 }
 
 .options .tab-content .table-responsive  .table , #product-category {
-    margin-bottom: 0px;
+	margin-bottom: 0px;
 }
 
-.options .tab-content .table-responsive .input-group.price  input[type="text"] {
-    width: 69%;
-}
-
-.options .tab-content .table-responsive .input-group.price  select {
-    width: 31%;
+.options .tab-content .table-responsive .input-group.price .btn-group.bootstrap-select.input-group-btn {
+	min-width: 46px !important;
 }
 
 #product-category  div{
