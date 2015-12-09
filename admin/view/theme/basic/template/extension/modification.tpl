@@ -25,116 +25,121 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
         <?php } ?>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
-            </div>
-            <div class="panel-body">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-                    <li><a href="#tab-log" data-toggle="tab"><?php echo $tab_log; ?></a></li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="tab-general">
-                        <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-modification">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <td style="width: 70px;" class="text-center">
-                                            <div class="bulk-action">
-                                                <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
-                                                <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
-                                                <span class="item-selected"></span>
-                        <span class="bulk-action-button">
-                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                              <b><?php echo $text_bulk_action; ?></b>
-                              <span class="caret"></span>
-                          </a>
-                          <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
-                              <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                              <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-modification').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
-                          </ul>
-                        </span>
-                                            </div></td>
-                                        <td class="text-left"><?php if ($sort == 'name') { ?>
-                                            <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
-                                            <?php } else { ?>
-                                            <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
-                                            <?php } ?></td>
-                                        <td class="text-left"><?php if ($sort == 'author') { ?>
-                                            <a href="<?php echo $sort_author; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_author; ?></a>
-                                            <?php } else { ?>
-                                            <a href="<?php echo $sort_author; ?>"><?php echo $column_author; ?></a>
-                                            <?php } ?></td>
-                                        <td class="text-left"><?php if ($sort == 'version') { ?>
-                                            <a href="<?php echo $sort_version; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_version; ?></a>
-                                            <?php } else { ?>
-                                            <a href="<?php echo $sort_version; ?>"><?php echo $column_version; ?></a>
-                                            <?php } ?></td>
-                                        <td class="text-left"><?php if ($sort == 'type') { ?>
-                                            <a href="<?php echo $sort_type; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_type; ?></a>
-                                            <?php } else { ?>
-                                            <a href="<?php echo $sort_type; ?>"><?php echo $column_type; ?></a>
-                                            <?php } ?></td>
-                                        <td class="text-left"><?php if ($sort == 'status') { ?>
-                                            <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
-                                            <?php } else { ?>
-                                            <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
-                                            <?php } ?></td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php if ($modifications) { ?>
-                                    <?php foreach ($modifications as $modification) { ?>
-                                    <?php if( empty($modification['modification_id']) ) {
-                              $modification_id = explode('.', $modification['vqmod_id']); $modification_id = $modification_id[0]; 
-                          } else {
-                              $modification_id = explode('.', $modification['modification_id']) ; $modification_id = $modification_id[0]; 
-                          } ?>
-                                    <tr id="remove_<?php echo $modification_id;?>">
-                                        <td class="text-center"><?php if (isset($modification['modification_id']) and in_array($modification['modification_id'], $selected)) { ?>
-                                            <input type="checkbox" name="selected[]" value="<?php echo  $modification['modification_id'] ; ?>" checked="checked" />
-                                            <?php } else if (isset($modification['vqmod_id']) && (in_array($modification['vqmod_id'], $selected))){ ?>
-                                            <input type="checkbox" name="selected[]" value="<?php echo $modification['vqmod_id'] ; ?>"  checked="checked" />
-                                            <?php }  else { ?>
-                                            <input type="checkbox" name="selected[]" value="<?php echo empty($modification['modification_id']) ? $modification['vqmod_id'] : $modification['modification_id']; ?>" />
-                                            <?php } ?></td>
-                                        <td class="text-left">
-                                            <?php if ($modification['link']) { ?>
-                                            <a href="<?php echo $modification['link']; ?>" data-toggle="tooltip" title="<?php echo $button_link; ?>" target="_blank"><i class="fa fa-link"></i></a>
-                                            <?php } ?>
-                                            <?php if (!$modification['enabled']) { ?>
-                                            <a onClick="changeStatus('<?php echo $modification['enable']; ?>', '<?php echo $modification_id; ?>');" id="<?php echo $modification_id; ?>"  data-toggle="tooltip" title="<?php echo $button_enable; ?>"><i class="fa fa-plus-circle"></i></a>
-                                            <?php } else { ?>
-                                            <a onClick="changeStatus('<?php echo $modification['disable']; ?>', '<?php echo $modification_id; ?>');" id="<?php echo $modification_id; ?>" data-toggle="tooltip" title="<?php echo $button_disable; ?>"><i class="fa fa-minus-circle"></i></a>
-                                            <?php } ?>
-                                            <?php echo $modification['name']; ?><br /><div class="text-danger"><?php echo $modification['invalid_xml']; ?><div></td>
-                                        <td class="text-left"><?php echo $modification['author']; ?></td>
-                                        <td class="text-left"><?php echo $modification['version']; ?></td>
-                                        <td class="text-left"><?php echo $modification['type']; ?></td>
-                                        <td class="text-left"><?php echo $modification['status']; ?></td>
-                                    </tr>
-                                    <?php } ?>
-                                    <?php } else { ?>
-                                    <tr>
-                                        <td class="text-center" colspan="7"><?php echo $text_no_results; ?></td>
-                                    </tr>
-                                    <?php } ?>
-                                    </tbody>
-                                </table>
+        <div class="row">
+            <div class="left-col col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="general">  
+                            <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-modification">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <td style="width: 70px;" class="text-center">
+                                                <div class="bulk-action">
+                                                    <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
+                                                    <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
+                                                    <span class="item-selected"></span>
+                                                    <span class="bulk-action-button">
+                                                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                                          <b><?php echo $text_bulk_action; ?></b>
+                                                          <span class="caret"></span>
+                                                      </a>
+                                                      <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
+                                                          <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
+                                                          <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-modification').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                                      </ul>
+                                                    </span>
+                                                </div></td>
+                                            <td class="text-left"><?php if ($sort == 'name') { ?>
+                                                <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+                                                <?php } else { ?>
+                                                <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+                                                <?php } ?></td>
+                                            <td class="text-left"><?php if ($sort == 'author') { ?>
+                                                <a href="<?php echo $sort_author; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_author; ?></a>
+                                                <?php } else { ?>
+                                                <a href="<?php echo $sort_author; ?>"><?php echo $column_author; ?></a>
+                                                <?php } ?></td>
+                                            <td class="text-left"><?php if ($sort == 'version') { ?>
+                                                <a href="<?php echo $sort_version; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_version; ?></a>
+                                                <?php } else { ?>
+                                                <a href="<?php echo $sort_version; ?>"><?php echo $column_version; ?></a>
+                                                <?php } ?></td>
+                                            <td class="text-left"><?php if ($sort == 'type') { ?>
+                                                <a href="<?php echo $sort_type; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_type; ?></a>
+                                                <?php } else { ?>
+                                                <a href="<?php echo $sort_type; ?>"><?php echo $column_type; ?></a>
+                                                <?php } ?></td>
+                                            <td class="text-left"><?php if ($sort == 'status') { ?>
+                                                <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
+                                                <?php } else { ?>
+                                                <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
+                                                <?php } ?></td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php if ($modifications) { ?>
+                                        <?php foreach ($modifications as $modification) { ?>
+                                        <?php if( empty($modification['modification_id']) ) {
+                                                  $modification_id = explode('.', $modification['vqmod_id']); $modification_id = $modification_id[0]; 
+                                              } else {
+                                                  $modification_id = explode('.', $modification['modification_id']) ; $modification_id = $modification_id[0]; 
+                                              } ?>
+                                        <tr id="remove_<?php echo $modification_id;?>">
+                                            <td class="text-center"><?php if (isset($modification['modification_id']) and in_array($modification['modification_id'], $selected)) { ?>
+                                                <input type="checkbox" name="selected[]" value="<?php echo  $modification['modification_id'] ; ?>" checked="checked" />
+                                                <?php } else if (isset($modification['vqmod_id']) && (in_array($modification['vqmod_id'], $selected))){ ?>
+                                                <input type="checkbox" name="selected[]" value="<?php echo $modification['vqmod_id'] ; ?>"  checked="checked" />
+                                                <?php }  else { ?>
+                                                <input type="checkbox" name="selected[]" value="<?php echo empty($modification['modification_id']) ? $modification['vqmod_id'] : $modification['modification_id']; ?>" />
+                                                <?php } ?></td>
+                                            <td class="text-left">
+                                                <?php if ($modification['link']) { ?>
+                                                <a href="<?php echo $modification['link']; ?>" data-toggle="tooltip" title="<?php echo $button_link; ?>" target="_blank"><i class="fa fa-link"></i></a>
+                                                <?php } ?>
+                                                <?php if (!$modification['enabled']) { ?>
+                                                <a onClick="changeStatus('<?php echo $modification['enable']; ?>', '<?php echo $modification_id; ?>');" id="<?php echo $modification_id; ?>"  data-toggle="tooltip" title="<?php echo $button_enable; ?>"><i class="fa fa-plus-circle"></i></a>
+                                                <?php } else { ?>
+                                                <a onClick="changeStatus('<?php echo $modification['disable']; ?>', '<?php echo $modification_id; ?>');" id="<?php echo $modification_id; ?>" data-toggle="tooltip" title="<?php echo $button_disable; ?>"><i class="fa fa-minus-circle"></i></a>
+                                                <?php } ?>
+                                                <?php echo $modification['name']; ?><br /><div class="text-danger"><?php echo $modification['invalid_xml']; ?></div></td>
+                                            <td class="text-left"><?php echo $modification['author']; ?></td>
+                                            <td class="text-left"><?php echo $modification['version']; ?></td>
+                                            <td class="text-left"><?php echo $modification['type']; ?></td>
+                                            <td class="text-left"><?php echo $modification['status']; ?></td>
+                                        </tr>
+                                        <?php } ?>
+                                        <?php } else { ?>
+                                        <tr>
+                                            <td class="text-center" colspan="7"><?php echo $text_no_results; ?></td>
+                                        </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </form>
+                            <div class="row">
+                                <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+                                <div class="col-sm-6 text-right"><?php echo $results; ?></div>
                             </div>
-                        </form>
-                        <div class="row">
-                            <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-                            <div class="col-sm-6 text-right"><?php echo $results; ?></div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="tab-log">
-                        <p>
-                            <textarea wrap="off" rows="15" class="form-control"><?php echo $log ?></textarea>
-                        </p>
-                        <div class="text-right"><a href="<?php echo $clear_log; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear ?></a></div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><?php echo $tab_log; ?></h3>
+                        <div class="pull-right">
+                            <div class="panel-chevron"><i class="fa fa-chevron-up rotate-reset"></i></div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="log">
+                            <p>
+                                <textarea wrap="off" rows="15" class="form-control"><?php echo $log ?></textarea>
+                            </p>
+                            <div class="text-right"><a href="<?php echo $clear_log; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear ?></a></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -142,6 +147,10 @@
     </div>
 </div>
 <script type="text/javascript"><!--
+$(document).ready(function() {
+    $('.panel-chevron').trigger('click');
+});
+
 function changeStatus(url ,id) {
     var html = "";
     $.ajax({

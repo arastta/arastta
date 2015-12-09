@@ -2026,6 +2026,10 @@
         </form>
     </div>
     <script type="text/javascript"><!--
+    $(document).ready(function() {
+        $('.panel-chevron').trigger('click');
+    });
+    
     $('select[name=\'config_template\']').on('change', function() {
         $.ajax({
             url: 'index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value),
