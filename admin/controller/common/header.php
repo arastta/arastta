@@ -151,13 +151,27 @@ class ControllerCommonHeader extends Controller {
 
             $languages = $this->model_localisation_language->getLanguages();
             if (count($languages) > 1) {
+                $extra_link = '';
+
                 $route = !empty($this->request->get['route']) ? $this->request->get['route'] : 'common/dashboard';
+
+                if (!empty($this->request->get)) {
+                    foreach ($this->request->get as $name => $value) {
+                        $skip_vars = array('route', 'token');
+
+                        if (in_array($name, $skip_vars)) {
+                            continue;
+                        }
+
+                        $extra_link .= '&' . $name . '=' . $value;
+                    }
+                }
 
                 foreach ($languages as $language) {
                     $data['languages'][] = array(
                         'name' => $language['name'],
                         'image' => $language['image'],
-                        'link' => $this->url->link($route, 'token=' . $this->session->data['token'].'&lang='.$language['code'], 'SSL')
+                        'link' => $this->url->link($route, 'lang=' . $language['code'] . $extra_link . '&token=' . $this->session->data['token'], 'SSL')
                     );
                 }
             } else {
