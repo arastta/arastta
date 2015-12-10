@@ -31,6 +31,10 @@ class EventEditorSummernote extends Event
     {
         $editor = $this->config->get('config_text_editor');
 
+        $this->load->model('setting/setting');
+
+        $setting = $this->model_setting_setting->getSetting('summernote');
+
         if ($editor != 'summernote') {
             return;
         }
@@ -42,8 +46,6 @@ class EventEditorSummernote extends Event
         }
 
         $this->trigger->addFolder('editor-xtd');
-        // $this->trigger->fire('pre.admin.editor.menu.add');
-        // $this->trigger->fire('pre.admin.editor.button.add');
         $this->trigger->fire('pre.admin.editor.toolbar.add', array(&$this->toolbar));
         $this->trigger->fire('pre.admin.editor.height.edit', array(&$this->height));
         $this->trigger->fire('pre.admin.editor.other.edit', array(&$this->other_options));
@@ -57,10 +59,20 @@ class EventEditorSummernote extends Event
 
         $toolbars = '';
 
+        $tool_prefix = 'summernote_tool_';
+
         foreach ($this->toolbar as $key => $value) {
+            if (isset($setting[$tool_prefix . $key]) && !$setting[$tool_prefix . $key]) {
+                continue;
+            }
+
             $toolbars .= "[['" . $key . "'], [";
 
             foreach ($value as $item) {
+                if (isset($setting[$tool_prefix . $key . '_' . $item]) && !$setting[$tool_prefix . $key . '_' . $item]) {
+                    continue;
+                }
+
                 $toolbars .= "'" . $item . "',";
             }
 
@@ -75,6 +87,10 @@ class EventEditorSummernote extends Event
             foreach ($this->other_options as $key => $value) {
                 $other_options = '';
             }
+        }
+
+        if (isset($setting['summernote_height']) && $setting['summernote_height'] > 0) {
+            $this->height = $setting['summernote_height'];
         }
 
         $script  = "function textEditor(text_id) {" . chr(13). chr(9) . chr(9);
