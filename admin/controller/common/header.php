@@ -157,7 +157,7 @@ class ControllerCommonHeader extends Controller {
 
                 if (!empty($this->request->get)) {
                     foreach ($this->request->get as $name => $value) {
-                        $skip_vars = array('route', 'token');
+                        $skip_vars = array('route', 'token', 'lang');
 
                         if (in_array($name, $skip_vars)) {
                             continue;
