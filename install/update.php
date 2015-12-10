@@ -174,6 +174,12 @@ if (version_compare(VERSION, '1.2.0', '<')) {
         
         $user_group['permission']['access'][] = 'sale/invoice';
         $user_group['permission']['modify'][] = 'sale/invoice';
+
+        $user_group['permission']['access'][] = 'editor/summernote';
+        $user_group['permission']['modify'][] = 'editor/summernote';        
+        
+        $user_group['permission']['access'][] = 'editor/tinymce';
+        $user_group['permission']['modify'][] = 'editor/tinymce';
         
         $this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
     }
