@@ -363,7 +363,7 @@ class ControllerExtensionModification extends Controller {
         $data['modifications'] = array();
 
         $files_enable = glob(DIR_SYSTEM . 'xml/*.xml');
-        $files_disable = glob(DIR_SYSTEM . 'xml/*.xml_');
+        $files_disable = glob(DIR_SYSTEM . 'xml/*.xml_') == false ? array() : glob(DIR_SYSTEM . 'xml/*.xml_');
 
         $files_hide = array('core.xml');
 
@@ -640,7 +640,7 @@ class ControllerExtensionModification extends Controller {
 
     protected function _checkVqmodfile() {
         $files_enable  = glob(DIR_VQMOD . 'xml/*.xml');
-        $files_disable = glob(DIR_VQMOD . 'xml/*.xml_');
+        $files_disable = glob(DIR_VQMOD . 'xml/*.xml_') == false ? array() : glob(DIR_VQMOD . 'xml/*.xml_');
 
         $files = array_merge($files_enable, $files_disable);
 
