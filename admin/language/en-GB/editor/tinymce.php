@@ -7,12 +7,12 @@
  */
 
 // Heading
-$_['heading_title']                 = 'Tinymce';
+$_['heading_title']                 = 'TinyMCE';
 
 // Text
 $_['text_editor']                   = 'Editor';
-$_['text_success']                  = 'Success: You have modified Tinymce editor!';
-$_['text_edit']                     = 'Edit Tinymce';
+$_['text_success']                  = 'Success: You have modified TinyMCE editor!';
+$_['text_edit']                     = 'Edit TinyMCE';
 $_['text_menu']                     = 'Menu';
 $_['text_tool']                     = 'Toolbar';
 
@@ -41,21 +41,21 @@ $_['tab_advanced']                  = 'Advanced';
 
 // Help
 $_['help_height']                   = 'Editor height.';
-$_['help_menu_edit_undo']           = 'Tinymce Editor Undo button.';
-$_['help_menu_edit_redo']           = 'Tinymce Editor Redo button.';
-$_['help_menu_format_bold']         = 'Tinymce Editor Bold button.';
-$_['help_menu_format_italic']       = 'Tinymce Editor Italic button.';
-$_['help_menu_view_alignleft']      = 'Tinymce Editor Align Left button.';
-$_['help_menu_view_aligncenter']    = 'Tinymce Editor Align Center button.';
-$_['help_menu_view_alignright']     = 'Tinymce Editor Align Right button.';
-$_['help_menu_view_alignjustify']   = 'Tinymce Editor Justify button.';
-$_['help_menu_file_bullist']        = 'Tinymce Editor Bullet List button.';
-$_['help_menu_file_numlist']        = 'Tinymce Editor Numbered List button.';
-$_['help_menu_file_outdent']        = 'Tinymce Editor Decrease Indent button.';
-$_['help_menu_file_indent']         = 'Tinymce Editor Increase Indent button.';
-$_['help_menu_insert_link']         = 'Tinymce Editor Insert/edit Link button.';
-$_['help_menu_insert_image']        = 'Tinymce Editor Insert/edit Image button.';
-$_['help_menu_tools_imagetools']    = 'Tinymce Editor Emoticons button.';
+$_['help_menu_edit_undo']           = 'TinyMCE Editor Undo button.';
+$_['help_menu_edit_redo']           = 'TinyMCE Editor Redo button.';
+$_['help_menu_format_bold']         = 'TinyMCE Editor Bold button.';
+$_['help_menu_format_italic']       = 'TinyMCE Editor Italic button.';
+$_['help_menu_view_alignleft']      = 'TinyMCE Editor Align Left button.';
+$_['help_menu_view_aligncenter']    = 'TinyMCE Editor Align Center button.';
+$_['help_menu_view_alignright']     = 'TinyMCE Editor Align Right button.';
+$_['help_menu_view_alignjustify']   = 'TinyMCE Editor Justify button.';
+$_['help_menu_file_bullist']        = 'TinyMCE Editor Bullet List button.';
+$_['help_menu_file_numlist']        = 'TinyMCE Editor Numbered List button.';
+$_['help_menu_file_outdent']        = 'TinyMCE Editor Decrease Indent button.';
+$_['help_menu_file_indent']         = 'TinyMCE Editor Increase Indent button.';
+$_['help_menu_insert_link']         = 'TinyMCE Editor Insert/edit Link button.';
+$_['help_menu_insert_image']        = 'TinyMCE Editor Insert/edit Image button.';
+$_['help_menu_tools_imagetools']    = 'TinyMCE Editor Emoticons button.';
 
 // Error
-$_['error_permission']              = 'Warning: You do not have permission to modify payment Cash On Delivery!';
+$_['error_permission']              = 'Warning: You do not have permission to modify editor TinyMCE!';

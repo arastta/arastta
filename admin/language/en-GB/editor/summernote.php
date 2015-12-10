@@ -64,4 +64,4 @@ $_['help_tool_view_codeview']       = 'Summernote Editor Tool Insert Code View b
 $_['help_tool_help']                = 'Summernote Editor Tool Help button.';
 
 // Error
-$_['error_permission']              = 'Warning: You do not have permission to modify payment Cash On Delivery!';
+$_['error_permission']              = 'Warning: You do not have permission to modify editor Summernote!';
