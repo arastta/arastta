@@ -33,6 +33,10 @@ class EventEditorTinymce extends Event
     {
         $editor = $this->config->get('config_text_editor');
 
+        $this->load->model('setting/setting');
+
+        $setting = $this->model_setting_setting->getSetting('tinymce');
+
         if ($editor != 'tinymce') {
             return;
         }
@@ -61,8 +65,14 @@ class EventEditorTinymce extends Event
 
         $menus = "";
 
+        $menu_prefix = 'tinymce_menu_';
+
         foreach ($this->menu as $key => $value) {
             foreach ($value as $item) {
+                if (isset($setting[$menu_prefix . $key . '_' . $item]) && !$setting[$menu_prefix . $key . '_' . $item]) {
+                    continue;
+                }
+
                 $menus .=  $item . " ";
             }
             $menus .= "| " ;
@@ -71,6 +81,8 @@ class EventEditorTinymce extends Event
         $menus .= "";
 
         $toolbars = "";
+
+        $tool_prefix = 'tinymce_tool_';
 
         foreach ($this->toolbar as $key => $value) {
             $toolbars .= "'";
@@ -89,10 +101,14 @@ class EventEditorTinymce extends Event
             }
         }
 
+        if (isset($setting['tinymce_height']) && $setting['tinymce_height'] > 0) {
+            $this->height = (int)$setting['tinymce_height'];
+        }
+
         $script  = "function textEditor(text_id) {" . chr(13). chr(9) . chr(9);
         $script .= "  tinymce.init({" . chr(13) . chr(9) . chr(9);
         $script .= "      selector: text_id," . chr(13) . chr(9) . chr(9);
-        $script .= "      height: " . $this->height . "," . chr(13) . chr(9) . chr(9);
+        $script .= "      height: " . $this->height . " ," . chr(13) . chr(9) . chr(9);
         $script .= "      plugins: [" . chr(13) . chr(9) . chr(9);
         $script .= "        "   . $toolbars;
         $script .= "      ]," . chr(13) . chr(9) . chr(9);
