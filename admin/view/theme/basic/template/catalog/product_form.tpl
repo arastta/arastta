@@ -90,7 +90,7 @@
                                         <input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
                                     </div>
                                     <div class="col-sm-9">
-                                        <input name="file[]" value="<?php echo $product_image['image']; ?>" type="file" multiple=true class="file-loading" id="input-image-addon" />
+                                        <input name="file[]" value="" type="file" multiple=true class="file-loading" id="input-image-addon" />
                                     </div>
                                 </div>
                             </div>

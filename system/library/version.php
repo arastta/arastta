@@ -1,9 +1,9 @@
 <?php
 /**
- * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits        See CREDITS.txt for credits and other copyright notices.
- * @license        GNU General Public License version 3; see LICENSE.txt
+ * @package		Arastta eCommerce
+ * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits		See CREDITS.txt for credits and other copyright notices.
+ * @license		GNU General Public License version 3; see LICENSE.txt
  */
 
 defined('AREXE') or die;
@@ -13,26 +13,25 @@ defined('AREXE') or die;
  *
  * @since  1.0
  */
-final class Version extends Object
-{
+final class Version extends Object {
 
     protected $name = 'Arastta';
 
-    protected $code = 'Wellington';
+    protected $code = 'Shkoder';
 
     protected $major = '1';
 
-    protected $minor = '1';
+    protected $minor = '2';
 
-    protected $patch = '5';
+    protected $patch = '0';
 
     protected $build = '';
 
-    protected $status = 'Stable';
+    protected $status = 'RC 2';
 
-    protected $date = '27-October-2015';
+    protected $date = '9-December-2015';
 
-    protected $time = '14:30';
+    protected $time = '15:30';
 
     protected $zone = 'GMT +2';
 
@@ -46,8 +45,7 @@ final class Version extends Object
      * @see     http://www.php.net/version_compare
      * @since   1.0
      */
-    public function isCompatible($minimum)
-    {
+    public function isCompatible($minimum) {
         return version_compare($this->getShortVersion(), $minimum, 'ge');
     }
 
@@ -58,8 +56,7 @@ final class Version extends Object
      *
      * @since   1.0
      */
-    public function getReleaseVersion()
-    {
+    public function getReleaseVersion() {
         return $this->get('major') . '.' . $this->get('minor');
     }
 
@@ -70,8 +67,7 @@ final class Version extends Object
      *
      * @since   1.0
      */
-    public function getShortVersion()
-    {
+    public function getShortVersion() {
         return $this->getReleaseVersion() . '.' . $this->get('patch');
     }
 
@@ -82,8 +78,7 @@ final class Version extends Object
      *
      * @since   1.0
      */
-    public function getLongVersion()
-    {
+    public function getLongVersion() {
         return $this->get('name') . ' ' . $this->getShortVersion() . ' '
         . $this->get('status') . ' [ ' . $this->get('code') . ' ] ' . $this->get('date') . ' '
         . $this->get('time') . ' ' . $this->get('zone');

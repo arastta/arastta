@@ -668,7 +668,7 @@ a, div {
     color: #f8f8f8;
 }
 
-#menu-collapse #button-menu {
+#menu-collapse #button-menu, #menu-collapse-right #button-menu-right {
     background-color: #00A0D2 !important;
     padding-left: 16px;
 }
