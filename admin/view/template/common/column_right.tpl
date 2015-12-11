@@ -1,1 +1,1 @@
-<nav id="column-right" class="active"><?php echo $menu; ?></nav>
+<nav id="column-right" class="<?php echo $class; ?>"><?php echo $menu; ?></nav>

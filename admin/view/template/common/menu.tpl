@@ -1,8 +1,8 @@
 <?php if (empty($menu_position) || $menu_position != 'right') { ?>
-<ul id="menu">
-    <?php } else { ?>
+    <ul id="menu">
+<?php } else { ?>
     <ul id="right-menu">
-        <?php } ?>
+<?php } ?>
         <?php foreach ($menu_items as $id=>$item) { ?>
         <?php if (!isset($item['permission']) || (isset($item['permission']) && $item['permission']) && (isset($menu_position) && $menu_position == 'right' && $item['position'] == 'right') || ((empty($menu_position) || $menu_position != 'right') && $item['position'] != 'right')) { ?>
         <li id="<?php echo $id; ?>">

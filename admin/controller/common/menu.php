@@ -822,7 +822,7 @@ class ControllerCommonMenu extends Controller {
         usort($this->menu, array($this, 'compareMenuItems'));
 
         $data['menu_items'] = $this->menu;
-
+        $data['left_menu'] = isset($this->session->data['left_menu']) ? $this->session->data['left_menu'] : 'show';
         return $this->load->view('common/menu.tpl', $data);
     }
 
@@ -879,5 +879,20 @@ class ControllerCommonMenu extends Controller {
         } else {
             unset($this->menu[$id]);
         }
+    }
+    
+    public function position() {
+        $json = array();
+
+        if (isset($this->request->get['menu'])) {
+            $this->session->data['show_menu'] = ($this->request->get['menu'] == 'right') ? 'right' : '';
+        }
+
+        if (isset($this->request->get['position'])) {
+            $this->session->data['show_menu_position'] = ($this->request->get['position'] == 'passive') ? 'passive' : '';
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
     }
 }

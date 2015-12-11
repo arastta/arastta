@@ -225,15 +225,18 @@ class ControllerCommonHeader extends Controller {
                 }
                 
                 $user_params =  json_decode($user_info['params'], true);
+                
                 $data['basic_mode_message'] = isset($user_params['basic_mode_message']) ? $user_params['basic_mode_message'] : 'show';
             } else {
                 $data['name'] = '';
                 $data['image'] = '';
                 $data['basic_mode_message'] = 'hide';
             }
-            $this->load->model('setting/store');
 
             $data['url_user'] = $this->url->link('user/user/edit', 'user_id='.$this->user->getId().'&token=' . $this->session->data['token'], 'SSL');
+
+            $this->load->model('setting/store');
+
             $results = $this->model_setting_store->getStores();
 
             foreach ($results as $result) {
@@ -243,7 +246,7 @@ class ControllerCommonHeader extends Controller {
                 );
             }
 
-            $data['url_user'] = $this->url->link('user/user/edit', 'user_id='.$this->user->getId().'&token=' . $this->session->data['token'], 'SSL');
+            $data['show_menu'] = (isset($this->session->data['show_menu']) && $this->session->data['show_menu'] == 'right') ? 'right' : 'left';
         }
 
         $data['sitename'] = (strlen($this->config->get('config_name')) > 14) ? substr($this->config->get('config_name'),0,14) . "..." : $this->config->get('config_name');

@@ -22,6 +22,9 @@
     <script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="view/javascript/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <?php if (isset($show_menu) && $show_menu == 'right') { ?>
+    <link href="view/stylesheet/right_menu.css" type="text/css" rel="stylesheet" />
+    <?php } ?>
     <?php if ($bootstrap_select_lang) { ?>
     <script type="text/javascript" src="view/javascript/bootstrap-select/js/i18n/defaults-<?php echo $bootstrap_select_lang; ?>.min.js"></script>
     <?php } ?>

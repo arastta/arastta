@@ -10,6 +10,15 @@ class ControllerCommonColumnLeft extends Controller {
     public function index() {
         if (isset($this->request->get['token']) && isset($this->session->data['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
             $data['menu'] = $this->load->controller('common/menu');
+            $data['class'] = '';
+
+            if (empty($this->session->data['show_menu_position'])) {
+                $data['class'] = 'active';
+            }
+
+            if (!empty($this->session->data['show_menu'])) {
+                $data['class'] = ' right';
+            }
 
             return $this->load->view('common/column_left.tpl', $data);
         }
