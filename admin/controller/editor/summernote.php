@@ -24,20 +24,10 @@ class ControllerEditorSummernote extends Controller {
             $this->session->data['success'] = $this->language->get('text_success');
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                $route = $this->request->get['route'];
-                $module_id = '';
-                
-                if (isset($this->request->get['module_id'])) {
-                    $module_id = '&module_id=' . $this->request->get['module_id'];
-                }
-                elseif ($this->db->getLastId()) {
-                    $module_id = '&module_id=' . $this->db->getLastId();
-                }
-                
-                $this->response->redirect($this->url->link($route, 'token=' . $this->session->data['token'] . $module_id, 'SSL'));
+                $this->response->redirect($this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'], 'SSL'));
             }
 
-            $this->response->redirect($this->url->link('extension/editor', 'token=' . $this->session->data['token'], 'SSL'));
+            $this->response->redirect($this->url->link('extension/extension', 'filter_type=editor&token=' . $this->session->data['token'], 'SSL'));
         }
         
         // Add all language text
@@ -48,23 +38,6 @@ class ControllerEditorSummernote extends Controller {
         } else {
             $data['error_warning'] = '';
         }
-
-        $data['breadcrumbs'] = array();
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-        );
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_editor'),
-            'href' => $this->url->link('extension/extension', 'filter_type=editor&token=' . $this->session->data['token'], 'SSL')
-        );
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('editor/summernote', 'token=' . $this->session->data['token'], 'SSL')
-        );
 
         $data['action'] = $this->url->link('editor/summernote', 'token=' . $this->session->data['token'], 'SSL');
 
