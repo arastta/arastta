@@ -53,13 +53,13 @@
                         </div>
                         <div class="panel-body">
                             <div class="images">
-                                <table id="images" class="table table-striped table-bordered table-hover">
+                                <table id="images" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
                                         <td class="text-left"><?php echo $entry_title; ?></td>
                                         <td class="text-left"><?php echo $entry_link; ?></td>
                                         <td class="text-left"><?php echo $entry_image; ?></td>
-                                        <td class="text-right"><?php echo $entry_sort_order; ?></td>
+                                        <td class="text-right hidden"><?php echo $entry_sort_order; ?></td>
                                         <td></td>
                                     </tr>
                                     </thead>
@@ -78,16 +78,16 @@
                                         <td class="text-left" style="width: 30%;"><input type="text" name="banner_image[<?php echo $image_row; ?>][link]" value="<?php echo $banner_image['link']; ?>" placeholder="<?php echo $entry_link; ?>" class="form-control" /></td>
                                         <td class="text-left"><a href="" id="thumb-image<?php echo $image_row; ?>" data-toggle="image" class="img-thumbnail"><img src="<?php echo $banner_image['thumb']; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
                                             <input type="hidden" name="banner_image[<?php echo $image_row; ?>][image]" value="<?php echo $banner_image['image']; ?>" id="input-image<?php echo $image_row; ?>" /></td>
-                                        <td class="text-right" style="width: 10%;><input type="text" name="banner_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $banner_image['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
-                                        <td class="text-left"><button type="button" onclick="$('#image-row<?php echo $image_row; ?>, .tooltip').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                        <td class="text-right hidden" style="width: 10%;><input type="text" name="banner_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $banner_image['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
+                                        <td class="text-left"><a onclick="$('#image-row<?php echo $image_row; ?>, .tooltip').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="fa fa-minus-circle"></i></a></td>
                                     </tr>
                                     <?php $image_row++; ?>
                                     <?php } ?>
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <td colspan="4"></td>
-                                        <td class="text-left"><button type="button" onclick="addImage();" data-toggle="tooltip" title="<?php echo $button_banner_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                                        <td colspan="3"></td>
+                                        <td class="text-left"><a onclick="addImage();" data-toggle="tooltip" title="<?php echo $button_banner_add; ?>"><i class="fa fa-plus-circle"></i></a></td>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -149,8 +149,8 @@
     html += '  </td>';  
         html += '  <td class="text-left" style="width: 30%;><input type="text" name="banner_image[' + image_row + '][link]" value="" placeholder="<?php echo $entry_link; ?>" class="form-control" /></td>';
         html += '  <td class="text-left"><a href="" id="thumb-image' + image_row + '" data-toggle="image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a><input type="hidden" name="banner_image[' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
-        html += '  <td class="text-right" style="width: 10%;><input type="text" name="banner_image[' + image_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
-        html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-right hidden" style="width: 10%;><input type="text" name="banner_image[' + image_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
+        html += '  <td class="text-left"><a onclick="$(\'#image-row' + image_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="fa fa-minus-circle"></i></a></td>';
         html += '</tr>';
 
         $('#images tbody').append(html);
