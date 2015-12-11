@@ -236,7 +236,7 @@ $(document).ready(function() {
             iframe.contents().find('html,body').css({
                 height: 'auto'
             });
-            iframe.contents().find('#header,#content .page-header .breadcrumb,#column-left,#footer').hide();
+            iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #column-right, #footer').hide();
             iframe.contents().find('#content').css({marginLeft: '0px'});
             iframe.contents().find('#content').css({padding: '10px 0 0 0'});
             $('#module-modal-loading').removeClass('loading_iframe');
@@ -268,7 +268,7 @@ $(document).ready(function() {
             iframe.contents().find('html,body').css({
                 height: 'auto'
             });
-            iframe.contents().find('#header,#content .page-header .breadcrumb,#column-left,#footer,#module').hide();
+            iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #column-right, #footer, #module').hide();
             iframe.contents().find('#content').css({marginLeft: '0px'});
             iframe.contents().find('#content').css({padding: '10px 0 0 0'});
             $('#layout-add-loading').removeClass('loading_iframe');
@@ -300,7 +300,7 @@ $(document).ready(function() {
             iframe.contents().find('html,body').css({
                 height: 'auto'
             });
-            iframe.contents().find('#header,#content .page-header .breadcrumb,#column-left,#footer,#module').hide();
+            iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #column-right, #footer, #module').hide();
             iframe.contents().find('#content').css({marginLeft: '0px'});
             iframe.contents().find('#content').css({padding: '10px 0 0 0'});
             $('#layout-edit-loading').removeClass('loading_iframe');
@@ -404,7 +404,7 @@ $(document).ready(function() {
                 iframe.contents().find('html,body').css({
                     height: 'auto'
                 });
-                iframe.contents().find('#header,#content .page-header .breadcrumb,#column-left,#footer').hide();
+                iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #column-right, #footer').hide();
                 iframe.contents().find('#content').css({padding: '10px 0 0 0'});
                 iframe.removeClass('loading');
                 $('#modal-box').modal('show');

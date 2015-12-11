@@ -255,7 +255,7 @@
                         height: 'auto'
                     });
 
-                    iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #footer').hide();
+                    iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #column-right, #footer').hide();
                     iframe.contents().find('#content').css({marginLeft: '0px'});
                     iframe.contents().find('#content').css({padding: '10px 0 0 0'});
 
