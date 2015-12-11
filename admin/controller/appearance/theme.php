@@ -587,7 +587,7 @@ class ControllerAppearanceTheme extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if (!AForm::isValid('form-' . $this->request->get['theme'] . '-theme-elements')) {
+        if ($this->request->get['theme'] == $this->config->get('config_template') && !AForm::isValid('form-' . $this->request->get['theme'] . '-theme-elements')) {
             $this->error['warning'] = $this->language->get('error_warning');
         }
 
