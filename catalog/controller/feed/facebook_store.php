@@ -151,53 +151,57 @@ class ControllerFeedFacebookStore extends Controller
 
             $results = $this->model_feed_facebook_store->getProducts($filter_data, $this->config->get('facebook_store_feed'));
 
-            foreach ($results as $result) {
-                $this->request->server['HTTPS'] = '1';
+            $data['products'] = array();
 
-                if ($result['image']) {
-                    $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
-                } else {
-                    $image = $this->model_tool_image->resize('no_image.jpg', $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+            if ($results) {
+                foreach ($results as $result) {
+                    $this->request->server['HTTPS'] = '1';
+
+                    if ($result['image']) {
+                        $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+                    } else {
+                        $image = $this->model_tool_image->resize('no_image.jpg', $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+                    }
+
+                    if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+                        $price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
+                    } else {
+                        $price = false;
+                    }
+
+                    if ((float) $result['special']) {
+                        $special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
+                    } else {
+                        $special = false;
+                    }
+
+                    if ($this->config->get('config_tax')) {
+                        $tax = $this->currency->format((float) $result['special'] ? $result['special'] : $result['price']);
+                    } else {
+                        $tax = false;
+                    }
+
+                    if ($this->config->get('config_review_status')) {
+                        $rating = (int) $result['rating'];
+                    } else {
+                        $rating = false;
+                    }
+
+                    $this->trigger->fire('pre.product.display', array(&$result, 'facebook_store'));
+
+                    $data['products'][] = array(
+                        'product_id'  => $result['product_id'],
+                        'thumb'       => $image,
+                        'name'        => $result['name'],
+                        'description' => $result['description'],
+                        'price'       => $price,
+                        'special'     => $special,
+                        'tax'         => $tax,
+                        'rating'      => $rating,
+                        'reviews'     => sprintf($this->language->get('text_reviews'), (int) $result['reviews']),
+                        'href'        => $this->url->link('product/product', '&product_id=' . $result['product_id'], 'SSL')
+                    );
                 }
-
-                if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-                    $price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
-                } else {
-                    $price = false;
-                }
-
-                if ((float)$result['special']) {
-                    $special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
-                } else {
-                    $special = false;
-                }
-
-                if ($this->config->get('config_tax')) {
-                    $tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
-                } else {
-                    $tax = false;
-                }
-
-                if ($this->config->get('config_review_status')) {
-                    $rating = (int)$result['rating'];
-                } else {
-                    $rating = false;
-                }
-                
-                $this->trigger->fire('pre.product.display', array(&$result, 'facebook_store'));
-
-                $data['products'][] = array(
-                    'product_id'  => $result['product_id'],
-                    'thumb'       => $image,
-                    'name'        => $result['name'],
-                    'description' => $result['description'],
-                    'price'       => $price,
-                    'special'     => $special,
-                    'tax'         => $tax,
-                    'rating'      => $rating,
-                    'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-                    'href'        => $this->url->link('product/product', '&product_id=' . $result['product_id'], 'SSL')
-                );
             }
 
             $url = '';
@@ -356,7 +360,7 @@ class ControllerFeedFacebookStore extends Controller
         } else {
             $data['not_activate'] = true;
 
-            $data['message'] = $this->language->get('text_not_activate_facebook_store');
+            $data['message'] = $this->language->get('text_not_active_facebook_store');
 
             if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/feed/facebook_store.tpl')) {
                 $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/feed/facebook_store.tpl', $data));

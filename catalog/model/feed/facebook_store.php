@@ -11,7 +11,7 @@ class ModelFeedFacebookStore extends Model
     public function getProduct($product_id)
     {
         if ($this->customer->isLogged()) {
-            $customer_group_id = $this->customer->getCustomerGroupId();
+            $customer_group_id = $this->customer->getGroupId();
         } else {
             $customer_group_id = $this->config->get('config_customer_group_id');
         }
@@ -31,7 +31,7 @@ class ModelFeedFacebookStore extends Model
     public function getProducts($data, $feeds)
     {
         if ($this->customer->isLogged()) {
-            $customer_group_id = $this->customer->getCustomerGroupId();
+            $customer_group_id = $this->customer->getGroupId();
         } else {
             $customer_group_id = $this->config->get('config_customer_group_id');
         }
@@ -58,7 +58,7 @@ class ModelFeedFacebookStore extends Model
             $product_data = false;
         }
 
-        if (!$product_data) {
+        if (!$product_data && $feeds) {
             foreach ($feeds as $feed) {
                 $feed_type = explode('-', $feed);
 
@@ -165,62 +165,66 @@ class ModelFeedFacebookStore extends Model
             return count($product_data);
         }
     
-        foreach ($feeds as $feed) {
-            $feed_type = explode('-', $feed);
+        $result = array();
 
-            if ($feed_type[0] == 'product') {
-                $result[] = array(
-                    'type' => 'product',
-                    'code' => $feed_type[1]
-                );
-            } else {
-                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "module WHERE module_id = '" . (int)$feed_type[1] . "'");
+        if ($feeds) {
+            foreach ($feeds as $feed) {
+                $feed_type = explode('-', $feed);
 
-                if ($query->row) {
-                    $module = unserialize($query->row['setting']);
+                if ($feed_type[0] == 'product') {
+                    $result[] = array(
+                        'type' => 'product',
+                        'code' => $feed_type[1]
+                    );
                 } else {
-                    $module = array();
-                }
+                    $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "module WHERE module_id = '" . (int) $feed_type[1] . "'");
 
-                $special_module = array(
-                    'latest',
-                    'special',
-                    'bestseller',
-                );
-
-                if (isset($module) && isset($module['product'])) {
-                    $limit = 0;
-
-                    foreach ($module['product'] as $product_id) {
-                        if (isset($module['limit']) && $module['limit'] <= $limit) {
-                            break;
-                        }
-
-                        $result[] = array(
-                            'type' => $feed_type[0],
-                            'code' => $product_id
-                        );
-
-                        $limit++;
+                    if ($query->row) {
+                        $module = unserialize($query->row['setting']);
+                    } else {
+                        $module = array();
                     }
-                } elseif (in_array($feed_type[0], $special_module) && $module['status']) {
-                    $module_data = $this->{$feed_type[0].'Product'}();
 
-                    $setting = $module;
-                    $limit = 0;
+                    $special_module = array(
+                        'latest',
+                        'special',
+                        'bestseller',
+                    );
 
-                    foreach ($module_data as $module) {
-                        if (isset($module)) {
-                            if (isset($setting['limit']) && $setting['limit'] <= $limit) {
+                    if (isset($module) && isset($module['product'])) {
+                        $limit = 0;
+
+                        foreach ($module['product'] as $product_id) {
+                            if (isset($module['limit']) && $module['limit'] <= $limit) {
                                 break;
                             }
 
                             $result[] = array(
                                 'type' => $feed_type[0],
-                                'code' => $module['product_id']
+                                'code' => $product_id
                             );
 
                             $limit++;
+                        }
+                    } elseif (in_array($feed_type[0], $special_module) && $module['status']) {
+                        $module_data = $this->{$feed_type[0] . 'Product'}();
+
+                        $setting = $module;
+                        $limit   = 0;
+
+                        foreach ($module_data as $module) {
+                            if (isset($module)) {
+                                if (isset($setting['limit']) && $setting['limit'] <= $limit) {
+                                    break;
+                                }
+
+                                $result[] = array(
+                                    'type' => $feed_type[0],
+                                    'code' => $module['product_id']
+                                );
+
+                                $limit++;
+                            }
                         }
                     }
                 }
