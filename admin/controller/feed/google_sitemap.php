@@ -41,6 +41,7 @@ class ControllerFeedGoogleSitemap extends Controller {
         $data['text_edit'] = $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
+        $data['text_publish'] = $this->language->get('text_publish');
 
         $data['entry_status'] = $this->language->get('entry_status');
         $data['entry_data_feed'] = $this->language->get('entry_data_feed');
