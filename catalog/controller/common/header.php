@@ -234,9 +234,10 @@ class ControllerCommonHeader extends Controller {
                 break;
         }
 
-        $check = strpos($item['link'], 'http');
-        if ( $check !== false ) {
+        if (strpos($item['link'], 'http') !== false) {
             $link = $item['link'];
+        } elseif (empty($route)) {
+            $link = '#';
         } else {
             $link = $this->url->link($route, $args);
         }
