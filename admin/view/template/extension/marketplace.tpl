@@ -50,7 +50,7 @@
 
 <script type="text/javascript">
     apiBaseUrl = '<?php echo $apiBaseUrl; ?>';
-    baseUrl = '<?php echo HTTP_SERVER; ?>';
+    baseUrl = '<?php echo $base_url; ?>';
     apps_version = '<?php echo VERSION; ?>';
     token = '<?php echo $token; ?>';
     <?php if ($error_warning || $data['changeApiKey']) { ?>

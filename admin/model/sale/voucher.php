@@ -102,7 +102,7 @@ class ModelSaleVoucher extends Model {
                 $voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($voucher_info['voucher_theme_id']);
 
                 if ($voucher_theme_info && is_file(DIR_IMAGE . $voucher_theme_info['image'])) {
-                    $data['image'] = HTTP_CATALOG . 'image/' . $voucher_theme_info['image'];
+                    $data['image'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'image/' . $voucher_theme_info['image'];
                 } else {
                     $data['image'] = '';
                 }
@@ -147,13 +147,13 @@ class ModelSaleVoucher extends Model {
                 $data['code'] = $voucher_info['code'];
 
                 if ($voucher_theme_info && is_file(DIR_IMAGE . $voucher_theme_info['image'])) {
-                    $data['image'] = HTTP_CATALOG . 'image/' . $voucher_theme_info['image'];
+                    $data['image'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'image/' . $voucher_theme_info['image'];
                 } else {
                     $data['image'] = '';
                 }
 
                 $data['store_name'] = $this->config->get('config_name');
-                $data['store_href'] = HTTP_CATALOG;
+                $data['store_href'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG;
                 $data['message'] = nl2br($voucher_info['message']);
 
                 $subject = $this->emailtemplate->getSubject('Voucher', 'customer_5', $data);

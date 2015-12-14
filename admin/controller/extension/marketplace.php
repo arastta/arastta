@@ -72,6 +72,7 @@ class ControllerExtensionMarketplace extends Controller
         }
 
         $data['apiBaseUrl'] = $this->apiBaseUrl;
+        $data['base_url'] = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
 
         $data['heading_title'] = $this->language->get('heading_title');
         $data['text_list'] = $this->language->get('text_list');

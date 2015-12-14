@@ -1225,7 +1225,7 @@ class ControllerSaleCustomer extends Controller {
             if ($store_info) {
                 $this->response->redirect($store_info['url'] . 'index.php?route=account/login&token=' . $token);
             } else {
-                $this->response->redirect(HTTP_CATALOG . 'index.php?route=account/login&token=' . $token);
+                $this->response->redirect(($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'index.php?route=account/login&token=' . $token);
             }
         } else {
             $this->load->language('error/not_found');

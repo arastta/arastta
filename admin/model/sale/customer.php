@@ -180,7 +180,7 @@ class ModelSaleCustomer extends Model {
                 $store_url = $store_info['url'] . 'index.php?route=account/login';
             } else {
                 $store_name = $this->config->get('config_name');
-                $store_url = HTTP_CATALOG . 'index.php?route=account/login';
+                $store_url = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'index.php?route=account/login';
             }
 
             $customer_info['store_name'] = $store_name;

@@ -14,7 +14,7 @@ class ControllerFeedGoogleBase extends Controller {
             $output .= '<channel>';
             $output .= '<title>' . $this->config->get('config_name') . '</title>';
             $output .= '<description>' . $this->config->get('config_meta_description') . '</description>';
-            $output .= '<link>' . HTTP_SERVER . '</link>';
+            $output .= '<link>' . ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER . '</link>';
 
             $this->load->model('catalog/category');
 

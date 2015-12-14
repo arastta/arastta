@@ -112,7 +112,6 @@ class Emailtemplate
             $message = $this->getDefaultMessage($type, $template_id, $data);
         }
 
-
         return $message;
     }
 
@@ -147,7 +146,6 @@ class Emailtemplate
             );
         }
 
-
         return $email_template_data;
     }
 
@@ -155,6 +153,7 @@ class Emailtemplate
     public function getLoginFind()
     {
         $result = array( '{username}', '{store_name}', '{ip_address}' );
+        
         return $result;
     }
 
@@ -173,6 +172,7 @@ class Emailtemplate
     public function getAffiliateFind()
     {
         $result = array( '{firstname}', '{lastname}', '{date}', '{store_name}', '{description}', '{order_id}', '{amount}', '{total}', '{email}','{password}', '{affiliate_code}', '{account_href}' );
+        
         return $result;
     }
     
@@ -200,6 +200,7 @@ class Emailtemplate
     public function getCustomerFind()
     {
         $result = array( '{firstname}', '{lastname}', '{date}', '{store_name}', '{email}', '{password}', '{account_href}', '{activate_href}' );
+        
         return $result;
     }
 
@@ -223,6 +224,7 @@ class Emailtemplate
     public function getContactFind()
     {
         $result = array( '{name}', '{email}', '{store_name}', '{enquiry}' );
+        
         return $result;
     }
 
@@ -436,6 +438,7 @@ class Emailtemplate
     public function getReviewFind()
     {
         $result = array( '{author}', '{review}', '{date}', '{rating}', '{product}' );
+        
         return $result;
     }
 
@@ -456,6 +459,7 @@ class Emailtemplate
     public function getStockFind()
     {
         $result = array( '{store_name}', '{total_products}' );
+        
         return $result;
     }
     
@@ -473,6 +477,7 @@ class Emailtemplate
     public function getVoucherFind()
     {
         $result = array( '{recip_name}', '{recip_email}', '{date}', '{store_name}', '{name}', '{amount}', '{message}', '{store_href}', '{image}', '{code}' );
+        
         return $result;
     }
 
@@ -489,6 +494,7 @@ class Emailtemplate
             'store_href'  => $data['store_href'],
             'image'       => (file_exists(DIR_IMAGE . $data['image'])) ? 'cid:' . md5(basename($data['image'])) : '', 'code' => $data['code']
         );
+        
         return $result;
     }
 
@@ -560,14 +566,13 @@ class Emailtemplate
             $text .= $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id . "\n\n";
         }
 
-
         /*
          if ($download_status) {
              $text .= $language->get('text_new_download') . "\n";
              $text .= $order_info['store_url'] . 'index.php?route=account/download' . "\n\n";
          }
         */
-                // Comment
+        // Comment
         if ($order_info['comment']) {
             $text .= $language->get('text_new_comment') . "\n\n";
             $text .= $order_info['comment'] . "\n\n";
@@ -634,7 +639,6 @@ class Emailtemplate
                 }
             }
 
-
             $getProduct = $this->getProduct($product['product_id']);
 
             // Product Image Order
@@ -671,7 +675,6 @@ class Emailtemplate
 
     public function getProductReplace($image, $product, $order_info, $attribute, $option)
     {
-
         $getProduct = $this->getProduct($product['product_id']);
 
         $result = array(
@@ -739,7 +742,6 @@ class Emailtemplate
 
     public function getVoucherTemplate($order_info, $getVouchers, $template_voucher)
     {
-
         $result = array();
 
 
@@ -774,10 +776,7 @@ class Emailtemplate
     // Order Comment
     public function getCommentTemplate($comment, $template_comment)
     {
-
-
         $result = array();
-
 
         // Replace Product Short Code to Values
         $comment_find = $this->getCommentFind();
@@ -807,9 +806,7 @@ class Emailtemplate
     // Order Tax
     public function getTaxTemplate($totals, $template_tax)
     {
-
         $result = array();
-
 
         if (isset($totals['tax'])) {
             foreach ($totals['tax'] as $tax) {
@@ -844,7 +841,6 @@ class Emailtemplate
     // Order Total
     public function getTotalTemplate($getTotal, $template_total, $order_info)
     {
-
         $result = array();
 
         foreach ($getTotal as $total) {
@@ -1001,7 +997,7 @@ class Emailtemplate
         if ($type_id == 'affiliate_4') {
             $message  = sprintf($this->language->get('text_approve_welcome'), $this->config->get('config_name')) . "\n\n";
             $message .= $this->language->get('text_approve_login') . "\n";
-            $message .= HTTP_CATALOG . 'index.php?route=affiliate/login' . "\n\n";
+            $message .= ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'index.php?route=affiliate/login' . "\n\n";
             $message .= $this->language->get('text_approve_services') . "\n\n";
             $message .= $this->language->get('text_approve_thanks') . "\n";
             $message .= $this->config->get('config_name');
@@ -1026,7 +1022,6 @@ class Emailtemplate
     public function getCommissionTotal($affiliate_id)
     {
         $query = $this->db->query("SELECT SUM(amount) AS total FROM " . DB_PREFIX . "affiliate_commission WHERE affiliate_id = '" . (int)$affiliate_id . "'");
-
 
         return $query->row['total'];
     }
@@ -1061,8 +1056,7 @@ class Emailtemplate
 
         if ($type_id == 'customer_4') {
             $store_name = $this->config->get('config_name');
-            $store_url = HTTP_CATALOG . 'index.php?route=account/login';
-
+            $store_url = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'index.php?route=account/login';
 
             $message = sprintf($this->language->get('text_approve_welcome'), $store_name) . "\n\n";
             $message .= $this->language->get('text_approve_login') . "\n";
@@ -1083,7 +1077,6 @@ class Emailtemplate
         } else {
             $message = 'Customer Mail Description';
         }
-
 
         return $message;
     }
@@ -1179,7 +1172,6 @@ class Emailtemplate
             $format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
         }
 
-
         $find = array(
             '{firstname}',
             '{lastname}',
@@ -1192,7 +1184,6 @@ class Emailtemplate
             '{zone_code}',
             '{country}'
         );
-
 
         $replace = array(
             'firstname' => $order_info['payment_firstname'],
@@ -1486,14 +1477,12 @@ class Emailtemplate
     {
          $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE code = '" . $this->db->escape($code) . "'");
 
-
          return $query->row;
     }
 
     public function getProduct($product_id)
     {
          $query = $this->db->query("SELECT DISTINCT p.*, pd.*, md.name AS manufacturer, (SELECT price FROM " . DB_PREFIX . "product_discount pd2 WHERE pd2.product_id = p.product_id AND pd2.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND pd2.quantity = '1' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())) ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, (SELECT price FROM " . DB_PREFIX . "product_special ps WHERE ps.product_id = p.product_id AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special, (SELECT points FROM " . DB_PREFIX . "product_reward pr WHERE pr.product_id = p.product_id AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "') AS reward, (SELECT ss.name FROM " . DB_PREFIX . "stock_status ss WHERE ss.stock_status_id = p.stock_status_id AND ss.language_id = '" . (int)$this->config->get('config_language_id') . "') AS stock_status, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating, (SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r2 WHERE r2.product_id = p.product_id AND r2.status = '1' GROUP BY r2.product_id) AS reviews, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON (p.manufacturer_id = md.manufacturer_id AND md.language_id = '" . (int)$this->config->get('config_language_id') . "') WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
-
 
         if ($query->num_rows) {
             return array(

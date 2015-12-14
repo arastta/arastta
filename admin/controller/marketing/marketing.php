@@ -496,7 +496,7 @@ class ControllerMarketingMarketing extends Controller {
 
         $data['token'] = $this->session->data['token'];
 
-        $data['store'] = HTTP_CATALOG;
+        $data['store'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG;
 
         if (isset($this->request->post['name'])) {
             $data['name'] = $this->request->post['name'];

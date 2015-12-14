@@ -29,11 +29,7 @@ class ControllerAppearanceCustomizer extends Controller
         #Get All Language Text
         $data = $this->language->all($data);
 
-        if ($this->request->server['HTTPS']) {
-            $data['base'] = HTTPS_SERVER;
-        } else {
-            $data['base'] = HTTP_SERVER;
-        }
+        $data['base'] = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
 
         $this->installStylesheet();
         $this->installJavascript();
@@ -43,11 +39,11 @@ class ControllerAppearanceCustomizer extends Controller
         $data['fonts'] = $this ->getFonts();
 
         $this->load->model('tool/image');
-        $data['image_fullpath'] = HTTPS_IMAGE;
+        $data['image_fullpath'] = ($this->request->server['HTTPS']) ? HTTPS_IMAGE : HTTP_IMAGE;
         $data['no_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
         if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
-            $data['icon'] = HTTP_CATALOG . 'image/' . $this->config->get('config_icon');
+            $data['icon'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'image/' . $this->config->get('config_icon');
         } else {
             $data['icon'] = '';
         }
@@ -60,8 +56,8 @@ class ControllerAppearanceCustomizer extends Controller
         $data['back'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
         $data['changeTheme'] = $this->url->link('appearance/customizer/changeTheme', 'token=' . $this->session->data['token'], 'SSL');
 
-        $data['frontend'] = HTTP_CATALOG;
-        $data['backend']  = HTTP_SERVER;
+        $data['frontend'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG;
+        $data['backend']  = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
 
         $data['description'] = $this->document->getDescription();
         $data['keywords'] = $this->document->getKeywords();
@@ -331,22 +327,18 @@ class ControllerAppearanceCustomizer extends Controller
         #Get All Language Text
         $data = $this->language->all();
 
-        if ($this->request->server['HTTPS']) {
-            $data['base'] = HTTPS_SERVER;
-        } else {
-            $data['base'] = HTTP_SERVER;
-        }
+        $data['base'] = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
 
         $data['sections'] = $this->getCustomizerItem();
 
         $data['fonts'] = $this ->getFonts();
 
         $this->load->model('tool/image');
-        $data['image_fullpath'] = HTTPS_IMAGE;
+        $data['image_fullpath'] = ($this->request->server['HTTPS']) ? HTTPS_IMAGE : HTTP_IMAGE;
         $data['no_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
         if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
-            $data['icon'] = HTTP_CATALOG . 'image/' . $this->config->get('config_icon');
+            $data['icon'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG  . 'image/' . $this->config->get('config_icon');
         } else {
             $data['icon'] = '';
         }
@@ -359,8 +351,8 @@ class ControllerAppearanceCustomizer extends Controller
         $data['back'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
         $data['changeTheme'] = $this->url->link('appearance/customizer/changeTheme', 'token=' . $this->session->data['token'], 'SSL');
 
-        $data['frontend'] = HTTP_CATALOG;
-        $data['backend']  = HTTP_SERVER;
+        $data['frontend'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG;
+        $data['backend']  = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
 
         $data['default_data'] = $this->model_appearance_customizer->getDefaultData('customizer');
 

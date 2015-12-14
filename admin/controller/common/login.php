@@ -121,7 +121,7 @@ class ControllerCommonLogin extends Controller {
         
         $data['store'] = array(
             'name' => $this->config->get('config_name'),
-            'href' => HTTP_CATALOG
+            'href' => ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG
         );
 
         // Language list

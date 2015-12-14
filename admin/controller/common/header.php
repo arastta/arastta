@@ -28,7 +28,7 @@ class ControllerCommonHeader extends Controller {
         $data['direction'] = $this->language->get('direction');
 
         if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
-            $data['icon'] = HTTP_CATALOG . 'image/' . $this->config->get('config_icon');
+            $data['icon'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'image/' . $this->config->get('config_icon');
         } else {
             $data['icon'] = '';
         }
@@ -134,7 +134,7 @@ class ControllerCommonHeader extends Controller {
 
             $data['stores'][] = array(
                 'name' => $this->config->get('config_name'),
-                'href' => HTTP_CATALOG
+                'href' => ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG
             );
 
             $processing_total = $this->model_sale_order->getTotalOrdersByProcessingStatus();
@@ -250,7 +250,8 @@ class ControllerCommonHeader extends Controller {
         }
 
         $data['sitename'] = (strlen($this->config->get('config_name')) > 14) ? substr($this->config->get('config_name'),0,14) . "..." : $this->config->get('config_name');
-        $data['site_url'] = HTTPS_CATALOG;
+        
+        $data['site_url'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG;
 
         $data['bootstrap_select_lang'] = '';
 

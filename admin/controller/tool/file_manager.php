@@ -74,7 +74,7 @@ class ControllerToolFilemanager extends Controller
                 array(
                     'driver'        => 'LocalFileSystem',
                     'path'          => DIR_ROOT,     #Arastta Root
-                    'URL'           => HTTP_CATALOG, #Arastta Root
+                    'URL'           => ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG, #Arastta Root
                     'accessControl' => 'access'      //disable and hide dot starting files (OPTIONAL)
                 )
             )
