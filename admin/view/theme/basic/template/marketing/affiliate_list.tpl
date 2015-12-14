@@ -79,10 +79,10 @@
                                     <?php } ?>
                                 </select>
                                 <div class="input-group date filter hidden">
-                                    <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                  <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
+                                  <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                  </span></div>
                             </div>
                         </div>
                     </div>

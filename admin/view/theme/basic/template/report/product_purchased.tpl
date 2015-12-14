@@ -35,16 +35,16 @@
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_status; ?>', 'filter_order_status_id');"><?php echo $entry_status; ?></a></li>
                                     </ul>
                                 </div>
-                                <div class="input-group date filter">
-                                    <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control filter" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
-                                <div class="input-group date filter hidden">
-                                    <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                <div class="input-group date filter filter_date_start">
+                                  <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control filter" />
+                                  <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                  </span></div>
+                                <div class="input-group date filter hidden filter_date_end">
+                                  <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
+                                  <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                  </span></div>
                                 <select name="filter_order_status_id" id="input-status" class="form-control filter hidden">
                                     <option value="0"><?php echo $text_all_status; ?></option>
                                     <?php foreach ($order_statuses as $order_status) { ?>
@@ -126,8 +126,8 @@
         $('input[name=\'' + filter_type + '\']').removeClass('hidden');
         $('select[name=\'' + filter_type + '\']').removeClass('hidden');
         if (filter_type == 'filter_date_start' || filter_type == 'filter_date_end') {
-            $('.well .input-group-btn').removeClass('hidden');
-            $('.well .input-group').removeClass('hidden');
+            $('.well .input-group-btn .' + filter_type).removeClass('hidden');
+            $('.well .input-group .' + filter_type).removeClass('hidden');
         }
     }
     //--></script>

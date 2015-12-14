@@ -50,7 +50,7 @@
                                     </ul>
                                 </div>
                                 <input type="text" name="filter_country"  value="<?php echo $filter_country; ?>" placeholder="<?php echo $column_country; ?>" id="input-country" class="form-control filter">
-                                <input type="text" name="filter_zone_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $column_name; ?>" id="input-name" class="form-control filter hidden">
+                                <input type="text" name="filter_zone_name"  value="<?php echo $filter_zone_name; ?>" placeholder="<?php echo $column_name; ?>" id="input-name" class="form-control filter hidden">
                                 <input type="text" name="filter_zone_code"  value="<?php echo $filter_zone_code; ?>" placeholder="<?php echo $column_code; ?>" id="input-zone-code" class="form-control filter hidden">
                                 <select name="filter_status" id="input-status" class="form-control filter hidden">
                                     <option value="*"></option>

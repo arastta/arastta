@@ -215,9 +215,9 @@
                                                     <div class="col-sm-10">
                                                         <div class="input-group date">
                                                             <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                                <span class="input-group-btn">
-                                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                </span></div>
+                                                            <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                            </span></div>
                                                         <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
                                                         <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
                                                         <?php } ?>
@@ -230,9 +230,9 @@
                                                     <div class="col-sm-10">
                                                         <div class="input-group time">
                                                             <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                                <span class="input-group-btn">
-                                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                </span></div>
+                                                            <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                            </span></div>
                                                         <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
                                                         <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
                                                         <?php } ?>
@@ -245,9 +245,9 @@
                                                     <div class="col-sm-10">
                                                         <div class="input-group datetime">
                                                             <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                                <span class="input-group-btn">
-                                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                </span></div>
+                                                            <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                            </span></div>
                                                         <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
                                                         <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
                                                         <?php } ?>
@@ -548,9 +548,9 @@
                                                     <div class="col-sm-10">
                                                         <div class="input-group date">
                                                             <input type="text" name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                                <span class="input-group-btn">
-                                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                </span></div>
+                                                            <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                            </span></div>
                                                         <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
                                                         <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                                                         <?php } ?>
@@ -563,9 +563,9 @@
                                                     <div class="col-sm-10">
                                                         <div class="input-group time">
                                                             <input type="text" name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                                <span class="input-group-btn">
-                                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                </span></div>
+                                                            <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                            </span></div>
                                                         <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
                                                         <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                                                         <?php } ?>
@@ -578,9 +578,9 @@
                                                     <div class="col-sm-10">
                                                         <div class="input-group datetime">
                                                             <input type="text" name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                                <span class="input-group-btn">
-                                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                </span></div>
+                                                            <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                            </span></div>
                                                         <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
                                                         <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                                                         <?php } ?>
@@ -711,6 +711,10 @@
         </form>
     </div>
     <script type="text/javascript"><!--
+    $(document).ready(function() {
+        $('.panel-chevron').trigger('click');
+    });
+    
     $('select[name=\'customer_group_id\']').on('change', function() {
         $.ajax({
             url: 'index.php?route=sale/customer/customfield&token=<?php echo $token; ?>&customer_group_id=' + this.value,
@@ -786,7 +790,7 @@
         <?php foreach ($countries as $country) { ?>
         html += '         <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
         <?php } ?>
-    html += '      </select></div>';
+        html += '      </select></div>';
         html += '  </div>';
 
         html += '  <div class="form-group required">';
@@ -902,14 +906,13 @@
         <?php } ?>
         <?php } ?>
 
-    html += '  <div class="form-group">';
-            html += '    <label class="col-sm-2 control-label"><?php echo $entry_default; ?></label>';
-            html += '    <div class="col-sm-10"><label class="radio"><input type="radio" name="address[' + address_row + '][default]" value="1" /></label></div>';
-            html += '  </div>';
+        html += '  <div class="form-group">';
+        html += '    <label class="col-sm-2 control-label"><?php echo $entry_default; ?></label>';
+        html += '    <div class="col-sm-10"><label class="radio"><input type="radio" name="address[' + address_row + '][default]" value="1" /></label></div>';
+        html += '  </div>';
+        html += '</div>';
 
-    html += '</div>';
-
-        $('#tab-general .tab-content').append(html);
+        $('.general .tab-content').append(html);
 
         $('select[name=\'customer_group_id\']').trigger('change');
 

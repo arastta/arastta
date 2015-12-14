@@ -39,16 +39,16 @@
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
                                         <span class="item-selected"></span>
-                    <span class="bulk-action-button">
-                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                          <b><?php echo $text_bulk_action; ?></b>
-                          <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
-                          <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                          <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-store').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
-                      </ul>
-                    </span>
+                                        <span class="bulk-action-button">
+                                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                              <b><?php echo $text_bulk_action; ?></b>
+                                              <span class="caret"></span>
+                                          </a>
+                                          <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
+                                              <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
+                                              <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-store').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                          </ul>
+                                        </span>
                                     </div></td>
                                 <td class="text-left"><?php if ($sort == 'tr.name') { ?>
                                     <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>

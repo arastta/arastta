@@ -64,16 +64,16 @@
                                     <?php } ?>
                                     <?php } ?>
                                 </select>
-                                <div class="input-group date hidden filter">
-                                    <input type="text" name="filter_order_date" value="<?php echo $filter_order_date; ?>"data-date-format="YYYY-MM-DD" id="input-order-date" class="form-control hidden filter" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
-                                <div class="input-group date hidden filter">
-                                    <input type="text" name="filter_invoice_date" value="<?php echo $filter_invoice_date; ?>"data-date-format="YYYY-MM-DD" id="input-invoice-date" class="form-control hidden filter" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                <div class="input-group date hidden filter filter_order_date">
+                                  <input type="text" name="filter_order_date" value="<?php echo $filter_order_date; ?>"data-date-format="YYYY-MM-DD" id="input-order-date" class="form-control hidden filter" />
+                                  <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                  </span></div>
+                                <div class="input-group date hidden filter filter_invoice_date">
+                                  <input type="text" name="filter_invoice_date" value="<?php echo $filter_invoice_date; ?>"data-date-format="YYYY-MM-DD" id="input-invoice-date" class="form-control hidden filter" />
+                                  <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                  </span></div>
                             </div>
                         </div>
                     </div>
@@ -210,8 +210,8 @@
         $('input[name=\'' + filter_type + '\']').removeClass('hidden');
         $('select[name=\'' + filter_type + '\']').removeClass('hidden');
         if (filter_type == 'filter_order_date' || filter_type == 'filter_invoice_date') {
-            $('.well .input-group-btn').removeClass('hidden');
-            $('.well .input-group').removeClass('hidden');
+            $('.well .input-group-btn .' + filter_type).removeClass('hidden');
+            $('.well .input-group .' + filter_type).removeClass('hidden');
         }
     }
     //--></script>

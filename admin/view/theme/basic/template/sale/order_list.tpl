@@ -68,16 +68,16 @@
                                     <?php } ?>
                                     <?php } ?>
                                 </select>
-                                <div class="input-group date hidden filter">
-                                    <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>"data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control hidden filter" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
-                                <div class="input-group date hidden filter">
-                                    <input type="text" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>"  data-date-format="YYYY-MM-DD" id="input-date-modified" class="form-control hidden filter" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                <div class="input-group date hidden filter filter_date_added">
+                                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>"data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control hidden filter" />
+                                  <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                  </span></div>
+                                <div class="input-group date hidden filter filter_date_modified">
+                                  <input type="text" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>"  data-date-format="YYYY-MM-DD" id="input-date-modified" class="form-control hidden filter" />
+                                  <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                  </span></div>
                             </div>
                         </div>
                     </div>
@@ -223,9 +223,9 @@
         $('.filter').addClass('hidden');
         $('input[name=\'' + filter_type + '\']').removeClass('hidden');
         $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-        if (filter_type == 'filter_date_added') {
-            $('.well .input-group-btn').removeClass('hidden');
-            $('.well .input-group').removeClass('hidden');
+        if (filter_type == 'filter_date_added' || filter_type == 'filter_date_modified') {
+            $('.well .input-group-btn .' + filter_type).removeClass('hidden');
+            $('.well .input-group .' + filter_type).removeClass('hidden');
         }
     }
     //--></script>

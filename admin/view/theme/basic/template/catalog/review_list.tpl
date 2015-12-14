@@ -65,9 +65,9 @@
                                     <?php } ?>
                                 </select>
                                 <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-added" class="date form-control hidden filter" />
-                <span class="input-group-btn filter hidden">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                </span>
+                                <span class="input-group-btn filter hidden">
+                                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                </span>
                             </div>
                         </div>
                     </div>

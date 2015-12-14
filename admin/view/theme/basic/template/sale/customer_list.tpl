@@ -92,10 +92,10 @@
                                 </select>
                                 <input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" placeholder="<?php echo $entry_ip; ?>" id="input-ip" class="form-control hidden filter" />
                                 <div class="input-group date hidden filter">
-                                    <input type="text" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>"  data-date-format="YYYY-MM-DD" id="input-date-modified" class="form-control hidden filter" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>"  data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control hidden filter" />
+                                  <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                  </span></div>
                             </div>
                         </div>
                     </div>
@@ -110,16 +110,16 @@
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
                                         <span class="item-selected"></span>
-                    <span class="bulk-action-button">
-                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                          <b><?php echo $text_bulk_action; ?></b>
-                          <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
-                          <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                          <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-customer').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
-                      </ul>
-                    </span>
+                                        <span class="bulk-action-button">
+                                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                              <b><?php echo $text_bulk_action; ?></b>
+                                              <span class="caret"></span>
+                                          </a>
+                                          <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
+                                              <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
+                                              <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-customer').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                          </ul>
+                                        </span>
                                     </div></td>
                                 <td class="text-left"><?php if ($sort == 'name') { ?>
                                     <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>

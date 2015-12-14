@@ -120,7 +120,7 @@
                         </div>
                     </div>
 
-                    <div class="panel panel-default">
+                    <div class="panel panel-default option-items">
                         <div class="panel-heading">
                             <h3 class="panel-title"><?php echo $text_items; ?></h3>
                             <div class="pull-right">
@@ -129,7 +129,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="items">
-                                <table id="option-value" class="table table-striped table-bordered table-hover">
+                                <table id="option-value" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
                                         <td class="text-left required"><?php echo $entry_option_value; ?></td>
@@ -176,9 +176,9 @@
     <script type="text/javascript"><!--
     $('select[name=\'type\']').on('change', function() {
         if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox' || this.value == 'image') {
-            $('#option-value').show();
+            $('.option-items').show();
         } else {
-            $('#option-value').hide();
+            $('.option-items').hide();
         }
     });
 
@@ -194,7 +194,7 @@
         html += '      <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span><input type="text" name="option_value[' + option_value_row + '][option_value_description][<?php echo $language['language_id']; ?>][name]" value="" placeholder="<?php echo $entry_option_value; ?>" class="form-control" />';
         html += '    </div>';
         <?php } ?>
-    html += '  </td>';
+        html += '  </td>';
         html += '  <td class="text-left"><a href="" id="thumb-image' + option_value_row + '" data-toggle="image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '" /></td>';
         html += '  <td class="text-right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
         html += '  <td class="text-left"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
