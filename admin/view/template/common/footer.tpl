@@ -16,6 +16,7 @@
 <script>
     var text_yes = '<?php echo $text_yes; ?>';
     var text_no = '<?php echo $text_no; ?>';
+    var theme_message = '<?php echo $text_advanced_message; ?>';
 </script>
 
 </body></html>

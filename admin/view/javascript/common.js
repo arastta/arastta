@@ -885,4 +885,46 @@ $(document).ready(function() {
 
         location = url + theme;
     });
+    
+    checkTheme = getURLVar('theme');
+
+    if (checkTheme) {
+        $.notify({
+            // options
+            icon: 'fa fa-refresh',
+            message: theme_message,
+        },{
+            // settings
+            element: 'body',
+            position: null,
+            type: "info",
+            allow_dismiss: true,
+            newest_on_top: false,
+            showProgressbar: false,
+            placement: {
+                from: "top",
+                align: "center"
+            },
+            offset: 60,
+            spacing: 10,
+            z_index: 1031,
+            delay: 3000,
+            timer: 1000,
+            animate: {
+                enter: 'animated',
+                exit: 'animated'
+            },
+            icon_type: 'class',
+            template: '<div data-notify="container" class="col-xs-11 col-sm-4 alert alert-{0}" role="alert">' +
+            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss"><i class="fa fa-times"></i></button>' +
+            '<span data-notify="icon"></span> ' +
+            '<span data-notify="title"> </span> ' +
+            '<span data-notify="message">{2}</span>' +
+            '<div class="progress" data-notify="progressbar">' +
+            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+            '</div>' +
+            '<a href="{3}" target="{4}" data-notify="url"></a>' +
+            '</div>'
+        });
+    }    
 });

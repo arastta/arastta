@@ -28,6 +28,7 @@
     <?php if ($bootstrap_select_lang) { ?>
     <script type="text/javascript" src="view/javascript/bootstrap-select/js/i18n/defaults-<?php echo $bootstrap_select_lang; ?>.min.js"></script>
     <?php } ?>
+    <script type="text/javascript" src="view/javascript/bootstrap-notify/bootstrap-notify.min.js"></script>    
     <script src="view/javascript/common.js" type="text/javascript"></script>
     <?php foreach ($styles as $style) { ?>
     <link type="text/css" href="<?php echo $style['href']; ?>" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
