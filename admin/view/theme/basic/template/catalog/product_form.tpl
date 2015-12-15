@@ -582,6 +582,7 @@
             </tr>
             <?php $image_row++; ?>
             <?php } ?>
+            <input type="text" name="points" value="<?php echo $points; ?>" placeholder="<?php echo $entry_points; ?>" id="input-points" class="form-control" />
         </form>
     </div>
     <style>
