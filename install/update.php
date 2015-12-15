@@ -117,9 +117,9 @@ if (version_compare(VERSION, '1.2.0', '<')) {
         $params = json_decode($addon['params'], true);
         
         // Update to language_id
-        if (isset($params->['localisation/language'])) {
-            $params['language_id'] = $params->['localisation/language'];
-            unset($params->['localisation/language']);
+        if (isset($params['localisation/language'])) {
+            $params['language_id'] = $params['localisation/language'];
+            unset($params['localisation/language']);
         }
         
         // Set theme/extension ids
