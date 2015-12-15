@@ -30,9 +30,7 @@
                 <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
             </div>
             <div class="panel-body">
-                <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-category" class="form-horizontal">
-                    <?php echo $theme_info; ?>
-                </form>
+                <?php echo $theme_info; ?>
             </div>
         </div>
     </div>
