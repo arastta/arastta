@@ -4,80 +4,19 @@
         "type": "tab",
         "element": {
             "element-1": {
-                "type": "textbox",
-                "label": "text_textbox_label",
-                "name": "input_name",
-                "attribute": {
-                    "required": "1",
-                    "value": "Test"
+                "type": "yesno",
+                "label": "text_menu_show_all",
+                "name": "menu_show_all",
+                "option": {
+                    "labelclass": "radio-inline"
                 }
             },
             "element-2": {
-                "type": "password",
-                "label": "text_password_label",
-                "name": "input_password",
-                "attribute": {
-                    "required": "1"
-                }
-            },
-            "element-3": {
-                "type": "select",
-                "label": "text_select_label",
-                "name": "input_select",
+                "type": "yesno",
+                "label": "text_refine_search_show",
+                "name": "refine_shearch_show",
                 "option": {
-                    "value-1": "text-1",
-                    "value-2": "text-2"
-                },
-                "attribute": {
-                    "required": "1"
-                }
-            },
-            "element-4": {
-                "type": "radio",
-                "label": "text_radio_label",
-                "name": "input_radio",
-                "option": {
-                    "value-1": "text-1",
-                    "value-2": "text-2"
-                },
-                "attribute": {
-                    "required": "1"
-                }
-            },
-            "element-5": {
-                "type": "checkbox",
-                "label": "text_checkbox_label",
-                "name": "input_checkbox",
-                "option": {
-                    "value-1": "text-1",
-                    "value-2": "text-2"
-                },
-                "attribute": {
-                    "required": "1"
-                }
-            },
-            "element-7": {
-                "type": "tinymce",
-                "label": "text_editor_label",
-                "name": "input_editor_tinymce",
-                "attribute": {
-                    "jspath": "view/javascript/tinymce/tinymce.min.js",
-                    "function_name": "textEditor"
-                }
-            }
-        }
-    },
-    "test": {
-        "title": "text_generall_title",
-        "type": "tab",
-        "element": {
-            "xxx": {
-                "type": "textbox",
-                "label": "text_textbox2_label",
-                "name": "input_ne",
-                "attribute": {
-                    "required": "1",
-                    "value": "Test"
+                    "labelclass": "radio-inline"
                 }
             }
         }

@@ -42,6 +42,23 @@
         <?php } ?>
     </style>
     <?php } ?>
+    <?php if ($theme_default) { ?>
+    <style type="text/css">
+    <?php if ($theme_default['menu_show_all']) { ?>
+    #menu .see-all { display: none !important;}
+    <?php } ?>
+    <?php if ($theme_default['refine_shearch_show']) { ?>
+    body[class*="product-category"] #content.col-sm-12 h3,
+    body[class*="product-category"] #content.col-sm-12 h3 + .row,
+    body[class*="product-category"] #content.col-sm-9 h3,
+    body[class*="product-category"] #content.col-sm-9 h3 + .row,
+    body[class*="product-category"] #content.col-sm-6 h3,
+    body[class*="product-category"] #content.col-sm-6 h3 + .row {
+        display: none;
+    }
+    <?php } ?>
+    </style>
+    <?php } ?>    
     <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
     <script src="catalog/view/javascript/arastta.js" type="text/javascript"></script>
     <?php foreach ($scripts as $script) { ?>

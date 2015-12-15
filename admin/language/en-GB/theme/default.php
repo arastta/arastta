@@ -79,3 +79,6 @@ $_['text_default_button_border_color_label']                    = 'Default Butto
 $_['text_default_button_border_hover_color_label']              = 'Default Button Border Hover Color';
 $_['text_default_button_text_color_label']                      = 'Default Button Icon(Text) Color';
 $_['text_default_button_text_hover_color_label']                = 'Default Button Icon(Text) Hover Color';
+
+$_['text_menu_show_all']        = 'Menu Show All Button';
+$_['text_refine_search_show']   = 'Refine Search';

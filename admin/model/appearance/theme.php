@@ -193,6 +193,11 @@ class ModelAppearanceTheme extends Model
                     $attribute['value'] = $config[$name];
                 }
 
+                if ($element['type'] == 'yesno') {
+                    $option['value'] = $config[$name];
+                    $attribute['yes'] = $this->language->get('text_enabled');
+                    $attribute['no'] = $this->language->get('text_disabled');
+                }
                 if (empty($option) && empty($attribute)) {
                     $form->addElement(new $class_name($label, $name));
                 } elseif (!empty($option) && empty($attribute)) {
