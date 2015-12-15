@@ -2115,6 +2115,11 @@ class ControllerSaleOrder extends Controller {
             $this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL'));
         }
 
+        $this->load->model('sale/order');
+        $this->load->model('sale/customer');
+        $order_info = $this->model_sale_order->getOrder($order_id);
+        $customer_info = $this->model_sale_customer->getCustomer($order_info['customer_id']);
+
         Client::setName('catalog');
 
         $app = new Catalog();
@@ -2126,6 +2131,9 @@ class ControllerSaleOrder extends Controller {
         $app->request->post = array();
 
         $app->ecommerce();
+        if (!empty($customer_info)) {
+            $app->customer->login($customer_info['email'], '', true);
+        }
         $app->route();
         $app->dispatch();
 
