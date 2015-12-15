@@ -18,7 +18,8 @@ class Emailtemplate
         $this->db = $registry->get('db');
         $this->currency = new Currency($registry);
         $this->load = new Loader($registry);
-        $this->trigger = new Trigger($this->registry);
+        $this->trigger = new Trigger($this->registry);        
+        $this->request = new Request($this->registry);
     }
 
     // Mail Subject
@@ -112,6 +113,16 @@ class Emailtemplate
             $message = $this->getDefaultMessage($type, $template_id, $data);
         }
 
+        $data['title'] = $this->getSubject($type, $template_id, $data);
+        $data['message'] = $message;
+        $data['site_url'] = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
+
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/default.tpl')) {
+            $message = $this->load->view($this->config->get('config_template') . '/template/mail/default.tpl', $data);
+        } else {
+            $message = $this->load->view('default/template/mail/default.tpl', $data);
+        }
+        
         return $message;
     }
 
