@@ -887,8 +887,9 @@ $(document).ready(function() {
     });
     
     checkTheme = getURLVar('theme');
-
-    if (checkTheme) {
+    route = getURLVar('route');
+    
+    if (checkTheme && route != 'appearance/theme/edit') {
         $.notify({
             // options
             icon: 'fa fa-refresh',
