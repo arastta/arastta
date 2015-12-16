@@ -29,9 +29,9 @@ final class Version extends Object {
 
     protected $status = 'Stable';
 
-    protected $date = '15-December-2015';
+    protected $date = '16-December-2015';
 
-    protected $time = '19:15';
+    protected $time = '10:30';
 
     protected $zone = 'GMT +2';
 
