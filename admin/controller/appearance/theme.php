@@ -391,9 +391,9 @@ class ControllerAppearanceTheme extends Controller
         $data['cancel'] = $this->url->link('appearance/theme', 'token=' . $this->session->data['token'], 'SSL');
 
         if (isset($this->request->get['theme']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-            $data['theme_info'] = $this->model_appearance_theme->getThemeSetting($this->request->get['theme']);
+            $data['theme_info'] = $this->model_appearance_theme->getThemeSetting($this->request->get['theme'], $data['action']);
         } elseif (isset($this->request->get['theme'])) {
-            $data['theme_info'] = $this->model_appearance_theme->getThemeSetting($this->request->get['theme']);
+            $data['theme_info'] = $this->model_appearance_theme->getThemeSetting($this->request->get['theme'], $data['action']);
         }
 
         $data['token'] = $this->session->data['token'];
