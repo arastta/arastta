@@ -474,8 +474,8 @@ class ControllerAppearanceMenu extends Controller
         if (isset($this->request->get['filter_information_name'])) {
             $this->load->model('catalog/information');
             
-            if (isset($this->request->get['filter_manufacturer_name'])) {
-                $filter_name = $this->request->get['filter_manufacturer_name'];
+            if (isset($this->request->get['filter_information_name'])) {
+                $filter_name = $this->request->get['filter_information_name'];
             } else {
                 $filter_name = '';
             }
