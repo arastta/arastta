@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 class ModelExtensionModification extends Model {
@@ -30,7 +30,11 @@ class ModelExtensionModification extends Model {
 
         if (!empty($files) && $files) {
             foreach ($files as $file) {
-                $xmls[$file] = file_get_contents($file);
+                $xml_content = file_get_contents($file);
+
+                $xml_content = preg_replace('/\$this->(trigger|event)->(fire|trigger)\(\'(.*)\',[\s]*(.*)\);/', '\$this->trigger->fire("$3", array(&$4));', $xml_content);
+
+                $xmls[$file] = $xml_content;
             }
         }
 
@@ -43,7 +47,7 @@ class ModelExtensionModification extends Model {
             return false;
         }
 
-        $dom                     = new DOMDocument('1.0', 'UTF-8');
+        $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->preserveWhiteSpace = false;
 
         foreach ($xmls as $file => $xml) {
@@ -333,8 +337,8 @@ class ModelExtensionModification extends Model {
                             $index_count++;
                             $changed = true;
                             if (!$search_node_indexes || ($search_node_indexes && in_array($index_count, $search_node_indexes))) {
-								$this->positionAttr($position, $line_num, $_offset, $tmp, $add_node_value, $line_max, $search_node_value, $line, $search_node_regex, $limit);
-								$status = true;
+                                $this->positionAttr($position, $line_num, $_offset, $tmp, $add_node_value, $line_max, $search_node_value, $line, $search_node_regex, $limit);
+                                $status = true;
                             }
                         }
                     }
@@ -419,44 +423,44 @@ class ModelExtensionModification extends Model {
         }
     }
 
-	protected function positionAttr($position, $line_num, $_offset, &$tmp, $add_node_value, $line_max, $search_node_value, $line, $search_node_regex, $limit) {
-		switch ($position) {
-			case 'before':
-				$offset       = ($line_num - $_offset < 0) ? -1 : $line_num - $_offset;
-				$tmp[$offset] = empty($tmp[$offset]) ? $add_node_value : $add_node_value . "\n" . $tmp[$offset];
-				break;
-			case 'after':
-				$offset       = ($line_num + $_offset > $line_max) ? $line_max : $line_num + $_offset;
-				$tmp[$offset] = $tmp[$offset] . "\n" . $add_node_value;
-				break;
-			case 'ibefore':
-				$tmp[$line_num] = str_replace($search_node_value, $add_node_value . $search_node_value, $line);
-				break;
-			case 'iafter':
-				$tmp[$line_num] = str_replace($search_node_value, $search_node_value . $add_node_value, $line);
-				break;
-			default:
-				if (!empty($_offset)) {
-					if ($_offset > 0) {
-						for ($i = 1; $i <= $_offset; $i++) {
-							if (isset($tmp[$line_num + $i])) {
-								$tmp[$line_num + $i] = '';
-							}
-						}
-					} elseif ($_offset < 0) {
-						for ($i = -1; $i >= $_offset; $i--) {
-							if (isset($tmp[$line_num + $i])) {
-								$tmp[$line_num + $i] = '';
-							}
-						}
-					}
-				}
-				if ($search_node_regex == 'true') {
-					$tmp[$line_num] = preg_replace($search_node_value, $add_node_value, $line, $limit);
-				} else {
-					$tmp[$line_num] = str_replace($search_node_value, $add_node_value, $line);
-				}
-				break;
-		}
-	}
+    protected function positionAttr($position, $line_num, $_offset, &$tmp, $add_node_value, $line_max, $search_node_value, $line, $search_node_regex, $limit) {
+        switch ($position) {
+            case 'before':
+                $offset       = ($line_num - $_offset < 0) ? -1 : $line_num - $_offset;
+                $tmp[$offset] = empty($tmp[$offset]) ? $add_node_value : $add_node_value . "\n" . $tmp[$offset];
+                break;
+            case 'after':
+                $offset       = ($line_num + $_offset > $line_max) ? $line_max : $line_num + $_offset;
+                $tmp[$offset] = $tmp[$offset] . "\n" . $add_node_value;
+                break;
+            case 'ibefore':
+                $tmp[$line_num] = str_replace($search_node_value, $add_node_value . $search_node_value, $line);
+                break;
+            case 'iafter':
+                $tmp[$line_num] = str_replace($search_node_value, $search_node_value . $add_node_value, $line);
+                break;
+            default:
+                if (!empty($_offset)) {
+                    if ($_offset > 0) {
+                        for ($i = 1; $i <= $_offset; $i++) {
+                            if (isset($tmp[$line_num + $i])) {
+                                $tmp[$line_num + $i] = '';
+                            }
+                        }
+                    } elseif ($_offset < 0) {
+                        for ($i = -1; $i >= $_offset; $i--) {
+                            if (isset($tmp[$line_num + $i])) {
+                                $tmp[$line_num + $i] = '';
+                            }
+                        }
+                    }
+                }
+                if ($search_node_regex == 'true') {
+                    $tmp[$line_num] = preg_replace($search_node_value, $add_node_value, $line, $limit);
+                } else {
+                    $tmp[$line_num] = str_replace($search_node_value, $add_node_value, $line);
+                }
+                break;
+        }
+    }
 }

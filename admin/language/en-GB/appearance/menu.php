@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -19,13 +19,13 @@ $_['text_product']              = 'Product';
 $_['text_manufacturer']         = 'Manufacturer';
 $_['text_information']          = 'Information';
 $_['text_custom']               = 'Custom Link';
-$_['text_confirm']				= 'Are you sure?';
+$_['text_confirm']              = 'Are you sure?';
 
 $_['text_menu_title']           = 'Menu Structure';
 $_['text_menu_description']     = 'Drag each item into the order you prefer. Click the arrow on the right of the item to reveal additional configuration options.';
-$_['text_sub_item'] 	        = 'sub item';
-$_['text_menu_name'] 	        = 'Name';
-$_['text_menu_link'] 	        = 'Link';
+$_['text_sub_item']             = 'sub item';
+$_['text_menu_name']            = 'Name';
+$_['text_menu_link']            = 'Link';
 
 // Column
 $_['column_sort_order']         = 'Sort Order';
@@ -43,7 +43,7 @@ $_['entry_name']                = 'Name';
 $_['entry_link']                = 'Link';
 $_['entry_columns']             = 'Columns';
 $_['entry_sort_order']          = 'Sort Order';
-$_['entry_store']         		= 'Stores';
+$_['entry_store']               = 'Stores';
 
 // Buttons
 $_['button_custom']             = 'Add Custom Link to Menu';

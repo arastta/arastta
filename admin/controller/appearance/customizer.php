@@ -1,15 +1,17 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerAppearanceCustomizer extends Controller {
-	private $error = array();
+class ControllerAppearanceCustomizer extends Controller
+{
+    private $error = array();
 
-	public function index() {
+    public function index()
+    {
         $this->load->language('appearance/customizer');
 
         $this->load->model('appearance/customizer');
@@ -25,13 +27,9 @@ class ControllerAppearanceCustomizer extends Controller {
         $data['title'] = $this->document->getTitle();
 
         #Get All Language Text
-		$data = $this->language->all($data);
+        $data = $this->language->all($data);
 
-        if ($this->request->server['HTTPS']) {
-            $data['base'] = HTTPS_SERVER;
-        } else {
-            $data['base'] = HTTP_SERVER;
-        }
+        $data['base'] = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
 
         $this->installStylesheet();
         $this->installJavascript();
@@ -41,11 +39,11 @@ class ControllerAppearanceCustomizer extends Controller {
         $data['fonts'] = $this ->getFonts();
 
         $this->load->model('tool/image');
-        $data['image_fullpath'] = HTTPS_IMAGE;
+        $data['image_fullpath'] = ($this->request->server['HTTPS']) ? HTTPS_IMAGE : HTTP_IMAGE;
         $data['no_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
         if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
-            $data['icon'] = HTTP_CATALOG . 'image/' . $this->config->get('config_icon');
+            $data['icon'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'image/' . $this->config->get('config_icon');
         } else {
             $data['icon'] = '';
         }
@@ -58,8 +56,8 @@ class ControllerAppearanceCustomizer extends Controller {
         $data['back'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
         $data['changeTheme'] = $this->url->link('appearance/customizer/changeTheme', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['frontend'] = HTTP_CATALOG;
-		$data['backend']  = HTTP_SERVER;
+        $data['frontend'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG;
+        $data['backend']  = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
 
         $data['description'] = $this->document->getDescription();
         $data['keywords'] = $this->document->getKeywords();
@@ -88,6 +86,14 @@ class ControllerAppearanceCustomizer extends Controller {
             $data['config_template'] = $this->config->get('config_template');
         }
 
+        if (isset($this->request->get['theme'])) {
+            $data['theme'] = $this->request->get['theme'];
+        } elseif (isset($this->request->post['config_template'])) {
+            $data['theme'] = $this->request->post['config_template'];
+        } else {
+            $data['theme'] = $this->config->get('config_template');
+        }
+
         $data['templates'] = array();
 
         $directories = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
@@ -98,10 +104,11 @@ class ControllerAppearanceCustomizer extends Controller {
 
         $data['token'] = $this->session->data['token'];
 
-		$this->response->setOutput($this->load->view('appearance/customizer.tpl', $data));
-	}
+        $this->response->setOutput($this->load->view('appearance/customizer.tpl', $data));
+    }
 
-    public function reset(){
+    public function reset()
+    {
         $this->load->model('appearance/customizer');
 
         if ($this->validate()) {
@@ -115,7 +122,8 @@ class ControllerAppearanceCustomizer extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function installStylesheet() {
+    public function installStylesheet()
+    {
         $this->document->addStyle('view/javascript/bootstrap/arastta/arastta.css');
         $this->document->addStyle('view/javascript/font-awesome/css/font-awesome.min.css');
         $this->document->addStyle('view/stylesheet/customizer.css');
@@ -123,18 +131,20 @@ class ControllerAppearanceCustomizer extends Controller {
         $this->document->addStyle('view/stylesheet/color-picker.css');
     }
 
-    public function installJavascript() {
+    public function installJavascript()
+    {
         $this->document->addScript('view/javascript/jquery/jquery-2.1.1.min.js');
         $this->document->addScript('view/javascript/bootstrap/js/bootstrap.min.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
         $this->document->addScript('view/javascript/colorpicker/color-picker.js');
         $this->document->addScript('view/javascript/colorpicker/iris.min.js');
-        if(is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/javascript/customizer.js')){
+        if (is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/javascript/customizer.js')) {
             $this->document->addScript('../catalog/view/theme/' . $this->config->get('config_template') . '/javascript/customizer.js');
         }
     }
 
-    public function getCustomizerItem(){
+    public function getCustomizerItem()
+    {
         $use_template = $this->config->get('config_template');
 
         $data['general'] = array(
@@ -205,8 +215,8 @@ class ControllerAppearanceCustomizer extends Controller {
             )
         );
 
-		if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
-			unset($data['general']['control']['sitename']);
+        if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
+            unset($data['general']['control']['sitename']);
         } else {
             unset($data['images']['control']['logo']);
         }
@@ -233,7 +243,7 @@ class ControllerAppearanceCustomizer extends Controller {
 
                     if (!empty($item_value['control'])) {
                         foreach ($item_value['control'] as $control => $value) {
-                            foreach ($value as $key => $val){
+                            foreach ($value as $key => $val) {
                                 $data[$item_name]['control'][$control][$key] = $val;
                             }
                         }
@@ -267,13 +277,14 @@ class ControllerAppearanceCustomizer extends Controller {
 
         return $result;
     }
-	
-	public function getFonts(){	
-		$json =  file_get_contents(DIR_SYSTEM . 'helper/fonts.json');
-		
-		$data = json_decode($json, true);
-		
-		$fonts['system'] = array(
+    
+    public function getFonts()
+    {
+        $json =  file_get_contents(DIR_SYSTEM . 'helper/fonts.json');
+        
+        $data = json_decode($json, true);
+        
+        $fonts['system'] = array(
             array(
                 'family' => 'Georgia, serif'
             ),
@@ -282,16 +293,17 @@ class ControllerAppearanceCustomizer extends Controller {
             )
         );
 
-		foreach ($data['items'] as $font_item) {
-			$fonts['google'][] = array(
-				'family' => $font_item['family']
-			);
-		}
-		
-		return $fonts;
-	}
+        foreach ($data['items'] as $font_item) {
+            $fonts['google'][] = array(
+                'family' => $font_item['family']
+            );
+        }
+        
+        return $fonts;
+    }
 
-    public function changeTheme(){
+    public function changeTheme()
+    {
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->load->model('appearance/customizer');
 
@@ -305,7 +317,8 @@ class ControllerAppearanceCustomizer extends Controller {
         }
     }
 
-    public function menu(){
+    public function menu()
+    {
         $this->load->language('appearance/customizer');
 
         $this->load->model('appearance/customizer');
@@ -314,22 +327,18 @@ class ControllerAppearanceCustomizer extends Controller {
         #Get All Language Text
         $data = $this->language->all();
 
-        if ($this->request->server['HTTPS']) {
-            $data['base'] = HTTPS_SERVER;
-        } else {
-            $data['base'] = HTTP_SERVER;
-        }
+        $data['base'] = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
 
         $data['sections'] = $this->getCustomizerItem();
 
         $data['fonts'] = $this ->getFonts();
 
         $this->load->model('tool/image');
-        $data['image_fullpath'] = HTTPS_IMAGE;
+        $data['image_fullpath'] = ($this->request->server['HTTPS']) ? HTTPS_IMAGE : HTTP_IMAGE;
         $data['no_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
         if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
-            $data['icon'] = HTTP_CATALOG . 'image/' . $this->config->get('config_icon');
+            $data['icon'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG  . 'image/' . $this->config->get('config_icon');
         } else {
             $data['icon'] = '';
         }
@@ -342,8 +351,8 @@ class ControllerAppearanceCustomizer extends Controller {
         $data['back'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
         $data['changeTheme'] = $this->url->link('appearance/customizer/changeTheme', 'token=' . $this->session->data['token'], 'SSL');
 
-        $data['frontend'] = HTTP_CATALOG;
-        $data['backend']  = HTTP_SERVER;
+        $data['frontend'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG;
+        $data['backend']  = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
 
         $data['default_data'] = $this->model_appearance_customizer->getDefaultData('customizer');
 
@@ -363,10 +372,11 @@ class ControllerAppearanceCustomizer extends Controller {
 
         $data['token'] = $this->session->data['token'];
 
-       return $this->load->view('appearance/customizer_menu.tpl', $data);
+        return $this->load->view('appearance/customizer_menu.tpl', $data);
     }
 
-    public function getLanguageText($data, $use_template) {
+    public function getLanguageText($data, $use_template)
+    {
         $this->load->language('theme/default');
         $this->load->language('theme/' . $use_template);
 
@@ -381,7 +391,7 @@ class ControllerAppearanceCustomizer extends Controller {
                 $data[$key]['description'] = $language[$value['description']];
             }
 
-            foreach ($value['control'] as $cont_key => $cont_val){
+            foreach ($value['control'] as $cont_key => $cont_val) {
                 if (isset($data[$key]['control'][$cont_key]['label']) && isset($language[$cont_val['label']])) {
                     $data[$key]['control'][$cont_key]['label'] = $language[$cont_val['label']];
                 }
@@ -392,9 +402,9 @@ class ControllerAppearanceCustomizer extends Controller {
 
                 if (isset($data[$key]['control'][$cont_key]['choices'])) {
                     foreach ($data[$key]['control'][$cont_key]['choices'] as $choices_key => $choices_val) {
-						if (isset($language[$choices_val])) {
-							$data[$key]['control'][$cont_key]['choices'][$choices_key] = $language[$choices_val];
-						}
+                        if (isset($language[$choices_val])) {
+                            $data[$key]['control'][$cont_key]['choices'][$choices_key] = $language[$choices_val];
+                        }
                     }
                 }
             }
@@ -403,7 +413,8 @@ class ControllerAppearanceCustomizer extends Controller {
         return $data;
     }
 
-    protected function validate() {
+    protected function validate()
+    {
         if (!$this->user->hasPermission('modify', 'appearance/customizer')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }

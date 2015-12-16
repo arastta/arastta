@@ -1,14 +1,14 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 class ModelExtensionEvent extends Model {
 
-	public function addEvent($code, $trigger, $action) {
+    public function addEvent($code, $trigger, $action) {
 
         $exTrigger = explode('.', $trigger);
         $funcitonName = '';
@@ -25,7 +25,7 @@ class ModelExtensionEvent extends Model {
         $replaceArray = array(
           '_', '-', '.'
         );
-		
+        
         if (is_file(Client::getDir() . 'event/app/' . $code . '.php')) {
             $file = file_get_contents(Client::getDir() . 'event/app/' . $code . '.php', FILE_USE_INCLUDE_PATH);
 
@@ -50,10 +50,10 @@ class ModelExtensionEvent extends Model {
         } else {
             $content = '<?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 class EventApp' . ucwords(str_replace($replaceArray, "", $code)) . ' extends Event {
@@ -64,10 +64,10 @@ class EventApp' . ucwords(str_replace($replaceArray, "", $code)) . ' extends Eve
 }';
         }
 
-		$this->filesystem->dumpFile(Client::getDir() . 'event/app/' . $code . '.php', $content);
+        $this->filesystem->dumpFile(Client::getDir() . 'event/app/' . $code . '.php', $content);
     }
 
-	public function deleteEvent($code) {
+    public function deleteEvent($code) {
         $this->filesystem->remove(Client::getDir() . 'event/app/' . $code . '.php');
-	}
+    }
 }

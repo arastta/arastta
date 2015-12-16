@@ -1,16 +1,16 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
-$_['heading_title']      	= 'Customizer';
+$_['heading_title']         = 'Customizer';
 
 // Text
-$_['text_customizer']     	= 'Customizer';
+$_['text_customizer']       = 'Customizer';
 $_['text_menu_description'] = 'Press return or enter to expand';
 $_['text_title']            = 'Title';
 $_['text_advance']          = 'Advanced';
@@ -37,15 +37,15 @@ $_['text_general_layout_width']                 = 'Boxed';
 $_['text_general_layout_full_width']            = 'Full Width';
 
 // Entry
-$_['entry_close']        	= 'Close';
-$_['entry_back']         	= 'Back';
+$_['entry_close']           = 'Close';
+$_['entry_back']            = 'Back';
 $_['entry_hex_value']       = 'Hex Value';
-$_['entry_default']      	= 'Default';
-$_['entry_clear']    	  	= 'Clear';
-$_['entry_collapse']    	= 'Collapse';
+$_['entry_default']         = 'Default';
+$_['entry_clear']           = 'Clear';
+$_['entry_collapse']        = 'Collapse';
 $_['entry_collapse_sidebar']= 'Collapse Sidebar';
-$_['entry_select_color']  	= 'Select Color';
-$_['entry_current_color']  	= 'Current Color';
+$_['entry_select_color']    = 'Select Color';
+$_['entry_current_color']   = 'Current Color';
 
 // Error
-$_['error_permission']    	= 'Warning: You do not have permission to modify customizer!';
+$_['error_permission']      = 'Warning: You do not have permission to modify customizer!';

@@ -1,25 +1,25 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
 $_['heading_title']             = 'System Information';
 
 // Column
-$_['column_setting']         	= 'Setting';
-$_['column_value']       		= 'Value';
-$_['column_folder']       		= 'Folder';
-$_['column_status']       		= 'Status';
+$_['column_setting']            = 'Setting';
+$_['column_value']              = 'Value';
+$_['column_folder']             = 'Folder';
+$_['column_status']             = 'Status';
 
 // Tab
-$_['tab_general']         	    = 'General';
-$_['tab_permissions']       	= 'Permissions';
-$_['tab_php_settings']       	= 'PHP Settings';
-$_['tab_php_info']       	    = 'PHP Information';
+$_['tab_general']               = 'General';
+$_['tab_permissions']           = 'Permissions';
+$_['tab_php_settings']          = 'PHP Settings';
+$_['tab_php_info']              = 'PHP Information';
 
 // Text
 $_['text_list']                 = 'System Details';

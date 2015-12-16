@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -32,12 +32,12 @@ $_['text_google_captcha']              = 'Google reCAPTCHA';
 $_['text_smtp_encryption_n']           = 'None';
 $_['text_smtp_encryption_s']           = 'SSL';
 $_['text_smtp_encryption_t']           = 'TLS';
-$_['text_common']           		   = 'Common';
-$_['text_summernote']        		   = 'Summernote';
-$_['text_tinymce']  		           = 'TinyMCE';
-$_['text_seo_urls']  		           = 'SEO URLs';
-$_['text_seo_metadata']  		       = 'Metadata';
-$_['text_seo_sitemap']  		       = 'Sitemap';
+$_['text_common']                      = 'Common';
+$_['text_summernote']                  = 'Summernote';
+$_['text_tinymce']                     = 'TinyMCE';
+$_['text_seo_urls']                    = 'SEO URLs';
+$_['text_seo_metadata']                = 'Metadata';
+$_['text_seo_sitemap']                 = 'Sitemap';
 $_['text_seo_category_last']           = 'Only Last Category';
 $_['text_seo_category_all']            = 'All Parent + Child Categories';
 $_['text_seo_www_red_with']            = 'With www';
@@ -116,6 +116,7 @@ $_['entry_mail_alert']                 = 'Additional Alert E-Mails';
 $_['entry_stock_display']              = 'Display Stock';
 $_['entry_stock_warning']              = 'Show Out Of Stock Warning';
 $_['entry_stock_checkout']             = 'Stock Checkout';
+$_['entry_stock_mail']                 = 'Out Of Stock Mail';
 $_['entry_affiliate_approval']         = 'Affiliate Requires Approval';
 $_['entry_affiliate_auto']             = 'Automatic Commission';
 $_['entry_affiliate_commission']       = 'Affiliate Commission (%)';
@@ -123,6 +124,7 @@ $_['entry_affiliate']                  = 'Affiliate Terms';
 $_['entry_affiliate_mail']             = 'New Affiliate Alert Mail';
 $_['entry_return']                     = 'Return Terms';
 $_['entry_return_status']              = 'Return Status';
+$_['entry_return_mail']                = 'New Return Request Mail';
 $_['entry_logo']                       = 'Store Logo';
 $_['entry_icon']                       = 'Icon';
 $_['entry_image_category']             = 'Category Image Size';
@@ -151,7 +153,7 @@ $_['entry_fraud_status']               = 'MaxMind Fraud Order Status';
 $_['entry_secure']                     = 'Use SSL';
 $_['entry_shared']                     = 'Use Shared Sessions';
 $_['entry_robots']                     = 'Robots';
-$_['entry_file_max_size']	           = 'Max File Size';
+$_['entry_file_max_size']              = 'Max File Size';
 $_['entry_file_ext_allowed']           = 'Allowed File Extensions';
 $_['entry_file_mime_allowed']          = 'Allowed File Mime Types';
 $_['entry_maintenance']                = 'Maintenance Mode';
@@ -204,12 +206,12 @@ $_['help_comment']                     = 'This field is for any special notes yo
 $_['help_location']                    = 'The different store locations you have that you want displayed on the contact us form.';
 $_['help_currency']                    = 'Change the default currency. Clear your browser cache to see the change and reset your existing cookie.';
 $_['help_currency_auto']               = 'Set your store to automatically update currencies daily.';
-$_['help_product_limit'] 	           = 'Determines how many catalog items are shown per page (products, categories, etc).';
+$_['help_product_limit']               = 'Determines how many catalog items are shown per page (products, categories, etc).';
 $_['help_product_description_length']  = 'In the list view, short description character limit (categories, special etc).';
-$_['help_limit_admin']   	           = 'Determines how many admin items are shown per page (orders, customers, etc).';
+$_['help_limit_admin']                 = 'Determines how many admin items are shown per page (orders, customers, etc).';
 $_['help_product_count']               = 'Show the number of products inside the subcategories in the storefront header category menu. Be warned, this will cause an extreme performance hit for stores with a lot of subcategories!';
-$_['help_review']       	           = 'Enable/Disable new review entry and display of existing reviews.';
-$_['help_review_guest']       	       = 'Allow guests to post reviews.';
+$_['help_review']                      = 'Enable/Disable new review entry and display of existing reviews.';
+$_['help_review_guest']                = 'Allow guests to post reviews.';
 $_['help_review_mail']                 = 'Send an email to the store owner when a new review is created.';
 $_['help_voucher_min']                 = 'Minimum amount a customer can purchase a voucher for.';
 $_['help_voucher_max']                 = 'Maximum amount a customer can purchase a voucher for.';
@@ -234,6 +236,7 @@ $_['help_order_mail']                  = 'Send an email to the store owner when 
 $_['help_stock_display']               = 'Display stock quantity on the product page.';
 $_['help_stock_warning']               = 'Display out of stock message on the shopping cart page if a product is out of stock but stock checkout is yes. (Warning always shows if stock checkout is no)';
 $_['help_stock_checkout']              = 'Allow customers to still checkout if the products they are ordering are not in stock.';
+$_['help_stock_mail']                  = 'Send an email to the store owner when a product\'s stock reaches zero.';
 $_['help_affiliate_approval']          = 'Automatically approve any new affiliates who sign up.';
 $_['help_affiliate_auto']              = 'Automatically add commission when each order reaches the complete status.';
 $_['help_affiliate_commission']        = 'The default affiliate commission percentage.';
@@ -241,6 +244,7 @@ $_['help_affiliate']                   = 'Forces people to agree to terms before
 $_['help_affiliate_mail']              = 'Send an email to the store owner when a new affiliate is registered.';
 $_['help_return']                      = 'Forces people to agree to terms before a return can be created.';
 $_['help_return_status']               = 'Set the default return status when a return request is submitted.';
+$_['help_return_mail']                 = 'Send an email to the store owner when a new return request is registered.';
 $_['help_icon']                        = 'The icon should be a PNG that is 16px x 16px.';
 $_['help_mail_protocol']               = 'Select which mail protocol to use for the email delivery.';
 $_['help_mail_sendmail_path']          = 'Enter the path to the Sendmail program directory on the host server.';
@@ -252,7 +256,7 @@ $_['help_fraud_status']                = 'Orders over your set score will be ass
 $_['help_secure']                      = 'To use SSL check with your host if a SSL certificate is installed.';
 $_['help_shared']                      = 'Try to share the session cookie between stores so the cart can be passed between different domains.';
 $_['help_robots']                      = 'A list of web crawler user agents that shared sessions will not be used with. Use separate lines for each user agent.';
-$_['help_file_max_size']		       = 'The maximum image file size you can upload in Image Manager. Enter as byte.';
+$_['help_file_max_size']               = 'The maximum image file size you can upload in Image Manager. Enter as byte.';
 $_['help_file_ext_allowed']            = 'Add which file extensions are allowed to be uploaded. Use a new line for each value.';
 $_['help_file_mime_allowed']           = 'Add which file mime types are allowed to be uploaded. Use a new line for each value.';
 $_['help_maintenance']                 = 'Prevents customers from browsing your store. They will instead see a maintenance message. If logged in as admin, you will see the store as normal.';
@@ -302,8 +306,8 @@ $_['error_address']                    = 'Store Address must be between 10 and 2
 $_['error_email']                      = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']                  = 'Telephone must be between 3 and 32 characters!';
 $_['error_meta_title']                 = 'Title must be between 3 and 32 characters!';
-$_['error_limit']       	           = 'Limit required!';
-$_['error_login_attempts']       	   = 'Login Attempts must be greater than 0!';
+$_['error_limit']                      = 'Limit required!';
+$_['error_login_attempts']             = 'Login Attempts must be greater than 0!';
 $_['error_customer_group_display']     = 'You must include the default customer group if you are going to use this feature!';
 $_['error_voucher_min']                = 'Minimum voucher amount required!';
 $_['error_voucher_max']                = 'Maximum voucher amount required!';

@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -13,6 +13,7 @@ $_['heading_title']    = 'Return Reasons';
 $_['text_success']     = 'Success: You have modified return reasons!';
 $_['text_list']        = 'Return Reason List';
 $_['text_add']         = 'Add Return Reason';
+$_['text_edit']        = 'Edit Return Reason';
 $_['text_edit']        = 'Edit Return Reason';
 
 // Column

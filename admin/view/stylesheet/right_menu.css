@@ -1,0 +1,22 @@
+#column-left.right {
+    display: none;
+}
+
+#column-right {
+    margin-right: 0px;
+}
+
+@media (min-width: 768px) {
+    #column-left.right + #content {
+        margin-left: 0px !important;
+        padding-top: 46px;
+        padding-bottom: 25px;
+    }
+
+    #column-right.active + #column-left.right + #content {
+        margin-right: 185px;
+    }
+    #column-right + #column-left.right + #content {
+        margin-right: 50px;
+    }
+}

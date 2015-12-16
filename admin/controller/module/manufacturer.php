@@ -1,15 +1,17 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerModuleManufacturer extends Controller {
+class ControllerModuleManufacturer extends Controller
+{
     private $error = array();
 
-    public function index() {
+    public function index()
+    {
         $this->load->language('module/manufacturer');
 
         $this->document->setTitle($this->language->get('heading_title'));
@@ -26,7 +28,7 @@ class ControllerModuleManufacturer extends Controller {
 
         $data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_edit'] = $this->language->get('text_edit');
+        $data['text_edit'] = $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -55,31 +57,32 @@ class ControllerModuleManufacturer extends Controller {
 
         $data['breadcrumbs'][] = array(
             'text'      => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/manufacturer', 'token=' . $this->session->data['token'], 'SSL')
+            'href' => $this->url->link('module/manufacturer', 'token=' . $this->session->data['token'], 'SSL')
         );
 
         $data['action'] = $this->url->link('module/manufacturer', 'token=' . $this->session->data['token'], 'SSL');
 
         $data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		if (isset($this->request->post['manufacturer_status'])) {
-			$data['manufacturer_status'] = $this->request->post['manufacturer_status'];
-		} else {
-			$data['manufacturer_status'] = $this->config->get('manufacturer_status');
+        if (isset($this->request->post['manufacturer_status'])) {
+            $data['manufacturer_status'] = $this->request->post['manufacturer_status'];
+        } else {
+            $data['manufacturer_status'] = $this->config->get('manufacturer_status');
         }
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/manufacturer.tpl', $data));
+        $this->response->setOutput($this->load->view('module/manufacturer.tpl', $data));
     }
 
-    private function validate() {
+    private function validate()
+    {
         if (!$this->user->hasPermission('modify', 'module/manufacturer')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-		return !$this->error;
+        return !$this->error;
     }
 }

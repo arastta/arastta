@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 class Url extends Object {
@@ -14,20 +14,24 @@ class Url extends Object {
 
     protected $config;
 
-	public function __construct($domain, $ssl = '', $registry = '') {
-		$this->domain = $domain;
-		$this->ssl = str_replace('http://', 'https://', $ssl);
+    public function __construct($domain, $ssl = '', $registry = '') {
+        $this->domain = $domain;
+        $this->ssl = str_replace('http://', 'https://', $ssl);
 
         if (is_object($registry)) {
             $this->config = $registry->get('config');
         }
-	}
+    }
 
-	public function addRewrite($rewrite) {
-		$this->rewrite[] = $rewrite;
-	}
+    public function addRewrite($rewrite) {
+        $this->rewrite[] = $rewrite;
+    }
 
-	public function link($route, $args = '', $secure = false) {
+    public function link($route, $args = '', $secure = false) {
+        if (strstr($route, 'extension/') && Client::isAdmin()) {
+            $this->checkExtManagerRoute($route, $args);
+        }
+
         if (empty($this->ssl)) {
             $this->ssl = str_replace('http://', 'https://', $this->domain);
         }
@@ -44,18 +48,18 @@ class Url extends Object {
             $url .= '/';
         }
 
-		$url .= 'index.php?route=' . $route;
+        $url .= 'index.php?route=' . $route;
 
-		if ($args) {
-			$url .= str_replace('&', '&amp;', '&' . ltrim($args, '&'));
-		}
+        if ($args) {
+            $url .= str_replace('&', '&amp;', '&' . ltrim($args, '&'));
+        }
 
-		foreach ($this->rewrite as $rewrite) {
-			$url = $rewrite->rewrite($url);
-		}
+        foreach ($this->rewrite as $rewrite) {
+            $url = $rewrite->rewrite($url);
+        }
 
-		return $url;
-	}
+        return $url;
+    }
 
     public function getDomain($secure = false) {
         if ($this->useSSL($secure)) {
@@ -129,5 +133,20 @@ class Url extends Object {
         }
 
         return $ret;
+    }
+
+    public function checkExtManagerRoute(&$route, &$args) {
+        switch ($route) {
+            case 'extension/payment':
+            case 'extension/shipping':
+            case 'extension/module':
+            case 'extension/total':
+            case 'extension/feed':
+                $r = explode('/', $route);
+
+                $route = 'extension/extension';
+                $args = 'filter_type='.$r[1].'&'.$args;
+                break;
+        }
     }
 }

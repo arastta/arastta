@@ -1,0 +1,14 @@
+{
+    "author":{
+        "name":"Arastta Core",
+        "email":"info@arastta.org",
+        "website":"arastta.org"
+    },
+    "theme":{
+        "name":"Default",
+        "description":"This is the default theme of Arastta.",
+        "code":"default",
+        "version":"1.0.0",
+        "product_id":"0"
+    }
+}

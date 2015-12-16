@@ -1,0 +1,24 @@
+{
+    "general": {
+        "title": "text_general_title",
+        "type": "tab",
+        "element": {
+            "element-1": {
+                "type": "yesno",
+                "label": "text_menu_show_all",
+                "name": "menu_show_all",
+                "option": {
+                    "labelclass": "radio-inline"
+                }
+            },
+            "element-2": {
+                "type": "yesno",
+                "label": "text_refine_search_show",
+                "name": "refine_shearch_show",
+                "option": {
+                    "labelclass": "radio-inline"
+                }
+            }
+        }
+    }
+}

@@ -1,13 +1,13 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
  
 // Heading
-$_['heading_title']    				   = 'Menu';
+$_['heading_title']                    = 'Menu';
 
 // Text
 $_['text_affiliate']                   = 'Affiliates';
@@ -51,6 +51,7 @@ $_['text_manufacturer']                = 'Manufacturers';
 $_['text_module']                      = 'Modules';
 $_['text_option']                      = 'Options';
 $_['text_order']                       = 'Orders';
+$_['text_invoice']                     = 'Invoices';
 $_['text_order_status']                = 'Order Statuses';
 $_['text_payment']                     = 'Payments';
 $_['text_paypal']                      = 'PayPal';
@@ -101,11 +102,15 @@ $_['text_order_recurring']             = 'Recurring Orders';
 $_['text_paypal_manage']               = 'PayPal';
 $_['text_paypal_search']               = 'Search';
 $_['text_file_manager']                = 'File Manager';
-$_['text_update']               	   = 'Update';
-$_['text_support']               	   = 'Support';
+$_['text_update']                      = 'Update';
+$_['text_support']                     = 'Support';
 
 $_['text_appearance']                  = 'Appearance';
 $_['text_customizer']                  = 'Customizer';
 $_['text_layout']                      = 'Layouts';
 $_['text_menu']                        = 'Menus';
 $_['text_collapse']                    = 'Collapse';
+$_['text_theme']                       = 'Themes';
+$_['text_translation']                 = 'Translations';
+$_['text_resource']                    = 'Resources';
+$_['text_all']                         = 'View All..';

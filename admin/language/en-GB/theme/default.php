@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Text
@@ -79,3 +79,6 @@ $_['text_default_button_border_color_label']                    = 'Default Butto
 $_['text_default_button_border_hover_color_label']              = 'Default Button Border Hover Color';
 $_['text_default_button_text_color_label']                      = 'Default Button Icon(Text) Color';
 $_['text_default_button_text_hover_color_label']                = 'Default Button Icon(Text) Hover Color';
+
+$_['text_menu_show_all']        = 'Menu Show All Button Hide';
+$_['text_refine_search_show']   = 'Refine Search  Hide';

@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 class Language {
@@ -71,28 +71,28 @@ class Language {
 
         $dir = Client::getDir();
 
-		// Step 1: Load the en-GB language translation (it's the safest fallback) 
+        // Step 1: Load the en-GB language translation (it's the safest fallback) 
         $file = $dir . 'language/' . 'en-GB/' . $filename . '.php';
 
         if (file_exists($file)) {
             require($file);
         }
 
-		// Step 2: Load the store's default language translation (it's the store owner preferred fallback)
+        // Step 2: Load the store's default language translation (it's the store owner preferred fallback)
         $file = $dir . 'language/' . $this->default . '/' . $filename . '.php';
 
         if (file_exists($file)) {
             require($file);
         }
 
-		// Step 3: Load the user's selected language translation (it's the user preferred language)
+        // Step 3: Load the user's selected language translation (it's the user preferred language)
         $file = $dir . 'language/' . $this->directory . '/' . $filename . '.php';
 
         if (file_exists($file)) {
             require($file);
         }
 
-		// Step 4: Load the user's selected language override (it's the store owner preferred language)
+        // Step 4: Load the user's selected language override (it's the store owner preferred language)
         $file = $dir . 'language/' . 'override/' . $this->directory . '/' . $filename . '.php';
 
         if (file_exists($file)) {

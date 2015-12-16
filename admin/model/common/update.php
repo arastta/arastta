@@ -1,14 +1,16 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class ModelCommonUpdate extends Model {
+class ModelCommonUpdate extends Model
+{
 
-    public function check() {
+    public function check()
+    {
         // Fire event
         $this->trigger->fire('pre.admin.update.check');
 
@@ -19,7 +21,8 @@ class ModelCommonUpdate extends Model {
         return true;
     }
 
-    public function changelog() {
+    public function changelog()
+    {
         $output = '';
 
         $url = 'https://api.github.com/repos/arastta/arastta/releases';
@@ -57,11 +60,12 @@ class ModelCommonUpdate extends Model {
     }
 
     // Upgrade
-    public function update() {
+    public function update()
+    {
         $version = $this->request->get['version'];
         $product_id = $this->request->get['product_id'];
 
-        $data = $this->update->downloadUpdate($product_id, $version);
+        $data = $this->downloadUpdate($product_id, $version);
 
         $path = 'temp-' . md5(mt_rand());
         $file = DIR_UPLOAD . $path . '/upload.zip';
@@ -77,7 +81,7 @@ class ModelCommonUpdate extends Model {
         }
 
         // Fire event
-        $this->trigger->fire('pre.admin.update.update', $product_id);
+        $this->trigger->fire('pre.admin.update.update', array(&$product_id));
 
         // Force enable maintenance mode
         $maintenance_mode = $this->config->get('maintenance_mode');
@@ -90,7 +94,7 @@ class ModelCommonUpdate extends Model {
         }
 
         // Remove Zip
-		$this->filesystem->remove($file);
+        $this->filesystem->remove($file);
 
         if ($product_id == 'core') {
             $temp_path = DIR_UPLOAD . $path;
@@ -109,8 +113,7 @@ class ModelCommonUpdate extends Model {
 
             // Delete the temp path
             $this->filesystem->remove($temp_path);
-        }
-        else {
+        } else {
             // Required for ftp & remove extension functions
             $this->request->post['path'] = $path;
 
@@ -124,8 +127,124 @@ class ModelCommonUpdate extends Model {
         $this->config->set('maintenance_mode', $maintenance_mode);
 
         // Fire event
-        $this->trigger->fire('post.admin.update.update', $product_id);
+        $this->trigger->fire('post.admin.update.update', array(&$product_id));
 
         return true;
+    }
+
+    public function countUpdates()
+    {
+        return array_sum(array_map("count", $this->getUpdates()));
+    }
+
+    public function getUpdates()
+    {
+        $data = $this->cache->get('update');
+
+        if (empty($data)) {
+            $data = array();
+
+            $this->load->model('extension/marketplace');
+
+            $addons = $this->model_extension_marketplace->getAddons();
+
+            $versions = $this->getVersions($addons);
+
+            foreach ($versions as $key => $version) {
+                // Addons (extensions, themes, translations) comes as array
+                if (is_array($version)) {
+                    foreach ($version as $id => $addon_version) {
+                        $addon = $addons[$id];
+                        $type = $addon['product_type'];
+
+                        if (version_compare($addon['product_version'], $addon_version) != 0) {
+                            $data[$type][$addon['product_id']] = $addon_version;
+                        }
+                    }
+                } elseif ($key == 'core') {
+                    if (version_compare(VERSION, $version) != 0) {
+                        $data['core'] = $version;
+                    }
+                }
+            }
+
+            $this->cache->set('update', $data);
+        }
+
+        return $data;
+    }
+
+    public function getVersions($addons = array())
+    {
+        $data = $this->cache->get('version');
+
+        if (empty($data)) {
+            $data = array();
+
+            // Check core first
+            $info = $this->utility->getInfo();
+            $base_url = 'http://arastta.io';
+
+            $url = $base_url.'/core/1.0/version/'.$info['arastta'].'/'.$info['php'].'/'.$info['mysql'].'/'.$info['langs'].'/'.$info['stores'];
+
+            $data['core'] = $this->getRemoteVersion($url);
+
+            // Then addons
+            if (!empty($addons)) {
+                foreach ($addons as $addon) {
+                    $type = $addon['product_type'];
+
+                    $url = $base_url.'/'.$type.'/1.0/version/'.$addon['product_id'].'/'.$addon['product_version'].'/'.$info['arastta'];
+
+                    $data[$type][$addon['product_id']] = $this->getRemoteVersion($url);
+                }
+            }
+
+            $this->cache->set('version', $data);
+        }
+
+        return $data;
+    }
+
+    public function getRemoteVersion($url)
+    {
+        $remote_data = $this->utility->getRemoteData($url, array('referrer' => true));
+
+        if (is_string($remote_data)) {
+            $version = json_decode($remote_data);
+
+            if (is_object($version)) {
+                $latest = $version->latest;
+            } else {
+                $latest = '0.0.0';
+            }
+        } else {
+            $latest = '0.0.0';
+        }
+
+        return $latest;
+    }
+
+    public function downloadUpdate($product_id, $version)
+    {
+        // Check core first
+        $info = $this->utility->getInfo();
+        $base_url = 'http://arastta.io';
+
+        if ($product_id == 'core') {
+            $url = $base_url.'/core/1.0/update/'.$version.'/'.$info['php'].'/'.$info['mysql'];
+        } else {
+            $addons = $this->addon->getAddons();
+            $type = $addons[$product_id]['product_type'];
+
+            $url = $base_url.'/'.$type.'/1.0/update/'.$product_id.'/'.$version.'/'.$info['arastta'].'/'.$info['api'];
+        }
+
+        $options['timeout'] = 30;
+        $options['referrer'] = true;
+
+        $file = $this->utility->getRemoteData($url, $options);
+
+        return $file;
     }
 }

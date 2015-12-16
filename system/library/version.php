@@ -17,21 +17,21 @@ final class Version extends Object {
 
     protected $name = 'Arastta';
 
-    protected $code = 'Wellington';
+    protected $code = 'Shkoder';
 
     protected $major = '1';
 
-    protected $minor = '1';
+    protected $minor = '2';
 
-    protected $patch = '5';
+    protected $patch = '0';
 
     protected $build = '';
 
     protected $status = 'Stable';
 
-    protected $date = '27-October-2015';
+    protected $date = '15-December-2015';
 
-    protected $time = '14:30';
+    protected $time = '19:15';
 
     protected $zone = 'GMT +2';
 

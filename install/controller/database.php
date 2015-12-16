@@ -1,13 +1,15 @@
 <?php
 /**
  * @package     Arastta eCommerce
- * @copyright   Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright       Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
  * @license     GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerDatabase extends Controller {
+class ControllerDatabase extends Controller
+{
 
-    public function index() {
+    public function index()
+    {
         $this->load->model('database');
 
         $data = $this->language->all();
@@ -52,13 +54,14 @@ class ControllerDatabase extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function save() {
+    public function save()
+    {
         $this->load->model('database');
 
         $json = $this->validate();
 
         if (empty($json)) {
-            if(!$this->model_database->saveConfig($this->request->post)) {
+            if (!$this->model_database->saveConfig($this->request->post)) {
                 $json['error']['config'] = $this->language->get('error_config');
 
                 $this->response->addHeader('Content-Type: application/json');
@@ -72,7 +75,8 @@ class ControllerDatabase extends Controller {
         }
     }
 
-    protected function validate() {
+    protected function validate()
+    {
         $json = array();
 
         if (empty($this->request->post['db_hostname'])) {

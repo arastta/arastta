@@ -1,28 +1,28 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 class Mail {
 
-	protected $to;
-	protected $cc;
-	protected $bcc;
-	protected $from;
-	protected $return_path;
-	protected $read_receipt_to;
-	protected $sender;
-	protected $reply_to;
-	protected $subject;
-	protected $text;
-	protected $html;
-	protected $charset = null;
-	protected $attachments = array();
-	protected $attachments_inline = array();
-	protected $priority;
+    protected $to;
+    protected $cc;
+    protected $bcc;
+    protected $from;
+    protected $return_path;
+    protected $read_receipt_to;
+    protected $sender;
+    protected $reply_to;
+    protected $subject;
+    protected $text;
+    protected $html;
+    protected $charset = null;
+    protected $attachments = array();
+    protected $attachments_inline = array();
+    protected $priority;
 
     public $config_mail_protocol = 'phpmail';
     public $config_mail_sendmail_path = '/usr/sbin/sendmail -bs';
@@ -33,30 +33,30 @@ class Mail {
     public $config_mail_smtp_encryption = 'none';
 
     // Old variables, keeping for B/C
-	public $protocol = 'phpmail';
-	public $parameter = '';
-	public $sendmail_path = '/usr/sbin/sendmail -bs';
-	public $smtp_hostname;
-	public $smtp_username;
-	public $smtp_password;
-	public $smtp_port = 25;
-	public $smtp_timeout = 0;
-	public $smtp_encryption = 'none';
+    public $protocol = 'phpmail';
+    public $parameter = '';
+    public $sendmail_path = '/usr/sbin/sendmail -bs';
+    public $smtp_hostname;
+    public $smtp_username;
+    public $smtp_password;
+    public $smtp_port = 25;
+    public $smtp_timeout = 0;
+    public $smtp_encryption = 'none';
 
-	public function __construct($config = array()) {
+    public function __construct($config = array()) {
         if (!class_exists('Swift_Message')) {
             require_once(DIR_SYSTEM.'vendor/swiftmailer/swiftmailer/lib/swift_required.php');
         }
 
-		foreach ($config as $key => $value) {
+        foreach ($config as $key => $value) {
             if (!strpos($key, 'config_mail_')) {
                 $this->set('config_mail_' . $key, $value);
             }
             else {
                 $this->set($key, $value);
             }
-		}
-	}
+        }
+    }
 
     public function get($name) {
         return $this->$name;
@@ -139,36 +139,36 @@ class Mail {
         $this->set('priority', $priority, $decode);
     }
 
-	public function send() {
+    public function send() {
         // Check First
-		if (!$this->to) {
-			trigger_error('Error: E-Mail to required!');
-			exit();
-		}
+        if (!$this->to) {
+            trigger_error('Error: E-Mail to required!');
+            exit();
+        }
 
-		if (!$this->from) {
-			trigger_error('Error: E-Mail from required!');
-			exit();
-		}
+        if (!$this->from) {
+            trigger_error('Error: E-Mail from required!');
+            exit();
+        }
 
-		if (!$this->sender) {
-			trigger_error('Error: E-Mail sender required!');
-			exit();
-		}
+        if (!$this->sender) {
+            trigger_error('Error: E-Mail sender required!');
+            exit();
+        }
 
-		if (!$this->subject) {
-			trigger_error('Error: E-Mail subject required!');
-			exit();
-		}
+        if (!$this->subject) {
+            trigger_error('Error: E-Mail subject required!');
+            exit();
+        }
 
-		if ((!$this->text) && (!$this->html)) {
-			trigger_error('Error: E-Mail message required!');
-			exit();
-		}
+        if ((!$this->text) && (!$this->html)) {
+            trigger_error('Error: E-Mail message required!');
+            exit();
+        }
 
-		if (!$this->reply_to) {
-			$this->setReplyTo(array($this->from => $this->sender), false);
-		}
+        if (!$this->reply_to) {
+            $this->setReplyTo(array($this->from => $this->sender), false);
+        }
 
         // Create the message object
         $message = Swift_Message::newInstance();
@@ -271,5 +271,5 @@ class Mail {
         $result = $mailer->send($message);
 
         return $result;
-	}
+    }
 }

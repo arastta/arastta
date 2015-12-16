@@ -34,7 +34,7 @@
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     margin-top: 37px;
-	min-height: 250px;
+    min-height: 250px;
 }
 
 #tab-products #search {
@@ -78,5 +78,5 @@
 }
 
 #logo, #logo-width-height {
-   /* display: none;*/
+    /* display: none;*/
 }

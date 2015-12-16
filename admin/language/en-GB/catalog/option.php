@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -26,6 +26,7 @@ $_['text_file']           = 'File';
 $_['text_date']           = 'Date';
 $_['text_datetime']       = 'Date &amp; Time';
 $_['text_time']           = 'Time';
+$_['text_items']          = 'Items';
 
 // Column
 $_['column_name']         = 'Option Name';

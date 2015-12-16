@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -66,7 +66,7 @@ $_['entry_send_email']      = 'Send Email';
 // Help
 $_['help_safe']             = 'Set to true to avoid this customer from being caught by the anti-fraud system';
 $_['help_points']           = 'Use minus to remove points';
-$_['help_send_email']		= 'Send an information email to the customer after being saved.';
+$_['help_send_email']       = 'Send an information email to the customer after being saved.';
 
 // Error
 $_['error_warning']         = 'Warning: Please check the form carefully for errors!';

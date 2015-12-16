@@ -1,106 +1,106 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 class ModelLocalisationReturnReason extends Model {
-	public function addReturnReason($data) {
-		foreach ($data['return_reason'] as $language_id => $value) {
-			if (isset($return_reason_id)) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "return_reason SET return_reason_id = '" . (int)$return_reason_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
-			} else {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "return_reason SET language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+    public function addReturnReason($data) {
+        foreach ($data['return_reason'] as $language_id => $value) {
+            if (isset($return_reason_id)) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "return_reason SET return_reason_id = '" . (int)$return_reason_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+            } else {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "return_reason SET language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 
-				$return_reason_id = $this->db->getLastId();
-			}
-		}
+                $return_reason_id = $this->db->getLastId();
+            }
+        }
 
-		$this->cache->delete('return_reason');
-		return $return_reason_id;
-	}
+        $this->cache->delete('return_reason');
+        return $return_reason_id;
+    }
 
-	public function editReturnReason($return_reason_id, $data) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "return_reason WHERE return_reason_id = '" . (int)$return_reason_id . "'");
+    public function editReturnReason($return_reason_id, $data) {
+        $this->db->query("DELETE FROM " . DB_PREFIX . "return_reason WHERE return_reason_id = '" . (int)$return_reason_id . "'");
 
-		foreach ($data['return_reason'] as $language_id => $value) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "return_reason SET return_reason_id = '" . (int)$return_reason_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
-		}
+        foreach ($data['return_reason'] as $language_id => $value) {
+            $this->db->query("INSERT INTO " . DB_PREFIX . "return_reason SET return_reason_id = '" . (int)$return_reason_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
+        }
 
-		$this->cache->delete('return_reason');
-	}
+        $this->cache->delete('return_reason');
+    }
 
-	public function deleteReturnReason($return_reason_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "return_reason WHERE return_reason_id = '" . (int)$return_reason_id . "'");
+    public function deleteReturnReason($return_reason_id) {
+        $this->db->query("DELETE FROM " . DB_PREFIX . "return_reason WHERE return_reason_id = '" . (int)$return_reason_id . "'");
 
-		$this->cache->delete('return_reason');
-	}
+        $this->cache->delete('return_reason');
+    }
 
-	public function getReturnReason($return_reason_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_reason WHERE return_reason_id = '" . (int)$return_reason_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+    public function getReturnReason($return_reason_id) {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_reason WHERE return_reason_id = '" . (int)$return_reason_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-		return $query->row;
-	}
+        return $query->row;
+    }
 
-	public function getReturnReasons($data = array()) {
-		if ($data) {
-			$sql = "SELECT * FROM " . DB_PREFIX . "return_reason WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'";
+    public function getReturnReasons($data = array()) {
+        if ($data) {
+            $sql = "SELECT * FROM " . DB_PREFIX . "return_reason WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
-			$sql .= " ORDER BY name";
+            $sql .= " ORDER BY name";
 
-			if (isset($data['order']) && ($data['order'] == 'DESC')) {
-				$sql .= " DESC";
-			} else {
-				$sql .= " ASC";
-			}
+            if (isset($data['order']) && ($data['order'] == 'DESC')) {
+                $sql .= " DESC";
+            } else {
+                $sql .= " ASC";
+            }
 
-			if (isset($data['start']) || isset($data['limit'])) {
-				if ($data['start'] < 0) {
-					$data['start'] = 0;
-				}
+            if (isset($data['start']) || isset($data['limit'])) {
+                if ($data['start'] < 0) {
+                    $data['start'] = 0;
+                }
 
-				if ($data['limit'] < 1) {
-					$data['limit'] = 20;
-				}
+                if ($data['limit'] < 1) {
+                    $data['limit'] = 20;
+                }
 
-				$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-			}
+                $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+            }
 
-			$query = $this->db->query($sql);
+            $query = $this->db->query($sql);
 
-			return $query->rows;
-		} else {
-			$return_reason_data = $this->cache->get('return_reason.' . (int)$this->config->get('config_language_id'));
+            return $query->rows;
+        } else {
+            $return_reason_data = $this->cache->get('return_reason.' . (int)$this->config->get('config_language_id'));
 
-			if (!$return_reason_data) {
-				$query = $this->db->query("SELECT return_reason_id, name FROM " . DB_PREFIX . "return_reason WHERE language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY name");
+            if (!$return_reason_data) {
+                $query = $this->db->query("SELECT return_reason_id, name FROM " . DB_PREFIX . "return_reason WHERE language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY name");
 
-				$return_reason_data = $query->rows;
+                $return_reason_data = $query->rows;
 
-				$this->cache->set('return_reason.' . (int)$this->config->get('config_language_id'), $return_reason_data);
-			}
+                $this->cache->set('return_reason.' . (int)$this->config->get('config_language_id'), $return_reason_data);
+            }
 
-			return $return_reason_data;
-		}
-	}
+            return $return_reason_data;
+        }
+    }
 
-	public function getReturnReasonDescriptions($return_reason_id) {
-		$return_reason_data = array();
+    public function getReturnReasonDescriptions($return_reason_id) {
+        $return_reason_data = array();
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_reason WHERE return_reason_id = '" . (int)$return_reason_id . "'");
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_reason WHERE return_reason_id = '" . (int)$return_reason_id . "'");
 
-		foreach ($query->rows as $result) {
-			$return_reason_data[$result['language_id']] = array('name' => $result['name']);
-		}
+        foreach ($query->rows as $result) {
+            $return_reason_data[$result['language_id']] = array('name' => $result['name']);
+        }
 
-		return $return_reason_data;
-	}
+        return $return_reason_data;
+    }
 
-	public function getTotalReturnReasons() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "return_reason WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+    public function getTotalReturnReasons() {
+        $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "return_reason WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-		return $query->row['total'];
-	}
+        return $query->row['total'];
+    }
 }

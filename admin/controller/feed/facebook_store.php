@@ -1,19 +1,21 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerFeedFacebookStore extends Controller {
+class ControllerFeedFacebookStore extends Controller
+{
 
-	private $error = array(); 
-	
-	public function index() {
-		$this->load->language('feed/facebook_store');
+    private $error = array();
+    
+    public function index()
+    {
+        $this->load->language('feed/facebook_store');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+        $this->document->setTitle($this->language->get('heading_title'));
 
         $this->document->addStyle('view/stylesheet/facebook-store.css');
         $this->document->addStyle('view/javascript/jquery/layout/jquery-ui.css');
@@ -22,12 +24,12 @@ class ControllerFeedFacebookStore extends Controller {
         $this->document->addScript('view/javascript/jquery/layout/jquery-lockfixed.js');
         $this->document->addScript('view/javascript/facebook-store/facebook-store.js');
 
-		$this->load->model('setting/setting');
+        $this->load->model('setting/setting');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('facebook_store', $this->request->post);
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+            $this->model_setting_setting->editSetting('facebook_store', $this->request->post);
 
-			$this->session->data['success'] = $this->language->get('text_success');
+            $this->session->data['success'] = $this->language->get('text_success');
 
             if (!$this->cache->clear()) {
                 $json['error'] = $this->language->get('error_cache_not_cleared');
@@ -38,57 +40,56 @@ class ControllerFeedFacebookStore extends Controller {
                 $module_id = '';
                 if (isset($this->request->get['module_id'])) {
                     $module_id = '&module_id=' . $this->request->get['module_id'];
+                } elseif ($this->db->getLastId()) {
+                    $module_id = '&module_id=' . $this->db->getLastId();
                 }
-	            elseif ($this->db->getLastId()) {
-		            $module_id = '&module_id=' . $this->db->getLastId();
-	            }
                 $this->response->redirect($this->url->link($route, 'token=' . $this->session->data['token'] . $module_id, 'SSL'));
             }
 
-			$this->response->redirect($this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL'));
-		}
+            $this->response->redirect($this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL'));
+        }
 
         $data = $this->language->all();
 
- 		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
+        if (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
 
-		if (isset($this->error['app_id'])) {
-			$data['error_app_id'] = $this->error['app_id'];
-		} else {
-			$data['error_app_id'] = array();
-		}
+        if (isset($this->error['app_id'])) {
+            $data['error_app_id'] = $this->error['app_id'];
+        } else {
+            $data['error_app_id'] = array();
+        }
 
-		$data['breadcrumbs'] = array();
+        $data['breadcrumbs'] = array();
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+        );
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_feed'),
-			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL')
-		);
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_feed'),
+            'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL')
+        );
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('feed/facebook_store', 'token=' . $this->session->data['token'], 'SSL')
-		);
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('heading_title'),
+            'href' => $this->url->link('feed/facebook_store', 'token=' . $this->session->data['token'], 'SSL')
+        );
 
-		$data['action'] = $this->url->link('feed/facebook_store', 'token=' . $this->session->data['token'], 'SSL');
-		$data['cancel'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');
+        $data['action'] = $this->url->link('feed/facebook_store', 'token=' . $this->session->data['token'], 'SSL');
+        $data['cancel'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');
 
-		if (isset($this->request->post['facebook_store_app_id'])) {
-			$data['app_id'] = $this->request->post['facebook_store_app_id'];
-		} elseif ($this->config->get('facebook_store_app_id')) {
-			$data['app_id'] = $this->config->get('facebook_store_app_id');
-		} else {
-			$data['app_id'] = '';
-		}
+        if (isset($this->request->post['facebook_store_app_id'])) {
+            $data['app_id'] = $this->request->post['facebook_store_app_id'];
+        } elseif ($this->config->get('facebook_store_app_id')) {
+            $data['app_id'] = $this->config->get('facebook_store_app_id');
+        } else {
+            $data['app_id'] = '';
+        }
 
         if (isset($this->request->post['facebook_store_show_header_currency'])) {
             $data['show_header_currency'] = $this->request->post['facebook_store_show_header_currency'];
@@ -177,25 +178,26 @@ class ControllerFeedFacebookStore extends Controller {
         }
 
         if (isset($this->request->post['facebook_store_status'])) {
-			$data['status'] = $this->request->post['facebook_store_status'];
-		} elseif ($this->config->get('facebook_store_status')) {
-			$data['status'] = $this->config->get('facebook_store_status');
-		} else {
-			$data['status'] = 0;
-		}
+            $data['status'] = $this->request->post['facebook_store_status'];
+        } elseif ($this->config->get('facebook_store_status')) {
+            $data['status'] = $this->config->get('facebook_store_status');
+        } else {
+            $data['status'] = 0;
+        }
 
-		$data['token'] = $this->session->data['token'];
+        $data['token'] = $this->session->data['token'];
 
-		$data['data_feed'] = htmlspecialchars('<iframe src="' . HTTPS_CATALOG . 'index.php?route=feed/facebook_store" frameborder="0" scrolling="no" width="810" height="1400"></iframe>');
+        $data['data_feed'] = htmlspecialchars('<iframe src="' . HTTPS_CATALOG . 'index.php?route=feed/facebook_store" frameborder="0" scrolling="no" width="810" height="1400"></iframe>');
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('feed/facebook_store.tpl', $data));
-	}
+        $this->response->setOutput($this->load->view('feed/facebook_store.tpl', $data));
+    }
 
-    public function getProduct() {
+    public function getProduct()
+    {
         if (isset($this->request->get['product_id'])) {
             $product_id = $this->request->get['product_id'];
         }
@@ -219,23 +221,25 @@ class ControllerFeedFacebookStore extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'feed/facebook_store')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-		
-		if ( utf8_strlen($this->request->post['facebook_store_app_id']) < 1 ){
-			$this->error['app_id'] = $this->language->get('error_app_id');
-		}
+    protected function validate()
+    {
+        if (!$this->user->hasPermission('modify', 'feed/facebook_store')) {
+            $this->error['warning'] = $this->language->get('error_permission');
+        }
+        
+        if (utf8_strlen($this->request->post['facebook_store_app_id']) < 1) {
+            $this->error['app_id'] = $this->language->get('error_app_id');
+        }
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}	
-	}
+        if (!$this->error) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-    protected function getModules() {
+    protected function getModules()
+    {
         $this->load->model('extension/module');
 
         $results = array();
@@ -264,7 +268,8 @@ class ControllerFeedFacebookStore extends Controller {
         return $results;
     }
 
-    protected function getFeeds($data) {
+    protected function getFeeds($data)
+    {
         $result = array();
 
         foreach ($data as $value) {

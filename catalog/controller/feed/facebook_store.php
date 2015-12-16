@@ -1,13 +1,15 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerFeedFacebookStore extends Controller {
-	public function index() {
+class ControllerFeedFacebookStore extends Controller
+{
+    public function index()
+    {
         if ($this->config->get('facebook_store_status')) {
             $this->load->language('common/header');
             $this->load->language('product/search');
@@ -149,51 +151,57 @@ class ControllerFeedFacebookStore extends Controller {
 
             $results = $this->model_feed_facebook_store->getProducts($filter_data, $this->config->get('facebook_store_feed'));
 
-            foreach ($results as $result) {
-                $this->request->server['HTTPS'] = '1';
+            $data['products'] = array();
 
-                if ($result['image']) {
-                    $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
-                } else {
-                    $image = $this->model_tool_image->resize('no_image.jpg', $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+            if ($results) {
+                foreach ($results as $result) {
+                    $this->request->server['HTTPS'] = '1';
+
+                    if ($result['image']) {
+                        $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+                    } else {
+                        $image = $this->model_tool_image->resize('no_image.jpg', $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+                    }
+
+                    if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+                        $price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
+                    } else {
+                        $price = false;
+                    }
+
+                    if ((float) $result['special']) {
+                        $special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
+                    } else {
+                        $special = false;
+                    }
+
+                    if ($this->config->get('config_tax')) {
+                        $tax = $this->currency->format((float) $result['special'] ? $result['special'] : $result['price']);
+                    } else {
+                        $tax = false;
+                    }
+
+                    if ($this->config->get('config_review_status')) {
+                        $rating = (int) $result['rating'];
+                    } else {
+                        $rating = false;
+                    }
+
+                    $this->trigger->fire('pre.product.display', array(&$result, 'facebook_store'));
+
+                    $data['products'][] = array(
+                        'product_id'  => $result['product_id'],
+                        'thumb'       => $image,
+                        'name'        => $result['name'],
+                        'description' => $result['description'],
+                        'price'       => $price,
+                        'special'     => $special,
+                        'tax'         => $tax,
+                        'rating'      => $rating,
+                        'reviews'     => sprintf($this->language->get('text_reviews'), (int) $result['reviews']),
+                        'href'        => $this->url->link('product/product', '&product_id=' . $result['product_id'], 'SSL')
+                    );
                 }
-
-                if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-                    $price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
-                } else {
-                    $price = false;
-                }
-
-                if ((float)$result['special']) {
-                    $special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
-                } else {
-                    $special = false;
-                }
-
-                if ($this->config->get('config_tax')) {
-                    $tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
-                } else {
-                    $tax = false;
-                }
-
-                if ($this->config->get('config_review_status')) {
-                    $rating = (int)$result['rating'];
-                } else {
-                    $rating = false;
-                }
-
-                $data['products'][] = array(
-                    'product_id' => $result['product_id'],
-                    'thumb' => $image,
-                    'name' => $result['name'],
-                    'description' => substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
-                    'price' => $price,
-                    'special' => $special,
-                    'tax' => $tax,
-                    'rating' => $rating,
-                    'reviews' => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-                    'href' => $this->url->link('product/product', '&product_id=' . $result['product_id'], 'SSL')
-                );
             }
 
             $url = '';
@@ -352,7 +360,7 @@ class ControllerFeedFacebookStore extends Controller {
         } else {
             $data['not_activate'] = true;
 
-            $data['message'] = $this->language->get('text_not_activate_facebook_store');
+            $data['message'] = $this->language->get('text_not_active_facebook_store');
 
             if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/feed/facebook_store.tpl')) {
                 $this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/feed/facebook_store.tpl', $data));
@@ -360,9 +368,10 @@ class ControllerFeedFacebookStore extends Controller {
                 $this->response->setOutput($this->load->view('default/template/feed/facebook_store.tpl', $data));
             }
         }
-	}
+    }
 
-    protected function getCategories($data) {
+    protected function getCategories($data)
+    {
         $this->load->model('catalog/category');
         $this->load->model('catalog/product');
 
@@ -410,7 +419,8 @@ class ControllerFeedFacebookStore extends Controller {
         return $data;
     }
 
-    protected function getLangauge($data) {
+    protected function getLangauge($data)
+    {
         $language = array();
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['language_code'])) {
@@ -449,7 +459,8 @@ class ControllerFeedFacebookStore extends Controller {
         return $data;
     }
 
-    protected function getCurrency($data) {
+    protected function getCurrency($data)
+    {
         $currency = array();
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && isset($this->request->post['currency_code'])) {
@@ -491,7 +502,8 @@ class ControllerFeedFacebookStore extends Controller {
         return $data;
     }
 
-    protected function getFooter($data) {
+    protected function getFooter($data)
+    {
         $this->language->load('common/footer');
 
         $footer['text_information'] = $this->language->get('text_information');

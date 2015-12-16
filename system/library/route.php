@@ -1,28 +1,33 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class Route extends Object {
+class Route extends Object
+{
 
     protected $registry;
 
-    public function __construct($registry) {
+    public function __construct($registry)
+    {
         $this->registry = $registry;
     }
 
-    public function __get($key) {
+    public function __get($key)
+    {
         return $this->registry->get($key);
     }
 
-    public function __set($key, $value) {
+    public function __set($key, $value)
+    {
         $this->registry->set($key, $value);
     }
 
-    public function parse() {
+    public function parse()
+    {
         // Stop if SEO is disabled
         if (!$this->config->get('config_seo_url')) {
             return;
@@ -85,7 +90,7 @@ class Route extends Object {
 
         // URLs are stored without suffix in database
         if ($this->config->get('config_seo_suffix')) {
-			$seo_url = substr($seo_url, 0, -5);
+            $seo_url = substr($seo_url, 0, -5);
         }
 
         $parts = explode('/', $seo_url);
@@ -96,7 +101,7 @@ class Route extends Object {
         }
 
         $seo = new Seo($this->registry);
-		
+        
         foreach ($parts as $part) {
             $query = $seo->getAliasQuery($part);
 
@@ -132,8 +137,7 @@ class Route extends Object {
                             if (!empty($categories)) {
                                 $this->request->get['path'] = implode('_', $categories);
                             }
-                        }
-                        else {
+                        } else {
                             if (!isset($this->request->get['path'])) {
                                 $this->request->get['path'] = $url[1];
                             } else {
@@ -151,18 +155,15 @@ class Route extends Object {
                         $this->request->get['route'] = $query;
                         break;
                 }
-            }
-            else if ($is_lang_home) {
+            } elseif ($is_lang_home) {
                 $this->request->get['route'] = 'common/home';
 
                 break;
-            }
-            else if (in_array($seo_url, $this->getSeoRouteList())) {
+            } elseif (in_array($seo_url, $this->getSeoRouteList())) {
                 $this->request->get['route'] = $seo_url;
 
                 break;
-            }
-            else {
+            } else {
                 $this->request->get['route'] = 'error/not_found';
 
                 break;
@@ -172,14 +173,11 @@ class Route extends Object {
         if (!isset($this->request->get['route'])) {
             if (isset($this->request->get['product_id'])) {
                 $this->request->get['route'] = 'product/product';
-            }
-            elseif (isset($this->request->get['path'])) {
+            } elseif (isset($this->request->get['path'])) {
                 $this->request->get['route'] = 'product/category';
-            }
-            elseif (isset($this->request->get['manufacturer_id'])) {
+            } elseif (isset($this->request->get['manufacturer_id'])) {
                 $this->request->get['route'] = 'product/manufacturer/info';
-            }
-            elseif (isset($this->request->get['information_id'])) {
+            } elseif (isset($this->request->get['information_id'])) {
                 $this->request->get['route'] = 'information/information';
             }
         }
@@ -187,7 +185,8 @@ class Route extends Object {
         unset($this->request->get['_route_']); // For B/C purpose
     }
 
-    public function rewrite($link) {
+    public function rewrite($link)
+    {
         $url = '';
         $is_home = false;
 
@@ -206,8 +205,7 @@ class Route extends Object {
                             $categories = explode('_', $uri->getVar('path'));
 
                             $categories = array(end($categories));
-                        }
-                        else {
+                        } else {
                             $categories = array();
 
                             $category_id = $seo->getCategoryIdBySortOrder($uri->getVar('product_id'));
@@ -319,13 +317,13 @@ class Route extends Object {
             $uri->setPath($path);
 
             return $uri->toString();
-        }
-        else {
+        } else {
             return $link;
         }
     }
 
-    public function checkNonseoRedirection($route) {
+    public function checkNonseoRedirection($route)
+    {
         if ($this->seoDisabled($route)) {
             return;
         }
@@ -337,8 +335,7 @@ class Route extends Object {
             $url = $this->rewrite($domain);
 
             $this->response->redirect($url, 301);
-        }
-        else {
+        } else {
             $url_data = $this->request->get;
             unset($url_data['lang']);
             unset($url_data['_route_']); // For B/C purpose
@@ -360,7 +357,8 @@ class Route extends Object {
         }
     }
 
-    public function checkWwwRedirection() {
+    public function checkWwwRedirection()
+    {
         $redirect = false;
 
         $host = $this->uri->getHost();
@@ -369,8 +367,7 @@ class Route extends Object {
         if (($www_red == 'with') and (strpos($host, 'www') !== 0)) {
             $redirect = true;
             $this->uri->setHost('www.'.$host);
-        }
-        elseif (($www_red == 'non') and strpos($host, 'www') === 0) {
+        } elseif (($www_red == 'non') and strpos($host, 'www') === 0) {
             $redirect = true;
             $this->uri->setHost(substr($host, 4, strlen($host)));
         }
@@ -382,7 +379,8 @@ class Route extends Object {
         $this->response->redirect($this->uri->toString(), 301);
     }
 
-    public function parseNonSeoVariables($query) {
+    public function parseNonSeoVariables($query)
+    {
         if (empty($query)) {
             return;
         }
@@ -390,8 +388,7 @@ class Route extends Object {
         foreach ($query as $variable => $value) {
             if (is_array($value)) {
                 $this->parseNonSeoVariables($value);
-            }
-            else {
+            } else {
                 $value = urlencode($value);
 
                 $this->request->get[$variable] = $value;
@@ -399,7 +396,8 @@ class Route extends Object {
         }
     }
 
-    public function seoDisabled($route = '') {
+    public function seoDisabled($route = '')
+    {
         $status = false;
 
         if (!in_array($route, $this->getSeoRouteList())) {
@@ -413,7 +411,8 @@ class Route extends Object {
         return $status;
     }
 
-    public function getSeoRouteList() {
+    public function getSeoRouteList()
+    {
         static $route = array();
 
         if (empty($route)) {

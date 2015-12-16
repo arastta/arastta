@@ -1,16 +1,18 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerAppearanceMenu extends Controller {
-	
+class ControllerAppearanceMenu extends Controller
+{
+    
     private $error = array();
 
-    public function index() {
+    public function index()
+    {
         $this->load->language('appearance/menu');
         $this->document->setTitle($this->language->get('heading_title'));
         $this->load->model('appearance/menu');
@@ -18,39 +20,39 @@ class ControllerAppearanceMenu extends Controller {
         $this->document->addStyle('view/javascript/jquery/layout/jquery-ui.css');
         $this->document->addStyle('view/stylesheet/menu.css');
         $this->document->addStyle('view/stylesheet/layout.css');
-		
-		$this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
+        
+        $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery-lockfixed.js');
         $this->document->addScript('view/javascript/menu/menu.js');
-		
-		$data['changeMenuPosition'] = $this->url->link('appearance/menu/changeMenuPosition', 'token=' . $this->session->data['token'], 'SSL');
-		
-		$data['deleteMenu'] = $this->url->link('appearance/menu/deleteMenu', 'token=' . $this->session->data['token'], 'SSL');
-		$data['deleteChildMenu'] = $this->url->link('appearance/menu/deleteChildMenu', 'token=' . $this->session->data['token'], 'SSL');
-				
-		$data['enableMenu'] = $this->url->link('appearance/menu/enableMenu', 'token=' . $this->session->data['token'], 'SSL');
-		$data['enableChildMenu'] = $this->url->link('appearance/menu/enableChildMenu', 'token=' . $this->session->data['token'], 'SSL');
-		
-		$data['disableMenu'] = $this->url->link('appearance/menu/disableMenu', 'token=' . $this->session->data['token'], 'SSL');
-		$data['disableChildMenu'] = $this->url->link('appearance/menu/disableChildMenu', 'token=' . $this->session->data['token'], 'SSL');
+        
+        $data['changeMenuPosition'] = $this->url->link('appearance/menu/changeMenuPosition', 'token=' . $this->session->data['token'], 'SSL');
+        
+        $data['deleteMenu'] = $this->url->link('appearance/menu/deleteMenu', 'token=' . $this->session->data['token'], 'SSL');
+        $data['deleteChildMenu'] = $this->url->link('appearance/menu/deleteChildMenu', 'token=' . $this->session->data['token'], 'SSL');
+                
+        $data['enableMenu'] = $this->url->link('appearance/menu/enableMenu', 'token=' . $this->session->data['token'], 'SSL');
+        $data['enableChildMenu'] = $this->url->link('appearance/menu/enableChildMenu', 'token=' . $this->session->data['token'], 'SSL');
+        
+        $data['disableMenu'] = $this->url->link('appearance/menu/disableMenu', 'token=' . $this->session->data['token'], 'SSL');
+        $data['disableChildMenu'] = $this->url->link('appearance/menu/disableChildMenu', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['refresch'] = $this->url->link('appearance/menu', 'token=' . $this->session->data['token'], 'SSL');
-		$data['add'] = $this->url->link('appearance/menu/add', 'token=' . $this->session->data['token'], 'SSL');
-		$data['save'] = $this->url->link('appearance/menu/save', 'token=' . $this->session->data['token'], 'SSL');
+        $data['refresch'] = $this->url->link('appearance/menu', 'token=' . $this->session->data['token'], 'SSL');
+        $data['add'] = $this->url->link('appearance/menu/add', 'token=' . $this->session->data['token'], 'SSL');
+        $data['save'] = $this->url->link('appearance/menu/save', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['menu_child'] = array();
+        $data['menu_child'] = array();
 
-		$menus = $this->model_appearance_menu->getMenus();
+        $menus = $this->model_appearance_menu->getMenus();
         $menu_child = $this->model_appearance_menu->getChildMenus();
 
         $rent_menu = array();
 
         $this->load->model('catalog/product');
-		$this->load->model('localisation/language');
+        $this->load->model('localisation/language');
 
-		$data['languages'] = $this->model_localisation_language->getLanguages();
+        $data['languages'] = $this->model_localisation_language->getLanguages();
 
-        foreach($menus as $id => $menu) {
+        foreach ($menus as $id => $menu) {
             $rent_menu[] = array(
                 'name'          => $menu['name'] ,
                 'menu_id'       => $menu['menu_id'],
@@ -60,7 +62,7 @@ class ControllerAppearanceMenu extends Controller {
                 'isSubMenu'     => ''
             );
 
-            foreach($menu_child as $child_id => $child_menu) {
+            foreach ($menu_child as $child_id => $child_menu) {
                 if (($menu['menu_id'] != $child_menu['menu_id']) or !is_numeric($child_id)) {
                     continue;
                 }
@@ -76,57 +78,60 @@ class ControllerAppearanceMenu extends Controller {
             }
         }
 
-		$data['menu_desc'] = $this->model_appearance_menu->getMenuDesc();
-		$data['menu_child_desc'] = $this->model_appearance_menu->getMenuChildDesc();
+        $data['menu_desc'] = $this->model_appearance_menu->getMenuDesc();
+        $data['menu_child_desc'] = $this->model_appearance_menu->getMenuChildDesc();
 
         $data['menus'] = $rent_menu;
 
         $this->load->model('setting/store');
 
         $data['stores'] = $this->model_setting_store->getStores();
-		
+        
         $data = $this->language->all($data);
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
+        if (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
 
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
+        if (isset($this->session->data['success'])) {
+            $data['success'] = $this->session->data['success'];
 
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
+            unset($this->session->data['success']);
+        } else {
+            $data['success'] = '';
+        }
 
-		$data['token'] = $this->session->data['token'];
+        $data['token'] = $this->session->data['token'];
 
-		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['footer'] = $this->load->controller('common/footer');
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('appearance/menu_list.tpl', $data));
-	}
+        $this->response->setOutput($this->load->view('appearance/menu_list.tpl', $data));
+    }
 
-	protected function validateForm() {
-		if (!$this->user->hasPermission('modify', 'appearance/menu')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
+    protected function validateForm()
+    {
+        if (!$this->user->hasPermission('modify', 'appearance/menu')) {
+            $this->error['warning'] = $this->language->get('error_permission');
+        }
         
-		return !$this->error;
-	}
+        return !$this->error;
+    }
 
-	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'appearance/menu')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
+    protected function validateDelete()
+    {
+        if (!$this->user->hasPermission('modify', 'appearance/menu')) {
+            $this->error['warning'] = $this->language->get('error_permission');
+        }
 
-		return !$this->error;
-	}
+        return !$this->error;
+    }
 
-    public function add() {
+    public function add()
+    {
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->load->model('appearance/menu');
             $this->load->model('localisation/language');
@@ -141,7 +146,8 @@ class ControllerAppearanceMenu extends Controller {
         }
     }
 
-    protected function addHtml($menu, $languages){
+    protected function addHtml($menu, $languages)
+    {
         $this->load->language('appearance/menu');
 
         $data = $this->language->all();
@@ -210,13 +216,14 @@ class ControllerAppearanceMenu extends Controller {
         return $html;
     }
 
-    public function save() {
+    public function save()
+    {
         $this->load->language('appearance/menu');
         $this->document->setTitle($this->language->get('heading_title'));
         $this->load->model('appearance/menu');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-            if($this->request->get['type'] == 'child') {
+            if ($this->request->get['type'] == 'child') {
                 $this->model_appearance_menu->saveChild($this->request->post);
             } else {
                 $this->model_appearance_menu->save($this->request->post);
@@ -226,7 +233,8 @@ class ControllerAppearanceMenu extends Controller {
         }
     }
 
-    public function deleteMenu() {
+    public function deleteMenu()
+    {
         $this->load->language('appearance/menu');
         $this->document->setTitle($this->language->get('heading_title'));
         $this->load->model('appearance/menu');
@@ -251,7 +259,8 @@ class ControllerAppearanceMenu extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function deleteChildMenu() {
+    public function deleteChildMenu()
+    {
         $this->load->language('appearance/menu');
         $this->document->setTitle($this->language->get('heading_title'));
         $this->load->model('appearance/menu');
@@ -276,221 +285,227 @@ class ControllerAppearanceMenu extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-	public function enableMenu() {
+    public function enableMenu()
+    {
         $this->load->language('appearance/menu');
-		$this->document->setTitle($this->language->get('heading_title'));
-		$this->load->model('appearance/menu');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('appearance/menu');
         
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_appearance_menu->enableMenu($this->request->post['menu_id']);
-			$this->session->data['success'] = $this->language->get('text_success');
-			 
-		}
-		
-		$id = explode('-', $this->request->post['id']);
-
-		$button = "<a id=\"disableMenu-" . $id[1] . "\" onclick=\"statusMenu('disable', '" . $this->request->post['menu_id'] . "', 'menu-item-" .  $this->request->post['menu_id'] . "', 'disableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-danger btn-xs btn-edit btn-group\"><i class=\"fa fa-times-circle\"></i></a>";
-		
-		echo $button;
-		exit();
-	}	
-
-	public function disableMenu() {
-        $this->load->language('appearance/menu');
-		$this->document->setTitle($this->language->get('heading_title'));
-		$this->load->model('appearance/menu');
+            $this->session->data['success'] = $this->language->get('text_success');
+             
+        }
         
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        $id = explode('-', $this->request->post['id']);
+
+        $button = "<a id=\"disableMenu-" . $id[1] . "\" onclick=\"statusMenu('disable', '" . $this->request->post['menu_id'] . "', 'menu-item-" .  $this->request->post['menu_id'] . "', 'disableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-danger btn-xs btn-edit btn-group\"><i class=\"fa fa-times-circle\"></i></a>";
+        
+        echo $button;
+        exit();
+    }
+
+    public function disableMenu()
+    {
+        $this->load->language('appearance/menu');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('appearance/menu');
+        
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_appearance_menu->disableMenu($this->request->post['menu_id']);
-			$this->session->data['success'] = $this->language->get('text_success');
-			 
-		}
-		
-		$id = explode('-', $this->request->post['id']);
-		
-		$button = "<a id=\"enableMenu-" . $id[1] . "\" onclick=\"statusMenu('enable', '" . $this->request->post['menu_id'] . "', 'menu-item-" .  $this->request->post['menu_id'] . "', 'enableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-success btn-xs btn-edit btn-group\"><i class=\"fa fa-check-circle\"></i></a>";
-
-		echo $button;
-		exit();
-	}	
-	
-	public function enableChildMenu() {
-        $this->load->language('appearance/menu');
-		$this->document->setTitle($this->language->get('heading_title'));
-		$this->load->model('appearance/menu');
+            $this->session->data['success'] = $this->language->get('text_success');
+             
+        }
         
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        $id = explode('-', $this->request->post['id']);
+        
+        $button = "<a id=\"enableMenu-" . $id[1] . "\" onclick=\"statusMenu('enable', '" . $this->request->post['menu_id'] . "', 'menu-item-" .  $this->request->post['menu_id'] . "', 'enableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-success btn-xs btn-edit btn-group\"><i class=\"fa fa-check-circle\"></i></a>";
+
+        echo $button;
+        exit();
+    }
+    
+    public function enableChildMenu()
+    {
+        $this->load->language('appearance/menu');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('appearance/menu');
+        
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_appearance_menu->enableChildMenu($this->request->post['menu_id']);
-			$this->session->data['success'] = $this->language->get('text_success');	 
-		}
+            $this->session->data['success'] = $this->language->get('text_success');
+        }
 
-		$id = explode('-', $this->request->post['id']);
-		
-		$button = "<a id=\"disableMenu-" . $id[1] . "\" onclick=\"statusMenu('disable', '" . $this->request->post['menu_id'] . "', 'menu-child-item-" .  $this->request->post['menu_id'] . "', 'disableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-danger btn-xs btn-edit btn-group\"><i class=\"fa fa-times-circle\"></i></a>";
-
-		echo $button;
-		exit();
-	}	
-
-	public function disableChildMenu() {
-        $this->load->language('appearance/menu');
-		$this->document->setTitle($this->language->get('heading_title'));
-		$this->load->model('appearance/menu');
+        $id = explode('-', $this->request->post['id']);
         
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        $button = "<a id=\"disableMenu-" . $id[1] . "\" onclick=\"statusMenu('disable', '" . $this->request->post['menu_id'] . "', 'menu-child-item-" .  $this->request->post['menu_id'] . "', 'disableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-danger btn-xs btn-edit btn-group\"><i class=\"fa fa-times-circle\"></i></a>";
+
+        echo $button;
+        exit();
+    }
+
+    public function disableChildMenu()
+    {
+        $this->load->language('appearance/menu');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('appearance/menu');
+        
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_appearance_menu->disableChildMenu($this->request->post['menu_id']);
-			$this->session->data['success'] = $this->language->get('text_success');	 
-		}
-		
-		$id = explode('-', $this->request->post['id']);
-
-		$button = "<a id=\"enableMenu-" . $id[1] . "\" onclick=\"statusMenu('enable', '" . $this->request->post['menu_id'] . "', 'menu-child-item-" .  $this->request->post['menu_id'] . "', 'enableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-success btn-xs btn-edit btn-group\"><i class=\"fa fa-check-circle\"></i></a>";
-		
-		echo $button;
-		exit();
-	}	
-
-	public function changeMenuPosition() {
-        $this->load->language('appearance/menu');
-		$this->document->setTitle($this->language->get('heading_title'));
-		$this->load->model('appearance/menu');
+            $this->session->data['success'] = $this->language->get('text_success');
+        }
         
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+        $id = explode('-', $this->request->post['id']);
+
+        $button = "<a id=\"enableMenu-" . $id[1] . "\" onclick=\"statusMenu('enable', '" . $this->request->post['menu_id'] . "', 'menu-child-item-" .  $this->request->post['menu_id'] . "', 'enableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-success btn-xs btn-edit btn-group\"><i class=\"fa fa-check-circle\"></i></a>";
+        
+        echo $button;
+        exit();
+    }
+
+    public function changeMenuPosition()
+    {
+        $this->load->language('appearance/menu');
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('appearance/menu');
+        
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_appearance_menu->changeMenuPosition($this->request->post);
-			$this->session->data['success'] = $this->language->get('text_success');
+            $this->session->data['success'] = $this->language->get('text_success');
 
-		}
-	}	
+        }
+    }
 
-	public function autocomplete() {
-		$json = array();
+    public function autocomplete()
+    {
+        $json = array();
 
-		#Category
-		if (isset($this->request->get['filter_category_name'])) {
-			$this->load->model('catalog/category');
-			
-			if (isset($this->request->get['filter_category_name'])) {
-				$filter_name = $this->request->get['filter_category_name'];
-			} else {
-				$filter_name = '';
-			}
-			
-			$filter_data = array(
-				'filter_name' => $filter_name,
-				'sort'        => 'name',
-				'order'       => 'ASC',
-				'start'       => 0,
-				'limit'       => 5
-			);
+        #Category
+        if (isset($this->request->get['filter_category_name'])) {
+            $this->load->model('catalog/category');
+            
+            if (isset($this->request->get['filter_category_name'])) {
+                $filter_name = $this->request->get['filter_category_name'];
+            } else {
+                $filter_name = '';
+            }
+            
+            $filter_data = array(
+                'filter_name' => $filter_name,
+                'sort'        => 'name',
+                'order'       => 'ASC',
+                'start'       => 0,
+                'limit'       => 5
+            );
 
-			$results = $this->model_catalog_category->getCategories($filter_data);
+            $results = $this->model_catalog_category->getCategories($filter_data);
 
-			foreach ($results as $result) {
-				
-				$result['index'] = $result['name'];
-				if(strpos($result['name'], '&nbsp;&nbsp;&gt;&nbsp;&nbsp;')) {
-					$result['name'] = explode ('&nbsp;&nbsp;&gt;&nbsp;&nbsp;', $result['name']);
-					$result['name'] = end($result['name']);
-				}
-				
-				$json[] = array(
-					'category_id' => $result['category_id'],
-					'index'		  => $result['index'],
-					'name'		  => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
-				);
-			}
-		}
-		
-		#Product
-		if (isset($this->request->get['filter_product_name'])) {
-			$this->load->model('catalog/product');
+            foreach ($results as $result) {
+                
+                $result['index'] = $result['name'];
+                if (strpos($result['name'], '&nbsp;&nbsp;&gt;&nbsp;&nbsp;')) {
+                    $result['name'] = explode('&nbsp;&nbsp;&gt;&nbsp;&nbsp;', $result['name']);
+                    $result['name'] = end($result['name']);
+                }
+                
+                $json[] = array(
+                    'category_id' => $result['category_id'],
+                    'index'       => $result['index'],
+                    'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
+                );
+            }
+        }
+        
+        #Product
+        if (isset($this->request->get['filter_product_name'])) {
+            $this->load->model('catalog/product');
 
-			if (isset($this->request->get['filter_product_name'])) {
-				$filter_name = $this->request->get['filter_product_name'];
-			} else {
-				$filter_name = '';
-			}
+            if (isset($this->request->get['filter_product_name'])) {
+                $filter_name = $this->request->get['filter_product_name'];
+            } else {
+                $filter_name = '';
+            }
 
-			$filter_data = array(
-				'filter_name'  => $filter_name,
-				'start'        => 0,
-				'limit'        => 5
-			);
+            $filter_data = array(
+                'filter_name'  => $filter_name,
+                'start'        => 0,
+                'limit'        => 5
+            );
 
-			$results = $this->model_catalog_product->getProducts($filter_data);
+            $results = $this->model_catalog_product->getProducts($filter_data);
 
-			foreach ($results as $result) {
-				$json[] = array(
-					'product_id' => $result['product_id'],
-					'name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
-					'index'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
-				);
-			}
-		}
-		
-		#Manufacturer
-		if (isset($this->request->get['filter_manufacturer_name'])) {
-			$this->load->model('catalog/manufacturer');
-			
-			if (isset($this->request->get['filter_manufacturer_name'])) {
-				$filter_name = $this->request->get['filter_manufacturer_name'];
-			} else {
-				$filter_name = '';
-			}
-			
-			$filter_data = array(
-				'filter_name' => $filter_name,
-				'start'       => 0,
-				'limit'       => 5
-			);
+            foreach ($results as $result) {
+                $json[] = array(
+                    'product_id' => $result['product_id'],
+                    'name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+                    'index'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
+                );
+            }
+        }
+        
+        #Manufacturer
+        if (isset($this->request->get['filter_manufacturer_name'])) {
+            $this->load->model('catalog/manufacturer');
+            
+            if (isset($this->request->get['filter_manufacturer_name'])) {
+                $filter_name = $this->request->get['filter_manufacturer_name'];
+            } else {
+                $filter_name = '';
+            }
+            
+            $filter_data = array(
+                'filter_name' => $filter_name,
+                'start'       => 0,
+                'limit'       => 5
+            );
 
-			$results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
+            $results = $this->model_catalog_manufacturer->getManufacturers($filter_data);
 
-			foreach ($results as $result) {
-				$json[] = array(
-					'manufacturer_id' => $result['manufacturer_id'],
-					'name'            => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
-					'index'           => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
-				);
-			}
-		}
+            foreach ($results as $result) {
+                $json[] = array(
+                    'manufacturer_id' => $result['manufacturer_id'],
+                    'name'            => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+                    'index'           => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
+                );
+            }
+        }
 
-		#Information
-		if (isset($this->request->get['filter_information_name'])) {
-			$this->load->model('catalog/information');
-			
-			if (isset($this->request->get['filter_manufacturer_name'])) {
-				$filter_name = $this->request->get['filter_manufacturer_name'];
-			} else {
-				$filter_name = '';
-			}
-			
-			$filter_data = array(
-				'filter_name' => $filter_name,
-				'start'       => 0,
-				'limit'       => 5
-			);
+        #Information
+        if (isset($this->request->get['filter_information_name'])) {
+            $this->load->model('catalog/information');
+            
+            if (isset($this->request->get['filter_manufacturer_name'])) {
+                $filter_name = $this->request->get['filter_manufacturer_name'];
+            } else {
+                $filter_name = '';
+            }
+            
+            $filter_data = array(
+                'filter_name' => $filter_name,
+                'start'       => 0,
+                'limit'       => 5
+            );
 
-			$results = $this->model_catalog_information->getInformations($filter_data);
+            $results = $this->model_catalog_information->getInformations($filter_data);
 
-			foreach ($results as $result) {
-				$json[] = array(
-					'information_id' => $result['information_id'],
-					'name'            => strip_tags(html_entity_decode($result['title'], ENT_QUOTES, 'UTF-8')),
-					'index'           => strip_tags(html_entity_decode($result['title'], ENT_QUOTES, 'UTF-8'))
-				);
-			}
-		}
+            foreach ($results as $result) {
+                $json[] = array(
+                    'information_id' => $result['information_id'],
+                    'name'            => strip_tags(html_entity_decode($result['title'], ENT_QUOTES, 'UTF-8')),
+                    'index'           => strip_tags(html_entity_decode($result['title'], ENT_QUOTES, 'UTF-8'))
+                );
+            }
+        }
 
-		$sort_order = array();
+        $sort_order = array();
 
-		foreach ($json as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
+        foreach ($json as $key => $value) {
+            $sort_order[$key] = $value['name'];
+        }
 
-		array_multisort($sort_order, SORT_ASC, $json);
+        array_multisort($sort_order, SORT_ASC, $json);
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}	
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
 }

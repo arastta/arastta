@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 // Heading
@@ -17,6 +17,7 @@ $_['text_edit']             = 'Edit Manufacturer';
 $_['text_default']          = 'Default';
 $_['text_percent']          = 'Percentage';
 $_['text_amount']           = 'Fixed Amount';
+$_['text_preview']          = 'View Manufacturer';
 
 // Column
 $_['column_name']           = 'Manufacturer Name';
@@ -27,8 +28,8 @@ $_['column_status']         = 'Status';
 // Entry
 $_['entry_name']             = 'Manufacturer Name';
 $_['entry_description']      = 'Description';
-$_['entry_meta_title'] 	     = 'Meta Tag Title';
-$_['entry_meta_keyword'] 	 = 'Meta Tag Keywords';
+$_['entry_meta_title']       = 'Meta Tag Title';
+$_['entry_meta_keyword']     = 'Meta Tag Keywords';
 $_['entry_meta_description'] = 'Meta Tag Description';
 $_['entry_seo_url']          = 'SEO URL';
 $_['entry_store']            = 'Stores';

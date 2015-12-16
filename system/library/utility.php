@@ -1,23 +1,26 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class Utility extends Object {
+class Utility extends Object
+{
 
-	public function __construct($registry) {
-		$this->db = $registry->get('db');
+    public function __construct($registry)
+    {
+        $this->db = $registry->get('db');
         $this->url = $registry->get('url');
         $this->cache = $registry->get('cache');
         $this->config = $registry->get('config');
-		$this->request = $registry->get('request');
-		$this->session = $registry->get('session');
-	}
+        $this->request = $registry->get('request');
+        $this->session = $registry->get('session');
+    }
 
-    public function getLanguage() {
+    public function getLanguage()
+    {
         $languages = array();
 
         $prefix = Client::isAdmin() ? 'admin_' : '';
@@ -30,20 +33,16 @@ class Utility extends Object {
 
         if (isset($this->request->get['lang']) && array_key_exists($this->request->get['lang'], $languages) && $languages[$this->request->get['lang']]['status']) {
             $code = $this->request->get['lang'];
-        }
-        elseif (isset($this->session->data[$prefix.'language']) && array_key_exists($this->session->data[$prefix.'language'], $languages) && $languages[$this->session->data[$prefix.'language']]['status']) {
+        } elseif (isset($this->session->data[$prefix.'language']) && array_key_exists($this->session->data[$prefix.'language'], $languages) && $languages[$this->session->data[$prefix.'language']]['status']) {
             $code = $this->session->data[$prefix.'language'];
-        }
-        elseif (isset($this->request->cookie[$prefix.'language']) && array_key_exists($this->request->cookie[$prefix.'language'], $languages) && $languages[$this->request->cookie[$prefix.'language']]['status']) {
+        } elseif (isset($this->request->cookie[$prefix.'language']) && array_key_exists($this->request->cookie[$prefix.'language'], $languages) && $languages[$this->request->cookie[$prefix.'language']]['status']) {
             $code = $this->request->cookie[$prefix.'language'];
-        }
-        else {
+        } else {
             $browser = $this->getBrowserLangCode($languages);
 
             if (is_object($this->config)) {
                 $default = Client::isAdmin() ? $this->config->get('config_admin_language') : $this->config->get('config_language');
-            }
-            else {
+            } else {
                 $default = 'en-GB';
             }
 
@@ -53,14 +52,15 @@ class Utility extends Object {
         return $languages[$code];
     }
 
-    public function getDefaultLanguage(){
+    public function getDefaultLanguage()
+    {
         if (!is_object($this->config)) {
             return;
         }
 
         $store_id = $this->config->get('config_store_id');
 
-        if (Client::isAdmin()){
+        if (Client::isAdmin()) {
             $sql = "SELECT * FROM " . DB_PREFIX . "setting WHERE `key` = 'config_admin_language' AND `store_id` = '" . $store_id . "'";
         } else {
             $sql = "SELECT * FROM " . DB_PREFIX . "setting WHERE `key` = 'config_language' AND `store_id` = '" . $store_id . "'";
@@ -73,7 +73,8 @@ class Utility extends Object {
         return $language->row;
     }
 
-    public function getBrowserLangCode($system_langs) {
+    public function getBrowserLangCode($system_langs)
+    {
         $lang = null;
 
         if (empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
@@ -103,8 +104,7 @@ class Utility extends Object {
 
                 if (strtolower($browser_lang) == strtolower(substr($system_dir, 0, strlen($browser_lang)))) {
                     return $system_code;
-                }
-                elseif ($primary_browser_lang == substr($system_dir, 0, 2)) {
+                } elseif ($primary_browser_lang == substr($system_dir, 0, 2)) {
                     $primary_detected_code = $system_code;
                 }
             }
@@ -117,7 +117,8 @@ class Utility extends Object {
         return $lang;
     }
 
-    public function getRemoteData($url, $options = array('timeout' => 10)) {
+    public function getRemoteData($url, $options = array('timeout' => 10))
+    {
         $user_agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
         $data = false;
 
@@ -142,8 +143,8 @@ class Utility extends Object {
 
             if (!empty($options['post'])) {
                 @curl_setopt($process, CURLOPT_POST, 1);
-				@curl_setopt($process, CURLOPT_POSTFIELDS, http_build_query($options['post_fields']));
-			}
+                @curl_setopt($process, CURLOPT_POSTFIELDS, http_build_query($options['post_fields']));
+            }
 
             $data = @curl_exec($process);
 
@@ -158,7 +159,7 @@ class Utility extends Object {
             $errstr = '';
 
             $url_info = parse_url($url);
-            if($url_info['host'] == 'localhost')  {
+            if ($url_info['host'] == 'localhost') {
                 $url_info['host'] = '127.0.0.1';
             }
 
@@ -208,7 +209,7 @@ class Utility extends Object {
 
             @stream_set_blocking($handle, 1);
             @stream_set_timeout($handle, 5);
-            @ini_set('user_agent',$user_agent);
+            @ini_set('user_agent', $user_agent);
 
             $url = str_replace('://localhost', '://127.0.0.1', $url);
 
@@ -231,7 +232,7 @@ class Utility extends Object {
         // file_get_contents
         if (function_exists('file_get_contents') && ini_get('allow_url_fopen')) {
             $url = str_replace('://localhost', '://127.0.0.1', $url);
-            @ini_set('user_agent',$user_agent);
+            @ini_set('user_agent', $user_agent);
             $data = @file_get_contents($url);
 
             // Return data
@@ -241,7 +242,8 @@ class Utility extends Object {
         return $data;
     }
 
-    public function getInfo() {
+    public function getInfo()
+    {
         $info = array();
 
         $info['arastta'] = VERSION;
@@ -269,7 +271,8 @@ class Utility extends Object {
         return $info;
     }
 
-    public function getLanguages() {
+    public function getLanguages()
+    {
         $language_data = $this->cache->get('language');
 
         if (!$language_data) {
@@ -296,7 +299,8 @@ class Utility extends Object {
         return $language_data;
     }
 
-    public function getTotalStores() {
+    public function getTotalStores()
+    {
         $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "store");
 
         return $query->row['total'];

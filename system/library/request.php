@@ -1,37 +1,37 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 class Request {
 
-	public $get = array();
-	public $post = array();
-	public $cookie = array();
-	public $files = array();
-	public $server = array();
+    public $get = array();
+    public $post = array();
+    public $cookie = array();
+    public $files = array();
+    public $server = array();
 
     protected $db;
     protected $config;
     protected $security;
     protected $purifier;
 
-	public function __construct($registry = '') {
+    public function __construct($registry = '') {
         if (!empty($registry)) {
             $this->db = $registry->get('db');
             $this->config = $registry->get('config');
             $this->security = $registry->get('security');
         }
 
-		$this->get = $this->clean($_GET);
-		$this->post = $this->clean($_POST);
-		$this->request = $this->clean($_REQUEST);
-		$this->cookie = $this->clean($_COOKIE);
-		$this->files = $this->clean($_FILES);
-		$this->server = $this->clean($_SERVER);
+        $this->get = $this->clean($_GET);
+        $this->post = $this->clean($_POST);
+        $this->request = $this->clean($_REQUEST);
+        $this->cookie = $this->clean($_COOKIE);
+        $this->files = $this->clean($_FILES);
+        $this->server = $this->clean($_SERVER);
 
         if (is_object($this->security)) {
             $this->security->checkRequest($this->get, 'get');
@@ -44,14 +44,14 @@ class Request {
         }
     }
 
-	public function clean($data) {
-		if (is_array($data)) {
-			foreach ($data as $key => $value) {
-				unset($data[$key]);
+    public function clean($data) {
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                unset($data[$key]);
 
                 $data[$this->clean($key)] = $this->clean($value);
-			}
-		}
+            }
+        }
         else {
             if (is_object($this->purifier)) {
                 $data = $this->purifier->purify($data);
@@ -59,10 +59,10 @@ class Request {
             else {
                 $data = htmlspecialchars($data, ENT_COMPAT, 'UTF-8');
             }
-		}
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 
     public function isGet() {
         static $status = null;

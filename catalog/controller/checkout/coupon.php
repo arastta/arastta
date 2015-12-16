@@ -1,9 +1,9 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
 class ControllerCheckoutCoupon extends Controller {
@@ -56,7 +56,7 @@ class ControllerCheckoutCoupon extends Controller {
 
         if (empty($this->request->post['coupon'])) {
             $json['error'] = $this->language->get('error_empty');
-			unset($this->session->data['coupon']);
+            unset($this->session->data['coupon']);
         } elseif ($coupon_info) {
             $this->session->data['coupon'] = $this->request->post['coupon'];
 

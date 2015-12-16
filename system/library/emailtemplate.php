@@ -1,77 +1,109 @@
 <?php
 /**
- * @package		Arastta eCommerce
- * @copyright	Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
- * @credits		See CREDITS.txt for credits and other copyright notices.
- * @license		GNU General Public License version 3; see LICENSE.txt
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class Emailtemplate {
+class Emailtemplate
+{
 
-	public function __construct($registry) {
+    public function __construct($registry)
+    {
         $this->registry = $registry;
-		$this->config = $registry->get('config');
-		$this->url = $registry->get('url');
-		$this->language = $registry->get('language');
-		$this->db = $registry->get('db');
-		$this->currency = new Currency($registry);
-		$this->load = new Loader($registry);
-	}
+        $this->config = $registry->get('config');
+        $this->url = $registry->get('url');
+        $this->language = $registry->get('language');
+        $this->db = $registry->get('db');
+        $this->currency = new Currency($registry);
+        $this->load = new Loader($registry);
+        $this->trigger = new Trigger($this->registry);        
+        $this->request = new Request($this->registry);
+    }
 
-	// Mail Subject
-	public function getSubject($type, $template_id, $data) {
-		$template = $this->getEmailTemplate($template_id);
+    // Mail Subject
+    public function getSubject($type, $template_id, $data)
+    {
+        $template = $this->getEmailTemplate($template_id);
 
-		$findFunctionName = 'get' . ucwords($type) . 'Find';
-		$replaceFunctionName = 'get' . ucwords($type) . 'Replace';
-		
-		$find = $this->$findFunctionName();
-		$replace = $this->$replaceFunctionName($data);
+        $findFunctionName = 'get' . ucwords($type) . 'Find';
+        $replaceFunctionName = 'get' . ucwords($type) . 'Replace';
 
-        if(!empty($template['name'])){
+        $find = array();
+
+        if (method_exists($this, $findFunctionName)) {
+            $find = $this->$findFunctionName();
+        }
+
+        $this->trigger->fire('post.emailtemplate.subject.shortcode', array(&$find));
+
+        $replace = array();
+
+        if (method_exists($this, $replaceFunctionName)) {
+            $replace = $this->$replaceFunctionName($data);
+        }
+
+        $this->trigger->fire('post.emailtemplate.subject.replace', array(&$replace, &$data));
+
+        if (!empty($template['name'])) {
             $subject = trim(str_replace($find, $replace, $template['name']));
         } else {
             $subject = $this->getDefaultSubject($type, $template_id, $data);
         }
 
-		return $subject;
-	}
+        return $subject;
+    }
 
     // Mail Message
-	public function getMessage($type, $template_id, $data) {
-		$template = $this->getEmailTemplate($template_id);
-		
-		$findFunctionName = 'get' . ucwords($type) . 'Find';
-		$replaceFunctionName = 'get' . ucwords($type) . 'Replace';
-		
-		$find = $this->$findFunctionName();
-		$replace = $this->$replaceFunctionName($data);
+    public function getMessage($type, $template_id, $data)
+    {
+        $template = $this->getEmailTemplate($template_id);
+        
+        $findFunctionName = 'get' . ucwords($type) . 'Find';
+        $replaceFunctionName = 'get' . ucwords($type) . 'Replace';
 
-        if(!empty($template['description'])){
-            if(ucwords($type) == 'OrderAll') {
+        $find = array();
+
+        if (method_exists($this, $findFunctionName)) {
+            $find = $this->$findFunctionName();
+        }
+
+        $this->trigger->fire('post.emailtemplate.message.shortcode', array(&$find));
+
+        $replace = array();
+
+        if (method_exists($this, $replaceFunctionName)) {
+            $replace = $this->$replaceFunctionName($data);
+        }
+
+        $this->trigger->fire('post.emailtemplate.message.replace', array(&$replace, &$data));
+
+        if (!empty($template['description'])) {
+            if (ucwords($type) == 'OrderAll') {
 
                 preg_match('/{product:start}(.*){product:stop}/Uis', $template['description'], $template_product);
-                if(!empty($template_product[1])){
+                if (!empty($template_product[1])) {
                     $template['description'] = str_replace($template_product[1], '', $template['description']);
                 }
 
                 preg_match('/{voucher:start}(.*){voucher:stop}/Uis', $template['description'], $template_voucher);
-                if(!empty($template_voucher[1])){
+                if (!empty($template_voucher[1])) {
                     $template['description'] = str_replace($template_voucher[1], '', $template['description']);
                 }
 
                 preg_match('/{comment:start}(.*){comment:stop}/Uis', $template['description'], $template_comment);
-                if(!empty($template_comment[1])){
+                if (!empty($template_comment[1])) {
                     $template['description'] = str_replace($template_comment[1], '', $template['description']);
                 }
 
                 preg_match('/{tax:start}(.*){tax:stop}/Uis', $template['description'], $template_tax);
-                if(!empty($template_tax[1])){
+                if (!empty($template_tax[1])) {
                     $template['description'] = str_replace($template_tax[1], '', $template['description']);
                 }
 
                 preg_match('/{total:start}(.*){total:stop}/Uis', $template['description'], $template_total);
-                if(!empty($template_total[1])){
+                if (!empty($template_total[1])) {
                     $template['description'] = str_replace($template_total[1], '', $template['description']);
                 }
             }
@@ -81,23 +113,35 @@ class Emailtemplate {
             $message = $this->getDefaultMessage($type, $template_id, $data);
         }
 
+        $data['title'] = $this->getSubject($type, $template_id, $data);
+        $data['message'] = $message;
+        $data['site_url'] = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
+
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/default.tpl')) {
+            $message = $this->load->view($this->config->get('config_template') . '/template/mail/default.tpl', $data);
+        } else {
+            $message = $this->load->view('default/template/mail/default.tpl', $data);
+        }
+        
         return $message;
-	}
+    }
 
     //Mail Text
-    public function getText($type, $template_id, $data) {
+    public function getText($type, $template_id, $data)
+    {
         $findName = 'get' . ucwords($type) . 'Text';
 
         return $this->$findName($template_id, $data);
     }
 
     // Mail Template
-	public function getEmailTemplate($email_template) {
+    public function getEmailTemplate($email_template)
+    {
         $item = explode("_", $email_template);
 
         $query  = $this->db->query("SELECT * FROM " . DB_PREFIX . "email AS e LEFT JOIN " . DB_PREFIX . "email_description AS ed ON ed.email_id = e.id WHERE e.type = '{$item[0]}' AND e.text_id = '{$item[1]}' AND ed.language_id = '{$this->config->get('config_language_id')}'");
 
-        if(!$query->num_rows) {
+        if (!$query->num_rows) {
             $query  = $this->db->query("SELECT * FROM " . DB_PREFIX . "email AS e LEFT JOIN " . DB_PREFIX . "email_description AS ed ON ed.email_id = e.id WHERE e.type = '{$item[0]}' AND e.text_id = '{$item[1]}'");
         }
 
@@ -116,13 +160,16 @@ class Emailtemplate {
         return $email_template_data;
     }
 
-	// Admin Login 
-	public function getLoginFind() {
+    // Admin Login
+    public function getLoginFind()
+    {
         $result = array( '{username}', '{store_name}', '{ip_address}' );
+        
         return $result;
     }
 
-    public function getLoginReplace($data) {
+    public function getLoginReplace($data)
+    {
         $result = array(
             'username'   => $data['username'],
             'store_name' => $data['store_name'],
@@ -131,14 +178,17 @@ class Emailtemplate {
 
         return $result;
     }
-	
-	// Affilate
-    public function getAffiliateFind() {
+    
+    // Affilate
+    public function getAffiliateFind()
+    {
         $result = array( '{firstname}', '{lastname}', '{date}', '{store_name}', '{description}', '{order_id}', '{amount}', '{total}', '{email}','{password}', '{affiliate_code}', '{account_href}' );
+        
         return $result;
     }
-	
-    public function getAffiliateReplace($data) {
+    
+    public function getAffiliateReplace($data)
+    {
         $result = array(
             'firstname'      => (!empty($data['firstname'])) ? $data['firstname'] : '',
             'lastname'       => (!empty($data['lastname'])) ? $data['lastname'] : '',
@@ -155,15 +205,18 @@ class Emailtemplate {
         );
 
         return $result;
-    }	
-	
-	// Customer
-	public function getCustomerFind() {
+    }
+    
+    // Customer
+    public function getCustomerFind()
+    {
         $result = array( '{firstname}', '{lastname}', '{date}', '{store_name}', '{email}', '{password}', '{account_href}', '{activate_href}' );
+        
         return $result;
     }
 
-    public function getCustomerReplace($data) {
+    public function getCustomerReplace($data)
+    {
         $result = array(
             'firstname'      => $data['firstname'],
             'lastname'       => $data['lastname'],
@@ -177,14 +230,17 @@ class Emailtemplate {
 
         return $result;
     }
-	
-	// Contact ( Information )
-	public function getContactFind() {
+    
+    // Contact ( Information )
+    public function getContactFind()
+    {
         $result = array( '{name}', '{email}', '{store_name}', '{enquiry}' );
+        
         return $result;
     }
 
-    public function getContactReplace($data) {
+    public function getContactReplace($data)
+    {
         $result = array(
             'name'       => (!empty($data['name'])) ? $data['name'] : '',
             'email'      => (!empty($data['email'])) ? $data['email'] : '',
@@ -196,8 +252,8 @@ class Emailtemplate {
     }
 
     // Order
-    public function getOrderAllFind() {
-
+    public function getOrderAllFind()
+    {
         $result = array (
             '{firstname}', '{lastname}', '{delivery_address}', '{shipping_address}', '{payment_address}', '{order_date}', '{product:start}', '{product:stop}',
             '{total:start}', '{total:stop}', '{voucher:start}', '{voucher:stop}', '{special}', '{date}', '{payment}', '{shipment}', '{order_id}', '{total}', '{invoice_number}',
@@ -208,10 +264,11 @@ class Emailtemplate {
         return $result;
     }
 
-    public function getOrderAllReplace($data) {
+    public function getOrderAllReplace($data)
+    {
         $emailTemplate = $this->getEmailTemplate($data['template_id']);
 
-        foreach($data as $dataKey => $dataValue) {
+        foreach ($data as $dataKey => $dataValue) {
             $$dataKey = $dataValue;
         }
 
@@ -225,6 +282,7 @@ class Emailtemplate {
 
         // Products
         preg_match('/{product:start}(.*){product:stop}/Uis', $emailTemplate['description'], $template_product);
+
 
         if (sizeof($template_product) > 0) {
             $getProducts = $this->getOrderProducts($order_info['order_id']);
@@ -251,7 +309,7 @@ class Emailtemplate {
         preg_match('/{comment:start}(.*){comment:stop}/Uis', $emailTemplate['description'], $template_comment);
 
         if (sizeof($template_comment) > 0) {
-            if(empty($comment)){
+            if (empty($comment)) {
                 $comment[0] = '';
             } else {
                 $comment = $this->getCommentTemplate($comment, $template_comment);
@@ -324,13 +382,79 @@ class Emailtemplate {
         return $result;
     }
 
-	// Review
-	public function getReviewFind() {
-        $result = array( '{author}', '{review}', '{date}', '{rating}', '{product}' );
+    // Invoice
+    public function getInvoiceFind()
+    {
+        $result = array(
+            '{invoice_id}', '{invoice_date}', '{invoice_no}', '{invoice_prefix}', '{order_id}',
+            '{store_name}', '{customer}', '{email}', '{telephone}', '{fax}', '{comment}', '{ip}',
+            '{date_added}', '{date_modified}'
+        );
+
         return $result;
     }
 
-    public function getReviewReplace($data) {
+    public function getInvoiceReplace($data)
+    {
+        $result = array(
+            'invoice_id' => $data['invoice_id'],
+            'invoice_date' => $data['invoice_date'],
+            'invoice_no' => $data['invoice_no'],
+            'invoice_prefix' => $data['invoice_prefix'],
+            'order_id' => $data['order_id'],
+            'store_name' => $data['store_name'],
+            'customer' => $data['customer'],
+            'email' => $data['email'],
+            'telephone' => $data['telephone'],
+            'fax' => $data['fax'],
+            'comment' => $data['comment'],
+            'ip' => $data['ip'],
+            'date_added' => $data['date_added'],
+            'date_modified' => $data['date_modified']
+        );
+
+        return $result;
+    }
+
+    //Return
+    public function getReturnFind()
+    {
+        $result = array( '{store_name}', '{order_id}', '{date_ordered}', '{firstname}', '{lastname}', '{email}', '{telephone}', '{product}', '{model}', '{quantity}', '{return_reason}', '{opened}', '{comment}' );
+        
+        return $result;
+    }
+  
+    public function getReturnReplace($data)
+    {
+        $result = array(
+            'store_name' => $this->config->get('config_name'),
+            'order_id' => $data['order_id'],
+            'date_ordered' => $data['date_ordered'],
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'email' => $data['email'],
+            'telephone' => $data['telephone'],
+            'product' => $data['product'],
+            'model' => $data['model'],
+            'quantity' => $data['quantity'],
+            'return_reason' => $data['return_reason'],
+            'opened' => $data['opened'] ? $this->language->get('text_yes') : $this->language->get('text_no'),
+            'comment' => nl2br($data['comment'])
+        );
+    
+        return $result;
+    }
+
+    // Review
+    public function getReviewFind()
+    {
+        $result = array( '{author}', '{review}', '{date}', '{rating}', '{product}' );
+        
+        return $result;
+    }
+
+    public function getReviewReplace($data)
+    {
         $result = array(
             'author'   => $data['name'],
             'review'   => $data['text'],
@@ -341,32 +465,55 @@ class Emailtemplate {
 
         return $result;
     }
-	
-	// Voucher
-    public function getVoucherFind() {
+    
+    // Stock
+    public function getStockFind()
+    {
+        $result = array( '{store_name}', '{total_products}' );
+        
+        return $result;
+    }
+    
+    public function getStockReplace($data)
+    {
+        $result = array(
+            'store_name'     => $this->config->get('config_name'),
+            'total_products' => $data['outofstock']
+        );
+        
+        return $result;
+    }
+    
+    // Voucher
+    public function getVoucherFind()
+    {
         $result = array( '{recip_name}', '{recip_email}', '{date}', '{store_name}', '{name}', '{amount}', '{message}', '{store_href}', '{image}', '{code}' );
+        
         return $result;
     }
 
-    public function getVoucherReplace($data) {
-        $result = array( 
-			'recip_name'  => $data['recip_name'],
-			'recip_email' => $data['recip_email'], 
-			'date'        => date($this->language->get('date_format_short'), strtotime(date("Y-m-d H:i:s"))),
+    public function getVoucherReplace($data)
+    {
+        $result = array(
+            'recip_name'  => $data['recip_name'],
+            'recip_email' => $data['recip_email'],
+            'date'        => date($this->language->get('date_format_short'), strtotime(date("Y-m-d H:i:s"))),
             'store_name'  => $data['store_name'],
-			'name'        => $data['name'],
-			'amount'      => $data['amount'],
-			'message'     => $data['message'],
-			'store_href'  => $data['store_href'],
+            'name'        => $data['name'],
+            'amount'      => $data['amount'],
+            'message'     => $data['message'],
+            'store_href'  => $data['store_href'],
             'image'       => (file_exists(DIR_IMAGE . $data['image'])) ? 'cid:' . md5(basename($data['image'])) : '', 'code' => $data['code']
         );
+        
         return $result;
     }
 
     // Order Text
-    public function getOrderText($template_id, $data){
+    public function getOrderText($template_id, $data)
+    {
 
-        foreach($data as $dataKey => $dataValue) {
+        foreach ($data as $dataKey => $dataValue) {
             $$dataKey = $dataValue;
         }
 
@@ -409,6 +556,7 @@ class Emailtemplate {
             }
         }
 
+
         foreach ($getVouchers as $voucher) {
             $text .= '1x ' . $voucher['description'] . ' ' . $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']);
         }
@@ -420,6 +568,7 @@ class Emailtemplate {
         foreach ($getTotal as $total) {
             $text .= $total['title'] . ': ' . html_entity_decode($this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
         }
+
 
         $text .= "\n";
 
@@ -434,7 +583,7 @@ class Emailtemplate {
              $text .= $order_info['store_url'] . 'index.php?route=account/download' . "\n\n";
          }
         */
-                // Comment
+        // Comment
         if ($order_info['comment']) {
             $text .= $language->get('text_new_comment') . "\n\n";
             $text .= $order_info['comment'] . "\n\n";
@@ -446,7 +595,8 @@ class Emailtemplate {
     }
 
     // Language
-    public function getLanguage(){
+    public function getLanguage()
+    {
         $sql = "SELECT * FROM " . DB_PREFIX . "language WHERE language_id = '" . $this->config->get('config_language_id') . "'";
         $query = $this->db->query($sql);
 
@@ -456,13 +606,15 @@ class Emailtemplate {
     // Order Special
 
     // Order Product
-    public function getOrderProducts($order_id) {
+    public function getOrderProducts($order_id)
+    {
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 
         return $query->rows;
     }
 
-    public function getProductsTemplate($order_info, $getProducts, $template_product) {
+    public function getProductsTemplate($order_info, $getProducts, $template_product)
+    {
         $result = array();
 
         foreach ($getProducts as $product) {
@@ -522,7 +674,8 @@ class Emailtemplate {
         return $result;
     }
 
-    public function getProductFind() {
+    public function getProductFind()
+    {
         $result = array(
             '{product_image}', '{product_name}', '{product_model}', '{product_quantity}', '{product_price}', '{product_price_gross}', '{product_attribute}',
             '{product_option}', '{product_sku}', '{product_upc}', '{product_tax}', '{product_total}', '{product_total_gross}'
@@ -531,8 +684,8 @@ class Emailtemplate {
         return $result;
     }
 
-    public function getProductReplace($image, $product, $order_info, $attribute, $option) {
-
+    public function getProductReplace($image, $product, $order_info, $attribute, $option)
+    {
         $getProduct = $this->getProduct($product['product_id']);
 
         $result = array(
@@ -554,13 +707,15 @@ class Emailtemplate {
         return $result;
     }
 
-    public function getOrderOptions($order_id, $order_product_id) {
+    public function getOrderOptions($order_id, $order_product_id)
+    {
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
 
         return $query->rows;
     }
 
-    public function getProductAttributes($product_id, $language_id) {
+    public function getProductAttributes($product_id, $language_id)
+    {
         $product_attribute_group_data = array();
 
         $product_attribute_group_query = $this->db->query("SELECT ag.attribute_group_id, agd.name FROM " . DB_PREFIX . "product_attribute pa LEFT JOIN " . DB_PREFIX . "attribute a ON (pa.attribute_id = a.attribute_id) LEFT JOIN " . DB_PREFIX . "attribute_group ag ON (a.attribute_group_id = ag.attribute_group_id) LEFT JOIN " . DB_PREFIX . "attribute_group_description agd ON (ag.attribute_group_id = agd.attribute_group_id) WHERE pa.product_id = '" . (int)$product_id . "' AND agd.language_id = '" . (int)$language_id . "' GROUP BY ag.attribute_group_id ORDER BY ag.sort_order, agd.name");
@@ -589,15 +744,17 @@ class Emailtemplate {
     }
 
     // Order Voucher
-    public function getOrderVouchers($order_id) {
+    public function getOrderVouchers($order_id)
+    {
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_voucher WHERE order_id = '" . (int)$order_id . "'");
 
         return $query->rows;
     }
 
-    public function getVoucherTemplate($order_info, $getVouchers, $template_voucher) {
-
+    public function getVoucherTemplate($order_info, $getVouchers, $template_voucher)
+    {
         $result = array();
+
 
         foreach ($getVouchers as $voucher) {
             // Replace Product Short Code to Values
@@ -610,13 +767,15 @@ class Emailtemplate {
         return $result;
     }
 
-    public function getOrderVoucherFind() {
+    public function getOrderVoucherFind()
+    {
         $result = array( '{voucher_description}', '{voucher_amount}' );
 
         return $result;
     }
 
-    public function getOrderVoucherReplace($voucher, $order_info) {
+    public function getOrderVoucherReplace($voucher, $order_info)
+    {
         $result = array(
             'voucher_description'  => $voucher['description'],
             'voucher_amount'       => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value'])
@@ -626,8 +785,8 @@ class Emailtemplate {
     }
 
     // Order Comment
-    public function getCommentTemplate($comment, $template_comment) {
-
+    public function getCommentTemplate($comment, $template_comment)
+    {
         $result = array();
 
         // Replace Product Short Code to Values
@@ -639,13 +798,15 @@ class Emailtemplate {
         return $result;
     }
 
-    public function getCommentFind() {
+    public function getCommentFind()
+    {
         $result = array( '{comment}' );
 
         return $result;
     }
 
-    public function getCommentReplace($comment) {
+    public function getCommentReplace($comment)
+    {
         $result = array(
             'comment'  => $comment,
         );
@@ -654,8 +815,8 @@ class Emailtemplate {
     }
 
     // Order Tax
-    public function getTaxTemplate($totals, $template_tax) {
-
+    public function getTaxTemplate($totals, $template_tax)
+    {
         $result = array();
 
         if (isset($totals['tax'])) {
@@ -671,13 +832,15 @@ class Emailtemplate {
         return $result;
     }
 
-    public function getTaxFind() {
+    public function getTaxFind()
+    {
         $result = array( '{tax_title}', '{tax_value}' );
 
         return $result;
     }
 
-    public function getTaxReplace($tax) {
+    public function getTaxReplace($tax)
+    {
         $result = array(
             'tax_title'     => $tax['title'],
             'tax_value'     => $tax['text']
@@ -687,8 +850,8 @@ class Emailtemplate {
     }
 
     // Order Total
-    public function getTotalTemplate($getTotal, $template_total, $order_info) {
-
+    public function getTotalTemplate($getTotal, $template_total, $order_info)
+    {
         $result = array();
 
         foreach ($getTotal as $total) {
@@ -702,13 +865,15 @@ class Emailtemplate {
         return $result;
     }
 
-    public function getTotalFind() {
+    public function getTotalFind()
+    {
         $result = array( '{total_title}', '{total_value}' );
 
         return $result;
     }
 
-    public function getTotalReplace($total, $order_info) {
+    public function getTotalReplace($total, $order_info)
+    {
         $result = array(
             'total_title'     => $total['title'],
             'total_value'     => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value'])
@@ -718,7 +883,8 @@ class Emailtemplate {
     }
 
     // Default Mail Subject & Message
-    public function getDefaultSubject($type, $template_id, $data){
+    public function getDefaultSubject($type, $template_id, $data)
+    {
         switch (ucwords($type)) {
             case 'Login':
                 $subject = $this->getDefaultLoginSubject($template_id, $data);
@@ -735,11 +901,17 @@ class Emailtemplate {
             case 'Order':
                 $subject = $this->getDefaultOrderSubject($template_id, $data);
                 break;
-			case 'OrderAll':
+            case 'OrderAll':
                 $subject = $this->getDefaultOrderSubject($template_id, $data);
+                break;
+            case 'Return':
+                $subject = $this->getDefaultReturnSubject($template_id, $data);
                 break;
             case 'Review':
                 $subject = $this->getDefaultReviewSubject($template_id, $data);
+                break;
+            case 'Stock':
+                $subject = $this->getDefaultStockSubject($template_id, $data);
                 break;
             case 'Voucher':
                 $subject = $this->getDefaultVoucherSubject($template_id, $data);
@@ -749,7 +921,8 @@ class Emailtemplate {
         return $subject;
     }
 
-    public function getDefaultMessage($type, $template_id, $data){
+    public function getDefaultMessage($type, $template_id, $data)
+    {
         switch (ucwords($type)) {
             case 'Login':
                 $subject = $this->getDefaultLoginMessage($template_id, $data);
@@ -769,8 +942,14 @@ class Emailtemplate {
             case 'OrderAll':
                 $subject = $this->getDefaultOrderMessage($template_id, $data);
                 break;
+            case 'Return':
+                $subject = $this->getDefaultReturnMessage($template_id, $data);
+                break;
             case 'Review':
                 $subject = $this->getDefaultReviewMessage($template_id, $data);
+                break;
+            case 'Stock':
+                $subject = $this->getDefaultStockMessage($template_id, $data);
                 break;
             case 'Voucher':
                 $subject = $this->getDefaultVoucherMessage($template_id, $data);
@@ -780,7 +959,8 @@ class Emailtemplate {
         return $subject;
     }
 
-    public function getDefaultLoginSubject($type_id, $data){
+    public function getDefaultLoginSubject($type_id, $data)
+    {
         $username = $data['username'];
 
         $subject = 'User '.$username.' logged in on '.$this->config->get('config_name').' admin panel';
@@ -788,7 +968,8 @@ class Emailtemplate {
         return $subject;
     }
 
-    public function getDefaultLoginMessage($type_id, $data){
+    public function getDefaultLoginMessage($type_id, $data)
+    {
         $message = 'Hello,<br/><br/>';
         $message .= 'We would like to notify you that user ' . $data['username'] . ' has just logged in to the admin panel of your store, ' . $data['store_name'] . ', using IP address ' . $data['ip_address'].'.<br/><br/>';
         $message .= 'If this is expected you need to do nothing about it. If you suspect a hacking attempt, please log in to your store\'s admin panel immediately and change your password at once.<br/><br/>';
@@ -798,18 +979,19 @@ class Emailtemplate {
         return $message;
     }
 
-    public function getDefaultAffilateSubject($type_id, $data){
+    public function getDefaultAffilateSubject($type_id, $data)
+    {
         $this->load->language('mail/affiliate');
 
-        if($type_id == 'affiliate_4'){
+        if ($type_id == 'affiliate_4') {
             $subject = sprintf($this->language->get('text_approve_subject'), $this->config->get('config_name'));
-        }else if($type_id == 'affiliate_5'){
+        } elseif ($type_id == 'affiliate_5') {
             $subject = sprintf($this->language->get('text_commission_subject'), $this->config->get('config_name'));
-        } else if($type_id == 'affiliate_1') {
+        } elseif ($type_id == 'affiliate_1') {
             $subject = sprintf($this->language->get('text_register_subject'), $this->config->get('config_name'));
-        } else if($type_id == 'affiliate_3') {
+        } elseif ($type_id == 'affiliate_3') {
             $subject = sprintf($this->language->get('text_register_approve_subject'), $this->config->get('config_name'));
-        } else if($type_id == 'affiliate_2'){
+        } elseif ($type_id == 'affiliate_2') {
             // Reset Password Null
             $subject = '';
         } else {
@@ -819,24 +1001,25 @@ class Emailtemplate {
         return $subject;
     }
 
-    public function getDefaultAffilateMessage($type_id, $data){
+    public function getDefaultAffilateMessage($type_id, $data)
+    {
         $this->load->language('mail/affiliate');
 
-        if($type_id == 'affiliate_4'){
+        if ($type_id == 'affiliate_4') {
             $message  = sprintf($this->language->get('text_approve_welcome'), $this->config->get('config_name')) . "\n\n";
             $message .= $this->language->get('text_approve_login') . "\n";
-            $message .= HTTP_CATALOG . 'index.php?route=affiliate/login' . "\n\n";
+            $message .= ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'index.php?route=affiliate/login' . "\n\n";
             $message .= $this->language->get('text_approve_services') . "\n\n";
             $message .= $this->language->get('text_approve_thanks') . "\n";
             $message .= $this->config->get('config_name');
-        } else if($type_id == 'affiliate_5') {
+        } elseif ($type_id == 'affiliate_5') {
             $message  = sprintf($this->language->get('text_commission_received'), $this->currency->format($data['amount'], $this->config->get('config_currency'))) . "\n\n";
             $message .= sprintf($this->language->get('text_commission_total'), $this->currency->format($this->getCommissionTotal($data['affiliate_id']), $this->config->get('config_currency')));
-        } else if($type_id == 'affiliate_1') {
+        } elseif ($type_id == 'affiliate_1') {
             $message = sprintf($this->language->get('text_register_message'), $data['firstname'] . ' ' . $data['lastname'], $this->config->get('config_name'));
-        } else if($type_id == 'affiliate_3') {
+        } elseif ($type_id == 'affiliate_3') {
             $message = sprintf($this->language->get('text_register_approve_message'), $data['firstname'] . ' ' . $data['lastname'], $this->config->get('config_name'));
-        } else if($type_id == 'affiliate_2') {
+        } elseif ($type_id == 'affiliate_2') {
             // Reset Password Null
             $message = sprintf($this->language->get('text_register_approve_subject'), $this->config->get('config_name'), $data['firstname'] . ' ' . $data['lastname']);
         } else {
@@ -847,27 +1030,29 @@ class Emailtemplate {
     }
 
     // Affilate getComissionTotal Frontend & Backend
-    public function getCommissionTotal($affiliate_id) {
+    public function getCommissionTotal($affiliate_id)
+    {
         $query = $this->db->query("SELECT SUM(amount) AS total FROM " . DB_PREFIX . "affiliate_commission WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 
         return $query->row['total'];
     }
 
-    public function getDefaultCustomerSubject($type_id, $data) {
+    public function getDefaultCustomerSubject($type_id, $data)
+    {
         $this->load->language('mail/customer');
 
         if ($type_id == 'customer_4') {
             $subject = sprintf($this->language->get('text_approve_subject'), $this->config->get('config_name'));
-        } else if ($type_id == 'customer_1') {
+        } elseif ($type_id == 'customer_1') {
             // Register
             $subject = sprintf($this->language->get('text_register_subject'), $this->config->get('config_name'));
-        } else if ($type_id == 'customer_2') {
+        } elseif ($type_id == 'customer_2') {
             // Aprove
             $subject = sprintf($this->language->get('text_approve_wait_subject'), $this->config->get('config_name'));
-        } else if ($type_id == 'customer_3') {
+        } elseif ($type_id == 'customer_3') {
             // Reset
             $subject = sprintf($this->language->get('text_approve_subject'), $this->config->get('config_name'));
-        } else if($type_id == 'customer_5'){
+        } elseif ($type_id == 'customer_5') {
             $subject = $this->getDefaultVoucherSubject($type_id, $data);
         } else {
             $subject = $this->config->get('config_name') . ' - Customer Mail';
@@ -876,12 +1061,13 @@ class Emailtemplate {
         return $subject;
     }
 
-    public function getDefaultCustomerMessage($type_id, $data) {
+    public function getDefaultCustomerMessage($type_id, $data)
+    {
         $this->load->language('mail/customer');
 
         if ($type_id == 'customer_4') {
             $store_name = $this->config->get('config_name');
-            $store_url = HTTP_CATALOG . 'index.php?route=account/login';
+            $store_url = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'index.php?route=account/login';
 
             $message = sprintf($this->language->get('text_approve_welcome'), $store_name) . "\n\n";
             $message .= $this->language->get('text_approve_login') . "\n";
@@ -889,15 +1075,15 @@ class Emailtemplate {
             $message .= $this->language->get('text_approve_services') . "\n\n";
             $message .= $this->language->get('text_approve_thanks') . "\n";
             $message .= $store_name;
-        } else if ($type_id == 'customer_1') {
+        } elseif ($type_id == 'customer_1') {
             // Register
             $message = sprintf($this->language->get('text_register_message'), $this->config->get('config_name'));
-        } else if ($type_id == 'customer_2') {
+        } elseif ($type_id == 'customer_2') {
             // Aprove
             $message = sprintf($this->language->get('text_register_message'), $this->config->get('config_name'));
-        } else if ($type_id == 'customer_3') {
+        } elseif ($type_id == 'customer_3') {
             $message = ' --- ';
-        } else if ($type_id == 'customer_5') {
+        } elseif ($type_id == 'customer_5') {
             $message = $this->getDefaultVoucherMessage($type_id, $data);
         } else {
             $message = 'Customer Mail Description';
@@ -906,7 +1092,8 @@ class Emailtemplate {
         return $message;
     }
 
-    public function getDefaultContactSubject($type_id, $data) {
+    public function getDefaultContactSubject($type_id, $data)
+    {
         $this->load->language('information/contact');
 
         $subject = sprintf($this->language->get('email_subject'), $data['name']);
@@ -914,11 +1101,13 @@ class Emailtemplate {
         return $subject;
     }
 
-    public function getDefaultContactMessage($type_id, $data) {
+    public function getDefaultContactMessage($type_id, $data)
+    {
         return strip_tags($data['enquiry']);
     }
 
-    public function getDefaultOrderSubject($type_id, $data) {
+    public function getDefaultOrderSubject($type_id, $data)
+    {
         $this->load->language('mail/order');
 
         $subject = sprintf($this->language->get('text_new_subject'), $data['order_info']['store_name'], $data['order_info']['order_id']);
@@ -926,10 +1115,11 @@ class Emailtemplate {
         return $subject;
     }
 
-    public function getDefaultOrderMessage($type_id, $data) {
+    public function getDefaultOrderMessage($type_id, $data)
+    {
         $this->load->language('mail/order');
 
-        foreach($data as $dataKey => $dataValue) {
+        foreach ($data as $dataKey => $dataValue) {
             $$dataKey = $dataValue;
         }
 
@@ -1055,6 +1245,7 @@ class Emailtemplate {
 
         $html_data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
+
         $this->load->model('tool/upload');
 
         // Products
@@ -1099,6 +1290,7 @@ class Emailtemplate {
         // Vouchers
         $html_data['vouchers'] = array();
 
+
         $order_voucher_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_voucher WHERE order_id = '" . (int)$order_info['order_id'] . "'");
 
         foreach ($order_voucher_query->rows as $voucher) {
@@ -1126,8 +1318,42 @@ class Emailtemplate {
 
         return $html;
     }
+    
+    public function getDefaultReturnSubject($type_id, $data)
+    {
+        $this->load->language('mail/return');
 
-    public function getDefaultReviewSubject($type_id, $data) {
+        $subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
+
+        return $subject;
+    }
+
+    public function getDefaultReturnMessage($type_id, $data)
+    {
+        $this->load->language('mail/return');
+
+        $message  = $this->language->get('text_request') . "\n";
+        $message .= "\n";
+        $message .= sprintf($this->language->get('text_order_id'), $data['order_id']) . "\n";
+        $message .= sprintf($this->language->get('text_date_ordered'), $this->db->escape(strip_tags($data['date_ordered']))) . "\n";
+        $message .= sprintf($this->language->get('text_customer'), $this->db->escape(strip_tags($data['firstname'])), $this->db->escape(strip_tags($data['lastname']))) . "\n";
+        $message .= sprintf($this->language->get('text_email'), $this->db->escape(strip_tags($data['email']))) . "\n";
+        $message .= sprintf($this->language->get('text_telephone'), $this->db->escape(strip_tags($data['telephone']))) . "\n";
+        $message .= "\n";
+        $message .= sprintf($this->language->get('text_product'), $this->db->escape(strip_tags($data['product']))) . "\n";
+        $message .= sprintf($this->language->get('text_model'), $this->db->escape(strip_tags($data['model']))) . "\n";
+        $message .= sprintf($this->language->get('text_quantity'), $data['quantity']) . "\n";
+        $message .= "\n";
+        $message .= sprintf($this->language->get('text_return_reason'), $data['return_reason']) . "\n";
+        $message .= sprintf($this->language->get('text_opened'), ($data['opened'] ? $this->language->get('text_yes') : $this->language->get('text_no'))) . "\n";
+        $message .= "\n";
+        $message .= strip_tags($data['comment']);
+
+        return nl2br($message);
+    }
+
+    public function getDefaultReviewSubject($type_id, $data)
+    {
         $this->load->language('mail/review');
 
         $subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
@@ -1135,7 +1361,8 @@ class Emailtemplate {
         return $subject;
     }
 
-    public function getDefaultReviewMessage($type_id, $data) {
+    public function getDefaultReviewMessage($type_id, $data)
+    {
         $this->load->language('mail/review');
         $this->load->model('catalog/product');
 
@@ -1150,8 +1377,29 @@ class Emailtemplate {
 
         return $message;
     }
+    
+    public function getDefaultStockSubject($type_id, $data)
+    {
+        $this->load->language('mail/stock');
 
-    public function getDefaultVoucherSubject($type_id, $data) {
+        $subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'), $data['outofstock']);
+
+        return $subject;
+    }
+
+    public function getDefaultStockMessage($type_id, $data)
+    {
+        $this->load->language('mail/stock');
+
+        $message  = sprintf($this->language->get('text_notify'), $data['outofstock'], $this->config->get('config_name')) . "\n";
+        $message .= $this->language->get('text_view') . "\n";
+        $message .= sprintf($this->language->get('text_signature'), $this->config->get('config_name'));
+
+        return nl2br($message);
+    }
+
+    public function getDefaultVoucherSubject($type_id, $data)
+    {
         $this->load->language('mail/review');
 
         $subject = sprintf($this->language->get('text_subject'), $data['name']);
@@ -1159,7 +1407,9 @@ class Emailtemplate {
         return $subject;
     }
 
-    public function getDefaultVoucherMessage($type_id, $data) {
+
+    public function getDefaultVoucherMessage($type_id, $data)
+    {
         $this->load->language('mail/voucher');
 
         $voucher_data = array();
@@ -1191,102 +1441,106 @@ class Emailtemplate {
         return $message;
     }
 
-    public function imageResize($filename, $width, $height) {
-         if (!is_file(DIR_IMAGE . $filename)) {
-             return;
-         }
+    public function imageResize($filename, $width, $height)
+    {
+        if (!is_file(DIR_IMAGE . $filename)) {
+            return;
+        }
 
          $extension = pathinfo($filename, PATHINFO_EXTENSION);
 
          $old_image = $filename;
          $new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;
 
-         if (!is_file(DIR_IMAGE . $new_image) || (filectime(DIR_IMAGE . $old_image) > filectime(DIR_IMAGE . $new_image))) {
-             $path = '';
+        if (!is_file(DIR_IMAGE . $new_image) || (filectime(DIR_IMAGE . $old_image) > filectime(DIR_IMAGE . $new_image))) {
+            $path = '';
 
-             $directories = explode('/', dirname(str_replace('../', '', $new_image)));
+            $directories = explode('/', dirname(str_replace('../', '', $new_image)));
 
-             foreach ($directories as $directory) {
-                 $path = $path . '/' . $directory;
+            foreach ($directories as $directory) {
+                $path = $path . '/' . $directory;
 
-                 if (!is_dir(DIR_IMAGE . $path)) {
-                     $this->filesystem->mkdir(DIR_IMAGE . $path);
-                 }
-             }
+                if (!is_dir(DIR_IMAGE . $path)) {
+                    $this->filesystem->mkdir(DIR_IMAGE . $path);
+                }
+            }
 
-             list($width_orig, $height_orig) = getimagesize(DIR_IMAGE . $old_image);
+            list($width_orig, $height_orig) = getimagesize(DIR_IMAGE . $old_image);
 
-             if ($width_orig != $width || $height_orig != $height) {
-                 $image = new Image(DIR_IMAGE . $old_image);
-                 $image->resize($width, $height);
-                 $image->save(DIR_IMAGE . $new_image);
-             } else {
-                 copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);
-             }
-         }
 
-         if ($_SERVER['HTTPS']) {
-             return $this->config->get('config_ssl') . 'image/' . $new_image;
-         } else {
-             return $this->config->get('config_url') . 'image/' . $new_image;
-         }
-     }
+            if ($width_orig != $width || $height_orig != $height) {
+                $image = new Image(DIR_IMAGE . $old_image);
+                $image->resize($width, $height);
+                $image->save(DIR_IMAGE . $new_image);
+            } else {
+                copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);
+            }
+        }
 
-    public function getUploadByCode($code) {
+        if ($_SERVER['HTTPS']) {
+            return $this->config->get('config_ssl') . 'image/' . $new_image;
+        } else {
+            return $this->config->get('config_url') . 'image/' . $new_image;
+        }
+    }
+
+    public function getUploadByCode($code)
+    {
          $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE code = '" . $this->db->escape($code) . "'");
 
          return $query->row;
-     }
+    }
 
-    public function getProduct($product_id) {
+    public function getProduct($product_id)
+    {
          $query = $this->db->query("SELECT DISTINCT p.*, pd.*, md.name AS manufacturer, (SELECT price FROM " . DB_PREFIX . "product_discount pd2 WHERE pd2.product_id = p.product_id AND pd2.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND pd2.quantity = '1' AND ((pd2.date_start = '0000-00-00' OR pd2.date_start < NOW()) AND (pd2.date_end = '0000-00-00' OR pd2.date_end > NOW())) ORDER BY pd2.priority ASC, pd2.price ASC LIMIT 1) AS discount, (SELECT price FROM " . DB_PREFIX . "product_special ps WHERE ps.product_id = p.product_id AND ps.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((ps.date_start = '0000-00-00' OR ps.date_start < NOW()) AND (ps.date_end = '0000-00-00' OR ps.date_end > NOW())) ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special, (SELECT points FROM " . DB_PREFIX . "product_reward pr WHERE pr.product_id = p.product_id AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "') AS reward, (SELECT ss.name FROM " . DB_PREFIX . "stock_status ss WHERE ss.stock_status_id = p.stock_status_id AND ss.language_id = '" . (int)$this->config->get('config_language_id') . "') AS stock_status, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, (SELECT AVG(rating) AS total FROM " . DB_PREFIX . "review r1 WHERE r1.product_id = p.product_id AND r1.status = '1' GROUP BY r1.product_id) AS rating, (SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r2 WHERE r2.product_id = p.product_id AND r2.status = '1' GROUP BY r2.product_id) AS reviews, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON (p.manufacturer_id = md.manufacturer_id AND md.language_id = '" . (int)$this->config->get('config_language_id') . "') WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
-         if ($query->num_rows) {
-             return array(
-                 'product_id'       => $query->row['product_id'],
-                 'name'             => $query->row['name'],
-                 'description'      => $query->row['description'],
-                 'meta_title'       => $query->row['meta_title'],
-                 'meta_description' => $query->row['meta_description'],
-                 'meta_keyword'     => $query->row['meta_keyword'],
-                 'tag'              => $query->row['tag'],
-                 'model'            => $query->row['model'],
-                 'sku'              => $query->row['sku'],
-                 'upc'              => $query->row['upc'],
-                 'ean'              => $query->row['ean'],
-                 'jan'              => $query->row['jan'],
-                 'isbn'             => $query->row['isbn'],
-                 'mpn'              => $query->row['mpn'],
-                 'location'         => $query->row['location'],
-                 'quantity'         => $query->row['quantity'],
-                 'stock_status'     => $query->row['stock_status'],
-                 'image'            => $query->row['image'],
-                 'manufacturer_id'  => $query->row['manufacturer_id'],
-                 'manufacturer'     => $query->row['manufacturer'],
-                 'price'            => ($query->row['discount'] ? $query->row['discount'] : $query->row['price']),
-                 'special'          => $query->row['special'],
-                 'reward'           => $query->row['reward'],
-                 'points'           => $query->row['points'],
-                 'tax_class_id'     => $query->row['tax_class_id'],
-                 'date_available'   => $query->row['date_available'],
-                 'weight'           => $query->row['weight'],
-                 'weight_class_id'  => $query->row['weight_class_id'],
-                 'length'           => $query->row['length'],
-                 'width'            => $query->row['width'],
-                 'height'           => $query->row['height'],
-                 'length_class_id'  => $query->row['length_class_id'],
-                 'subtract'         => $query->row['subtract'],
-                 'rating'           => round($query->row['rating']),
-                 'reviews'          => $query->row['reviews'] ? $query->row['reviews'] : 0,
-                 'minimum'          => $query->row['minimum'],
-                 'sort_order'       => $query->row['sort_order'],
-                 'status'           => $query->row['status'],
-                 'date_added'       => $query->row['date_added'],
-                 'date_modified'    => $query->row['date_modified'],
-                 'viewed'           => $query->row['viewed']
-             );
-         } else {
-             return false;
-         }
-     }
- }
+        if ($query->num_rows) {
+            return array(
+                'product_id'       => $query->row['product_id'],
+                'name'             => $query->row['name'],
+                'description'      => $query->row['description'],
+                'meta_title'       => $query->row['meta_title'],
+                'meta_description' => $query->row['meta_description'],
+                'meta_keyword'     => $query->row['meta_keyword'],
+                'tag'              => $query->row['tag'],
+                'model'            => $query->row['model'],
+                'sku'              => $query->row['sku'],
+                'upc'              => $query->row['upc'],
+                'ean'              => $query->row['ean'],
+                'jan'              => $query->row['jan'],
+                'isbn'             => $query->row['isbn'],
+                'mpn'              => $query->row['mpn'],
+                'location'         => $query->row['location'],
+                'quantity'         => $query->row['quantity'],
+                'stock_status'     => $query->row['stock_status'],
+                'image'            => $query->row['image'],
+                'manufacturer_id'  => $query->row['manufacturer_id'],
+                'manufacturer'     => $query->row['manufacturer'],
+                'price'            => ($query->row['discount'] ? $query->row['discount'] : $query->row['price']),
+                'special'          => $query->row['special'],
+                'reward'           => $query->row['reward'],
+                'points'           => $query->row['points'],
+                'tax_class_id'     => $query->row['tax_class_id'],
+                'date_available'   => $query->row['date_available'],
+                'weight'           => $query->row['weight'],
+                'weight_class_id'  => $query->row['weight_class_id'],
+                'length'           => $query->row['length'],
+                'width'            => $query->row['width'],
+                'height'           => $query->row['height'],
+                'length_class_id'  => $query->row['length_class_id'],
+                'subtract'         => $query->row['subtract'],
+                'rating'           => round($query->row['rating']),
+                'reviews'          => $query->row['reviews'] ? $query->row['reviews'] : 0,
+                'minimum'          => $query->row['minimum'],
+                'sort_order'       => $query->row['sort_order'],
+                'status'           => $query->row['status'],
+                'date_added'       => $query->row['date_added'],
+                'date_modified'    => $query->row['date_modified'],
+                'viewed'           => $query->row['viewed']
+            );
+        } else {
+            return false;
+        }
+    }
+}
