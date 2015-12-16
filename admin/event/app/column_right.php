@@ -9,7 +9,7 @@
 class EventAppColumnRight extends Event
 {
 
-    public function postLoadController($route, &$ret)
+    public function postLoadController($route, &$ret = null)
     {
         if ($route != 'common/column_left') {
             return;

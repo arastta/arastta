@@ -192,4 +192,8 @@ if (version_compare(VERSION, '1.2.0', '<')) {
         
         $this->db->query("UPDATE " . DB_PREFIX . "user SET params = '" . $this->db->escape($params) . "' WHERE user_id = '" . (int)$user['user_id'] . "'");
     }
+    
+    if (!file_exists(DIR_ADMIN . 'controller/module/pp_login.php')) {
+        $this->filesystem->remove(DIR_CATALOG . 'event/app/pp_login.php');
+    }
 }
