@@ -30,7 +30,7 @@ $_['error_warning']             = 'Warning: Please check the form carefully for 
 $_['error_curl']                = 'Warning: cURL error %s(%s)!';
 $_['error_action']              = 'Warning: Could not complete this action!';
 $_['error_default']             = 'Warning: Something went wrong. Please contact your administration!';
-$_['error_api_key']             = 'Warning: Please insert your API Key in order to use Marketplace. If you do not have already an API Key, please goto <a href="http://extensions.arastta.pro/account/login" target="_blank">Arastta Extensions</a>, login and create one.';
+$_['error_api_key']             = 'Warning: Please insert your API Key in order to use Marketplace. If you do not have already an API Key, please goto <a href="https://extensions.arastta.pro/account/login" target="_blank">Arastta Extensions</a>, login and create one.';
 $_['error_zip']                 = 'Warning: ZIP extension needs to be loaded on your server! Please, ask your hosting company for further help.';
 $_['error_xml']                 = 'Warning: XML extension needs to be loaded on your server! Please, ask your hosting company for further help.';
 $_['error_uninstall_already']   = 'Uninstalled already!';

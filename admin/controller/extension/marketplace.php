@@ -10,7 +10,7 @@ class ControllerExtensionMarketplace extends Controller
 {
 
     private $error = array();
-    public $apiBaseUrl = 'http://arastta.pro/';
+    public $apiBaseUrl = 'https://arastta.pro/';
 
     public function index()
     {
@@ -98,7 +98,7 @@ class ControllerExtensionMarketplace extends Controller
             $data['help_api_key'] = $this->language->get('help_api_key');
             $data['changeApiKey'] = true;
 
-            $data['api_key_href'] = 'http://extensions.arastta.pro/index.php?route=account/api';
+            $data['api_key_href'] = 'https://extensions.arastta.pro/index.php?route=account/api';
             $data['action'] = $this->url->link('extension/marketplace/saveApiKey', 'token=' . $this->session->data['token'], 'SSL');
         }
 
