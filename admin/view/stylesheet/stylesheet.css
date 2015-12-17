@@ -2693,3 +2693,7 @@ li.basic-advanced {
 .width-zero {
     width: 0px !important;
 }
+
+#marketplace-header #marketplace-search-div #marketplace-search .input-group-btn {
+    min-width: initial;
+}
