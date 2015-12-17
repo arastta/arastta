@@ -590,6 +590,7 @@ class ControllerCatalogProduct extends Controller {
         $data['button_recurring_add'] = $this->language->get('button_recurring_add');
 
         $data['tab_general'] = $this->language->get('tab_general');
+        $data['tab_design'] = $this->language->get('tab_design');
 
         $data['error_tag'] = $this->language->get('error_tag');
         $data['error_tag_empty'] = $this->language->get('error_tag_empty');
