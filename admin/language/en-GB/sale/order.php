@@ -188,6 +188,7 @@ $_['entry_order_id']                          = 'Order ID';
 $_['entry_total']                             = 'Total';
 $_['entry_date_added']                        = 'Date Added';
 $_['entry_date_modified']                     = 'Date Modified';
+$_['entry_currency']                          = 'Currency';
 
 // Help
 $_['help_country_match']                      = 'Whether country of IP address matches billing address country (mismatch = higher risk).';

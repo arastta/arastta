@@ -43,6 +43,20 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-currency"><?php echo $entry_currency; ?></label>
+                                <div class="col-sm-10">
+                                    <select name="currency" id="input-currency" class="form-control">
+                                        <?php foreach ($currencies as $currency) { ?>
+                                        <?php if ($currency['code'] == $currency_code) { ?>
+                                        <option value="<?php echo $currency['code']; ?>" selected="selected"><?php echo $currency['title']; ?></option>
+                                        <?php } else { ?>
+                                        <option value="<?php echo $currency['code']; ?>"><?php echo $currency['title']; ?></option>
+                                        <?php } ?>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-customer"><?php echo $entry_customer; ?></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="customer" value="<?php echo $customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
@@ -1117,6 +1131,38 @@
             }
         });
     });
+
+    // Currency
+    $('select[name=\'currency\']').on('change', function() {
+        $.ajax({
+            url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/currency&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+            type: 'post',
+            data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
+            dataType: 'json',
+            beforeSend: function() {
+                $('select[name=\'currency\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+            },
+            complete: function() {
+                $('.fa-spin').remove();
+            },
+            success: function(json) {
+                $('.alert, .text-danger').remove();
+                $('.form-group').removeClass('has-error');
+
+                if (json['error']) {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+                    // Highlight any found errors
+                    $('select[name=\'currency\']').parent().parent().parent().addClass('has-error');
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    });
+
+    $('select[name=\'currency\']').trigger('change');
 
     // Customer
     $('input[name=\'customer\']').autocomplete({

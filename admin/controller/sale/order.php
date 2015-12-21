@@ -507,7 +507,7 @@ class ControllerSaleOrder extends Controller {
         $data['entry_voucher'] = $this->language->get('entry_voucher');
         $data['entry_reward'] = $this->language->get('entry_reward');
         $data['entry_order_status'] = $this->language->get('entry_order_status');
-
+        $data['entry_currency'] = $this->language->get('entry_currency');
         $data['column_product'] = $this->language->get('column_product');
         $data['column_model'] = $this->language->get('column_model');
         $data['column_quantity'] = $this->language->get('column_quantity');
@@ -706,6 +706,7 @@ class ControllerSaleOrder extends Controller {
             $data['comment'] = $order_info['comment'];
             $data['affiliate_id'] = $order_info['affiliate_id'];
             $data['affiliate'] = $order_info['affiliate_firstname'] . ' ' . $order_info['affiliate_lastname'];
+            $data['currency_code'] = $order_info['currency_code'];
         } else {
             $data['order_id'] = 0;
             $data['store_id'] = '';
@@ -756,6 +757,7 @@ class ControllerSaleOrder extends Controller {
             $data['comment'] = '';
             $data['affiliate_id'] = '';
             $data['affiliate'] = '';
+            $data['currency_code'] = $this->config->get('config_currency');
 
             $data['coupon'] = '';
             $data['voucher'] = '';
@@ -803,6 +805,9 @@ class ControllerSaleOrder extends Controller {
 
         $data['countries'] = $this->model_localisation_country->getCountries();
 
+        $this->load->model('localisation/currency');
+
+        $data['currencies'] = $this->model_localisation_currency->getCurrencies();
         $data['voucher_min'] = $this->config->get('config_voucher_min');
 
         $this->load->model('sale/voucher_theme');
