@@ -873,6 +873,11 @@
 
             $('#option a[href=\'#tab-option' + option_row + '\']').tab('show');
 
+            $('[data-toggle=\'tooltip\']').tooltip({
+                container: 'body',
+                html: true
+            });
+            
             $('.date').datetimepicker({
                 pickTime: false
             });
