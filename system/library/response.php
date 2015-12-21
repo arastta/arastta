@@ -75,7 +75,7 @@ class Response {
             }
 
             if (!headers_sent()) {
-                header('Arastta: ' . VERSION);
+                header('X-Arastta: ');
                 foreach ($this->headers as $header) {
                     header($header, true);
                 }
