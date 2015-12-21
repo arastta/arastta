@@ -19,6 +19,7 @@ class ModelLocalisationStockStatus extends Model {
         }
 
         $this->cache->delete('stock_status');
+        
         return $stock_status_id;
     }
 

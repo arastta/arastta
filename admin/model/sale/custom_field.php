@@ -35,6 +35,7 @@ class ModelSaleCustomField extends Model {
                 }
             }
         }
+        
         return $custom_field_id;
     }
 
@@ -75,6 +76,7 @@ class ModelSaleCustomField extends Model {
                 }
             }
         }
+        
         return $custom_field_id;
     }
 

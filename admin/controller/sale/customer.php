@@ -943,8 +943,7 @@ class ControllerSaleCustomer extends Controller {
         } else {
             $data['fax'] = '';
         }
-                
-        
+
         if (isset($this->request->post['send_email'])) {
             $data['send_email'] = $this->request->post['send_email'];
         } elseif (!empty($customer_info)) {
@@ -963,8 +962,13 @@ class ControllerSaleCustomer extends Controller {
 
         $data['custom_fields'] = array();
 
-        $custom_fields = $this->model_sale_custom_field->getCustomFields();
-
+        $filter_data = array(
+            'sort'  => 'cf.sort_order',
+            'order' => 'ASC'
+        );
+ 
+        $custom_fields = $this->model_sale_custom_field->getCustomFields($filter_data);
+ 
         foreach ($custom_fields as $custom_field) {
             $data['custom_fields'][] = array(
                 'custom_field_id'    => $custom_field['custom_field_id'],
