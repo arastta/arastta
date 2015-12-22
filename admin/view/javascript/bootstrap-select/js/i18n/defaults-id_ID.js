@@ -23,19 +23,12 @@
 
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Nothing selected',
-    noneResultsText: 'No results match {0}',
-    countSelectedText: function (numSelected, numTotal) {
-      return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
-    },
-    maxOptionsText: function (numAll, numGroup) {
-      return [
-        (numAll == 1) ? 'Limit reached ({n} item max)' : 'Limit reached ({n} items max)',
-        (numGroup == 1) ? 'Group limit reached ({n} item max)' : 'Group limit reached ({n} items max)'
-      ];
-    },
-    selectAllText: 'Select All',
-    deselectAllText: 'Deselect All',
+    noneSelectedText: 'Tidak ada yang dipilih',
+    noneResultsText: 'Tidak ada yang cocok {0}',
+    countSelectedText: '{0} terpilih',
+    maxOptionsText: ['Mencapai batas (maksimum {n})', 'Mencapai batas grup (maksimum {n})'],
+    selectAllText: 'Pilih Semua',
+    deselectAllText: 'Hapus Semua',
     multipleSeparator: ', '
   };
 })(jQuery);
