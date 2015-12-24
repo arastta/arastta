@@ -367,9 +367,13 @@ $(document).ready(function() {
             $('#column-right').css('margin-right', '0px');
             $('#column-right').removeClass('width-zero');
             $('#column-right').addClass('right-active');
+
             show_menu = 'right';
             sessionStorage.setItem('active-menu', 'right');
-            setTimeout( function(){
+
+            setTimeout( function() {
+                $('#content .page-header .pull-right').removeAttr('style');
+
                 if ($('#column-right').hasClass('active')) {
                     $('.footer-version').css('padding-right', '200px');
                 } else {
@@ -377,29 +381,47 @@ $(document).ready(function() {
                 }
 
                 $('.footer-text').css('padding-left', '20px');
-            },80);
+            }, 80);
+
+            setTimeout( function() {
+                if ($('#column-right').hasClass('active')) {
+                    $('#content .page-header .pull-right').addClass('wide-button')
+                } else {
+                    $('#content .page-header .pull-right').addClass('short-button');
+                }
+            }, 300);
         } else {
             $('#column-left').removeClass('right');
             $('#column-left').show();
             $('#column-right').addClass('width-zero');
             $('#column-right').removeClass('right-active');
             $('#column-left').removeClass('width-zero');
-            
-            setTimeout( function(){
+
+            $('#content .page-header .pull-right').removeClass('short-button');
+            $('#content .page-header .pull-right').removeClass('wide-button');
+
+            setTimeout( function() {
                 $('#column-left #menu').css('margin-left', '0px');
-            },200);
+            }, 200);
+
+            setTimeout( function() {
+
+                $('#content .page-header .pull-right').css('padding', '10px');
+                $('#content .page-header .pull-right').css('position', 'fixed');
+            }, 300);
 
             show_menu = 'left';
             sessionStorage.setItem('active-menu', 'left');
-            setTimeout( function(){
+
+            setTimeout( function() {
                 if ($('#column-left').hasClass('active')) {
-                    $('.footer-text').css('padding-left', '220px' );
+                    $('.footer-text').css('padding-left', '220px');
                 } else {
-                    $('.footer-text').css('padding-left', '70px' );
+                    $('.footer-text').css('padding-left', '70px');
                 }
 
                 $('.footer-version').css('padding-right', '20px');
-            },80);
+            }, 80);
         }
 
         $.ajax({
@@ -419,6 +441,11 @@ $(document).ready(function() {
             $('#column-right').removeClass('active');
             $('#header').addClass('short');
             $('#header').removeClass('wide');
+
+            setTimeout( function() {
+                $('#content .page-header .pull-right').addClass('short-button');
+                $('#content .page-header .pull-right').removeClass('wide-button');
+            }, 150);
 
             $('#column-right #right-menu li span').hide();
 
@@ -444,6 +471,11 @@ $(document).ready(function() {
             $('#column-right').addClass('active');
             $('#header').addClass('wide');
             $('#header').removeClass('short');
+
+            setTimeout( function() {
+                $('#content .page-header .pull-right').addClass('wide-button');
+                $('#content .page-header .pull-right').removeClass('short-button');
+            }, 150);
 
             $.ajax({
                 url: 'index.php?route=common/menu/position&token=' + getURLVar('token')  + '&position=active',
@@ -498,6 +530,17 @@ $(document).ready(function() {
             }
         }
     });
+
+    if (sessionStorage.getItem('active-menu') == 'right') {
+        if ($('#header').hasClass('short')) {
+            $('#content .page-header .pull-right').addClass('short-button');
+        } else {
+            $('#content .page-header .pull-right').addClass('wide-button');
+        }
+    } else {
+        $('#content .page-header .pull-right').css('padding', '10px');
+        $('#content .page-header .pull-right').css('position', 'fixed');
+    }
 
     // Override summernotes image manager
     $('button[data-event=\'showImageDialog\']').attr('data-toggle', 'image').removeAttr('data-event');

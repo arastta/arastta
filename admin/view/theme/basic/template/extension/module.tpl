@@ -3,11 +3,6 @@
     <div class="page-header">
         <div class="container-fluid">
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -55,8 +50,8 @@
                             <?php foreach ($extension['module'] as $module) { ?>
                             <tr>
                                 <td class="text-left">
-                                    <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $module['delete']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_delete; ?>"><i class="fa fa-trash-o"></i></a>
-                                    <a href="<?php echo $module['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                                    <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $module['delete']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-trash-o"></i></a> 
+                                    <a href="<?php echo $module['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $module['name']; ?></td>
                             </tr>
                             <?php } ?>

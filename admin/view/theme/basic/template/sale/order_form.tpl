@@ -196,9 +196,9 @@
                                             <div class="col-sm-10">
                                                 <div class="input-group date">
                                                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                            <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                            </span></div>
+                                                    <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                    </span></div>
                                             </div>
                                         </div>
                                         <?php } ?>
@@ -208,9 +208,9 @@
                                             <div class="col-sm-10">
                                                 <div class="input-group time">
                                                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                            <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                            </span></div>
+                                                    <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                    </span></div>
                                             </div>
                                         </div>
                                         <?php } ?>
@@ -220,9 +220,9 @@
                                             <div class="col-sm-10">
                                                 <div class="input-group datetime">
                                                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                            <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                            </span></div>
+                                                    <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                    </span></div>
                                             </div>
                                         </div>
                                         <?php } ?>
@@ -565,9 +565,9 @@
                                             <div class="col-sm-10">
                                                 <div class="input-group date">
                                                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                            <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                            </span></div>
+                                                    <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                    </span></div>
                                             </div>
                                         </div>
                                         <?php } ?>
@@ -577,9 +577,9 @@
                                             <div class="col-sm-10">
                                                 <div class="input-group time">
                                                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                            <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                            </span></div>
+                                                    <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                    </span></div>
                                             </div>
                                         </div>
                                         <?php } ?>
@@ -589,9 +589,9 @@
                                             <div class="col-sm-10">
                                                 <div class="input-group datetime">
                                                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                            <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                            </span></div>
+                                                    <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                    </span></div>
                                             </div>
                                         </div>
                                         <?php } ?>
@@ -776,9 +776,9 @@
                                             <div class="col-sm-10">
                                                 <div class="input-group date">
                                                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                            <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                            </span></div>
+                                                    <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                    </span></div>
                                             </div>
                                         </div>
                                         <?php } ?>
@@ -788,9 +788,9 @@
                                             <div class="col-sm-10">
                                                 <div class="input-group time">
                                                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                            <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                            </span></div>
+                                                    <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                    </span></div>
                                             </div>
                                         </div>
                                         <?php } ?>
@@ -800,9 +800,9 @@
                                             <div class="col-sm-10">
                                                 <div class="input-group datetime">
                                                     <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                            <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                            </span></div>
+                                                    <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                    </span></div>
                                             </div>
                                         </div>
                                         <?php } ?>
@@ -848,9 +848,9 @@
                                                             <option value="<?php echo $shipping_code; ?>" selected="selected"><?php echo $shipping_method; ?></option>
                                                             <?php } ?>
                                                         </select>
-                              <span class="input-group-btn">
-                              <button type="button" id="button-shipping-method" data-toggle="tooltip" title="<?php echo $button_shipping; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                              </span></div>
+                                                      <span class="input-group-btn">
+                                                      <button type="button" id="button-shipping-method" data-toggle="tooltip" title="<?php echo $button_shipping; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                                                      </span></div>
                                                 </div>
                                             </div>
                                             <div class="form-group required">
@@ -863,9 +863,9 @@
                                                             <option value="<?php echo $payment_code; ?>" selected="selected"><?php echo $payment_method; ?></option>
                                                             <?php } ?>
                                                         </select>
-                              <span class="input-group-btn">
-                              <button type="button" id="button-payment-method" data-toggle="tooltip" title="<?php echo $button_payment; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                              </span></div>
+                                                        <span class="input-group-btn">
+                                                        <button type="button" id="button-payment-method" data-toggle="tooltip" title="<?php echo $button_payment; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                                                        </span></div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -873,9 +873,9 @@
                                                 <div class="col-sm-10">
                                                     <div class="input-group">
                                                         <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" class="form-control" />
-                              <span class="input-group-btn">
-                              <button type="button" id="button-coupon" data-toggle="tooltip" title="<?php echo $button_coupon; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                              </span></div>
+                                                        <span class="input-group-btn">
+                                                        <button type="button" id="button-coupon" data-toggle="tooltip" title="<?php echo $button_coupon; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                                                        </span></div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -883,9 +883,9 @@
                                                 <div class="col-sm-10">
                                                     <div class="input-group">
                                                         <input type="text" name="voucher" value="<?php echo $voucher; ?>" id="input-voucher" data-loading-text="<?php echo $text_loading; ?>" class="form-control" />
-                              <span class="input-group-btn">
-                              <button type="button" id="button-voucher" data-toggle="tooltip" title="<?php echo $button_voucher; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                              </span></div>
+                                                        <span class="input-group-btn">
+                                                        <button type="button" id="button-voucher" data-toggle="tooltip" title="<?php echo $button_voucher; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                                                        </span></div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -893,9 +893,9 @@
                                                 <div class="col-sm-10">
                                                     <div class="input-group">
                                                         <input type="text" name="reward" value="<?php echo $reward; ?>" id="input-reward" data-loading-text="<?php echo $text_loading; ?>" class="form-control" />
-                              <span class="input-group-btn">
-                              <button type="button" id="button-reward" data-toggle="tooltip" title="<?php echo $button_reward; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                              </span></div>
+                                                        <span class="input-group-btn">
+                                                        <button type="button" id="button-reward" data-toggle="tooltip" title="<?php echo $button_reward; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                                                        </span></div>
                                                 </div>
                                             </div>
                                             <div class="form-group">

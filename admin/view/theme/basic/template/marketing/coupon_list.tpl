@@ -6,11 +6,6 @@
                 <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
             </div>
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -54,12 +49,12 @@
                                 <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $column_name; ?>" id="input-name" class="form-control filter">
                                 <input type="text" name="filter_code"  value="<?php echo $filter_code; ?>" placeholder="<?php echo $column_code; ?>" id="input-code" class="form-control filter hidden">
                                 <div class="input-group date filter hidden filter_date_start">
-                                  <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control filter" />
+                                  <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $column_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control filter" />
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                                   </span></div>
                                 <div class="input-group date filter hidden filter_date_end">
-                                  <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
+                                  <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $column_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                                   </span></div>
@@ -80,6 +75,48 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_name) || !empty($filter_code) || !empty($filter_date_start) || !empty($filter_date_end) || !empty($filter_discount) || isset($filter_status)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_name) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_name; ?>:</label> <label class="filter-label"> <?php echo $filter_name; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_name');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_code) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_code; ?>:</label> <label class="filter-label"> <?php echo $filter_code; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_code');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_date_start) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_date_start; ?>:</label> <label class="filter-label"> <?php echo $filter_date_start; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_date_start');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_date_end) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_date_end; ?>:</label> <label class="filter-label"> <?php echo $filter_date_end; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_date_end');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_discount) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_discount; ?>:</label> <label class="filter-label"> <?php echo $filter_discount; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_discount');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if (isset($filter_status)) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_status; ?>:</label> <label class="filter-label"> <?php echo ($filter_status) ? $text_enabled : $text_disabled; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_status');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-coupon">
                     <div class="table-responsive">
@@ -91,16 +128,16 @@
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
                                         <span class="item-selected"></span>
-                    <span class="bulk-action-button">
-                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                          <b><?php echo $text_bulk_action; ?></b>
-                          <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
-                          <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                          <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-coupon').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
-                      </ul>
-                    </span>
+                                        <span class="bulk-action-button">
+                                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                              <b><?php echo $text_bulk_action; ?></b>
+                                              <span class="caret"></span>
+                                          </a>
+                                          <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
+                                              <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
+                                              <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-coupon').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                          </ul>
+                                        </span>
                                     </div></td>
                                 <td class="text-left"><?php if ($sort == 'cd.name') { ?>
                                     <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
@@ -144,7 +181,7 @@
                                     <input type="checkbox" name="selected[]" value="<?php echo $coupon['coupon_id']; ?>" />
                                     <?php } ?></td>
                                 <td class="text-left">
-                                    <a href="<?php echo $coupon['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                                    <a href="<?php echo $coupon['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $coupon['name']; ?></td>
                                 <td class="text-left"><?php echo $coupon['code']; ?></td>
                                 <td class="text-right"><?php echo $coupon['discount']; ?></td>
@@ -170,6 +207,52 @@
         </div>
     </div>
 </div>
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+    pickTime: false
+});
+//--></script>
+<script type="text/javascript"><!--
+$('input[name=\'filter_name\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=marketing/coupon/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['coupon_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_name\']').val(item['label']);
+    }
+});
+
+$('input[name=\'filter_code\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=marketing/coupon/autocomplete&token=<?php echo $token; ?>&filter_code=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['code'],
+                        value: item['coupon_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_code\']').val(item['label']);
+    }
+});
+//--></script>
 <script type="text/javascript"><!--
 function filter() {
     var url = 'index.php?route=marketing/coupon&token=<?php echo $token; ?>';
@@ -212,63 +295,5 @@ function filter() {
 
     location = url;
 }
-
-function changeFilterType(text, filter_type) {
-    $('.filter-type').text(text);
-
-    $('.filter').addClass('hidden');
-    $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-    $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-    if (filter_type == 'filter_date_start' || filter_type == 'filter_date_end') {
-        $('.well .input-group-btn .' + filter_type).removeClass('hidden');
-        $('.well .input-group .' + filter_type).removeClass('hidden');
-    }
-}
-//--></script></script>
-<script type="text/javascript"><!--
-                $('.date').datetimepicker({
-                    pickTime: false
-                });
-//--></script>
-<script type="text/javascript"><!--
-$('input[name=\'filter_name\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=marketing/coupon/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['name'],
-                        value: item['coupon_id']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_name\']').val(item['label']);
-    }
-});
-
-$('input[name=\'filter_code\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=marketing/coupon/autocomplete&token=<?php echo $token; ?>&filter_code=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['code'],
-                        value: item['coupon_id']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_code\']').val(item['label']);
-    }
-});
 //--></script>
 <?php echo $footer; ?>

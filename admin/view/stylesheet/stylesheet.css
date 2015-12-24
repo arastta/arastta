@@ -2697,3 +2697,22 @@ li.basic-advanced {
 #marketplace-header #marketplace-search-div #marketplace-search .input-group-btn {
     min-width: initial;
 }
+
+#content .page-header .pull-right {
+    right: 5px;
+    top: 51px;
+    z-index: 9999;
+    background: #F5F5F5;
+}
+
+#content .page-header .pull-right.wide-button {
+    position: fixed;
+    right: 190px;
+    padding: 10px;
+}
+
+#content .page-header .pull-right.short-button {
+    position: fixed;
+    right: 55px;
+    padding: 10px;
+}

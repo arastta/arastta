@@ -6,11 +6,6 @@
                 <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
             </div>
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -81,6 +76,55 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_name) || !empty($filter_model) || !empty($filter_category) || !empty($filter_price) || !empty($filter_quantity) || isset($filter_status)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_name) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_name; ?>:</label> <label class="filter-label"> <?php echo $filter_name; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_name');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_model) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_model; ?>:</label> <label class="filter-label"> <?php echo $filter_model; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_model');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_category) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_category; ?>:</label>
+                                <label class="filter-label">
+                                    <?php foreach ($categories as $category) { ?>
+                                    <?php if ($category['category_id'] == $filter_category) { ?>
+                                    <?php echo $category['name']; ?>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_category');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_price) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_price; ?>:</label> <label class="filter-label"> <?php echo $filter_price; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_price');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_quantity) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_quantity; ?>:</label> <label class="filter-label"> <?php echo $filter_quantity; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_quantity');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if (isset($filter_status)) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_status; ?>:</label> <label class="filter-label"> <?php echo ($filter_status) ? $text_enabled : $text_disabled; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_status');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-product">
                     <div class="table-responsive">
@@ -92,18 +136,18 @@
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
                                         <span class="item-selected"></span>
-                    <span class="bulk-action-button">
-                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                          <b><?php echo $text_bulk_action; ?></b>
-                          <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
-                          <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                          <li><a onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i> <?php echo $button_enable; ?></a></li>
-                          <li><a onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i> <?php echo $button_disable; ?></a></li>
-                          <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-product').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
-                      </ul>
-                    </span>
+                                        <span class="bulk-action-button">
+                                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                              <b><?php echo $text_bulk_action; ?></b>
+                                              <span class="caret"></span>
+                                          </a>
+                                          <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
+                                              <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
+                                              <li><a onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i> <?php echo $button_enable; ?></a></li>
+                                              <li><a onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i> <?php echo $button_disable; ?></a></li>
+                                              <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-product').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                          </ul>
+                                        </span>
                                     </div></td>
                                 <td class="text-center"><?php echo $column_image; ?></td>
                                 <td class="text-left"><?php if ($sort == 'pd.name') { ?>
@@ -147,18 +191,17 @@
                                     </a>
                                     <input type="hidden" name="image" value="<?php echo $product['image']; ?>" id="input-image-<?php echo $product['product_id']; ?>" /></td>
                                 <td class="text-left">
-                                    <a href="<?php echo $product['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
-                      <span class="product-name" id="name[<?php echo $product['product_id']; ?>]">
-                        <?php echo $product['name']; ?>
-                      </span>
-                                </td>
+                                    <a href="<?php echo $product['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
+                                      <span class="product-name" id="name[<?php echo $product['product_id']; ?>]">
+                                        <?php echo $product['name']; ?>
+                                      </span></td>
                                 <td class="text-left"><?php if ($product['special']) { ?>
                                     <span class="product-price" style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
                                     <div class="text-danger"><span class="product-special"><?php echo $product['special']; ?></span></div>
                                     <?php } else { ?>
-                    <span class="product-price">
-                      <?php echo $product['price']; ?>
-                    </span>
+                                    <span class="product-price">
+                                      <?php echo $product['price']; ?>
+                                    </span>
                                     <?php } ?></td>
                                 <td class="text-right"><?php if ($product['quantity'] <= 0) { ?>
                                     <span class="label label-warning"><span class="product-quantity"><?php echo $product['quantity']; ?></span></span>
@@ -357,6 +400,7 @@
         },
         'select': function(item) {
             $('input[name=\'filter_name\']').val(item['label']);
+            filter();
         }
     });
 
@@ -377,10 +421,13 @@
         },
         'select': function(item) {
             $('input[name=\'filter_model\']').val(item['label']);
+            filter();
         }
     });
     //--></script></div>
 <script type="text/javascript"><!--
+var status_type = 'product';
+
 function filter() {
     var url = 'index.php?route=catalog/product&token=<?php echo $token; ?>';
 
@@ -421,30 +468,6 @@ function filter() {
     }
 
     location = url;
-}
-
-function changeFilterType(text, filter_type) {
-    $('.filter-type').text(text);
-
-    $('.filter').addClass('hidden');
-    $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-    $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-}
-
-function changeStatus(status){
-    $.ajax({
-        url: 'index.php?route=common/edit/changeStatus&type=product&status='+ status +'&token=<?php echo $token; ?>',
-        dataType: 'json',
-        data: $("form[id^='form-']").serialize(),
-        success: function(json) {
-            if(json){
-                $('.panel.panel-default').before('<div class="alert alert-warning"><i class="fa fa-warning"></i> ' + json.warning + '<button type="button" class="close" data-dismiss="alert">×</button></div>');
-            }
-            else{
-                location.reload();
-            }
-        }
-    });
 }
 //--></script>
 <?php echo $footer; ?>

@@ -40,7 +40,47 @@ $(document).ready(function() {
             $('.bulk-action').removeClass('bulk-action-activate');
         }
     });
+
+    $('.well .row .input-group').keypress(function(e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+
+        if(code == 13) { //Enter keycode
+            filter();
+        }
+    });
+
+    $('.well .row .input-group select').on('change', function() {
+        filter();
+    });
 });
+
+function changeFilterType(text, filter_type) {
+    $('.filter-type').text(text);
+
+    $('.filter').addClass('hidden');
+    $('input[name=\'' + filter_type + '\']').removeClass('hidden');
+    $('select[name=\'' + filter_type + '\']').removeClass('hidden');
+    if (filter_type == 'filter_date_added' || filter_type == 'filter_date_modified' || filter_type == 'filter_date_start' || filter_type == 'filter_date_end' || filter_type == 'filter_order_date' || filter_type == 'filter_invoice_date'){
+        $('.well .input-group-btn .' + filter_type).removeClass('hidden');
+        $('.well .input-group .' + filter_type).removeClass('hidden');
+    }
+}
+
+function changeStatus(status) {
+    $.ajax({
+        url: 'index.php?route=common/edit/changeStatus&type=' + status_type + '&status='+ status +'&token=' + getURLVar('token'),
+        dataType: 'json',
+        data: $("form[id^='form-']").serialize(),
+        success: function(json) {
+            if(json){
+                $('.panel.panel-default').before('<div class="alert alert-warning"><i class="fa fa-warning"></i> ' + json.warning + '<button type="button" class="close" data-dismiss="alert">×</button></div>');
+            }
+            else{
+                location.reload();
+            }
+        }
+    });
+}
 
 function save(type) {
     var input = document.createElement('input');
@@ -49,6 +89,13 @@ function save(type) {
     input.value = type;
     form = $("form[id^='form-']").append(input);
     form.submit();
+}
+
+function removeFilter(filter_tag, filter_selector) {
+    $('input[name=\'' + filter_selector  + '\']').val('');
+    $('select[name=\'' + filter_selector  + '\'] option:selected').removeAttr('selected');
+    $(filter_tag).parent().remove();
+    filter();
 }
 
 var BasicImage = function() {

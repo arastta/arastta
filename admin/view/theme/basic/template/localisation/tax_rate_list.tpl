@@ -6,11 +6,6 @@
                 <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
             </div>
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -92,7 +87,7 @@
                                     <input type="checkbox" name="selected[]" value="<?php echo $tax_rate['tax_rate_id']; ?>" />
                                     <?php } ?></td>
                                 <td class="text-left">
-                                    <a href="<?php echo $tax_rate['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                                    <a href="<?php echo $tax_rate['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $tax_rate['name']; ?></td>
                                 <td class="text-right"><?php echo $tax_rate['rate']; ?></td>
                                 <td class="text-left"><?php echo $tax_rate['type']; ?></td>

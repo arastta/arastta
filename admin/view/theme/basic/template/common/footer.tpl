@@ -12,12 +12,10 @@
     <?php } ?>
 </footer>
 <?php } ?></div>
-
 <script>
     var text_yes = '<?php echo $text_yes; ?>';
     var text_no = '<?php echo $text_no; ?>';
     var text_selected = '<?php echo $text_selected; ?>';
     var theme_message = '<?php echo $text_basic_message; ?>';
 </script>
-
 </body></html>

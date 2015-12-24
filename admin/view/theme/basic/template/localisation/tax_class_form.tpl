@@ -8,11 +8,6 @@
                 <button type="submit" onclick="save('new')" form="form-tax-class" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
                 <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -130,7 +125,7 @@
         <?php foreach ($tax_rates as $tax_rate) { ?>
         html += '    <option value="<?php echo $tax_rate['tax_rate_id']; ?>"><?php echo addslashes($tax_rate['name']); ?></option>';
         <?php } ?>
-    html += '  </select></td>';
+        html += '  </select></td>';
         html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][based]" class="form-control">';
         html += '    <option value="shipping"><?php echo $text_shipping; ?></option>';
         html += '    <option value="payment"><?php echo $text_payment; ?></option>';

@@ -193,3 +193,33 @@ a.editable-click:hover {
 .file-preview-frame {
     margin: 4px !important;
 }
+
+.well .row .filter-tag {
+    margin-top: 10px;
+    margin-bottom: -10px;
+}
+.well .row .filter-tag .filter-info.pull-left {
+    margin-right: 15px;
+    border-radius: 2px;
+    padding-left: 10px;
+    padding-top: 7px;
+    color: #E6E6E6;
+    background-color: #008db9;
+}
+
+.well .row .filter-tag .filter-info.pull-left .filter-label {
+    font-weight: initial;
+}
+
+.well .row .filter-tag .filter-info.pull-left .filter-remove {
+    color: #E6E6E6;
+    margin-left: 5px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.btn-basic-list {
+    padding: 0px 5px;
+    margin-right: 2px;
+    border: none;
+}

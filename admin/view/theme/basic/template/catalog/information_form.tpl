@@ -8,11 +8,6 @@
                 <button type="submit" onclick="save('new')" form="form-information" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
                 <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -52,10 +47,10 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><?php echo $entry_seo_url; ?></span></label>
                                             <div class="col-sm-10" style="padding-top: 5px;">
-                              <span>
-                                 <?php $link = str_replace(basename($preview[$language['language_id']]), '', $preview[$language['language_id']]);
-                                    echo $link; ?><span class="seo-url" data-lang="<?php echo $language['language_id']; ?> "><?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?></span>
-                              </span>
+                                                <span>
+                                                    <?php $link = str_replace(basename($preview[$language['language_id']]), '', $preview[$language['language_id']]);
+                                                     echo $link; ?><span class="seo-url" data-lang="<?php echo $language['language_id']; ?> "><?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?></span>
+                                                </span>
                                                 <input type="hidden" name="seo_url[<?php echo $language['language_id']; ?>]" value="<?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?>" placeholder="<?php echo $entry_seo_url; ?>" id="input-seo-url-<?php echo $language['language_id']; ?>" class="form-control" />
                                                 <div class="pull-right">
                                                     <a href="<?php echo $preview[$language['language_id']]; ?>" data-toggle="tooltip" title="<?php echo $text_preview; ?>" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></a>
@@ -78,7 +73,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="right-col col-sm-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -115,7 +109,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title"><?php echo $tab_data; ?></h3>
@@ -130,12 +123,12 @@
                                     <div class="col-sm-9">
                                         <div class="checkbox">
                                             <label>
-                                                <?php if ($bottom) { ?>
-                                                <input type="checkbox" name="bottom" value="1" checked="checked" id="input-bottom" />
-                                                <?php } else { ?>
-                                                <input type="checkbox" name="bottom" value="1" id="input-bottom" />
-                                                <?php } ?>
-                                                &nbsp; </label>
+                                            <?php if ($bottom) { ?>
+                                            <input type="checkbox" name="bottom" value="1" checked="checked" id="input-bottom" />
+                                            <?php } else { ?>
+                                            <input type="checkbox" name="bottom" value="1" id="input-bottom" />
+                                            <?php } ?>
+                                            &nbsp; </label>
                                         </div>
                                     </div>
                                 </div>
@@ -166,27 +159,27 @@
     $(document).ready(function() {
         <?php foreach ($languages as $language) { ?>
             textEditor('#input-description<?php echo $language["language_id"]; ?>');
-            <?php } ?>
+        <?php } ?>
         $.fn.editable.defaults.mode = 'inline';
 
         $('.seo-url').editable({
-        url: function (params) {
-            $.ajax({
-                type: 'post',
-                url: 'index.php?route=catalog/information/inline&token=<?php echo $token; ?>&information_id=<?php echo $information_id;?>',
-        data: {seo_url: params.value, language_id : $(this).attr('data-lang')},
-        async: false,
-        success: function(json) {
-            $('#input-seo-url-' +  json['language_id']).val(params.value);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            return false;
-        }
-        })
-        },
-        showbuttons: false,
+            url: function (params) {
+                $.ajax({
+                    type: 'post',
+                    url: 'index.php?route=catalog/information/inline&token=<?php echo $token; ?>&information_id=<?php echo $information_id;?>',
+                    data: {seo_url: params.value, language_id : $(this).attr('data-lang')},
+                    async: false,
+                    success: function(json) {
+                        $('#input-seo-url-' +  json['language_id']).val(params.value);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        return false;
+                    }
+                })
+            },
+            showbuttons: false,
         });
-        });
+    });
     //--></script>
     <script type="text/javascript"><!--
     $('#language a:first').tab('show');

@@ -3,11 +3,6 @@
     <div class="page-header">
         <div class="container-fluid">
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -39,6 +34,24 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_ip) || !empty($filter_customer)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_ip) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_ip; ?>:</label> <label class="filter-label"> <?php echo $filter_ip; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_ip');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_customer) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_customer; ?>:</label> <label class="filter-label"> <?php echo $filter_customer; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_customer');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -58,9 +71,9 @@
                             <td class="text-left"><a href="http://whatismyipaddress.com/ip/<?php echo $customer['ip']; ?>" target="_blank"><?php echo $customer['ip']; ?></a></td>
                             <td class="text-left">
                                 <?php if ($customer['customer_id']) { ?>
-                                <a href="<?php echo $customer['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                                <a href="<?php echo $customer['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                 <?php } else { ?>
-                                <button type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" disabled="disabled"><i class="fa fa-pencil"></i></button>
+                                <button type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list" disabled="disabled"><i class="fa fa-pencil"></i></button>
                                 <?php } ?>
                                 <?php echo $customer['customer']; ?></td>
                             <td class="text-left"><a href="<?php echo $customer['url']; ?>" target="_blank"><?php echo implode('<br/>', str_split($customer['url'], 30)); ?></a></td>
@@ -68,7 +81,6 @@
                                 <a href="<?php echo $customer['referer']; ?>" target="_blank"><?php echo implode('<br/>', str_split($customer['referer'], 30)); ?></a>
                                 <?php } ?></td>
                             <td class="text-left"><?php echo $customer['date_added']; ?></td>
-                            <td class="text-right">
                         </tr>
                         <?php } ?>
                         <?php } else { ?>
@@ -103,18 +115,6 @@
         }
 
         location = url;
-    }
-
-    function changeFilterType(text, filter_type) {
-        $('.filter-type').text(text);
-
-        $('.filter').addClass('hidden');
-        $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-        $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-        if (filter_type == 'filter_date_start' || filter_type == 'filter_date_end') {
-            $('.well .input-group-btn').removeClass('hidden');
-            $('.well .input-group').removeClass('hidden');
-        }
     }
     //--></script></div>
 <?php echo $footer; ?>
