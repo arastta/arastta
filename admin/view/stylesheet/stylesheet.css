@@ -2701,7 +2701,7 @@ li.basic-advanced {
 #content .page-header .pull-right {
     right: 5px;
     top: 51px;
-    z-index: 9999;
+    z-index: 9;
     background: #F5F5F5;
 }
 
