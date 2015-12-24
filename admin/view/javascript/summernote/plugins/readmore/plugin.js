@@ -46,7 +46,9 @@ $(document).ready(function() {
 				content = content.replace(/<img[^>]+>/g, function( image ) {
 					if ( image.indexOf( 'data-readmore="more"' ) !== -1 ) {
 						return '<p><!--readmore--></p>';
-					}
+					} else {
+                        return image;
+                    }
 				});
 
 				value.value = content;

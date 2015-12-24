@@ -52,6 +52,7 @@ class EventEditorSummernote extends Event
 
         $this->document->addStyle('view/javascript/summernote/summernote.css');
         $this->document->addScript('view/javascript/summernote/summernote.js');
+        $this->document->addScript('view/javascript/summernote/summernote-xtd.js');
 
         if ($editor_language != 'en-US') {
             $this->document->addScript('view/javascript/summernote/lang/summernote-' . $editor_language . '.js');
@@ -104,6 +105,7 @@ class EventEditorSummernote extends Event
         $script .= "      height: " . $this->height . "," . chr(13) . chr(9) . chr(9);
         $script .= "      lang: '" . $editor_language . "'" . chr(13) . chr(9) . chr(9);
         $script .= "   });" . chr(13) . chr(9) . chr(9);
+        $script .= "   imageDialog();";
         $script .= "}" . chr(9) . chr(9);
     
         $this->document->addScriptDeclarations($script);
