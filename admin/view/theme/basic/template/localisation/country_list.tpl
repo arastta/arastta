@@ -6,11 +6,6 @@
                 <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-country').submit() : false;"><i class="fa fa-trash-o"></i></button>
             </div>
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -68,6 +63,36 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_country) || !empty($filter_iso_code_2) || !empty($filter_iso_code_3) || !empty($filter_status)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_country) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_name; ?>:</label> <label class="filter-label"> <?php echo $filter_country; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_country');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_iso_code_2) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_iso_code_2; ?>:</label> <label class="filter-label"> <?php echo $filter_iso_code_2; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_iso_code_2');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if (isset($filter_iso_code_3)) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_iso_code_3; ?>:</label> <label class="filter-label"> <?php echo $filter_iso_code_3; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_iso_code_3');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_status) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_status; ?>:</label> <label class="filter-label"> <?php echo $filter_status; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_status');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-country">
                     <div class="table-responsive">
@@ -79,16 +104,16 @@
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
                                         <span class="item-selected"></span>
-                    <span class="bulk-action-button">
-                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                          <b><?php echo $text_bulk_action; ?></b>
-                          <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
-                          <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                          <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-country').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
-                      </ul>
-                    </span>
+                                        <span class="bulk-action-button">
+                                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                              <b><?php echo $text_bulk_action; ?></b>
+                                              <span class="caret"></span>
+                                          </a>
+                                          <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
+                                              <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
+                                              <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-country').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                          </ul>
+                                        </span>
                                     </div></td>
                                 <td class="text-left"><?php if ($sort == 'name') { ?>
                                     <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
@@ -117,7 +142,7 @@
                                     <input type="checkbox" name="selected[]" value="<?php echo $country['country_id']; ?>" />
                                     <?php } ?></td>
                                 <td class="text-left">
-                                    <a href="<?php echo $country['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                                    <a href="<?php echo $country['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $country['name']; ?></td>
                                 <td class="text-left"><?php echo $country['iso_code_2']; ?></td>
                                 <td class="text-left"><?php echo $country['iso_code_3']; ?></td>
@@ -140,6 +165,71 @@
         </div>
     </div>
 </div>
+<script type="text/javascript"><!--
+$('input[name=\'filter_country\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=localisation/country/autocomplete&token=<?php echo $token; ?>&filter_country=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['country'],
+                        value: item['country_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_country\']').val(item['label']);
+        filter();
+    }
+});
+
+$('input[name=\'filter_iso_code_2\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=localisation/country/autocomplete&token=<?php echo $token; ?>&filter_iso_code_2=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['iso_code_2'],
+                        value: item['country_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_iso_code_2\']').val(item['label']);
+        filter();
+    }
+});
+
+$('input[name=\'filter_iso_code_3\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=localisation/country/autocomplete&token=<?php echo $token; ?>&filter_iso_code_3=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['iso_code_3'],
+                        value: item['country_id']
+                    }
+                }));
+
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_iso_code_3\']').val(item['label']);
+        filter();
+    }
+});
+//--></script>
 <script type="text/javascript"><!--
 function filter() {
     var url = 'index.php?route=localisation/country&token=<?php echo $token; ?>';
@@ -170,75 +260,5 @@ function filter() {
 
     location = url;
 }
-
-function changeFilterType(text, filter_type) {
-    $('.filter-type').text(text);
-
-    $('.filter').addClass('hidden');
-    $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-    $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-}
-//--></script>
-<script type="text/javascript"><!--
-$('input[name=\'filter_country\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=localisation/country/autocomplete&token=<?php echo $token; ?>&filter_country=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['country'],
-                        value: item['country_id']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_country\']').val(item['label']);
-    }
-});
-
-$('input[name=\'filter_iso_code_2\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=localisation/country/autocomplete&token=<?php echo $token; ?>&filter_iso_code_2=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['iso_code_2'],
-                        value: item['country_id']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_iso_code_2\']').val(item['label']);
-    }
-});
-
-$('input[name=\'filter_iso_code_3\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=localisation/country/autocomplete&token=<?php echo $token; ?>&filter_iso_code_3=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['iso_code_3'],
-                        value: item['country_id']
-                    }
-                }));
-
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_iso_code_3\']').val(item['label']);
-    }
-});
 //--></script>
 <?php echo $footer; ?>

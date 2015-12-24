@@ -8,11 +8,6 @@
                 <button type="submit" onclick="save('new')" form="form-coupon" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
                 <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -156,9 +151,9 @@
                                     <div class="col-sm-3">
                                         <div class="input-group date">
                                             <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
-                        <span class="input-group-btn">
-                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                        </span></div>
+                                            <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                            </span></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -166,9 +161,9 @@
                                     <div class="col-sm-3">
                                         <div class="input-group date">
                                             <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
-                        <span class="input-group-btn">
-                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                        </span></div>
+                                            <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                            </span></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -186,7 +181,6 @@
                             </div>
                         </div>
                     </div>
-
                     <?php if ($coupon_id) { ?>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -203,7 +197,6 @@
                     </div>
                     <?php } ?>
                 </div>
-
                 <div class="right-col col-sm-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">

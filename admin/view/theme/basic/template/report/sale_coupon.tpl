@@ -3,11 +3,6 @@
     <div class="page-header">
         <div class="container-fluid">
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -47,6 +42,24 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_date_start) || !empty($filter_date_end)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_date_start) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_date_start; ?>:</label> <label class="filter-label"> <?php echo $filter_date_start; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_date_start');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_date_end) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_date_end; ?>:</label> <label class="filter-label"> <?php echo $filter_date_end; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_date_end');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -63,7 +76,7 @@
                         <?php foreach ($coupons as $coupon) { ?>
                         <tr>
                             <td class="text-left">
-                                <a href="<?php echo $coupon['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                                <a href="<?php echo $coupon['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                 <?php echo $coupon['name']; ?></td>
                             <td class="text-left"><?php echo $coupon['code']; ?></td>
                             <td class="text-right"><?php echo $coupon['orders']; ?></td>
@@ -102,18 +115,6 @@
         }
 
         location = url;
-    }
-
-    function changeFilterType(text, filter_type) {
-        $('.filter-type').text(text);
-
-        $('.filter').addClass('hidden');
-        $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-        $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-        if (filter_type == 'filter_date_start' || filter_type == 'filter_date_end') {
-            $('.well .input-group-btn .' + filter_type).removeClass('hidden');
-            $('.well .input-group .' + filter_type).removeClass('hidden');
-        }
     }
     //--></script>
     <script type="text/javascript"><!--

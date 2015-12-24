@@ -170,7 +170,7 @@
     </div>
     <script type="text/javascript"><!--
     $('#button-filter').on('click', function() {
-        url = 'index.php?route=sale/order&token=<?php echo $token; ?>';
+        url = 'index.php?route=sale/invoice&token=<?php echo $token; ?>';
 
         var filter_invoice_number = $('input[name=\'filter_invoice_number\']').val();
 

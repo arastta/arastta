@@ -6,11 +6,6 @@
                 <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-return').submit() : false;"><i class="fa fa-trash-o"></i></button>
             </div>
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -81,6 +76,67 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_return_id) || !empty($filter_order_id) || !empty($filter_customer) || !empty($filter_product) || !empty($filter_model) || isset($filter_return_status_id) || !empty($filter_date_added) || !empty($filter_date_modified)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_return_id) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_return_id; ?>:</label> <label class="filter-label"> <?php echo $filter_return_id; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_return_id');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_order_id) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_order_id; ?>:</label> <label class="filter-label"> <?php echo $filter_order_id; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_order_id');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_customer) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_customer; ?>:</label> <label class="filter-label"> <?php echo $filter_customer; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_customer');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_product) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_product; ?>:</label> <label class="filter-label"> <?php echo $filter_product; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_product');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_model) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_model; ?>:</label> <label class="filter-label"> <?php echo $filter_model; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_model');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_return_status_id) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_return_status; ?>:</label> 
+                                <label class="filter-label"> 
+                                <?php foreach ($return_statuses as $return_status) { ?>
+                                    <?php if ($return_status['return_status_id'] == $filter_return_status_id) { ?>
+                                    <?php echo $return_status['name']; ?>
+                                    <?php } ?>
+                                <?php } ?>
+                                </label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_return_status_id');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_date_added) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_date_added; ?>:</label> <label class="filter-label"> <?php echo $filter_date_added; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_date_added');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_date_modified) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_date_modified; ?>:</label> <label class="filter-label"> <?php echo $filter_date_modified; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_date_modified');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-return">
                     <div class="table-responsive">
@@ -155,7 +211,7 @@
                                     <input type="checkbox" name="selected[]" value="<?php echo $return['return_id']; ?>" />
                                     <?php } ?></td>
                                 <td class="text-right">
-                                    <a href="<?php echo $return['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                                    <a href="<?php echo $return['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $return['return_id']; ?>
                                 </td>
                                 <td class="text-right"><?php echo $return['order_id']; ?></td>
@@ -183,6 +239,70 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript"><!--
+    $('input[name=\'filter_customer\']').autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['name'],
+                            value: item['customer_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $('input[name=\'filter_customer\']').val(item['label']);
+            filter();
+        }
+    });
+
+    $('input[name=\'filter_product\']').autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['name'],
+                            value: item['product_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $('input[name=\'filter_product\']').val(item['label']);
+            filter();
+        }
+    });
+
+    $('input[name=\'filter_model\']').autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_model=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['model'],
+                            value: item['product_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $('input[name=\'filter_model\']').val(item['label']);
+            filter();
+        }
+    });
+    //--></script>
     <script type="text/javascript"><!--
     function filter() {
         url = 'index.php?route=sale/return&token=<?php echo $token; ?>';
@@ -237,79 +357,6 @@
 
         location = url;
     }
-
-    function changeFilterType(text, filter_type) {
-        $('.filter-type').text(text);
-
-        $('.filter').addClass('hidden');
-        $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-        $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-        if (filter_type == 'filter_date_added' || filter_type == 'filter_date_modified') {
-            $('.well .input-group-btn .' + filter_type).removeClass('hidden');
-            $('.well .input-group .' + filter_type).removeClass('hidden');
-        }
-    }
-    //--></script>
-    <script type="text/javascript"><!--
-    $('input[name=\'filter_customer\']').autocomplete({
-        'source': function(request, response) {
-            $.ajax({
-                url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-                dataType: 'json',
-                success: function(json) {
-                    response($.map(json, function(item) {
-                        return {
-                            label: item['name'],
-                            value: item['customer_id']
-                        }
-                    }));
-                }
-            });
-        },
-        'select': function(item) {
-            $('input[name=\'filter_customer\']').val(item['label']);
-        }
-    });
-
-    $('input[name=\'filter_product\']').autocomplete({
-        'source': function(request, response) {
-            $.ajax({
-                url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-                dataType: 'json',
-                success: function(json) {
-                    response($.map(json, function(item) {
-                        return {
-                            label: item['name'],
-                            value: item['product_id']
-                        }
-                    }));
-                }
-            });
-        },
-        'select': function(item) {
-            $('input[name=\'filter_product\']').val(item['label']);
-        }
-    });
-
-    $('input[name=\'filter_model\']').autocomplete({
-        'source': function(request, response) {
-            $.ajax({
-                url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_model=' +  encodeURIComponent(request),
-                dataType: 'json',
-                success: function(json) {
-                    response($.map(json, function(item) {
-                        return {
-                            label: item['model'],
-                            value: item['product_id']
-                        }
-                    }));
-                }
-            });
-        },
-        'select': function(item) {
-            $('input[name=\'filter_model\']').val(item['label']);
-        }
-    });
     //--></script>
     <script type="text/javascript"><!--
     $('.date').datetimepicker({

@@ -6,11 +6,6 @@
                 <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
             </div>
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -68,6 +63,36 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_country) || !empty($filter_zone_name) || !empty($filter_zone_code) || !empty($filter_status)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_country) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_country; ?>:</label> <label class="filter-label"> <?php echo $filter_country; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_country');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_zone_name) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_name; ?>:</label> <label class="filter-label"> <?php echo $filter_zone_name; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_zone_name');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if (isset($filter_zone_code)) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_code; ?>:</label> <label class="filter-label"> <?php echo ($filter_zone_code) ? $text_enabled : $text_disabled; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_zone_code');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_status) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_status; ?>:</label> <label class="filter-label"> <?php echo $filter_status; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_status');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-zone">
                     <div class="table-responsive">
@@ -79,16 +104,16 @@
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
                                         <span class="item-selected"></span>
-                    <span class="bulk-action-button">
-                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                          <b><?php echo $text_bulk_action; ?></b>
-                          <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
-                          <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                          <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-zone').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
-                      </ul>
-                    </span>
+                                        <span class="bulk-action-button">
+                                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                              <b><?php echo $text_bulk_action; ?></b>
+                                              <span class="caret"></span>
+                                          </a>
+                                          <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
+                                              <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
+                                              <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-zone').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                          </ul>
+                                        </span>
                                     </div></td>
                                 <td class="text-left"><?php if ($sort == 'c.name') { ?>
                                     <a href="<?php echo $sort_country; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_country; ?></a>
@@ -117,7 +142,7 @@
                                     <input type="checkbox" name="selected[]" value="<?php echo $zone['zone_id']; ?>" />
                                     <?php } ?></td>
                                 <td class="text-left">
-                                    <a href="<?php echo $zone['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                                    <a href="<?php echo $zone['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $zone['country']; ?></td>
                                 <td class="text-left"><?php echo $zone['name']; ?></td>
                                 <td class="text-left"><?php echo $zone['code']; ?></td>
@@ -140,6 +165,71 @@
         </div>
     </div>
 </div>
+<script type="text/javascript"><!--
+$('input[name=\'filter_country\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=localisation/zone/autocomplete&token=<?php echo $token; ?>&filter_country=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['country'],
+                        value: item['country_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_country\']').val(item['label']);
+        filter();
+    }
+});
+
+$('input[name=\'filter_zone_name\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=localisation/zone/autocomplete&token=<?php echo $token; ?>&filter_zone_name=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['zone_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_zone_name\']').val(item['label']);
+        filter();
+    }
+});
+
+$('input[name=\'filter_zone_code\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=localisation/zone/autocomplete&token=<?php echo $token; ?>&filter_zone_code=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['code'],
+                        value: item['zone_id']
+                    }
+                }));
+
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_zone_code\']').val(item['label']);
+        filter();
+    }
+});
+//--></script>
 <script type="text/javascript"><!--
 function filter() {
     var url = 'index.php?route=localisation/zone&token=<?php echo $token; ?>';
@@ -170,75 +260,5 @@ function filter() {
 
     location = url;
 }
-
-function changeFilterType(text, filter_type) {
-    $('.filter-type').text(text);
-
-    $('.filter').addClass('hidden');
-    $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-    $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-}
-//--></script>
-<script type="text/javascript"><!--
-$('input[name=\'filter_country\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=localisation/zone/autocomplete&token=<?php echo $token; ?>&filter_country=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['country'],
-                        value: item['country_id']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_country\']').val(item['label']);
-    }
-});
-
-$('input[name=\'filter_zone_name\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=localisation/zone/autocomplete&token=<?php echo $token; ?>&filter_zone_name=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['name'],
-                        value: item['zone_id']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_zone_name\']').val(item['label']);
-    }
-});
-
-$('input[name=\'filter_zone_code\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=localisation/zone/autocomplete&token=<?php echo $token; ?>&filter_zone_code=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['code'],
-                        value: item['zone_id']
-                    }
-                }));
-
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_zone_code\']').val(item['label']);
-    }
-});
 //--></script>
 <?php echo $footer; ?>

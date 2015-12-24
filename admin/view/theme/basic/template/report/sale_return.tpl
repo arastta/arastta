@@ -3,11 +3,6 @@
     <div class="page-header">
         <div class="container-fluid">
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -68,6 +63,43 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_date_start) || !empty($filter_date_end) || !empty($filter_group) || isset($filter_return_status_id)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_date_start) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_date_start; ?>:</label> <label class="filter-label"> <?php echo $filter_date_start; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_date_start');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_date_end) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_date_end; ?>:</label> <label class="filter-label"> <?php echo $filter_date_end; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_date_end');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_group) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_group; ?>:</label> <label class="filter-label"> <?php echo $filter_group; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_group');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_return_status_id) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_status; ?>:</label> 
+                                <label class="filter-label"> 
+                                <?php foreach ($return_statuses as $return_status) { ?>
+                                <?php if ($return_status['return_status_id'] == $filter_return_status_id) { ?>
+                                <?php echo $return_status['name']; ?>
+                                <?php } ?>
+                                <?php } ?>
+                                </label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_return_status_id');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -124,25 +156,13 @@
             url += '&filter_group=' + encodeURIComponent(filter_group);
         }
 
-        var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
+        var filter_return_status_id = $('select[name=\'filter_return_status_id\']').val();
 
-        if (filter_order_status_id != 0) {
-            url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+        if (filter_return_status_id != 0) {
+            url += '&filter_return_status_id=' + encodeURIComponent(filter_return_status_id);
         }
 
         location = url;
-    }
-
-    function changeFilterType(text, filter_type) {
-        $('.filter-type').text(text);
-
-        $('.filter').addClass('hidden');
-        $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-        $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-        if (filter_type == 'filter_date_start' || filter_type == 'filter_date_end') {
-            $('.well .input-group-btn .' + filter_type).removeClass('hidden');
-            $('.well .input-group .' + filter_type).removeClass('hidden');
-        }
     }
     //--></script>
     <script type="text/javascript"><!--

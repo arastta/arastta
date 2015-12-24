@@ -85,17 +85,17 @@
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
                                         <span class="item-selected"></span>
-                    <span class="bulk-action-button">
-                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                          <b><?php echo $text_bulk_action; ?></b>
-                          <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
-                          <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                          <li><a onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i> <?php echo $button_enable; ?></a></li>
-                          <li><a onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i> <?php echo $button_disable; ?></a></li>
-                      </ul>
-                    </span>
+                                        <span class="bulk-action-button">
+                                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                              <b><?php echo $text_bulk_action; ?></b>
+                                              <span class="caret"></span>
+                                          </a>
+                                          <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
+                                              <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
+                                              <li><a onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i> <?php echo $button_enable; ?></a></li>
+                                              <li><a onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i> <?php echo $button_disable; ?></a></li>
+                                          </ul>
+                                        </span>
                                     </div></td>
                                 <td class="text-left"><?php if ($sort == 'name') { ?>
                                     <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
@@ -128,8 +128,8 @@
                             <tr>
                                 <td class="text-center"><input type="checkbox" name="selected[]" value="<?php echo $extension['type'] . '/' . $extension['code']; ?>" /></td>
                                 <td class="text-left">
-                                    <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
-                                    <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>"><i class="fa fa-minus-circle"></i></a>
+                                    <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"  class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
+                                    <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>"  class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></a>
                                     <?php echo $extension['name']; ?>
                                     <?php if ($extension['instances']) { ?>
                                     <?php foreach ($extension['instances'] as $instance) { ?>
@@ -138,8 +138,8 @@
                                             <td class="text-left">&nbsp;</td>
                                             <td class="text-left" colspan="6">
                                                 &nbsp;&nbsp;&nbsp;&#8618;&nbsp;&nbsp;<?php echo $instance['name']; ?>&nbsp;&nbsp;
-                                                <a href="<?php echo $instance['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
-                                                <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $instance['delete']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_delete; ?>"><i class="fa fa-trash"></i></a>
+                                                <a href="<?php echo $instance['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
+                                                <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $instance['delete']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     </table>
@@ -170,6 +170,8 @@
     </div>
 </div>
 <script type="text/javascript"><!--
+var status_type = 'extension';
+
 function filter() {
     url = 'index.php?route=extension/extension&token=<?php echo $token; ?>';
 
@@ -198,30 +200,6 @@ function filter() {
     }
 
     location = url;
-}
-
-function changeFilterType(text, filter_type) {
-    $('.filter-type').text(text);
-
-    $('.filter').addClass('hidden');
-    $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-    $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-}
-
-function changeStatus(status) {
-    $.ajax({
-        url: 'index.php?route=extension/extension/changeStatus&status='+ status +'&token=<?php echo $token; ?>',
-        dataType: 'json',
-        data: $("form").serialize(),
-        success: function(json) {
-            if(json){
-                $('.panel.panel-default').before('<div class="alert alert-warning"><i class="fa fa-warning"></i> ' + json.warning + '<button type="button" class="close" data-dismiss="alert">×</button></div>');
-            }
-            else{
-                location.reload();
-            }
-        }
-    });
 }
 //--></script>
 <?php echo $footer; ?>

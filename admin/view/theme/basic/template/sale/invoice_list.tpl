@@ -77,6 +77,58 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_order_id) || !empty($filter_invoice_number) || !empty($filter_customer) || !empty($filter_order_status) || !empty($filter_order_date) || !empty($filter_invoice_date)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_order_id) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_order_id; ?>:</label> <label class="filter-label"> <?php echo $filter_order_id; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_order_id');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_invoice_number) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_invoice_number; ?>:</label> <label class="filter-label"> <?php echo $filter_invoice_number; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_invoice_number');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_customer) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_customer; ?>:</label> <label class="filter-label"> <?php echo $filter_customer; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_customer');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_order_status) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_date_end; ?>:</label>
+                                <label class="filter-label"> 
+                                <?php if ($filter_order_status == '0') { ?>
+                                <?php echo $text_missing; ?>
+                                <?php } ?>
+                                <?php foreach ($order_statuses as $order_status) { ?>
+                                <?php if ($order_status['order_status_id'] == $filter_order_status) { ?>
+                                <?php echo $order_status['name']; ?>
+                                <?php } ?>
+                                <?php } ?>
+                                </label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_order_status');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_order_date) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_order_date; ?>:</label> <label class="filter-label"> <?php echo $filter_order_date; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_order_date');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_invoice_date) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_invoice_date; ?>:</label> <label class="filter-label"> <?php echo $filter_invoice_date; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_invoice_date');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <form method="post" enctype="multipart/form-data" target="_blank" id="form-invoice">
                     <div class="table-responsive">
@@ -132,9 +184,9 @@
                             <?php foreach ($invoices as $invoice) { ?>
                             <tr>
                                 <td class="text-right">
-                                    <a href="<?php echo $invoice['info']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>"><i class="fa fa-eye"></i></a>
-                                    <a href="<?php echo $invoice['email']; ?>" data-toggle="tooltip" title="<?php echo $button_email; ?>"><i class="fa fa-envelope"></i></a>
-                                    <a href="<?php echo $invoice['pdf']; ?>" data-toggle="tooltip" title="<?php echo $button_pdf; ?>"><i class="fa fa-file-pdf-o"></i></a>
+                                    <a href="<?php echo $invoice['info']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info btn-sm btn-basic-list"><i class="fa fa-eye"></i></a>
+                                    <a href="<?php echo $invoice['email']; ?>" data-toggle="tooltip" title="<?php echo $button_email; ?>" class="btn btn-success btn-sm btn-basic-list"><i class="fa fa-envelope"></i></a>
+                                    <a href="<?php echo $invoice['pdf']; ?>" data-toggle="tooltip" title="<?php echo $button_pdf; ?>" class="btn btn-warning btn-sm btn-basic-list"><i class="fa fa-file-pdf-o"></i></a>
                                     <?php echo $invoice['invoice_number']; ?></td>
                                 <td class="text-left"><?php echo $invoice['invoice_date']; ?></td>
                                 <td class="text-right"><?php echo $invoice['order_id']; ?></td>
@@ -161,8 +213,30 @@
         </div>
     </div>
     <script type="text/javascript"><!--
+    $('input[name=\'filter_customer\']').autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['name'],
+                            value: item['customer_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $('input[name=\'filter_customer\']').val(item['label']);
+            filter();
+        }
+    });
+    //--></script>
+    <script type="text/javascript"><!--
     function filter() {
-        url = 'index.php?route=sale/order&token=<?php echo $token; ?>';
+        url = 'index.php?route=sale/invoice&token=<?php echo $token; ?>';
 
         var filter_invoice_number = $('input[name=\'filter_invoice_number\']').val();
 
@@ -202,39 +276,6 @@
 
         location = url;
     }
-
-    function changeFilterType(text, filter_type) {
-        $('.filter-type').text(text);
-
-        $('.filter').addClass('hidden');
-        $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-        $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-        if (filter_type == 'filter_order_date' || filter_type == 'filter_invoice_date') {
-            $('.well .input-group-btn .' + filter_type).removeClass('hidden');
-            $('.well .input-group .' + filter_type).removeClass('hidden');
-        }
-    }
-    //--></script>
-    <script type="text/javascript"><!--
-    $('input[name=\'filter_customer\']').autocomplete({
-        'source': function(request, response) {
-            $.ajax({
-                url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-                dataType: 'json',
-                success: function(json) {
-                    response($.map(json, function(item) {
-                        return {
-                            label: item['name'],
-                            value: item['customer_id']
-                        }
-                    }));
-                }
-            });
-        },
-        'select': function(item) {
-            $('input[name=\'filter_customer\']').val(item['label']);
-        }
-    });
     //--></script>
     <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
     <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />

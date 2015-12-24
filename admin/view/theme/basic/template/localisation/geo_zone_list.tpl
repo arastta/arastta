@@ -6,11 +6,6 @@
                 <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
             </div>
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -52,6 +47,24 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_name) || !empty($filter_description)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_name) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_name; ?>:</label> <label class="filter-label"> <?php echo $filter_name; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_name');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_description) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_description; ?>:</label> <label class="filter-label"> <?php echo $filter_description; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_description');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>                    
                 </div>
                 <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-geo-zone">
                     <div class="table-responsive">
@@ -63,16 +76,16 @@
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
                                         <span class="item-selected"></span>
-                    <span class="bulk-action-button">
-                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                          <b><?php echo $text_bulk_action; ?></b>
-                          <span class="caret"></span>
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
-                          <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                          <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-geo-zone').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
-                      </ul>
-                    </span>
+                                        <span class="bulk-action-button">
+                                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                              <b><?php echo $text_bulk_action; ?></b>
+                                              <span class="caret"></span>
+                                          </a>
+                                          <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
+                                              <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
+                                              <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-geo-zone').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                          </ul>
+                                        </span>
                                     </div></td>
                                 <td class="text-left"><?php if ($sort == 'name') { ?>
                                     <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
@@ -96,7 +109,7 @@
                                     <input type="checkbox" name="selected[]" value="<?php echo $geo_zone['geo_zone_id']; ?>" />
                                     <?php } ?></td>
                                 <td class="text-left">
-                                    <a href="<?php echo $geo_zone['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                                    <a href="<?php echo $geo_zone['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $geo_zone['name']; ?></td>
                                 <td class="text-left"><?php echo $geo_zone['description']; ?></td>
                             </tr>
@@ -119,33 +132,6 @@
     </div>
 </div>
 <script type="text/javascript"><!--
-function filter() {
-    var url = 'index.php?route=localisation/geo_zone&token=<?php echo $token; ?>';
-
-    var filter_name = $('input[name=\'filter_name\']').val();
-
-    if (filter_name) {
-        url += '&filter_name=' + encodeURIComponent(filter_name);
-    }
-
-    var filter_description = $('input[name=\'filter_description\']').val();
-
-    if (filter_description) {
-        url += '&filter_description=' + encodeURIComponent(filter_description);
-    }
-
-    location = url;
-}
-
-function changeFilterType(text, filter_type) {
-    $('.filter-type').text(text);
-
-    $('.filter').addClass('hidden');
-    $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-    $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-}
-//--></script>
-<script type="text/javascript"><!--
 $('input[name=\'filter_name\']').autocomplete({
     'source': function(request, response) {
         $.ajax({
@@ -163,6 +149,7 @@ $('input[name=\'filter_name\']').autocomplete({
     },
     'select': function(item) {
         $('input[name=\'filter_name\']').val(item['label']);
+        filter();
     }
 });
 
@@ -183,7 +170,27 @@ $('input[name=\'filter_description\']').autocomplete({
     },
     'select': function(item) {
         $('input[name=\'filter_description\']').val(item['label']);
+        filter();
     }
 });
+//--></script>
+<script type="text/javascript"><!--
+function filter() {
+    var url = 'index.php?route=localisation/geo_zone&token=<?php echo $token; ?>';
+
+    var filter_name = $('input[name=\'filter_name\']').val();
+
+    if (filter_name) {
+        url += '&filter_name=' + encodeURIComponent(filter_name);
+    }
+
+    var filter_description = $('input[name=\'filter_description\']').val();
+
+    if (filter_description) {
+        url += '&filter_description=' + encodeURIComponent(filter_description);
+    }
+
+    location = url;
+}
 //--></script>
 <?php echo $footer; ?>

@@ -8,11 +8,6 @@
                 <button type="submit" onclick="save('new')" form="form-affiliate" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
                 <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -191,7 +186,6 @@
                             </div>
                         </div>
                     </div>
-
                     <?php if ($affiliate_id) { ?>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -223,9 +217,7 @@
                         </div>
                     </div>
                     <?php } ?>
-
                 </div>
-
                 <div class="right-col col-sm-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -262,7 +254,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title"><?php echo $tab_payment; ?></h3>

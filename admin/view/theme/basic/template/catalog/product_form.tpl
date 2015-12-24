@@ -8,11 +8,6 @@
                 <button type="submit" onclick="save('new')" form="form-product" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
                 <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -280,17 +275,17 @@
                                     <div class="col-sm-9 tags-select">
                                         <select id="tags-<?php echo $language['language_id']; ?>" name="product_description[<?php echo $language['language_id']; ?>][tag][]" class="inputbox chzn-done tags-multi-select hidden" size="5" multiple="multiple" style="display: none !important;">
                                             <?php if (!empty($product_description[$language['language_id']]['tag'])) {
-                                        foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
+                                                    foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
                                             <option data-tag-remove="<?php echo $tag_key; ?>" value="<?php echo $tag_value; ?>" selected="selected"><?php echo $tag_value; ?></option>
-                                            <?php     }
-                                                                    } ?>
+                                            <?php   }
+                                                  } ?>
                                         </select>
                                         <div class="form-control">
                                             <?php if (!empty($product_description[$language['language_id']]['tag'])) {
-                                                                    foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
+                                                    foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
                                             <span class="tag-choice"><?php echo $tag_value; ?><a class="tag-choice-close" onclick="removeTag(this);" data-tag-remove-index="<?php echo $tag_key; ?>"><i class="fa fa-times"></i></a></span>
-                                            <?php     }
-                                                                  } ?>
+                                            <?php   }
+                                                  } ?>
                                             <input type="text" name="tag" value="" style="margin-top: -5px;" placeholder="<?php echo $entry_tag; ?>" id="input-tag<?php echo $language['language_id']; ?>" class="form-control input-full-width tag-select" />
                                         </div>
                                     </div>
@@ -602,19 +597,19 @@
                 $.ajax({
                     type: 'post',
                     url: 'index.php?route=catalog/product/inline&token=<?php echo $token; ?>&product_id=<?php echo $product_id;?>',
-        data: {seo_url: params.value, language_id : $(this).attr('data-lang')},
-        async: false,
-        success: function(json) {
-            $('#input-seo-url-' +  json['language_id']).val(params.value);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            return false;
-        }
-        })
-        },
-        showbuttons: false,
+                    data: {seo_url: params.value, language_id : $(this).attr('data-lang')},
+                    async: false,
+                    success: function(json) {
+                        $('#input-seo-url-' +  json['language_id']).val(params.value);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        return false;
+                    }
+                })
+            },
+            showbuttons: false,
         });
-        });
+    });
     //--></script>
     <script type="text/javascript"><!--
     // Manufacturer
@@ -646,10 +641,10 @@
     });
 
     <?php if (!empty($tag_key)) { ?>
-        var tag_key = '<?php echo $tag_key; ?>';
-        <?php } else  { ?>
-        var tag_key = 0;
-        <?php } ?>
+    var tag_key = '<?php echo $tag_key; ?>';
+    <?php } else  { ?>
+    var tag_key = 0;
+    <?php } ?>
 
     // Tag
     $('.tag-select').autocomplete({
@@ -981,26 +976,27 @@
             uploadAsync: true,
             overwriteInitial: false,
             initialPreview: [
-                <?php foreach ($product_images as $product_image) { ?>
+            <?php foreach ($product_images as $product_image) { ?>
             "<img src='<?php echo $product_image['thumb']; ?>' data-code='<?php echo $product_image['image']; ?>'/>",
             <?php } ?>
-        ],
-        initialPreviewConfig: [
-                <?php foreach ($product_images as $product_image) { ?>
-        {caption: "<?php echo basename($product_image['image']); ?>", url: "index.php?route=catalog/product/deleteImage&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>&image=<?php echo $product_image['image'] ; ?>", key: <?php echo $product_image['sort_order']; ?>},
+            ],
+            initialPreviewConfig: [
+            <?php foreach ($product_images as $product_image) { ?>
+            {caption: "<?php echo basename($product_image['image']); ?>", url: "index.php?route=catalog/product/deleteImage&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>&image=<?php echo $product_image['image'] ; ?>", key: <?php echo $product_image['sort_order']; ?>},
             <?php } ?>
-        ]
+            ]
         });
+        
         $("#input-image-addon").on("filepredelete", function(jqXHR) {
-                var abort = true;
-                if (confirm("<?php echo $text_delete_image; ?>")) {
-            abort = false;
-        }
-        return abort; // you can also send any data/object that you can receive on `filecustomerror` event
+            var abort = true;
+            if (confirm("<?php echo $text_delete_image; ?>")) {
+                abort = false;
+            }
+            return abort; // you can also send any data/object that you can receive on `filecustomerror` event
         });
 
         BasicImage.init();
-        });
+    });
 </script>
 <?php echo $footer; ?>
 <link href="view/javascript/jquery/layout/jquery-ui.css" type="text/css" rel="stylesheet" />

@@ -3,11 +3,6 @@
     <div class="page-header">
         <div class="container-fluid">
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -76,6 +71,49 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_text) || !empty($filter_context) || !empty($filter_name) || !empty($filter_type) || !empty($filter_status)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_text) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_text; ?>:</label> <label class="filter-label"> <?php echo $filter_text; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_text');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_context) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_context; ?>:</label> <label class="filter-label"> <?php echo $filter_context; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_context');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_name) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_name; ?>:</label> <label class="filter-label"> <?php echo $filter_name; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_name');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_type) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_type; ?>:</label> 
+                                <label class="filter-label"> 
+                                    <?php foreach ($types as $type) { ?>
+                                    <?php if ($filter_type == $type['id']) { ?>
+                                        <?php echo $type['value']; ?>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_type');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_status) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_status; ?>:</label> <label class="filter-label"> <?php echo ($filter_status) ? $text_enabled : $text_disabled; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_status');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <form action="<?php //echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-email-template">
                     <div class="table-responsive">
@@ -116,7 +154,7 @@
                                     <input type="checkbox" name="selected[]" value="<?php echo $email_template['id']; ?>" />
                                     <?php } ?></td>
                                 <td class="text-left">
-                                    <a href="<?php echo $email_template['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                                    <a href="<?php echo $email_template['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $email_template['text']; ?></td>
                                 <td class="text-left"><?php echo ucwords($email_template['type']); ?></td>
                                 <td class="text-left"><?php echo $email_template['context']; ?></td>
@@ -140,6 +178,28 @@
         </div>
     </div>
 </div>
+<script type="text/javascript"><!--
+$('input[name=\'filter_name\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=system/email_template/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_name\']').val(item['label']);
+        filter();
+    }
+});
+//--></script>
 <script type="text/javascript"><!--
 function filter() {
     var url = 'index.php?route=system/email_template&token=<?php echo $token; ?>';
@@ -176,34 +236,5 @@ function filter() {
 
     location = url;
 }
-
-function changeFilterType(text, filter_type) {
-    $('.filter-type').text(text);
-
-    $('.filter').addClass('hidden');
-    $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-    $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-}
-//--></script>
-<script type="text/javascript"><!--
-$('input[name=\'filter_name\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=system/email_template/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['name'],
-                        value: item['product_id']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_name\']').val(item['label']);
-    }
-});
 //--></script>
 <?php echo $footer; ?>

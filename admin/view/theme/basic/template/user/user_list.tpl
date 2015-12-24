@@ -65,6 +65,42 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_firstname) || !empty($filter_lastname) || !empty($filter_user_group) || isset($filter_status) || !empty($filter_email)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_firstname) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_firstname; ?>:</label> <label class="filter-label"> <?php echo $filter_firstname; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_firstname');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_lastname) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_lastname; ?>:</label> <label class="filter-label"> <?php echo $filter_lastname; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_lastname');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_user_group) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_user_group; ?>:</label> <label class="filter-label"> <?php echo $filter_user_group; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_user_group');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_status) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_status; ?>:</label> <label class="filter-label"> <?php echo ($filter_status) ? $text_enabled : $text_disabled; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_status');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_email) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_email; ?>:</label> <label class="filter-label"> <?php echo $filter_email; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_email');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-user">
                     <div class="table-responsive">
@@ -125,7 +161,7 @@
                                     <input type="checkbox" name="selected[]" value="<?php echo $user['user_id']; ?>" />
                                     <?php } ?></td>
                                 <td class="text-left">
-                                    <a href="<?php echo $user['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                                    <a href="<?php echo $user['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $user['firstname']; ?></td>
                                 <td class="text-left"><?php echo $user['lastname']; ?></td>
                                 <td class="text-left"><?php echo $user['email']; ?></td>
@@ -136,7 +172,7 @@
                             <?php } ?>
                             <?php } else { ?>
                             <tr>
-                                <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+                                <td class="text-center" colspan="7"><?php echo $text_no_results; ?></td>
                             </tr>
                             <?php } ?>
                             </tbody>
@@ -151,6 +187,94 @@
         </div>
     </div>
 </div>
+<script type="text/javascript"><!--
+$('input[name=\'filter_user_group\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=user/user/autocomplete&token=<?php echo $token; ?>&filter_user_group=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['user_group'],
+                        value: item['user_group_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_user_group\']').val(item['label']);
+        filter();
+    }
+});
+
+$('input[name=\'filter_firstname\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=user/user/autocomplete&token=<?php echo $token; ?>&filter_firstname=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['firstname'],
+                        value: item['user_id']
+                    }
+                }));
+
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_firstname\']').val(item['label']);
+        filter();
+    }
+});
+
+$('input[name=\'filter_lastname\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=user/user/autocomplete&token=<?php echo $token; ?>&filter_lastname=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['lastname'],
+                        value: item['user_id']
+                    }
+                }));
+
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_lastname\']').val(item['label']);
+        filter();
+    }
+});
+
+$('input[name=\'filter_email\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=user/user/autocomplete&token=<?php echo $token; ?>&filter_email=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['email'],
+                        value: item['user_id']
+                    }
+                }));
+
+            }
+        });
+    },
+    'select': function(item) {
+        $('input[name=\'filter_email\']').val(item['label']);
+        filter();
+    }
+});
+//--></script>
 <script type="text/javascript"><!--
 function filter() {
     var url = 'index.php?route=user/user&token=<?php echo $token; ?>';
@@ -187,97 +311,5 @@ function filter() {
 
     location = url;
 }
-
-function changeFilterType(text, filter_type) {
-    $('.filter-type').text(text);
-
-    $('.filter').addClass('hidden');
-    $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-    $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-}
-//--></script>
-<script type="text/javascript"><!--
-$('input[name=\'filter_user_group\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=user/user/autocomplete&token=<?php echo $token; ?>&filter_user_group=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['user_group'],
-                        value: item['user_group_id']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_user_group\']').val(item['label']);
-    }
-});
-
-$('input[name=\'filter_firstname\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=user/user/autocomplete&token=<?php echo $token; ?>&filter_firstname=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['firstname'],
-                        value: item['user_id']
-                    }
-                }));
-
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_firstname\']').val(item['label']);
-    }
-});
-
-$('input[name=\'filter_lastname\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=user/user/autocomplete&token=<?php echo $token; ?>&filter_lastname=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['lastname'],
-                        value: item['user_id']
-                    }
-                }));
-
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_lastname\']').val(item['label']);
-    }
-});
-
-$('input[name=\'filter_email\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=user/user/autocomplete&token=<?php echo $token; ?>&filter_email=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['email'],
-                        value: item['user_id']
-                    }
-                }));
-
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_email\']').val(item['label']);
-    }
-});
 //--></script>
 <?php echo $footer; ?>

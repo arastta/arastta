@@ -6,11 +6,6 @@
                 <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
             </div>
             <h1><?php echo $heading_title; ?></h1>
-            <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-            </ul>
         </div>
     </div>
     <div class="container-fluid">
@@ -91,7 +86,7 @@
                                     <?php } ?>
                                 </select>
                                 <input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" placeholder="<?php echo $entry_ip; ?>" id="input-ip" class="form-control hidden filter" />
-                                <div class="input-group date hidden filter">
+                                <div class="input-group date hidden filter filter_date_added">
                                   <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>"  data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control hidden filter" />
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
@@ -99,6 +94,55 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_name) || !empty($filter_email) || !empty($filter_customer_group_id) || isset($filter_status) || !empty($filter_approved) || !empty($filter_date_added)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_name) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_name; ?>:</label> <label class="filter-label"> <?php echo $filter_name; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_name');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_email) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_email; ?>:</label> <label class="filter-label"> <?php echo $filter_email; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_email');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_customer_group_id) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_date_start; ?>:</label> 
+                                <label class="filter-label"> 
+                                <?php foreach ($customer_groups as $customer_group) { ?>
+                                    <?php if ($customer_group['customer_group_id'] == $filter_customer_group_id) { ?>
+                                    <?php echo $customer_group['name']; ?>
+                                    <?php } ?>
+                                <?php } ?>
+                                </label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_customer_group_id');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_status) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_status; ?>:</label> <label class="filter-label"> <?php echo ($filter_status) ? $text_enabled : $text_disabled; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_status');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_approved) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_approved; ?>:</label> <label class="filter-label"> <?php echo ($filter_approved) ? $text_yes : $text_no; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_approved');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_date_added) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_date_added; ?>:</label> <label class="filter-label"> <?php echo $filter_date_added; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_date_added');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-customer">
                     <div class="table-responsive">
@@ -164,10 +208,12 @@
                                     <?php } ?></td>
                                 <td class="text-left">
                                     <?php if ($customer['approve']) { ?>
-                                    <a href="<?php echo $customer['approve']; ?>" data-toggle="tooltip" title="<?php echo $button_approve; ?>" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
+                                    <a href="<?php echo $customer['approve']; ?>" data-toggle="tooltip" title="<?php echo $button_approve; ?>" class="btn btn-success btn-sm btn-basic-list"><i class="fa fa-thumbs-o-up"></i></a>
+                                    <?php } else { ?>
+                                    <button type="button" class="btn btn-success btn-sm btn-basic-list" disabled><i class="fa fa-thumbs-o-up"></i></button>
                                     <?php } ?>
                                     <div class="btn-group" data-toggle="tooltip" title="<?php echo $button_login; ?>">
-                                        <a data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-lock"></i></a>
+                                        <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle btn-sm btn-basic-list"><i class="fa fa-lock"></i></button>
                                         <ul class="dropdown-menu pull-right">
                                             <li><a href="index.php?route=sale/customer/login&token=<?php echo $token; ?>&customer_id=<?php echo $customer['customer_id']; ?>&store_id=0" target="_blank"><?php echo $text_default; ?></a></li>
                                             <?php foreach ($stores as $store) { ?>
@@ -176,9 +222,11 @@
                                         </ul>
                                     </div>
                                     <?php if ($customer['unlock']) { ?>
-                                    <a href="<?php echo $customer['unlock']; ?>" data-toggle="tooltip" title="<?php echo $button_unlock; ?>"><i class="fa fa-unlock"></i></a>
+                                    <a href="<?php echo $customer['unlock']; ?>" data-toggle="tooltip" title="<?php echo $button_unlock; ?>" class="btn btn-warning btn-sm btn-basic-list"><i class="fa fa-unlock"></i></a>
+                                    <?php } else { ?>
+                                    <button type="button" class="btn btn-warning btn-sm btn-basic-list" disabled><i class="fa fa-unlock"></i></button>
                                     <?php } ?>
-                                    <a href="<?php echo $customer['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                                    <a href="<?php echo $customer['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $customer['name']; ?></td>
                                 <td class="text-left"><?php echo $customer['email']; ?></td>
                                 <td class="text-left"><?php echo $customer['customer_group']; ?></td>
@@ -203,6 +251,49 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript"><!--
+    $('input[name=\'filter_name\']').autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['name'],
+                            value: item['customer_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $('input[name=\'filter_name\']').val(item['label']);
+            filter();
+        }
+    });
+
+    $('input[name=\'filter_email\']').autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_email=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['email'],
+                            value: item['customer_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $('input[name=\'filter_email\']').val(item['label']);
+            filter();
+        }
+    });
+    //--></script>
     <script type="text/javascript"><!--
     function filter() {
         url = 'index.php?route=sale/customer&token=<?php echo $token; ?>';
@@ -251,59 +342,6 @@
 
         location = url;
     }
-
-    function changeFilterType(text, filter_type) {
-        $('.filter-type').text(text);
-
-        $('.filter').addClass('hidden');
-        $('input[name=\'' + filter_type + '\']').removeClass('hidden');
-        $('select[name=\'' + filter_type + '\']').removeClass('hidden');
-        if (filter_type == 'filter_date_added') {
-            $('.well .input-group-btn').removeClass('hidden');
-            $('.well .input-group').removeClass('hidden');
-        }
-    }
-    //--></script>
-    <script type="text/javascript"><!--
-    $('input[name=\'filter_name\']').autocomplete({
-        'source': function(request, response) {
-            $.ajax({
-                url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-                dataType: 'json',
-                success: function(json) {
-                    response($.map(json, function(item) {
-                        return {
-                            label: item['name'],
-                            value: item['customer_id']
-                        }
-                    }));
-                }
-            });
-        },
-        'select': function(item) {
-            $('input[name=\'filter_name\']').val(item['label']);
-        }
-    });
-
-    $('input[name=\'filter_email\']').autocomplete({
-        'source': function(request, response) {
-            $.ajax({
-                url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_email=' +  encodeURIComponent(request),
-                dataType: 'json',
-                success: function(json) {
-                    response($.map(json, function(item) {
-                        return {
-                            label: item['email'],
-                            value: item['customer_id']
-                        }
-                    }));
-                }
-            });
-        },
-        'select': function(item) {
-            $('input[name=\'filter_email\']').val(item['label']);
-        }
-    });
     //--></script>
     <script type="text/javascript"><!--
     $('.date').datetimepicker({

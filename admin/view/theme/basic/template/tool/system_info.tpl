@@ -113,12 +113,12 @@
                                         <td class="text-left"><?php echo ${'text_'.$id}; ?></td>
                                         <td class="text-left">
                                             <?php
-                         if (is_bool($value)) {
-                           echo ($value == true) ? $text_enabled : $text_disabled;
-                         } else {
-                           echo $value;
-                         }
-                        ?>
+                                             if (is_bool($value)) {
+                                               echo ($value == true) ? $text_enabled : $text_disabled;
+                                             } else {
+                                               echo $value;
+                                             }
+                                            ?>
                                         </td>
                                     </tr>
                                     <?php } ?>
@@ -159,14 +159,14 @@
 </div>
 <?php echo $footer; ?>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('.permission-body').slideToggle();
-        $('.permission-chevron').toggleClass('rotate');
+$(document).ready(function() {
+    $('.permission-body').slideToggle();
+    $('.permission-chevron').toggleClass('rotate');
 
-        $('.php-setting-body').slideToggle();
-        $('.php-setting-chevron').toggleClass('rotate');
+    $('.php-setting-body').slideToggle();
+    $('.php-setting-chevron').toggleClass('rotate');
 
-        $('.php-info-body').slideToggle();
-        $('.php-info-chevron').toggleClass('rotate');
-    });
+    $('.php-info-body').slideToggle();
+    $('.php-info-chevron').toggleClass('rotate');
+});
 </script>
