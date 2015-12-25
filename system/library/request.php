@@ -26,22 +26,22 @@ class Request {
             $this->security = $registry->get('security');
         }
 
+        if (is_object($this->config) and $this->config->get('config_sec_htmlpurifier')) {
+            $config = HTMLPurifier_Config::createDefault();
+            $this->purifier = new HTMLPurifier($config);
+        }
+
+        if (is_object($this->security)) {
+            $this->security->checkRequest($_GET, 'get');
+            $this->security->checkRequest($_POST, 'post');
+        }
+
         $this->get = $this->clean($_GET);
         $this->post = $this->clean($_POST);
         $this->request = $this->clean($_REQUEST);
         $this->cookie = $this->clean($_COOKIE);
         $this->files = $this->clean($_FILES);
         $this->server = $this->clean($_SERVER);
-
-        if (is_object($this->security)) {
-            $this->security->checkRequest($this->get, 'get');
-            $this->security->checkRequest($this->post, 'post');
-        }
-
-        if (is_object($this->config) and $this->config->get('config_sec_htmlpurifier')) {
-            $config = HTMLPurifier_Config::createDefault();
-            $this->purifier = new HTMLPurifier($config);
-        }
     }
 
     public function clean($data) {
@@ -49,7 +49,14 @@ class Request {
             foreach ($data as $key => $value) {
                 unset($data[$key]);
 
-                $data[$this->clean($key)] = $this->clean($value);
+                $clean_value = $this->clean($value);
+
+                // Accept only "a-Z 0-9 / - ." for route variable
+                if ($key == 'route') {
+                    $clean_value = preg_replace('~[^\w-/\.]*~', '', $clean_value);;
+                }
+
+                $data[$this->clean($key)] = $clean_value;
             }
         }
         else {

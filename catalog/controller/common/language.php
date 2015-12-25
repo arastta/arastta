@@ -40,7 +40,7 @@ class ControllerCommonLanguage extends Controller {
             $url_data['route'] = 'common/home';
         }
 
-        $data['redirect'] = urldecode(http_build_query($url_data, '', '&'));
+        $data['redirect'] = htmlspecialchars(urldecode(http_build_query($url_data, '', '&')));
 
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/language.tpl')) {
             return $this->load->view($this->config->get('config_template') . '/template/common/language.tpl', $data);

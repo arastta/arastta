@@ -63,11 +63,11 @@ class ControllerApiPayment extends Controller {
                 $json['error']['postcode'] = $this->language->get('error_postcode');
             }
 
-            if ($this->request->post['country_id'] == '') {
+            if ($this->request->post['country_id'] == '' || !is_numeric($this->request->post['country_id'])) {
                 $json['error']['country'] = $this->language->get('error_country');
             }
 
-            if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+            if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
                 $json['error']['zone'] = $this->language->get('error_zone');
             }
 

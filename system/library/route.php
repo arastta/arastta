@@ -69,7 +69,9 @@ class Route extends Object
             $this->parseNonSeoVariables($query_array);
 
             if ($this->config->get('config_seo_canonical')) {
-                $this->document->addLink($this->url->getDomain().$route, 'canonical');
+                $canonical_link = htmlspecialchars($this->url->getDomain().$route);
+
+                $this->document->addLink($canonical_link, 'canonical');
             }
         }
 

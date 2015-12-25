@@ -82,8 +82,6 @@ class Document {
         } else {
             $this->style_declarations[strtolower($type)] .= chr(13) . $content;
         }
-
-        return $this;
     }
 
     public function getStyleDeclarations() {

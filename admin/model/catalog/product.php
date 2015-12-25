@@ -793,12 +793,12 @@ class ModelCatalogProduct extends Model {
 
         if (!empty($filter_tags)) {
             foreach ($filter_tags as $filter_tag) {
-                $filter .= " AND not (tag = '" . $filter_tag['value'] . "')";
+                $filter .= " AND not (tag = '" . $this->db->escape($filter_tag['value']) . "')";
                 $tags_filter[] = $filter_tag['value'];
             }
         }
 
-        $query = $this->db->query("SELECT DISTINCT(tag) FROM `" . DB_PREFIX . "product_description` WHERE `tag` LIKE '%" . $tag_name . "%'" . $filter);
+        $query = $this->db->query("SELECT DISTINCT(tag) FROM `" . DB_PREFIX . "product_description` WHERE `tag` LIKE '%" . $this->db->escape($tag_name) . "%'" . $filter);
 
         if ($query->num_rows) {
             foreach ($query->rows as $result) {

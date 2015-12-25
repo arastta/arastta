@@ -44,10 +44,8 @@ class Uri extends JUri
                 }
             }
 
-            // Check for quotes in the URL to prevent injections through the Host header
-            if ($theUri !== str_replace(array("'", '"', '<', '>'), '', $theUri)) {
-                throw new InvalidArgumentException('Invalid URI detected.');
-            }
+            // Extra cleanup to remove invalid chars in the URL to prevent injections through the Host header
+            $theUri = str_replace(array("'", '"', '<', '>'), array("%27", "%22", "%3C", "%3E"), $theUri);
         } else {
             // We were given a Uri
             $theUri = $uri;

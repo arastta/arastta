@@ -915,7 +915,7 @@ class ControllerMarketingAffiliate extends Controller {
         }
 
         if (isset($this->request->post['country_id'])) {
-            $data['country_id'] = $this->request->post['country_id'];
+            $data['country_id'] = (int)$this->request->post['country_id'];
         } elseif (!empty($affiliate_info)) {
             $data['country_id'] = $affiliate_info['country_id'];
         } else {
@@ -927,7 +927,7 @@ class ControllerMarketingAffiliate extends Controller {
         $data['countries'] = $this->model_localisation_country->getCountries();
 
         if (isset($this->request->post['zone_id'])) {
-            $data['zone_id'] = $this->request->post['zone_id'];
+            $data['zone_id'] = (int)$this->request->post['zone_id'];
         } elseif (!empty($affiliate_info)) {
             $data['zone_id'] = $affiliate_info['zone_id'];
         } else {
@@ -1141,11 +1141,11 @@ class ControllerMarketingAffiliate extends Controller {
             $this->error['postcode'] = $this->language->get('error_postcode');
         }
 
-        if ($this->request->post['country_id'] == '') {
+        if ($this->request->post['country_id'] == '' || !is_numeric($this->request->post['country_id'])) {
             $this->error['country'] = $this->language->get('error_country');
         }
 
-        if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+        if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
             $this->error['zone'] = $this->language->get('error_zone');
         }
 
