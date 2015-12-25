@@ -12,6 +12,7 @@ class Utility extends Object
     public function __construct($registry)
     {
         $this->db = $registry->get('db');
+        $this->uri = $registry->get('uri');
         $this->url = $registry->get('url');
         $this->cache = $registry->get('cache');
         $this->config = $registry->get('config');
@@ -38,18 +39,37 @@ class Utility extends Object
         } elseif (isset($this->request->cookie[$prefix.'language']) && array_key_exists($this->request->cookie[$prefix.'language'], $languages) && $languages[$this->request->cookie[$prefix.'language']]['status']) {
             $code = $this->request->cookie[$prefix.'language'];
         } else {
-            $browser = $this->getBrowserLangCode($languages);
+            // Try to get the language from SEF URL
+            if (Client::isCatalog() && $this->config->get('config_seo_url')) {
+                $route = str_replace($this->url->getFullUrl(), '', rawurldecode($this->uri->toString()));
+                $route = str_replace('?'.$this->uri->getQuery(), '', $route);
+                $route_parts = explode('/', str_replace('index.php/', '', $route));
 
-            if (is_object($this->config)) {
-                $default = Client::isAdmin() ? $this->config->get('config_admin_language') : $this->config->get('config_language');
+                if (!empty($route_parts[0]) && (strlen($route_parts[0]) == 2)) {
+                    $code = $route_parts[0];
+                } else {
+                    $code = $this->getBrowserDefaultLanguage($languages);
+                }
             } else {
-                $default = 'en-GB';
+                $code = $this->getBrowserDefaultLanguage($languages);
             }
-
-            $code = $browser ? $browser : $default;
         }
 
         return $languages[$code];
+    }
+
+    public function getBrowserDefaultLanguage($languages) {
+        $browser = $this->getBrowserLangCode($languages);
+
+        if (is_object($this->config)) {
+            $default = Client::isAdmin() ? $this->config->get('config_admin_language') : $this->config->get('config_language');
+        } else {
+            $default = 'en';
+        }
+
+        $code = $browser ? $browser : $default;
+
+        return $code;
     }
 
     public function getDefaultLanguage()
