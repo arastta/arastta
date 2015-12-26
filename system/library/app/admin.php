@@ -198,7 +198,7 @@ class Admin extends App
             return true;
         }
 
-        if (isset($this->request->get['route']) && ($this->request->get['route'] == 'common/login') && !empty($this->request->post['username']) && !empty($this->request->post['password'])) {
+        if (isset($this->request->get['route']) && ($this->request->get['route'] == 'common/login') && !empty($this->request->post['email']) && !empty($this->request->post['password'])) {
             return true;
         }
 
