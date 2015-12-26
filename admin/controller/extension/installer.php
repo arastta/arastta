@@ -592,6 +592,7 @@ class ControllerExtensionInstaller extends Controller {
                     $this->cache->remove('version');
 
                     // Set it to use in the next step, addExtensionTheme
+                    $this->session->data['product_id'] = $product_id;
                     $this->session->data['installer_info'] = $install_data;
                 }
             }
@@ -832,6 +833,14 @@ class ControllerExtensionInstaller extends Controller {
     public function addExtensionTheme($directory) {
         $this->load->model('extension/installer');
 
+        // Skip file scan for translations as they're all in one place
+        if (isset($this->session->data['installer_info']) && array_key_exists('translation', $this->session->data['installer_info'])) {
+            unset($this->session->data['product_id']);
+            unset($this->session->data['installer_info']);
+
+            return;
+        }
+
         if (isset($this->session->data['product_id'])) {
             $this->load->model('extension/marketplace');
 
@@ -950,6 +959,7 @@ class ControllerExtensionInstaller extends Controller {
             $this->model_extension_marketplace->addAddon($addon);
         }
 
+        unset($this->session->data['product_id']);
         unset($this->session->data['installer_info']);
     }
 

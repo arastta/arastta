@@ -192,6 +192,11 @@ class ModelCommonUpdate extends Model
             // Then addons
             if (!empty($addons)) {
                 foreach ($addons as $addon) {
+                    // This comes from Marketplace
+                    if (empty($addon['product_id'])) {
+                        continue;
+                    }
+
                     $type = $addon['product_type'];
 
                     $url = $base_url.'/'.$type.'/1.0/version/'.$addon['product_id'].'/'.$addon['product_version'].'/'.$info['arastta'];
