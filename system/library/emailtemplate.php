@@ -117,10 +117,14 @@ class Emailtemplate
         $data['message'] = $message;
         $data['site_url'] = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
 
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/default.tpl')) {
-            $message = $this->load->view($this->config->get('config_template') . '/template/mail/default.tpl', $data);
+        if (Client::isCatalog()) {
+            if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/default.tpl')) {
+                $message = $this->load->view($this->config->get('config_template') . '/template/mail/default.tpl', $data);
+            } else {
+                $message = $this->load->view('default/template/mail/default.tpl', $data);
+            }
         } else {
-            $message = $this->load->view('default/template/mail/default.tpl', $data);
+            $message = $this->load->view('mail/default.tpl', $data);
         }
         
         return $message;
