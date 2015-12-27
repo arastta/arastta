@@ -31,7 +31,7 @@ class Request {
             $this->purifier = new HTMLPurifier($config);
         }
 
-        if (is_object($this->security)) {
+        if (is_object($this->security) && Client::isCatalog()) {
             $this->security->checkRequest($_GET, 'get');
             $this->security->checkRequest($_POST, 'post');
         }
@@ -52,7 +52,7 @@ class Request {
                 $clean_value = $this->clean($value);
 
                 // Accept only "a-Z 0-9 / - ." for route variable
-                if ($key == 'route') {
+                if (($key == 'route') && !is_array($clean_value)) {
                     $clean_value = preg_replace('~[^\w-/\.]*~', '', $clean_value);;
                 }
 
