@@ -72,7 +72,7 @@
                                     <input type="checkbox" name="selected[]" value="<?php echo $weight_class['weight_class_id']; ?>" />
                                     <?php } ?></td>
                                 <td class="text-left">
-                                    <a href="<?php echo $weight_class['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                                    <a href="<?php echo $weight_class['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $weight_class['title']; ?></td>
                                 <td class="text-left"><?php echo $weight_class['unit']; ?></td>
                                 <td class="text-right"><?php echo $weight_class['value']; ?></td>

@@ -57,7 +57,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="items">
-                                <table id="zone-to-geo-zone" class="table table-striped table-bordered table-hover">
+                                <table id="zone-to-geo-zone" class="table table-striped table-hover">
                                     <thead>
                                     <tr>
                                         <td class="text-left"><?php echo $entry_country; ?></td>
@@ -88,7 +88,7 @@
                                             <?php } ?>
                                             <?php } ?>
                                         </select></td>
-                                        <td class="text-left"><button type="button" onclick="$('#zone-to-geo-zone-row<?php echo $zone_to_geo_zone_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                        <td class="text-left"><button type="button" onclick="$('#zone-to-geo-zone-row<?php echo $zone_to_geo_zone_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></button></td>
                                     </tr>
                                     <?php $zone_to_geo_zone_row++; ?>
                                     <?php } ?>
@@ -96,7 +96,7 @@
                                     <tfoot>
                                     <tr>
                                         <td colspan="2"></td>
-                                        <td class="text-left"><button type="button" onclick="addGeoZone();" data-toggle="tooltip" title="<?php echo $button_geo_zone_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                                        <td class="text-left"><button type="button" onclick="addGeoZone();" data-toggle="tooltip" title="<?php echo $button_geo_zone_add; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-plus-circle"></i></button></td>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -131,7 +131,7 @@
         <?php } ?>
         html += '</select></td>';
         html += '  <td class="text-left"><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][zone_id]" id="zone' + zone_to_geo_zone_row + '" class="form-control"></select></td>';
-        html += '  <td class="text-left"><button type="button" onclick="$(\'#zone-to-geo-zone-row' + zone_to_geo_zone_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-left"><button type="button" onclick="$(\'#zone-to-geo-zone-row' + zone_to_geo_zone_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger  btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#zone-to-geo-zone tbody').append(html);

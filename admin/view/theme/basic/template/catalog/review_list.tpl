@@ -159,7 +159,7 @@
                                     <input type="checkbox" name="selected[]" value="<?php echo $review['review_id']; ?>" />
                                     <?php } ?></td>
                                 <td class="text-left">
-                                    <a href="<?php echo $review['edit']; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
+                                    <a href="<?php echo $review['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $review['name']; ?>
                                 </td>
                                 <td class="text-left">

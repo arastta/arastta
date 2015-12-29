@@ -105,6 +105,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
             </div>
         </form>
     </div>

@@ -38,9 +38,7 @@
                                         <div class="form-group required">
                                             <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
                                             <div class="col-sm-10">
-                                                <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-                                                    <input type="text" name="order_status[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($order_status[$language['language_id']]) ? $order_status[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
-                                                </div>
+                                                <input type="text" name="order_status[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($order_status[$language['language_id']]) ? $order_status[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
                                                 <?php if (isset($error_name[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
                                                 <?php } ?>
@@ -49,9 +47,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label"><?php echo $entry_message; ?></label>
                                             <div class="col-sm-10">
-                                                <div class="input-group" style="max-width: 100%;"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-                                                    <textarea name="order_status[<?php echo $language['language_id']; ?>][message]" placeholder="<?php echo $entry_message; ?>" id="input-message-<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($order_status[$language['language_id']]) ? $order_status[$language['language_id']]['message'] : ''; ?></textarea>
-                                                </div>
+                                                <textarea name="order_status[<?php echo $language['language_id']; ?>][message]" placeholder="<?php echo $entry_message; ?>" id="input-message-<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($order_status[$language['language_id']]) ? $order_status[$language['language_id']]['message'] : ''; ?></textarea>
                                                 <?php if (isset($error_message[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_message[$language['language_id']]; ?></div>
                                                 <?php } ?>
@@ -60,9 +56,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_email_template; ?>"><?php echo $entry_email_template; ?></span></label>
                                             <div class="col-sm-10">
-                                                <div class="input-group" style="max-width: 100%;"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-                                                    <textarea name="order_status[<?php echo $language['language_id']; ?>][email_template]" placeholder="<?php echo $entry_email_template; ?>" id="input-email-template-<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($email_template[$language['language_id']]) ? $email_template[$language['language_id']]['description'] : ''; ?></textarea>
-                                                </div>
+                                                <textarea name="order_status[<?php echo $language['language_id']; ?>][email_template]" placeholder="<?php echo $entry_email_template; ?>" id="input-email-template-<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($email_template[$language['language_id']]) ? $email_template[$language['language_id']]['description'] : ''; ?></textarea>
                                                 <?php if (isset($error_message[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_message[$language['language_id']]; ?></div>
                                                 <?php } ?>

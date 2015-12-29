@@ -209,7 +209,7 @@
                                             <?php } ?>
                                             <?php } ?></td>
                                         <td class="text-right hidden"><input type="text" name="custom_field_value[<?php echo $custom_field_value_row; ?>][sort_order]" value="<?php echo $custom_field_value['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
-                                        <td class="text-left"><a onclick="$('#custom-field-value-row<?php echo $custom_field_value_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="fa fa-minus-circle"></i></a></td>
+                                        <td class="text-left"><a onclick="$('#custom-field-value-row<?php echo $custom_field_value_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></a></td>
                                     </tr>
                                     <?php $custom_field_value_row++; ?>
                                     <?php } ?>
@@ -217,7 +217,7 @@
                                     <tfoot>
                                     <tr>
                                         <td colspan="1"></td>
-                                        <td class="text-left"><a onclick="addCustomFieldValue();" data-toggle="tooltip" title="<?php echo $button_custom_field_value_add; ?>" ><i class="fa fa-plus-circle"></i></a></td>
+                                        <td class="text-left"><a onclick="addCustomFieldValue();" data-toggle="tooltip" title="<?php echo $button_custom_field_value_add; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-plus-circle"></i></a></td>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -315,7 +315,7 @@
         <?php } ?>
         html += '  </td>';
         html += '  <td class="text-right hidden"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
-        html += '  <td class="text-left"><a onclick="$(\'#custom-field-value-row' + custom_field_value_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="fa fa-minus-circle"></i></a></td>';
+        html += '  <td class="text-left"><a onclick="$(\'#custom-field-value-row' + custom_field_value_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></a></td>';
         html += '</tr>';
 
         $('#custom-field-value tbody').append(html);
