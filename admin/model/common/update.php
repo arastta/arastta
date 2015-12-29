@@ -239,7 +239,10 @@ class ModelCommonUpdate extends Model
         if ($product_id == 'core') {
             $url = $base_url.'/core/1.0/update/'.$version.'/'.$info['php'].'/'.$info['mysql'];
         } else {
-            $addons = $this->addon->getAddons();
+            $this->load->model('extension/marketplace');
+
+            $addons = $this->model_extension_marketplace->getAddons();
+            
             $type = $addons[$product_id]['product_type'];
 
             $url = $base_url.'/'.$type.'/1.0/update/'.$product_id.'/'.$version.'/'.$info['arastta'].'/'.$info['api'];
