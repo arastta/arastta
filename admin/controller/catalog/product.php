@@ -1264,7 +1264,8 @@ class ControllerCatalogProduct extends Controller {
         }
 
         $data['product_id'] = isset($this->request->get['product_id']) ? $this->request->get['product_id'] : 0;
-        
+
+        // Preview link
         foreach ($data['languages'] as $language) {
             $data['preview'][$language['language_id']] = $this->getSeoLink($data['product_id'], $language['code']);
         }
@@ -1589,21 +1590,29 @@ class ControllerCatalogProduct extends Controller {
     }
 
     public function getSeoLink($product_id, $language_code) {
-        // Change the client
-        Client::setName('catalog');
-        $app = new Catalog();
-        $app->initialise();
-        $app->ecommerce();
-        $app->route();
+        $old_session_code = $this->session->data['language'];
+        $old_config_code = $this->config->get('config_language');
 
-        $site_url = $app->url->link('product/product', 'product_id=' . $product_id . '&lang=' . $language_code, 'SSL');
+        $this->session->data['language'] = $language_code;
+        $this->config->set('config_language', $language_code);
 
-        $admin_folder = str_replace(DIR_ROOT, '', DIR_ADMIN);
+        $url = $this->config->get('config_url');
 
-        $seo_url = str_replace($admin_folder, '', $site_url);
-        // Return back to admin
-        Client::setName('admin');
+        if (empty($url)) {
+            $url = HTTP_SERVER;
 
-        return $seo_url;
+            $admin_folder = str_replace(DIR_ROOT, '', DIR_ADMIN);
+
+            $url = str_replace($admin_folder, '', $url);
+        }
+
+        $route = new Route($this->registry);
+
+        $url .= $route->rewrite('index.php?route=product/product&product_id='.$product_id);
+
+        $this->session->data['language'] = $old_session_code;
+        $this->config->set('config_language', $old_config_code);
+
+        return $url;
     }
 }

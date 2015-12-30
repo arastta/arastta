@@ -14,6 +14,12 @@ class ModelCatalogUrlAlias extends Model {
         return $query->row;
     }
 
+    public function getAlias($type, $id, $language_id) {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE query = '" . $this->db->escape($type) . "_id=" . (int)$id . "' AND language_id = '" . (int)$language_id . "'");
+
+        return $query->row;
+    }
+
     public function addAlias($type, $id, $alias, $language_id) {
         $alias = $this->seo->generateAlias($alias, $id, $language_id);
 
