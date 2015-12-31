@@ -9,17 +9,34 @@
 class Emailtemplate
 {
 
+    protected $registry;
+
     public function __construct($registry)
+    {
+        $this->registry = $registry;
+    }
+
+    public function __get($key)
+    {
+        return $this->registry->get($key);
+    }
+
+    public function __set($key, $value)
+    {
+        $this->registry->set($key, $value);
+    }
+
+    public function __constructtt($registry)
     {
         $this->registry = $registry;
         $this->config = $registry->get('config');
         $this->url = $registry->get('url');
         $this->language = $registry->get('language');
         $this->db = $registry->get('db');
-        $this->currency = new Currency($registry);
-        $this->load = new Loader($registry);
-        $this->trigger = new Trigger($this->registry);        
-        $this->request = new Request($this->registry);
+        $this->currency = $registry->get('currency');
+        $this->load = $registry->get('load');
+        $this->trigger = $registry->get('trigger');
+        $this->request = $registry->get('request');
     }
 
     // Mail Subject

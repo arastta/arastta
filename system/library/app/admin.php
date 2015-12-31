@@ -119,9 +119,6 @@ class Admin extends App
     {
         // Currency
         $this->registry->set('currency', new Currency($this->registry));
-        
-        // Email Template
-        $this->registry->set('emailtemplate', new Emailtemplate($this->registry));
 
         // Weight
         $this->registry->set('weight', new Weight($this->registry));
@@ -131,6 +128,9 @@ class Admin extends App
 
         // User
         $this->registry->set('user', new User($this->registry));
+
+        // Email Template
+        $this->registry->set('emailtemplate', new Emailtemplate($this->registry));
 
         // Theme
         if (isset($this->request->get['theme'])) {
