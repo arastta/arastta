@@ -26,19 +26,6 @@ class Emailtemplate
         $this->registry->set($key, $value);
     }
 
-    public function __constructtt($registry)
-    {
-        $this->registry = $registry;
-        $this->config = $registry->get('config');
-        $this->url = $registry->get('url');
-        $this->language = $registry->get('language');
-        $this->db = $registry->get('db');
-        $this->currency = $registry->get('currency');
-        $this->load = $registry->get('load');
-        $this->trigger = $registry->get('trigger');
-        $this->request = $registry->get('request');
-    }
-
     // Mail Subject
     public function getSubject($type, $template_id, $data)
     {
