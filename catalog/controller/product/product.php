@@ -487,7 +487,9 @@ class ControllerProductProduct extends Controller {
             } else {
                 $data['site_key'] = '';
             }
-        
+
+            $data['share'] = $this->url->link('product/product', 'product_id=' . (int)$this->request->get['product_id']);
+
             $data['column_left'] = $this->load->controller('common/column_left');
             $data['column_right'] = $this->load->controller('common/column_right');
             $data['content_top'] = $this->load->controller('common/content_top');
