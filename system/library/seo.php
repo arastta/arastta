@@ -235,7 +235,7 @@ class Seo extends Object
 
             $query = $this->db->query($sql);
 
-            if (!$query->num_rows) {
+            if (empty($query->row) || !isset($query->row['parent_id'])) {
                 return $data[$category_id];
             }
 
