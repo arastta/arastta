@@ -1590,7 +1590,7 @@ class ControllerCatalogProduct extends Controller {
     }
 
     public function getSeoLink($product_id, $language_code) {
-        $old_session_code = $this->session->data['language'];
+        $old_session_code = isset($this->session->data['language']) ? $this->session->data['language'] : '';
         $old_config_code = $this->config->get('config_language');
 
         $this->session->data['language'] = $language_code;
@@ -1610,7 +1610,10 @@ class ControllerCatalogProduct extends Controller {
 
         $url .= $route->rewrite('index.php?route=product/product&product_id='.$product_id);
 
-        $this->session->data['language'] = $old_session_code;
+        if (!empty($old_session_code)) {
+            $this->session->data['language'] = $old_session_code;
+        }
+
         $this->config->set('config_language', $old_config_code);
 
         return $url;
