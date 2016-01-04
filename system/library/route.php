@@ -295,7 +295,7 @@ class Route extends Object
             $uri->delVar('route');
         }
 
-        if ($url or $is_home) {
+        if ($url || $is_home) {
             // Add language code to URL
             if ($this->config->get('config_seo_lang_code')) {
                 $url = '/'.$this->session->data['language'].$url;
@@ -309,7 +309,7 @@ class Route extends Object
 
             $path = $uri->getPath();
 
-            if ($is_home or $this->config->get('config_seo_rewrite')) {
+            if ($this->config->get('config_seo_rewrite') || ($is_home && !$this->config->get('config_seo_lang_code'))) {
                 $path = str_replace('index.php/', '', $path);
                 $path = str_replace('index.php', '', $path);
             }
