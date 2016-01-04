@@ -1018,8 +1018,8 @@ CREATE TABLE IF NOT EXISTS `ar_custom_field_value_description` (
 
 CREATE TABLE IF NOT EXISTS `ar_download` (
   `download_id` int(11) NOT NULL AUTO_INCREMENT,
-  `filename` varchar(128) NOT NULL,
-  `mask` varchar(128) NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `mask` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`download_id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

@@ -197,3 +197,10 @@ if (version_compare(VERSION, '1.2.0', '<')) {
         $this->filesystem->remove(DIR_CATALOG . 'event/app/pp_login.php');
     }
 }
+
+// 1.2.4 changes;
+if (version_compare(VERSION, '1.2.4', '<')) {
+    // Update download table
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "download` CHANGE `filename` `filename` varchar(255) NOT NULL");
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "download` CHANGE `mask` `mask` varchar(255) NOT NULL");
+}
