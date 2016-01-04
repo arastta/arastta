@@ -141,9 +141,6 @@ class Catalog extends App
         } elseif (isset($this->session->data['guest']) && isset($this->session->data['guest']['customer_group_id'])) {
             $this->config->set('config_customer_group_id', $this->session->data['guest']['customer_group_id']);
         }
-        
-        // Email Template
-        $this->registry->set('emailtemplate', new Emailtemplate($this->registry));
 
         // Tracking Code
         if (isset($this->request->get['tracking'])) {
@@ -172,6 +169,9 @@ class Catalog extends App
 
         // Encryption
         $this->registry->set('encryption', new Encryption($this->config->get('config_encryption')));
+
+        // Email Template
+        $this->registry->set('emailtemplate', new Emailtemplate($this->registry));
 
         $this->trigger->fire('post.app.ecommerce');
     }
