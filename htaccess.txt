@@ -1,12 +1,12 @@
-# 1.To use URL Alias you need to be running apache with mod_rewrite enabled. 
+# 1. To use SEO URL you need to be running Apache with mod_rewrite enabled
 
-# 2. In your arastta directory rename htaccess.txt to .htaccess.
+# 2. In your Arastta directory rename htaccess.txt to .htaccess
 
 # For any support issues please visit: http://arastta.org
 
 Options +FollowSymlinks
 
-# Prevent Directoy listing 
+# Prevent Directoy listing
 Options -Indexes
 
 # Prevent Direct Access to files
@@ -21,7 +21,7 @@ RewriteEngine On
 
 ##
 # Uncomment following line if your webserver's URL is not directly related to physical file paths.
-# Update Your Arastta Directory (just / for root).
+# Update your Arastta directory (just / for root).
 ##
 
 # RewriteBase /
