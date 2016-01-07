@@ -1702,7 +1702,7 @@ class ControllerSaleOrder extends Controller {
                 $reward_total = $this->model_sale_customer->getTotalCustomerRewardsByOrderId($order_id);
 
                 if (!$reward_total) {
-                    $this->model_sale_customer->addReward($order_info['customer_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['reward'], $order_id);
+                    $this->model_sale_customer->addReward($order_info['customer_id'], $this->language->get('text_order_id') . $order_id, $order_info['reward'], $order_id);
                 }
             }
 
@@ -1768,7 +1768,7 @@ class ControllerSaleOrder extends Controller {
                 $affiliate_total = $this->model_marketing_affiliate->getTotalCommissionsByOrderId($order_id);
 
                 if (!$affiliate_total) {
-                    $this->model_marketing_affiliate->addCommission($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
+                    $this->model_marketing_affiliate->addCommission($order_info['affiliate_id'], $this->language->get('text_order_id') . $order_id, $order_info['commission'], $order_id);
                 }
             }
 

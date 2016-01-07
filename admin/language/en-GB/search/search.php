@@ -23,4 +23,4 @@ $_['text_orders_placeholder']       = 'Order Id, Invoice No, First Name, Last Na
 $_['text_search_placeholder']       = 'Search';
 
 $_['text_no_result']                = '- No Result -';
-$_['text_order_id']                 = 'Order ID: ';
+$_['text_order_id']                 = 'Order ID: #';
