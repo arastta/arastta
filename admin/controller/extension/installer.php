@@ -301,31 +301,31 @@ class ControllerExtensionInstaller extends Controller {
         $this->load->model('extension/installer');
 
         $search_page = array(
-            'appearance'             => 'appearance',
-            'catalog'                 => 'catalog',
-            'product'                 => 'product',
-            'common'                 => 'common',
-            'dashboard'             => 'dashboard',
-            'design'                 => 'design',
-            'error'                 => 'error',
-            'extension'             => 'extension',
-            'feed'                     => 'feed',
-            'localisation'             => 'localisation',
-            'marketing'             => 'marketing',
-            'module'                 => 'module',
-            'payment'                 => 'payment',
-            'report'                => 'report',
-            'sale'                     => 'sale',
-            'search'                 => 'search',
-            'setting'                 => 'setting',
-            'shipping'                 => 'shipping',
-            'system'                 => 'system',
-            'tool'                   => 'tool',
-            'total'                 => 'total',
-            'user'                     => 'user'
+            'appearance'    => 'appearance',
+            'catalog'       => 'catalog',
+            'product'       => 'product',
+            'common'        => 'common',
+            'dashboard'     => 'dashboard',
+            'design'        => 'design',
+            'error'         => 'error',
+            'extension'     => 'extension',
+            'feed'          => 'feed',
+            'localisation'  => 'localisation',
+            'marketing'     => 'marketing',
+            'module'        => 'module',
+            'payment'       => 'payment',
+            'report'        => 'report',
+            'sale'          => 'sale',
+            'search'        => 'search',
+            'setting'       => 'setting',
+            'shipping'      => 'shipping',
+            'system'        => 'system',
+            'tool'          => 'tool',
+            'total'         => 'total',
+            'user'          => 'user'
         );
 
-        foreach($search_page as $page) {
+        foreach ($search_page as $page) {
             if (strpos($edit_page_url, 'upload/admin/controller/'.$page) === false){
                 continue;
             }
@@ -936,6 +936,9 @@ class ControllerExtensionInstaller extends Controller {
                 }
 
                 $params['extension_ids'][] = $extension_id;
+            
+                // Call install method, if exists
+                $this->load->controller($type . '/' . $code . '/install');
             }
         }
 

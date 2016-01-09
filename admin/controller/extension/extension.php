@@ -59,9 +59,17 @@ class ControllerExtensionExtension extends Controller
             $extension['params'] = array();
 
             $extension_id = $this->model_extension_extension->addExtension($extension);
-
+            
             // Add setting
             $this->model_setting_setting->editSetting($code, array($code . '_status' => 0));
+            
+            // Add permission
+            $this->load->model('user/user_group');
+            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', $type . '/' . $code);
+            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', $type . '/' . $code);
+            
+            // Call install method, if exists
+            $this->load->controller($type . '/' . $code . '/install');
 
             // Add addon
             $params = array();
@@ -411,7 +419,7 @@ class ControllerExtensionExtension extends Controller
         if ($this->validate() && !empty($type) && !empty($code)) {
             $this->load->model('setting/setting');
 
-            // Call uninstall method if it exsits
+            // Call uninstall method, if exists
             $this->load->controller($type . '/' . $code . '/uninstall');
 
             // Uninstall extension
