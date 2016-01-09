@@ -26,7 +26,7 @@
                 <tbody>
                 <tr>
                     <td class="text-left" style="width: 50%;">
-                        <p><b><?php echo $text_recurring_id; ?></b><?php echo $recurring['order_recurring_id']; ?></p>
+                        <p><b><?php echo $text_recurring_id; ?></b> <?php echo $recurring['order_recurring_id']; ?></p>
                         <p><b><?php echo $text_date_added; ?></b> <?php echo $recurring['date_added']; ?></p>
                         <p><b><?php echo $text_status; ?></b> <?php echo $status_types[$recurring['status']]; ?></p>
                         <p><b><?php echo $text_payment_method; ?></b> <?php echo $recurring['payment_method']; ?></p>

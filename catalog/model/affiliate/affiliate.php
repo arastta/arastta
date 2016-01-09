@@ -121,7 +121,7 @@ class ModelAffiliateAffiliate extends Model {
             $this->trigger->fire('pre.affiliate.add.commission');
 
 
-            $this->db->query("INSERT INTO " . DB_PREFIX . "affiliate_commission SET affiliate_id = '" . (int)$affiliate_id . "', order_id = '" . (float)$order_id . "', description = '" . $this->db->escape($this->language->get('text_order_id') . $order_id) . "', amount = '" . (float)$amount . "', date_added = NOW()");
+            $this->db->query("INSERT INTO " . DB_PREFIX . "affiliate_commission SET affiliate_id = '" . (int)$affiliate_id . "', order_id = '" . (float)$order_id . "', description = '" . $this->db->escape($this->language->get('text_order_id') . ' ' . $order_id) . "', amount = '" . (float)$amount . "', date_added = NOW()");
 
             $affiliate_commission_id = $this->db->getLastId();
 
