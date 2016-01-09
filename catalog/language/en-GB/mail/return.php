@@ -9,7 +9,7 @@
 // Text
 $_['text_subject']        = '%s - Product Return Request';
 $_['text_request']        = 'You have a new product return request.';
-$_['text_order_id']       = '<b>Order ID:</b> #%s';
+$_['text_order_id']       = '<b>Order ID:</b> %s';
 $_['text_date_ordered']   = '<b>Date Ordered:</b> %s';
 $_['text_customer']       = '<b>Customer:</b> %s %s';
 $_['text_email']          = '<b>Email:</b> %s';
