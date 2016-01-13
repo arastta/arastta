@@ -30,7 +30,7 @@
                 <tbody>
                 <?php foreach ($returns as $return) { ?>
                 <tr>
-                    <td class="text-right">#<?php echo $return['return_id']; ?></td>
+                    <td class="text-right"><?php echo $return['return_id']; ?></td>
                     <td class="text-left"><?php echo $return['status']; ?></td>
                     <td class="text-left"><?php echo $return['date_added']; ?></td>
                     <td class="text-right"><?php echo $return['order_id']; ?></td>

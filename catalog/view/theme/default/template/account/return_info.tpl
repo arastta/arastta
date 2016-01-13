@@ -23,9 +23,9 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td class="text-left" style="width: 50%;"><b><?php echo $text_return_id; ?></b> #<?php echo $return_id; ?><br />
+                    <td class="text-left" style="width: 50%;"><b><?php echo $text_return_id; ?></b> <?php echo $return_id; ?><br />
                         <b><?php echo $text_date_added; ?></b> <?php echo $date_added; ?></td>
-                    <td class="text-left" style="width: 50%;"><b><?php echo $text_order_id; ?></b> #<?php echo $order_id; ?><br />
+                    <td class="text-left" style="width: 50%;"><b><?php echo $text_order_id; ?></b> <?php echo $order_id; ?><br />
                         <b><?php echo $text_date_ordered; ?></b> <?php echo $date_ordered; ?></td>
                 </tr>
                 </tbody>
