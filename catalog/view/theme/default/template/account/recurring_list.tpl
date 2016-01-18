@@ -30,7 +30,7 @@
                     <tbody>
                     <?php foreach ($recurrings as $recurring) { ?>
                     <tr>
-                        <td class="text-left">#<?php echo $recurring['id']; ?></td>
+                        <td class="text-left"><?php echo $recurring['id']; ?></td>
                         <td class="text-left"><?php echo $recurring['date_added']; ?></td>
                         <td class="text-left"><?php echo $status_types[$recurring['status']]; ?></td>
                         <td class="text-left"><?php echo $recurring['name']; ?></td>
