@@ -80,7 +80,7 @@ class Cli extends App {
 
     }
 
-    public function call($callback, array $parameters = [])
+    public function call($callback, array $parameters = array())
     {
         return call_user_func_array($callback, $parameters);
     }
@@ -97,11 +97,11 @@ class Cli extends App {
         if(is_installed()) {
 
         } else {
-            $commands[] = Command\InstallCommand::class;
+            $commands[] = 'Command\InstallCommand';
         }
 
         //always available commands
-        $commands[] = Command\ClearCacheCommand::class;
+        $commands[] = 'Command\ClearCacheCommand';
 
         return $commands;
     }
