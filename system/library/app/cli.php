@@ -100,11 +100,8 @@ class Cli extends App {
             $commands[] = Command\InstallCommand::class;
         }
 
-        //todo - move to installed
-        //$commands[] = Commands\Updatecommand::class;
-
         //always available commands
-        //$commands[] = Commands\Clearcachecommand::class;
+        $commands[] = Command\ClearCacheCommand::class;
 
         return $commands;
     }
