@@ -42,4 +42,23 @@ final class Client
     {
         return (self::getDir() == DIR_INSTALL);
     }
+
+    /**
+     * Allow for new apps to be added and checked e.g. isBlog(), isCli()
+     * @param $name
+     * @param $arguments
+     * @return bool
+     */
+    public static function __callStatic($name, $arguments) {
+
+        if(strpos($name, 'is') !== false) {
+
+            $constant_name = 'DIR_' . strtoupper(substr($name, 2));
+            if(defined($constant_name)) {
+                return (self::getDir() == constant($constant_name));
+            }
+        }
+
+        return false;
+    }
 }

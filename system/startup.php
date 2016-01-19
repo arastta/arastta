@@ -7,7 +7,7 @@
  */
 
 // Installation check, and check on removal of the install directory.
-if ((!file_exists(DIR_ROOT . 'config.php') || (filesize(DIR_ROOT . 'config.php') < 10)) && !Client::isInstall()) {
+if ((!file_exists(DIR_ROOT . 'config.php') || (filesize(DIR_ROOT . 'config.php') < 10)) && !Client::isInstall() && !Client::isCli()) {
     if (file_exists(DIR_INSTALL . 'index.php')) {
         header('Location: ' . str_replace(array('admin', 'index.php', '//'), array('', '', '/'), $_SERVER['REQUEST_URI']) . 'install/index.php');
 
@@ -70,12 +70,16 @@ if (!file_exists(DIR_SYSTEM.'vendor/autoload.php')) {
 require_once(DIR_SYSTEM.'vendor/autoload.php');
 
 // Modification Override
-function modification($filename)
+function modification($filename, $override = 'catalog')
 {
     if (Client::isCatalog()) {
         $file = DIR_MODIFICATION . 'catalog/' . substr($filename, strlen(Client::getDir()));
     } else {
         $file = DIR_MODIFICATION . 'admin/' .  substr($filename, strlen(Client::getDir()));
+    }
+
+    if(Client::isCli()) {
+        $file = DIR_MODIFICATION . $override . '/' . substr($filename, strlen(Client::getDir()));
     }
 
     if (substr($filename, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
@@ -95,12 +99,18 @@ function autoload($class)
     $lib = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
     $app = DIR_SYSTEM . 'library/app/' . str_replace('\\', '/', strtolower($class)) . '.php';
 
+    $command = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
+
     if (is_file($lib)) {
         include(modification($lib));
 
         return true;
     } elseif (is_file($app)) {
         include(modification($app));
+
+        return true;
+    } elseif (is_file(modification($command))) {
+        include(modification($command));
 
         return true;
     }
