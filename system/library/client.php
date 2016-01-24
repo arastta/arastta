@@ -28,33 +28,13 @@ final class Client
         return constant($dir);
     }
 
-    public static function isAdmin()
+    public static function __callStatic($name, $arguments)
     {
-        return (self::getDir() == DIR_ADMIN);
-    }
 
-    public static function isCatalog()
-    {
-        return (self::getDir() == DIR_CATALOG);
-    }
-
-    public static function isInstall()
-    {
-        return (self::getDir() == DIR_INSTALL);
-    }
-
-    /**
-     * Allow for new apps to be added and checked e.g. isBlog(), isCli()
-     * @param $name
-     * @param $arguments
-     * @return bool
-     */
-    public static function __callStatic($name, $arguments) {
-
-        if(strpos($name, 'is') !== false) {
+        if (strpos($name, 'is') !== false) {
 
             $constant_name = 'DIR_' . strtoupper(substr($name, 2));
-            if(defined($constant_name)) {
+            if (defined($constant_name)) {
                 return (self::getDir() == constant($constant_name));
             }
         }
