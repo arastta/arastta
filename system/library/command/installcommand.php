@@ -19,14 +19,14 @@ class InstallCommand extends Command
             exit;
         }
 
-        if($requirements = $this->checkRequirements()) {
+        if ($requirements = $this->checkRequirements()) {
             $this->error('You do not meet the requirements to install Arastta');
             foreach ($requirements as $requirement) {
                 $this->info($requirement);
             }
             exit;
         }
-        if($errors = $this->validateInputs()) {
+        if ($errors = $this->validateInputs()) {
             $this->error('Please ensure the input is correct:');
             foreach ($errors as $error) {
                 $this->info($error);
@@ -36,14 +36,14 @@ class InstallCommand extends Command
 
         $options = $this->option();
 
-        if($this->option('install_demo_data')) {
+        if ($this->option('install_demo_data')) {
             $options['install_demo_data'] = true;
         } else {
             unset($options['install_demo_data']); //the model checks if it isset
         }
 
         $this->app->load->model('database');
-        if(!$this->app->model_database->saveConfig($options)) {
+        if (!$this->app->model_database->saveConfig($options)) {
             $this->comment('There was an issue saving the config file, you may have to create it manually');
         }
 
@@ -55,9 +55,9 @@ class InstallCommand extends Command
         $this->app->load->model('setting');
 
         //before we create the database tables we need to add language data to the session
-        $this->app->session->data['lang_name'] = 'English';
-        $this->app->session->data['lang_code'] = 'en';
-        $this->app->session->data['lang_image'] = 'gb.png';
+        $this->app->session->data['lang_name']      = 'English';
+        $this->app->session->data['lang_code']      = 'en';
+        $this->app->session->data['lang_image']     = 'gb.png';
         $this->app->session->data['lang_directory'] = 'en-GB';
 
         $this->app->model_setting->createDatabaseTables($options);
@@ -92,7 +92,8 @@ class InstallCommand extends Command
         return empty($errors) ? '' : $errors;
     }
 
-    protected function getOptions() {
+    protected function getOptions()
+    {
         return array(
             array('db_hostname', null, InputOption::VALUE_OPTIONAL, 'Host of the Database', 'localhost'),
             array('db_username', null, InputOption::VALUE_REQUIRED, 'Username to access the database'),
