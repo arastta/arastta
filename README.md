@@ -30,7 +30,7 @@ Fork the repository, make the code changes then submit a pull request.
 
 Please, be very clear on your commit messages and pull requests, empty pull request messages may be rejected without reason.
 
-Your code standards should match the [Arastta coding standards](https://github.com/arastta/arastta/wiki/Coding-Stardards). We use an automated code scanner to check for most basic mistakes - if the test fails your pull request will be rejected.
+Your code standards should match the [Arastta coding standards](https://github.com/arastta/arastta/wiki/Coding-Standards). We use an automated code scanner to check for most basic mistakes - if the test fails your pull request will be rejected.
 
 Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
