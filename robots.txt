@@ -14,6 +14,10 @@
 User-agent: *
 Disallow: /admin/
 Disallow: /catalog/
+Allow: /catalog/view/javascript/
+Allow: /catalog/view/theme/default/image/
+Allow: /catalog/view/theme/default/javascript/
+Allow: /catalog/view/theme/default/stylesheet/
 Disallow: /download/
 Disallow: /system/
 Disallow: /upload/
