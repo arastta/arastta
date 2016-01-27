@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-if(php_sapi_name() !== 'cli') die('CLI Only');
+if (php_sapi_name() !== 'cli') die('CLI Only');
 
 use Symfony\Component\Console\Application;
 
@@ -31,9 +31,9 @@ if (!file_exists(DIR_SYSTEM.'vendor/autoload.php')) {
     die('You need to run Composer first. More details https://github.com/arastta/arastta');
 }
 
-if(!function_exists('is_installed')) {
-    function is_installed() {
-
+if (!function_exists('is_installed')) {
+    function is_installed()
+    {
         if (!file_exists(DIR_ROOT . 'config.php')) {
             return false;
         }
@@ -42,16 +42,22 @@ if(!function_exists('is_installed')) {
     }
 }
 
+// TODO: find a better way here
+if (!defined('HTTP_SERVER')) {
+    define('HTTP_SERVER', '');
+}
+if (!defined('HTTPS_SERVER')) {
+    define('HTTPS_SERVER', '');
+}
+
 require_once(DIR_SYSTEM . 'library/client.php');
 
-$catalog = null;
 $admin = null;
+$catalog = null;
+$install = null;
 
-if(is_installed()) {
-
-    //todo another unhappy fix
-    define('HTTP_SERVER', '');
-    define('HTTPS_SERVER', '');
+if (is_installed()) {
+    require_once(DIR_SYSTEM . 'startup.php');
 
     Client::setName('catalog');
     $catalog = new Catalog();
@@ -60,17 +66,15 @@ if(is_installed()) {
     Client::setName('admin');
     $admin = new Admin();
     $admin->initialise();
-
 } else {
-
     define('DIR_LANGUAGE', 		DIR_INSTALL . 'language/');
     define('DIR_TEMPLATE', 		DIR_INSTALL . 'view/theme/');
 
     $_SERVER['HTTP_HOST'] = '';
 
-    //we need the $_SERVER['HTTP_HOST'] variable so that the define.php value loads correctly
+    // we need the $_SERVER['HTTP_HOST'] variable so that the define.php value loads correctly
     foreach ($argv as $argument) {
-        if(strpos($argument, '--http_server') !== false) {
+        if (strpos($argument, '--http_server') !== false) {
             $_SERVER['HTTP_HOST'] = str_replace('--http_server=', '', $argument);
             define('HTTP_SERVER', $_SERVER['HTTP_HOST']);
             define('HTTPS_SERVER', $_SERVER['HTTP_HOST']);
@@ -80,15 +84,25 @@ if(is_installed()) {
 
     Client::setName('install');
 
+    require_once(DIR_SYSTEM . 'startup.php');
+
+    $install = new Install();
+    $install->initialise();
 }
 
-require_once(DIR_SYSTEM . 'startup.php');
+require_once(DIR_SYSTEM . 'library/command.php');
 
 $console = new Application('Arastta CLI', '1.0');
 $app = new Cli($console);
 
+// set other apps for later usage
+$app->set('admin', $admin);
+$app->set('catalog', $catalog);
+$app->set('install', $install);
+$app->set('apps', array());
+
 Client::setName('cli');
 
-$app->initialise($catalog, $admin);
+$app->initialise();
 
 $console->run();

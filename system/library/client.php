@@ -30,15 +30,16 @@ final class Client
 
     public static function __callStatic($name, $arguments)
     {
+        $status = false;
 
         if (strpos($name, 'is') !== false) {
-
             $constant_name = 'DIR_' . strtoupper(substr($name, 2));
+
             if (defined($constant_name)) {
-                return (self::getDir() == constant($constant_name));
+                $status = (self::getDir() == constant($constant_name));
             }
         }
 
-        return false;
+        return $status;
     }
 }
