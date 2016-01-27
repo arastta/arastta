@@ -28,18 +28,17 @@ final class Client
         return constant($dir);
     }
 
-    public static function isAdmin()
+    public static function __callStatic($name, $arguments)
     {
-        return (self::getDir() == DIR_ADMIN);
-    }
 
-    public static function isCatalog()
-    {
-        return (self::getDir() == DIR_CATALOG);
-    }
+        if (strpos($name, 'is') !== false) {
 
-    public static function isInstall()
-    {
-        return (self::getDir() == DIR_INSTALL);
+            $constant_name = 'DIR_' . strtoupper(substr($name, 2));
+            if (defined($constant_name)) {
+                return (self::getDir() == constant($constant_name));
+            }
+        }
+
+        return false;
     }
 }
