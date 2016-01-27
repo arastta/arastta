@@ -10,6 +10,16 @@
 #
 # For syntax checking, see:
 # http://tool.motoricerca.info/robots-checker.phtml
+#
+# If the Sitemap feed is activated in your Arastta store we recommend
+# you to tell the robots where they can find it/them. Just uncomment
+# and change domain in the one/ones you like to use bellow.
+# The first sitemap includes all content in the store.
+
+# Sitemap: http://www.example.com/index.php?route=feed/google_sitemap
+# Sitemap: http://www.example.com/index.php?route=feed/google_sitemap/products
+# Sitemap: http://www.example.com/index.php?route=feed/google_sitemap/categories
+# Sitemap: http://www.example.com/index.php?route=feed/google_sitemap/manufacturers
 
 User-agent: *
 Disallow: /admin/
