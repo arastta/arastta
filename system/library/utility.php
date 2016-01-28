@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -9,19 +9,26 @@
 class Utility extends Object
 {
 
+    protected $registry;
+
     public function __construct($registry)
     {
-        $this->db = $registry->get('db');
-        $this->uri = $registry->get('uri');
-        $this->url = $registry->get('url');
-        $this->cache = $registry->get('cache');
-        $this->config = $registry->get('config');
-        $this->request = $registry->get('request');
-        $this->session = $registry->get('session');
+        $this->registry = $registry;
+    }
+
+    public function __get($key)
+    {
+        return $this->registry->get($key);
+    }
+
+    public function __set($key, $value)
+    {
+        $this->registry->set($key, $value);
     }
 
     public function getLanguage()
     {
+        $lang = null;
         $languages = array();
 
         $prefix = Client::isAdmin() ? 'admin_' : '';
@@ -55,7 +62,14 @@ class Utility extends Object
             }
         }
 
-        return $languages[$code];
+        // Check if lang code exists in db, otherwise return the first lang
+        if (isset($languages[$code])) {
+            $lang = $languages[$code];
+        } else {
+            $lang = array_values($languages)[0];
+        }
+
+        return $lang;
     }
 
     public function getBrowserDefaultLanguage($languages) {
