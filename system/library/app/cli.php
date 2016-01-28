@@ -1,4 +1,10 @@
 <?php
+/**
+ * @package        Arastta eCommerce
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
+ * @credits        See CREDITS.txt for credits and other copyright notices.
+ * @license        GNU General Public License version 3; see LICENSE.txt
+ */
 
 use Symfony\Component\Console\Application;
 
@@ -61,8 +67,6 @@ class Cli extends App
             $lang = 'en-GB';
             $language = new Language($lang, $this->registry);
             $this->registry->set('language', $language);
-
-            $this->registry->set('update', new Update($this->registry));
         }
 
         $cache = new Cache($this->config->get('config_cache_storage', 'file'), $this->config->get('config_cache_lifetime', 86400));
@@ -89,7 +93,7 @@ class Cli extends App
         $commands = array();
 
         if (is_installed()) {
-
+            $commands[] = 'Command\Update';
         } else {
             $commands[] = 'Command\Install';
         }
