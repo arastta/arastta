@@ -80,12 +80,20 @@ if (is_installed()) {
 
     // we need the $_SERVER['HTTP_HOST'] variable so that the define.php value loads correctly
     foreach ($argv as $argument) {
-        if (strpos($argument, '--http_server') !== false) {
-            $_SERVER['HTTP_HOST'] = str_replace('--http_server=', '', $argument);
+        if (strpos($argument, '--http_host') !== false) {
+            $_SERVER['HTTP_HOST'] = str_replace('--http_host=', '', $argument);
+
             define('HTTP_SERVER', $_SERVER['HTTP_HOST']);
             define('HTTPS_SERVER', $_SERVER['HTTP_HOST']);
+
             break;
         }
+    }
+
+    if (!empty($_SERVER['HTTP_HOST'])) {
+        define('HTTP_CATALOG', 'http://' . $_SERVER['HTTP_HOST'] . '/');
+    } else {
+        define('HTTP_CATALOG', '');
     }
 
     Client::setName('install');

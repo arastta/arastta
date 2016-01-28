@@ -51,6 +51,8 @@ class Cache extends Command
             if ($modification == 'refresh') {
                 $this->admin->request->get['extensionInstaller'] = 'yes';
                 $this->admin->load->controller('extension/modification/refresh');
+
+                $this->info('Modification refreshed');
             } else {
                 try {
                     $this->app->filesystem->remove(DIR_MODIFICATION);
@@ -78,14 +80,13 @@ class Cache extends Command
             $this->app->cache->clear();
             $this->info('Cache Cleared');
         }
-
     }
 
     protected function getOptions()
     {
         return array(
             array('images', null, InputOption::VALUE_NONE, 'Flag to clear the cached images'),
-            array('modification', null, InputOption::VALUE_NONE, 'Clear/Refresh the modifications cache'),
+            array('modification', null, InputOption::VALUE_OPTIONAL, 'Clear/Refresh the modifications cache'),
             array('application', null, InputOption::VALUE_NONE, 'Clear the application cache')
         );
     }
