@@ -531,7 +531,7 @@ $(document).ready(function() {
         }
     });
 
-    if (sessionStorage.getItem('active-menu') == 'right') {
+    if (sessionStorage.getItem('active-menu') == 'right' || $('#column-left').hasClass('right')) {
         if ($('#header').hasClass('short')) {
             $('#content .page-header .pull-right').addClass('short-button');
         } else {
