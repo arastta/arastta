@@ -810,7 +810,7 @@ class ControllerSaleInvoice extends Controller
         $invoice_data['invoice_id'] = $invoice_info['invoice_id'];
         $invoice_data['invoice_date'] = $invoice_info['invoice_date'];
 
-        $invoice_file = DIR_UPLOAD . $invoice_info['invoice_prefix'] . $invoice_info['invoice_no'] . '.pdf';
+        $invoice_file = DIR_UPLOAD . $invoice_data['invoice_prefix'] . $invoice_data['invoice_no'] . '.pdf';
 
         $subject = $this->emailtemplate->getSubject('Invoice', 'invoice_1', $invoice_data);
         $message = $this->emailtemplate->getMessage('Invoice', 'invoice_1', $invoice_data);
