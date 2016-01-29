@@ -93,8 +93,19 @@ class ControllerProductSearch extends Controller {
             $url .= '&search=' . urlencode(html_entity_decode($this->request->get['search'], ENT_QUOTES, 'UTF-8'));
         }
 
+        // for BC not delete this line SEF Tag issue
+        if (!empty($this->request->get['tag'])) {
+            $_tag = $this->request->get['tag'];
+            unset($this->request->get['tag']);
+        }
+
         if (isset($this->request->get['tag'])) {
             $url .= '&tag=' . urlencode(html_entity_decode($this->request->get['tag'], ENT_QUOTES, 'UTF-8'));
+        }
+
+        // for BC not delete this line SEF Tag issue
+        if (isset($_tag)) {
+            $this->request->get['tag'] = $_tag;
         }
 
         if (isset($this->request->get['description'])) {
