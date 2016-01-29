@@ -1,9 +1,7 @@
 var Layout = function() {
-
     var token = getURLVar('token');
     var confirm_text = 'Are you sure?';
     var module_list_title = 'Edit module';
-
     var refresh = function() {
         Layout.handleAccordion();
         Layout.handleDraggable();
@@ -25,13 +23,11 @@ var Layout = function() {
 
     };
 
-    return{
-
+    return {
         refresh_module_list : function() {
             $.ajax({
                 url : 'index.php?route=appearance/layout/getModuleList&token=' + token,
                 dataType : 'html',
-
                 success : function(textStatus) {
                     var el = $('.module_accordion').html(textStatus);
                     el.find('.btn-edit').click(btn_edit_click);
@@ -40,14 +36,15 @@ var Layout = function() {
                 }
             });
         },
-
         handleAccordion : function() {
             $('.accordion>.accordion-content').css('display', 'none');
 
             $('.accordion>h4,.accordion>.accordion-heading').click(function() {
                 if (!$(this).hasClass('active')) {
                     $(this).addClass('active').siblings('h4,.accordion-heading').removeClass('active');
+                    
                     var statsTemplate = $(this).next('.accordion-content');
+                    
                     $(statsTemplate).slideDown(350).siblings('.accordion-content').slideUp(350);
                 }
             });
@@ -56,7 +53,6 @@ var Layout = function() {
                 $(this).click();
             });
         },
-
         handleDraggable : function() {
             $('.module-block').draggable({
                 appendTo : document['body'],
@@ -73,14 +69,13 @@ var Layout = function() {
 
             $('.dashed').droppable({
                 activeClass 		 	: 'activeDroppable',
-                hoverClass 			: 'hoverDroppable',
+                hoverClass 			    : 'hoverDroppable',
                 tolerance			 	: 'pointer',
                 forceHelperSize 	 	: false,
-                forcePlaceholderSize  : false,
-                accept 				: '.module-block',
-                cancel 				: '.btn-remove, .btn-edit',
+                forcePlaceholderSize    : false,
+                accept 				    : '.module-block',
+                cancel 				    : '.btn-remove, .btn-edit',
                 drop 				 	: function(event, ev) {
-
                     var data_code = $(ev['draggable']).attr('data-code');
                     var module_settnig_link = $(ev['draggable']).find('a').attr('href');
                     var data_position = $(this).attr('data-position');
@@ -90,6 +85,7 @@ var Layout = function() {
                     var sort_order_value = 0;
 
                     sort_order_value = $(this).find('.mblock').length;
+                    
                     var html  = '<div class="mblock ui-draggable ui-draggable-handle" data-code="' + data_code + '">';
                     html += ' 	<div class="mblock-header">';
                     html += ' 		<div class="mblock-header-title"><i class="fa fa-arrows-alt"></i><span class="module-name">' + ev['draggable']['text']() + '</span></div>';
@@ -108,7 +104,9 @@ var Layout = function() {
                     html += '</div>';
 
                     $('.accordion-content-drop').find(ev['draggable']).remove();
+                    
                     $(this).append(html);
+                    
                     $('#data_index').attr('data-index', parseInt(cDigit) + 1);
 
                     $.ajax({
@@ -119,31 +117,30 @@ var Layout = function() {
                             console.log('success');
                         }
                     });
-
                 }
             }).sortable({
-                appendTo : document['body'],
-                helper : 'clone',
+                appendTo    : document['body'],
+                helper      : 'clone',
                 placeholder : 'hoverDroppable',
-                zIndex : 99999,
+                zIndex      : 99999,
                 dropOnEmpty : true,
                 connectWith : '.dashed',
-                items : '.mblock',
-                cancel : '.btn-edit, .btn-remove',
-                update : function(allBindingsAccessor, stopHere) {
+                items       : '.mblock',
+                cancel      : '.btn-edit, .btn-remove',
+                update      : function(allBindingsAccessor, stopHere) {
                     $(this).find('.layout_position').attr('value', $(this).attr('data-position'));
+                    
                     $.ajax({
-                        url: action_url,
-                        data: $('#form-layout').serialize(),
-                        type: 'post',
-                        success: function(html) {
+                        url     : action_url,
+                        data    : $('#form-layout').serialize(),
+                        type    : 'post',
+                        success : function(html) {
                             console.log('success');
                         }
                     });
                 }
             }).disableSelection();
         },
-
         addModule : function(module, array, moduleInstance, ext) {
             var module_data = $('#data_index').attr('data-index');
             var confirm_text = $('#module_list').attr('data-text-confirm');
@@ -168,16 +165,15 @@ var Layout = function() {
 
             $("div[data-position='" + array + "']").append(html);
         },
-
         init : function() {
             refresh();
         }
-
     };
 }();
 
 function moduleSetting (url) {
     var data_href = url;
+    
     $('#model-large').attr('src',data_href);
     $('#module-modal').modal('show');
 }
@@ -200,7 +196,9 @@ function refresh_layout() {
 
 function btn_edit_click(event) {
     event.preventDefault();
+    
     var data_href = $(this).attr('href');
+    
     $('#model-large').attr('src',data_href);
     $('#module-modal').modal('show');
 }
@@ -208,6 +206,7 @@ function btn_edit_click(event) {
 $(document).ready(function() {
     $(document).on('hide.bs.modal','.modal-box', function () {
         $('body').removeClass('modal-open');
+        
         parent.$('iframe').removeClass('loading');
     });
 
@@ -215,6 +214,7 @@ $(document).ready(function() {
 
     $('#model-large').on('load', function(event) {
         event.preventDefault();
+        
         var iframe = $('#model-large');
         var current_url = document.getElementById("model-large").contentWindow.location.href;
 
@@ -225,33 +225,42 @@ $(document).ready(function() {
         iframe.contents().find('form').on('submit', function(event) {
             $('#module-modal-loading').addClass('loading_iframe');
         });
-        if (current_url.indexOf('extension/module') > -1) {
+        
+        if (current_url.indexOf('extension/extension') > -1) {
             setTimeout(function(){
                 $('#module-modal').modal('hide');
                 $('body').removeClass('modal-open');
                 Layout.refresh_module_list();
             }, 500);
+            
             iframe.removeClass('loading');
         } else {
             iframe.contents().find('html,body').css({
                 height: 'auto'
             });
-            iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #column-right, #footer').hide();
+            
+            iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #column-right, #footer').remove();
+            iframe.contents().find('.pull-right.wide-button').removeClass('wide-button');
+            iframe.contents().find('.pull-right.short-button').removeClass('short-button');
             iframe.contents().find('#content').css({marginLeft: '0px'});
             iframe.contents().find('#content').css({padding: '10px 0 0 0'});
+            
             $('#module-modal-loading').removeClass('loading_iframe');
         }
     });
 
     $('.add-layout').on('click', function(event) {
         event.preventDefault();
+        
         var data_href = $(this).attr('href');
+        
         $('#layout-add-iframe').attr('src',data_href);
         $('#layout-add').modal('show');
     });
 
     $('#layout-add-iframe').on('load', function(event) {
         event.preventDefault();
+        
         var iframe = $('#layout-add-iframe');
         var current_url = document.getElementById("layout-add-iframe").contentWindow.location.href;
 
@@ -262,28 +271,36 @@ $(document).ready(function() {
         iframe.contents().find('form').on('submit', function(event) {
             $('#layout-add-loading').addClass('loading_iframe');
         });
+        
         if (current_url.indexOf('appearance/layout/add') < 0) {
             $('#layout-add').modal('hide');
         } else if (current_url.indexOf('appearance/layout/add') > -1) {
             iframe.contents().find('html,body').css({
                 height: 'auto'
             });
-            iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #column-right, #footer, #module').hide();
+            
+            iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #column-right, #footer, #module').remove();
+            iframe.contents().find('.pull-right.wide-button').removeClass('wide-button');
+            iframe.contents().find('.pull-right.short-button').removeClass('short-button');
             iframe.contents().find('#content').css({marginLeft: '0px'});
             iframe.contents().find('#content').css({padding: '10px 0 0 0'});
+            
             $('#layout-add-loading').removeClass('loading_iframe');
         }
     });
 
     $('.edit-layout').on('click', function(event) {
         event.preventDefault();
+        
         var data_href = $(this).attr('href');
+        
         $('#layout-edit-iframe').attr('src',data_href);
         $('#layout-edit').modal('show');
     });
 
     $('#layout-edit-iframe').on('load', function(event) {
         event.preventDefault();
+        
         var iframe = $('#layout-edit-iframe');
         var current_url = document.getElementById("layout-edit-iframe").contentWindow.location.href;
 
@@ -294,15 +311,20 @@ $(document).ready(function() {
         iframe.contents().find('form').on('submit', function(event) {
             $('#layout-edit-loading').addClass('loading_iframe');
         });
+        
         if (current_url.indexOf('appearance/layout/edit') < 0) {
             $('#layout-edit').modal('hide');
         } else if (current_url.indexOf('appearance/layout/edit') > -1) {
             iframe.contents().find('html,body').css({
                 height: 'auto'
             });
-            iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #column-right, #footer, #module').hide();
+            
+            iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #column-right, #footer, #module').remove();
+            iframe.contents().find('.pull-right.wide-button').removeClass('wide-button');
+            iframe.contents().find('.pull-right.short-button').removeClass('short-button');
             iframe.contents().find('#content').css({marginLeft: '0px'});
             iframe.contents().find('#content').css({padding: '10px 0 0 0'});
+            
             $('#layout-edit-loading').removeClass('loading_iframe');
         }
     });
@@ -312,62 +334,73 @@ $(document).ready(function() {
 
         var element = this;
 
-        var href = $(element).attr('href')+'&with_iframe=true';
+        var href  = $(element).attr('href') + '&with_iframe=true';
         var title = $(element).attr('data-title');
-        if (title == ''||title == null) {
+        
+        if (title == '' || title == null) {
             title = $(element).text();
         }
 
-        var data_id ='modal-box';
+        var data_id = 'modal-box';
+        
         if ($(element).attr('data-id') != undefined) {
             data_id = $(element).attr('data-id');
-        }else{
-            data_id='modal-box';
+        } else {
+            data_id = 'modal-box';
         }
 
-        var type ='model-large';
+        var type = 'model-large';
+        
         if ($(element).attr('data-size') != undefined) {
             size = $(element).attr('data-size');
-        }else{
-            size='model-large';
+        } else {
+            size = 'model-large';
         }
-        var type ='html';
+        
+        var type = 'html';
+        
         if ($(element).attr('data-type') != undefined) {
             type = $(element).attr('data-type');
-        } else if($(element).hasClass('modalbox')){
-            type='html';
-        }else{
-            type='iframe';
+        } else if ($(element).hasClass('modalbox')) {
+            type = 'html';
+        } else {
+            type = 'iframe';
         }
+        
         if ($(element).attr('data-backdrop') != undefined) {
             $('body').addClass('hidden-backdrop');
-        }else{
+        } else {
             $('body').removeClass('hidden-backdrop');
         }
-        if(type=='iframe'){
-            $('#'+data_id).remove();
-            html  = '<div id="'+data_id+'" class="modal-box modal fade">';
-            html += '  <div class="modal-dialog '+size+'">';
+        
+        if (type == 'iframe') {
+            
+            $('#' + data_id).remove();
+            
+            html  = '<div id="' + data_id + '" class="modal-box modal fade">';
+            html += '  <div class="modal-dialog ' + size + '">';
             html += '    <div class="modal-content">';
             html += '      <div class="modal-header">';
             html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
             html += '        <h4 class="modal-title">' + title + '</h4>';
             html += '      </div>';
-            html += '      <div class="modal-body model-large"><iframe id="model-large" frameborder="0" src="'+href+'"></iframe></div>';
+            html += '      <div class="modal-body model-large"><iframe id="model-large" frameborder="0" src="' + href + '"></iframe></div>';
             html += '    </div';
             html += '  </div>';
             html += '</div>';
+            
             $('body').append(html);
             $('#modal-box').modal('show');
-        }else{
+        } else {
             $('#'+data_id).remove();
+            
             $.ajax({
                 url:href,
                 type: 'get',
                 dataType: 'html',
                 success: function(data) {
-                    html  = '<div id="'+data_id+'" class="modal-box modal fade">';
-                    html += '  <div class="modal-dialog '+size+'">';
+                    html  = '<div id="' + data_id + '" class="modal-box modal fade">';
+                    html += '  <div class="modal-dialog ' + size + '">';
                     html += '    <div class="modal-content">';
                     html += '      <div class="modal-header">';
                     html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
@@ -377,13 +410,16 @@ $(document).ready(function() {
                     html += '    </div';
                     html += '  </div>';
                     html += '</div>';
+                    
                     $('body').append(html);
-                    $('#'+data_id).modal('show');
+                    $('#' + data_id).modal('show');
                 }
             });
         }
+        
         $('#model-large').on('load', function(event) {
             event.preventDefault();
+            
             var iframe = $('#model-large');
             var current_url = document.getElementById("model-large").contentWindow.location.href;
 
@@ -394,19 +430,25 @@ $(document).ready(function() {
             iframe.contents().find('form').on('submit', function(event) {
                 iframe.addClass('loading');
             });
-            if (current_url.indexOf('extension/module') > -1) {
+            
+            if (current_url.indexOf('extension/extension') > -1) {
                 setTimeout(function(){
                     $('#modal-box').modal('hide');
                     $('body').removeClass('modal-open');
                 }, 500);
+                
                 iframe.removeClass('loading');
             } else {
                 iframe.contents().find('html,body').css({
                     height: 'auto'
                 });
-                iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #column-right, #footer').hide();
+                
+                iframe.contents().find('#header, #content .page-header .breadcrumb, #column-left, #column-right, #footer').remove();
+                iframe.contents().find('.pull-right.wide-button').removeClass('wide-button');
+                iframe.contents().find('.pull-right.short-button').removeClass('short-button');
                 iframe.contents().find('#content').css({padding: '10px 0 0 0'});
                 iframe.removeClass('loading');
+                
                 $('#modal-box').modal('show');
             }
         });
