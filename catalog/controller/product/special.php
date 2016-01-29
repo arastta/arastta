@@ -147,7 +147,7 @@ class ControllerProductSpecial extends Controller {
                 'special'     => $special,
                 'tax'         => $tax,
                 'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
-                'rating'      => $result['rating'],
+                'rating'      => $rating,
                 'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
             );
         }
