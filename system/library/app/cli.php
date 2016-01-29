@@ -6,6 +6,7 @@
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Console\Application;
 
 class Cli extends App
@@ -92,14 +93,15 @@ class Cli extends App
     {
         $commands = array();
 
-        if (is_installed()) {
-            $commands[] = 'Command\Update';
-        } else {
-            $commands[] = 'Command\Install';
-        }
+        $finder = new Finder();
 
-        // always available commands
-        $commands[] = 'Command\Cache';
+        $finder->files()->in(DIR_SYSTEM . 'library/command')->name('*.php');
+
+        foreach ($finder as $file) {
+            $name = str_replace('.php', '', $file->getRelativePathname());
+
+            $commands[] = 'Command\\' . ucfirst($name);;
+        }
 
         return $commands;
     }
