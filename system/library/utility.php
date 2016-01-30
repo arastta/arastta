@@ -66,7 +66,8 @@ class Utility extends Object
         if (isset($languages[$code])) {
             $lang = $languages[$code];
         } else {
-            $lang = array_values($languages)[0];
+            reset($languages);
+            $lang = current($languages);
         }
 
         return $lang;
