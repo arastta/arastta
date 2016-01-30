@@ -21,20 +21,20 @@ define('AREXE', 1);
 $base = __DIR__;
 
 define('DIR_BASE',          $base . '/');
-define('DIR_ROOT', 			$base . '/');
-define('DIR_INSTALL',     	DIR_ROOT . 'install/');
-define('DIR_SYSTEM', 		DIR_ROOT . 'system/');
-define('DIR_ADMIN', 		DIR_ROOT . 'admin/');
-define('DIR_CATALOG', 		DIR_ROOT . 'catalog/');
-define('DIR_CLI', 		    DIR_SYSTEM . 'console/');
-define('DIR_VQMOD', 		DIR_ROOT . 'vqmod/');
-define('DIR_IMAGE', 		DIR_ROOT . 'image/');
-define('DIR_DOWNLOAD', 		DIR_ROOT . 'download/');
-define('DIR_UPLOAD', 		DIR_ROOT . 'upload/');
-define('DIR_CONFIG', 		DIR_SYSTEM . 'config/');
-define('DIR_CACHE', 		DIR_SYSTEM . 'cache/');
-define('DIR_MODIFICATION',	DIR_SYSTEM . 'modification/');
-define('DIR_LOG', 			DIR_SYSTEM . 'log/');
+define('DIR_ROOT',          $base . '/');
+define('DIR_INSTALL',       DIR_ROOT . 'install/');
+define('DIR_SYSTEM',        DIR_ROOT . 'system/');
+define('DIR_ADMIN',         DIR_ROOT . 'admin/');
+define('DIR_CATALOG',       DIR_ROOT . 'catalog/');
+define('DIR_CLI',           DIR_SYSTEM . 'console/');
+define('DIR_VQMOD',         DIR_ROOT . 'vqmod/');
+define('DIR_IMAGE',         DIR_ROOT . 'image/');
+define('DIR_DOWNLOAD',      DIR_ROOT . 'download/');
+define('DIR_UPLOAD',        DIR_ROOT . 'upload/');
+define('DIR_CONFIG',        DIR_SYSTEM . 'config/');
+define('DIR_CACHE',         DIR_SYSTEM . 'cache/');
+define('DIR_MODIFICATION',  DIR_SYSTEM . 'modification/');
+define('DIR_LOG',           DIR_SYSTEM . 'log/');
 
 if (!file_exists(DIR_SYSTEM.'vendor/autoload.php')) {
     die('You need to run Composer first. More details https://github.com/arastta/arastta');
