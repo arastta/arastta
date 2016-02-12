@@ -146,7 +146,7 @@
                                       </a>
                                       <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
                                           <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                                          <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-customer').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                          <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-order').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
                                       </ul>
                                     </span>
                                     </div></td>
