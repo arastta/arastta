@@ -276,13 +276,29 @@
                 url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
                 dataType: 'json',
                 success: function(json) {
-                    response($.map(json, function(item) {
-                        return {
-                            label: item['name'],
-                            value: item['product_id'],
-                            model: item['model']
-                        }
-                    }));
+                    if (json.length === 0) {
+                        $.ajax({
+                            url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_model=' +  encodeURIComponent(request),
+                            dataType: 'json',
+                            success: function(json) {
+                                response($.map(json, function(item) {
+                                    return {
+                                        label: item['name'],
+                                        value: item['product_id'],
+                                        model: item['model']
+                                    }
+                                }));
+                            }
+                        });
+                    } else {
+                        response($.map(json, function(item) {
+                            return {
+                                label: item['name'],
+                                value: item['product_id'],
+                                model: item['model']
+                            }
+                        }));
+                    }
                 }
             });
         },
