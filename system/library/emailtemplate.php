@@ -377,6 +377,7 @@ class Emailtemplate
             'ip'              => $order_info['ip'],
             'comment:start'   => implode("", $comment),
             'comment:stop'    => '',
+            'comment'         => $comment,
             'sub_total'       => $totals['sub_total'][0]['text'],
             'shipping_cost'   => (isset($totals['shipping'][0]['text'])) ? $totals['shipping'][0]['text'] : '',
             'client_comment'  => $order_info['comment'],
