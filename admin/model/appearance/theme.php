@@ -122,7 +122,7 @@ class ModelAppearanceTheme extends Model
 
     public function getThemeSetting($code, $action)
     {
-        $form = new Arastta\Component\Form\Form('form-' . $code . '-theme-elements' , str_replace('&amp;', '&', $action));
+        $form = new Arastta\Component\Form\Form('form-' . $code . '-theme-elements', str_replace('&amp;', '&', $action));
 
         if (file_exists(DIR_CATALOG . 'view/theme/' . $code . '/setting_.php')) {
             include(DIR_CATALOG . 'view/theme/' . $code . '/setting.php');
