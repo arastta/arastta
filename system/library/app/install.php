@@ -12,7 +12,7 @@ use Symfony\Component\Debug\ExceptionHandler;
 class Install extends App
 {
 
-    protected $_route = 'main';
+    protected $route = 'main';
 
     public function initialise()
     {
@@ -53,9 +53,9 @@ class Install extends App
         if (isset($this->request->get['lang']) && $this->filesystem->exists(DIR_LANGUAGE . $this->request->get['lang'])) {
             $lang = $this->request->get['lang'];
         } else {
-            $lang = 'en-GB';
+            $lang                       = 'en-GB';
             $this->request->get['lang'] = $lang;
-            $this->_route = 'language';
+            $this->route                = 'language';
         }
 
         $language = new Language($lang, $this->registry);
@@ -76,7 +76,7 @@ class Install extends App
         if (isset($this->request->get['route'])) {
             $action = new Action($this->request->get['route']);
         } else {
-            $action = new Action($this->_route);
+            $action = new Action($this->route);
         }
 
         // Dispatch
