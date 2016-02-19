@@ -78,7 +78,7 @@ function modification($filename, $override = 'catalog')
         $file = DIR_MODIFICATION . 'admin/' .  substr($filename, strlen(Client::getDir()));
     }
 
-    if(Client::isCli()) {
+    if (Client::isCli()) {
         $file = DIR_MODIFICATION . $override . '/' . substr($filename, strlen(Client::getDir()));
     }
 

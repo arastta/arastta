@@ -100,7 +100,7 @@ class Cli extends App
         foreach ($finder as $file) {
             $name = str_replace('.php', '', $file->getRelativePathname());
 
-            $commands[] = 'Command\\' . ucfirst($name);;
+            $commands[] = 'Command\\' . ucfirst($name);
         }
 
         return $commands;
