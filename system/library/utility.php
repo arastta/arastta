@@ -73,7 +73,8 @@ class Utility extends Object
         return $lang;
     }
 
-    public function getBrowserDefaultLanguage($languages) {
+    public function getBrowserDefaultLanguage($languages)
+    {
         $browser = $this->getBrowserLangCode($languages);
 
         if (is_object($this->config)) {
