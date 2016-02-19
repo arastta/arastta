@@ -6,8 +6,10 @@
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class ControllerApiCurrency extends Controller {
-    public function index() {
+class ControllerApiCurrency extends Controller
+{
+    public function index()
+    {
         $this->load->language('api/currency');
 
         $json = array();
