@@ -8,10 +8,12 @@
 
 use Arastta\Component\Form\Form as AForm;
 
-class ControllerEditorTinymce extends Controller {
+class ControllerEditorTinymce extends Controller
+{
     private $error = array();
 
-    public function index() {
+    public function index()
+    {
         $this->load->language('editor/tinymce');
 
         $this->document->setTitle($this->language->get('heading_title'));
@@ -52,7 +54,8 @@ class ControllerEditorTinymce extends Controller {
         $this->response->setOutput($this->load->view('editor/tinymce.tpl', $data));
     }
 
-    protected function getFormFields($action) {
+    protected function getFormFields($action)
+    {
         $action = str_replace('amp;', '', $action);
 
         $option_text = array(
@@ -153,7 +156,8 @@ class ControllerEditorTinymce extends Controller {
         return $form->render(true);
     }
 
-    protected function validate() {
+    protected function validate()
+    {
         if (!$this->user->hasPermission('modify', 'editor/tinymce')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }

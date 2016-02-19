@@ -176,7 +176,7 @@ if (version_compare(VERSION, '1.2.0', '<')) {
         $user_group['permission']['modify'][] = 'sale/invoice';
 
         $user_group['permission']['access'][] = 'editor/summernote';
-        $user_group['permission']['modify'][] = 'editor/summernote';        
+        $user_group['permission']['modify'][] = 'editor/summernote';
         
         $user_group['permission']['access'][] = 'editor/tinymce';
         $user_group['permission']['modify'][] = 'editor/tinymce';

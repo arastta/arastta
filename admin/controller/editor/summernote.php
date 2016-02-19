@@ -8,10 +8,12 @@
 
 use Arastta\Component\Form\Form as AForm;
 
-class ControllerEditorSummernote extends Controller {
+class ControllerEditorSummernote extends Controller
+{
     private $error = array();
 
-    public function index() {
+    public function index()
+    {
         $this->load->language('editor/summernote');
 
         $this->document->setTitle($this->language->get('heading_title'));
@@ -52,7 +54,8 @@ class ControllerEditorSummernote extends Controller {
         $this->response->setOutput($this->load->view('editor/summernote.tpl', $data));
     }
     
-    protected function getFormFields($action) {
+    protected function getFormFields($action)
+    {
         $action = str_replace('amp;', '', $action);
 
         $option_text = array(
@@ -167,7 +170,8 @@ class ControllerEditorSummernote extends Controller {
 
         return $form->render(true);
     }
-    protected function validate() {
+    protected function validate()
+    {
         if (!$this->user->hasPermission('modify', 'editor/summernote')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
