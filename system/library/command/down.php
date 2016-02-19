@@ -2,7 +2,8 @@
 
 namespace Command;
 
-class Down extends Command {
+class Down extends Command
+{
 
     protected $name = 'down';
 
@@ -16,5 +17,4 @@ class Down extends Command {
 
         $this->info('Maintenance mode enabled');
     }
-
 }
