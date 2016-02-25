@@ -48,6 +48,8 @@ class ControllerCommonEdit extends Controller
                 break;
         }
 
+        $this->cache->delete($type);
+
         if (empty($route)) {
             exit();
         }

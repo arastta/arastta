@@ -198,13 +198,14 @@ class ControllerLocalisationLanguage extends Controller {
         $data['languages'] = array();
 
         $filter_data = array(
+            'status'=> '*',
             'sort'  => $sort,
             'order' => $order,
             'start' => ($page - 1) * $this->config->get('config_limit_admin'),
             'limit' => $this->config->get('config_limit_admin')
         );
 
-        $language_total = $this->model_localisation_language->getTotalLanguages();
+        $language_total = $this->model_localisation_language->getTotalLanguages($filter_data);
 
         $results = $this->model_localisation_language->getLanguages($filter_data);
 
