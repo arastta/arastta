@@ -544,6 +544,8 @@ class ControllerSaleCustomer extends Controller {
         $data['button_approve'] = $this->language->get('button_approve');
         $data['button_add'] = $this->language->get('button_add');
         $data['button_edit'] = $this->language->get('button_edit');
+        $data['button_enable'] = $this->language->get('button_enable');
+        $data['button_disable'] = $this->language->get('button_disable');
         $data['button_delete'] = $this->language->get('button_delete');
         $data['button_filter'] = $this->language->get('button_filter');
         $data['button_show_filter'] = $this->language->get('button_show_filter');

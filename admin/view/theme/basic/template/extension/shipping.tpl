@@ -22,7 +22,7 @@
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
-                    <form id="form" method="post">
+                    <form id="form-shipping" method="post">
                         <table class="table table-hover">
                             <thead>
                             <tr>
@@ -80,7 +80,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript"><!--
-var status_type = 'shipping';
-//--></script>
 <?php echo $footer; ?>

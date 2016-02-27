@@ -247,7 +247,7 @@ class ControllerLocalisationZone extends Controller {
                 'zone_id' => $result['zone_id'],
                 'country' => $result['country'],
                 'name'    => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : null),
-                'status'  => $result['status'],
+                'status'  => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
                 'code'    => $result['code'],
                 'edit'    => $this->url->link('localisation/zone/edit', 'token=' . $this->session->data['token'] . '&zone_id=' . $result['zone_id'] . $url, 'SSL')
             );
@@ -314,6 +314,7 @@ class ControllerLocalisationZone extends Controller {
         $data['sort_country'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . '&sort=c.name' . $url, 'SSL');
         $data['sort_name'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . '&sort=z.name' . $url, 'SSL');
         $data['sort_code'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . '&sort=z.code' . $url, 'SSL');
+        $data['sort_status'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . '&sort=z.status' . $url, 'SSL');
 
         $url = '';
 

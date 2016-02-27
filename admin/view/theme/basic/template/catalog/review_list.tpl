@@ -288,8 +288,6 @@
     });
     //--></script></div>
 <script type="text/javascript"><!--
-var status_type = 'review';
-
 function filter() {
     url = 'index.php?route=catalog/review&token=<?php echo $token; ?>';
 

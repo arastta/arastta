@@ -219,8 +219,6 @@ $('input[name=\'filter_name\']').autocomplete({
 });
 //--></script>
 <script type="text/javascript"><!--
-var status_type = 'category';
-
 function filter() {
     url = 'index.php?route=catalog/category&token=<?php echo $token; ?>';
 

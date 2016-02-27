@@ -86,7 +86,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript"><!--
-var status_type = 'information';
-//--></script>
 <?php echo $footer; ?>

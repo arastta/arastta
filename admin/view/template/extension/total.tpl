@@ -31,7 +31,7 @@
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
-                    <form id="form" method="post">
+                    <form id="form-total" method="post">
                         <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
@@ -75,23 +75,4 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript"><!--
-function changeStatus(status){
-    $.ajax({
-        url: 'index.php?route=common/edit/changeStatus&type=total&status='+ status +'&token=<?php echo $token; ?>',
-        dataType: 'json',
-        data: $("form").serialize(),
-        success: function(json) {
-            if(json){
-                $('.panel.panel-default').before('<div class="alert alert-warning"><i class="fa fa-warning"></i> ' + json.warning + '<button type="button" class="close" data-dismiss="alert">×</button></div>');
-            }
-            else{
-                location.reload();
-            }
-        }
-    });
-}
-//--></script>
-
 <?php echo $footer; ?>

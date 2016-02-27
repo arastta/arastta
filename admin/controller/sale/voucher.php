@@ -210,6 +210,8 @@ class ControllerSaleVoucher extends Controller {
 
         $data['button_add'] = $this->language->get('button_add');
         $data['button_edit'] = $this->language->get('button_edit');
+        $data['button_enable'] = $this->language->get('button_enable');
+        $data['button_disable'] = $this->language->get('button_disable');
         $data['button_delete'] = $this->language->get('button_delete');
         $data['button_send'] = $this->language->get('button_send');
 

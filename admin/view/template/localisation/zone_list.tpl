@@ -91,6 +91,11 @@
                                     <?php } else { ?>
                                     <a href="<?php echo $sort_code; ?>"><?php echo $column_code; ?></a>
                                     <?php } ?></td>
+                                <td class="text-left"><?php if ($sort == 'status') { ?>
+                                    <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
+                                    <?php } else { ?>
+                                    <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
+                                    <?php } ?></td> 
                                 <td class="text-right"><?php echo $column_action; ?></td>
                             </tr>
                             </thead>
@@ -106,12 +111,13 @@
                                 <td class="text-left"><?php echo $zone['country']; ?></td>
                                 <td class="text-left"><?php echo $zone['name']; ?></td>
                                 <td class="text-left"><?php echo $zone['code']; ?></td>
+                                <td class="text-left"><?php echo $zone['status']; ?></td>
                                 <td class="text-right"><a href="<?php echo $zone['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>
                             <tr>
-                                <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+                                <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
                             </tr>
                             <?php } ?>
                             </tbody>
