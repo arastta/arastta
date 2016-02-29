@@ -965,6 +965,7 @@ class ControllerSaleCustomer extends Controller {
         $data['custom_fields'] = array();
 
         $filter_data = array(
+            'filter_status' => 1,
             'sort'  => 'cf.sort_order',
             'order' => 'ASC'
         );
@@ -1097,7 +1098,7 @@ class ControllerSaleCustomer extends Controller {
         // Custom field validation
         $this->load->model('sale/custom_field');
 
-        $custom_fields = $this->model_sale_custom_field->getCustomFields(array('filter_customer_group_id' => $this->request->post['customer_group_id']));
+        $custom_fields = $this->model_sale_custom_field->getCustomFields(array('filter_customer_group_id' => $this->request->post['customer_group_id'], 'filter_status' => 1));
 
         foreach ($custom_fields as $custom_field) {
             if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
@@ -1602,7 +1603,7 @@ class ControllerSaleCustomer extends Controller {
             $customer_group_id = $this->config->get('config_customer_group_id');
         }
 
-        $custom_fields = $this->model_sale_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id));
+        $custom_fields = $this->model_sale_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id, 'filter_status' => 1));
 
         foreach ($custom_fields as $custom_field) {
             $json[] = array(

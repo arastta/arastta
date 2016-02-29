@@ -234,6 +234,8 @@ class ControllerLocalisationZone extends Controller {
             'limit' => $this->config->get('config_limit_admin')
         );
 
+        $zone_status = $this->model_localisation_zone->getZoneStatus();
+
         if(!empty($filter_country) || !empty($filter_zone_name) || !empty($filter_zone_code) || !empty($filter_status)) {
             $zone_total = $this->model_localisation_zone->getTotalZonesFilter($filter_data);
         } else {
@@ -247,7 +249,7 @@ class ControllerLocalisationZone extends Controller {
                 'zone_id' => $result['zone_id'],
                 'country' => $result['country'],
                 'name'    => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : null),
-                'status'  => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+                'status'  => ($zone_status[$result['zone_id']]['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
                 'code'    => $result['code'],
                 'edit'    => $this->url->link('localisation/zone/edit', 'token=' . $this->session->data['token'] . '&zone_id=' . $result['zone_id'] . $url, 'SSL')
             );

@@ -3,6 +3,8 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right"><a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-default" onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i></button>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-default" onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i></button>
                 <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-custom-field').submit() : false;"><i class="fa fa-trash-o"></i></button>
             </div>
             <h1><?php echo $heading_title; ?></h1>
@@ -50,6 +52,11 @@
                                     <?php } else { ?>
                                     <a href="<?php echo $sort_type; ?>"><?php echo $column_type; ?></a>
                                     <?php } ?></td>
+                                <td class="text-left"><?php if ($sort == 'cf.status') { ?>
+                                    <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
+                                    <?php } else { ?>
+                                    <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
+                                    <?php } ?></td>
                                 <td class="text-right"><?php if ($sort == 'cf.sort_order') { ?>
                                     <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
                                     <?php } else { ?>
@@ -70,6 +77,7 @@
                                 <td class="text-left"><?php echo $custom_field['name']; ?></td>
                                 <td class="text-left"><?php echo $custom_field['location']; ?></td>
                                 <td class="text-left"><?php echo $custom_field['type']; ?></td>
+                                <td class="text-left"><?php echo $custom_field['status']; ?></td>
                                 <td class="text-right"><?php echo $custom_field['sort_order']; ?></td>
                                 <td class="text-right"><a href="<?php echo $custom_field['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                             </tr>
