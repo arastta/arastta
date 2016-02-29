@@ -76,11 +76,12 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <form id="form" method="post">
+                    <form id="form-extension" method="post">
                         <table class="table table-hover">
                             <thead>
                             <tr>
                                 <td style="width: 70px;" class="text-center">
+                                    <?php if ($filter_type != 'module') { ?>
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
@@ -96,7 +97,14 @@
                                               <li><a onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i> <?php echo $button_disable; ?></a></li>
                                           </ul>
                                         </span>
-                                    </div></td>
+                                    </div>
+                                    <?php } else { ?>
+                                    <div class="bulk-action">
+                                        <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
+                                        <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
+                                        <span class="item-selected" style="border-bottom-right-radius: 3px; border-top-right-radius: 3px;"></span>
+                                    </div>
+                                <?php } ?></td>
                                 <td class="text-left"><?php if ($sort == 'name') { ?>
                                     <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
                                     <?php } else { ?>
@@ -170,8 +178,6 @@
     </div>
 </div>
 <script type="text/javascript"><!--
-var status_type = 'extension';
-
 function filter() {
     url = 'index.php?route=extension/extension&token=<?php echo $token; ?>';
 

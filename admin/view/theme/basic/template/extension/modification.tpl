@@ -96,9 +96,9 @@
                                                 <button type="button" class="btn btn-info btn-sm btn-basic-list" disabled="disabled"><i class="fa fa-link"></i></button>
                                                 <?php } ?>
                                                 <?php if (!$modification['enabled']) { ?>
-                                                <a onClick="changeStatusModification('<?php echo $modification['enable']; ?>', '<?php echo $modification_id; ?>');" id="<?php echo $modification_id; ?>"  data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-success btn-sm btn-basic-list"><i class="fa fa-plus-circle"></i></a>
+                                                <a onClick="changeModificationStatus('<?php echo $modification['enable']; ?>', '<?php echo $modification_id; ?>');" id="<?php echo $modification_id; ?>"  data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-success btn-sm btn-basic-list"><i class="fa fa-plus-circle"></i></a>
                                                 <?php } else { ?>
-                                                <a onClick="changeStatusModification('<?php echo $modification['disable']; ?>', '<?php echo $modification_id; ?>');" id="<?php echo $modification_id; ?>" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></a>
+                                                <a onClick="changeModificationStatus('<?php echo $modification['disable']; ?>', '<?php echo $modification_id; ?>');" id="<?php echo $modification_id; ?>" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></a>
                                                 <?php } ?>
                                                 <?php echo $modification['name']; ?><br /><div class="text-danger"><?php echo $modification['invalid_xml']; ?></div></td>
                                             <td class="text-left"><?php echo $modification['author']; ?></td>
@@ -148,7 +148,7 @@ $(document).ready(function() {
     $('.panel-chevron').trigger('click');
 });
 
-function changeStatusModification(url ,id) {
+function changeModificationStatus(url ,id) {
     var html = "";
     $.ajax({
         url: url,
@@ -174,7 +174,7 @@ function changeStatusModification(url ,id) {
 
             if (json['status'] == 1) {
                 if(json['enable'] == 1) {
-                    html  = '<a onClick="changeStatusModification(\'' + json['link'] + '\', \'' + id + '\');"';
+                    html  = '<a onClick="changeModificationStatus(\'' + json['link'] + '\', \'' + id + '\');"';
                     html += 'id="' + id + '"';
                     html += 'data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-danger btn-sm btn-basic-list">';
                     html += '<i class="fa fa-minus-circle"></i></a>';
@@ -183,7 +183,7 @@ function changeStatusModification(url ,id) {
                 }
 
                 if(json['disable'] == 1) {
-                    html  = '<a onClick="changeStatusModification(\'' + json['link'] + '\', \'' + id + '\');"';
+                    html  = '<a onClick="changeModificationStatus(\'' + json['link'] + '\', \'' + id + '\');"';
                     html += 'id="' + id + '"';
                     html += 'data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-success btn-sm btn-basic-list">';
                     html += '<i class="fa fa-plus-circle"></i></a>';

@@ -207,8 +207,6 @@ $('input[name=\'filter_name\']').autocomplete({
 });
 //--></script>
 <script type="text/javascript"><!--
-var status_type = 'manufacturer';
-
 function filter() {
     url = 'index.php?route=catalog/manufacturer&token=<?php echo $token; ?>';
 

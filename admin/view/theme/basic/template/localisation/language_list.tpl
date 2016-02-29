@@ -118,7 +118,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript"><!--
-var status_type = 'language';
-//--></script>
 <?php echo $footer; ?>

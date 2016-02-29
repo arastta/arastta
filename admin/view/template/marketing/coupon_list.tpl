@@ -3,6 +3,8 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right"><a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-default" onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i></button>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-default" onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i></button>
                 <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-coupon').submit() : false;"><i class="fa fa-trash-o"></i></button>
             </div>
             <h1><?php echo $heading_title; ?></h1>
@@ -50,17 +52,19 @@
                                 <label class="control-label" for="input-date-start"><?php echo $column_date_start; ?></label>
                                 <div class="input-group date">
                                     <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $column_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="input-date-end"><?php echo $column_date_end; ?></label>
                                 <div class="input-group date">
                                     <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $column_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -206,9 +210,9 @@ $('#button-filter').on('click', function() {
 });
 //--></script></script>
 <script type="text/javascript"><!--
-                $('.date').datetimepicker({
-                    pickTime: false
-                });
+$('.date').datetimepicker({
+    pickTime: false
+});
 //--></script>
 <script type="text/javascript"><!--
 $('input[name=\'filter_name\']').autocomplete({

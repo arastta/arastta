@@ -426,8 +426,6 @@
     });
     //--></script></div>
 <script type="text/javascript"><!--
-var status_type = 'product';
-
 function filter() {
     var url = 'index.php?route=catalog/product&token=<?php echo $token; ?>';
 

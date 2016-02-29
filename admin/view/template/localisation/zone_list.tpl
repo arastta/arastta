@@ -3,6 +3,8 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right"><a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-default" onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i></button>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-default" onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i></button>
                 <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-zone').submit() : false;"><i class="fa fa-trash-o"></i></button>
             </div>
             <h1><?php echo $heading_title; ?></h1>
@@ -91,6 +93,11 @@
                                     <?php } else { ?>
                                     <a href="<?php echo $sort_code; ?>"><?php echo $column_code; ?></a>
                                     <?php } ?></td>
+                                <td class="text-left"><?php if ($sort == 'status') { ?>
+                                    <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
+                                    <?php } else { ?>
+                                    <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
+                                    <?php } ?></td> 
                                 <td class="text-right"><?php echo $column_action; ?></td>
                             </tr>
                             </thead>
@@ -106,12 +113,13 @@
                                 <td class="text-left"><?php echo $zone['country']; ?></td>
                                 <td class="text-left"><?php echo $zone['name']; ?></td>
                                 <td class="text-left"><?php echo $zone['code']; ?></td>
+                                <td class="text-left"><?php echo $zone['status']; ?></td>
                                 <td class="text-right"><a href="<?php echo $zone['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>
                             <tr>
-                                <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+                                <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
                             </tr>
                             <?php } ?>
                             </tbody>

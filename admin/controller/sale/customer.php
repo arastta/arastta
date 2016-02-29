@@ -544,6 +544,8 @@ class ControllerSaleCustomer extends Controller {
         $data['button_approve'] = $this->language->get('button_approve');
         $data['button_add'] = $this->language->get('button_add');
         $data['button_edit'] = $this->language->get('button_edit');
+        $data['button_enable'] = $this->language->get('button_enable');
+        $data['button_disable'] = $this->language->get('button_disable');
         $data['button_delete'] = $this->language->get('button_delete');
         $data['button_filter'] = $this->language->get('button_filter');
         $data['button_show_filter'] = $this->language->get('button_show_filter');
@@ -963,6 +965,7 @@ class ControllerSaleCustomer extends Controller {
         $data['custom_fields'] = array();
 
         $filter_data = array(
+            'filter_status' => 1,
             'sort'  => 'cf.sort_order',
             'order' => 'ASC'
         );
@@ -1095,7 +1098,7 @@ class ControllerSaleCustomer extends Controller {
         // Custom field validation
         $this->load->model('sale/custom_field');
 
-        $custom_fields = $this->model_sale_custom_field->getCustomFields(array('filter_customer_group_id' => $this->request->post['customer_group_id']));
+        $custom_fields = $this->model_sale_custom_field->getCustomFields(array('filter_customer_group_id' => $this->request->post['customer_group_id'], 'filter_status' => 1));
 
         foreach ($custom_fields as $custom_field) {
             if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
@@ -1600,7 +1603,7 @@ class ControllerSaleCustomer extends Controller {
             $customer_group_id = $this->config->get('config_customer_group_id');
         }
 
-        $custom_fields = $this->model_sale_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id));
+        $custom_fields = $this->model_sale_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id, 'filter_status' => 1));
 
         foreach ($custom_fields as $custom_field) {
             $json[] = array(

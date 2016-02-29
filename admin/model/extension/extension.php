@@ -103,20 +103,6 @@ class ModelExtensionExtension extends Model {
         $this->uninstall($type, $code);
     }
 
-    public function changeStatus($code, $status) {
-        $code = $this->db->escape($code);
-
-        $current = $this->config->get($code . '_status');
-
-        if (is_null($current)) {
-            $store_id = $this->config->get('config_store_id');
-
-            $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET `store_id` = {$store_id}, `code` = '{$code}', `key` = '{$code}_status', `value` = {$status}, `serialized` = '0'");
-        } else {
-            $this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = {$status} WHERE `code` = '{$code}' AND `key` = '{$code}_status'", 'query');
-        }
-    }
-
     public function getInstances($type, $code) {
         $sql = "SELECT * FROM " . DB_PREFIX . $type ." WHERE code = '" . $this->db->escape($code) . "'";
 

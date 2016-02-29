@@ -102,6 +102,21 @@ class ModelLocalisationZone extends Model {
         return $query->rows;
     }
 
+    public function getZoneStatus()
+    {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone");
+
+        $zone_status = array();
+
+        foreach ($query->rows as $row) {
+            $zone_status[$row['zone_id']] = array(
+                'status' => $row['status']
+            );
+        }
+
+        return $zone_status;
+    }
+    
     public function getZonesByCountryId($country_id) {
         $zone_data = $this->cache->get('zone.' . (int)$country_id);
 

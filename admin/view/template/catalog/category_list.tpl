@@ -98,7 +98,7 @@
                                     <input type="checkbox" name="selected[]" value="<?php echo $category['category_id']; ?>" />
                                     <?php } ?></td>
                                 <td class="text-left"><?php echo $category['name']; ?></td>
-                                <td class="text-right"><?php echo $category['status']; ?></td>
+                                <td class="text-left"><?php echo $category['status']; ?></td>
                                 <td class="text-right"><?php echo $category['sort_order']; ?></td>
                                 <td class="text-right"><a href="<?php echo $category['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                             </tr>
@@ -120,25 +120,6 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript"><!--
-function changeStatus(status){
-    $.ajax({
-        url: 'index.php?route=common/edit/changeStatus&type=category&status='+ status +'&token=<?php echo $token; ?>',
-        dataType: 'json',
-        data: $("form[id^='form-']").serialize(),
-        success: function(json) {
-            if(json){
-                $('.panel.panel-default').before('<div class="alert alert-warning"><i class="fa fa-warning"></i> ' + json.warning + '<button type="button" class="close" data-dismiss="alert">×</button></div>');
-            }
-            else{
-                location.reload();
-            }
-        }
-    });
-}
-//--></script>
-
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
     url = 'index.php?route=catalog/category&token=<?php echo $token; ?>';

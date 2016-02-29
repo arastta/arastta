@@ -111,6 +111,8 @@
                                           </a>
                                           <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
                                               <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
+                                              <li><a onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i> <?php echo $button_enable; ?></a></li>
+                                              <li><a onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i> <?php echo $button_disable; ?></a></li>
                                               <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-zone').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
                                           </ul>
                                         </span>
@@ -130,6 +132,11 @@
                                     <?php } else { ?>
                                     <a href="<?php echo $sort_code; ?>"><?php echo $column_code; ?></a>
                                     <?php } ?></td>
+                                <td class="text-left"><?php if ($sort == 'z.status') { ?>
+                                    <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
+                                    <?php } else { ?>
+                                    <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
+                                    <?php } ?></td>
                             </tr>
                             </thead>
                             <tbody>
@@ -146,11 +153,12 @@
                                     <?php echo $zone['country']; ?></td>
                                 <td class="text-left"><?php echo $zone['name']; ?></td>
                                 <td class="text-left"><?php echo $zone['code']; ?></td>
+                                <td class="text-left"><?php echo $zone['status']; ?></td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>
                             <tr>
-                                <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+                                <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
                             </tr>
                             <?php } ?>
                             </tbody>

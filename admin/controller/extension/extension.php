@@ -542,36 +542,6 @@ class ControllerExtensionExtension extends Controller
         $this->cache->remove('version');
     }
 
-    public function changeStatus()
-    {
-        $select = $this->request->get['selected'];
-        $status = $this->request->get['status'];
-
-        if ((count($select) == 0) or is_null($status)) {
-            exit();
-        }
-
-        $this->load->model('extension/extension');
-
-        foreach ($select as $id) {
-            list($type, $code) = explode('/', $id);
-
-            $route = 'extension/'.$type;
-
-            if (!$this->validate($route)) {
-                continue;
-            }
-
-            $this->model_extension_extension->changeStatus($code, (int)$status);
-        }
-
-        $this->session->data['success'] = $this->language->get('text_success');
-
-        echo 0;
-
-        exit();
-    }
-
     public function getInstances($type, $code)
     {
         $instances = array();

@@ -16,7 +16,7 @@
                 <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $heading_title; ?></h3>
             </div>
             <div class="panel-body">
-                <form class="form-horizontal">
+                <form id="form-installer" class="form-horizontal">
                     <div class="form-group required">
                         <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="<?php echo $help_upload; ?>"><?php echo $entry_upload; ?></span></label>
                         <div class="col-sm-10">

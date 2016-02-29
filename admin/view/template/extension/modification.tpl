@@ -73,10 +73,10 @@
                                     <?php if ($modifications) { ?>
                                     <?php foreach ($modifications as $modification) { ?>
                                     <?php if( empty($modification['modification_id']) ) {
-                              $modification_id = explode('.', $modification['vqmod_id']); $modification_id = $modification_id[0]; 
-                          } else {
-                              $modification_id = explode('.', $modification['modification_id']) ; $modification_id = $modification_id[0]; 
-                          } ?>
+                                              $modification_id = explode('.', $modification['vqmod_id']); $modification_id = $modification_id[0]; 
+                                          } else {
+                                              $modification_id = explode('.', $modification['modification_id']) ; $modification_id = $modification_id[0]; 
+                                          } ?>
                                     <tr id="remove_<?php echo $modification_id;?>">
                                         <td class="text-center"><?php if (isset($modification['modification_id']) and in_array($modification['modification_id'], $selected)) { ?>
                                             <input type="checkbox" name="selected[]" value="<?php echo  $modification['modification_id'] ; ?>" checked="checked" />
@@ -96,9 +96,9 @@
                                             <button type="button" class="btn btn-info" disabled="disabled"><i class="fa fa-link"></i></button>
                                             <?php } ?>
                                             <?php if (!$modification['enabled']) { ?>
-                                            <a onClick="changeStatus('<?php echo $modification['enable']; ?>', '<?php echo $modification_id; ?>');" id="<?php echo $modification_id; ?>"  data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+                                            <a onClick="changeModificationStatus('<?php echo $modification['enable']; ?>', '<?php echo $modification_id; ?>');" id="<?php echo $modification_id; ?>"  data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                                             <?php } else { ?>
-                                            <a onClick="changeStatus('<?php echo $modification['disable']; ?>', '<?php echo $modification_id; ?>');" id="<?php echo $modification_id; ?>" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                                            <a onClick="changeModificationStatus('<?php echo $modification['disable']; ?>', '<?php echo $modification_id; ?>');" id="<?php echo $modification_id; ?>" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
                                             <?php } ?></td>
                                     </tr>
                                     <?php } ?>
@@ -129,7 +129,7 @@
 </div>
 
 <script type="text/javascript"><!--
-function changeStatus(url ,id) {
+function changeModificationStatus(url ,id) {
     var html = "";
     $.ajax({
         url: url,
@@ -155,7 +155,7 @@ function changeStatus(url ,id) {
 
             if (json['status'] == 1) {
                 if(json['enable'] == 1) {
-                    html  = '<a onClick="changeStatus(\'' + json['link'] + '\', \'' + id + '\');"';
+                    html  = '<a onClick="changeModificationStatus(\'' + json['link'] + '\', \'' + id + '\');"';
                     html += 'id="' + id + '"';
                     html += 'data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-danger">';
                     html += '<i class="fa fa-minus-circle"></i></a>';
@@ -164,7 +164,7 @@ function changeStatus(url ,id) {
                 }
 
                 if(json['disable'] == 1) {
-                    html  = '<a onClick="changeStatus(\'' + json['link'] + '\', \'' + id + '\');"';
+                    html  = '<a onClick="changeModificationStatus(\'' + json['link'] + '\', \'' + id + '\');"';
                     html += 'id="' + id + '"';
                     html += 'data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-success">';
                     html += '<i class="fa fa-plus-circle"></i></a>';
