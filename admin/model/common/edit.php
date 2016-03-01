@@ -10,6 +10,20 @@ class ModelCommonEdit extends Model
 {
     public function changeStatus($type, $ids, $status, $extension = false)
     {
+        $data = array(
+            'selected'  => $ids,
+            'status'    => $status,
+            'extension' => $extension
+        );
+
+        $folder = explode('/', $this->request->post['route']);
+
+        if (is_array($folder)) {
+            $this->trigger->addFolder($folder[0]);
+        }
+
+        $this->trigger->fire('pre.admin.' . $type . '.status.edit', array($data));
+
         if ($extension) {
             foreach ($ids as $id) {
                 $extension_name = basename($id);
@@ -29,5 +43,7 @@ class ModelCommonEdit extends Model
                 $this->db->query("UPDATE `" . DB_PREFIX . $type . "` SET `status` = " . (int)$status . " WHERE `" . $type . "_id` = " . $this->db->escape($id));
             }
         }
+
+        $this->trigger->fire('post.admin.' . $type . '.status.edit', array($data));
     }
 }

@@ -224,7 +224,11 @@ class ControllerLocalisationLanguage extends Controller {
 
         $data = $this->language->all($data);
 
-        if (isset($this->error['warning'])) {
+        if (isset($this->session->data['warning'])) {
+            $data['error_warning'] = $this->session->data['warning'];
+
+            unset($this->session->data['warning']);
+        } else if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {
             $data['error_warning'] = '';
@@ -296,7 +300,11 @@ class ControllerLocalisationLanguage extends Controller {
         $data = $this->language->all();
         $data['text_form'] = !isset($this->request->get['language_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-        if (isset($this->error['warning'])) {
+        if (isset($this->session->data['warning'])) {
+            $data['error_warning'] = $this->session->data['warning'];
+
+            unset($this->session->data['warning']);
+        } else if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {
             $data['error_warning'] = '';
