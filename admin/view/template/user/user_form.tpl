@@ -94,7 +94,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group hidden">
+                    <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-language"><?php echo $entry_admin_language; ?></label>
                         <div class="col-sm-10">
                             <select name="params[language]" id="input-language" class="form-control">
@@ -108,7 +108,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group hidden">
+                    <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-editor"><?php echo $entry_text_editor; ?></label>
                         <div class="col-sm-10">
                             <select name="params[editor]" id="input-editor" class="form-control">

@@ -33,6 +33,14 @@ class EventEditorTinymce extends Event
     {
         $editor = $this->config->get('config_text_editor');
 
+        if ($this->user->isLogged()) {
+            $user = $this->user->getParams();
+
+            if (!empty($user['editor'])) {
+                $editor = $user['editor'];
+            }
+        }
+
         $this->load->model('setting/setting');
 
         $setting = $this->model_setting_setting->getSetting('tinymce');
