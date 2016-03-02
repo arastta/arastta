@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -45,7 +45,7 @@ class ModelDatabase extends Model
         $content  = '<?php' . "\n";
         $content .= '/**' . "\n";
         $content .= ' * @package		Arastta eCommerce' . "\n";
-        $content .= ' * @copyright	    Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)' . "\n";
+        $content .= ' * @copyright	    Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)' . "\n";
         $content .= ' * @license		GNU General Public License version 3; see LICENSE.txt' . "\n";
         $content .= ' */' . "\n";
         $content .= "\n";
