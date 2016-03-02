@@ -499,6 +499,14 @@ class ControllerUserUser extends Controller {
             'summernote', 'tinymce'
         );        
 
+        if (isset($this->request->post['params']) && isset($this->request->post['params']['editor'])) {
+            $data['use_editor'] = $this->request->post['params']['editor'];
+        } elseif (!empty($user_info)) {
+            $data['use_editor'] = $params['editor'];
+        } else {
+            $data['use_editor'] = $this->config->get('config_text_editor');
+        }
+
         foreach ($themes as $theme) {
             $data['themes'][] = array(
                 'theme' => basename($theme),

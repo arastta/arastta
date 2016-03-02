@@ -39,6 +39,8 @@ $_['entry_image']           = 'Image';
 $_['entry_status']          = 'Status';
 $_['entry_enabled']         = 'Enabled';
 $_['entry_theme']           = 'Theme';
+$_['entry_admin_language']  = 'Administration Language';
+$_['entry_text_editor']     = 'Text Editor (Admin)';
 $_['entry_basic_mode_message'] = 'Basic Mode Message';
 
 // Error
