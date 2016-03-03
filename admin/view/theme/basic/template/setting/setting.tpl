@@ -260,6 +260,43 @@
                         <div class="panel-body">
                             <div class="design">
                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-admin-template"><?php echo $entry_admin_template; ?></label>
+                                    <div class="col-sm-10">
+                                        <select name="config_admin_template" id="input-admin-template" class="form-control">
+                                            <?php foreach ($admin_templates as $admin_template) { ?>
+                                            <?php if ($admin_template['theme'] == $config_admin_template) { ?>
+                                            <option value="<?php echo $admin_template['theme']; ?>" selected="selected"><?php echo $admin_template['text']; ?></option>
+                                            <?php } else { ?>
+                                            <option value="<?php echo $admin_template['theme']; ?>"><?php echo $admin_template['text']; ?></option>
+                                            <?php } ?>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group hidden">
+                                    <label class="col-sm-2 control-label" for="input-admin-template"><?php echo $entry_admin_template_message; ?></label>
+                                    <div class="col-sm-10">
+                                        <label class="radio-inline">
+                                            <?php if ($config_admin_template_message) { ?>
+                                            <input type="radio" name="config_admin_template_message" value="show" checked="checked" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_admin_template_message" value="show" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } ?>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <?php if (!$config_admin_template_message) { ?>
+                                            <input type="radio" name="config_admin_template_message" value="hide" checked="checked" />
+                                            <?php echo $text_no; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_admin_template_message" value="hide" />
+                                            <?php echo $text_no; ?>
+                                            <?php } ?>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-2 control-label" for="input-template"><?php echo $entry_template; ?></label>
                                     <div class="col-sm-10">
                                         <select name="config_template" id="input-template" class="form-control">

@@ -463,7 +463,7 @@ class ControllerUserUser extends Controller {
         } elseif (!empty($user_info)) {
             $data['use_theme'] = $params['theme'];
         } else {
-            $data['use_theme'] = 'basic';
+            $data['use_theme'] = $this->config->get('config_admin_template');
         }
 
         // Themes
@@ -474,12 +474,19 @@ class ControllerUserUser extends Controller {
 
         $themes = glob(DIR_ADMIN . 'view/theme/*', GLOB_ONLYDIR);
         
+        foreach ($themes as $theme) {
+            $data['themes'][] = array(
+                'theme' => basename($theme),
+                'text'  => $this->language->get('text_theme_' . basename($theme))
+            );
+        }
+        
         if (isset($this->request->post['params']) && isset($this->request->post['params']['basic_mode_message'])) {
             $data['basic_mode_message'] = $this->request->post['params']['basic_mode_message'];
         } elseif (!empty($user_info)) {
             $data['basic_mode_message'] = $params['basic_mode_message'];
         } else {
-            $data['basic_mode_message'] = 'show';
+            $data['basic_mode_message'] = $this->config->get('config_admin_theme');
         }
 
         $this->load->model('localisation/language');
@@ -491,7 +498,7 @@ class ControllerUserUser extends Controller {
         } elseif (!empty($user_info)) {
             $data['use_language'] = $params['language'];
         } else {
-            $data['use_language'] = $this->session->data['admin_language'];
+            $data['use_language'] = $this->config->get('config_admin_language');
         }
 
         // This code changes
@@ -506,13 +513,6 @@ class ControllerUserUser extends Controller {
         } else {
             $data['use_editor'] = $this->config->get('config_text_editor');
         }
-
-        foreach ($themes as $theme) {
-            $data['themes'][] = array(
-                'theme' => basename($theme),
-                'text'  => $this->language->get('text_theme_' . basename($theme))
-            );
-        }        
 
         if (isset($this->request->post['image'])) {
             $data['image'] = $this->request->post['image'];
@@ -533,7 +533,6 @@ class ControllerUserUser extends Controller {
         }
         
         $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-
 
         if (isset($this->request->post['status'])) {
             $data['status'] = $this->request->post['status'];

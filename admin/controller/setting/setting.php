@@ -425,6 +425,32 @@ class ControllerSettingSetting extends Controller {
             $data['templates'][] = basename($directory);
         }
 
+        if (isset($this->request->post['config_admin_template'])) {
+            $data['config_admin_template'] = $this->request->post['config_admin_template'];
+        } else {
+            $data['config_admin_template'] = $this->config->get('config_admin_template', 'basic');
+        }
+
+        $data['admin_templates'][] = array(
+            'theme' => 'advanced',
+            'text'    => $this->language->get('text_error_advanced')
+        );
+
+        $admin_templates = glob(DIR_ADMIN . 'view/theme/*', GLOB_ONLYDIR);
+
+        foreach ($admin_templates as $admin_template) {
+            $data['admin_templates'][] = array(
+                'theme' => basename($admin_template),
+                'text'  => $this->language->get('text_error_' . basename($admin_template))
+            );
+        }
+
+        if (isset($this->request->post['config_admin_template_message'])) {
+            $data['config_admin_template_message'] = $this->request->post['config_admin_template_message'];
+        } else {
+            $data['config_admin_template_message'] = $this->config->get('config_admin_template_message', 'show');
+        }
+
         if (isset($this->request->post['config_country_id'])) {
             $data['config_country_id'] = $this->request->post['config_country_id'];
         } else {
