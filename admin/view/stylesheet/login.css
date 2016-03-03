@@ -1,0 +1,11 @@
+span.filter-option.pull-left {
+    padding-left: 22%;
+}
+
+.input-icon .bootstrap-select {
+    width: 100% !important;
+}
+
+.input-icon input {
+    padding-bottom: 3px;
+}

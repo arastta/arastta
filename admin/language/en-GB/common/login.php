@@ -19,6 +19,7 @@ $_['text_back_to']    = 'Back to';
 $_['entry_email']     = 'Email';
 $_['entry_password']  = 'Password';
 $_['entry_language']  = 'Language';
+$_['entry_default']   = 'Language - Default';
 
 // Button
 $_['button_login']    = 'Login';

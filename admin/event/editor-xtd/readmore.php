@@ -13,6 +13,14 @@ class EventEditorXtdReadmore extends Event
     {
         $editor = $this->config->get('config_text_editor');
 
+        if ($this->user->isLogged()) {
+            $user = $this->user->getParams();
+
+            if (!empty($user['editor'])) {
+                $editor = $user['editor'];
+            }
+        }
+
         switch ($editor) {
             case 'summernote':
                 $toolbar['readmore'] = array('readmore');

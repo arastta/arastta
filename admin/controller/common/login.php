@@ -15,6 +15,8 @@ class ControllerCommonLogin extends Controller {
 
         $this->document->setTitle($this->language->get('heading_title'));
 
+        $this->document->addStyle('view/stylesheet/login.css');
+
         if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
             $this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'));
         }
@@ -22,7 +24,7 @@ class ControllerCommonLogin extends Controller {
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->session->data['token'] = md5(mt_rand());
 
-            if (!empty($this->request->post['lang'])) {
+            if (!empty($this->request->post['lang']) && $this->request->post['lang'] != '*') {
                 $this->session->data['admin_language'] = $this->request->post['lang'];
             }
 
