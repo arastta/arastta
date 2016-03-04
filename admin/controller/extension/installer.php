@@ -626,6 +626,11 @@ class ControllerExtensionInstaller extends Controller {
 
             // Remove dir
             $this->filesystem->remove($directory);
+            
+            // Clear cache
+            $this->cache->remove('addon');
+            $this->cache->remove('update');
+            $this->cache->remove('version');
 
             $json['success'] = $this->language->get('text_success');
         }
