@@ -501,11 +501,9 @@ class ControllerUserUser extends Controller {
             $data['use_language'] = $this->config->get('config_admin_language');
         }
 
-        // This code changes
-        $data['editors'] = array(
-            'summernote', 'tinymce'
-        );        
+        $this->load->model('extension/editor');
 
+        $data['editors'] = $this->model_extension_editor->getEditors();
         if (isset($this->request->post['params']) && isset($this->request->post['params']['editor'])) {
             $data['use_editor'] = $this->request->post['params']['editor'];
         } elseif (!empty($user_info)) {
@@ -533,7 +531,6 @@ class ControllerUserUser extends Controller {
         }
         
         $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-
         if (isset($this->request->post['status'])) {
             $data['status'] = $this->request->post['status'];
         } elseif (!empty($user_info)) {

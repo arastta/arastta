@@ -186,10 +186,10 @@
                                     <div class="col-sm-9">
                                         <select name="params[editor]" id="input-editor" class="form-control">
                                             <?php foreach ($editors as $editor) { ?>
-                                            <?php if ($editor == $use_editor) { ?>
-                                            <option value="<?php echo $editor; ?>" selected="selected"><?php echo ($use_editor != 'tinymce') ? 'Summernote' : 'Tinymce'; ?></option>
+                                            <?php if ($editor['value'] == $use_editor) { ?>
+                                            <option value="<?php echo $editor['value']; ?>" selected="selected"><?php echo $editor['text']; ?></option>
                                             <?php } else { ?>
-                                            <option value="<?php echo $editor; ?>"><?php echo ($use_editor == 'tinymce') ? 'Summernote' : 'Tinymce'; ?></option>
+                                            <option value="<?php echo $editor['value']; ?>"><?php echo $editor['text']; ?></option>
                                             <?php } ?>
                                             <?php } ?>
                                         </select>

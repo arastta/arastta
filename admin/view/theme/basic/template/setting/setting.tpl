@@ -343,12 +343,12 @@
                                         <label class="col-sm-2 control-label" for="input-text-editor"><span data-toggle="tooltip" title="<?php echo $help_text_editor; ?>"><?php echo $entry_text_editor; ?></span></label>
                                         <div class="col-sm-10">
                                             <select name="config_text_editor" id="input-text-editor" class="form-control">
-                                                <?php  if ($config_text_editor == 'summernote') { ?>
-                                                <option value="summernote" selected="selected"><?php echo $text_summernote; ?></option>
-                                                <option value="tinymce"><?php echo $text_tinymce; ?></option>
+                                                <?php foreach ($editors as $editor) { ?>
+                                                <?php  if ($editor['value'] == $config_text_editor) { ?>
+                                                <option value="<?php echo $editor['value']; ?>" selected="selected"><?php echo $editor['text']; ?></option>
                                                 <?php } else { ?>
-                                                <option value="summernote"><?php echo $text_summernote; ?></option>
-                                                <option value="tinymce" selected="selected"><?php echo $text_tinymce; ?></option>
+                                                <option value="<?php echo $editor['value']; ?>"><?php echo $editor['text']; ?></option>
+                                                <?php } ?>
                                                 <?php } ?>
                                             </select>
                                         </div>

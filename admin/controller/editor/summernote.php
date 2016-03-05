@@ -170,12 +170,21 @@ class ControllerEditorSummernote extends Controller
 
         return $form->render(true);
     }
+
     protected function validate()
     {
         if (!$this->user->hasPermission('modify', 'editor/summernote')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
+        
+        $this->load->model('extension/editor');
 
+        $result = $this->model_extension_editor->check('summernote', $this->request->post);
+
+        if (!$result) {
+            $this->error['warning'] = $this->session->data['warning'];
+        }
+        
         return !$this->error;
     }
 }
