@@ -537,12 +537,16 @@ class ControllerSettingSetting extends Controller {
             $data['config_limit_admin'] = $this->config->get('config_limit_admin');
         }
 
+        $this->load->model('extension/editor');
+
+        $data['editors'] = $this->model_extension_editor->getEditors();
+
         if (isset($this->request->post['config_text_editor'])) {
             $data['config_text_editor'] = $this->request->post['config_text_editor'];
         } else {
             $data['config_text_editor'] = $this->config->get('config_text_editor');
         }
-        
+
         if (isset($this->request->post['config_product_count'])) {
             $data['config_product_count'] = $this->request->post['config_product_count'];
         } else {
@@ -626,7 +630,7 @@ class ControllerSettingSetting extends Controller {
         } else {
             $data['config_customer_price'] = $this->config->get('config_customer_price');
         }
-        
+
         if (isset($this->request->post['config_login_attempts'])) {
             $data['config_login_attempts'] = $this->request->post['config_login_attempts'];
         } elseif ($this->config->has('config_login_attempts')) {
@@ -634,7 +638,7 @@ class ControllerSettingSetting extends Controller {
         } else {
             $data['config_login_attempts'] = 5;
         }
-        
+
         if (isset($this->request->post['config_account_id'])) {
             $data['config_account_id'] = $this->request->post['config_account_id'];
         } else {

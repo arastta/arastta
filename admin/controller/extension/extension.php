@@ -320,7 +320,11 @@ class ControllerExtensionExtension extends Controller
         array_multisort($a_names, $a_sort, $data['extensions']);
 
         // Success & Warning
-        if (isset($this->error['warning'])) {
+        if (isset($this->session->data['warning'])) {
+            $data['error_warning'] = $this->session->data['warning'];
+
+            unset($this->session->data['warning']);
+        } elseif (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {
             $data['error_warning'] = '';

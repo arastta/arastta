@@ -166,6 +166,14 @@ class ControllerEditorTinymce extends Controller
             $this->error['warning'] = $this->language->get('error_warning');
         }
 
+        $this->load->model('extension/editor');
+
+        $result = $this->model_extension_editor->check('summernote', $this->request->post);
+
+        if (!$result) {
+            $this->error['warning'] = $this->session->data['warning'];
+        }
+
         return !$this->error;
     }
 }
