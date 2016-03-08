@@ -48,9 +48,16 @@ class Cache extends Command
         // Clear/Refresh modifications cache
         $modification = $this->option('modification');
         if ($modification) {
-            if ($modification == 'refresh') {
-                $this->admin->request->get['extensionInstaller'] = 'yes';
-                $this->admin->load->controller('extension/modification/refresh');
+            if ($modification === 'refresh') {
+                $this->loadModel('extension/modification', 'admin');
+                $this->app->filesystem->remove(DIR_MODIFICATION);
+                
+                // Clear Log
+                $handle = fopen(DIR_LOG . 'modification.log', 'w+');
+                fclose($handle);
+
+                // Apply vQmods and OCmods
+                $this->admin->model_extension_modification->applyMod();
 
                 $this->info('Modification refreshed');
             } else {

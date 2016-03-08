@@ -216,4 +216,11 @@ abstract class Command extends SymfonyCommand
         $this->$client->load->model($model);
         Client::setName('cli');
     }
+
+    protected function loadController($controller, $client)
+    {
+        Client::setName($client);
+        $this->$client->load->controller($controller);
+        Client::setName('cli');
+    }
 }
