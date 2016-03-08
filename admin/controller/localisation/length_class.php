@@ -27,7 +27,7 @@ class ControllerLocalisationLengthClass extends Controller {
         $this->load->model('localisation/length_class');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-            $this->model_localisation_length_class->addLengthClass($this->request->post);
+            $length_class_id = $this->model_localisation_length_class->addLengthClass($this->request->post);
 
             $this->session->data['success'] = $this->language->get('text_success');
 

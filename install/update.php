@@ -210,4 +210,10 @@ if (version_compare(VERSION, '1.3.0', '<')) {
     // Insert setting table
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_admin_template', `value` = 'basic'");
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_admin_template_message', `value` = 'show'");
+
+    // Update length_class_description table
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "length_class_description` CHANGE length_class_id length_class_id INT(11) NOT NULL");
+
+    // Update weight_class_description table
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "weight_class_description` CHANGE weight_class_id weight_class_id INT(11) NOT NULL");
 }
