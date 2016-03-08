@@ -1344,7 +1344,7 @@ CREATE TABLE IF NOT EXISTS `ar_information_to_store` (
 -- Table structure for table `ar_invoice`
 --
 
-CREATE TABLE `ar_invoice` (
+CREATE TABLE IF NOT EXISTS `ar_invoice` (
   `invoice_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `invoice_date` datetime NOT NULL,
@@ -1358,7 +1358,7 @@ CREATE TABLE `ar_invoice` (
 -- Table structure for table `ar_invoice_history`
 --
 
-CREATE TABLE `ar_invoice_history` (
+CREATE TABLE IF NOT EXISTS `ar_invoice_history` (
   `invoice_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `invoice_id` int(11) NOT NULL,
   `notify` tinyint(1) NOT NULL DEFAULT '0',
