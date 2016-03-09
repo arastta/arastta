@@ -140,13 +140,13 @@
     $('input[name=\'affiliates\']').autocomplete({
         'source': function(request, response) {
             $.ajax({
-                url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+                url: 'index.php?route=marketing/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
                 dataType: 'json',
                 success: function(json) {
                     response($.map(json, function(item) {
                         return {
                             label: item['name'],
-                            value: item['customer_id']
+                            value: item['affiliate_id']
                         }
                     }));
                 }
