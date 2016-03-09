@@ -57,6 +57,7 @@ class ControllerSaleInvoice extends Controller
         } else {
             $filter_total = null;
         }
+		
         if (isset($this->request->get['filter_order_date'])) {
             $filter_order_date = $this->request->get['filter_order_date'];
         } else {
@@ -108,6 +109,7 @@ class ControllerSaleInvoice extends Controller
         if (isset($this->request->get['filter_total'])) {
             $url .= '&filter_total=' . $this->request->get['filter_total'];
         }
+		
         if (isset($this->request->get['filter_order_date'])) {
             $url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
         }
@@ -214,6 +216,7 @@ class ControllerSaleInvoice extends Controller
         if (isset($this->request->get['filter_total'])) {
             $url .= '&filter_total=' . $this->request->get['filter_total'];
         }
+		
         if (isset($this->request->get['filter_order_date'])) {
             $url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
         }
@@ -261,6 +264,7 @@ class ControllerSaleInvoice extends Controller
         if (isset($this->request->get['filter_total'])) {
             $url .= '&filter_total=' . $this->request->get['filter_total'];
         }
+		
         if (isset($this->request->get['filter_order_date'])) {
             $url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
         }
@@ -328,6 +332,7 @@ class ControllerSaleInvoice extends Controller
         } else {
             $filter_total = null;
         }
+		
         if (isset($this->request->get['filter_order_status'])) {
             $filter_order_status = $this->request->get['filter_order_status'];
         } else {
