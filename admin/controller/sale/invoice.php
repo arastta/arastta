@@ -52,6 +52,11 @@ class ControllerSaleInvoice extends Controller
             $filter_customer = null;
         }
 
+        if (isset($this->request->get['filter_total'])) {
+            $filter_total = $this->request->get['filter_total'];
+        } else {
+            $filter_total = null;
+        }
         if (isset($this->request->get['filter_order_date'])) {
             $filter_order_date = $this->request->get['filter_order_date'];
         } else {
@@ -100,6 +105,9 @@ class ControllerSaleInvoice extends Controller
             $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
         }
 
+        if (isset($this->request->get['filter_total'])) {
+            $url .= '&filter_total=' . $this->request->get['filter_total'];
+        }
         if (isset($this->request->get['filter_order_date'])) {
             $url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
         }
@@ -129,6 +137,7 @@ class ControllerSaleInvoice extends Controller
             'filter_invoice_number'=> $filter_invoice_number,
             'filter_order_status'  => $filter_order_status,
             'filter_customer'      => $filter_customer,
+            'filter_total'         => $filter_total,
             'filter_order_date'    => $filter_order_date,
             'filter_invoice_date'  => $filter_invoice_date,
             'sort'                 => $sort,
@@ -202,6 +211,9 @@ class ControllerSaleInvoice extends Controller
             $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
         }
 
+        if (isset($this->request->get['filter_total'])) {
+            $url .= '&filter_total=' . $this->request->get['filter_total'];
+        }
         if (isset($this->request->get['filter_order_date'])) {
             $url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
         }
@@ -246,6 +258,9 @@ class ControllerSaleInvoice extends Controller
             $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
         }
 
+        if (isset($this->request->get['filter_total'])) {
+            $url .= '&filter_total=' . $this->request->get['filter_total'];
+        }
         if (isset($this->request->get['filter_order_date'])) {
             $url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
         }
@@ -276,6 +291,7 @@ class ControllerSaleInvoice extends Controller
         $data['filter_invoice_number'] = $filter_invoice_number;
         $data['filter_order_status'] = $filter_order_status;
         $data['filter_customer'] = $filter_customer;
+        $data['filter_total'] = $filter_total;
         $data['filter_order_date'] = $filter_order_date;
         $data['filter_invoice_date'] = $filter_invoice_date;
 
@@ -307,6 +323,11 @@ class ControllerSaleInvoice extends Controller
             $filter_customer = null;
         }
 
+        if (isset($this->request->get['filter_total'])) {
+            $filter_total = $this->request->get['filter_total'];
+        } else {
+            $filter_total = null;
+        }
         if (isset($this->request->get['filter_order_status'])) {
             $filter_order_status = $this->request->get['filter_order_status'];
         } else {
@@ -363,6 +384,7 @@ class ControllerSaleInvoice extends Controller
         $filter_data = array(
             'filter_order_id'      => $filter_order_id,
             'filter_customer'      => $filter_customer,
+            'filter_total'         => $filter_total,
             'filter_order_status'  => $filter_order_status,
             'filter_order_date'    => $filter_order_date
         );
