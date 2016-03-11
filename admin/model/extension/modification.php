@@ -22,10 +22,12 @@ class ModelExtensionModification extends Model {
         set_error_handler(array('ModelExtensionModification', 'handleXMLError'));
 
         if (class_exists('VQMod')) {
-            $files = glob(DIR_SYSTEM . 'xml/*.xml');
+            $files = ($files = glob(DIR_SYSTEM . 'xml/*.xml')) ? $files : array();
         } else {
             // Merge vQmods and OCmods files
-            $files = array_merge(glob(DIR_VQMOD . 'xml/*.xml'), glob(DIR_SYSTEM . 'xml/*.xml'));
+            $vqmod_files = ($vqmod_files = glob(DIR_VQMOD . 'xml/*.xml')) ? $vqmod_files : array();
+            $system_files = ($system_files = glob(DIR_SYSTEM . 'xml/*.xml')) ? $system_files : array();
+            $files = array_merge($vqmod_files, $system_files);
         }
 
         if (!empty($files) && $files) {
