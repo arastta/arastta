@@ -46,6 +46,8 @@ class ModelExtensionEditor extends Model
         $editor_data = $this->cache->get('editor');
 
         if (!$editor_data) {
+            $editor_data = array();
+
             $editors = glob(DIR_ADMIN . 'controller/editor/*');
 
             foreach ($editors as $editor) {
