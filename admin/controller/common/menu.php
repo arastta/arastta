@@ -147,7 +147,7 @@ class ControllerCommonMenu extends Controller {
                 'sort_order' => 4,
                 'position' => 'left'
             ),
-            'marketing' => array(
+            'marketings' => array(
                 'text' => $data['text_marketing'],
                 'icon' => 'fa-share-alt',
                 'permission' => $p_return_marketing_marketing || $p_return_marketing_affiliate || $p_return_coupon || $p_return_voucher || $p_return_voucher_theme || $p_return_contact,
@@ -346,7 +346,7 @@ class ControllerCommonMenu extends Controller {
         );
 
         #Marketing
-        $this->menu['marketing']['children'] = array(
+        $this->menu['marketings']['children'] = array(
             'campaigns' => array(
                 'text' => $data['text_campaign'],
                 'href' => $data['marketing'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'], 'SSL'),
