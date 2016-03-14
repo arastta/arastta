@@ -292,6 +292,8 @@ class ControllerUserUser extends Controller {
             $url .= '&page=' . $this->request->get['page'];
         }
 
+        $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
+
         $data['sort_firstname'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=firstname' . $url, 'SSL');
         $data['sort_lastname'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=lastname' . $url, 'SSL');
         $data['sort_email'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=email' . $url, 'SSL');

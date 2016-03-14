@@ -451,6 +451,7 @@ class ControllerMarketingAffiliate extends Controller {
         $data['text_no'] = $this->language->get('text_no');
         $data['text_no_results'] = $this->language->get('text_no_results');
         $data['text_confirm'] = $this->language->get('text_confirm');
+        $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         $data['text_none'] = $this->language->get('text_none');
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
 
