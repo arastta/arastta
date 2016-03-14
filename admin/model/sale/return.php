@@ -232,6 +232,6 @@ class ModelSaleReturn extends Model {
     public function getTotalReturnHistoriesByReturnStatusId($return_status_id) {
         $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "return_history WHERE return_status_id = '" . (int)$return_status_id . "' GROUP BY return_id");
 
-        return $query->row['total'];
+        return !empty($query->row['total']) ? $query->row['total'] : 0;
     }
 }

@@ -146,7 +146,7 @@
                                       </a>
                                       <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
                                           <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                                          <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-order').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                          <li><a onclick="confirmItem('<?php echo $text_confirm_title; ?>', '<?php echo $text_confirm; ?>');"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
                                       </ul>
                                     </span>
                                     </div></td>
@@ -267,9 +267,7 @@
     $('a[id^=\'button-delete\']').on('click', function(e) {
         e.preventDefault();
 
-        if (confirm('<?php echo $text_confirm; ?>')) {
-            location = $(this).attr('href');
-        }
+        confirmItemSetLink('<?php echo $text_confirm_title; ?>', '<?php echo $text_confirm; ?>', $(this).attr('href'));
     });
     //--></script>
         <script type="text/javascript"><!--

@@ -264,6 +264,8 @@ class ControllerCatalogManufacturer extends Controller {
             $url .= '&page=' . $this->request->get['page'];
         }
 
+        $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
+
         $data['sort_name'] = $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
         $data['sort_status'] = $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
         $data['sort_sort_order'] = $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . '&sort=sort_order' . $url, 'SSL');

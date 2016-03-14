@@ -49,6 +49,7 @@
 
 .bulk-action-button a {
     margin-top: -5px;
+    text-decoration: none;
 }
 
 .bulk-action-activate input[type="checkbox"] {
