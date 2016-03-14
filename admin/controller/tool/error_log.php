@@ -18,6 +18,7 @@ class ControllerToolErrorLog extends Controller {
         
         $data['text_list'] = $this->language->get('text_list');
         $data['text_confirm'] = $this->language->get('text_confirm');
+        $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         
         $data['button_download'] = $this->language->get('button_download');
         $data['button_clear'] = $this->language->get('button_clear');

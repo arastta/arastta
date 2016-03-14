@@ -16,8 +16,14 @@ class ControllerHeader extends Controller
         $data['links'] = $this->document->getLinks();
         $data['styles'] = $this->document->getStyles();
         $data['scripts'] = $this->document->getScripts();
+        
+        if ($this->request->server['HTTPS']) {
+            $server = HTTPS_SERVER;
+        } else {
+            $server = HTTP_SERVER;
+        }
 
-        $data['base'] = HTTP_SERVER;
+        $data['base'] = $server;
 
         return $this->load->view('header.tpl', $data);
     }

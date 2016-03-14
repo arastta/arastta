@@ -137,7 +137,7 @@
                                 <td class="text-center"><input type="checkbox" name="selected[]" value="<?php echo $extension['type'] . '/' . $extension['code']; ?>" /></td>
                                 <td class="text-left">
                                     <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"  class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
-                                    <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>"  class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></a>
+                                    <a onclick="confirmItemSetLink('<?php echo $text_confirm_title; ?>', '<?php echo $text_confirm; ?>', '<?php echo $extension['uninstall']; ?>');" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>"  class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></a>
                                     <?php echo $extension['name']; ?>
                                     <?php if ($extension['instances']) { ?>
                                     <?php foreach ($extension['instances'] as $instance) { ?>
@@ -147,7 +147,7 @@
                                             <td class="text-left" colspan="6">
                                                 &nbsp;&nbsp;&nbsp;&#8618;&nbsp;&nbsp;<?php echo $instance['name']; ?>&nbsp;&nbsp;
                                                 <a href="<?php echo $instance['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
-                                                <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $instance['delete']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-trash"></i></a>
+                                                <a onclick="confirmItemSetLink('<?php echo $text_confirm_title; ?>', '<?php echo $text_confirm; ?>', '<?php echo $instance['delete']; ?>');" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     </table>
