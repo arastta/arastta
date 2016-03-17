@@ -121,7 +121,7 @@ class ModelSystemLanguageoverride extends Model
                 }
 
                 // Convert special characters to HTML entities
-                $val = htmlspecialchars($val, ENT_NOQUOTES);
+                $val = htmlspecialchars($val);
 
                 // Un-escape quotation
                 $val = stripslashes($val);
@@ -197,7 +197,7 @@ class ModelSystemLanguageoverride extends Model
                 }
 
                 // Convert HTML entities
-                $value = html_entity_decode($value, ENT_NOQUOTES);
+                $value = html_entity_decode($value);
 
                 if (($org_strings[$key] == $value)) {
                     // Remove from overrides if it's the same as original
