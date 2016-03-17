@@ -39,4 +39,8 @@
         <a href="<?php echo $store['href']; ?>"> ← Back to <?php echo $store['name']; ?></a>
     </div>
 </div>
+<script type="text/javascript">
+    // set focus on email
+    $('input[name=email]').focus();
+</script>
 <?php echo $footer; ?>

@@ -57,6 +57,9 @@
     </div>
 </form>
 <script type="text/javascript">
+    // set focus on store name
+    $('input[name=store_name]').focus();
+    
     $('#advanced-settings').on('hidden.bs.collapse', function() {
         $('#btn-show-advanced').html('<i class="fa fa-chevron-down"></i>');
     });
