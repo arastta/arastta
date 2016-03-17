@@ -216,4 +216,7 @@ if (version_compare(VERSION, '1.3.0', '<')) {
 
     // Update weight_class_description table
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "weight_class_description` CHANGE weight_class_id weight_class_id INT(11) NOT NULL");
+
+    // Update information_description table
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "information_description` CHANGE description description MEDIUMTEXT NOT NULL");
 }
