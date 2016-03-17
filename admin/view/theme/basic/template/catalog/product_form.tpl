@@ -625,7 +625,7 @@
                         $('.btn-manufacturer-add').remove();
                         $('.tooltip.fade.top.in').removeClass('in');
 
-                        html = '<button type="button" data-toggle="tooltip" title="<?php //echo $button_manufacturer_add; ?>" class="btn btn-sm btn-default btn-manufacturer-add" data-original-title="Add New Manufacturer"><i class="fa fa-plus text-success"></i></button>';
+                        html = '<button type="button" data-toggle="tooltip" title="<?php echo $button_manufacturer_add; ?>" class="btn btn-sm btn-default btn-manufacturer-add" data-original-title="Add New Manufacturer"><i class="fa fa-plus text-success"></i></button>';
 
                         $('input[name=\'manufacturer\']').after(html);
                     }
@@ -771,7 +771,7 @@
                         $('.btn-category-add').remove();
                         $('.tooltip.fade.top.in').removeClass('in');
 
-                        html = '<a href="javascript:void(0);" data-toggle="tooltip" title="<?php //echo $button_category_add; ?>" class="btn btn-sm btn-default btn-category-add" data-original-title="Add New Category"><i class="fa fa-plus text-success"></i></a>';
+                        html = '<a href="javascript:void(0);" data-toggle="tooltip" title="<?php echo $button_category_add; ?>" class="btn btn-sm btn-default btn-category-add" data-original-title="Add New Category"><i class="fa fa-plus text-success"></i></a>';
 
                         $('input[name=\'category\']').after(html);
                     }

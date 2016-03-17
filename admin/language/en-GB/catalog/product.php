@@ -24,6 +24,10 @@ $_['text_amount']            = 'Fixed Amount';
 $_['text_preview']           = 'View Product';
 $_['text_delete_image']      = 'Are you sure you want to delete this image?';
 
+// Button
+$_['button_category_add']    = 'Add New Category';
+$_['button_manufacturer_add']= 'Add New Manufacturer';
+
 // Column
 $_['column_name']            = 'Name';
 $_['column_model']           = 'Model';
