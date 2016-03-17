@@ -120,7 +120,13 @@ class ModelSystemLanguageoverride extends Model
                     break 2;
                 }
 
-                $data[$key][$var] = htmlspecialchars($val);
+                // Convert special characters to HTML entities
+                $val = htmlspecialchars($val, ENT_NOQUOTES);
+
+                // Un-escape quotation
+                $val = stripslashes($val);
+
+                $data[$key][$var] = $val;
             }
         }
 
@@ -190,7 +196,10 @@ class ModelSystemLanguageoverride extends Model
                     continue;
                 }
 
-                if (($org_strings[$key] == html_entity_decode($value))) {
+                // Convert HTML entities
+                $value = html_entity_decode($value, ENT_NOQUOTES);
+
+                if (($org_strings[$key] == $value)) {
                     // Remove from overrides if it's the same as original
                     if (isset($ovr_strings[$key])) {
                         unset($ovr_strings[$key]);
@@ -199,7 +208,10 @@ class ModelSystemLanguageoverride extends Model
                     continue;
                 }
 
-                $new_strings[$key] = html_entity_decode($value);
+                // Escape quotation
+                $value = addslashes($value);
+
+                $new_strings[$key] = $value;
             }
 
             if (!empty($ovr_strings)) {
