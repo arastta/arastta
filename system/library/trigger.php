@@ -195,8 +195,8 @@ class Trigger extends Object
                 continue;
             }
 
-            // is it a different class
-            if ($trace_class == $trace[$i]['class']) {
+            // continue if it's not the calling class
+            if ($trace_class != $trace[$i]['class']) {
                 continue;
             }
 
