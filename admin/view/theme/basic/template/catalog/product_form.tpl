@@ -621,6 +621,15 @@
                 url: 'index.php?route=catalog/manufacturer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
                 dataType: 'json',
                 success: function(json) {
+                    if ((typeof(json) != 'undefined' || typeof(json) != 'object') && (json == null || json == '')) {
+                        $('.btn-manufacturer-add').remove();
+                        $('.tooltip.fade.top.in').removeClass('in');
+
+                        html = '<button type="button" data-toggle="tooltip" title="<?php echo $button_manufacturer_add; ?>" class="btn btn-sm btn-default btn-manufacturer-add" data-original-title="Add New Manufacturer"><i class="fa fa-plus text-success"></i></button>';
+
+                        $('input[name=\'manufacturer\']').after(html);
+                    }
+
                     json.unshift({
                         manufacturer_id: 0,
                         name: '<?php echo $text_none; ?>'
@@ -636,10 +645,35 @@
             });
         },
         'select': function(item) {
+            $('.btn-manufacturer-add').remove();
+            $('.tooltip.fade.top.in').removeClass('in');
 
             $('input[name=\'manufacturer\']').val(item['label']);
             $('input[name=\'manufacturer_id\']').val(item['value']);
         }
+    });
+
+    $(document).on('click', '.btn-manufacturer-add', function() {
+        $.ajax({
+            url: 'index.php?route=catalog/manufacturer/quick&token=<?php echo $token; ?>',
+            type: 'post',
+            data: {name: $('#input-manufacturer').val(), sort_order: '0', status: '1'},
+            dataType: 'json',
+            success: function(json) {
+                if (json['success']) {
+                    $('.btn-manufacturer-add').remove();
+                    $('.tooltip.fade.top.in').removeClass('in');
+
+                    $('input[name=\'manufacturer_id\']').val(json['manufacturer_id']);
+
+                    $('#input-manufacturer').after('<p id="quick-manufacturer-success" class="text-success">' + json['success'] + '</p>').fadeIn(3000);
+                }
+            }
+        }).done(function() {
+            setTimeout(function(){
+                $('#quick-manufacturer-success').remove();
+            }, 3000);
+        });
     });
 
     <?php if (!empty($tag_key)) { ?>
@@ -733,6 +767,15 @@
                 url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
                 dataType: 'json',
                 success: function(json) {
+                    if ((typeof(json) != 'undefined' || typeof(json) != 'object') && (json == null || json == '')) {
+                        $('.btn-category-add').remove();
+                        $('.tooltip.fade.top.in').removeClass('in');
+
+                        html = '<a href="javascript:void(0);" data-toggle="tooltip" title="<?php echo $button_category_add; ?>" class="btn btn-sm btn-default btn-category-add" data-original-title="Add New Category"><i class="fa fa-plus text-success"></i></a>';
+
+                        $('input[name=\'category\']').after(html);
+                    }
+
                     response($.map(json, function(item) {
                         return {
                             label: item['name'],
@@ -753,6 +796,37 @@
 
     $('#product-category').delegate('.fa-minus-circle', 'click', function() {
         $(this).parent().remove();
+    });
+
+    $(document).on('click', '.btn-category-add', function() {
+        $.ajax({
+            url: 'index.php?route=catalog/category/quick&token=<?php echo $token; ?>',
+            type: 'post',
+            data: {name: $('#input-category').val(), sort_order: '0', status: '1', column: '1', parent_id: '0'},
+            dataType: 'json',
+            success: function(json) {
+                if (json['success']) {
+                    $('.btn-category-add').remove();
+                    $('.tooltip.fade.top.in').removeClass('in');
+
+                    html  = '<div id="product-category' + json['category_id'] + '">';
+                    html += '    <i class="fa fa-minus-circle"></i> ' + $('#input-category').val();
+                    html += '    <input type="hidden" name="product_category[]" value="' + json['category_id'] + '">';
+                    html += '</div>';
+
+                    $('#input-category').val('');
+
+                    $('#product-category').append(html);
+
+                    $('#input-category').after('<p id="quick-category-success" class="text-success">' + json['success'] + '</p>').fadeIn(3000);
+                }
+            }
+        }).done(function() {
+            setTimeout(function(){
+                $('#quick-category-success').fadeOut();
+                $('#quick-category-success').remove();
+            }, 3000);
+        });
     });
     //--></script>
     <script type="text/javascript"><!--
