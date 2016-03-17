@@ -18,7 +18,7 @@ class Catalog extends App
         $this->registry->set('filesystem', new Filesystem());
 
         // Config
-        $this->registry->set('config', new Config());
+        $this->registry->set('config', new Object());
 
         // Database
         $this->registry->set('db', new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE));
