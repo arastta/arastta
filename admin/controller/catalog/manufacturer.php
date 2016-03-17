@@ -562,6 +562,55 @@ class ControllerCatalogManufacturer extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
+    public function quick()
+    {
+        $this->load->language('catalog/manufacturer');
+
+        $json = array();
+
+        $this->load->model('catalog/manufacturer');
+        $this->load->model('catalog/url_alias');
+
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateQuick()) {
+            $this->trigger->fire('pre.admin.manufacturer.quick', array(&$this->request->post));
+
+            $this->load->model('localisation/language');
+
+            $languages = $this->model_localisation_language->getLanguages();
+
+            if ($this->request->post['name']) {
+                foreach ($languages as $language) {
+                    $this->request->post['manufacturer_description'][$language['language_id']]['name'] = $this->request->post['name'];
+                    $this->request->post['manufacturer_description'][$language['language_id']]['description'] = '';
+                    $this->request->post['manufacturer_description'][$language['language_id']]['meta_description'] = '';
+                    $this->request->post['manufacturer_description'][$language['language_id']]['meta_keyword'] = '';
+                    $this->request->post['seo_url'][$language['language_id']] = '';
+                }
+            }
+
+            $manufacturer_id = $this->model_catalog_manufacturer->addManufacturer($this->request->post);
+
+            $this->trigger->fire('post.admin.manufacturer.quick', array($manufacturer_id));
+
+            $json['success'] = $this->language->get('text_success');
+            $json['manufacturer_id'] = $manufacturer_id;
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+
+    protected function validateQuick() 
+    {
+        if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
+            $this->error['warning'] = $this->language->get('error_permission');
+        }
+        
+        $this->trigger->fire('post.admin.manufacturer.validate.quick', array(&$this->error));
+
+        return !$this->error;
+    }
+
     public function inline() {
         $json = array();
 
