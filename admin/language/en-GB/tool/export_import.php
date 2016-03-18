@@ -153,7 +153,7 @@ $_['error_invalid_filter_group_name_filter_name']       = 'Export/Import: Undefi
 $_['error_invalid_product_id']                          = 'Export/Import: Invalid product_id \'%2\' used in worksheet \'%1\'!';
 $_['error_duplicate_product_id']                        = 'Export/Import: Duplicate product_id \'%2\' used in worksheet \'%1\'!';
 $_['error_unlisted_product_id']                         = 'Export/Import: Worksheet \'%1\' cannot use product_id \'%2\' because it is not listed in worksheet \'Products\'!';
-$_['error_filter_not_supported']                        = 'Export/Import: Filters are not supported in your OpenCart version!';
+$_['error_filter_not_supported']                        = 'Export/Import: Filters are not supported in your Arastta version!';
 // Tabs
 $_['tab_import']                            = 'Import';
 $_['tab_export']                            = 'Export';
