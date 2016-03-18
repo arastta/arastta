@@ -83,7 +83,7 @@ $_['{telephone}']        = 'Telephone';
 
 // Demo Data
 $_['demo_username']         = 'Super User';
-$_['demo_store_name']       = 'Arsatta E-Commerce';
+$_['demo_store_name']       = 'Arastta eCommerce';
 $_['demo_ip_address']       = '127.0.0.1';
 $_['demo_firstname']        = 'Ada';
 $_['demo_lastname']         = 'Bulut';
