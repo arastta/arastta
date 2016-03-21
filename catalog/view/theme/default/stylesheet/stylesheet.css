@@ -467,6 +467,21 @@ footer h5 {
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
 }
+.breadcrumb .product-navigation {
+    margin-top: -8px;
+}
+.breadcrumb .product-navigation .btn {
+    border: none;
+    padding: 10px 12px;
+}
+.breadcrumb .product-navigation .btn-default[disabled], .breadcrumb .navigation .btn-default.disabled {
+    background: transparent;
+}
+.product-navigation-xs {
+    clear: both;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
 .pagination {
     margin: 0;
 }
