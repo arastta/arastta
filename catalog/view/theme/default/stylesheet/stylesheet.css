@@ -979,3 +979,10 @@ h2.price {
 .invoice-logo {
     margin-bottom: 20px;
 }
+
+@media (min-width: 768px) {
+    #modal-popup-cart .modal-dialog {
+        width: 800px;
+        margin: 30px auto;
+    }
+}
