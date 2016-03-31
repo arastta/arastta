@@ -219,4 +219,8 @@ if (version_compare(VERSION, '1.3.0', '<')) {
 
     // Update information_description table
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "information_description` CHANGE description description MEDIUMTEXT NOT NULL");
+
+    // Insert Module table Cart module => Popup after cart 
+    $this->db->query("INSERT INTO " . DB_PREFIX . "module SET `name` = 'Cart - Popup after Add to Cart', `code` = 'cart', `setting` = 'a:15:{s:4:\"name\";s:30:\"Cart - Popup after Add to Cart\";s:5:\"popup\";s:1:\"1\";s:5:\"theme\";s:9:\"mini_cart\";s:6:\"status\";s:1:\"1\";s:13:\"product_image\";s:1:\"1\";s:12:\"product_name\";s:1:\"1\";s:13:\"product_model\";s:1:\"0\";s:16:\"product_quantity\";s:1:\"1\";s:13:\"product_price\";s:1:\"1\";s:13:\"product_total\";s:1:\"1\";s:15:\"button_continue\";s:1:\"1\";s:11:\"button_cart\";s:1:\"1\";s:15:\"button_checkout\";s:1:\"1\";s:6:\"coupon\";s:1:\"1\";s:7:\"message\";s:1:\"1\";}'");
+
 }

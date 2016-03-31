@@ -489,6 +489,9 @@ $('#button-cart').on('click', function() {
             }
 
             if (json['success']) {
+                cart.after('add', json);
+                
+                /*
                 $('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 $('#cart > button').html('<i class="fa fa-shopping-cart"></i> ' + json['total']);
@@ -496,6 +499,7 @@ $('#button-cart').on('click', function() {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
 
                 $('#cart > ul').load('index.php?route=common/cart/info ul li');
+                */
             }
         }
     });
