@@ -5,7 +5,7 @@
             <?php foreach ($products as $product) { ?>
             <tr>
                 <?php if ($setting['product_image']) { ?>
-                <td class="text-center"><?php if ($product['thumb']) { ?>
+                <td class="text-center hidden-xs"><?php if ($product['thumb']) { ?>
                     <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-thumbnail" /></a>
                     <?php } ?></td>
                 <?php } ?>
@@ -69,7 +69,7 @@
                 <?php if ($setting['button_cart'] || $setting['button_checkout']) { ?>
                 <div class="pull-right">
                     <?php if ($setting['button_cart']) { ?>
-                    <a href="<?php echo $cart; ?>"><strong><i class="fa fa-shopping-cart"></i> <?php echo $text_cart; ?></strong></a>
+                    <a class="hidden-xs" href="<?php echo $cart; ?>"><strong><i class="fa fa-shopping-cart"></i> <?php echo $text_cart; ?></strong></a>
                     <?php } ?>
                     &nbsp;&nbsp;&nbsp;
                     <?php if ($setting['button_checkout']) { ?>

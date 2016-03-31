@@ -146,7 +146,7 @@
                 <?php if ($setting['button_cart'] || $setting['button_checkout']) { ?>
                 <div class="pull-right">
                     <?php if ($setting['button_cart']) { ?>
-                    <a href="<?php echo $cart; ?>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> <?php echo $text_cart; ?></a>
+                    <a href="<?php echo $cart; ?>" class="btn btn-primary hidden-xs"><i class="fa fa-shopping-cart"></i> <?php echo $text_cart; ?></a>
                     <?php } ?>
                     &nbsp;&nbsp;&nbsp;
                     <?php if ($setting['button_checkout']) { ?>

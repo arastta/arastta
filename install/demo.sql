@@ -458,7 +458,8 @@ INSERT INTO `ar_module` (`module_id`, `name`, `code`, `setting`) VALUES
 (27, 'Slideshow - Home Page', 'slideshow', 'a:5:{s:4:"name";s:21:"Slideshow - Home Page";s:9:"banner_id";s:1:"7";s:5:"width";s:4:"1140";s:6:"height";s:3:"380";s:6:"status";s:1:"1";}'),
 (28, 'Featured - Home Page', 'featured', 'a:7:{s:4:"name";s:20:"Featured - Home Page";s:7:"product";a:4:{i:0;s:2:"43";i:1;s:2:"40";i:2;s:2:"42";i:3;s:2:"30";}s:5:"limit";s:1:"4";s:5:"width";s:3:"200";s:6:"height";s:3:"200";s:6:"status";s:1:"1";s:4:"feed";s:1:"1";}'),
 (29, 'Carousel - Home Page', 'carousel', 'a:5:{s:4:"name";s:20:"Carousel - Home Page";s:9:"banner_id";s:1:"8";s:5:"width";s:3:"130";s:6:"height";s:3:"100";s:6:"status";s:1:"1";}'),
-(30, 'Banner - Category', 'banner', 'a:5:{s:4:"name";s:17:"Banner - Category";s:9:"banner_id";s:1:"6";s:5:"width";s:3:"300";s:6:"height";s:3:"300";s:6:"status";s:1:"1";}');
+(30, 'Banner - Category', 'banner', 'a:5:{s:4:"name";s:17:"Banner - Category";s:9:"banner_id";s:1:"6";s:5:"width";s:3:"300";s:6:"height";s:3:"300";s:6:"status";s:1:"1";}'),
+(31, 'Cart - Popup after Add to Cart', 'cart', 'a:15:{s:4:"name";s:30:"Cart - Popup after Add to Cart";s:5:"popup";s:1:"1";s:5:"theme";s:9:"mini_cart";s:6:"status";s:1:"1";s:13:"product_image";s:1:"1";s:12:"product_name";s:1:"1";s:13:"product_model";s:1:"0";s:16:"product_quantity";s:1:"1";s:13:"product_price";s:1:"1";s:13:"product_total";s:1:"1";s:15:"button_continue";s:1:"1";s:11:"button_cart";s:1:"1";s:15:"button_checkout";s:1:"1";s:6:"coupon";s:1:"1";s:7:"message";s:1:"1";}');
 
 INSERT INTO `ar_option` (`option_id`, `type`, `sort_order`) VALUES
 (1, 'radio', 1),
