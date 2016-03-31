@@ -385,7 +385,7 @@ $(document).ready(function() {
     }
 
     // right menu
-    $('#settings-menu').on('click', function() {
+    $('#settings-menu, .logo-image img').on('click', function() {
         left_menu_width = $('#column-left').width();
 
         if (left_menu_width > 0 && !$('#column-left').hasClass('right')) {

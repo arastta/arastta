@@ -2716,3 +2716,7 @@ li.basic-advanced {
     right: 55px;
     padding: 10px;
 }
+
+.logo-image img {
+    cursor: pointer;
+}
