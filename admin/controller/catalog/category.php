@@ -686,17 +686,17 @@ class ControllerCatalogCategory extends Controller {
             $results = $this->model_catalog_category->getCategories($filter_data);
 
             foreach ($results as $result) {
-                
                 $result['index'] = $result['name'];
-                if(strpos($result['name'], '&nbsp;&nbsp;&gt;&nbsp;&nbsp;')) {
-                    $result['name'] = explode ('&nbsp;&nbsp;&gt;&nbsp;&nbsp;', $result['name']);
-                    $result['name'] = end($result['name']);
+
+                if(strpos($result['index'], '&nbsp;&nbsp;&gt;&nbsp;&nbsp;')) {
+                    $result['index'] = explode ('&nbsp;&nbsp;&gt;&nbsp;&nbsp;', $result['index']);
+                    $result['index'] = end($result['index']);
                 }
                 
                 $json[] = array(
                     'category_id' => $result['category_id'],
-                    'index'          => $result['index'],
-                    'name'          => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
+                    'index'       => $result['index'],
+                    'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
                 );
             }
         }

@@ -153,8 +153,8 @@ $('input[name=\'filter_name\']').autocomplete({
             success: function(json) {
                 response($.map(json, function(item) {
                     return {
-                        label: item['index'],
-                        name: item['name'],
+                        label: item['name'],
+                        name : item['index'],
                         value: item['category_id']
                     }
                 }));
