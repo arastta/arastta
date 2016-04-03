@@ -82,7 +82,7 @@ class Admin extends App
         $this->registry->set('response', $response);
 
         // Cache
-        $cache = new Cache($this->config->get('config_cache_storage', 'file'), $this->config->get('config_cache_lifetime', 86400));
+        $cache = new Cache($this->config->get('config_cache_storage', 'file'), $this->config->get('config_cache_lifetime', 86400), $this->config);
         $this->registry->set('cache', $cache);
 
         // Session

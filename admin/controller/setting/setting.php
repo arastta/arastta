@@ -31,15 +31,29 @@ class ControllerSettingSetting extends Controller {
             if ($this->request->post['config_pagecache_exclude']) {
                 $ex_routes = '';
 
-                foreach (explode("\n", $this->request->post['config_pagecache_exclude']) as $id) {
-                    $id = trim($id);
+                foreach (explode("\n", $this->request->post['config_pagecache_exclude']) as $route) {
+                    $route = trim($route);
 
-                    if ($id) {
-                        $ex_routes .= $id.',';
+                    if ($route) {
+                        $ex_routes .= $route.',';
                     }
                 }
 
                 $this->request->post['config_pagecache_exclude'] = trim($ex_routes, ',');
+            }
+
+            if ($this->request->post['config_cache_memcache_servers']) {
+                $memcache_servers = '';
+
+                foreach (explode("\n", $this->request->post['config_cache_memcache_servers']) as $server) {
+                    $server = trim($server);
+
+                    if ($server) {
+                        $memcache_servers .= $server.',';
+                    }
+                }
+
+                $this->request->post['config_cache_memcache_servers'] = trim($memcache_servers, ',');
             }
 
             $this->model_setting_setting->editSetting('config', $this->request->post);
@@ -266,6 +280,18 @@ class ControllerSettingSetting extends Controller {
             $data['error_cache_lifetime'] = $this->error['cache_lifetime'];
         } else {
             $data['error_cache_lifetime'] = '';
+        }
+
+        if (isset($this->error['cache_memcache_servers'])) {
+            $data['error_cache_memcache_servers'] = $this->error['cache_memcache_servers'];
+        } else {
+            $data['error_cache_memcache_servers'] = '';
+        }
+
+        if (isset($this->error['cache_redis_server'])) {
+            $data['error_cache_redis_server'] = $this->error['cache_redis_server'];
+        } else {
+            $data['error_cache_redis_server'] = '';
         }
 
         $data['breadcrumbs'] = array();
@@ -1098,6 +1124,28 @@ class ControllerSettingSetting extends Controller {
             $data['config_cache_storage'] = $this->config->get('config_cache_storage', 'file');
         }
 
+        if (isset($this->request->post['config_cache_memcache_servers'])) {
+            $data['config_cache_memcache_servers'] = $this->request->post['config_cache_memcache_servers'];
+        } else {
+            $memcache_servers = '';
+
+            foreach (explode(",", $this->config->get('config_cache_memcache_servers', '')) as $server) {
+                $server = trim($server);
+
+                if ($server) {
+                    $memcache_servers .= $server."\n";
+                }
+            }
+
+            $data['config_cache_memcache_servers'] = $memcache_servers;
+        }
+
+        if (isset($this->request->post['config_cache_redis_server'])) {
+            $data['config_cache_redis_server'] = $this->request->post['config_cache_redis_server'];
+        } else {
+            $data['config_cache_redis_server'] = $this->config->get('config_cache_redis_server', '');
+        }
+
         if (isset($this->request->post['config_cache_lifetime'])) {
             $data['config_cache_lifetime'] = $this->request->post['config_cache_lifetime'];
         } else {
@@ -1118,20 +1166,18 @@ class ControllerSettingSetting extends Controller {
 
         if (isset($this->request->post['config_pagecache_exclude'])) {
             $data['config_pagecache_exclude'] = $this->request->post['config_pagecache_exclude'];
-        } elseif ($this->config->get('config_pagecache_exclude')) {
+        } else {
             $ex_routes = '';
 
-            foreach (explode(",", $this->config->get('config_pagecache_exclude')) as $id) {
-                $id = trim($id);
+            foreach (explode(",", $this->config->get('config_pagecache_exclude', '')) as $route) {
+                $route = trim($route);
 
-                if ($id) {
-                    $ex_routes .= $id."\n";
+                if ($route) {
+                    $ex_routes .= $route."\n";
                 }
             }
 
             $data['config_pagecache_exclude'] = $ex_routes;
-        } else {
-            $data['config_pagecache_exclude'] = '';
         }
 
         // Security
@@ -1428,6 +1474,14 @@ class ControllerSettingSetting extends Controller {
 
         if (!$this->request->post['config_cache_lifetime']) {
             $this->error['cache_lifetime'] = $this->language->get('error_cache_lifetime');
+        }
+
+        if ((($this->request->post['config_cache_storage'] == 'memcache') || ($this->request->post['config_cache_storage'] == 'memcached')) && !$this->request->post['config_cache_memcache_servers']) {
+            $this->error['cache_memcache_servers'] = $this->language->get('error_cache_memcache_servers');
+        }
+
+        if (($this->request->post['config_cache_storage'] == 'redis') && !$this->request->post['config_cache_redis_server']) {
+            $this->error['cache_redis_server'] = $this->language->get('error_cache_redis_server');
         }
 
         if ($this->error && !isset($this->error['warning'])) {

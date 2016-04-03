@@ -1622,6 +1622,24 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div id="memcache-servers" class="form-group required <?php echo (($config_cache_storage != 'memcache') && ($config_cache_storage != 'memcached')) ? 'hidden' : ''; ?>">
+                                        <label class="col-sm-2 control-label" for="input-cache-memcache-servers"><span data-toggle="tooltip" title="<?php echo $help_cache_memcache_servers; ?>"><?php echo $entry_cache_memcache_servers; ?></span></label>
+                                        <div class="col-sm-10">
+                                            <textarea name="config_cache_memcache_servers" rows="3" placeholder="<?php echo $entry_cache_memcache_servers; ?>" id="input-cache-memcache-servers" class="form-control"><?php echo $config_cache_memcache_servers; ?></textarea>
+                                            <?php if ($error_cache_memcache_servers) { ?>
+                                            <div class="text-danger"><?php echo $error_cache_memcache_servers; ?></div>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                    <div id="redis-server" class="form-group required <?php echo ($config_cache_storage != 'redis') ? 'hidden' : ''; ?>">
+                                        <label class="col-sm-2 control-label" for="input-cache-redis-server"><span data-toggle="tooltip" title="<?php echo $help_cache_redis_server; ?>"><?php echo $entry_cache_redis_server; ?></span></label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="config_cache_redis_server" value="<?php echo $config_cache_redis_server; ?>" placeholder="<?php echo $entry_cache_redis_server; ?>" id="input-cache-redis-server" class="form-control" />
+                                            <?php if ($error_cache_redis_server) { ?>
+                                            <div class="text-danger"><?php echo $error_cache_redis_server; ?></div>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
                                     <div class="form-group required">
                                         <label class="col-sm-2 control-label" for="input-cache-lifetime"><span data-toggle="tooltip" title="<?php echo $help_cache_lifetime; ?>"><?php echo $entry_cache_lifetime; ?></span></label>
                                         <div class="col-sm-10">
@@ -2057,7 +2075,8 @@
             </div>
         </form>
     </div>
-    <script type="text/javascript"><!--
+
+<script type="text/javascript"><!--
     $(document).ready(function() {
         $('.panel-chevron').trigger('click');
     });
@@ -2156,6 +2175,18 @@
     });
 
     $('select[name=\'config_country_id\']').trigger('change');
+
+    $('select[name=\'config_cache_storage\']').on('change', function() {
+        var cache_storage = $('select[name=\'config_cache_storage\']').val();
+
+        if ((cache_storage == 'memcache') || (cache_storage == 'memcached')) {
+            $("#memcache-servers").removeClass('hidden');
+            $("#redis-server").addClass('hidden');
+        } else if (cache_storage == 'redis') {
+            $("#redis-server").removeClass('hidden');
+            $("#memcache-servers").addClass('hidden');
+        }
+    });
     //--></script>
 </div>
 <script type="text/javascript"><!--

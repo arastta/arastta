@@ -70,7 +70,7 @@ class Cli extends App
             $this->registry->set('language', $language);
         }
 
-        $cache = new Cache($this->config->get('config_cache_storage', 'file'), $this->config->get('config_cache_lifetime', 86400));
+        $cache = new Cache($this->config->get('config_cache_storage', 'file'), $this->config->get('config_cache_lifetime', 86400), $this->config);
         $this->registry->set('cache', $cache);
 
         $this->addCommandsToConsole();
