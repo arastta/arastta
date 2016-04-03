@@ -10,7 +10,7 @@ class Cache {
 
     protected $adapter;
 
-    public function __construct($storage, $lifetime, $config = null)
+    public function __construct($storage, $lifetime = 86400, $config = null)
     {
         $class = 'Joomla\Cache\\' . ucfirst($storage);
 
