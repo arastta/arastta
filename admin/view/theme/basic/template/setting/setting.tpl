@@ -2185,6 +2185,9 @@
         } else if (cache_storage == 'redis') {
             $("#redis-server").removeClass('hidden');
             $("#memcache-servers").addClass('hidden');
+        } else {
+            $("#memcache-servers").addClass('hidden');
+            $("#redis-server").addClass('hidden');
         }
     });
     //--></script>
