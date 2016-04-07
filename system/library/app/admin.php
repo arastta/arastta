@@ -129,6 +129,9 @@ class Admin extends App
         // User
         $this->registry->set('user', new User($this->registry));
 
+        // Encryption
+        $this->registry->set('encryption', new Encryption($this->config->get('config_encryption')));
+
         // Email Template
         $this->registry->set('emailtemplate', new Emailtemplate($this->registry));
 
