@@ -37,6 +37,15 @@
                                     <span class="help-block"><a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a></span>
                                     <?php } ?>
                                 </div>
+                                <?php if ($twofactorauth) { ?>
+                                <div class="form-group">
+                                    <label for="input-secretcode"><?php echo $entry_secretcode; ?></label>
+                                    <div class="input-icon">
+                                        <i class="fa fa-shield"></i>
+                                        <input type="text" name="secretcode" value="" placeholder="<?php echo $entry_secretcode; ?>" id="input-secretcode" class="form-control" />
+                                    </div>
+                                </div>
+                                <?php } ?>
                                 <?php if ($languages) { ?>
                                 <div class="form-group">
                                     <label for="input-language"><?php echo $entry_language; ?></label>

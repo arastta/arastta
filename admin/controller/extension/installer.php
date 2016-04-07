@@ -307,6 +307,7 @@ class ControllerExtensionInstaller extends Controller {
             'common'        => 'common',
             'dashboard'     => 'dashboard',
             'design'        => 'design',
+            'editor'        => 'editor',
             'error'         => 'error',
             'extension'     => 'extension',
             'feed'          => 'feed',
@@ -322,6 +323,7 @@ class ControllerExtensionInstaller extends Controller {
             'system'        => 'system',
             'tool'          => 'tool',
             'total'         => 'total',
+            'twofactorauth' => 'twofactorauth',
             'user'          => 'user'
         );
 
@@ -1023,7 +1025,7 @@ class ControllerExtensionInstaller extends Controller {
 
         $tmp = explode('\\', $path);
 
-        $ext_types = array('captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total');
+        $ext_types = array('captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total', 'twofactorauth');
 
         if (isset($tmp[2]) && in_array($tmp[2], $ext_types)) {
             $type = $tmp[2];

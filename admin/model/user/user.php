@@ -7,17 +7,29 @@
  */
 
 class ModelUserUser extends Model {
+
     public function addUser($data) {
+        $this->trigger->fire('pre.admin.user.add', array(&$data));
+
         $this->db->query("INSERT INTO `" . DB_PREFIX . "user` SET username = '" . $this->db->escape($data['email']) . "', user_group_id = '" . (int)$data['user_group_id'] . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', image = '" . $this->db->escape($data['image']) . "', params = '" . $this->db->escape(json_encode($data['params'])) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
-        return $this->db->getLastId();
+
+        $user_id = $this->db->getLastId();
+
+        $this->trigger->fire('post.admin.user.add', array(&$user_id));
+
+        return $user_id;
     }
 
     public function editUser($user_id, $data) {
+        $this->trigger->fire('pre.admin.user.edit', array(&$data));
+
         $this->db->query("UPDATE `" . DB_PREFIX . "user` SET username = '" . $this->db->escape($data['email']) . "', user_group_id = '" . (int)$data['user_group_id'] . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', image = '" . $this->db->escape($data['image']) . "', params = '" . $this->db->escape(json_encode($data['params'])) . "', status = '" . (int)$data['status'] . "' WHERE user_id = '" . (int)$user_id . "'");
 
         if ($data['password']) {
             $this->db->query("UPDATE `" . DB_PREFIX . "user` SET salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "' WHERE user_id = '" . (int)$user_id . "'");
         }
+
+        $this->trigger->fire('post.admin.user.edit', array(&$user_id));
     }
 
     public function editPassword($user_id, $password) {
@@ -43,7 +55,11 @@ class ModelUserUser extends Model {
     }
     
     public function deleteUser($user_id) {
+        $this->trigger->fire('pre.admin.user.delete', array(&$user_id));
+
         $this->db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE user_id = '" . (int)$user_id . "'");
+
+        $this->trigger->fire('post.admin.user.delete', array(&$user_id));
     }
 
     public function getUser($user_id) {

@@ -30,7 +30,7 @@ class ControllerExtensionExtension extends Controller
         $this->load->model('setting/setting');
         $this->load->model('extension/marketplace');
 
-        $extension_types = array('captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total');
+        $extension_types = array('captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total', 'twofactorauth');
 
         $extensions = $this->model_extension_extension->getDiscoverExtensions();
 
@@ -224,6 +224,9 @@ class ControllerExtensionExtension extends Controller
                 case 'captcha':
                     $cat_id = 94;
                     break;
+                case 'twofactorauth':
+                    $cat_id = 95;
+                    break;
                 case 'other':
                     $cat_id = 75;
                     break;
@@ -298,14 +301,14 @@ class ControllerExtensionExtension extends Controller
                 'name'              => $name,
                 'author'            => $author,
                 'type'              => $result['type'],
-                'type_name'             => $this->language->get('text_' . $result['type']),
+                'type_name'         => $this->language->get('text_' . $result['type']),
                 'code'              => $result['code'],
                 'version'           => $version,
-                'instances'             => $instances,
+                'instances'         => $instances,
                 'sort_order'        => $this->config->get($result['code'] . '_sort_order'),
                 'status'            => $status ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
                 'edit'              => $this->url->link($result['type'] . '/' . $result['code'], 'token=' . $this->session->data['token'] . $url, 'SSL'),
-                'uninstall'             => $this->url->link('extension/extension/uninstall', 'type=' . $result['type'] . '&code=' . $result['code'] . '&token=' . $this->session->data['token'] . $url, 'SSL')
+                'uninstall'         => $this->url->link('extension/extension/uninstall', 'type=' . $result['type'] . '&code=' . $result['code'] . '&token=' . $this->session->data['token'] . $url, 'SSL')
             );
         }
 
