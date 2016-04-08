@@ -13,6 +13,10 @@ class EventAppTheme extends Event
     {
         $theme = $this->config->get('config_template');
 
-        $data['theme_' . $theme] = json_decode($this->config->get('theme_' . $theme), true);
+        $obj = new Object();
+        $obj->setProperties(json_decode($this->config->get('theme_' . $theme), true));
+
+        $data['theme'] = $theme;
+        $data['theme_config'] = $obj;
     }
 }

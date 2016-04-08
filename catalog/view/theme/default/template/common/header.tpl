@@ -31,7 +31,7 @@
     <script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
-    <link href="catalog/view/theme/default/stylesheet/stylesheet.css" rel="stylesheet">
+    <link href="catalog/view/theme/<?php echo $theme; ?>/stylesheet/stylesheet.css" rel="stylesheet">
     <?php foreach ($styles as $style) { ?>
     <link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
     <?php } ?>
@@ -42,12 +42,12 @@
         <?php } ?>
     </style>
     <?php } ?>
-    <?php if ($theme_default) { ?>
+    <?php if ($theme_config) { ?>
     <style type="text/css">
-    <?php if ($theme_default['menu_show_all']) { ?>
+    <?php if ($theme_config->get('menu_show_all')) { ?>
     #menu .see-all { display: none !important;}
     <?php } ?>
-    <?php if ($theme_default['refine_shearch_show']) { ?>
+    <?php if ($theme_config->get('refine_shearch_show')) { ?>
     body[class*="product-category"] #content.col-sm-12 h3,
     body[class*="product-category"] #content.col-sm-12 h3 + .row,
     body[class*="product-category"] #content.col-sm-9 h3,
