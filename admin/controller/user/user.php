@@ -553,6 +553,7 @@ class ControllerUserUser extends Controller {
             }
         } else {
             $data['twofactorauths'] = '';
+            $data['use_twofactorauth'] = 'none';
         }
 
         if (isset($this->request->post['image'])) {

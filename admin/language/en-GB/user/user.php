@@ -19,6 +19,7 @@ $_['text_theme_basic']          = 'Basic';
 $_['text_show']                 = 'Show';
 $_['text_hide']                 = 'Hide';
 $_['text_none']                 = '- None -';
+$_['text_twofactorauth']        = 'Please, save the user first.';
 
 // Column
 $_['column_firstname']          = 'First Name';
@@ -41,8 +42,8 @@ $_['entry_status']              = 'Status';
 $_['entry_enabled']             = 'Enabled';
 $_['entry_theme']               = 'Theme';
 $_['entry_admin_language']      = 'Admin Language';
-$_['entry_text_editor']         = 'Editor';
-$_['entry_text_twofactorauth']  = 'Two-Factor Authentication';
+$_['entry_editor']              = 'Editor';
+$_['entry_twofactorauth']       = 'Two-Factor Authentication';
 $_['entry_basic_mode_message']  = 'Basic Mode Message';
 
 // Error
@@ -56,7 +57,7 @@ $_['error_firstname']           = 'First Name must be between 1 and 32 character
 $_['error_lastname']            = 'Last Name must be between 1 and 32 characters!';
 $_['error_twofactorauth']       = 'The verification code is invalid or has expired. Please, try again.';
 
-// B/C
+// BC
 $_['column_username']           = 'Username';
 $_['error_username']            = 'Username must be between 3 and 20 characters!';
 $_['error_exists']              = 'Warning: Username is already in use!';
