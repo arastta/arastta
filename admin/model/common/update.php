@@ -117,7 +117,7 @@ class ModelCommonUpdate extends Model
             // Required for ftp & remove extension functions
             $this->request->post['path'] = $path;
 
-            $ftp = $this->load->controller('extension/installer/ftp');
+            $ftp = $this->load->controller('extension/installer/parseFiles');
             $remove = $this->load->controller('extension/installer/remove');
 
             $this->db->query("UPDATE `" . DB_PREFIX . "addon` SET `product_version` = '" . $this->db->escape($version) . "' WHERE `product_id` = '" . (int)$product_id . "'");
