@@ -68,11 +68,7 @@ class ControllerTwofactorauthGoogleauth extends Controller
 
         $form = new AForm('form-googleauth', $action);
 
-        $form->addElement(new Arastta\Component\Form\Element\HTML('<div class="tab-content">'));
-
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_status'), 'googleauth_status', $status, $option_text));
-
-        $form->addElement(new Arastta\Component\Form\Element\HTML('</div>'));
 
         return $form->render(true);
     }

@@ -74,13 +74,9 @@ class ControllerTwofactorauthYubikey extends Controller
 
         $form = new AForm('form-yubikey', $action);
 
-        $form->addElement(new Arastta\Component\Form\Element\HTML('<div class="tab-content">'));
-
         $form->addElement(new Arastta\Component\Form\Element\Textbox($this->language->get('entry_apikey'), 'yubikey_apikey', $apikey));
         $form->addElement(new Arastta\Component\Form\Element\Textbox($this->language->get('entry_clientid'), 'yubikey_clientid', $clientid));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_status'), 'yubikey_status', $status, $option_text));
-
-        $form->addElement(new Arastta\Component\Form\Element\HTML('</div>'));
 
         return $form->render(true);
     }
