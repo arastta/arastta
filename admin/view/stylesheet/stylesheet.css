@@ -240,7 +240,6 @@ a, div {
 }
 #column-right.active {
     width: 184.5px;
-
 }
 #column-right #right-menu li:first-child {
     display: none;
@@ -2243,7 +2242,15 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
     #column-left + #content {
         margin-left: 50px !important;
     }
-    #column-right + #column-left + #content {
+    #column-left.right + #content {
+        margin-left: 0px !important;
+        margin-right: 50px !important;
+    }
+    #column-right.width-zero + #column-left + #content {
+        margin-right: 0px !important;
+    }
+    #column-left.width-zero + #content {
+        margin-left: 0px !important;
         margin-right: 50px !important;
     }
     #recenttabs .table-responsive {

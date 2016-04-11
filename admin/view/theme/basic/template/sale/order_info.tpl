@@ -18,6 +18,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="order">
+                            <div class="table-responsive">
                             <table class="table table-bordered">
                                 <tr>
                                     <td><?php echo $text_order_id; ?></td>
@@ -151,6 +152,7 @@
                                     <td><?php echo $date_modified; ?></td>
                                 </tr>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -163,6 +165,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="payment">
+                            <div class="table-responsive">
                             <table class="table table-bordered">
                                 <tr>
                                     <td><?php echo $text_firstname; ?></td>
@@ -223,6 +226,7 @@
                                     <td><?php echo $payment_method; ?></td>
                                 </tr>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -236,6 +240,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="shipping">
+                            <div class="table-responsive">
                             <table class="table table-bordered">
                                 <tr>
                                     <td><?php echo $text_firstname; ?></td>
@@ -298,6 +303,7 @@
                                 </tr>
                                 <?php } ?>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -311,6 +317,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="product">
+                            <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
@@ -356,6 +363,7 @@
                                 <?php } ?>
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -432,6 +440,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="fraud">
+                            <div class="table-responsive">
                             <table class="table table-bordered">
                                 <?php if ($country_match) { ?>
                                 <tr>
@@ -734,6 +743,7 @@
                                 </tr>
                                 <?php } ?>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </div>

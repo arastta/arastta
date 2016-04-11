@@ -44,7 +44,8 @@
                                     <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control filter" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                    </span></div>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>

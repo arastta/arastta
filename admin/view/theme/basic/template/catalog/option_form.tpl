@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-option" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success" data-original-title="Save"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-option" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-option" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -28,8 +29,8 @@
                         <div class="panel-body">
                             <div class="general">
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12"><?php echo $entry_name; ?></label>
+                                    <div class="col-sm-12">
                                         <?php foreach ($languages as $language) { ?>
                                         <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
                                             <input type="text" name="option_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($option_description[$language['language_id']]) ? $option_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
@@ -41,8 +42,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-type"><?php echo $entry_type; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-type"><?php echo $entry_type; ?></label>
+                                    <div class="col-sm-12">
                                         <select name="type" id="input-type" class="form-control">
                                             <optgroup label="<?php echo $text_choose; ?>">
                                                 <?php if ($type == 'select') { ?>
@@ -106,8 +107,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
                                     </div>
                                 </div>

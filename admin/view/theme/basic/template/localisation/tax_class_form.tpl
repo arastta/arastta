@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-tax-class" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-tax-class" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-tax-class" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -28,8 +29,8 @@
                         <div class="panel-body">
                             <div class="general">
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-title"><?php echo $entry_title; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-title"><?php echo $entry_title; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" class="form-control" />
                                         <?php if ($error_title) { ?>
                                         <div class="text-danger"><?php echo $error_title; ?></div>
@@ -37,8 +38,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-description"><?php echo $entry_description; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-description"><?php echo $entry_description; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="description" value="<?php echo $description; ?>" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control" />
                                         <?php if ($error_description) { ?>
                                         <div class="text-danger"><?php echo $error_description; ?></div>
@@ -56,7 +57,7 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <div class="items">
+                            <div class="items table-responsive">
                                 <table id="tax-rule" class="table table-striped table-hover">
                                     <thead>
                                     <tr>

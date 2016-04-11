@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-customer-group" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-customer-group" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-customer-group" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -36,8 +37,8 @@
                                     <?php foreach ($languages as $language) { ?>
                                     <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
                                         <div class="form-group required">
-                                            <label class="col-sm-2 control-label" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-12" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
+                                            <div class="col-sm-12">
                                                 <input type="text" name="customer_group_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($customer_group_description[$language['language_id']]) ? $customer_group_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name<?php echo $language['language_id']; ?>" class="form-control input-full-width" />
                                                 <?php if (isset($error_name[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
@@ -45,8 +46,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-12" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
+                                            <div class="col-sm-12">
                                                 <textarea name="customer_group_description[<?php echo $language['language_id']; ?>][description]" rows="5" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($customer_group_description[$language['language_id']]) ? $customer_group_description[$language['language_id']]['description'] : ''; ?></textarea>
                                             </div>
                                         </div>
@@ -68,8 +69,8 @@
                         <div class="panel-body">
                             <div class="publish">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><span data-toggle="tooltip" title="<?php echo $help_approval; ?>"><?php echo $entry_approval; ?></span></label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_approval; ?>"><?php echo $entry_approval; ?></span></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($approval) { ?>
                                             <input type="radio" name="approval" value="1" checked="checked" />

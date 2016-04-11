@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-customer-ban-ip" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-customer-ban-ip" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-customer-ban-ip" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -28,8 +29,8 @@
                         <div class="panel-body">
                             <div class="general">
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-ip"><?php echo $entry_ip; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="ip" value="<?php echo $ip; ?>" id="input-ip" class="form-control" />
                                         <?php if ($error_ip) { ?>
                                         <div class="text-danger"><?php echo $error_ip; ?></div>

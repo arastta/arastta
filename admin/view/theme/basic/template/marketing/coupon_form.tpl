@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-coupon" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-coupon" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-coupon" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -28,8 +29,8 @@
                         <div class="panel-body">
                             <div class="general">
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-name"><?php echo $entry_name; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
                                         <?php if ($error_name) { ?>
                                         <div class="text-danger"><?php echo $error_name; ?></div>
@@ -37,8 +38,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="<?php echo $help_code; ?>"><?php echo $entry_code; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-code"><span data-toggle="tooltip" title="<?php echo $help_code; ?>"><?php echo $entry_code; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
                                         <?php if ($error_code) { ?>
                                         <div class="text-danger"><?php echo $error_code; ?></div>
@@ -46,8 +47,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-type"><span data-toggle="tooltip" title="<?php echo $help_type; ?>"><?php echo $entry_type; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-type"><span data-toggle="tooltip" title="<?php echo $help_type; ?>"><?php echo $entry_type; ?></span></label>
+                                    <div class="col-sm-12">
                                         <select name="type" id="input-type" class="form-control">
                                             <?php if ($type == 'P') { ?>
                                             <option value="P" selected="selected"><?php echo $text_percent; ?></option>
@@ -63,20 +64,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-discount"><?php echo $entry_discount; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-discount"><?php echo $entry_discount; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="discount" value="<?php echo $discount; ?>" placeholder="<?php echo $entry_discount; ?>" id="input-discount" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="total" value="<?php echo $total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_logged; ?>"><?php echo $entry_logged; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_logged; ?>"><?php echo $entry_logged; ?></span></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($logged) { ?>
                                             <input type="radio" name="logged" value="1" checked="checked" />
@@ -98,8 +99,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label"><?php echo $entry_shipping; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12"><?php echo $entry_shipping; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($shipping) { ?>
                                             <input type="radio" name="shipping" value="1" checked="checked" />
@@ -121,8 +122,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="<?php echo $help_product; ?>"><?php echo $entry_product; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-product"><span data-toggle="tooltip" title="<?php echo $help_product; ?>"><?php echo $entry_product; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
                                         <div id="coupon-product" class="well well-sm" style="height: 150px; overflow: auto;">
                                             <?php foreach ($coupon_product as $coupon_product) { ?>
@@ -134,8 +135,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-category"><span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_category; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-category"><span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_category; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control" />
                                         <div id="coupon-category" class="well well-sm" style="height: 150px; overflow: auto;">
                                             <?php foreach ($coupon_category as $coupon_category) { ?>
@@ -147,8 +148,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
-                                    <div class="col-sm-3">
+                                    <label class="col-sm-12" for="input-date-start"><?php echo $entry_date_start; ?></label>
+                                    <div class="col-sm-12">
                                         <div class="input-group date">
                                             <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
                                             <span class="input-group-btn">
@@ -157,8 +158,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-                                    <div class="col-sm-3">
+                                    <label class="col-sm-12" for="input-date-end"><?php echo $entry_date_end; ?></label>
+                                    <div class="col-sm-12">
                                         <div class="input-group date">
                                             <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
                                             <span class="input-group-btn">
@@ -167,14 +168,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-uses-total"><span data-toggle="tooltip" title="<?php echo $help_uses_total; ?>"><?php echo $entry_uses_total; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-uses-total"><span data-toggle="tooltip" title="<?php echo $help_uses_total; ?>"><?php echo $entry_uses_total; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="uses_total" value="<?php echo $uses_total; ?>" placeholder="<?php echo $entry_uses_total; ?>" id="input-uses-total" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-uses-customer"><span data-toggle="tooltip" title="<?php echo $help_uses_customer; ?>"><?php echo $entry_uses_customer; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-uses-customer"><span data-toggle="tooltip" title="<?php echo $help_uses_customer; ?>"><?php echo $entry_uses_customer; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="uses_customer" value="<?php echo $uses_customer; ?>" placeholder="<?php echo $entry_uses_customer; ?>" id="input-uses-customer" class="form-control" />
                                     </div>
                                 </div>
@@ -208,8 +209,8 @@
                         <div class="panel-body">
                             <div class="publish">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><?php echo $text_enabled; ?></label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-12"><?php echo $text_enabled; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($status) { ?>
                                             <input type="radio" name="status" value="1" checked="checked" />

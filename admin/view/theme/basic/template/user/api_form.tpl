@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-api" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-api" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-api" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -28,8 +29,8 @@
                         <div class="panel-body">
                             <div class="general">
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-username"><?php echo $entry_username; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-username"><?php echo $entry_username; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" />
                                         <?php if ($error_username) { ?>
                                         <div class="text-danger"><?php echo $error_username; ?></div>
@@ -37,8 +38,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-password"><?php echo $entry_password; ?></label>
+                                    <div class="col-sm-12">
                                         <textarea name="password" placeholder="<?php echo $entry_password; ?>" rows="5" id="input-password" class="form-control"><?php echo $password; ?></textarea>
                                         <br />
                                         <button type="button" id="button-generate" class="btn btn-primary"><i class="fa fa-refresh"></i> <?php echo $button_generate; ?></button>
@@ -62,8 +63,8 @@
                         <div class="panel-body">
                             <div class="publish">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><?php echo $text_enabled; ?></label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-12"><?php echo $text_enabled; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($status) { ?>
                                             <input type="radio" name="status" value="1" checked="checked" />

@@ -5,7 +5,8 @@
             <div class="pull-right">
                 <button type="submit" onclick="save('save')" form="form-email-template" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success" data-original-title="Save"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-email-template" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -65,8 +66,8 @@
                                     <?php foreach ($languages as $language) { ?>
                                     <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
                                         <div class="form-group required">
-                                            <label class="col-sm-2 control-label" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-12" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
+                                            <div class="col-sm-12">
                                                 <input type="text" name="email_template_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($email_template_description[$language['language_id']]) ? $email_template_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name<?php echo $language['language_id']; ?>" class="form-control input-full-width" />
                                                 <?php if (isset($error_name[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
@@ -74,11 +75,11 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="input-description<?php echo $language['language_id']; ?>">
+                                            <label class="col-sm-12" for="input-description<?php echo $language['language_id']; ?>">
                                                 <?php echo $entry_description; ?>
                                                 <div class="html-button"><a href="<?php echo $html_preview . '&language_id=' . $language['language_id']; ?>" class="popup btn btn-primary btn-xs"><?php echo $text_html_preview; ?></a></div>
                                             </label>
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-12">
                                                 <textarea name="email_template_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($email_template_description[$language['language_id']]) ? $email_template_description[$language['language_id']]['description'] : ''; ?></textarea>
                                             </div>
                                         </div>
@@ -93,7 +94,7 @@
         </form>
     </div>
 </div>
-<style>
+<style type="text/css"><!--
     .jumbotron {
         padding-left: 20px !important;
         padding-right: 20px !important;
@@ -112,11 +113,11 @@
         }
     }
 
-</style>
+//--></style>
 <script type="text/javascript"><!--
 $(document).ready(function() {
 <?php foreach ($languages as $language) { ?>
-    textEditor('#input-description<?php echo $language['language_id']; ?>');
+textEditor('#input-description<?php echo $language['language_id']; ?>');
 <?php } ?>
 });
 

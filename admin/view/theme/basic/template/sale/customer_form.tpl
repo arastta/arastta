@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-customer" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-customer" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-customer" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -39,12 +40,12 @@
                                             <li id="address-add"><a onclick="addAddress();"><i class="fa fa-plus-circle"></i> <?php echo $button_address_add; ?></a></li>
                                         </ul>
                                     </div>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-12">
                                         <div class="tab-content">
                                             <div class="tab-pane active" id="tab-customer">
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
+                                                    <div class="col-sm-12">
                                                         <select name="customer_group_id" id="input-customer-group" class="form-control">
                                                             <?php foreach ($customer_groups as $customer_group) { ?>
                                                             <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
@@ -57,8 +58,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group required">
-                                                    <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-firstname"><?php echo $entry_firstname; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control" />
                                                         <?php if ($error_firstname) { ?>
                                                         <div class="text-danger"><?php echo $error_firstname; ?></div>
@@ -66,8 +67,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group required">
-                                                    <label class="col-sm-2 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-lastname"><?php echo $entry_lastname; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" class="form-control" />
                                                         <?php if ($error_lastname) { ?>
                                                         <div class="text-danger"><?php echo $error_lastname; ?></div>
@@ -75,8 +76,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group required">
-                                                    <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-email"><?php echo $entry_email; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
                                                         <?php if ($error_email) { ?>
                                                         <div class="text-danger"><?php echo $error_email; ?></div>
@@ -84,8 +85,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group required">
-                                                    <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-telephone"><?php echo $entry_telephone; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
                                                         <?php if ($error_telephone) { ?>
                                                         <div class="text-danger"><?php echo $error_telephone; ?></div>
@@ -93,8 +94,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-fax"><?php echo $entry_fax; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
                                                     </div>
                                                 </div>
@@ -102,8 +103,8 @@
                                                 <?php if ($custom_field['location'] == 'account') { ?>
                                                 <?php if ($custom_field['type'] == 'select') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <select name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
                                                             <option value=""><?php echo $text_select; ?></option>
                                                             <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
@@ -122,8 +123,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'radio') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <div>
                                                             <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                                                             <div class="radio">
@@ -147,8 +148,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'checkbox') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <div>
                                                             <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                                                             <div class="checkbox">
@@ -172,8 +173,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'text') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                                                         <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
                                                         <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
@@ -183,8 +184,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'textarea') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
                                                         <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
                                                         <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
@@ -194,8 +195,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'file') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
                                                         <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
                                                         <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
@@ -206,8 +207,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'date') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <div class="input-group date">
                                                             <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                                                             <span class="input-group-btn">
@@ -221,8 +222,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'time') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <div class="input-group time">
                                                             <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                                                             <span class="input-group-btn">
@@ -236,8 +237,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'datetime') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <div class="input-group datetime">
                                                             <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                                                             <span class="input-group-btn">
@@ -252,8 +253,8 @@
                                                 <?php } ?>
                                                 <?php } ?>
                                                 <div class="form-group required">
-                                                    <label class="col-sm-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-password"><?php echo $entry_password; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" autocomplete="off" />
                                                         <?php if ($error_password) { ?>
                                                         <div class="text-danger"><?php echo $error_password; ?></div>
@@ -261,8 +262,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group required">
-                                                    <label class="col-sm-2 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-confirm"><?php echo $entry_confirm; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" autocomplete="off" id="input-confirm" class="form-control" />
                                                         <?php if ($error_confirm) { ?>
                                                         <div class="text-danger"><?php echo $error_confirm; ?></div>
@@ -270,8 +271,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-newsletter"><?php echo $entry_newsletter; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-newsletter"><?php echo $entry_newsletter; ?></label>
+                                                    <div class="col-sm-12">
                                                         <select name="newsletter" id="input-newsletter" class="form-control">
                                                             <?php if ($newsletter) { ?>
                                                             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -284,8 +285,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-status"><?php echo $entry_status; ?></label>
+                                                    <div class="col-sm-12">
                                                         <select name="status" id="input-status" class="form-control">
                                                             <?php if ($status) { ?>
                                                             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -298,8 +299,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-approved"><?php echo $entry_approved; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-approved"><?php echo $entry_approved; ?></label>
+                                                    <div class="col-sm-12">
                                                         <select name="approved" id="input-approved" class="form-control">
                                                             <?php if ($approved) { ?>
                                                             <option value="1" selected="selected"><?php echo $text_yes; ?></option>
@@ -312,8 +313,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-safe"><span data-toggle="tooltip" title="<?php echo $help_safe; ?>"><?php echo $entry_safe; ?></span></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-safe"><span data-toggle="tooltip" title="<?php echo $help_safe; ?>"><?php echo $entry_safe; ?></span></label>
+                                                    <div class="col-sm-12">
                                                         <select name="safe" id="input-safe" class="form-control">
                                                             <?php if ($safe) { ?>
                                                             <option value="1" selected="selected"><?php echo $text_yes; ?></option>
@@ -327,8 +328,8 @@
                                                 </div>
                                                 <?php if(!empty($show_send_email)) { ?>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-send-email"><span data-toggle="tooltip" title="<?php echo $help_send_email; ?>"><?php echo $entry_send_email; ?></span></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-send-email"><span data-toggle="tooltip" title="<?php echo $help_send_email; ?>"><?php echo $entry_send_email; ?></span></label>
+                                                    <div class="col-sm-12">
                                                         <select name="send_email" id="input-send-email" class="form-control">
                                                             <?php if ($send_email) { ?>
                                                             <option value="1" selected="selected"><?php echo $text_yes; ?></option>
@@ -347,8 +348,8 @@
                                             <div class="tab-pane" id="tab-address<?php echo $address_row; ?>">
                                                 <input type="hidden" name="address[<?php echo $address_row; ?>][address_id]" value="<?php echo $address['address_id']; ?>" />
                                                 <div class="form-group required">
-                                                    <label class="col-sm-2 control-label" for="input-firstname<?php echo $address_row; ?>"><?php echo $entry_firstname; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-firstname<?php echo $address_row; ?>"><?php echo $entry_firstname; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="address[<?php echo $address_row; ?>][firstname]" value="<?php echo $address['firstname']; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname<?php echo $address_row; ?>" class="form-control" />
                                                         <?php if (isset($error_address[$address_row]['firstname'])) { ?>
                                                         <div class="text-danger"><?php echo $error_address[$address_row]['firstname']; ?></div>
@@ -356,8 +357,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group required">
-                                                    <label class="col-sm-2 control-label" for="input-lastname<?php echo $address_row; ?>"><?php echo $entry_lastname; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-lastname<?php echo $address_row; ?>"><?php echo $entry_lastname; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address['lastname']; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname<?php echo $address_row; ?>" class="form-control" />
                                                         <?php if (isset($error_address[$address_row]['lastname'])) { ?>
                                                         <div class="text-danger"><?php echo $error_address[$address_row]['lastname']; ?></div>
@@ -365,14 +366,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-company<?php echo $address_row; ?>"><?php echo $entry_company; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-company<?php echo $address_row; ?>"><?php echo $entry_company; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="address[<?php echo $address_row; ?>][company]" value="<?php echo $address['company']; ?>" placeholder="<?php echo $entry_company; ?>" id="input-company<?php echo $address_row; ?>" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group required">
-                                                    <label class="col-sm-2 control-label" for="input-address-1<?php echo $address_row; ?>"><?php echo $entry_address_1; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-address-1<?php echo $address_row; ?>"><?php echo $entry_address_1; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1<?php echo $address_row; ?>" class="form-control" />
                                                         <?php if (isset($error_address[$address_row]['address_1'])) { ?>
                                                         <div class="text-danger"><?php echo $error_address[$address_row]['address_1']; ?></div>
@@ -380,14 +381,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label" for="input-address-2<?php echo $address_row; ?>"><?php echo $entry_address_2; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-address-2<?php echo $address_row; ?>"><?php echo $entry_address_2; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="address[<?php echo $address_row; ?>][address_2]" value="<?php echo $address['address_2']; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2<?php echo $address_row; ?>" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group required">
-                                                    <label class="col-sm-2 control-label" for="input-city<?php echo $address_row; ?>"><?php echo $entry_city; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-city<?php echo $address_row; ?>"><?php echo $entry_city; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="address[<?php echo $address_row; ?>][city]" value="<?php echo $address['city']; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city<?php echo $address_row; ?>" class="form-control" />
                                                         <?php if (isset($error_address[$address_row]['city'])) { ?>
                                                         <div class="text-danger"><?php echo $error_address[$address_row]['city']; ?></div>
@@ -395,8 +396,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group required">
-                                                    <label class="col-sm-2 control-label" for="input-postcode<?php echo $address_row; ?>"><?php echo $entry_postcode; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-postcode<?php echo $address_row; ?>"><?php echo $entry_postcode; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address['postcode']; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode<?php echo $address_row; ?>" class="form-control" />
                                                         <?php if (isset($error_address[$address_row]['postcode'])) { ?>
                                                         <div class="text-danger"><?php echo $error_address[$address_row]['postcode']; ?></div>
@@ -404,8 +405,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group required">
-                                                    <label class="col-sm-2 control-label" for="input-country<?php echo $address_row; ?>"><?php echo $entry_country; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-country<?php echo $address_row; ?>"><?php echo $entry_country; ?></label>
+                                                    <div class="col-sm-12">
                                                         <select name="address[<?php echo $address_row; ?>][country_id]" id="input-country<?php echo $address_row; ?>" onchange="country(this, '<?php echo $address_row; ?>', '<?php echo $address['zone_id']; ?>');" class="form-control">
                                                             <option value=""><?php echo $text_select; ?></option>
                                                             <?php foreach ($countries as $country) { ?>
@@ -422,8 +423,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group required">
-                                                    <label class="col-sm-2 control-label" for="input-zone<?php echo $address_row; ?>"><?php echo $entry_zone; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-zone<?php echo $address_row; ?>"><?php echo $entry_zone; ?></label>
+                                                    <div class="col-sm-12">
                                                         <select name="address[<?php echo $address_row; ?>][zone_id]" id="input-zone<?php echo $address_row; ?>" class="form-control">
                                                         </select>
                                                         <?php if (isset($error_address[$address_row]['zone'])) { ?>
@@ -435,8 +436,8 @@
                                                 <?php if ($custom_field['location'] == 'address') { ?>
                                                 <?php if ($custom_field['type'] == 'select') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <select name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" id="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
                                                             <option value=""><?php echo $text_select; ?></option>
                                                             <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
@@ -455,8 +456,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'radio') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <div>
                                                             <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                                                             <div class="radio">
@@ -480,8 +481,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'checkbox') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <div>
                                                             <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                                                             <div class="checkbox">
@@ -505,8 +506,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'text') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <input type="text" name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                                                         <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
                                                         <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
@@ -516,8 +517,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'textarea') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <textarea name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
                                                         <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
                                                         <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
@@ -527,8 +528,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'file') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <button type="button" id="button-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
                                                         <input type="hidden" name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : ''); ?>" />
                                                         <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
@@ -539,8 +540,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'date') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <div class="input-group date">
                                                             <input type="text" name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                                                             <span class="input-group-btn">
@@ -554,8 +555,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'time') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <div class="input-group time">
                                                             <input type="text" name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                                                             <span class="input-group-btn">
@@ -569,8 +570,8 @@
                                                 <?php } ?>
                                                 <?php if ($custom_field['type'] == 'datetime') { ?>
                                                 <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
-                                                    <label class="col-sm-2 control-label" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+                                                    <div class="col-sm-12">
                                                         <div class="input-group datetime">
                                                             <input type="text" name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                                                             <span class="input-group-btn">
@@ -585,8 +586,8 @@
                                                 <?php } ?>
                                                 <?php } ?>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label"><?php echo $entry_default; ?></label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-12"><?php echo $entry_default; ?></label>
+                                                    <div class="col-sm-12">
                                                         <label class="radio">
                                                             <?php if (($address['address_id'] == $address_id) || !$addresses) { ?>
                                                             <input type="radio" name="address[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" checked="checked" />
@@ -618,8 +619,8 @@
                                 <div id="history"></div>
                                 <br />
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-comment"><?php echo $entry_comment; ?></label>
+                                    <div class="col-sm-12">
                                         <textarea name="comment" rows="8" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"></textarea>
                                     </div>
                                 </div>
@@ -641,14 +642,14 @@
                                 <div id="credit"></div>
                                 <br />
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-credit-description"><?php echo $entry_description; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-credit-description"><?php echo $entry_description; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="description" value="" placeholder="<?php echo $entry_description; ?>" id="input-credit-description" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-amount"><?php echo $entry_amount; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-amount"><?php echo $entry_amount; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" id="input-amount" class="form-control" />
                                     </div>
                                 </div>
@@ -670,14 +671,14 @@
                                 <div id="reward"></div>
                                 <br />
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-reward-description"><?php echo $entry_description; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-reward-description"><?php echo $entry_description; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="description" value="" placeholder="<?php echo $entry_description; ?>" id="input-reward-description" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-points"><span data-toggle="tooltip" title="<?php echo $help_points; ?>"><?php echo $entry_points; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-points"><span data-toggle="tooltip" title="<?php echo $help_points; ?>"><?php echo $entry_points; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" id="input-points" class="form-control" />
                                     </div>
                                 </div>
@@ -744,43 +745,43 @@
         html += '  <input type="hidden" name="address[' + address_row + '][address_id]" value="" />';
 
         html += '  <div class="form-group required">';
-        html += '    <label class="col-sm-2 control-label" for="input-firstname' + address_row + '"><?php echo $entry_firstname; ?></label>';
-        html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][firstname]" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname' + address_row + '" class="form-control" /></div>';
+        html += '    <label class="col-sm-12" for="input-firstname' + address_row + '"><?php echo $entry_firstname; ?></label>';
+        html += '    <div class="col-sm-12"><input type="text" name="address[' + address_row + '][firstname]" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname' + address_row + '" class="form-control" /></div>';
         html += '  </div>';
 
         html += '  <div class="form-group required">';
-        html += '    <label class="col-sm-2 control-label" for="input-lastname' + address_row + '"><?php echo $entry_lastname; ?></label>';
-        html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][lastname]" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname' + address_row + '" class="form-control" /></div>';
+        html += '    <label class="col-sm-12" for="input-lastname' + address_row + '"><?php echo $entry_lastname; ?></label>';
+        html += '    <div class="col-sm-12"><input type="text" name="address[' + address_row + '][lastname]" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname' + address_row + '" class="form-control" /></div>';
         html += '  </div>';
 
         html += '  <div class="form-group">';
-        html += '    <label class="col-sm-2 control-label" for="input-company' + address_row + '"><?php echo $entry_company; ?></label>';
-        html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][company]" value="" placeholder="<?php echo $entry_company; ?>" id="input-company' + address_row + '" class="form-control" /></div>';
+        html += '    <label class="col-sm-12" for="input-company' + address_row + '"><?php echo $entry_company; ?></label>';
+        html += '    <div class="col-sm-12"><input type="text" name="address[' + address_row + '][company]" value="" placeholder="<?php echo $entry_company; ?>" id="input-company' + address_row + '" class="form-control" /></div>';
         html += '  </div>';
 
         html += '  <div class="form-group required">';
-        html += '    <label class="col-sm-2 control-label" for="input-address-1' + address_row + '"><?php echo $entry_address_1; ?></label>';
-        html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][address_1]" value="" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1' + address_row + '" class="form-control" /></div>';
+        html += '    <label class="col-sm-12" for="input-address-1' + address_row + '"><?php echo $entry_address_1; ?></label>';
+        html += '    <div class="col-sm-12"><input type="text" name="address[' + address_row + '][address_1]" value="" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1' + address_row + '" class="form-control" /></div>';
         html += '  </div>';
 
         html += '  <div class="form-group">';
-        html += '    <label class="col-sm-2 control-label" for="input-address-2' + address_row + '"><?php echo $entry_address_2; ?></label>';
-        html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][address_2]" value="" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2' + address_row + '" class="form-control" /></div>';
+        html += '    <label class="col-sm-12" for="input-address-2' + address_row + '"><?php echo $entry_address_2; ?></label>';
+        html += '    <div class="col-sm-12"><input type="text" name="address[' + address_row + '][address_2]" value="" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2' + address_row + '" class="form-control" /></div>';
         html += '  </div>';
 
         html += '  <div class="form-group required">';
-        html += '    <label class="col-sm-2 control-label" for="input-city' + address_row + '"><?php echo $entry_city; ?></label>';
-        html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][city]" value="" placeholder="<?php echo $entry_city; ?>" id="input-city' + address_row + '" class="form-control" /></div>';
+        html += '    <label class="col-sm-12" for="input-city' + address_row + '"><?php echo $entry_city; ?></label>';
+        html += '    <div class="col-sm-12"><input type="text" name="address[' + address_row + '][city]" value="" placeholder="<?php echo $entry_city; ?>" id="input-city' + address_row + '" class="form-control" /></div>';
         html += '  </div>';
 
         html += '  <div class="form-group required">';
-        html += '    <label class="col-sm-2 control-label" for="input-postcode' + address_row + '"><?php echo $entry_postcode; ?></label>';
-        html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][postcode]" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode' + address_row + '" class="form-control" /></div>';
+        html += '    <label class="col-sm-12" for="input-postcode' + address_row + '"><?php echo $entry_postcode; ?></label>';
+        html += '    <div class="col-sm-12"><input type="text" name="address[' + address_row + '][postcode]" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode' + address_row + '" class="form-control" /></div>';
         html += '  </div>';
 
         html += '  <div class="form-group required">';
-        html += '    <label class="col-sm-2 control-label" for="input-country' + address_row + '"><?php echo $entry_country; ?></label>';
-        html += '    <div class="col-sm-10"><select name="address[' + address_row + '][country_id]" id="input-country' + address_row + '" onchange="country(this, \'' + address_row + '\', \'0\');" class="form-control">';
+        html += '    <label class="col-sm-12" for="input-country' + address_row + '"><?php echo $entry_country; ?></label>';
+        html += '    <div class="col-sm-12"><select name="address[' + address_row + '][country_id]" id="input-country' + address_row + '" onchange="country(this, \'' + address_row + '\', \'0\');" class="form-control">';
         html += '         <option value=""><?php echo $text_select; ?></option>';
         <?php foreach ($countries as $country) { ?>
         html += '         <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
@@ -789,8 +790,8 @@
         html += '  </div>';
 
         html += '  <div class="form-group required">';
-        html += '    <label class="col-sm-2 control-label" for="input-zone' + address_row + '"><?php echo $entry_zone; ?></label>';
-        html += '    <div class="col-sm-10"><select name="address[' + address_row + '][zone_id]" id="input-zone' + address_row + '" class="form-control"><option value=""><?php echo $text_none; ?></option></select></div>';
+        html += '    <label class="col-sm-12" for="input-zone' + address_row + '"><?php echo $entry_zone; ?></label>';
+        html += '    <div class="col-sm-12"><select name="address[' + address_row + '][zone_id]" id="input-zone' + address_row + '" class="form-control"><option value=""><?php echo $text_none; ?></option></select></div>';
         html += '  </div>';
 
         // Custom Fields
@@ -799,8 +800,8 @@
         <?php if ($custom_field['type'] == 'select') { ?>
 
         html += '  <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">';
-        html += '       <label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
-        html += '       <div class="col-sm-10">';
+        html += '       <label class="col-sm-12" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
+        html += '       <div class="col-sm-12">';
         html += '         <select name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">';
         html += '           <option value=""><?php echo $text_select; ?></option>';
 
@@ -815,8 +816,8 @@
 
         <?php if ($custom_field['type'] == 'radio') { ?>
         html += '     <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">';
-        html += '       <label class="col-sm-2 control-label"><?php echo addslashes($custom_field['name']); ?></label>';
-        html += '       <div class="col-sm-10">';
+        html += '       <label class="col-sm-12"><?php echo addslashes($custom_field['name']); ?></label>';
+        html += '       <div class="col-sm-12">';
         html += '         <div>';
 
         <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
@@ -830,8 +831,8 @@
 
         <?php if ($custom_field['type'] == 'checkbox') { ?>
         html += '     <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">';
-        html += '       <label class="col-sm-2 control-label"><?php echo addslashes($custom_field['name']); ?></label>';
-        html += '       <div class="col-sm-10">';
+        html += '       <label class="col-sm-12"><?php echo addslashes($custom_field['name']); ?></label>';
+        html += '       <div class="col-sm-12">';
         html += '         <div>';
 
         <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
@@ -845,8 +846,8 @@
 
         <?php if ($custom_field['type'] == 'text') { ?>
         html += '     <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">';
-        html += '       <label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
-        html += '       <div class="col-sm-10">';
+        html += '       <label class="col-sm-12" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
+        html += '       <div class="col-sm-12">';
         html += '         <input type="text" name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo addslashes($custom_field['value']); ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />';
         html += '       </div>';
         html += '     </div>';
@@ -854,8 +855,8 @@
 
         <?php if ($custom_field['type'] == 'textarea') { ?>
         html += '     <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">';
-        html += '       <label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
-        html += '       <div class="col-sm-10">';
+        html += '       <label class="col-sm-12" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
+        html += '       <div class="col-sm-12">';
         html += '         <textarea name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo addslashes($custom_field['name']); ?>" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo addslashes($custom_field['value']); ?></textarea>';
         html += '       </div>';
         html += '     </div>';
@@ -863,8 +864,8 @@
 
         <?php if ($custom_field['type'] == 'file') { ?>
         html += '     <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">';
-        html += '       <label class="col-sm-2 control-label"><?php echo addslashes($custom_field['name']); ?></label>';
-        html += '       <div class="col-sm-10">';
+        html += '       <label class="col-sm-12"><?php echo addslashes($custom_field['name']); ?></label>';
+        html += '       <div class="col-sm-12">';
         html += '         <button type="button" id="button-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
         html += '         <input type="hidden" name="address[' + address_row + '][<?php echo $custom_field['custom_field_id']; ?>]" value="" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" />';
         html += '       </div>';
@@ -873,8 +874,8 @@
 
         <?php if ($custom_field['type'] == 'date') { ?>
         html += '     <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">';
-        html += '       <label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
-        html += '       <div class="col-sm-10">';
+        html += '       <label class="col-sm-12" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
+        html += '       <div class="col-sm-12">';
         html += '         <div class="input-group date"><input type="text" name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo addslashes($custom_field['value']); ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" data-date-format="YYYY-MM-DD" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
         html += '       </div>';
         html += '     </div>';
@@ -882,8 +883,8 @@
 
         <?php if ($custom_field['type'] == 'time') { ?>
         html += '     <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">';
-        html += '       <label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
-        html += '       <div class="col-sm-10">';
+        html += '       <label class="col-sm-12" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
+        html += '       <div class="col-sm-12">';
         html += '         <div class="input-group time"><input type="text" name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" data-date-format="HH:mm" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
         html += '       </div>';
         html += '     </div>';
@@ -891,8 +892,8 @@
 
         <?php if ($custom_field['type'] == 'datetime') { ?>
         html += '     <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">';
-        html += '       <label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
-        html += '       <div class="col-sm-10">';
+        html += '       <label class="col-sm-12" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
+        html += '       <div class="col-sm-12">';
         html += '         <div class="input-group datetime"><input type="text" name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo addslashes($custom_field['value']); ?>" placeholder="<?php echo addslashes($custom_field['name']); ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>';
         html += '       </div>';
         html += '     </div>';
@@ -902,8 +903,8 @@
         <?php } ?>
 
         html += '  <div class="form-group">';
-        html += '    <label class="col-sm-2 control-label"><?php echo $entry_default; ?></label>';
-        html += '    <div class="col-sm-10"><label class="radio"><input type="radio" name="address[' + address_row + '][default]" value="1" /></label></div>';
+        html += '    <label class="col-sm-12"><?php echo $entry_default; ?></label>';
+        html += '    <div class="col-sm-12"><label class="radio"><input type="radio" name="address[' + address_row + '][default]" value="1" /></label></div>';
         html += '  </div>';
         html += '</div>';
 
