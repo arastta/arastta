@@ -34,7 +34,7 @@ $_['text_footer_bottom']  = 'Footer Bottom';
 $_['text_drag_and_drop']  = 'Drag &amp; drop modules here';
 $_['text_confirm']        = 'Are you sure?';
 $_['text_close']          = 'Close';
-$_['text_theme']          = 'use %s theme';
+$_['text_theme']          = 'Using <em> %s </em> theme';
 
 // Button
 $_['button_new']         = 'New';

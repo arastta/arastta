@@ -27,7 +27,7 @@
                                 <?php if ($stores) { ?>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <span class="text-muted">Using <em>Second</em> theme</span>
+                                        <span class="text-muted"><?php echo $text_theme; ?></span>
                                         <span>
                                         <select name="store" id="store" class="form-control">
                                             <?php if ($store_id == $store['store_id']) { ?>

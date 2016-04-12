@@ -46,8 +46,6 @@ class ControllerAppearanceLayout extends Controller
 
         $data['stores'] = $this->model_setting_store->getStores();
 
-        $data['text_theme'] = sprintf($this->language->get('text_theme'), ucfirst(strtolower($this->config->get('config_template'))));
-
         $data['responsive_module'] = $this->url->link('appearance/layout/module', 'token=' . $this->session->data['token'], 'SSL');
 
         $data['action'] = $this->url->link('appearance/layout', 'token=' . $this->session->data['token'], 'SSL');
@@ -62,9 +60,12 @@ class ControllerAppearanceLayout extends Controller
         $data['module_list_html'] = $this->getModuleListHTML();
 
         $theme = $this->model_appearance_layout->getTheme($data['store_id']);
+        
         $this->load->language('theme/' . $theme);
-
+        
         $data = $this->language->all($data);
+
+        $data['text_theme'] = sprintf($this->language->get('text_theme'), ucfirst(strtolower($theme)));
 
         $data['positions'] = $this->model_appearance_layout->getPositions($theme);
 
