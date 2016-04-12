@@ -21,11 +21,13 @@
             <div class="panel-body">
                 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-layout" class="form-horizontal">
                     <div class="row layout-builder" id="layout-builder">
-                        <div class="col-md-3 col-sm-4 hidden-xs pull-left" style="padding-left: 40px;">
-                            <div class="row">
-                                <div class="layout">
-                                    <?php if ($stores) { ?>
+                        <div class="col-md-3 col-sm-4 hidden-xs">
+                            
+                            <div class="layout">
+                                <?php if ($stores) { ?>
+                                <div class="row">
                                     <div class="col-sm-12">
+                                        <span class="text-muted">Using <em>Second</em> theme</span>
                                         <span>
                                         <select name="store" id="store" class="form-control">
                                             <?php if ($store_id == $store['store_id']) { ?>
@@ -41,10 +43,12 @@
                                             <?php } ?>
                                             <?php } ?>
                                         </select>
-                                        </span> <?php echo $text_theme; ?>
+                                        </span>
                                     </div>
-                                    <?php } ?>
-                                    <div class="col-md-7 col-sm-7 layout-list">
+                                </div>
+                                <?php } ?>
+                                <div class="row">
+                                    <div class="col-sm-12 layout-list">
                                         <select type="text" name="change_layouts" id="change_layouts" class="form-control with-nav">
                                             <option value="0"><?php echo $entry_addnew;?></option>
                                             <?php foreach($layouts as $layout) { ?>
@@ -52,20 +56,19 @@
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    <div class="col-sm-5 layout-buttons">
+                                    <div class="col-sm-12 layout-buttons">
                                         <a class="btn btn-default edit-layout" href="<?php echo $edit . '&layout_id=' . $layout_id ; ?>" data-toggle="tooltip" title="<?php echo $text_edit;?>"><i class="fa fa-pencil"></i></a>
                                         <a class="btn btn-primary add-layout" href="<?php echo $add ; ?>" data-toggle="tooltip" title="<?php echo $text_add;?>"><i class="fa fa-plus"></i></a>
                                         <button type="button" data-toggle="tooltip" title="" class="btn btn-danger" onclick="confirm('Are you sure?') ? removeLayout('<?php echo $layout_id; ?>') : false;" data-original-title="Layout Delete"><i class="fa fa-trash-o"></i></button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="left-module-block">
-                                    <div id="module_list" class="module_list" data-text-confirm="<?php echo $text_confirm;?>" data-text-edit="<?php echo $text_edit;?>">
-                                        <div class="heading-accordion">&nbsp;<?php echo $text_module; ?></div>
-                                        <div class="module_accordion accordion">
-                                            <?php echo $module_list_html; ?>
-                                        </div>
+
+                            <div class="left-module-block">
+                                <div id="module_list" class="module_list" data-text-confirm="<?php echo $text_confirm;?>" data-text-edit="<?php echo $text_edit;?>">
+                                    <div class="heading-accordion">&nbsp;<?php echo $text_module; ?></div>
+                                    <div class="module_accordion accordion">
+                                        <?php echo $module_list_html; ?>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +117,7 @@
                                     </div>
                                     <?php } ?>
                                     <div class="row colsliders">
-                                        <div class="col-md-12 position">
+                                        <div class="col-md-12 position empty">
                                             <div class="layout-page-header layout-page-header-bg"><span><?php echo $text_header;?></span></div>
                                         </div>
                                     </div>
@@ -369,7 +372,7 @@
                                     </div>
                                     <?php } ?>
                                     <div class="row colsliders">
-                                        <div class="col-md-12 position">
+                                        <div class="col-md-12 position empty">
                                             <div class="layout-page-header layout-page-header-bg"><span><?php echo $text_footer; ?></span></div>
                                         </div>
                                     </div>
