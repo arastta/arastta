@@ -238,9 +238,9 @@ div.accordion {
 }
 
 .dashed{
-    background: #F2F2F2;
+    background: #fff;
     margin-bottom:5px;
-    border:2px dashed #999;
+    border:1px dashed #BFBFBF;
     white-space: nowrap;
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
@@ -285,21 +285,18 @@ b.value{
     border: 1px solid #d4d4d4;
     background-color: #F8F8F8;
     margin-top: 10px;
-    height: 50px;
     margin-bottom: 15px;
+    float: left;
+    width: 100%;
+    padding: 10px;
 }
 
 .layout-list {
     padding-top: 7px;
-    padding-left: 7px !important;
-    padding-right: 10px !important;
 }
 
 .layout-buttons {
-    padding-top: 2px;
-    line-height: 45px;
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+    padding-top: 10px;
 }
 
 .heading-accordion {
@@ -356,22 +353,52 @@ b.value{
 .row.colsliders{
     margin-bottom:15px;
 }
+@media (min-width: 992px) {
+    .row.colsliders .col-md-6 {
+        max-width: 48.5% !important;
+    }
+}
+.row.colsliders .col-md-3:first-child {
+    margin-right: 5px;
+}
+.row.colsliders .col-md-3:last-child {
+    margin-left: 5px;
+}
 
-.layout-page-header{
-    position:relative;
-    display:block;
-    height: 50px;
-    line-height: 50px;
-    text-align:center;
-    font-size:11px;
-    font-weight:700;
-    text-transform:uppercase;
-    cursor:default;
+.layout-builder .position {
+    background: #f4f4f4;
+    padding: 5px 20px 20px 20px;
+}
+
+.layout-builder .position.empty {
+    background: transparent;
+    padding: 0 20px;
+}
+.layout-builder .position.empty .layout-page-header {
+    margin-bottom: 0;
+}
+
+.position.main_column {
+    margin-bottom: 10px;
+}
+
+.layout-page-header {
+    position: relative;
+    display: block;
+    line-height: 1.5;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: default;
+    color: #00A0D2;
+    background: #E2E2E2;
+    margin: -5px -20px 20px -20px;
+    padding: 10px 0;
 }
 
 .layout-page-header.layout-page-header-bg{
-    background:#00A0D2;
-    color:#fff;
+    color:#999;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -417,6 +444,8 @@ b.value{
 .left-module-block{
     position:relative;
     box-sizing: initial;
+    float: left;
+    width: 100%;
 }
 
 .module_list{
@@ -451,14 +480,13 @@ b.value{
 
 .mblock-control-menu  .btn-xs{
     padding: 0px 0px;
-    color:#FFFFFF;
+    color:#00A0D2;
 }
 
 .mblock {
+    background: #E4F5FB;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    background-color: #fff;
-    border: 1px solid #aeaeae;
     border-radius: 5px;
     cursor: move;
     height: 75px;
@@ -475,16 +503,15 @@ b.value{
     -moz-border-radius-topright: 3px;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
-    border-top: 1px solid #fff !important;
     min-height: 40px;
     height: 40px;
-    background-color: #fff;
     padding-top: 10px;
     padding-left: 8px;
 }
 
 .mblock-header-title{
     word-wrap: break-word;
+    color: #00A0D2;
 }
 
 .mblock-header-title .fa{
@@ -495,12 +522,9 @@ b.value{
     -webkit-border-radius: 0 0 3px 3px;
     -moz-border-radius: 0 0 3px 3px;
     border-radius: 0 0 3px 3px;
-    background-color: #00A0D2;
 }
 
 .mblock-control-menu{
-    background-color: #eee;
-    border-top: 1px solid #e1e1e1;
     height: 33px;
     -webkit-border-radius: 0 0 1px 1px;
     -moz-border-radius: 0 0 1px 1px;

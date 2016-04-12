@@ -1429,7 +1429,7 @@ CREATE TABLE IF NOT EXISTS `ar_layout_module` (
   `layout_module_id` int(11) NOT NULL AUTO_INCREMENT,
   `layout_id` int(11) NOT NULL,
   `code` varchar(64) NOT NULL,
-  `position` varchar(14) NOT NULL,
+  `position` varchar(64) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`layout_module_id`),
   KEY `layout_id` (`layout_id`)
