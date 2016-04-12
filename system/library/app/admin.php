@@ -117,6 +117,11 @@ class Admin extends App
 
     public function ecommerce()
     {
+        // Set time zone
+        date_default_timezone_set($this->config->get('config_timezone', 'UTC'));
+        $dt = new \DateTime();
+        $this->db->setTimezone($dt->format('P'));
+
         // Currency
         $this->registry->set('currency', new Currency($this->registry));
 

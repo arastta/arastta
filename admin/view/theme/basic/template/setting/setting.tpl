@@ -1933,6 +1933,21 @@
                         <div class="panel-body">
                             <div class="server">
                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_timezone; ?>"><?php echo $entry_timezone; ?></label>
+                                    <div class="col-sm-10">
+                                        <select name="config_timezone" id="input-timezone" class="form-control" data-live-search="true">
+                                            <option value="UTC">UTC</option>
+                                            <?php foreach ($timezones as $tz_gname => $tz_gzones) { ?>
+                                            <optgroup label="<?php echo $tz_gname; ?>">
+                                                <?php foreach ($tz_gzones as $tz_zone => $tz_locale) { ?>
+                                                <option value="<?php echo $tz_zone; ?>" <?php echo ($config_timezone == $tz_zone) ? 'selected="selected"' : ''; ?>><?php echo $tz_locale; ?></option>
+                                                <?php } ?>
+                                            </optgroup>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shared; ?>"><?php echo $entry_shared; ?></span></label>
                                     <div class="col-sm-10">
                                         <label class="radio-inline">

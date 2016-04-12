@@ -129,6 +129,11 @@ class Catalog extends App
 
     public function ecommerce()
     {
+        // Set time zone
+        date_default_timezone_set($this->config->get('config_timezone', 'UTC'));
+        $dt = new \DateTime();
+        $this->db->setTimezone($dt->format('P'));
+
         // Customer
         $this->registry->set('customer', new Customer($this->registry));
 

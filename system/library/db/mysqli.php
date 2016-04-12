@@ -10,24 +10,24 @@ namespace DB;
 
 final class MySQLi {
 
-    private $link;
+    private $adapter;
 
     public function __construct($hostname, $username, $password, $database) {
-        $this->link = new \mysqli($hostname, $username, $password, $database);
+        $this->adapter = new \MySQLi($hostname, $username, $password, $database);
 
-        if ($this->link->connect_error) {
-            trigger_error('Error: Could not make a database link (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
+        if ($this->adapter->connect_error) {
+            trigger_error('Error: Could not make a database link (' . $this->adapter->connect_errno . ') ' . $this->adapter->connect_error);
             exit();
         }
 
-        $this->link->set_charset("utf8");
-        $this->link->query("SET SQL_MODE = ''");
+        $this->adapter->set_charset("utf8");
+        $this->adapter->query("SET SQL_MODE = ''");
     }
 
     public function query($sql) {
-        $query = $this->link->query($sql);
+        $query = $this->adapter->query($sql);
 
-        if (!$this->link->errno) {
+        if (!$this->adapter->errno) {
             if ($query instanceof \mysqli_result) {
                 $data = array();
 
@@ -47,24 +47,24 @@ final class MySQLi {
                 return true;
             }
         } else {
-            trigger_error('Error: ' . $this->link->error  . '<br />Error No: ' . $this->link->errno . '<br />' . $sql);
+            trigger_error('Error: ' . $this->adapter->error  . '<br />Error No: ' . $this->adapter->errno . '<br />' . $sql);
         }
     }
 
     public function escape($value) {
-        return $this->link->real_escape_string($value);
+        return $this->adapter->real_escape_string($value);
     }
 
     public function countAffected() {
-        return $this->link->affected_rows;
+        return $this->adapter->affected_rows;
     }
 
     public function getLastId() {
-        return $this->link->insert_id;
+        return $this->adapter->insert_id;
     }
 
     public function getVersion() {
-        return mysqli_get_server_info($this->link);
+        return mysqli_get_server_info($this->adapter);
     }
 
     public function getCollation() {
@@ -78,7 +78,11 @@ final class MySQLi {
         }
     }
 
+    public function setTimezone($timezone) {
+        $this->adapter->query("SET TIME_ZONE = '" . $timezone . "'");
+    }
+
     public function __destruct() {
-        $this->link->close();
+        $this->adapter->close();
     }
 }
