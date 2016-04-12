@@ -219,4 +219,47 @@ class ModelAppearanceLayout extends Model
 
         return ($name) ? $name : '';
     }
+
+    public function getTheme($store_id)
+    {
+        if (empty($store_id)) {
+            return $this->config->get('config_template');
+        }
+
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `code` = 'config' AND `key` = 'config_template'");
+
+        return $query->row['value'];
+    }
+
+    public function getPositions($theme)
+    {
+        $positions = array(
+            'header_top'    => array(),
+            'top'           => array(),
+            'left'          => array('column_left'),
+            'main_top'      => array('content_top'),
+            'main_bottom'   => array('content_bottom'),
+            'right'         => array('column_right'),
+            'bottom'        => array(),
+            'footer_bottom' => array()
+        );
+
+        $setting_path = DIR_CATALOG . 'view/theme/' . $theme . '/setting.json';
+
+        if (file_exists($setting_path)) {
+            $json = file_get_contents($setting_path);
+
+            $setting = json_decode($json, true);
+
+            if (isset($setting['positions'])) {
+                $this->trigger->fire('pre.admin.layout.position', array(&$setting['positions']));
+
+                return $setting['positions'];
+            }
+        }
+
+        $this->trigger->fire('pre.admin.layout.position', array(&$positions));
+
+        return $positions;
+    }
 }
