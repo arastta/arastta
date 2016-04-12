@@ -202,6 +202,7 @@ $_['entry_cache_lifetime']             = 'Lifetime';
 $_['entry_cache_clear']                = 'Clear After Save';
 $_['entry_pagecache']                  = 'Use Page Cache';
 $_['entry_pagecache_exclude']          = 'Exclude Routes';
+$_['entry_timezone']                   = 'Time Zone';
 
 // Help
 $_['help_geocode']                     = 'Please enter your store location geocode manually.';
@@ -302,6 +303,7 @@ $_['help_cache_lifetime']              = 'The maximum length of time in seconds 
 $_['help_cache_clear']                 = 'Clear the cache after a product, category, manufacturer, information is created/edited.';
 $_['help_pagecache']                   = 'Page Cache acts as like a page snapshot. It\'s super fast as it caches everything in HTML format. The cache is created on the first page visit by the first visitor of the store. After that, all other visitors will get this page loaded from the cache. Not applicable when visitor logged in or added product to cart or is in cart/checkout page.';
 $_['help_pagecache_exclude']           = 'Route values (i.e. common/home) to be excluded from the Page Cache. Enter one route per line.';
+$_['help_timezone']                    = 'Choose a city in the list to configure the date and time.';
 
 // Error
 $_['error_warning']                    = 'Warning: Please check the form carefully for errors!';

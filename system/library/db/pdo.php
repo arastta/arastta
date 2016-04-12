@@ -11,28 +11,27 @@ namespace DB;
 final class PDO
 {
 
-    private $pdo = null;
+    private $adapter = null;
     private $statement = null;
 
     public function __construct($hostname, $username, $password, $database, $port = "3306")
     {
         try {
-            $this->pdo = new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
+            $this->adapter = new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
         } catch (\PDOException $e) {
             trigger_error('Error: Could not make a database link ( ' . $e->getMessage() . '). Error Code : ' . $e->getCode() . ' <br />');
             exit();
         }
 
-        $this->pdo->exec("SET NAMES 'utf8'");
-        $this->pdo->exec("SET CHARACTER SET utf8");
-        $this->pdo->exec("SET CHARACTER_SET_CONNECTION=utf8");
-        $this->pdo->exec("SET SQL_MODE = ''");
-
+        $this->adapter->exec("SET NAMES 'utf8'");
+        $this->adapter->exec("SET CHARACTER SET utf8");
+        $this->adapter->exec("SET CHARACTER_SET_CONNECTION=utf8");
+        $this->adapter->exec("SET SQL_MODE = ''");
     }
 
     public function prepare($sql)
     {
-        $this->statement = $this->pdo->prepare($sql);
+        $this->statement = $this->adapter->prepare($sql);
     }
 
     public function bindParam($parameter, $variable, $data_type = \PDO::PARAM_STR, $length = 0)
@@ -66,7 +65,7 @@ final class PDO
 
     public function query($sql, $params = array())
     {
-        $this->statement = $this->pdo->prepare($sql);
+        $this->statement = $this->adapter->prepare($sql);
         $result = false;
 
         try {
@@ -116,12 +115,12 @@ final class PDO
 
     public function getLastId()
     {
-        return $this->pdo->lastInsertId();
+        return $this->adapter->lastInsertId();
     }
 
     public function getVersion()
     {
-        return $this->pdo->getAttribute(constant("PDO::ATTR_SERVER_VERSION"));
+        return $this->adapter->getAttribute(constant("PDO::ATTR_SERVER_VERSION"));
     }
 
     public function getCollation()
@@ -136,8 +135,12 @@ final class PDO
         }
     }
 
+    public function setTimezone ($timezone) {
+        $this->adapter->exec("SET TIME_ZONE = '" . $timezone . "'");
+    }
+
     public function __destruct()
     {
-        $this->pdo = null;
+        $this->adapter = null;
     }
 }

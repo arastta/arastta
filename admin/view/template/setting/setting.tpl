@@ -1876,6 +1876,21 @@
                         </div>
                         <div class="tab-pane" id="tab-server">
                             <div class="form-group">
+                                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_timezone; ?>"><?php echo $entry_timezone; ?></label>
+                                <div class="col-sm-10">
+                                    <select name="config_timezone" id="input-timezone" class="form-control" data-live-search="true">
+                                        <option value="UTC">UTC</option>
+                                        <?php foreach ($timezones as $tz_gname => $tz_gzones) { ?>
+                                        <optgroup label="<?php echo $tz_gname; ?>">
+                                            <?php foreach ($tz_gzones as $tz_zone => $tz_locale) { ?>
+                                            <option value="<?php echo $tz_zone; ?>" <?php echo ($config_timezone == $tz_zone) ? 'selected="selected"' : ''; ?>><?php echo $tz_locale; ?></option>
+                                            <?php } ?>
+                                        </optgroup>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shared; ?>"><?php echo $entry_shared; ?></span></label>
                                 <div class="col-sm-10">
                                     <label class="radio-inline">
@@ -1972,7 +1987,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"><?php echo $entry_error_display; ?></label>
                                 <div class="col-sm-10">
-                                    <select name="config_error_display" id="input-secure" class="form-control">
+                                    <select name="config_error_display" id="input-display" class="form-control">
                                         <option value="0" <?php echo ($config_error_display == '0') ? 'selected="selected"' : ''; ?>><?php echo $text_no; ?></option>
                                         <option value="1" <?php echo ($config_error_display == '1') ? 'selected="selected"' : ''; ?>><?php echo $text_error_basic; ?></option>
                                         <option value="2" <?php echo ($config_error_display == '2') ? 'selected="selected"' : ''; ?>><?php echo $text_error_advanced; ?></option>

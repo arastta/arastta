@@ -1296,6 +1296,14 @@ class ControllerSettingSetting extends Controller {
             $data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
         }
 
+        if (isset($this->request->post['config_timezone'])) {
+            $data['config_timezone'] = $this->request->post['config_timezone'];
+        } else {
+            $data['config_timezone'] = $this->config->get('config_timezone', 'UTC');
+        }
+
+        $data['timezones'] = $this->getTimezones();
+
         if (isset($this->request->post['config_shared'])) {
             $data['config_shared'] = $this->request->post['config_shared'];
         } else {
@@ -1542,5 +1550,43 @@ class ControllerSettingSetting extends Controller {
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
+    }
+
+    public function getTimezones()
+    {
+        // The list of available timezone groups to use.
+        $use_zones = array('Africa', 'America', 'Antarctica', 'Arctic', 'Asia', 'Atlantic', 'Australia', 'Europe', 'Indian', 'Pacific');
+
+        // Get the list of time zones from the server.
+        $zones = DateTimeZone::listIdentifiers();
+
+        // Build the group lists.
+        foreach ($zones as $zone) {
+            // Time zones not in a group we will ignore.
+            if (strpos($zone, '/') === false) {
+                continue;
+            }
+
+            // Get the group/locale from the timezone.
+            list ($group, $locale) = explode('/', $zone, 2);
+
+            // Only use known groups.
+            if (in_array($group, $use_zones)) {
+                // Initialize the group if necessary.
+                if (!isset($groups[$group])) {
+                    $groups[$group] = array();
+                }
+
+                // Only add options where a locale exists.
+                if (!empty($locale)) {
+                    $groups[$group][$zone] = str_replace('_', ' ', $locale);
+                }
+            }
+        }
+
+        // Sort the group lists.
+        ksort($groups);
+
+        return $groups;
     }
 }

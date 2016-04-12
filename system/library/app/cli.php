@@ -75,9 +75,20 @@ class Cli extends App
 
         $this->addCommandsToConsole();
 
+        $this->trigger->fire('post.app.initialise');
     }
 
-    public function call($callback, array $parameters = array())
+    public function ecommerce()
+    {
+        // Set time zone
+        date_default_timezone_set($this->config->get('config_timezone', 'UTC'));
+        $dt = new \DateTime();
+        $this->db->setTimezone($dt->format('P'));
+
+        $this->trigger->fire('post.app.ecommerce');
+    }
+
+        public function call($callback, array $parameters = array())
     {
         return call_user_func_array($callback, $parameters);
     }

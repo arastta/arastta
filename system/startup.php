@@ -25,10 +25,6 @@ if (version_compare(PHP_VERSION, '5.3.10', '<')) {
     die('Your host needs to use PHP 5.3.10 or higher to run Arastta.');
 }
 
-if (!ini_get('date.timezone')) {
-    date_default_timezone_set('UTC');
-}
-
 // Windows IIS Compatibility
 if (!isset($_SERVER['DOCUMENT_ROOT'])) {
     if (isset($_SERVER['SCRIPT_FILENAME'])) {
@@ -135,4 +131,5 @@ require_once(modification(DIR_SYSTEM . 'engine/model.php'));
 require_once(modification(DIR_SYSTEM . 'engine/registry.php'));
 
 // Helper
+require_once(DIR_SYSTEM . 'helper/json.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');
