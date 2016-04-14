@@ -118,6 +118,12 @@ class ModelExtensionExtension extends Model {
         return $list;
     }
 
+    public function getTotalExtensions($data = array()) {
+        $extensions = $this->getExtensions($data);
+
+        return count($extensions);
+    }
+
     public function deleteExtension($extension_id) {
         $this->db->query("DELETE FROM " . DB_PREFIX . "extension WHERE `extension_id` = '" . $this->db->escape($extension_id) . "'");
     }

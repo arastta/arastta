@@ -32,6 +32,7 @@ class ControllerExtensionExtension extends Controller
 
         $extension_types = array('captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total', 'twofactorauth');
 
+        $addons = $this->model_extension_marketplace->getAddons();
         $extensions = $this->model_extension_extension->getDiscoverExtensions();
 
         $finder = new SFinder();
@@ -48,28 +49,40 @@ class ControllerExtensionExtension extends Controller
             $code = str_replace('.php', '', $file->getFilename());
 
             if (isset($extensions[$type]) && array_key_exists($code, $extensions[$type])) {
-                continue;
+                $extension_id = $extensions[$type][$code]['extension_id'];
+
+                // Check if extension is available as addon
+                foreach ($addons as $addon) {
+                    $params = json_decode($addon['params'], true);
+
+                    if (empty($params['extension_ids']) || !in_array($extension_id, $params['extension_ids'])) {
+                        continue;
+                    }
+
+                    // Available as addon, nothing else required
+                    continue 2;
+                }
+            } else {
+                // Add extension
+                $extension = array();
+                $extension['type'] = $type;
+                $extension['code'] = $code;
+                $extension['info'] = array();
+                $extension['params'] = array();
+
+                $extension_id = $this->model_extension_extension->addExtension($extension);
+
+                // Add setting
+                $this->model_setting_setting->editSetting($code, array($code . '_status' => 0));
+
+                // Add permission
+                $this->load->model('user/user_group');
+                $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', $type . '/' . $code);
+                $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', $type . '/' . $code);
+
+                // Call install method, if exists
+                $this->load->controller($type . '/' . $code . '/install');
             }
-
-            // Add extension
-            $extension = array();
-            $extension['type'] = $type;
-            $extension['code'] = $code;
-            $extension['info'] = array();
-            $extension['params'] = array();
-
-            $extension_id = $this->model_extension_extension->addExtension($extension);
-            
-            // Add setting
-            $this->model_setting_setting->editSetting($code, array($code . '_status' => 0));
-            
-            // Add permission
-            $this->load->model('user/user_group');
-            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', $type . '/' . $code);
-            $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', $type . '/' . $code);
-            
-            // Call install method, if exists
-            $this->load->controller($type . '/' . $code . '/install');
 
             // Add addon
             $params = array();
@@ -88,6 +101,10 @@ class ControllerExtensionExtension extends Controller
 
             $this->model_extension_marketplace->addAddon($addon);
         }
+
+        $this->cache->remove('addon');
+        $this->cache->remove('update');
+        $this->cache->remove('version');
     }
 
     protected function getExtensionFiles($type, $code)
@@ -253,6 +270,12 @@ class ControllerExtensionExtension extends Controller
 
         $data['extensions'] = array();
 
+        if (!empty($filter_name) || !empty($filter_author) || !empty($filter_type) || !empty($filter_status)) {
+            $extension_total = $this->model_extension_extension->getTotalExtensions($filter_data);
+        } else {
+            $extension_total = $this->model_extension_extension->getTotalExtensions();
+        }
+
         $results = $this->model_extension_extension->getExtensions($filter_data);
 
         foreach ($results as $result) {
@@ -311,8 +334,6 @@ class ControllerExtensionExtension extends Controller
                 'uninstall'         => $this->url->link('extension/extension/uninstall', 'type=' . $result['type'] . '&code=' . $result['code'] . '&token=' . $this->session->data['token'] . $url, 'SSL')
             );
         }
-
-        $extension_total = count($data['extensions']);
 
         // Sort extensions
         $a_names = array();
