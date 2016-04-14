@@ -9,20 +9,30 @@
 class ModelExtensionMarketplace extends Model
 {
 
-    public function getAddons()
+    public function getAddons($by_product_id = false)
     {
         $data = $this->cache->get('addon');
 
         if (empty($data)) {
-            $data = array();
-
             $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "addon ORDER BY product_type, addon_id");
 
-            foreach ($query->rows as $result) {
-                $data[$result['product_id']] = $result;
-            }
+            $data = $query->rows;
 
             $this->cache->set('addon', $data);
+        }
+
+        if ($by_product_id) {
+            $addons = $data;
+
+            $data = array();
+
+            foreach ($addons as $addon) {
+                if (empty($addon['product_id'])) {
+                    continue;
+                }
+
+                $data[$addon['product_id']] = $addon;
+            }
         }
 
         return $data;

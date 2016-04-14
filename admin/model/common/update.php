@@ -146,7 +146,7 @@ class ModelCommonUpdate extends Model
 
             $this->load->model('extension/marketplace');
 
-            $addons = $this->model_extension_marketplace->getAddons();
+            $addons = $this->model_extension_marketplace->getAddons(true);
 
             $versions = $this->getVersions($addons);
 
@@ -192,11 +192,6 @@ class ModelCommonUpdate extends Model
             // Then addons
             if (!empty($addons)) {
                 foreach ($addons as $addon) {
-                    // This comes from Marketplace
-                    if (empty($addon['product_id'])) {
-                        continue;
-                    }
-
                     $type = $addon['product_type'];
 
                     $url = $base_url.'/'.$type.'/1.0/version/'.$addon['product_id'].'/'.$addon['product_version'].'/'.$info['arastta'];
@@ -241,7 +236,7 @@ class ModelCommonUpdate extends Model
         } else {
             $this->load->model('extension/marketplace');
 
-            $addons = $this->model_extension_marketplace->getAddons();
+            $addons = $this->model_extension_marketplace->getAddons(true);
             
             $type = $addons[$product_id]['product_type'];
 
