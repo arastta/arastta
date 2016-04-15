@@ -18,6 +18,10 @@ class EventAppPosition extends Event
         
         $positions = $this->model_appearance_layout->getPositions();
 
+        if (empty($positions)) {
+            return;
+        }
+
         $exclude = array(
           'column_left',
           'column_right',
@@ -26,6 +30,10 @@ class EventAppPosition extends Event
         );
 
         foreach ($positions as $position) {
+            if (!is_array($position)) {
+                continue;
+            }
+
             foreach ($position as $pos) {
                 if (in_array($pos, $exclude)) {
                     continue;

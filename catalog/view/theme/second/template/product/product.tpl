@@ -4,7 +4,16 @@
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
         <?php } ?>
+        <div class="btn-group product-navigation pull-right hidden-xs">
+            <button type="button" data-toggle="tooltip" class="btn btn-default" onclick="window.location.href='<?php echo !empty($previous["href"]) ? $previous["href"] : ''; ?>';" title="<?php echo !empty($previous['name']) ? $previous['name'] : ''; ?>" <?php echo empty($previous["href"]) ? 'disabled' : ''; ?>><i class="fa fa-arrow-left"></i></button>
+            <button type="button" data-toggle="tooltip" class="btn btn-default" onclick="window.location.href='<?php echo !empty($next["href"]) ? $next["href"] : ''; ?>';" title="<?php echo !empty($next['name']) ? $next['name'] : ''; ?>" <?php echo empty($next["href"]) ? 'disabled' : ''; ?>><i class="fa fa-arrow-right"></i></button>
+        </div>
     </ul>
+    <div class="btn-group product-navigation-xs pull-right visible-xs">
+        <button type="button" data-toggle="tooltip" class="btn btn-default" onclick="window.location.href='<?php echo !empty($previous["href"]) ? $previous["href"] : ''; ?>';" title="<?php echo !empty($previous['name']) ? $previous['name'] : ''; ?>" <?php echo empty($previous["href"]) ? 'disabled' : ''; ?>><i class="fa fa-arrow-left"></i></button>
+        <button type="button" data-toggle="tooltip" class="btn btn-default" onclick="window.location.href='<?php echo !empty($next["href"]) ? $next["href"] : ''; ?>';" title="<?php echo !empty($next['name']) ? $next['name'] : ''; ?>" <?php echo empty($next["href"]) ? 'disabled' : ''; ?>><i class="fa fa-arrow-right"></i></button>
+    </div>
+    <div class="clearfix"></div>
     <div class="row"><?php echo $column_left; ?>
         <?php if ($column_left && $column_right) { ?>
         <?php $class = 'col-sm-6'; ?>
@@ -480,6 +489,9 @@ $('#button-cart').on('click', function() {
             }
 
             if (json['success']) {
+                cart.after('add', json);
+                
+                /*
                 $('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
                 $('#cart > button').html('<i class="fa fa-shopping-cart"></i> ' + json['total']);
@@ -487,6 +499,7 @@ $('#button-cart').on('click', function() {
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
 
                 $('#cart > ul').load('index.php?route=common/cart/info ul li');
+                */
             }
         }
     });
