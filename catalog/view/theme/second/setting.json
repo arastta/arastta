@@ -1,0 +1,54 @@
+{
+    "general": {
+        "title": "text_general_title",
+        "type": "tab",
+        "element": {
+            "element-1": {
+                "type": "select",
+                "label": "Logo Width",
+                "name": "logo_width",
+                "option": {
+                    "3": "25%",
+                    "4": "33%",
+                    "6": "50%",
+                    "8": "75%",
+                    "12": "100%"
+                },
+                "attribute": {
+                    "value": "4"
+                }
+            },
+            "element-2": {
+                "type": "textbox",
+                "label": "Facebook URL",
+                "name": "facebook_url"
+            },
+            "element-3": {
+                "type": "textbox",
+                "label": "Twitter URL",
+                "name": "twitter_url"
+            },
+            "element-4": {
+                "type": "textbox",
+                "label": "Pinterest URL",
+                "name": "pinterest_url"
+            },
+            "element-5": {
+                "type": "textbox",
+                "label": "Instagram URL",
+                "name": "instagram_url"
+            }
+        }
+    },
+    "positions": {
+        "title": "Positions",
+        "header_top": ["header_top"],
+        "top": ["top"],
+        "left": ["column_left"],
+        "main_top": ["content_top"],
+        "main_bottom": ["content_bottom"],
+        "right": ["column_right"],
+        "bottom": ["bottom_a", "bottom_b", "bottom_c"],
+        "footer_bottom": []
+    }
+}
