@@ -659,6 +659,11 @@ footer .copyright a {
     background-position: 0 -15px;
     border-color: #A59A69;
 }
+.btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #b5a766;
+    border-color: #b5a766;
+}
 
 /* checkout*/
 .checkout-wizard {
