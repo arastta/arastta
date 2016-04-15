@@ -4,7 +4,16 @@
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
         <?php } ?>
+        <div class="btn-group product-navigation pull-right hidden-xs">
+            <button type="button" data-toggle="tooltip" class="btn btn-default" onclick="window.location.href='<?php echo !empty($previous["href"]) ? $previous["href"] : ''; ?>';" title="<?php echo !empty($previous['name']) ? $previous['name'] : ''; ?>" <?php echo empty($previous["href"]) ? 'disabled' : ''; ?>><i class="fa fa-arrow-left"></i></button>
+            <button type="button" data-toggle="tooltip" class="btn btn-default" onclick="window.location.href='<?php echo !empty($next["href"]) ? $next["href"] : ''; ?>';" title="<?php echo !empty($next['name']) ? $next['name'] : ''; ?>" <?php echo empty($next["href"]) ? 'disabled' : ''; ?>><i class="fa fa-arrow-right"></i></button>
+        </div>
     </ul>
+    <div class="btn-group product-navigation-xs pull-right visible-xs">
+        <button type="button" data-toggle="tooltip" class="btn btn-default" onclick="window.location.href='<?php echo !empty($previous["href"]) ? $previous["href"] : ''; ?>';" title="<?php echo !empty($previous['name']) ? $previous['name'] : ''; ?>" <?php echo empty($previous["href"]) ? 'disabled' : ''; ?>><i class="fa fa-arrow-left"></i></button>
+        <button type="button" data-toggle="tooltip" class="btn btn-default" onclick="window.location.href='<?php echo !empty($next["href"]) ? $next["href"] : ''; ?>';" title="<?php echo !empty($next['name']) ? $next['name'] : ''; ?>" <?php echo empty($next["href"]) ? 'disabled' : ''; ?>><i class="fa fa-arrow-right"></i></button>
+    </div>
+    <div class="clearfix"></div>
     <div class="row"><?php echo $column_left; ?>
         <?php if ($column_left && $column_right) { ?>
         <?php $class = 'col-sm-6'; ?>
