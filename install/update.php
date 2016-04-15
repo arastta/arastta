@@ -211,6 +211,78 @@ if (version_compare(VERSION, '1.3.0', '<')) {
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_admin_template', `value` = 'basic'");
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_admin_template_message', `value` = 'show'");
 
+    $addon = $this->db->query("SELECT * FROM " . DB_PREFIX . "addon WHERE `files` LIKE '%summernote%'");
+
+    if (empty($addon->num_rows)) {
+        $this->db->query("INSERT INTO " . DB_PREFIX . "extension SET type = 'editor', `code` = 'summernote'");
+        
+        $extension_id = $this->db->getLastId();
+        
+        $this->db->query("INSERT INTO " . DB_PREFIX . "addon SET product_id = '0', `product_name` = 'Summernote', `product_type` = 'editor', `product_version` = '1.0.0', `files` = '[\"admin\\/controller\\\\editor\\\\summernote.php","admin\\/language\\\\en-GB\\\\editor\\\\summernote.php","admin\\/view\\\\template\\\\editor\\\\summernote.tpl\"]', `params` = '{\"theme_ids\":[],\"extension_ids\":[" . $extension_id . "]}'");
+    }
+
+    $summernote = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "setting WHERE `code` = 'summernote' AND `key` = 'summernote_status' AND `value` = '1'");
+
+    if (empty($summernote->num_rows)) {
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_status', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_height', `value` = '300'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_sort_order', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_style', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_font_bold', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_font_italic', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_font_underline', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_font_clear', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_fontname', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_fontsize', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_color', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_para_ol', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_para_ul', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_para_paragraph', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_height', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_table', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_insert_link', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_insert_picture', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_insert_hr', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_view_fullscreen', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_view_codeview', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'summernote', `key` = 'summernote_tool_help', `value` = '1'");
+    }
+
+    $addon = $this->db->query("SELECT * FROM " . DB_PREFIX . "addon WHERE `files` LIKE '%tinymce%'");
+    
+    if (empty($addon->num_rows)) {
+        $this->db->query("INSERT INTO " . DB_PREFIX . "extension SET type = 'editor', `code` = 'tinymce'");
+        
+        $extension_id = $this->db->getLastId();
+        
+        $this->db->query("INSERT INTO " . DB_PREFIX . "addon SET product_id = '0', `product_name` = 'Tinymce', `product_type` = 'editor', `product_version` = '1.0.0', `files` = '[\"admin\\/controller\\\\editor\\\\tinymce.php","admin\\/language\\\\en-GB\\\\editor\\\\tinymce.php","admin\\/view\\\\template\\\\editor\\\\tinymce.tpl\"]', `params` = '{\"theme_ids\":[],\"extension_ids\":[" . $extension_id . "]}'");
+    }
+    
+    $tinymce = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "setting `code` = 'tinymce'");
+
+    if (empty($tinymce->num_rows)) {
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_status', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_height', `value` = '300'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_sort_order', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_edit_undo', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_edit_redo', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_format_bold', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_format_italic', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_view_alignleft', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_view_aligncenter', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_view_alignright', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_view_alignjustify', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_file_bullist', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_file_numlist', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_file_outdent', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_file_indent', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_insert_link', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_insert_image', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_tools_imagetools', `value` = '1'");
+    }
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'googleauth', `key` = 'googleauth_status', `value` = '1'");
+
     // Update length_class_description table
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "length_class_description` CHANGE length_class_id length_class_id INT(11) NOT NULL");
 
