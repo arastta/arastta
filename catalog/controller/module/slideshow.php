@@ -25,6 +25,7 @@ class ControllerModuleSlideshow extends Controller {
                 $data['banners'][] = array(
                     'title' => $result['title'],
                     'link'  => $result['link'],
+                    'pagination'  => isset($setting['pagination']) ? $setting['pagination'] : true,
                     'image' => $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'])
                 );
             }
