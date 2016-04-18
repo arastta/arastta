@@ -22,7 +22,7 @@
         <?php } ?>
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-setting" class="form-horizontal">
             <div class="row">
-                <div class="left-col col-sm-12">
+                <div class="col-sm-5 left-col">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="general">
@@ -124,6 +124,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-sm-7 right-col">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title"><?php echo $tab_local; ?></h3>

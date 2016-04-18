@@ -24,7 +24,7 @@
         <?php } ?>
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-option" class="form-horizontal">
             <div class="row">
-                <div class="left-col col-sm-12">
+                <div class="col-sm-3 left-col">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="general">
@@ -115,6 +115,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-sm-9 right-col">
                     <div class="panel panel-default option-items">
                         <div class="panel-heading">
                             <h3 class="panel-title"><?php echo $text_items; ?></h3>

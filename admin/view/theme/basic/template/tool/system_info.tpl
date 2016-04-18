@@ -17,7 +17,7 @@
         </div>
         <?php } ?>
         <div class="row">
-            <div class="left-col col-sm-12">
+            <div class="col-sm-6 left-col">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title"><?php echo $tab_general; ?></h3>
@@ -52,6 +52,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-sm-6 right-col">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title"><?php echo $tab_permissions; ?></h3>
@@ -128,6 +130,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-sm-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title"><?php echo $tab_php_info; ?></h3>

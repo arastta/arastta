@@ -24,13 +24,13 @@
         <?php } ?>
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-customer" class="form-horizontal">
             <div class="row">
-                <div class="left-col col-sm-12">
+                <div class="col-sm-8 left-col">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="general">
                                 <div class="row">
-                                    <div class="col-sm-2">
-                                        <ul class="nav nav-pills nav-stacked" id="address">
+                                    <div class="col-sm-12">
+                                        <ul class="nav nav-pills" id="address">
                                             <li class="active"><a href="#tab-customer" data-toggle="tab"><?php echo $tab_general; ?></a></li>
                                             <?php $address_row = 1; ?>
                                             <?php foreach ($addresses as $address) { ?>
@@ -606,6 +606,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-sm-4 right-col">
                     <?php if ($customer_id) { ?>
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -702,7 +704,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </form>
     </div>
@@ -1216,5 +1217,6 @@
     $('.time').datetimepicker({
         pickDate: false
     });
-    //--></script></div>
+    //--></script>
+</div>
 <?php echo $footer; ?>

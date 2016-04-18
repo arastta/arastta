@@ -24,7 +24,7 @@
         <?php } ?>
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-return" class="form-horizontal">
             <div class="row">
-                <div class="left-col col-sm-12">
+                <div class="col-sm-6 left-col">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title"><?php echo $text_order; ?></h3>
@@ -100,6 +100,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-sm-6 right-col">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title"><?php echo $text_product; ?></h3>

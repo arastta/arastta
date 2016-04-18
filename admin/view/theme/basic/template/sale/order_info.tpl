@@ -8,7 +8,7 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="left-col col-sm-12">
+            <div class="col-sm-8 left-col">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title"><?php echo $tab_order; ?></h3>
@@ -156,6 +156,115 @@
                         </div>
                     </div>
                 </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><?php echo $tab_product; ?></h3>
+                        <div class="pull-right">
+                            <div class="panel-chevron"><i class="fa fa-chevron-up rotate-reset"></i></div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="product">
+                            <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <td class="text-left"><?php echo $column_product; ?></td>
+                                    <td class="text-left"><?php echo $column_model; ?></td>
+                                    <td class="text-right"><?php echo $column_quantity; ?></td>
+                                    <td class="text-right"><?php echo $column_price; ?></td>
+                                    <td class="text-right"><?php echo $column_total; ?></td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach ($products as $product) { ?>
+                                <tr>
+                                    <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+                                        <?php foreach ($product['option'] as $option) { ?>
+                                        <br />
+                                        <?php if ($option['type'] != 'file') { ?>
+                                        &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
+                                        <?php } else { ?>
+                                        &nbsp;<small> - <?php echo $option['name']; ?>: <a href="<?php echo $option['href']; ?>"><?php echo $option['value']; ?></a></small>
+                                        <?php } ?>
+                                        <?php } ?></td>
+                                    <td class="text-left"><?php echo $product['model']; ?></td>
+                                    <td class="text-right"><?php echo $product['quantity']; ?></td>
+                                    <td class="text-right"><?php echo $product['price']; ?></td>
+                                    <td class="text-right"><?php echo $product['total']; ?></td>
+                                </tr>
+                                <?php } ?>
+                                <?php foreach ($vouchers as $voucher) { ?>
+                                <tr>
+                                    <td class="text-left"><a href="<?php echo $voucher['href']; ?>"><?php echo $voucher['description']; ?></a></td>
+                                    <td class="text-left"></td>
+                                    <td class="text-right">1</td>
+                                    <td class="text-right"><?php echo $voucher['amount']; ?></td>
+                                    <td class="text-right"><?php echo $voucher['amount']; ?></td>
+                                </tr>
+                                <?php } ?>
+                                <?php foreach ($totals as $total) { ?>
+                                <tr>
+                                    <td colspan="4" class="text-right"><?php echo $total['title']; ?>:</td>
+                                    <td class="text-right"><?php echo $total['text']; ?></td>
+                                </tr>
+                                <?php } ?>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><?php echo $tab_history; ?></h3>
+                        <div class="pull-right">
+                            <div class="panel-chevron"><i class="fa fa-chevron-up rotate-reset"></i></div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="history">
+                            <div id="history"></div>
+                            <br />
+                            <fieldset>
+                                <legend><?php echo $text_history; ?></legend>
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+                                        <div class="col-sm-10">
+                                            <select name="order_status_id" id="input-order-status" class="form-control">
+                                                <?php foreach ($order_statuses as $order_statuses) { ?>
+                                                <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
+                                                <option value="<?php echo $order_statuses['order_status_id']; ?>" selected="selected"><?php echo $order_statuses['name']; ?></option>
+                                                <?php } else { ?>
+                                                <option value="<?php echo $order_statuses['order_status_id']; ?>"><?php echo $order_statuses['name']; ?></option>
+                                                <?php } ?>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
+                                        <div class="col-sm-10">
+                                            <input type="checkbox" name="notify" value="1" id="input-notify" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+                                        <div class="col-sm-10">
+                                            <textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="text-right">
+                                    <button id="button-history" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_history_add; ?></button>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 right-col">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title"><?php echo $tab_payment; ?></h3>
@@ -308,113 +417,6 @@
                     </div>
                 </div>
                 <?php } ?>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><?php echo $tab_product; ?></h3>
-                        <div class="pull-right">
-                            <div class="panel-chevron"><i class="fa fa-chevron-up rotate-reset"></i></div>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="product">
-                            <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <td class="text-left"><?php echo $column_product; ?></td>
-                                    <td class="text-left"><?php echo $column_model; ?></td>
-                                    <td class="text-right"><?php echo $column_quantity; ?></td>
-                                    <td class="text-right"><?php echo $column_price; ?></td>
-                                    <td class="text-right"><?php echo $column_total; ?></td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php foreach ($products as $product) { ?>
-                                <tr>
-                                    <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-                                        <?php foreach ($product['option'] as $option) { ?>
-                                        <br />
-                                        <?php if ($option['type'] != 'file') { ?>
-                                        &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
-                                        <?php } else { ?>
-                                        &nbsp;<small> - <?php echo $option['name']; ?>: <a href="<?php echo $option['href']; ?>"><?php echo $option['value']; ?></a></small>
-                                        <?php } ?>
-                                        <?php } ?></td>
-                                    <td class="text-left"><?php echo $product['model']; ?></td>
-                                    <td class="text-right"><?php echo $product['quantity']; ?></td>
-                                    <td class="text-right"><?php echo $product['price']; ?></td>
-                                    <td class="text-right"><?php echo $product['total']; ?></td>
-                                </tr>
-                                <?php } ?>
-                                <?php foreach ($vouchers as $voucher) { ?>
-                                <tr>
-                                    <td class="text-left"><a href="<?php echo $voucher['href']; ?>"><?php echo $voucher['description']; ?></a></td>
-                                    <td class="text-left"></td>
-                                    <td class="text-right">1</td>
-                                    <td class="text-right"><?php echo $voucher['amount']; ?></td>
-                                    <td class="text-right"><?php echo $voucher['amount']; ?></td>
-                                </tr>
-                                <?php } ?>
-                                <?php foreach ($totals as $total) { ?>
-                                <tr>
-                                    <td colspan="4" class="text-right"><?php echo $total['title']; ?>:</td>
-                                    <td class="text-right"><?php echo $total['text']; ?></td>
-                                </tr>
-                                <?php } ?>
-                                </tbody>
-                            </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><?php echo $tab_history; ?></h3>
-                        <div class="pull-right">
-                            <div class="panel-chevron"><i class="fa fa-chevron-up rotate-reset"></i></div>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="history">
-                            <div id="history"></div>
-                            <br />
-                            <fieldset>
-                                <legend><?php echo $text_history; ?></legend>
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-                                        <div class="col-sm-10">
-                                            <select name="order_status_id" id="input-order-status" class="form-control">
-                                                <?php foreach ($order_statuses as $order_statuses) { ?>
-                                                <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
-                                                <option value="<?php echo $order_statuses['order_status_id']; ?>" selected="selected"><?php echo $order_statuses['name']; ?></option>
-                                                <?php } else { ?>
-                                                <option value="<?php echo $order_statuses['order_status_id']; ?>"><?php echo $order_statuses['name']; ?></option>
-                                                <?php } ?>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
-                                        <div class="col-sm-10">
-                                            <input type="checkbox" name="notify" value="1" id="input-notify" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-                                        <div class="col-sm-10">
-                                            <textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div class="text-right">
-                                    <button id="button-history" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_history_add; ?></button>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div>
-                </div>
                 <?php if ($payment_action) { ?>
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -950,3 +952,4 @@
     });
     //--></script></div>
 <?php echo $footer; ?>
+</div>

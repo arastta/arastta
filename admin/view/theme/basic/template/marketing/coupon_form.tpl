@@ -182,21 +182,6 @@
                             </div>
                         </div>
                     </div>
-                    <?php if ($coupon_id) { ?>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><?php echo $tab_history; ?></h3>
-                            <div class="pull-right">
-                                <div class="panel-chevron"><i class="fa fa-chevron-up rotate-reset"></i></div>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="history">
-                                <div id="history"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php } ?>
                 </div>
                 <div class="right-col col-sm-4">
                     <div class="panel panel-default">
@@ -234,6 +219,21 @@
                             </div>
                         </div>
                     </div>
+                    <?php if ($coupon_id) { ?>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><?php echo $tab_history; ?></h3>
+                            <div class="pull-right">
+                                <div class="panel-chevron"><i class="fa fa-chevron-up rotate-reset"></i></div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="history">
+                                <div id="history"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </form>
