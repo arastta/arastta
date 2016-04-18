@@ -148,6 +148,9 @@ div.required .control-label:before {
 #top .btn-group .dropdown-menu {
     margin-top: 5px;
 }
+#top .btn-group .dropdown-menu .btn {
+    padding: 3px 20px;
+}
 #top #currency .currency-select {
     text-align: left;
 }
