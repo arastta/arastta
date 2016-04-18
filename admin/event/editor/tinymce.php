@@ -14,14 +14,14 @@ class EventEditorTinymce extends Event
         'format'        => array('bold', 'italic'),
         'view'          => array('alignleft', 'aligncenter', 'alignright', 'alignjustify'),
         'file'          => array('bullist', 'numlist', 'outdent', 'indent'),
-        'insert'        => array('link', 'image'),
+        'insert'        => array('link', 'image_manager'),
         'tools'         => array('emoticons', 'autoresize', 'imagetools')
     );
 
     public $toolbar = array(
-        'insert'     => array('advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'print', 'preview', 'anchor'),
+        'insert'     => array('advlist', 'autolink', 'lists', 'link', 'charmap', 'print', 'preview', 'anchor'),
         'view'       => array('searchreplace', 'visualblocks', 'code', 'fullscreen'),
-        'table'      => array('insertdatetime', 'media', 'table', 'contextmenu', 'paste', 'imagetools'),
+        'table'      => array('insertdatetime', 'media', 'table', 'contextmenu', 'paste', 'image_manager'),
         'tools'      => array('emoticons', 'autoresize', 'textcolor', 'template' )
     );
 
