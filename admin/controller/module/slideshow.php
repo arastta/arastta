@@ -157,10 +157,10 @@ class ControllerModuleSlideshow extends Controller {
 
         if (isset($this->request->post['pagination'])) {
             $data['pagination'] = $this->request->post['pagination'];
-        } elseif (!empty($module_info)) {
+        } elseif (!empty($module_info) && isset($module_info['pagination'])) {
             $data['pagination'] = $module_info['pagination'];
         } else {
-            $data['pagination'] = '';
+            $data['pagination'] = '1';
         }
 
         if (isset($this->request->post['status'])) {
