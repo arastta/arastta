@@ -145,6 +145,12 @@ div.required .control-label:before {
     margin-bottom: 0;
     padding-top: 3px;
 }
+#top .btn-group .dropdown-menu {
+    margin-top: 5px;
+}
+#top .btn-group .dropdown-menu .btn {
+    padding: 3px 20px;
+}
 #top #currency .currency-select {
     text-align: left;
 }
@@ -162,9 +168,6 @@ div.required .control-label:before {
 }
 #top .nav .open>a, #top .nav .open>a:focus, #top .nav .open>a:hover {
     background: transparent;
-}
-#top .dropdown-menu {
-    margin-top: 10px;
 }
 #top-links .dropdown-menu a {
     text-shadow: none;
