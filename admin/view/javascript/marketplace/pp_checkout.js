@@ -994,7 +994,7 @@ if (!Date.now) {
             _destroy();
 
             if (successUrl) {
-                Marketplace.loadweb(baseUrl + 'index.php?route=route=extension/marketplace/api&api=checkout/success')
+                Marketplace.loadweb(baseUrl + 'index.php?route=extension/marketplace/api&api=checkout/success')
             }
         };
 
