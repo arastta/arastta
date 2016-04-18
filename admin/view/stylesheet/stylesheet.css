@@ -158,6 +158,9 @@ header ul.dropdown-menu.dropdown-menu-right:after {
     cursor: pointer;
     color: #f8f8f8;
 }
+@media (max-width: 767px) {
+    #header .nav > li > a {padding: 3px 10px;}
+}
 #header .pull-left > li > a {
     padding: 3px 16px;
     line-height: 38px;
@@ -2587,7 +2590,9 @@ li.basic-advanced {
     height: 45px;
     padding: 0 15px;
 }
-
+@media (max-width: 780px) {
+    li.basic-advanced {padding: 0 10px 0 0;}
+}
 li.settings {
     font-size: 18px;
 }
