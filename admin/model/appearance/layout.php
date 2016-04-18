@@ -244,17 +244,17 @@ class ModelAppearanceLayout extends Model
             'footer_bottom' => array()
         );
 
-        $setting_path = DIR_CATALOG . 'view/theme/' . $theme . '/setting.json';
+        $layout_path = DIR_CATALOG . 'view/theme/' . $theme . '/layout.json';
 
-        if (file_exists($setting_path)) {
-            $json = file_get_contents($setting_path);
+        if (file_exists($layout_path)) {
+            $json = file_get_contents($layout_path);
 
-            $setting = json_decode($json, true);
+            $layout = json_decode($json, true);
 
-            if (isset($setting['positions'])) {
-                $this->trigger->fire('pre.admin.layout.position', array(&$setting['positions']));
+            if (isset($layout['positions'])) {
+                $this->trigger->fire('pre.admin.layout.position', array(&$layout['positions']));
 
-                return $setting['positions'];
+                return $layout['positions'];
             }
         }
 

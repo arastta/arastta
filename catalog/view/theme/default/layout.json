@@ -1,0 +1,12 @@
+{
+    "positions": {
+        "header_top": [],
+        "top": [],
+        "left": ["column_left"],
+        "main_top": ["content_top"],
+        "main_bottom": ["content_bottom"],
+        "right": ["column_right"],
+        "bottom": [],
+        "footer_bottom": []
+    }
+}
