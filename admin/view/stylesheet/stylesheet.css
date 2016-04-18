@@ -160,7 +160,7 @@ header ul.dropdown-menu.dropdown-menu-right:after {
 }
 @media (max-width: 767px) {
     #header .nav > li > a {padding: 3px 10px;}
-}    
+}
 #header .pull-left > li > a {
     padding: 3px 16px;
     line-height: 38px;
@@ -243,7 +243,6 @@ a, div {
 }
 #column-right.active {
     width: 184.5px;
-
 }
 #column-right #right-menu li:first-child {
     display: none;
@@ -2246,7 +2245,15 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
     #column-left + #content {
         margin-left: 50px !important;
     }
-    #column-right + #column-left + #content {
+    #column-left.right + #content {
+        margin-left: 0px !important;
+        margin-right: 50px !important;
+    }
+    #column-right.width-zero + #column-left + #content {
+        margin-right: 0px !important;
+    }
+    #column-left.width-zero + #content {
+        margin-left: 0px !important;
         margin-right: 50px !important;
     }
     #recenttabs .table-responsive {
@@ -2586,7 +2593,6 @@ li.basic-advanced {
 @media (max-width: 780px) {
     li.basic-advanced {padding: 0 10px 0 0;}
 }
-
 li.settings {
     font-size: 18px;
 }

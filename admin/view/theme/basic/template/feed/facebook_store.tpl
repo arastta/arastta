@@ -27,8 +27,8 @@
                         <div class="panel-body">
                             <div class="general">
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="entry-app-id"><?php echo $entry_app_id; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="entry-app-id"><?php echo $entry_app_id; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="facebook_store_app_id" value="<?php echo $app_id; ?>" placeholder="<?php echo $entry_app_id; ?>" id="entry-app-id" class="form-control"/>
                                         <?php if ($error_app_id) { ?>
                                         <div class="text-danger"><?php echo $error_app_id; ?></div>
@@ -36,8 +36,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-show-header-currencies"><?php echo $entry_show_header_currency; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-show-header-currencies"><?php echo $entry_show_header_currency; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($show_header_currency) { ?>
                                             <input type="radio" name="facebook_store_show_header_currency" value="1" checked="checked" />
@@ -59,8 +59,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-show-header-language"><?php echo $entry_show_header_language; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-show-header-language"><?php echo $entry_show_header_language; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($show_header_language) { ?>
                                             <input type="radio" name="facebook_store_show_header_language" value="1" checked="checked" />
@@ -82,8 +82,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-show-header-category"><?php echo $entry_show_header_category; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-show-header-category"><?php echo $entry_show_header_category; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($show_header_category) { ?>
                                             <input type="radio" name="facebook_store_show_header_category" value="1" checked="checked" />
@@ -105,8 +105,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-show-header-search"><?php echo $entry_show_header_search; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-show-header-search"><?php echo $entry_show_header_search; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($show_header_search) { ?>
                                             <input type="radio" name="facebook_store_show_header_search" value="1" checked="checked" />
@@ -128,8 +128,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-show-footer"><?php echo $entry_show_footer; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-show-footer"><?php echo $entry_show_footer; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($show_footer) { ?>
                                             <input type="radio" name="facebook_store_show_footer" value="1" checked="checked" />
@@ -151,8 +151,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-show-product-description"><?php echo $entry_show_product_description; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-show-product-description"><?php echo $entry_show_product_description; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($show_product_description) { ?>
                                             <input type="radio" name="facebook_store_show_product_description" value="1" checked="checked" />
@@ -174,8 +174,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-show-product-price"><?php echo $entry_show_product_price; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-show-product-price"><?php echo $entry_show_product_price; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($show_product_price) { ?>
                                             <input type="radio" name="facebook_store_show_product_price" value="1" checked="checked" />
@@ -197,8 +197,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-show-product-rating"><?php echo $entry_show_product_rating; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-show-product-rating"><?php echo $entry_show_product_rating; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($show_product_rating) { ?>
                                             <input type="radio" name="facebook_store_show_product_rating" value="1" checked="checked" />
@@ -220,8 +220,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-show-addtocart"><?php echo $entry_show_addtocart; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-show-addtocart"><?php echo $entry_show_addtocart; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($show_addtocart) { ?>
                                             <input type="radio" name="facebook_store_show_addtocart" value="1" checked="checked" />
@@ -243,8 +243,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-data-feed"><span data-toggle="tooltip" title="<?php echo $help_data_feed; ?>"><?php echo $entry_data_feed; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-data-feed"><span data-toggle="tooltip" title="<?php echo $help_data_feed; ?>"><?php echo $entry_data_feed; ?></span></label>
+                                    <div class="col-sm-12">
                                         <textarea rows="5" readonly="readonly" id="input-data-feed" class="form-control"><?php echo $data_feed; ?></textarea>
                                     </div>
                                 </div>
@@ -320,8 +320,8 @@
                         <div class="panel-body">
                             <div class="publish">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><?php echo $text_enabled; ?></label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-12"><?php echo $text_enabled; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($status) { ?>
                                             <input type="radio" name="facebook_store_status" value="1" checked="checked" />

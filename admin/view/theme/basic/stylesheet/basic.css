@@ -241,3 +241,39 @@ a.editable-click:hover {
     margin-top: 5px !important;
     margin-bottom: -10px !important;
 }
+
+.star-rating {
+    font-size: 0;
+}
+
+.star-rating-wrap {
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.star-rating-wrap:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.star-rating-ico {
+    font-size: 2.5em;
+    float: right;
+    padding-left: 10px;
+    cursor: pointer;
+    color: #FFB300;
+}
+
+.star-rating-ico:last-child {
+    padding-left: 0;
+}
+
+.star-rating-input {
+    display: none;
+}
+
+.star-rating-ico:hover:before,
+.star-rating-ico:hover ~ .star-rating-ico:before,
+.star-rating-input:checked ~ .star-rating-ico:before {
+    content: "\f005";
+}

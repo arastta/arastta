@@ -332,21 +332,21 @@
             // check against PHP's post_max_size
             post_max_size = <?php echo $post_max_size; ?>;
             if (file_size > post_max_size) {
-            alert( "<?php echo $error_post_max_size; ?>" );
-            return false;
-        }
+                alert( "<?php echo $error_post_max_size; ?>" );
+                return false;
+            }
             <?php } ?>
-        <?php if (!empty($upload_max_filesize)) { ?>
+            <?php if (!empty($upload_max_filesize)) { ?>
             // check against PHP's upload_max_filesize
             upload_max_filesize = <?php echo $upload_max_filesize; ?>;
             if (file_size > upload_max_filesize) {
-            alert( "<?php echo $error_upload_max_filesize; ?>" );
-            return false;
-        }
+                alert( "<?php echo $error_upload_max_filesize; ?>" );
+                return false;
+            }
             <?php } ?>
-        return true;
+            return true;
         }
-        }
+    }
 
     function uploadData() {
         if (checkFileSize('upload')) {
@@ -354,7 +354,7 @@
         }
     }
 
-    function isNumber(txt){
+    function isNumber(txt) {
         var regExp=/^[\d]{1,}$/;
         return regExp.test(txt);
     }
@@ -375,32 +375,32 @@
 
         var export_type = $('input[name=export_type]:checked').val();
         var count_item = (export_type=='p') ? <?php echo $count_product-1; ?> : <?php echo $count_category-1; ?>;
-    var batchNo = parseInt(count_item/parseInt(min))+1; // Maximum number of item-batches, namely, item number/min, and then rounded up (that is, integer plus 1)
-    var minItemId = parseInt((export_type=='c') ? <?php echo $min_category_id; ?> : <?php echo $min_product_id; ?>);
-    var maxItemId = parseInt((export_type=='c') ? <?php echo $max_category_id; ?> : <?php echo $max_product_id; ?>);
+        var batchNo = parseInt(count_item/parseInt(min))+1; // Maximum number of item-batches, namely, item number/min, and then rounded up (that is, integer plus 1)
+        var minItemId = parseInt((export_type=='c') ? <?php echo $min_category_id; ?> : <?php echo $min_product_id; ?>);
+        var maxItemId = parseInt((export_type=='c') ? <?php echo $max_category_id; ?> : <?php echo $max_product_id; ?>);
 
-    if (val=="page") {  // Min for the batch size, Max for the batch number
-        if (parseInt(max) <= 0) {
-        alert("<?php echo $error_batch_number; ?>");
-        return false;
-    }
-        if (parseInt(max) > batchNo) {
-        alert("<?php echo $error_page_no_data; ?>");
-        return false;
-    } else {
-        $("input[name=max]").val(parseInt(max)+1);
-    }
-    } else {
-        if (minItemId <= 0) {
-        alert("<?php echo $error_min_item_id; ?>");
-        return false;
-    }
-        if (parseInt(min) > maxItemId || parseInt(max) < minItemId || parseInt(min) > parseInt(max)) {
-        alert("<?php echo $error_id_no_data; ?>");
-        return false;
-    }
-    }
-    return true;
+        if (val=="page") {  // Min for the batch size, Max for the batch number
+            if (parseInt(max) <= 0) {
+                alert("<?php echo $error_batch_number; ?>");
+                return false;
+            }
+            if (parseInt(max) > batchNo) {
+                alert("<?php echo $error_page_no_data; ?>");
+                return false;
+            } else {
+                $("input[name=max]").val(parseInt(max)+1);
+            }
+        } else {
+            if (minItemId <= 0) {
+                alert("<?php echo $error_min_item_id; ?>");
+                return false;
+            }
+            if (parseInt(min) > maxItemId || parseInt(max) < minItemId || parseInt(min) > parseInt(max)) {
+                alert("<?php echo $error_id_no_data; ?>");
+                return false;
+            }
+        }
+        return true;
     }
 
     function downloadData() {

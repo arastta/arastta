@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-manufacturer" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success" data-original-title="Save"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-manufacturer" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-manufacturer" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -36,8 +37,8 @@
                                     <?php foreach ($languages as $language) { ?>
                                     <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
                                         <div class="form-group required">
-                                            <label class="col-sm-2 control-label" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-12" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
+                                            <div class="col-sm-12">
                                                 <input type="text" name="manufacturer_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($manufacturer_description[$language['language_id']]) ? $manufacturer_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name<?php echo $language['language_id']; ?>" class="form-control input-full-width" />
                                                 <?php if (isset($error_name[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
@@ -46,8 +47,8 @@
                                         </div>
                                         <?php if (!empty($seo_url[$language['language_id']])) { ?>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><?php echo $entry_seo_url; ?></span></label>
-                                            <div class="col-sm-10" style="padding-top: 5px;">
+                                            <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><?php echo $entry_seo_url; ?></span></label>
+                                            <div class="col-sm-12" style="padding-top: 5px;">
                                                 <span>
                                                     <?php $link = str_replace(basename($preview[$language['language_id']]), '', $preview[$language['language_id']]);
                                                      echo $link; ?><span class="seo-url" data-lang="<?php echo $language['language_id']; ?> "><?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?></span>
@@ -59,8 +60,8 @@
                                         </div>
                                         <?php } ?>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-12" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
+                                            <div class="col-sm-12">
                                                 <textarea name="manufacturer_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>"><?php echo isset($manufacturer_description[$language['language_id']]) ? $manufacturer_description[$language['language_id']]['description'] : ''; ?></textarea>
                                             </div>
                                         </div>
@@ -82,8 +83,8 @@
                         <div class="panel-body">
                             <div class="publish">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><?php echo $text_enabled; ?></label>
-                                    <div class="col-sm-9" style="margin-bottom: 10px;">
+                                    <label class="col-sm-12"><?php echo $text_enabled; ?></label>
+                                    <div class="col-sm-12" style="margin-bottom: 10px;">
                                         <label class="radio-inline">
                                             <?php if ($status) { ?>
                                             <input type="radio" name="status" value="1" checked="checked" />
@@ -117,8 +118,8 @@
                         <div class="panel-body">
                             <div class="data">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label"><?php echo $entry_image; ?></label>
-                                    <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
+                                    <label class="col-sm-12"><?php echo $entry_image; ?></label>
+                                    <div class="col-sm-12"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
                                         <input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
                                     </div>
                                 </div>
@@ -152,7 +153,7 @@
 <script type="text/javascript"><!--
 $(document).ready(function() {
     <?php foreach ($languages as $language) { ?>
-        textEditor('#input-description<?php echo $language["language_id"]; ?>');
+    textEditor('#input-description<?php echo $language["language_id"]; ?>');
     <?php } ?>
     $.fn.editable.defaults.mode = 'inline';
 

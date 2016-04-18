@@ -12,7 +12,7 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="left-col col-sm-12">
+            <div class="col-sm-8 left-col">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title"><?php echo $tab_details; ?></h3>
@@ -131,6 +131,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-sm-4 right-col">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title"><?php echo $tab_history; ?></h3>

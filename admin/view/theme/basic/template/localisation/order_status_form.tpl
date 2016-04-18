@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-order-status" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-order-status" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-order-status" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -36,8 +37,8 @@
                                     <?php foreach ($languages as $language) { ?>
                                     <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
                                         <div class="form-group required">
-                                            <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-12"><?php echo $entry_name; ?></label>
+                                            <div class="col-sm-12">
                                                 <input type="text" name="order_status[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($order_status[$language['language_id']]) ? $order_status[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
                                                 <?php if (isset($error_name[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
@@ -45,8 +46,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label"><?php echo $entry_message; ?></label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-12"><?php echo $entry_message; ?></label>
+                                            <div class="col-sm-12">
                                                 <textarea name="order_status[<?php echo $language['language_id']; ?>][message]" placeholder="<?php echo $entry_message; ?>" id="input-message-<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($order_status[$language['language_id']]) ? $order_status[$language['language_id']]['message'] : ''; ?></textarea>
                                                 <?php if (isset($error_message[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_message[$language['language_id']]; ?></div>
@@ -54,8 +55,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_email_template; ?>"><?php echo $entry_email_template; ?></span></label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_email_template; ?>"><?php echo $entry_email_template; ?></span></label>
+                                            <div class="col-sm-12">
                                                 <textarea name="order_status[<?php echo $language['language_id']; ?>][email_template]" placeholder="<?php echo $entry_email_template; ?>" id="input-email-template-<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($email_template[$language['language_id']]) ? $email_template[$language['language_id']]['description'] : ''; ?></textarea>
                                                 <?php if (isset($error_message[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_message[$language['language_id']]; ?></div>
@@ -76,7 +77,7 @@
 <script type="text/javascript"><!--
 $(document).ready(function() {
 <?php foreach ($languages as $language) { ?>
-    textEditor('#input-message-<?php echo $language['language_id']; ?>, #input-email-template-<?php echo $language['language_id']; ?>');
+textEditor('#input-message-<?php echo $language['language_id']; ?>, #input-email-template-<?php echo $language['language_id']; ?>');
 <?php } ?>
 });
 //--></script>

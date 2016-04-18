@@ -29,8 +29,8 @@
                         <div class="panel-body">
                             <div class="general">
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-name"><?php echo $entry_name; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
                                         <?php if ($error_name) { ?>
                                         <div class="text-danger"><?php echo $error_name; ?></div>
@@ -38,8 +38,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="<?php echo $help_code; ?>"><?php echo $entry_code; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-code"><span data-toggle="tooltip" title="<?php echo $help_code; ?>"><?php echo $entry_code; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
                                         <?php if ($error_code) { ?>
                                         <div class="text-danger"><?php echo $error_code; ?></div>
@@ -47,8 +47,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-image"><span data-toggle="tooltip" title="<?php echo $help_image; ?>"><?php echo $entry_image; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-image"><span data-toggle="tooltip" title="<?php echo $help_image; ?>"><?php echo $entry_image; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="image" value="<?php echo $image; ?>" placeholder="<?php echo $entry_image; ?>" id="input-image" class="form-control" />
                                         <?php if ($error_image) { ?>
                                         <div class="text-danger"><?php echo $error_image; ?></div>
@@ -56,8 +56,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-directory"><span data-toggle="tooltip" title="<?php echo $help_directory; ?>"><?php echo $entry_directory; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-directory"><span data-toggle="tooltip" title="<?php echo $help_directory; ?>"><?php echo $entry_directory; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="directory" value="<?php echo $directory; ?>" placeholder="<?php echo $entry_directory; ?>" id="input-directory" class="form-control" />
                                         <?php if ($error_directory) { ?>
                                         <div class="text-danger"><?php echo $error_directory; ?></div>
@@ -79,8 +79,8 @@
                         <div class="panel-body">
                             <div class="publish">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><?php echo $text_enabled; ?></label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-12"><?php echo $text_enabled; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($status) { ?>
                                             <input type="radio" name="status" value="1" checked="checked" />
