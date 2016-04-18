@@ -31,10 +31,7 @@ CREATE TABLE IF NOT EXISTS `ar_addon` (
 INSERT INTO `ar_addon` (`addon_id`, `product_id`, `product_name`, `product_type`, `product_version`, `files`, `params`) VALUES
 (1, 0, 'Cart', 'module', '1.0.0', '["admin\\/controller\\\\module\\\\cart.php","catalog\\/controller\\\\module\\\\cart.php","admin\\/language\\\\en-GB\\\\module\\\\cart.php","catalog\\/language\\\\en-GB\\\\module\\\\cart.php","admin\\/view\\\\template\\\\module\\\\cart.tpl","catalog\\/view\\\\theme\\\\default\\\\template\\\\module\\\\cart.tpl"]', '{"theme_ids":[],"extension_ids":[444]}'),
 (2, 0, 'Summernote', 'editor', '1.0.0', '["admin\\/controller\\\\editor\\\\summernote.php","admin\\/language\\\\en-GB\\\\editor\\\\summernote.php","admin\\/view\\\\template\\\\editor\\\\summernote.tpl"]', '{"theme_ids":[],"extension_ids":[445]}'),
-(3, 0, 'Tinymce', 'editor', '1.0.0', '["admin\\/controller\\\\editor\\\\tinymce.php","admin\\/language\\\\en-GB\\\\editor\\\\tinymce.php","admin\\/view\\\\template\\\\editor\\\\tinymce.tpl"]', '{"theme_ids":[],"extension_ids":[446]}'),
-(4, 0, 'Googleauth', 'twofactorauth', '1.0.0', '["admin\\/controller\\\\twofactorauth\\\\googleauth.php","admin\\/language\\\\en-GB\\\\twofactorauth\\\\googleauth.php","admin\\/view\\\\template\\\\twofactorauth\\\\googleauth.tpl","admin\\/view\\\\theme\\\\basic\\\\template\\\\twofactorauth\\\\googleauth.tpl"]', '{"theme_ids":[],"extension_ids":[447]}'),
-(5, 0, 'Yubikey', 'twofactorauth', '1.0.0', '["admin\\/controller\\\\twofactorauth\\\\yubikey.php","admin\\/language\\\\en-GB\\\\twofactorauth\\\\yubikey.php","admin\\/view\\\\template\\\\twofactorauth\\\\yubikey.tpl","admin\\/view\\\\theme\\\\basic\\\\template\\\\twofactorauth\\\\yubikey.tpl"]', '{"theme_ids":[],"extension_ids":[448]}');
-
+(3, 0, 'Tinymce', 'editor', '1.0.0', '["admin\\/controller\\\\editor\\\\tinymce.php","admin\\/language\\\\en-GB\\\\editor\\\\tinymce.php","admin\\/view\\\\template\\\\editor\\\\tinymce.tpl"]', '{"theme_ids":[],"extension_ids":[446]}');
 -- --------------------------------------------------------
 
 --
@@ -1221,9 +1218,7 @@ INSERT INTO `ar_extension` (`extension_id`, `type`, `code`) VALUES
 (444, 'module', 'cart'),
 (443, 'feed', 'google_sitemap'),
 (445, 'editor', 'summernote'),
-(446, 'editor', 'tinymce'),
-(447, 'twofactorauth', 'googleauth'),
-(448, 'twofactorauth', 'yubikey');
+(446, 'editor', 'tinymce');
 
 -- --------------------------------------------------------
 
@@ -2854,8 +2849,7 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (474, 0, 'tinymce', 'tinymce_menu_file_indent', '1', 0),
 (475, 0, 'tinymce', 'tinymce_menu_insert_link', '1', 0),
 (476, 0, 'tinymce', 'tinymce_menu_insert_image', '1', 0),
-(477, 0, 'tinymce', 'tinymce_menu_tools_imagetools', '1', 0),
-(478, 0, 'googleauth', 'googleauth_status', '1', 0);
+(477, 0, 'tinymce', 'tinymce_menu_tools_imagetools', '1', 0);
 
 -- --------------------------------------------------------
 

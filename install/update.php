@@ -215,9 +215,9 @@ if (version_compare(VERSION, '1.3.0', '<')) {
 
     if (empty($addon->num_rows)) {
         $this->db->query("INSERT INTO " . DB_PREFIX . "extension SET type = 'editor', `code` = 'summernote'");
-        
+
         $extension_id = $this->db->getLastId();
-        
+
         $this->db->query("INSERT INTO " . DB_PREFIX . "addon SET product_id = '0', `product_name` = 'Summernote', `product_type` = 'editor', `product_version` = '1.0.0', `files` = '[\"admin\\/controller\\\\editor\\\\summernote.php","admin\\/language\\\\en-GB\\\\editor\\\\summernote.php","admin\\/view\\\\template\\\\editor\\\\summernote.tpl\"]', `params` = '{\"theme_ids\":[],\"extension_ids\":[" . $extension_id . "]}'");
     }
 
@@ -249,15 +249,15 @@ if (version_compare(VERSION, '1.3.0', '<')) {
     }
 
     $addon = $this->db->query("SELECT * FROM " . DB_PREFIX . "addon WHERE `files` LIKE '%tinymce%'");
-    
+
     if (empty($addon->num_rows)) {
         $this->db->query("INSERT INTO " . DB_PREFIX . "extension SET type = 'editor', `code` = 'tinymce'");
-        
+
         $extension_id = $this->db->getLastId();
-        
+
         $this->db->query("INSERT INTO " . DB_PREFIX . "addon SET product_id = '0', `product_name` = 'Tinymce', `product_type` = 'editor', `product_version` = '1.0.0', `files` = '[\"admin\\/controller\\\\editor\\\\tinymce.php","admin\\/language\\\\en-GB\\\\editor\\\\tinymce.php","admin\\/view\\\\template\\\\editor\\\\tinymce.tpl\"]', `params` = '{\"theme_ids\":[],\"extension_ids\":[" . $extension_id . "]}'");
     }
-    
+
     $tinymce = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "setting `code` = 'tinymce'");
 
     if (empty($tinymce->num_rows)) {
@@ -281,8 +281,6 @@ if (version_compare(VERSION, '1.3.0', '<')) {
         $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_tools_imagetools', `value` = '1'");
     }
 
-    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'googleauth', `key` = 'googleauth_status', `value` = '1'");
-
     // Update length_class_description table
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "length_class_description` CHANGE length_class_id length_class_id INT(11) NOT NULL");
 
@@ -297,7 +295,7 @@ if (version_compare(VERSION, '1.3.0', '<')) {
 
     // Update layout_module table
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "layout_module` CHANGE `position` `position` varchar(64) NOT NULL");
-    
+
     // Update coupon table
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "coupon` CHANGE `code` `code` varchar(30) NOT NULL");
 }
