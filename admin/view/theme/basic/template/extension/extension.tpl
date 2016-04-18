@@ -56,6 +56,7 @@
                                     <option value="feed" <?php echo ($filter_type == 'feed') ? 'selected="selected"' : ''; ?> ><?php echo $text_feed; ?></option>
                                     <option value="editor" <?php echo ($filter_type == 'editor') ? 'selected="selected"' : ''; ?> ><?php echo $text_editor; ?></option>
                                     <option value="captcha" <?php echo ($filter_type == 'captcha') ? 'selected="selected"' : ''; ?> ><?php echo $text_captcha; ?></option>
+                                    <option value="twofactorauth" <?php echo ($filter_type == 'twofactorauth') ? 'selected="selected"' : ''; ?> ><?php echo $text_twofactorauth; ?></option>
                                     <option value="other" <?php echo ($filter_type == 'other') ? 'selected="selected"' : ''; ?> ><?php echo $text_other; ?></option>
                                 </select>
                                 <select name="filter_status" id="input-status" class="form-control filter hidden">
@@ -172,6 +173,10 @@
                             </tbody>
                         </table>
                     </form>
+                    <div class="row">
+                        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+                        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+                    </div>
                 </div>
             </div>
         </div>

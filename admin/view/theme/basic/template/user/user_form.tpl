@@ -182,7 +182,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-12" for="input-editor"><?php echo $entry_text_editor; ?></label>
+                                    <label class="col-sm-12" for="input-editor"><?php echo $entry_editor; ?></label>
                                     <div class="col-sm-12">
                                         <select name="params[editor]" id="input-editor" class="form-control">
                                             <?php foreach ($editors as $editor) { ?>
@@ -195,6 +195,29 @@
                                         </select>
                                     </div>
                                 </div>
+                                <?php if ($error_twofactorauth) { ?>
+                                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_twofactorauth; ?>
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                </div>
+                                <?php } ?>
+                                <div class="form-group">
+                                    <label class="col-sm-12" for="input-twofactorauth"><?php echo $entry_twofactorauth; ?></label>
+                                    <div class="col-sm-12">
+                                        <?php if ($user_id) { ?>
+                                        <select name="params[twofactorauth][method]" id="input-twofactorauth" class="form-control">
+                                            <option value="none" <?php echo ($use_twofactorauth == 'none') ? 'selected="selected"' : ''; ?>><?php echo $text_none; ?></option>
+                                            <?php if ($twofactorauths) { ?>
+                                            <?php foreach ($twofactorauths as $twofactorauth) { ?>
+                                            <option value="<?php echo $twofactorauth['code']; ?>" <?php echo ($twofactorauth['code'] == $use_twofactorauth) ? 'selected="selected"' : ''; ?>><?php echo $twofactorauth['text']; ?></option>
+                                            <?php } ?>
+                                            <?php } ?>
+                                        </select>
+                                        <?php } else { ?>
+                                        <?php echo $text_twofactorauth; ?>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div id="twofactorauth-content"></div>
                             </div>
                         </div>
                     </div>
@@ -203,4 +226,26 @@
         </form>
     </div>
 </div>
+<script type="text/javascript"><!--
+$('select[name=\'params[twofactorauth][method]\']').on('change', function() {
+    $.ajax({
+        url: 'index.php?route=user/user/twofactorauth&token=<?php echo $token; ?>&user_id=<?php echo $user_id; ?>&method=' + this.value,
+        dataType: 'html',
+        beforeSend: function() {
+            $('#twofactorauth-content').html(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+        },
+        complete: function() {
+            $('.fa-spin').remove();
+        },
+        success: function(html) {
+            $('#twofactorauth-content').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('select[name=\'params[twofactorauth][method]\']').trigger('change');
+//--></script>
 <?php echo $footer; ?>
