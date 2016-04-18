@@ -2733,7 +2733,7 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (357, 0, 'config', 'config_affiliate_mail', '0', 0),
 (358, 0, 'config', 'config_return_id', '0', 0),
 (359, 0, 'config', 'config_return_status_id', '2', 0),
-(360, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
+(360, 0, 'config', 'config_logo', 'catalog/second.png', 0),
 (361, 0, 'config', 'config_icon', 'catalog/cart.png', 0),
 (362, 0, 'config', 'config_image_category_width', '80', 0),
 (363, 0, 'config', 'config_image_category_height', '80', 0),

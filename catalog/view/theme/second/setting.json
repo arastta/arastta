@@ -1,7 +1,6 @@
 {
     "general": {
         "title": "text_general_title",
-        "type": "tab",
         "element": {
             "element-1": {
                 "type": "select",
@@ -21,22 +20,34 @@
             "element-2": {
                 "type": "textbox",
                 "label": "Facebook URL",
-                "name": "facebook_url"
+                "name": "facebook_url",
+                "attribute": {
+                    "value": "https://www.facebook.com/#"
+                }
             },
             "element-3": {
                 "type": "textbox",
                 "label": "Twitter URL",
-                "name": "twitter_url"
+                "name": "twitter_url",
+                "attribute": {
+                    "value": "https://twitter.com/#"
+                }
             },
             "element-4": {
                 "type": "textbox",
                 "label": "Pinterest URL",
-                "name": "pinterest_url"
+                "name": "pinterest_url",
+                "attribute": {
+                    "value": "https://www.pinterest.com/#"
+                }
             },
             "element-5": {
                 "type": "textbox",
                 "label": "Instagram URL",
-                "name": "instagram_url"
+                "name": "instagram_url",
+                "attribute": {
+                    "value": "https://www.instagram.com/#"
+                }
             }
         }
     }
