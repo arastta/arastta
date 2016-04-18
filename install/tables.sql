@@ -25,6 +25,16 @@ CREATE TABLE IF NOT EXISTS `ar_addon` (
 -- --------------------------------------------------------
 
 --
+-- Dumping data for table `ar_addon`
+--
+
+INSERT INTO `ar_addon` (`addon_id`, `product_id`, `product_name`, `product_type`, `product_version`, `files`, `params`) VALUES
+(1, 0, 'Cart', 'module', '1.0.0', '["admin\\/controller\\\\module\\\\cart.php","catalog\\/controller\\\\module\\\\cart.php","admin\\/language\\\\en-GB\\\\module\\\\cart.php","catalog\\/language\\\\en-GB\\\\module\\\\cart.php","admin\\/view\\\\template\\\\module\\\\cart.tpl","catalog\\/view\\\\theme\\\\default\\\\template\\\\module\\\\cart.tpl"]', '{"theme_ids":[],"extension_ids":[444]}'),
+(2, 0, 'Summernote', 'editor', '1.0.0', '["admin\\/controller\\\\editor\\\\summernote.php","admin\\/language\\\\en-GB\\\\editor\\\\summernote.php","admin\\/view\\\\template\\\\editor\\\\summernote.tpl"]', '{"theme_ids":[],"extension_ids":[445]}'),
+(3, 0, 'Tinymce', 'editor', '1.0.0', '["admin\\/controller\\\\editor\\\\tinymce.php","admin\\/language\\\\en-GB\\\\editor\\\\tinymce.php","admin\\/view\\\\template\\\\editor\\\\tinymce.tpl"]', '{"theme_ids":[],"extension_ids":[446]}');
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ar_address`
 --
 
@@ -639,7 +649,7 @@ INSERT INTO `ar_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 CREATE TABLE IF NOT EXISTS `ar_coupon` (
   `coupon_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
-  `code` varchar(10) NOT NULL,
+  `code` varchar(128) NOT NULL,
   `type` char(1) NOT NULL,
   `discount` decimal(15,4) NOT NULL,
   `logged` tinyint(1) NOT NULL,
@@ -1205,7 +1215,10 @@ INSERT INTO `ar_extension` (`extension_id`, `type`, `code`) VALUES
 (438, 'module', 'manufacturer'),
 (441, 'module', 'special'),
 (442, 'module', 'store'),
-(443, 'feed', 'google_sitemap');
+(444, 'module', 'cart'),
+(443, 'feed', 'google_sitemap'),
+(445, 'editor', 'summernote'),
+(446, 'editor', 'tinymce');
 
 -- --------------------------------------------------------
 
@@ -1429,7 +1442,7 @@ CREATE TABLE IF NOT EXISTS `ar_layout_module` (
   `layout_module_id` int(11) NOT NULL AUTO_INCREMENT,
   `layout_id` int(11) NOT NULL,
   `code` varchar(64) NOT NULL,
-  `position` varchar(14) NOT NULL,
+  `position` varchar(64) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`layout_module_id`),
   KEY `layout_id` (`layout_id`)
@@ -2679,7 +2692,7 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (316, 0, 'config', 'config_currency_auto', '1', 0),
 (317, 0, 'config', 'config_length_class_id', '1', 0),
 (318, 0, 'config', 'config_weight_class_id', '1', 0),
-(319, 0, 'config', 'config_template', 'default', 0),
+(319, 0, 'config', 'config_template', 'second', 0),
 (320, 0, 'config', 'config_layout_id', '4', 0),
 (321, 0, 'config', 'config_text_editor', 'summernote', 0),
 (322, 0, 'config', 'config_product_count', '1', 0),
@@ -2720,7 +2733,7 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (357, 0, 'config', 'config_affiliate_mail', '0', 0),
 (358, 0, 'config', 'config_return_id', '0', 0),
 (359, 0, 'config', 'config_return_status_id', '2', 0),
-(360, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
+(360, 0, 'config', 'config_logo', 'catalog/second.png', 0),
 (361, 0, 'config', 'config_icon', 'catalog/cart.png', 0),
 (362, 0, 'config', 'config_image_category_width', '80', 0),
 (363, 0, 'config', 'config_image_category_height', '80', 0),
@@ -2796,7 +2809,47 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (434, 0, 'config', 'config_error_log', '0', 0),
 (435, 0, 'config', 'config_error_filename', 'error.log', 0),
 (436, 0, 'config', 'config_admin_template', 'basic', 0),
-(437, 0, 'config', 'config_admin_template_message', 'show', 0);
+(437, 0, 'config', 'config_admin_template_message', 'show', 0),
+(438, 0, 'summernote', 'summernote_status', '1', 0),
+(439, 0, 'summernote', 'summernote_height', '300', 0),
+(440, 0, 'summernote', 'summernote_sort_order', '1', 0),
+(441, 0, 'summernote', 'summernote_tool_style', '1', 0),
+(442, 0, 'summernote', 'summernote_tool_font_bold', '1', 0),
+(443, 0, 'summernote', 'summernote_tool_font_italic', '1', 0),
+(444, 0, 'summernote', 'summernote_tool_font_underline', '1', 0),
+(445, 0, 'summernote', 'summernote_tool_font_clear', '1', 0),
+(446, 0, 'summernote', 'summernote_tool_fontname', '1', 0),
+(447, 0, 'summernote', 'summernote_tool_fontsize', '1', 0),
+(448, 0, 'summernote', 'summernote_tool_color', '1', 0),
+(449, 0, 'summernote', 'summernote_tool_para_ol', '1', 0),
+(450, 0, 'summernote', 'summernote_tool_para_ul', '1', 0),
+(451, 0, 'summernote', 'summernote_tool_para_paragraph', '1', 0),
+(452, 0, 'summernote', 'summernote_tool_height', '1', 0),
+(453, 0, 'summernote', 'summernote_tool_table', '1', 0),
+(454, 0, 'summernote', 'summernote_tool_insert_link', '1', 0),
+(455, 0, 'summernote', 'summernote_tool_insert_picture', '1', 0),
+(456, 0, 'summernote', 'summernote_tool_insert_hr', '1', 0),
+(457, 0, 'summernote', 'summernote_tool_view_fullscreen', '1', 0),
+(458, 0, 'summernote', 'summernote_tool_view_codeview', '1', 0),
+(459, 0, 'summernote', 'summernote_tool_help', '1', 0),
+(460, 0, 'tinymce', 'tinymce_status', '1', 0),
+(461, 0, 'tinymce', 'tinymce_height', '300', 0),
+(462, 0, 'tinymce', 'tinymce_sort_order', '1', 0),
+(463, 0, 'tinymce', 'tinymce_menu_edit_undo', '1', 0),
+(464, 0, 'tinymce', 'tinymce_menu_edit_redo', '1', 0),
+(465, 0, 'tinymce', 'tinymce_menu_format_bold', '1', 0),
+(466, 0, 'tinymce', 'tinymce_menu_format_italic', '1', 0),
+(467, 0, 'tinymce', 'tinymce_menu_view_alignleft', '1', 0),
+(468, 0, 'tinymce', 'tinymce_menu_view_aligncenter', '1', 0),
+(469, 0, 'tinymce', 'tinymce_menu_view_alignright', '1', 0),
+(470, 0, 'tinymce', 'tinymce_menu_view_alignjustify', '1', 0),
+(471, 0, 'tinymce', 'tinymce_menu_file_bullist', '1', 0),
+(472, 0, 'tinymce', 'tinymce_menu_file_numlist', '1', 0),
+(473, 0, 'tinymce', 'tinymce_menu_file_outdent', '1', 0),
+(474, 0, 'tinymce', 'tinymce_menu_file_indent', '1', 0),
+(475, 0, 'tinymce', 'tinymce_menu_insert_link', '1', 0),
+(476, 0, 'tinymce', 'tinymce_menu_insert_image', '1', 0),
+(477, 0, 'tinymce', 'tinymce_menu_tools_imagetools', '1', 0);
 
 -- --------------------------------------------------------
 

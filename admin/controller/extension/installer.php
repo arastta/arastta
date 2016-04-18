@@ -8,11 +8,13 @@
 
 use Symfony\Component\Finder\Finder as SFinder;
 
-class ControllerExtensionInstaller extends Controller {
+class ControllerExtensionInstaller extends Controller
+{
 
     private $error = array();
 
-    public function index() {
+    public function index()
+    {
         $this->load->language('extension/installer');
 
         $data = $this->language->all();
@@ -44,7 +46,8 @@ class ControllerExtensionInstaller extends Controller {
         $this->response->setOutput($this->load->view('extension/installer.tpl', $data));
     }
 
-    public function upload() {
+    public function upload()
+    {
         $this->load->language('extension/installer');
 
         $json = array();
@@ -91,7 +94,7 @@ class ControllerExtensionInstaller extends Controller {
 
                 $file = DIR_UPLOAD . $path . '/install.xml';
 
-                if(empty($code)) {
+                if (empty($code)) {
                     $this->session->data['vqmod_file_name'] = $this->request->files['file']['name'];
                     $file = DIR_UPLOAD . $path . '/' . $this->request->files['file']['name'];
 
@@ -101,7 +104,7 @@ class ControllerExtensionInstaller extends Controller {
                 } else {
                     $code = $code->nodeValue;
 
-                    if (is_file(DIR_SYSTEM . 'xml/' . $code . '.xml') ) {
+                    if (is_file(DIR_SYSTEM . 'xml/' . $code . '.xml')) {
                         $json['overwrite'][] = 'system/xml/' . $code . '.xml';
                     }
                 }
@@ -112,7 +115,7 @@ class ControllerExtensionInstaller extends Controller {
                 if (file_exists($file)) {
                     $json['step'][] = array(
                         'text' => $this->language->get('text_xml'),
-                        'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/xml', 'token=' . $this->session->data['token'], 'SSL')),
+                        'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/parseXML', 'token=' . $this->session->data['token'], 'SSL')),
                         'path' => $path
                     );
 
@@ -147,7 +150,8 @@ class ControllerExtensionInstaller extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function unzip() {
+    public function unzip()
+    {
         $this->load->language('extension/installer');
 
         $json = array();
@@ -181,7 +185,8 @@ class ControllerExtensionInstaller extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function ftp() {
+    public function parseFiles()
+    {
         $this->load->language('extension/installer');
 
         $json = array();
@@ -202,7 +207,7 @@ class ControllerExtensionInstaller extends Controller {
             }
         }
 
-        if(empty($check_folder)) {
+        if (empty($check_folder)) {
             $this->response->addHeader('Content-Type: application/json');
             $this->response->setOutput(json_encode($json));
             return;
@@ -224,7 +229,7 @@ class ControllerExtensionInstaller extends Controller {
 
         if (!$json) {
             // Fire event
-            $this->trigger->fire('pre.admin.extension.ftp', array(&$directory));
+            $this->trigger->fire('pre.admin.extension.parseFiles', array(&$directory));
 
             $replaceFolderName = array(
                 'admin/language/english' => 'admin/language/en-GB',
@@ -232,7 +237,7 @@ class ControllerExtensionInstaller extends Controller {
             );
 
             // Replace language folder
-            foreach($replaceFolderName as $folderKey => $folderValue){
+            foreach ($replaceFolderName as $folderKey => $folderValue) {
                 $this->replaceFolderName($directory . $folderKey, $directory . $folderValue);
             }
 
@@ -250,13 +255,13 @@ class ControllerExtensionInstaller extends Controller {
                     }
 
                     // Replace directory path for language
-                    foreach($replaceFolderName as $folderKey => $folderValue){
+                    foreach ($replaceFolderName as $folderKey => $folderValue) {
                         $file = str_replace($folderKey, $folderValue, $file);
                     }
 
                     // $edit_page_url = explode("upload", strtolower($file));
                     $edit_page_url = explode("upload", $file);
-                    if(empty($edit_page_url[2])) {
+                    if (empty($edit_page_url[2])) {
                         $edit_page_url = explode($sub_folder, $edit_page_url);
                         $edit_page_url = 'upload' . $edit_page_url[1];
                     } else {
@@ -297,7 +302,8 @@ class ControllerExtensionInstaller extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function permissionControl($edit_page_url) {
+    public function permissionControl($edit_page_url)
+    {
         $this->load->model('extension/installer');
 
         $search_page = array(
@@ -307,6 +313,7 @@ class ControllerExtensionInstaller extends Controller {
             'common'        => 'common',
             'dashboard'     => 'dashboard',
             'design'        => 'design',
+            'editor'        => 'editor',
             'error'         => 'error',
             'extension'     => 'extension',
             'feed'          => 'feed',
@@ -322,23 +329,25 @@ class ControllerExtensionInstaller extends Controller {
             'system'        => 'system',
             'tool'          => 'tool',
             'total'         => 'total',
+            'twofactorauth' => 'twofactorauth',
             'user'          => 'user'
         );
 
         foreach ($search_page as $page) {
-            if (strpos($edit_page_url, 'upload/admin/controller/'.$page) === false){
+            if (strpos($edit_page_url, 'upload/admin/controller/'.$page) === false) {
                 continue;
             }
 
-            $permissions_page = explode($page,$edit_page_url);
-            $permissions_page = $page.str_replace('.php','',$permissions_page[1]);
+            $permissions_page = explode($page, $edit_page_url);
+            $permissions_page = $page . str_replace('.php', '', $permissions_page[1]);
 
             $this->model_extension_installer->addPermission($permissions_page);
         }
     }
 
-    public function replaceFile($file) {
-        if (!is_file($file)){
+    public function replaceFile($file)
+    {
+        if (!is_file($file)) {
             return;
         }
 
@@ -350,27 +359,29 @@ class ControllerExtensionInstaller extends Controller {
         $content = file_get_contents($file);
 
         // Just add admin file in content.
-        if (strpos($file, 'admin') !== false && strpos($content, 'design/layout') !== false){
+        if (strpos($file, 'admin') !== false && strpos($content, 'design/layout') !== false) {
             $replace_text['design/layout'] = 'appearance/layout';
             $replace_text['design_layout'] = 'appearance_layout';
         }
 
-        foreach ($replace_text as $key => $value){
+        foreach ($replace_text as $key => $value) {
             $content = str_replace($key, $value, $content);
         }
 
-        $content = preg_replace('/\$this->(trigger|event)->(fire|trigger)\(\'(.*)\',[\s]*(.*)\);/', '\$this->trigger->fire("$3", array(&$4));', $content);
+        $content = preg_replace('/\$this->(trigger|event)->(fire|trigg er)\(\'(.*)\',[\s]*(.*)\);/', '\$this->trigger->fire("$3", array(&$4));', $content);
 
         file_put_contents($file, $content);
     }
 
-    public function replaceFolderName($originalName, $changeName) {
-        if(is_dir($originalName)) {
+    public function replaceFolderName($originalName, $changeName)
+    {
+        if (is_dir($originalName)) {
             rename($originalName, $changeName);
         }
     }
 
-    public function sql() {
+    public function parseSQL()
+    {
         $this->load->language('extension/installer');
 
         $json = array();
@@ -390,7 +401,7 @@ class ControllerExtensionInstaller extends Controller {
 
             if ($lines) {
                 // Fire event
-                $this->trigger->fire('pre.admin.extension.sql', array(&$lines));
+                $this->trigger->fire('pre.admin.extension.parseSQL', array(&$lines));
 
                 try {
                     $sql = '';
@@ -409,7 +420,7 @@ class ControllerExtensionInstaller extends Controller {
                             }
                         }
                     }
-                } catch(Exception $exception) {
+                } catch (Exception $exception) {
                     $json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
                 }
             }
@@ -419,7 +430,8 @@ class ControllerExtensionInstaller extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function xml() {
+    public function parseXML()
+    {
         $this->load->language('extension/installer');
 
         $json = array();
@@ -430,9 +442,9 @@ class ControllerExtensionInstaller extends Controller {
 
         $ocmod = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/install.xml';
 
-        if(file_exists($ocmod)){
+        if (file_exists($ocmod)) {
             $file = $ocmod;
-        } else if (!empty($this->session->data['vqmod_file_name'])){
+        } elseif (!empty($this->session->data['vqmod_file_name'])) {
             $vqmod = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/' . $this->session->data['vqmod_file_name'];
 
             if (file_exists($vqmod)) {
@@ -476,7 +488,8 @@ class ControllerExtensionInstaller extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function php() {
+    public function parsePHP()
+    {
         $this->load->language('extension/installer');
 
         $json = array();
@@ -493,11 +506,11 @@ class ControllerExtensionInstaller extends Controller {
 
         if (!$json) {
             // Fire event
-            $this->trigger->fire('pre.admin.extension.php', array(&$file));
+            $this->trigger->fire('pre.admin.extension.parsePHP', array(&$file));
 
             try {
                 include($file);
-            } catch(Exception $exception) {
+            } catch (Exception $exception) {
                 $json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
             }
         }
@@ -506,7 +519,8 @@ class ControllerExtensionInstaller extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function json() {
+    public function parseJSON()
+    {
         $this->load->language('extension/installer');
         $this->load->model('extension/installer');
 
@@ -524,7 +538,7 @@ class ControllerExtensionInstaller extends Controller {
 
         if (!$json) {
             // Fire event
-            $this->trigger->fire('pre.admin.extension.json', array(&$file));
+            $this->trigger->fire('pre.admin.extension.parseJSON', array(&$file));
 
             $addon_params = array();
             $product_id = $product_name = $product_type = $product_version = '';
@@ -602,7 +616,8 @@ class ControllerExtensionInstaller extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function remove() {
+    public function remove()
+    {
         $this->load->language('extension/installer');
 
         $json = array();
@@ -626,7 +641,7 @@ class ControllerExtensionInstaller extends Controller {
 
             // Remove dir
             $this->filesystem->remove($directory);
-            
+
             // Clear cache
             $this->cache->remove('addon');
             $this->cache->remove('update');
@@ -639,7 +654,8 @@ class ControllerExtensionInstaller extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function clear() {
+    public function clear()
+    {
         $this->load->language('extension/installer');
 
         $json = array();
@@ -661,7 +677,8 @@ class ControllerExtensionInstaller extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function install() {
+    public function install()
+    {
         $this->load->language('extension/installer');
         $json = array();
         $data = $this->utility->getRemoteData(html_entity_decode("http://arastta.io/" . rtrim($this->request->post['store'], 's') . "/1.0/download/" . $this->request->post['product_id'] . "/latest/" . VERSION . "/" . $this->config->get('api_key')), array('referrer' => true));
@@ -698,7 +715,8 @@ class ControllerExtensionInstaller extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    public function readZip($zip, $path, &$json) {
+    public function readZip($zip, $path, &$json)
+    {
         while ($entry = zip_read($zip)) {
             $zip_name = zip_entry_name($entry);
 
@@ -706,7 +724,7 @@ class ControllerExtensionInstaller extends Controller {
             if (substr($zip_name, 0, 11) == 'install.sql') {
                 $json['step'][] = array(
                     'text' => $this->language->get('text_sql'),
-                    'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/sql', 'token='.$this->session->data['token'], 'SSL')),
+                    'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/parseSQL', 'token='.$this->session->data['token'], 'SSL')),
                     'path' => $path
                 );
             }
@@ -715,11 +733,10 @@ class ControllerExtensionInstaller extends Controller {
             if (substr($zip_name, 0, 11) == 'install.xml') {
                 $json['step'][] = array(
                     'text' => $this->language->get('text_xml'),
-                    'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/xml', 'token='.$this->session->data['token'], 'SSL')),
+                    'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/parseXML', 'token='.$this->session->data['token'], 'SSL')),
                     'path' => $path
                 );
-            }
-            else if (substr($zip_name, -4) == '.xml') {
+            } elseif (substr($zip_name, -4) == '.xml') {
                 $check = strpos($zip_name, '/');
 
                 if (!empty($check) && $check > 0) {
@@ -735,21 +752,21 @@ class ControllerExtensionInstaller extends Controller {
                     $json['overwrite'][] = 'system/xml/'.$zip_name;
                 }
             }
-            
+
             // PHP
             if (substr($zip_name, 0, 11) == 'install.php') {
                 $json['step'][] = array(
                     'text' => $this->language->get('text_php'),
-                    'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/php', 'token='.$this->session->data['token'], 'SSL')),
+                    'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/parsePHP', 'token='.$this->session->data['token'], 'SSL')),
                     'path' => $path
                 );
             }
-            
+
             // JSON
             if (substr($zip_name, 0, 12) == 'install.json') {
                 $json['step'][] = array(
                     'text' => $this->language->get('text_json'),
-                    'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/json', 'token='.$this->session->data['token'], 'SSL')),
+                    'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/parseJSON', 'token='.$this->session->data['token'], 'SSL')),
                     'path' => $path
                 );
             }
@@ -789,7 +806,8 @@ class ControllerExtensionInstaller extends Controller {
         }
     }
 
-    public function prepareSteps($file, $path, &$json) {
+    public function prepareSteps($file, $path, &$json)
+    {
         if (file_exists($file)) {
             $zip = zip_open($file);
 
@@ -804,7 +822,7 @@ class ControllerExtensionInstaller extends Controller {
                 // FTP
                 $json['step'][] = array(
                     'text' => $this->language->get('text_ftp'),
-                    'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/ftp', 'token='.$this->session->data['token'], 'SSL')),
+                    'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/parseFiles', 'token='.$this->session->data['token'], 'SSL')),
                     'path' => $path
                 );
 
@@ -825,17 +843,16 @@ class ControllerExtensionInstaller extends Controller {
                 );
 
                 zip_close($zip);
-            }
-            else {
+            } else {
                 $json['error'] = $this->language->get('error_unzip');
             }
-        }
-        else {
+        } else {
             $json['error'] = $this->language->get('error_file');
         }
     }
 
-    public function addExtensionTheme($directory) {
+    public function addExtensionTheme($directory)
+    {
         $this->load->model('extension/installer');
 
         // Skip file scan for translations as they're all in one place
@@ -861,12 +878,12 @@ class ControllerExtensionInstaller extends Controller {
         $addon_files = array();
 
         // Get all files
-        $files = $this->_indexFiles($directory);
+        $files = $this->indexFiles($directory);
 
         foreach ($files as $id => $file) {
             $addon_files[] = $file['relative_path_name'];
 
-            $type = $this->_getAddonType($file['relative_path_name']);
+            $type = $this->getAddonType($file['relative_path_name']);
 
             if (empty($type)) {
                 continue;
@@ -941,7 +958,7 @@ class ControllerExtensionInstaller extends Controller {
                 }
 
                 $params['extension_ids'][] = $extension_id;
-            
+
                 // Call install method, if exists
                 $this->load->controller($type . '/' . $code . '/install');
             }
@@ -971,7 +988,8 @@ class ControllerExtensionInstaller extends Controller {
         unset($this->session->data['installer_info']);
     }
 
-    protected function _indexFiles($path) {
+    protected function indexFiles($path)
+    {
         $data = array();
 
         $upload_path = $path;
@@ -998,7 +1016,7 @@ class ControllerExtensionInstaller extends Controller {
         if (file_exists($path . '/install.xml')) {
             $dom = new DOMDocument('1.0', 'UTF-8');
             $xml = file_get_contents($path . '/install.xml');
-            $dom->loadXml($xml);
+            $dom->loadXML($xml);
 
             $code = $dom->getElementsByTagName('code')->item(0);
             $code = $code->nodeValue;
@@ -1014,7 +1032,8 @@ class ControllerExtensionInstaller extends Controller {
         return $data;
     }
 
-    protected function _getAddonType($path) {
+    protected function getAddonType($path)
+    {
         $type = '';
 
         if (!strstr($path, 'admin' . DIRECTORY_SEPARATOR . 'controller') && !strstr($path, 'common' . DIRECTORY_SEPARATOR . 'header.tpl')) {
@@ -1023,7 +1042,7 @@ class ControllerExtensionInstaller extends Controller {
 
         $tmp = explode('\\', $path);
 
-        $ext_types = array('captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total');
+        $ext_types = array('captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total', 'twofactorauth');
 
         if (isset($tmp[2]) && in_array($tmp[2], $ext_types)) {
             $type = $tmp[2];

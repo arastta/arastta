@@ -94,6 +94,36 @@ class ModelExtensionExtension extends Model {
         }
     }
 
+    public function getEnabledExtensions($data = array()) {
+        $list = array();
+
+        $extensions = $this->getExtensions($data);
+
+        if (empty($extensions)) {
+            return $list;
+        }
+
+        $this->load->model('setting/setting');
+
+        foreach ($extensions as $extension) {
+            $setting = $this->model_setting_setting->getSetting($extension['code']);
+
+            if (!isset($setting[$extension['code'] . '_status']) || !$setting[$extension['code'] . '_status']) {
+                continue;
+            }
+
+            $list[] = $extension;
+        }
+
+        return $list;
+    }
+
+    public function getTotalExtensions($data = array()) {
+        $extensions = $this->getExtensions($data);
+
+        return count($extensions);
+    }
+
     public function deleteExtension($extension_id) {
         $this->db->query("DELETE FROM " . DB_PREFIX . "extension WHERE `extension_id` = '" . $this->db->escape($extension_id) . "'");
     }

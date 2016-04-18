@@ -22,6 +22,10 @@ function getURLVar(key) {
     }
 }
 
+function redirectURL(url) {
+    $(location).attr("href", url);
+}
+
 function changeStatus(status) {
     $.ajax({
         url: 'index.php?route=common/edit/changeStatus&token=' + getURLVar('token'),

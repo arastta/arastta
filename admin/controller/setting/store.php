@@ -954,6 +954,16 @@ class ControllerSettingStore extends Controller {
             $data['config_secure'] = '';
         }
 
+        if (isset($this->request->post['config_timezone'])) {
+            $data['config_timezone'] = $this->request->post['config_timezone'];
+        } elseif (isset($store_info['config_timezone'])) {
+            $data['config_timezone'] = $store_info['config_timezone'];
+        } else {
+            $data['config_timezone'] = 'UTC';
+        }
+
+        $data['timezones'] = $this->load->controller('setting/setting/gettimezones');
+
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');

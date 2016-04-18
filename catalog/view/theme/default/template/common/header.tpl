@@ -42,12 +42,12 @@
         <?php } ?>
     </style>
     <?php } ?>
-    <?php if ($theme_default) { ?>
+    <?php if ($theme_config) { ?>
     <style type="text/css">
-    <?php if ($theme_default['menu_show_all']) { ?>
+    <?php if ($theme_config->get('menu_show_all')) { ?>
     #menu .see-all { display: none !important;}
     <?php } ?>
-    <?php if ($theme_default['refine_shearch_show']) { ?>
+    <?php if ($theme_config->get('refine_shearch_show')) { ?>
     body[class*="product-category"] #content.col-sm-12 h3,
     body[class*="product-category"] #content.col-sm-12 h3 + .row,
     body[class*="product-category"] #content.col-sm-9 h3,
