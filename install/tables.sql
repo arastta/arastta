@@ -649,7 +649,7 @@ INSERT INTO `ar_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 CREATE TABLE IF NOT EXISTS `ar_coupon` (
   `coupon_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
-  `code` varchar(30) NOT NULL,
+  `code` varchar(128) NOT NULL,
   `type` char(1) NOT NULL,
   `discount` decimal(15,4) NOT NULL,
   `logged` tinyint(1) NOT NULL,

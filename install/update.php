@@ -297,5 +297,5 @@ if (version_compare(VERSION, '1.3.0', '<')) {
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "layout_module` CHANGE `position` `position` varchar(64) NOT NULL");
 
     // Update coupon table
-    $this->db->query("ALTER TABLE `" . DB_PREFIX . "coupon` CHANGE `code` `code` varchar(30) NOT NULL");
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "coupon` CHANGE `code` `code` varchar(128) NOT NULL");
 }
