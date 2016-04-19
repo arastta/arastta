@@ -522,8 +522,10 @@ header #cart > .dropdown-toggle:hover {
 footer {
     background: #333;
     margin-top: 30px;
-    padding-top: 30px;
+    padding: 40px 0 0 0;
     color: #fff;
+    font-size: 14px;
+    line-height: 1.9;
 }
 footer hr {
     border-top: none;
@@ -535,9 +537,8 @@ footer a {
 footer a:hover {
     color: #9b8935;
 }
-footer h5 {
+footer h3 {
     font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
     font-weight: bold;
     border-bottom: 2px solid #f4f4f4;
     padding-bottom: 10px;
@@ -546,7 +547,8 @@ footer h5 {
 footer .copyright {
     background: #2d2d2d;
     padding: 15px 0 5px 0;
-    margin-top: 20px;
+    margin-top: 40px;
+    font-size: 12px;
 }
 footer .copyright a {
     color: #b5a766;
