@@ -56,16 +56,15 @@
                                 </form>
                             </div>
                             <div class="jumbotron">
-                                <h2><?php echo $text_new_customer; ?></h2>
-                                <p><strong><?php echo $text_register; ?></strong></p>
-                                <p><?php echo $text_register_account; ?></p>
+                                <h2><?php echo $text_register; ?></h2>
+                                <p><?php echo $text_by_registering_account; ?></p>
                                 <a onclick="<?php echo $register; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="jumbotron">
-                                <h2><?php echo $text_returning_customer; ?></h2>
-                                <p><strong><?php echo $text_i_am_returning_customer; ?></strong></p>
+                                <h2><?php echo $text_login_email; ?></h2>
+                                <p><?php echo $text_signin_same_email; ?></p>
                                 <form>
                                     <div class="form-group">
                                         <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>

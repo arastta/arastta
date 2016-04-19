@@ -99,11 +99,11 @@ class ControllerExtensionMarketplace extends Controller
 
             $data['text_new_customer'] = $this->language->get('text_new_customer');
             $data['text_register'] = $this->language->get('text_register');
-            $data['text_register_account'] = $this->language->get('text_register_account');
-            $data['text_returning_customer'] = $this->language->get('text_returning_customer');
-            $data['text_i_am_returning_customer'] = $this->language->get('text_i_am_returning_customer');
             $data['text_forgotten'] = $this->language->get('text_forgotten');
             $data['text_login_api_key'] = $this->language->get('text_login_api_key');
+            $data['text_login_email'] = $this->language->get('text_login_email');
+            $data['text_signin_same_email'] = $this->language->get('text_signin_same_email');
+            $data['text_by_registering_account'] = $this->language->get('text_by_registering_account');
 
             $data['entry_email'] = $this->language->get('entry_email');
             $data['entry_password'] = $this->language->get('entry_password');
