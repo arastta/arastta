@@ -42,5 +42,7 @@ class EventAppPosition extends Event
                 $data[$pos] = $this->load->controller('common/position', $pos);
             }
         }
+
+        $data['header'] = $this->load->controller('common/header');
     }
 }
