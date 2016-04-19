@@ -240,6 +240,12 @@ div.required .control-label:before {
 #search .ajaxadvance .highlight {
     color: #38b0e3;
 }
+#search input.form-control.input-lg:focus {
+    border-color: #b5a760;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(181,167,102,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(181,167,102,.6);
+}
 /* Social Links */
 .social-links a {
     margin: 0 2px;

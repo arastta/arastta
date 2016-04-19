@@ -177,3 +177,8 @@ if ($theme_config->get('logo_width') == 12) {
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('.modal').on('shown.bs.modal', function () {
+  $(this).find('input:text:visible:first').focus();
+})
+//--></script>
