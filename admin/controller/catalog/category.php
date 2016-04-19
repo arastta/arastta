@@ -740,6 +740,20 @@ class ControllerCatalogCategory extends Controller {
                 }
             }
 
+            $this->request->post['top'] = 1;
+
+            $this->request->post['category_store'][] = 0;
+
+            $this->load->model('setting/store');
+
+            $stores = $this->model_setting_store->getStores();
+
+            if ($stores) {
+                foreach ($stores as $store) {
+                    $this->request->post['category_store'][] = $store['store_id'];
+                }
+            }
+
             $category_id = $this->model_catalog_category->addCategory($this->request->post);          
 
             $this->trigger->fire('post.admin.category.quick', array($category_id));

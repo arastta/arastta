@@ -588,6 +588,18 @@ class ControllerCatalogManufacturer extends Controller {
                 }
             }
 
+            $this->request->post['manufacturer_store'][] = 0;
+
+            $this->load->model('setting/store');
+
+            $stores = $this->model_setting_store->getStores();
+
+            if ($stores) {
+                foreach ($stores as $store) {
+                    $this->request->post['manufacturer_store'][] = $store['store_id'];
+                }
+            }
+
             $manufacturer_id = $this->model_catalog_manufacturer->addManufacturer($this->request->post);
 
             $this->trigger->fire('post.admin.manufacturer.quick', array($manufacturer_id));
