@@ -1,7 +1,7 @@
 {
     "positions": {
         "title": "Positions",
-        "header_top": ["header_top"],
+        "header_top": [],
         "top": ["top"],
         "left": ["column_left"],
         "main_top": ["content_top"],
