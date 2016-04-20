@@ -20,7 +20,6 @@ $_['text_cart']                = 'View Cart';
 $_['text_checkout']            = 'Checkout';
 $_['text_next']                = 'What would you like to do next?';
 $_['text_next_choice']         = 'Choose if you have a discount code.';
-$_['text_empty']               = 'Your shopping cart is empty!';
 $_['text_day']                 = 'day';
 $_['text_week']                = 'week';
 $_['text_semi_month']          = 'half-month';
