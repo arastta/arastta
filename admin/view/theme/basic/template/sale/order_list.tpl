@@ -129,7 +129,7 @@
                     </div>
                     <?php } ?>
                 </div>
-                <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+                <form method="post" action="" enctype="multipart/form-data" target="_blank" id="form-order">
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
@@ -146,7 +146,9 @@
                                       </a>
                                       <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
                                           <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                                          <li><a onclick="confirmItem('<?php echo $text_confirm_title; ?>', '<?php echo $text_confirm; ?>');"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                          <li><a id="button-shipping" form="form-order" formaction="<?php echo $shipping; ?>" ><i class="fa fa-truck"></i> <?php echo $button_shipping_print; ?></a></li>
+                                          <li><a id="button-invoice" form="form-order" formaction="<?php echo $invoice; ?>" ><i class="fa fa-print"></i> <?php echo $button_invoice_print; ?></a></li>
+                                          <li><a id="button-invoicepdf" form="form-order" formaction="<?php echo $invoicepdf; ?>" ><i class="fa fa-file-pdf-o"></i> <?php echo $button_invoice_pdf; ?></a></li>
                                       </ul>
                                     </span>
                                     </div></td>
@@ -194,8 +196,8 @@
                                     <input type="hidden" name="shipping_code[]" value="<?php echo $order['shipping_code']; ?>" /></td>
                                 <td class="text-right"><?php echo $order['order_id']; ?></td>
                                 <td class="text-left">
-                                    <a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info btn-sm btn-basic-list"><i class="fa fa-eye"></i></a> 
-                                    <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a> 
+                                    <a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info btn-sm btn-basic-list"><i class="fa fa-eye"></i></a>
+                                    <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <a href="<?php echo $order['delete']; ?>" id="button-delete<?php echo $order['order_id']; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-trash-o"></i></a>
                                     <?php echo $order['customer']; ?>
                                 </td>
@@ -260,6 +262,13 @@
                 break;
             }
         }
+    });
+
+    // IE and Edge fix!
+    $('#button-shipping, #button-invoice, #button-invoicepdf').on('click', function(e) {
+        $('#form-order').attr('action', this.getAttribute('formAction'));
+
+        $('#form-order').submit();
     });
 
     $('input[name^=\'selected\']:first').trigger('change');
