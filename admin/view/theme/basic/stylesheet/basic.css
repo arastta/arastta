@@ -256,6 +256,7 @@ a.editable-click:hover {
     display: table;
     clear: both;
 }
+
 .star-rating-ico {
     font-size: 2.5em;
     float: right;
@@ -276,4 +277,10 @@ a.editable-click:hover {
 .star-rating-ico:hover ~ .star-rating-ico:before,
 .star-rating-input:checked ~ .star-rating-ico:before {
     content: "\f005";
+}
+
+div.required label.col-sm-12:not(span):before, td.required:before {
+    content: '* ';
+    color: #F00;
+    font-weight: bold;
 }
