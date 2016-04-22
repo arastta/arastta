@@ -11,6 +11,10 @@ class EventEditorXtdReadmore extends Event
 
     public function preAdminEditorToolbarAdd(&$toolbar)
     {
+        if (!$this->check()) {
+            return;
+        }
+
         $editor = $this->config->get('config_text_editor');
 
         if ($this->user->isLogged()) {
@@ -36,6 +40,10 @@ class EventEditorXtdReadmore extends Event
 
     public function preAdminEditorMenuAdd(&$menu)
     {
+        if (!$this->check()) {
+            return;
+        }
+
         $editor = $this->config->get('config_text_editor');
 
         if ($this->user->isLogged()) {
@@ -52,5 +60,14 @@ class EventEditorXtdReadmore extends Event
                 break;
             #new-editor-add
         }
+    }
+
+    public function check()
+    {
+        if (isset($this->request->get['route']) && strpos($this->request->get['route'], 'catalog/product') !== false) {
+            return true;
+        }
+
+        return false;
     }
 }
