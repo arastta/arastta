@@ -9,6 +9,10 @@
 // Heading
 $_['heading_title']         = 'Customizer';
 
+// Button
+$_['button_save']           = 'Save Customizer Editing';
+$_['button_reset']          = 'Reset Customizer Editing';
+
 // Text
 $_['text_customizer']       = 'Customizer';
 $_['text_menu_description'] = 'Press return or enter to expand';
