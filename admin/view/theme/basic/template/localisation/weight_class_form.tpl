@@ -24,7 +24,7 @@
         <?php } ?>
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal" id="form-weight-class">
             <div class="row">
-                <div class="left-col col-sm-12">
+                <div class="left-col col-sm-3">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="general">
@@ -60,6 +60,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-sm-9">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title"><?php echo $text_items; ?></h3>
