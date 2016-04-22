@@ -2,7 +2,13 @@
 <div id="content">
     <div class="page-header">
         <div class="container-fluid">
-            <div class="pull-right"><a href="<?php echo $invoice; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-default"><i class="fa fa-print"></i></a> <a href="<?php echo $invoicepdf; ?>" data-toggle="tooltip" title="<?php echo $button_invoice_pdf; ?>" class="btn btn-default"><i class="fa fa-file-pdf-o"></i></a> <a href="<?php echo $shipping; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-default"><i class="fa fa-truck"></i></a> <a href="<?php echo $edit; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+            <div class="pull-right">
+                <button type="button" id="btn-invoice" onclick="location.href='<?php echo $invoice; ?>';" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-default"><i class="fa fa-print"></i></button>
+                <button type="button" id="btn-invoicepdf" onclick="location.href='<?php echo $invoicepdf; ?>';" data-toggle="tooltip" title="<?php echo $button_invoice_pdf; ?>" class="btn btn-default"><i class="fa fa-file-pdf-o"></i></button>
+                <button type="button" id="btn-shipping" onclick="location.href='<?php echo $shipping; ?>';" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-default"><i class="fa fa-truck"></i></button>
+                <button type="button" id="btn-edit" onclick="location.href='<?php echo $edit; ?>';" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></button>
+                <button type="button" id="btn-cancel" onclick="location.href='<?php echo $cancel; ?>';" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></button>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -753,6 +759,15 @@
             </div>
         </div>
     </div>
+
+    <?php if (!$invoice_no) { ?>
+    <script type="text/javascript"><!--
+    $(document).ready(function() {
+        $('#btn-invoicepdf').prop('disabled', true);
+    });
+    //--></script>
+    <?php } ?>
+
     <script type="text/javascript"><!--
     $(document).delegate('#button-invoice', 'click', function() {
         $.ajax({
@@ -773,6 +788,7 @@
 
                 if (json['invoice_no']) {
                     $('#button-invoice').replaceWith(json['invoice_no']);
+                    $('#btn-invoicepdf').prop('disabled', false);
                 }
             },
             error: function(xhr, ajaxOptions, thrownError) {
