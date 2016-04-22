@@ -192,6 +192,9 @@ class Route extends Object
         $url = '';
         $is_home = false;
 
+        // common/currency, $data['redirect']
+        $link = str_replace('amp;amp;', 'amp;', $link);
+
         $uri = new Uri($link);
 
         if ($uri->getVar('route')) {
