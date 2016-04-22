@@ -26,6 +26,34 @@ function redirectURL(url) {
     $(location).attr("href", url);
 }
 
+
+function redirectURL(url) {
+    $(location).attr("href", url);
+}
+
+function removeURLParameter(url, parameter) {
+    var path = url.split('?');
+
+    if (path.length >= 2) {
+
+        var prefix = encodeURIComponent(parameter) + '=';
+
+        var queryStrings = path[1].split(/[&;]/g);
+
+        for (var i = queryStrings.length; i-- > 0;) {
+            if (queryStrings[i].lastIndexOf(prefix, 0) !== -1) {
+                queryStrings.splice(i, 1);
+            }
+        }
+
+        url = path[0] + '?' + queryStrings.join('&');
+
+        return url;
+    } else {
+        return url;
+    }
+}
+
 function changeStatus(status) {
     $.ajax({
         url: 'index.php?route=common/edit/changeStatus&token=' + getURLVar('token'),
@@ -923,6 +951,7 @@ $(document).ready(function() {
         });
     }
 })(window.jQuery);
+
 var url = window.location.href;
 
 $(document).ready(function() {
@@ -933,7 +962,7 @@ $(document).ready(function() {
             theme = '&theme=basic';
         }
 
-        location = url + theme;
+        location = removeURLParameter(url, 'theme')  + theme;
     });
     
     checkTheme = getURLVar('theme');
