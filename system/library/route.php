@@ -75,13 +75,12 @@ class Route extends Object
             }
         }
 
-        $seo_url = str_replace('index.php/', '', $route);
+        $seo_url = str_replace('index.php', '', $route);
+        $seo_url = ltrim($seo_url, '/');
 
         // Add language code to URL
         $is_lang_home = false;
         if ($this->config->get('config_seo_lang_code')) {
-            $seo_url = ltrim($seo_url, '/');
-
             if ($seo_url == $this->session->data['language']) {
                 $is_lang_home = true;
             }
