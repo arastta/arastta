@@ -251,7 +251,7 @@
     });
 
     // IE and Edge fix!
-    $('#button-shipping, #button-invoice').on('click', function(e) {
+    $('#button-shipping, #button-invoice, #button-invoicepdf').on('click', function(e) {
         $('#form-order').attr('action', this.getAttribute('formAction'));
     });
     $('input[name^=\'selected\']:first').trigger('change');
