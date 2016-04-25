@@ -834,28 +834,32 @@ class ControllerSaleInvoice extends Controller
         // Send Email
         $invoice_data = $this->model_sale_order->getOrder($invoice_info['order_id']);
 
-        $invoice_data['invoice_id'] = $invoice_info['invoice_id'];
-        $invoice_data['invoice_date'] = $invoice_info['invoice_date'];
-
         $invoice_file = DIR_UPLOAD . $invoice_data['invoice_prefix'] . $invoice_data['invoice_no'] . '.pdf';
+        
+        if (is_file($invoice_file)) {
+            $invoice_data['invoice_id'] = $invoice_info['invoice_id'];
+            $invoice_data['invoice_date'] = $invoice_info['invoice_date'];
+        
+            $subject = $this->emailtemplate->getSubject('Invoice', 'invoice_1', $invoice_data);
+            $message = $this->emailtemplate->getMessage('Invoice', 'invoice_1', $invoice_data);
 
-        $subject = $this->emailtemplate->getSubject('Invoice', 'invoice_1', $invoice_data);
-        $message = $this->emailtemplate->getMessage('Invoice', 'invoice_1', $invoice_data);
+            $mail = new Mail($this->config->get('config_mail'));
+            $mail->setTo($invoice_data['email']);
+            $mail->setFrom($this->config->get('config_email'));
+            $mail->setSender($invoice_data['store_name']);
+            $mail->setSubject($subject);
+            $mail->setHtml($message);
+            $mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+            $mail->addAttachment($invoice_file);
+            $mail->send();
 
-        $mail = new Mail($this->config->get('config_mail'));
-        $mail->setTo($invoice_data['email']);
-        $mail->setFrom($this->config->get('config_email'));
-        $mail->setSender($invoice_data['store_name']);
-        $mail->setSubject($subject);
-        $mail->setHtml($message);
-        $mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
-        $mail->addAttachment($invoice_file);
-        $mail->send();
+            // Delete the invoice file after it has been sent
+            $this->filesystem->remove($invoice_file);
 
-        // Delete the invoice file after it has been sent
-        $this->filesystem->remove($invoice_file);
-
-        $this->session->data['success'] = $this->language->get('text_email_success');
+            $this->session->data['success'] = $this->language->get('text_email_success');
+        } else {
+            $this->session->data['error'] = $this->language->get('error_invoice_no_file');
+        }
 
         $this->response->redirect($this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . $url, 'SSL'));
     }
