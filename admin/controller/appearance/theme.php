@@ -450,7 +450,7 @@ class ControllerAppearanceTheme extends Controller
                     'code'        => $theme_info['code'],
                     'name'        => $theme_info['name'],
                     'author'      => $theme_info['author'],
-                    'description' => html_entity_decode($theme_info['description']),
+                    'description' => htmlspecialchars_decode(html_entity_decode($theme_info['description'])),
                     'thumb'       => $image,
                     'version'     => $theme_info['version'],
                     'action'      => $action,
