@@ -74,6 +74,48 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-3 col-sm-4 visible-xs" style="margin-bottom: 130px;">
+                            <div class="layout">
+                                <?php if ($stores) { ?>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <span class="text-muted"><?php echo $text_theme; ?></span>
+                                        <span>
+                                        <select name="store" id="store" class="form-control">
+                                            <?php if ($store_id == $store['store_id']) { ?>
+                                            <option value="0" selected="selected"><?php echo $store['store_name'];?></option>
+                                            <?php } else { ?>
+                                            <option value="0"><?php echo $store['store_name'];?></option>
+                                            <?php } ?>
+                                            <?php foreach ($stores as $store) { ?>
+                                            <?php if ($store_id == $store['store_id']) { ?>
+                                            <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
+                                            <?php } else { ?>
+                                            <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+                                            <?php } ?>
+                                            <?php } ?>
+                                        </select>
+                                        </span>
+                                    </div>
+                                </div>
+                                <?php } ?>
+                                <div class="row">
+                                    <div class="col-sm-12 layout-list">
+                                        <select type="text" name="change_layouts" id="change_layouts" class="form-control with-nav">
+                                            <option value="0"><?php echo $entry_addnew;?></option>
+                                            <?php foreach($layouts as $layout) { ?>
+                                            <option value="<?php echo $layout['layout_id']; ?>" <?php if( $change_layouts == $layout['layout_id'] ) { echo "selected=selected"; $name = $layout['name']; } ?>><?php echo $layout['name']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 layout-buttons">
+                                        <a class="btn btn-default edit-layout" href="<?php echo $edit . '&layout_id=' . $layout_id ; ?>" data-toggle="tooltip" title="<?php echo $text_edit;?>"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-primary add-layout" href="<?php echo $add ; ?>" data-toggle="tooltip" title="<?php echo $text_add;?>"><i class="fa fa-plus"></i></a>
+                                        <button type="button" data-toggle="tooltip" title="" class="btn btn-danger" onclick="confirm('Are you sure?') ? removeLayout('<?php echo $layout_id; ?>') : false;" data-original-title="Layout Delete"><i class="fa fa-trash-o"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-9 col-sm-8" style="top: 5px;">
                             <div class="accordion-content-drop">
                                 <div class="container-fluid">
