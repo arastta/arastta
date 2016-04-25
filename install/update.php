@@ -258,7 +258,7 @@ if (version_compare(VERSION, '1.3.0', '<')) {
         $this->db->query("INSERT INTO " . DB_PREFIX . "addon SET product_id = '0', `product_name` = 'Tinymce', `product_type` = 'editor', `product_version` = '1.0.0', `files` = '[\"admin\\/controller\\\\editor\\\\tinymce.php","admin\\/language\\\\en-GB\\\\editor\\\\tinymce.php","admin\\/view\\\\template\\\\editor\\\\tinymce.tpl\"]', `params` = '{\"theme_ids\":[],\"extension_ids\":[" . $extension_id . "]}'");
     }
 
-    $tinymce = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "setting `code` = 'tinymce'");
+    $tinymce = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "setting WHERE `code` = 'tinymce'");
 
     if (empty($tinymce->num_rows)) {
         $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_status', `value` = '1'");
