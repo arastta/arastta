@@ -284,3 +284,10 @@ div.required label.col-sm-12:not(span):before, td.required:before {
     color: #F00;
     font-weight: bold;
 }
+
+.table thead td span[data-toggle="tooltip"]:after, label.col-sm-12 span:after {
+    font-family: FontAwesome;
+    color: #008db9;
+    content: "\f059";
+    margin-left: 4px;
+}
