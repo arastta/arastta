@@ -56,10 +56,8 @@
     background-color: #229ac8;
 }
 
-.dashed .pull-center {
-    margin-top: 13%;
-    margin-left: 39%;
-    position: absolute;
+.dashed .text-center {
+    margin-top: 1%;
 }
 
 .ajaxadvance.row {

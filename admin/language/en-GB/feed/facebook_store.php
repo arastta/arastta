@@ -19,6 +19,7 @@ $_['tab_products']                   = 'Products';
 $_['text_edit']                      = 'Facebook Store Edit';
 $_['text_success']                   = 'Success: You have modified Facebook Store feed!';
 $_['text_remove_feed']               = 'Are you sure you want to remove this item?';
+$_['text_drag_and_drop']             = 'Drag &amp; drop modules here';
 
 // Entry
 $_['entry_app_id']                   = 'Facebook App ID';
