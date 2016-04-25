@@ -12,6 +12,18 @@
         "title": "text_colors_title",
         "description": "text_colors_description",
         "control": {
+            "container_background-color": {
+                    "type": "color",
+                    "label": "text_colors_container_background_label",
+                    "default": "#f5f5f5",
+                    "selector": "body"
+            },
+            "container-color_color": {
+                    "type": "color",
+                    "label": "text_colors_container_color_label",
+                    "default": "#666",
+                    "selector": "body"
+            },
             "header_background-color": {
                 "type": "color",
                 "label": "text_colors_header_background_label",
