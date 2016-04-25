@@ -18,5 +18,8 @@ class EventAppTheme extends Event
 
         $data['theme'] = $theme;
         $data['theme_config'] = $obj;
+
+        // BC for Arastta < 1.2.0
+        $data['theme_' . $theme] = json_decode($this->config->get('theme_' . $theme), true);
     }
 }
