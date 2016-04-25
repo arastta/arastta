@@ -44,3 +44,4 @@ $_['error_permission']                        = 'Warning: You do not have permis
 $_['error_action']                            = 'Warning: Could not complete this action!';
 $_['error_generate_empty']                    = 'Warning: No order available to generate invoices!';
 $_['error_invoice_not_found']                 = 'Warning: Invoice not found!';
+$_['error_invoice_no_file']                   = 'Warning: Invoice file was not created! Please, check file/folder permissions of "upload" folder.';
