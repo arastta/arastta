@@ -44,7 +44,7 @@ class ControllerDashboardOrder extends Controller {
         } else {
             $data['total'] = $order_total;
         }
-                
+        
         $data['order'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
 
         return $this->load->view('dashboard/order.tpl', $data);
