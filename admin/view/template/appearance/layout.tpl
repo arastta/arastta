@@ -3,6 +3,7 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
+                <button type="submit" onclick="save('save')" form="form-layout" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success" data-original-title="Save" id="layout-save" disabled="disabled"><i class="fa fa-check"></i></button>
                 <a href="<?php echo  $extension_module; ?>" data-toggle="tooltip" title="<?php echo $button_module; ?>" class="btn btn-default" data-original-title="<?php echo $button_module; ?>"><i class="fa fa-cubes"></i></a>
             </div>
             <h1><?php echo $heading_title; ?></h1>
@@ -440,12 +441,13 @@
             redirectURL('index.php?route=appearance/layout&token=<?php echo $token;?>&layout_id=' + $(this).val());
         });
 
-        var moduleListHeigth = ($('.accordion').height()) - 30;
+        var moduleListHeigth = $('.row.colsliders .col-md-6').height() - 12;
 
-        var moduleCol = (moduleListHeigth / 2) - 27;
+        var moduleCol = moduleListHeigth - 100;
 
-        $('.col-md-3 .dashed').attr('style','min-height:' + moduleListHeigth + 'px !important;');
-        $('.col-md-6 .dashed').attr('style','min-height:' + moduleCol + 'px !important;');
+        $('.row.colsliders .col-md-3.sidebar_column').attr('style','min-height:' + moduleListHeigth + 'px !important;');
+        $('.row.colsliders .col-md-3.sidebar_column .dashed').attr('style','min-height:' + moduleCol + 'px !important;');
+        //$('.col-md-6 .dashed').attr('style','min-height:' + moduleCol + 'px !important;');
 
         $('.btn-res-edit').on('click', function(event) {
             event.preventDefault();
