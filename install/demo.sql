@@ -13,8 +13,8 @@ INSERT INTO `ar_attribute` (`attribute_id`, `attribute_group_id`, `sort_order`) 
 
 INSERT INTO `ar_attribute_description` (`attribute_id`, `language_id`, `name`) VALUES
 (1, 1, 'Description'),
-(2, 1, 'No. of Cores'),
-(3, 1, 'Clockspeed'),
+(2, 1, 'Pattern'),
+(3, 1, 'Material'),
 (4, 1, 'test 1'),
 (5, 1, 'test 2'),
 (6, 1, 'test 3'),
@@ -26,15 +26,11 @@ INSERT INTO `ar_attribute_description` (`attribute_id`, `language_id`, `name`) V
 
 INSERT INTO `ar_attribute_group` (`attribute_group_id`, `sort_order`) VALUES
 (3, 2),
-(4, 1),
-(5, 3),
 (6, 4);
 
 INSERT INTO `ar_attribute_group_description` (`attribute_group_id`, `language_id`, `name`) VALUES
-(3, 1, 'Memory'),
-(4, 1, 'Technical'),
-(5, 1, 'Motherboard'),
-(6, 1, 'Processor');
+(3, 1, 'Style'),
+(6, 1, 'Fabric');
 
 INSERT INTO `ar_banner` (`banner_id`, `name`, `status`) VALUES
 (7, 'Home Page Slideshow', 1),
@@ -72,14 +68,14 @@ INSERT INTO `ar_category` (`category_id`, `image`, `parent_id`, `top`, `column`,
 (18, '', 0, 1, 0, 2, 1, '2015-05-18 00:00:00', '2016-04-18 14:16:22'),
 (20, '', 0, 1, 1, 1, 1, '2015-05-18 00:00:00', '2016-04-18 14:12:38'),
 (24, '', 0, 1, 1, 5, 1, '2015-05-18 00:00:00', '2016-04-18 14:25:37'),
-(25, '', 0, 1, 1, 3, 1, '2015-05-18 00:00:00', '2016-04-18 14:17:56'),
-(26, '', 20, 0, 0, 1, 1, '2015-05-18 00:00:00', '2016-04-18 14:14:21'),
-(27, '', 20, 0, 0, 2, 1, '2015-05-18 00:00:00', '2016-04-18 14:13:46'),
-(28, '', 25, 0, 0, 1, 1, '2015-05-18 00:00:00', '2016-04-18 15:21:47'),
-(29, '', 25, 0, 0, 1, 1, '2015-05-18 00:00:00', '2016-04-18 15:26:22'),
-(30, '', 25, 0, 0, 1, 1, '2015-05-18 00:00:00', '2016-04-18 15:25:03'),
-(31, '', 25, 0, 0, 1, 1, '2015-05-18 00:00:00', '2016-04-18 14:20:25'),
-(32, '', 25, 0, 0, 1, 1, '2015-05-18 00:00:00', '2016-04-18 15:22:03'),
+(25, '', 0, 1, 1, 3, 1, '2015-05-18 00:00:00', '2016-04-26 10:33:25'),
+(26, '', 20, 0, 0, 1, 1, '2015-05-18 00:00:00', '2016-04-26 10:29:55'),
+(27, '', 20, 0, 0, 2, 1, '2015-05-18 00:00:00', '2016-04-26 10:31:06'),
+(28, '', 25, 0, 0, 1, 1, '2015-05-18 00:00:00', '2016-04-26 10:35:10'),
+(29, '', 25, 0, 0, 1, 1, '2015-05-18 00:00:00', '2016-04-26 10:33:39'),
+(30, '', 25, 0, 0, 1, 1, '2015-05-18 00:00:00', '2016-04-26 10:33:53'),
+(31, '', 25, 0, 0, 1, 1, '2015-05-18 00:00:00', '2016-04-26 10:34:10'),
+(32, '', 25, 0, 0, 1, 1, '2015-05-18 00:00:00', '2016-04-26 10:34:31'),
 (33, '', 0, 1, 1, 6, 1, '2015-05-18 00:00:00', '2016-04-18 14:26:18'),
 (34, '', 0, 1, 4, 7, 1, '2015-05-18 00:00:00', '2016-04-18 14:24:02'),
 (35, '', 28, 0, 0, 0, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
@@ -92,8 +88,8 @@ INSERT INTO `ar_category` (`category_id`, `image`, `parent_id`, `top`, `column`,
 (42, '', 34, 0, 0, 0, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (43, '', 34, 0, 0, 0, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (44, '', 34, 0, 0, 0, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
-(45, '', 18, 0, 0, 0, 1, '2015-05-18 00:00:00', '2016-04-18 14:17:13'),
-(46, '', 18, 0, 0, 0, 1, '2015-05-18 00:00:00', '2016-04-18 14:16:49'),
+(45, '', 18, 0, 0, 0, 1, '2015-05-18 00:00:00', '2016-04-26 10:32:34'),
+(46, '', 18, 0, 0, 0, 1, '2015-05-18 00:00:00', '2016-04-26 10:32:50'),
 (47, '', 34, 0, 0, 0, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (48, '', 34, 0, 0, 0, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (49, '', 34, 0, 0, 0, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
@@ -105,20 +101,20 @@ INSERT INTO `ar_category` (`category_id`, `image`, `parent_id`, `top`, `column`,
 (55, '', 34, 0, 0, 0, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (56, '', 34, 0, 0, 0, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
 (58, '', 52, 0, 0, 0, 1, '2015-05-18 00:00:00', '2015-05-18 00:00:00'),
-(59, '', 0, 0, 1, 0, 1, '2015-05-18 00:00:00', '2016-04-18 14:24:57');
+(59, '', 0, 0, 1, 0, 1, '2015-05-18 00:00:00', '2016-04-26 10:36:55');
 
 INSERT INTO `ar_category_description` (`category_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
 (18, 1, 'Pants', '&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec est non dui posuere fermentum. In varius sem a viverra malesuada. Sed vitae congue sapien. Vivamus condimentum sagittis elit, ac commodo enim efficitur ultricies. Mauris venenatis dapibus risus, in vehicula ligula pulvinar sit amet.&lt;/p&gt;&lt;p&gt;Mauris egestas tellus vel dui aliquet vehicula. In in purus eu urna tempor maximus. Vivamus faucibus tincidunt odio sed scelerisque. Nulla laoreet lectus sit amet nibh suscipit vestibulum. Phasellus ac enim massa. Vivamus blandit nulla justo, non imperdiet diam sollicitudin vel. Maecenas accumsan aliquet enim, pulvinar mattis metus euismod quis. Vivamus mauris mi, vestibulum a semper fermentum, venenatis ac nulla. &lt;br&gt;&lt;/p&gt;\r\n', 'Pants', '', ''),
 (20, 1, 'Shoes', '&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec \r\nest non dui posuere fermentum. In varius sem a viverra malesuada. Sed \r\nvitae congue sapien. Vivamus condimentum sagittis elit, ac commodo enim \r\nefficitur ultricies. Mauris venenatis dapibus risus, in vehicula ligula \r\npulvinar sit amet. Mauris egestas tellus vel dui aliquet vehicula. In in\r\n purus eu urna tempor maximus. Vivamus faucibus tincidunt odio sed \r\nscelerisque.&lt;/p&gt;', 'Shoes', 'Example of category description', ''),
 (24, 1, 'Bags', '&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec est non dui posuere fermentum.&lt;/p&gt;', 'Bags', '', ''),
-(25, 1, 'Shirts', '&lt;p&gt;Connect external devices to a computer and expand your capabilities.&lt;/p&gt;', 'Shirts', '', ''),
-(26, 1, 'Casual', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'Casual', '', ''),
-(27, 1, 'Sport', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'Sport', '', ''),
-(28, 1, 'Striped', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'Striped', '', ''),
-(29, 1, 'Animal', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'Animal', '', ''),
-(30, 1, 'Character', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'Character', '', ''),
-(31, 1, 'Modern', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'Modern', '', ''),
-(32, 1, 'Solid', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'Solid', '', ''),
+(25, 1, 'Shirts', '&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;br&gt;&lt;/p&gt;', 'Shirts', '', ''),
+(26, 1, 'Casual', '&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam malesuada molestie suscipit.&lt;br&gt;&lt;/p&gt;', 'Casual', '', ''),
+(27, 1, 'Sport', '&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ornare, sed placerat neque urna a sem.&lt;br&gt;&lt;/p&gt;', 'Sport', '', ''),
+(28, 1, 'Striped', '&lt;p&gt;Maecenas vitae malesuada nulla. Vestibulum auctor dui elit, non blandit sapien accumsan in.&lt;br&gt;&lt;/p&gt;', 'Striped', '', ''),
+(29, 1, 'Animal', '&lt;p&gt;Sed facilisis et sem eget pulvinar. Pellentesque vulputate tempor lectus, id varius dui pharetra mattis.&lt;br&gt;&lt;/p&gt;', 'Animal', '', ''),
+(30, 1, 'Character', '&lt;p&gt;Nullam nec dolor bibendum, lacinia metus sit amet, sagittis ligula.&lt;br&gt;&lt;/p&gt;', 'Character', '', ''),
+(31, 1, 'Modern', '&lt;p&gt;Donec erat ipsum, scelerisque sed lobortis ut, porta viverra nisi. Nulla rhoncus sem non mi tincidunt luctus.&lt;br&gt;&lt;/p&gt;', 'Modern', '', ''),
+(32, 1, 'Solid', '&lt;p&gt;Sed non volutpat dui. Morbi congue egestas dolor et malesuada.&lt;br&gt;&lt;/p&gt;', 'Solid', '', ''),
 (33, 1, 'Hats', '&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec est non dui posuere fermentum. In varius sem a viverra malesuada. Sed vitae congue sapien.&lt;/p&gt;', 'Hats', '', ''),
 (34, 1, 'Jackets', '&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec est non dui posuere fermentum. In varius sem a viverra malesuada. Sed vitae congue sapien.&lt;/p&gt;', 'Jackets', '', ''),
 (35, 1, 'test 1', '', '', '', ''),
@@ -131,8 +127,8 @@ INSERT INTO `ar_category_description` (`category_id`, `language_id`, `name`, `de
 (42, 1, 'test 9', '', '', '', ''),
 (43, 1, 'test 11', '', '', '', ''),
 (44, 1, 'test 12', '', '', '', ''),
-(45, 1, 'Men', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'Men', '', ''),
-(46, 1, 'Women', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'Women', '', ''),
+(45, 1, 'Men', '&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse et velit sed nunc aliquet lacinia.&lt;br&gt;&lt;/p&gt;', 'Men', '', ''),
+(46, 1, 'Women', '&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque dapibus finibus facilisis.&lt;br&gt;&lt;/p&gt;', 'Women', '', ''),
 (47, 1, 'test 15', '', '', '', ''),
 (48, 1, 'test 16', '', '', '', ''),
 (49, 1, 'test 17', '', '', '', ''),
@@ -144,7 +140,7 @@ INSERT INTO `ar_category_description` (`category_id`, `language_id`, `name`, `de
 (55, 1, 'test 23', '', '', '', ''),
 (56, 1, 'test 24', '', '', '', ''),
 (58, 1, 'test 25', '', '', '', ''),
-(59, 1, 'Watches', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'Watches', '', '');
+(59, 1, 'Watches', '&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet est ex, eu varius libero semper ac. Donec blandit efficitur semper. Phasellus eget egestas tellus, et ullamcorper lacus.&lt;br&gt;&lt;/p&gt;', 'Watches', '', '');
 
 INSERT INTO `ar_category_path` (`category_id`, `path_id`, `level`) VALUES
 (18, 18, 0),
@@ -322,18 +318,6 @@ INSERT INTO `ar_manufacturer_description` (`manufacturer_id`, `language_id`, `na
 (12, 1, 'SKAGEN', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'SKAGEN', '', ''),
 (13, 1, 'SUPRA', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'SUPRA', '', ''),
 (14, 1, 'Spiral', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'Spiral', '', '');
-
-INSERT INTO `ar_manufacturer_to_layout` (`manufacturer_id`, `store_id`, `layout_id`) VALUES
-(5, 0, 0),
-(6, 0, 0),
-(7, 0, 0),
-(8, 0, 0),
-(9, 0, 0),
-(10, 0, 0),
-(11, 0, 0),
-(12, 0, 0),
-(13, 0, 0),
-(14, 0, 0);
 
 INSERT INTO `ar_menu` (`menu_id`, `sort_order`, `columns`, `menu_type`, `status`) VALUES
 (1, 1, 0, 'category', 1),
@@ -519,32 +503,32 @@ INSERT INTO `ar_option_value_description` (`option_value_id`, `language_id`, `op
 (48, 1, 11, 'Large');
 
 INSERT INTO `ar_product` (`product_id`, `model`, `sku`, `upc`, `ean`, `jan`, `isbn`, `mpn`, `location`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `sort_order`, `status`, `viewed`, `date_added`, `date_modified`) VALUES
-(28, 'Product 1', '', '', '', '', '', '', '', 939, 7, 'catalog/demo/product/bags-1-1.jpg', 8, 1, '18.0000', 200, 9, '2015-05-17', '146.40000000', 2, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, 2, '2015-05-18 00:00:00', '2016-04-19 07:36:42'),
+(28, 'Product 1', '', '', '', '', '', '', '', 939, 7, 'catalog/demo/product/bags-1-1.jpg', 8, 1, '18.0000', 200, 9, '2015-05-17', '146.40000000', 2, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, 3, '2015-05-18 00:00:00', '2016-04-19 07:36:42'),
 (29, 'Product 2', '', '', '', '', '', '', '', 999, 6, 'catalog/demo/product/bags-2-1.jpg', 14, 1, '25.0000', 0, 9, '2015-05-17', '133.00000000', 2, '0.00000000', '0.00000000', '0.00000000', 3, 1, 1, 0, 1, 2, '2015-05-18 00:00:00', '2016-04-19 07:35:50'),
-(30, 'Product 3', '', '', '', '', '', '', '', 7, 6, 'catalog/demo/product/shoes-1-1.jpg', 8, 1, '15.0000', 0, 9, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, 3, '2015-05-18 00:00:00', '2016-04-19 07:37:43'),
-(31, 'Product 4', '', '', '', '', '', '', '', 1000, 6, 'catalog/demo/product/character-1-1.jpg', 7, 1, '10.0000', 0, 9, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 3, 1, 1, 0, 1, 3, '2015-05-18 00:00:00', '2016-04-18 16:22:10'),
-(32, 'Product 5', '', '', '', '', '', '', '', 999, 6, 'catalog/demo/product/jackets-3-1.jpg', 13, 1, '25.0000', 0, 9, '2015-05-17', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, 0, '2015-05-18 00:00:00', '2016-04-19 08:00:35'),
-(33, 'Product 6', '', '', '', '', '', '', '', 500, 6, 'catalog/demo/product/hats-2-1.jpg', 8, 1, '4.0000', 0, 9, '2015-05-17', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 1, '2015-05-18 00:00:00', '2016-04-19 07:46:39'),
+(30, 'Product 3', '', '', '', '', '', '', '', 7, 6, 'catalog/demo/product/shoes-1-1.jpg', 8, 1, '15.0000', 0, 9, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, 4, '2015-05-18 00:00:00', '2016-04-19 07:37:43'),
+(31, 'Product 4', '', '', '', '', '', '', '', 1000, 6, 'catalog/demo/product/character-1-1.jpg', 7, 1, '10.0000', 0, 9, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 3, 1, 1, 0, 1, 2, '2015-05-18 00:00:00', '2016-04-18 16:22:10'),
+(32, 'Product 5', '', '', '', '', '', '', '', 999, 6, 'catalog/demo/product/jackets-3-1.jpg', 13, 1, '25.0000', 0, 9, '2015-05-17', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, 2, '2015-05-18 00:00:00', '2016-04-19 08:00:35'),
+(33, 'Product 6', '', '', '', '', '', '', '', 500, 6, 'catalog/demo/product/hats-2-1.jpg', 8, 1, '4.0000', 0, 9, '2015-05-17', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 3, '2015-05-18 00:00:00', '2016-04-19 07:46:39'),
 (34, 'Product 7', '', '', '', '', '', '', '', 1000, 6, 'catalog/demo/product/men-2-1.jpg', 7, 1, '25.0000', 0, 9, '2015-05-17', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 3, '2015-05-18 00:00:00', '2016-04-19 08:01:04'),
-(35, 'Product 8', '', '', '', '', '', '', '', 1000, 5, 'catalog/demo/product/hats-1-1.jpg', 9, 0, '5.0000', 0, 9, '2015-05-17', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, 2, '2015-05-18 00:00:00', '2016-04-19 07:44:07'),
-(36, 'Product 9', '', '', '', '', '', '', '', 994, 6, 'catalog/demo/product/jackets-1-1.jpg', 8, 0, '25.0000', 100, 9, '2015-05-17', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 0, '2015-05-18 00:00:00', '2016-04-19 07:55:11'),
-(40, 'product 11', '', '', '', '', '', '', '', 970, 5, 'catalog/demo/product/men-1-1.jpg', 6, 1, '25.0000', 0, 9, '2015-05-17', '10.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, 5, '2015-05-18 00:00:00', '2016-04-19 07:38:44'),
+(35, 'Product 8', '', '', '', '', '', '', '', 1000, 5, 'catalog/demo/product/hats-1-1.jpg', 9, 0, '5.0000', 0, 9, '2015-05-17', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, 6, '2015-05-18 00:00:00', '2016-04-19 07:44:07'),
+(36, 'Product 9', '', '', '', '', '', '', '', 994, 6, 'catalog/demo/product/jackets-1-1.jpg', 8, 0, '25.0000', 100, 9, '2015-05-17', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 2, '2015-05-18 00:00:00', '2016-04-19 07:55:11'),
+(40, 'product 11', '', '', '', '', '', '', '', 970, 5, 'catalog/demo/product/men-1-1.jpg', 6, 1, '25.0000', 0, 9, '2015-05-17', '10.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, 3, '2015-05-18 00:00:00', '2016-04-19 07:38:44'),
 (41, 'Product 14', '', '', '', '', '', '', '', 977, 5, 'catalog/demo/product/men-3-1.jpg', 5, 1, '20.0000', 0, 9, '2015-05-17', '5.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 0, 1, 3, '2015-05-18 00:00:00', '2016-04-19 06:47:54'),
-(42, 'Product 15', '', '', '', '', '', '', '', 990, 5, 'catalog/demo/product/shoes-2-1.jpg', 10, 1, '20.0000', 400, 9, '2015-05-17', '12.50000000', 1, '1.00000000', '2.00000000', '3.00000000', 1, 1, 2, 0, 1, 5, '2015-05-18 00:00:00', '2016-04-19 07:39:19'),
-(43, 'Product 16', '', '', '', '', '', '', '', 929, 5, 'catalog/demo/product/striped-1-1.jpg', 8, 0, '30.0000', 0, 9, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 11, '2015-05-18 00:00:00', '2016-04-19 07:20:17'),
-(44, 'Product 17', '', '', '', '', '', '', '', 1500, 5, 'catalog/demo/product/striped-2-1.jpg', 14, 1, '15.0000', 0, 9, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 4, '2015-05-18 00:00:00', '2016-04-18 15:32:53'),
-(45, 'Product 18', '', '', '', '', '', '', '', 998, 5, 'catalog/demo/product/solid-1-1.jpg', 12, 1, '5.0000', 0, 0, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 4, '2015-05-18 00:00:00', '2016-04-18 15:39:17'),
-(46, 'Product 19', '', '', '', '', '', '', '', 1000, 5, 'catalog/demo/product/animal-1-1.jpg', 11, 1, '25.0000', 0, 9, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 2, '2015-05-18 00:00:00', '2016-04-18 16:26:39'),
-(47, 'Product 21', '', '', '', '', '', '', '', 1000, 5, 'catalog/demo/product/women-1-1.jpg', 8, 1, '50.0000', 400, 9, '2015-05-17', '1.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 0, 1, 0, 1, 6, '2015-05-18 00:00:00', '2016-04-19 06:36:09'),
-(48, 'product 20', 'test 1', '', '', '', '', '', 'test 2', 995, 5, 'catalog/demo/product/jackets-2-1.jpg', 14, 1, '40.0000', 0, 9, '2015-05-17', '1.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 2, '2015-05-18 00:00:00', '2016-04-19 07:57:21'),
-(49, 'SAM1', '', '', '', '', '', '', '', 0, 8, 'catalog/demo/product/hats-3-1.jpg', 9, 1, '2.0000', 0, 9, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 1, 1, 1, '2015-05-18 00:00:00', '2016-04-19 07:49:47');
+(42, 'Product 15', '', '', '', '', '', '', '', 990, 5, 'catalog/demo/product/shoes-2-1.jpg', 10, 1, '20.0000', 400, 9, '2015-05-17', '12.50000000', 1, '1.00000000', '2.00000000', '3.00000000', 1, 1, 2, 0, 1, 6, '2015-05-18 00:00:00', '2016-04-26 11:02:16'),
+(43, 'Product 16', '', '', '', '', '', '', '', 929, 5, 'catalog/demo/product/striped-1-1.jpg', 8, 0, '30.0000', 0, 9, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 5, '2015-05-18 00:00:00', '2016-04-26 11:04:22'),
+(44, 'Product 17', '', '', '', '', '', '', '', 1500, 5, 'catalog/demo/product/striped-2-1.jpg', 14, 1, '15.0000', 0, 9, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 2, '2015-05-18 00:00:00', '2016-04-18 15:32:53'),
+(45, 'Product 18', '', '', '', '', '', '', '', 998, 5, 'catalog/demo/product/solid-1-1.jpg', 12, 1, '5.0000', 0, 0, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 3, '2015-05-18 00:00:00', '2016-04-18 15:39:17'),
+(46, 'Product 19', '', '', '', '', '', '', '', 1000, 5, 'catalog/demo/product/animal-1-1.jpg', 11, 1, '25.0000', 0, 9, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 3, '2015-05-18 00:00:00', '2016-04-18 16:26:39'),
+(47, 'Product 21', '', '', '', '', '', '', '', 1000, 5, 'catalog/demo/product/women-1-1.jpg', 8, 1, '50.0000', 400, 9, '2015-05-17', '1.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 0, 1, 0, 1, 5, '2015-05-18 00:00:00', '2016-04-26 11:03:14'),
+(48, 'product 20', 'test 1', '', '', '', '', '', 'test 2', 995, 5, 'catalog/demo/product/jackets-2-1.jpg', 14, 1, '40.0000', 0, 9, '2015-05-17', '1.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 2, 1, 1, 0, 1, 3, '2015-05-18 00:00:00', '2016-04-19 07:57:21'),
+(49, 'SAM1', '', '', '', '', '', '', '', 0, 8, 'catalog/demo/product/hats-3-1.jpg', 9, 1, '2.0000', 0, 9, '2015-05-17', '0.00000000', 1, '0.00000000', '0.00000000', '0.00000000', 1, 1, 1, 1, 1, 3, '2015-05-18 00:00:00', '2016-04-19 07:49:47');
 
 INSERT INTO `ar_product_attribute` (`product_id`, `attribute_id`, `language_id`, `text`) VALUES
-(42, 3, 1, '100mhz'),
-(43, 2, 1, '1'),
-(43, 4, 1, '8gb'),
-(47, 2, 1, '4'),
-(47, 4, 1, '16GB');
+(42, 3, 1, 'Cotton'),
+(43, 2, 1, 'Other'),
+(43, 4, 1, 'Sport'),
+(47, 2, 1, 'Letter'),
+(47, 4, 1, 'Casual');
 
 INSERT INTO `ar_product_description` (`product_id`, `language_id`, `name`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
 (28, 1, 'Vintage Handbag', '&lt;ul&gt;&lt;li&gt;Cras eget sollicitudin erat. &lt;br&gt;&lt;/li&gt;&lt;li&gt;Phasellus iaculis sem vitae dictum bibendum. &lt;br&gt;&lt;/li&gt;&lt;li&gt;Donec vel libero ut augue elementum interdum. &lt;br&gt;&lt;/li&gt;&lt;li&gt;Maecenas laoreet tempus nulla sit amet maximus. &lt;br&gt;&lt;/li&gt;&lt;li&gt;Donec in tempus nulla, in rhoncus dui. &lt;br&gt;&lt;/li&gt;&lt;li&gt;Maecenas quis dui mattis, interdum leo eget, fermentum nibh.&lt;/li&gt;&lt;li&gt;Vestibulum ultricies felis non pulvinar feugiat.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Nulla nulla elit, tincidunt ut tristique et, aliquam a orci. Phasellus auctor ante sed mollis pharetra. Curabitur pretium dui et mauris consectetur, vitae tincidunt lorem varius. Vestibulum vitae dui neque. Aenean tempor metus non sollicitudin condimentum. Quisque ut finibus arcu.&lt;br&gt;&lt;/p&gt;', '', 'Vintage Handbag', '', ''),
@@ -568,9 +552,9 @@ INSERT INTO `ar_product_description` (`product_id`, `language_id`, `name`, `desc
 (49, 1, 'Hip-Hot Skullies', '&lt;p&gt;&amp;nbsp;Morbi eros diam, facilisis eu augue eget, posuere dictum lectus. Ut eget nisl risus. Donec mauris turpis, maximus id hendrerit vel, imperdiet nec eros. Phasellus sit amet nunc eu turpis gravida gravida ut ut felis. Curabitur imperdiet justo sit amet tristique facilisis. Praesent et rutrum enim. Duis nec dignissim augue. Aenean blandit vehicula ornare.&lt;br&gt;&lt;br&gt;Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque lacinia venenatis tempus. Sed lobortis faucibus nisi vitae mollis. Nunc porta non justo quis facilisis. Nunc congue massa risus, at imperdiet mauris posuere eget. Nullam vel eros tellus. Sed sit amet massa posuere, consectetur massa nec, ullamcorper lectus. Cras ac metus tortor. Integer pulvinar vitae massa quis blandit. Praesent sit amet condimentum lectus. &lt;br&gt;&lt;br&gt;&lt;/p&gt;', '', 'Hip-Hot Skullies', '', '');
 
 INSERT INTO `ar_product_discount` (`product_discount_id`, `product_id`, `customer_group_id`, `quantity`, `priority`, `price`, `date_start`, `date_end`) VALUES
-(456, 42, 1, 10, 1, '18.0000', '0000-00-00', '0000-00-00'),
-(457, 42, 1, 20, 1, '15.0000', '0000-00-00', '0000-00-00'),
-(458, 42, 1, 30, 1, '12.0000', '0000-00-00', '0000-00-00');
+(459, 42, 1, 10, 1, '18.0000', '0000-00-00', '0000-00-00'),
+(460, 42, 1, 20, 1, '15.0000', '0000-00-00', '0000-00-00'),
+(461, 42, 1, 30, 1, '12.0000', '0000-00-00', '0000-00-00');
 
 INSERT INTO `ar_product_image` (`product_image_id`, `product_id`, `image`, `sort_order`) VALUES
 (2477, 44, 'catalog/demo/product/striped-2-2.jpg', 0),
@@ -582,12 +566,8 @@ INSERT INTO `ar_product_image` (`product_image_id`, `product_id`, `image`, `sort
 (2485, 31, 'catalog/demo/product/character-1-3.jpg', 0),
 (2486, 46, 'catalog/demo/product/animal-1-2.jpg', 0),
 (2487, 46, 'catalog/demo/product/animal-1-3.jpg', 0),
-(2492, 47, 'catalog/demo/product/women-1-3.jpg', 0),
-(2493, 47, 'catalog/demo/product/women-1-2.jpg', 0),
 (2498, 41, 'catalog/demo/product/men-3-2.jpg', 0),
 (2499, 41, 'catalog/demo/product/men-3-3.jpg', 0),
-(2514, 43, 'catalog/demo/product/striped-1-2.jpg', 0),
-(2515, 43, 'catalog/demo/product/striped-1-3.jpg', 0),
 (2517, 29, 'catalog/demo/product/bags-2-2.jpg', 0),
 (2518, 29, 'catalog/demo/product/bags-2-3.jpg', 0),
 (2519, 29, 'catalog/demo/product/bags-2-4.jpg', 0),
@@ -596,16 +576,20 @@ INSERT INTO `ar_product_image` (`product_image_id`, `product_id`, `image`, `sort
 (2522, 30, 'catalog/demo/product/shoes-1-3.jpg', 0),
 (2523, 40, 'catalog/demo/product/men-1-2.jpg', 0),
 (2524, 40, 'catalog/demo/product/men-1-3.jpg', 0),
-(2525, 42, 'catalog/demo/product/shoes-2-2.jpg', 0),
-(2526, 42, 'catalog/demo/product/shoes-2-3.jpg', 0),
-(2527, 42, 'catalog/demo/product/shoes-2-4.jpg', 0),
 (2528, 35, 'catalog/demo/product/hats-1-2.jpg', 0),
 (2529, 49, 'catalog/demo/product/hats-3-2.jpg', 0),
 (2530, 36, 'catalog/demo/product/jackets-1-2.jpg', 0),
 (2531, 36, 'catalog/demo/product/jackets-1-3.jpg', 0),
 (2532, 32, 'catalog/demo/product/jackets-3-2.jpg', 0),
 (2533, 32, 'catalog/demo/product/jackets-3-3.jpg', 0),
-(2534, 34, 'catalog/demo/product/men-2-2.jpg', 0);
+(2534, 34, 'catalog/demo/product/men-2-2.jpg', 0),
+(2535, 42, 'catalog/demo/product/shoes-2-2.jpg', 0),
+(2536, 42, 'catalog/demo/product/shoes-2-3.jpg', 0),
+(2537, 42, 'catalog/demo/product/shoes-2-4.jpg', 0),
+(2538, 47, 'catalog/demo/product/women-1-3.jpg', 0),
+(2539, 47, 'catalog/demo/product/women-1-2.jpg', 0),
+(2540, 43, 'catalog/demo/product/striped-1-2.jpg', 0),
+(2541, 43, 'catalog/demo/product/striped-1-3.jpg', 0);
 
 INSERT INTO `ar_product_option` (`product_option_id`, `product_id`, `option_id`, `value`, `required`) VALUES
 (208, 42, 4, 'test', 1),
@@ -650,26 +634,26 @@ INSERT INTO `ar_product_reward` (`product_reward_id`, `product_id`, `customer_gr
 (603, 45, 1, 800),
 (605, 31, 1, 0),
 (606, 46, 1, 0),
-(609, 47, 1, 300),
 (613, 41, 1, 0),
-(620, 43, 1, 600),
 (622, 29, 1, 0),
 (623, 28, 1, 400),
 (624, 30, 1, 200),
 (625, 40, 1, 0),
-(626, 42, 1, 100),
 (627, 35, 1, 0),
 (628, 33, 1, 0),
 (629, 49, 1, 1000),
 (630, 36, 1, 0),
 (631, 48, 1, 0),
 (632, 32, 1, 0),
-(633, 34, 1, 0);
+(633, 34, 1, 0),
+(634, 42, 1, 100),
+(635, 47, 1, 300),
+(636, 43, 1, 600);
 
 INSERT INTO `ar_product_special` (`product_special_id`, `product_id`, `customer_group_id`, `priority`, `price`, `date_start`, `date_end`) VALUES
 (459, 30, 1, 1, '13.0000', '0000-00-00', '0000-00-00'),
 (460, 30, 1, 2, '11.0000', '0000-00-00', '0000-00-00'),
-(461, 42, 1, 1, '15.0000', '0000-00-00', '0000-00-00');
+(462, 42, 1, 1, '15.0000', '0000-00-00', '0000-00-00');
 
 INSERT INTO `ar_product_to_category` (`product_id`, `category_id`) VALUES
 (28, 24),
@@ -764,33 +748,19 @@ INSERT INTO `ar_url_alias` (`url_alias_id`, `query`, `keyword`, `language_id`) V
 (842, 'information_id=3', 'privacy', 1),
 (843, 'information_id=5', 'terms', 1),
 (922, 'category_id=20', 'shoes', 1),
-(923, 'category_id=27', 'sport', 1),
-(924, 'category_id=26', 'casual', 1),
 (925, 'category_id=18', 'pants', 1),
-(926, 'category_id=46', 'women', 1),
-(927, 'category_id=45', 'men', 1),
-(928, 'category_id=25', 'shirts', 1),
-(933, 'category_id=31', 'modern', 1),
 (934, 'category_id=34', 'jackets', 1),
-(935, 'category_id=59', 'watches', 1),
 (936, 'category_id=24', 'bags', 1),
 (937, 'category_id=33', 'hats', 1),
-(942, 'category_id=28', 'striped', 1),
-(943, 'category_id=32', 'solid', 1),
-(944, 'category_id=30', 'character', 1),
-(945, 'category_id=29', 'animal', 1),
 (946, 'product_id=44', 'fitness-slim', 1),
 (949, 'product_id=45', 'summer-fashion', 1),
 (951, 'product_id=31', 'batman-v-superman', 1),
 (952, 'product_id=46', 'lion-printed', 1),
-(955, 'product_id=47', 'aeo-denim', 1),
 (959, 'product_id=41', 'spring-hip-hop', 1),
-(966, 'product_id=43', 'polo-fashion', 1),
 (968, 'product_id=29', 'geometric-plaid', 1),
 (969, 'product_id=28', 'vintage-handbag', 1),
 (970, 'product_id=30', 'mesh-breathable', 1),
 (971, 'product_id=40', 'joggers-khaki', 1),
-(972, 'product_id=42', 'canvas-daily', 1),
 (973, 'product_id=35', 'retro-wide', 1),
 (974, 'product_id=33', 'baggy-beret', 1),
 (975, 'product_id=49', 'hip-hot-skullies', 1),
@@ -807,7 +777,21 @@ INSERT INTO `ar_url_alias` (`url_alias_id`, `query`, `keyword`, `language_id`) V
 (986, 'manufacturer_id=12', 'skagen', 1),
 (987, 'manufacturer_id=14', 'spiral', 1),
 (988, 'manufacturer_id=13', 'supra', 1),
-(989, 'manufacturer_id=6', 'timberland', 1);
+(989, 'manufacturer_id=6', 'timberland', 1),
+(990, 'category_id=26', 'casual', 1),
+(992, 'category_id=27', 'sport', 1),
+(993, 'category_id=45', 'men', 1),
+(994, 'category_id=46', 'women', 1),
+(995, 'category_id=25', 'shirts', 1),
+(996, 'category_id=29', 'animal', 1),
+(997, 'category_id=30', 'character', 1),
+(998, 'category_id=31', 'modern', 1),
+(999, 'category_id=32', 'solid', 1),
+(1000, 'category_id=28', 'striped', 1),
+(1003, 'category_id=59', 'watches', 1),
+(1004, 'product_id=42', 'canvas-daily', 1),
+(1005, 'product_id=47', 'aeo-denim', 1),
+(1006, 'product_id=43', 'polo-fashion', 1);
 
 INSERT INTO `ar_voucher_theme` (`voucher_theme_id`, `image`) VALUES
 (6, 'catalog/demo/apple_logo.jpg'),
