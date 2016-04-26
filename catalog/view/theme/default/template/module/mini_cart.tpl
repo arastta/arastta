@@ -63,7 +63,7 @@
             <div class="buttons" style="min-height: 15px">
                 <?php if ($setting['button_continue']) { ?>
                 <div class="pull-left">
-                    <a class="button-continue hidden"><strong><b><i class="fa fa-angle-right"></i></b> <?php echo $button_shopping; ?></strong></a>
+                    <a class="button-continue hidden" data-dismiss="modal" aria-hidden="true"><strong><b><i class="fa fa-angle-right"></i></b> <?php echo $button_shopping; ?></strong></a>
                 </div>
                 <?php } ?>
                 <?php if ($setting['button_cart'] || $setting['button_checkout']) { ?>
