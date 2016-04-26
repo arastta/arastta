@@ -183,6 +183,12 @@ class ControllerAppearanceTheme extends Controller
         if (isset($this->request->get['theme']) && $this->validateDelete() && file_exists(DIR_CATALOG . 'view/theme/' . $this->request->get['theme'])) {
             $this->load->model('appearance/theme');
 
+            if ($this->request->get['theme'] == 'default') {
+                $this->session->data['warning'] = $this->language->get('error_default_theme');
+
+                $this->response->redirect($this->url->link('appearance/theme', 'token=' . $this->session->data['token'], 'SSL'));
+            }
+
             // Uninstall theme
             $this->uninstallTheme($this->request->get['theme']);
 
@@ -325,7 +331,11 @@ class ControllerAppearanceTheme extends Controller
 
         $data['active_theme'] = $this->config->get('config_template');
 
-        if (isset($this->error['warning'])) {
+        if (isset($this->session->data['warning'])) {
+            $data['error_warning'] = $this->session->data['warning'];
+
+            unset($this->session->data['warning']);
+        } elseif (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {
             $data['error_warning'] = '';
@@ -356,7 +366,11 @@ class ControllerAppearanceTheme extends Controller
 
         $data = $this->language->all();
 
-        if (isset($this->error['warning'])) {
+        if (isset($this->session->data['warning'])) {
+            $data['error_warning'] = $this->session->data['warning'];
+
+            unset($this->session->data['warning']);
+        } elseif (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {
             $data['error_warning'] = '';
