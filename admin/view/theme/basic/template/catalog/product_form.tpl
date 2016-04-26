@@ -275,6 +275,7 @@
                                     <label class="col-sm-12" for="input-category"><span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_category; ?></span></label>
                                     <div class="col-sm-12">
                                         <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control input-full-width" style="margin-bottom: 5px !important;"/>
+                                        <?php if (!empty($product_categories)) { ?>
                                         <div id="product-category" class="well well-sm" style="overflow: auto;">
                                             <?php foreach ($product_categories as $product_category) { ?>
                                             <div id="product-category<?php echo $product_category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_category['name']; ?>
@@ -282,6 +283,7 @@
                                             </div>
                                             <?php } ?>
                                         </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -805,14 +807,24 @@
         'select': function(item) {
             $('input[name=\'category\']').val('');
 
+            if (!$('#product-category').length) {
+                $('input[name=\'category\']').after('<div id="product-category" class="well well-sm" style="overflow: auto;"></div>');
+            }
+
             $('#product-category' + item['value']).remove();
 
             $('#product-category').append('<div id="product-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '" /></div>');
         }
     });
 
-    $('#product-category').delegate('.fa-minus-circle', 'click', function() {
+    // $('#product-category').delegate('.fa-minus-circle', 'click', function() {
+    $(document).on('click', '#product-category .fa-minus-circle', function() {
+
         $(this).parent().remove();
+
+        if (!$("div[id^='product-category'] i").hasClass('fa-minus-circle')) {
+            $('#product-category').remove();
+        }
     });
 
     $(document).on('click', '.btn-category-add', function() {
