@@ -1107,6 +1107,7 @@
 <link href="view/javascript/jquery/layout/jquery-ui.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="view/javascript/jquery/layout/jquery-ui.js" ></script>
 <script type="text/javascript" src="view/javascript/jquery/layout/jquery-lockfixed.js" ></script>
+<script type="text/javascript" src="view/javascript/jquery/layout/jquery.ui.touch-punch.js" ></script>
 <link href="view/javascript/bootstrap3-editable/css/bootstrap-editable.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="view/javascript/bootstrap3-editable/js/bootstrap-editable.js" ></script>
 <link href="../system/vendor/kartik-v/bootstrap-fileinput/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
