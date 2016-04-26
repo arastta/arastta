@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -9,7 +9,9 @@
 class ModelLocalisationLanguage extends Model {
     public function addLanguage($data) {
         $this->trigger->fire('pre.admin.language.add', array(&$data));
-        
+
+        $this->load->model('catalog/url_alias');
+
         $this->db->query("INSERT INTO " . DB_PREFIX . "language SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', locale = '" . $this->db->escape($data['locale']) . "', directory = '" . $this->db->escape($data['directory']) . "', image = '" . $this->db->escape($data['image']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', status = '" . (int)$data['status'] . "'");
 
         $this->cache->delete('language');
@@ -46,6 +48,12 @@ class ModelLocalisationLanguage extends Model {
 
         foreach ($query->rows as $category) {
             $this->db->query("INSERT INTO " . DB_PREFIX . "category_description SET category_id = '" . (int)$category['category_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($category['name']) . "', meta_description = '" . $this->db->escape($category['meta_description']) . "', meta_keyword = '" . $this->db->escape($category['meta_keyword']) . "', description = '" . $this->db->escape($category['description']) . "'");
+
+            $seo_url = $this->model_catalog_url_alias->getAlias('category', $category['category_id'], (int)$this->config->get('config_language_id'));
+
+            $alias = empty($seo_url['keyword']) ? $category['name'] : $seo_url['keyword'];
+
+            $this->model_catalog_url_alias->addAlias('category', $category['category_id'], $alias, $language_id);
         }
 
         $this->cache->delete('category');
@@ -97,6 +105,12 @@ class ModelLocalisationLanguage extends Model {
 
         foreach ($query->rows as $information) {
             $this->db->query("INSERT INTO " . DB_PREFIX . "information_description SET information_id = '" . (int)$information['information_id'] . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($information['title']) . "', description = '" . $this->db->escape($information['description']) . "'");
+
+            $seo_url = $this->model_catalog_url_alias->getAlias('information', $information['information_id'], (int)$this->config->get('config_language_id'));
+
+            $alias = empty($seo_url['keyword']) ? $information['title'] : $seo_url['keyword'];
+
+            $this->model_catalog_url_alias->addAlias('information', $information['information_id'], $alias, $language_id);
         }
 
         $this->cache->delete('information');
@@ -138,6 +152,12 @@ class ModelLocalisationLanguage extends Model {
 
         foreach ($query->rows as $product) {
             $this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int)$product['product_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($product['name']) . "', meta_description = '" . $this->db->escape($product['meta_description']) . "', meta_keyword = '" . $this->db->escape($product['meta_keyword']) . "', description = '" . $this->db->escape($product['description']) . "', tag = '" . $this->db->escape($product['tag']) . "'");
+
+            $seo_url = $this->model_catalog_url_alias->getAlias('product', $product['product_id'], (int)$this->config->get('config_language_id'));
+
+            $alias = empty($seo_url['keyword']) ? $product['name'] : $seo_url['keyword'];
+
+            $this->model_catalog_url_alias->addAlias('product', $product['product_id'], $alias, $language_id);
         }
 
         $this->cache->delete('product');
@@ -209,7 +229,15 @@ class ModelLocalisationLanguage extends Model {
 
         foreach ($query->rows as $manufacturer) {
             $this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer_description SET manufacturer_id = '" . (int)$manufacturer['manufacturer_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($manufacturer['name']) . "', description = '" . $this->db->escape($manufacturer['description']) . "', meta_title = '" . $this->db->escape($manufacturer['meta_title']) . "', meta_description = '" . $this->db->escape($manufacturer['meta_description']) . "', meta_keyword = '" . $this->db->escape($manufacturer['meta_keyword']) . "' ;");
+
+            $seo_url = $this->model_catalog_url_alias->getAlias('manufacturer', $manufacturer['manufacturer_id'], (int)$this->config->get('config_language_id'));
+
+            $alias = empty($seo_url['keyword']) ? $manufacturer['name'] : $seo_url['keyword'];
+
+            $this->model_catalog_url_alias->addAlias('manufacturer', $manufacturer['manufacturer_id'], $alias, $language_id);
         }
+
+        $this->cache->delete('manufacturer');
 
         // Menu
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
@@ -224,15 +252,19 @@ class ModelLocalisationLanguage extends Model {
             $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_description SET menu_child_id = '" . (int)$menu_child['menu_child_id'] . "', menu_id = '" . (int)$menu_child['menu_id'] . "', name = '" . $menu_child['name'] . "', link = '" . $menu_child['link'] . "', language_id = '" . (int)$language_id . "'");
         }
 
+        $this->cache->delete('menu');
+
         // Email Template
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "email_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
         foreach ($query->rows as $email) {
             $this->db->query("INSERT INTO " . DB_PREFIX . "email_description SET email_id = '" . (int)$email['email_id'] . "', name = '" . $this->db->escape($email['name']) . "', description = '" . $this->db->escape($email['description']) . "', status = '1', language_id = '" . (int)$language_id . "'");
         }
-        
+
+        $this->cache->delete('email_template');
+
         $this->trigger->fire('post.admin.language.add', array(&$language_id));
-        
+
         return $language_id;
     }
 
@@ -242,13 +274,13 @@ class ModelLocalisationLanguage extends Model {
         $this->db->query("UPDATE " . DB_PREFIX . "language SET name = '" . $this->db->escape($data['name']) . "', code = '" . $this->db->escape($data['code']) . "', locale = '" . $this->db->escape($data['locale']) . "', directory = '" . $this->db->escape($data['directory']) . "', image = '" . $this->db->escape($data['image']) . "', sort_order = '" . $this->db->escape($data['sort_order']) . "', status = '" . (int)$data['status'] . "' WHERE language_id = '" . (int)$language_id . "'");
 
         $this->cache->delete('language');
-        
+
         $this->trigger->fire('post.admin.language.edit', array(&$language_id));
     }
 
     public function deleteLanguage($language_id) {
         $this->trigger->fire('pre.admin.language.delete', array(&$language_id));
-    
+
         $this->db->query("DELETE FROM " . DB_PREFIX . "language WHERE language_id = '" . (int)$language_id . "'");
 
         $this->cache->delete('language');
@@ -310,14 +342,16 @@ class ModelLocalisationLanguage extends Model {
         $this->cache->delete('weight_class');
 
         $this->db->query("DELETE FROM " . DB_PREFIX . "recurring_description WHERE language_id = '" . (int)$language_id . "'");
-        
+
         $this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer_description WHERE language_id = '" . (int)$language_id . "'");
-        
+
         $this->db->query("DELETE FROM " . DB_PREFIX . "menu_description WHERE language_id = '" . (int)$language_id . "'");
         $this->db->query("DELETE FROM " . DB_PREFIX . "menu_child_description WHERE language_id = '" . (int)$language_id . "'");
 
         $this->db->query("DELETE FROM " . DB_PREFIX . "email_description WHERE language_id = '" . (int)$language_id . "'");
-        
+
+        $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE language_id = '" . (int)$language_id . "'");
+
         $this->trigger->fire('post.admin.language.delete', array(&$language_id));
     }
 
@@ -330,6 +364,10 @@ class ModelLocalisationLanguage extends Model {
     public function getLanguages($data = array()) {
         if ($data) {
             $sql = "SELECT * FROM " . DB_PREFIX . "language";
+
+            if (!isset($data['status'])) {
+                $sql .= " WHERE status = '1'";
+            }
 
             $sort_data = array(
                 'name',
@@ -370,7 +408,7 @@ class ModelLocalisationLanguage extends Model {
             if (!$language_data) {
                 $language_data = array();
 
-                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "language ORDER BY sort_order, name");
+                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "language WHERE status = '1' ORDER BY sort_order, name");
 
                 foreach ($query->rows as $result) {
                     $language_data[$result['code']] = array(
@@ -392,9 +430,22 @@ class ModelLocalisationLanguage extends Model {
         }
     }
 
-    public function getTotalLanguages() {
-        $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "language");
+    public function getTotalLanguages($data = array()) {
+        $where = "";
+
+        if (!isset($data['status'])) {
+            $where = " WHERE status = '1'";
+        }
+
+        $query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "language" . $where);
 
         return $query->row['total'];
+    }
+    
+    public function getLanguageByCode($code)
+    {
+        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE `code` = '" . $this->db->escape($code) . "'");
+
+        return $query->row;
     }
 }

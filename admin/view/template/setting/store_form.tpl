@@ -40,6 +40,7 @@
                         <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
                         <li><a href="#tab-seo" data-toggle="tab"><?php echo $tab_seo; ?></a></li>
                         <li><a href="#tab-security" data-toggle="tab"><?php echo $tab_security; ?></a></li>
+                        <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-general">
@@ -730,6 +731,23 @@
                                         <option value="1" <?php echo ($config_secure == '1') ? 'selected="selected"' : ''; ?>><?php echo $text_secure_checkout; ?></option>
                                         <option value="2" <?php echo ($config_secure == '2') ? 'selected="selected"' : ''; ?>><?php echo $text_secure_catalog; ?></option>
                                         <option value="3" <?php echo ($config_secure == '3') ? 'selected="selected"' : ''; ?>><?php echo $text_secure_all; ?></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-server">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_timezone; ?>"><?php echo $entry_timezone; ?></label>
+                                <div class="col-sm-10">
+                                    <select name="config_timezone" id="input-timezone" class="form-control" data-live-search="true">
+                                        <option value="UTC">UTC</option>
+                                        <?php foreach ($timezones as $tz_gname => $tz_gzones) { ?>
+                                        <optgroup label="<?php echo $tz_gname; ?>">
+                                            <?php foreach ($tz_gzones as $tz_zone => $tz_locale) { ?>
+                                            <option value="<?php echo $tz_zone; ?>" <?php echo ($config_timezone == $tz_zone) ? 'selected="selected"' : ''; ?>><?php echo $tz_locale; ?></option>
+                                            <?php } ?>
+                                        </optgroup>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>

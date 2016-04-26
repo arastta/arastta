@@ -54,6 +54,54 @@ $(document).ready(function() {
     });
 });
 
+function confirmItem(title, message) {
+    var html  = '<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">';
+        html += '  <div class="modal-dialog">';
+        html += '      <div class="modal-content">';
+        html += '          <div class="modal-header">';
+        html += '              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+        html += '              <h4 class="modal-title" id="confirmModalLabel">' + title + '</h4>';
+        html += '          </div>';
+        html += '          <div class="modal-body">';
+        html += '              <p>' + message + '</p>';
+        html += '              <p></p>';
+        html += '          </div>';
+        html += '          <div class="modal-footer">';
+        html += '              <button type="button" class="btn btn-default" data-dismiss="modal">' + button_cancel + '</button>';
+        html += '              <button type="button" class="btn btn-danger" onclick="$(\'form[id^=\\\'form-\\\']\').submit();">' + button_delete + '</button>';
+        html += '          </div>';
+        html += '      </div>';
+        html += '  </div>';
+        html += '</div>';
+
+    $('body').append(html);
+    $('#confirm-modal').modal('show');
+}
+
+function confirmItemSetLink(title, message, link) {
+    var html  = '<div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">';
+        html += '  <div class="modal-dialog">';
+        html += '      <div class="modal-content">';
+        html += '          <div class="modal-header">';
+        html += '              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+        html += '              <h4 class="modal-title" id="confirmModalLabel">' + title + '</h4>';
+        html += '          </div>';
+        html += '          <div class="modal-body">';
+        html += '              <p>' + message + '</p>';
+        html += '              <p></p>';
+        html += '          </div>';
+        html += '          <div class="modal-footer">';
+        html += '              <button type="button" class="btn btn-default" data-dismiss="modal">' + button_cancel + '</button>';
+        html += '              <a href="' + link + '" id="confirm-modal-delete" class="btn btn-danger">' + button_delete + '</a>';
+        html += '          </div>';
+        html += '      </div>';
+        html += '  </div>';
+        html += '</div>';
+
+    $('body').append(html);
+    $('#confirm-modal').modal('show');
+}
+
 function changeFilterType(text, filter_type) {
     $('.filter-type').text(text);
 
@@ -64,22 +112,6 @@ function changeFilterType(text, filter_type) {
         $('.well .input-group-btn .' + filter_type).removeClass('hidden');
         $('.well .input-group .' + filter_type).removeClass('hidden');
     }
-}
-
-function changeStatus(status) {
-    $.ajax({
-        url: 'index.php?route=common/edit/changeStatus&type=' + status_type + '&status='+ status +'&token=' + getURLVar('token'),
-        dataType: 'json',
-        data: $("form[id^='form-']").serialize(),
-        success: function(json) {
-            if(json){
-                $('.panel.panel-default').before('<div class="alert alert-warning"><i class="fa fa-warning"></i> ' + json.warning + '<button type="button" class="close" data-dismiss="alert">×</button></div>');
-            }
-            else{
-                location.reload();
-            }
-        }
-    });
 }
 
 function save(type) {

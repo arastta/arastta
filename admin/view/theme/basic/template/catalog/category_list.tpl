@@ -97,7 +97,7 @@
                                               <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
                                               <li><a onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i> <?php echo $button_enable; ?></a></li>
                                               <li><a onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i> <?php echo $button_disable; ?></a></li>
-                                              <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-category').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                              <li><a onclick="confirmItem('<?php echo $text_confirm_title; ?>', '<?php echo $text_confirm; ?>');"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
                                           </ul>
                                         </span>
                                     </div>
@@ -204,8 +204,8 @@ $('input[name=\'filter_name\']').autocomplete({
             success: function(json) {
                 response($.map(json, function(item) {
                     return {
-                        label: item['index'],
-                        name: item['name'],
+                        label: item['name'],
+                        name : item['index'],
                         value: item['category_id']
                     }
                 }));
@@ -219,8 +219,6 @@ $('input[name=\'filter_name\']').autocomplete({
 });
 //--></script>
 <script type="text/javascript"><!--
-var status_type = 'category';
-
 function filter() {
     url = 'index.php?route=catalog/category&token=<?php echo $token; ?>';
 

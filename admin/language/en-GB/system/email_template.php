@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -83,7 +83,7 @@ $_['{telephone}']        = 'Telephone';
 
 // Demo Data
 $_['demo_username']         = 'Super User';
-$_['demo_store_name']       = 'Arsatta E-Commerce';
+$_['demo_store_name']       = 'Arastta eCommerce';
 $_['demo_ip_address']       = '127.0.0.1';
 $_['demo_firstname']        = 'Ada';
 $_['demo_lastname']         = 'Bulut';

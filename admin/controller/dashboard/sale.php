@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -33,18 +33,23 @@ class ControllerDashboardSale extends Controller {
         $sale_total = $this->model_report_sale->getTotalSales();
 
         if ($sale_total > 1000000000000) {
-            $data['total'] = round($sale_total / 1000000000000, 1) . 'T';
+            $data['total'] = round($sale_total / 1000000000000, 1);
+            $suffix = 'T';
         } elseif ($sale_total > 1000000000) {
-            $data['total'] = round($sale_total / 1000000000, 1) . 'B';
+            $data['total'] = round($sale_total / 1000000000, 1);
+            $suffix = 'B';
         } elseif ($sale_total > 1000000) {
-            $data['total'] = round($sale_total / 1000000, 1) . 'M';
+            $data['total'] = round($sale_total / 1000000, 1);
+            $suffix = 'M';
         } elseif ($sale_total > 1000) {
-            $data['total'] = round($sale_total / 1000, 1) . 'K';
+            $data['total'] = round($sale_total / 1000, 1);
+            $suffix = 'K';
         } else {
             $data['total'] = round($sale_total);
+            $suffix = '';
         }
 
-        $data['total'] = $this->currency->format($sale_total, $this->config->get('config_currency'));
+        $data['total'] = $this->currency->format($data['total'], $this->config->get('config_currency')) . $suffix;
         
         $data['sale'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
 

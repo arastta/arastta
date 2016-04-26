@@ -1477,6 +1477,15 @@ body.folded .theme-overlay .theme-wrap {
     }
 }
 
+@media only screen and (min-width: 768px) {
+    .theme-overlay .theme-wrap {
+        width: 70%;
+        position: fixed;
+        top: 9%;
+        left: 215px;
+    }
+}
+
 /* Admin menu is folded */
 @media only screen and (max-width: 900px) {
     .theme-overlay .theme-wrap {

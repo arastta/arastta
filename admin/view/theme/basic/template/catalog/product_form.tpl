@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-product" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success" data-original-title="Save"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-product" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-product" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -36,8 +37,8 @@
                                     <?php foreach ($languages as $language) { ?>
                                     <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
                                         <div class="form-group required">
-                                            <label class="col-sm-2 control-label" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-12" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
+                                            <div class="col-sm-12">
                                                 <input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name<?php echo $language['language_id']; ?>" class="form-control input-full-width" />
                                                 <?php if (isset($error_name[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
@@ -46,8 +47,8 @@
                                         </div>
                                         <?php if (!empty($seo_url[$language['language_id']])) { ?>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><?php echo $entry_seo_url; ?></span></label>
-                                            <div class="col-sm-10" style="padding-top: 5px;">
+                                            <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><?php echo $entry_seo_url; ?></span></label>
+                                            <div class="col-sm-12" style="padding-top: 5px;">
                                                 <span>
                                                 <?php $link = str_replace(basename($preview[$language['language_id']]), '', $preview[$language['language_id']]);
                                                     echo $link; ?><span class="seo-url" data-lang="<?php echo $language['language_id']; ?> "><?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?></span>
@@ -59,8 +60,8 @@
                                         </div>
                                         <?php } ?>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-12" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
+                                            <div class="col-sm-12">
                                                 <textarea name="product_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['description'] : ''; ?></textarea>
                                             </div>
                                         </div>
@@ -104,90 +105,102 @@
                                 <fieldset>
                                     <legend><?php echo $entry_pricing; ?></legend>
                                     <div class="form-group required">
-                                        <label class="col-sm-3 col-md-2 control-label" for="input-price"><?php echo $entry_price; ?></label>
-                                        <div class="col-sm-9 col-md-4">
-                                            <div class="input-group price">
-                                                <input type="text" name="price" value="<?php echo $price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control" />
-                                                <select name="tax_class_id" id="input-tax-class" class="form-control">
-                                                    <option value="0"><?php echo $text_none; ?></option>
-                                                    <?php foreach ($tax_classes as $tax_class) { ?>
-                                                    <?php if ($tax_class['tax_class_id'] == $tax_class_id) { ?>
-                                                    <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
-                                                    <?php } else { ?>
-                                                    <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
-                                                    <?php } ?>
-                                                    <?php } ?>
-                                                </select>
+                                        <div class="col-sm-6">
+                                            <label class="col-sm-12" for="input-price"><?php echo $entry_price; ?></label>
+                                            <div class="col-sm-12">
+                                                <div class="input-group price">
+                                                    <input type="text" name="price" value="<?php echo $price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control" />
+                                                    <select name="tax_class_id" id="input-tax-class" class="form-control">
+                                                        <option value="0"><?php echo $text_none; ?></option>
+                                                        <?php foreach ($tax_classes as $tax_class) { ?>
+                                                        <?php if ($tax_class['tax_class_id'] == $tax_class_id) { ?>
+                                                        <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
+                                                        <?php } else { ?>
+                                                        <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
+                                                        <?php } ?>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                        <label class="col-sm-3 col-md-2 control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
-                                        <div class="col-sm-9 col-md-4">
-                                            <input type="text" name="quantity" value="<?php echo $quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control" />
+                                        <div class="col-sm-6">
+                                            <label class="col-sm-12" for="input-quantity"><?php echo $entry_quantity; ?></label>
+                                            <div class="col-sm-12">
+                                                <input type="text" name="quantity" value="<?php echo $quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control" />
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
                                 <fieldset class="data-fieldset">
                                     <legend><?php echo $entry_inventory; ?></legend>
                                     <div class="form-group required">
-                                        <label class="col-sm-3 col-md-2 control-label" for="input-model"><?php echo $entry_model; ?></label>
-                                        <div class="col-sm-9 col-md-4">
-                                            <input type="text" name="model" value="<?php echo $model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" class="form-control" />
-                                            <?php if ($error_model) { ?>
-                                            <div class="text-danger"><?php echo $error_model; ?></div>
-                                            <?php } ?>
+                                        <div class="col-sm-6">
+                                            <label class="col-sm-12" for="input-model"><?php echo $entry_model; ?></label>
+                                            <div class="col-sm-12">
+                                                <input type="text" name="model" value="<?php echo $model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" class="form-control" />
+                                                <?php if ($error_model) { ?>
+                                                <div class="text-danger"><?php echo $error_model; ?></div>
+                                                <?php } ?>
+                                            </div>
                                         </div>
-                                        <label class="col-sm-3 col-md-2 control-label" for="input-stock-status"><span data-toggle="tooltip" title="<?php echo $help_stock_status; ?>"><?php echo $entry_stock_status; ?></span></label>
-                                        <div class="col-sm-9 col-md-4">
-                                            <select name="stock_status_id" id="input-stock-status" class="form-control">
-                                                <?php foreach ($stock_statuses as $stock_status) { ?>
-                                                <?php if ($stock_status['stock_status_id'] == $stock_status_id) { ?>
-                                                <option value="<?php echo $stock_status['stock_status_id']; ?>" selected="selected"><?php echo $stock_status['name']; ?></option>
-                                                <?php } else { ?>
-                                                <option value="<?php echo $stock_status['stock_status_id']; ?>"><?php echo $stock_status['name']; ?></option>
-                                                <?php } ?>
-                                                <?php } ?>
-                                            </select>
+                                        <div class="col-sm-6">
+                                            <label class="col-sm-12" for="input-stock-status"><span data-toggle="tooltip" title="<?php echo $help_stock_status; ?>"><?php echo $entry_stock_status; ?></span></label>
+                                            <div class="col-sm-12">
+                                                <select name="stock_status_id" id="input-stock-status" class="form-control">
+                                                    <?php foreach ($stock_statuses as $stock_status) { ?>
+                                                    <?php if ($stock_status['stock_status_id'] == $stock_status_id) { ?>
+                                                    <option value="<?php echo $stock_status['stock_status_id']; ?>" selected="selected"><?php echo $stock_status['name']; ?></option>
+                                                    <?php } else { ?>
+                                                    <option value="<?php echo $stock_status['stock_status_id']; ?>"><?php echo $stock_status['name']; ?></option>
+                                                    <?php } ?>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
                                 <fieldset class="data-fieldset">
                                     <legend><?php echo $entry_shipping_group; ?></legend>
                                     <div class="form-group required">
-                                        <label class="col-sm-3 col-md-2 control-label" for="input-weight"><?php echo $entry_weight; ?></label>
-                                        <div class="col-sm-9 col-md-4">
-                                            <div class="input-group price">
-                                                <input type="text" name="weight" value="<?php echo $weight; ?>" placeholder="<?php echo $entry_weight; ?>" id="input-weight" class="form-control" />
-                                                <select name="weight_class_id" id="input-weight-class" class="form-control">
-                                                    <?php foreach ($weight_classes as $weight_class) { ?>
-                                                    <?php if ($weight_class['weight_class_id'] == $weight_class_id) { ?>
-                                                    <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
-                                                    <?php } else { ?>
-                                                    <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
-                                                    <?php } ?>
-                                                    <?php } ?>
-                                                </select>
+                                        <div class="col-sm-6">
+                                            <label class="col-sm-12" for="input-weight"><?php echo $entry_weight; ?></label>
+                                            <div class="col-sm-12">
+                                                <div class="input-group price">
+                                                    <input type="text" name="weight" value="<?php echo $weight; ?>" placeholder="<?php echo $entry_weight; ?>" id="input-weight" class="form-control" />
+                                                    <select name="weight_class_id" id="input-weight-class" class="form-control">
+                                                        <?php foreach ($weight_classes as $weight_class) { ?>
+                                                        <?php if ($weight_class['weight_class_id'] == $weight_class_id) { ?>
+                                                        <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
+                                                        <?php } else { ?>
+                                                        <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
+                                                        <?php } ?>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                        <label class="col-sm-3 col-md-2 control-label"><?php echo $entry_shipping; ?></label>
-                                        <div class="col-sm-9 col-md-4">
-                                            <label class="radio-inline">
-                                                <?php if ($shipping) { ?>
-                                                <input type="radio" name="shipping" value="1" checked="checked" />
-                                                <?php echo $text_yes; ?>
-                                                <?php } else { ?>
-                                                <input type="radio" name="shipping" value="1" />
-                                                <?php echo $text_yes; ?>
-                                                <?php } ?>
-                                            </label>
-                                            <label class="radio-inline">
-                                                <?php if (!$shipping) { ?>
-                                                <input type="radio" name="shipping" value="0" checked="checked" />
-                                                <?php echo $text_no; ?>
-                                                <?php } else { ?>
-                                                <input type="radio" name="shipping" value="0" />
-                                                <?php echo $text_no; ?>
-                                                <?php } ?>
-                                            </label>
+                                        <div class="col-sm-6">
+                                            <label class="col-sm-12"><?php echo $entry_shipping; ?></label>
+                                            <div class="col-sm-12">
+                                                <label class="radio-inline">
+                                                    <?php if ($shipping) { ?>
+                                                    <input type="radio" name="shipping" value="1" checked="checked" />
+                                                    <?php echo $text_yes; ?>
+                                                    <?php } else { ?>
+                                                    <input type="radio" name="shipping" value="1" />
+                                                    <?php echo $text_yes; ?>
+                                                    <?php } ?>
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <?php if (!$shipping) { ?>
+                                                    <input type="radio" name="shipping" value="0" checked="checked" />
+                                                    <?php echo $text_no; ?>
+                                                    <?php } else { ?>
+                                                    <input type="radio" name="shipping" value="0" />
+                                                    <?php echo $text_no; ?>
+                                                    <?php } ?>
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -206,8 +219,8 @@
                         <div class="panel-body">
                             <div class="publish">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><?php echo $text_enabled; ?></label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-12"><?php echo $text_enabled; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($status) { ?>
                                             <input type="radio" name="status" value="1" checked="checked" />
@@ -229,8 +242,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="input-date-available"><?php echo $entry_date; ?></label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-12" for="input-date-available"><?php echo $entry_date; ?></label>
+                                    <div class="col-sm-12">
                                         <div class="input-group date">
                                             <input type="text" name="date_available" value="<?php echo $date_available; ?>" placeholder="<?php echo $entry_date_available; ?>" data-date-format="YYYY-MM-DD" id="input-date-available" class="form-control" />
                                         <span class="input-group-btn">
@@ -252,16 +265,17 @@
                         <div class="panel-body">
                             <div class="links">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="input-manufacturer"><span data-toggle="tooltip" title="<?php echo $help_manufacturer; ?>"><?php echo $entry_manufacturer; ?></span></label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-12" for="input-manufacturer"><span data-toggle="tooltip" title="<?php echo $help_manufacturer; ?>"><?php echo $entry_manufacturer; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="manufacturer" value="<?php echo $manufacturer ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer" class="form-control input-full-width" />
                                         <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="input-category"><span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_category; ?></span></label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-12" for="input-category"><span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_category; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control input-full-width" style="margin-bottom: 5px !important;"/>
+                                        <?php if (!empty($product_categories)) { ?>
                                         <div id="product-category" class="well well-sm" style="overflow: auto;">
                                             <?php foreach ($product_categories as $product_category) { ?>
                                             <div id="product-category<?php echo $product_category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_category['name']; ?>
@@ -269,11 +283,12 @@
                                             </div>
                                             <?php } ?>
                                         </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="input-tag<?php echo $language['language_id']; ?>"><?php echo $entry_tag; ?></label>
-                                    <div class="col-sm-9 tags-select">
+                                    <label class="col-sm-12" for="input-tag<?php echo $language['language_id']; ?>"><?php echo $entry_tag; ?></label>
+                                    <div class="col-sm-12 tags-select">
                                         <select id="tags-<?php echo $language['language_id']; ?>" name="product_description[<?php echo $language['language_id']; ?>][tag][]" class="inputbox chzn-done tags-multi-select hidden" size="5" multiple="multiple" style="display: none !important;">
                                             <?php if (!empty($product_description[$language['language_id']]['tag'])) {
                                                     foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
@@ -304,13 +319,13 @@
                         <div class="panel-body">
                             <div class="options">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="input-option"><span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_option; ?></span></label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-12" for="input-option"><span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_option; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="option" value="" placeholder="<?php echo $entry_option; ?>" id="input-option" class="form-control input-full-width" />
                                     </div>
                                 </div>
                                 <div class="form-group <?php if (empty($product_options)) { ?>hidden <?php } ?>">
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-12">
                                         <ul class="nav nav-pills nav-stacked" id="option">
                                             <?php $option_row = 0; ?>
                                             <?php foreach ($product_options as $product_option) { ?>
@@ -319,7 +334,7 @@
                                             <?php } ?>
                                         </ul>
                                     </div>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-12">
                                         <div class="tab-content" style="padding-top: 0px !important;">
                                             <?php $option_row = 0; ?>
                                             <?php $option_value_row = 0; ?>
@@ -330,7 +345,7 @@
                                                 <input type="hidden" name="product_option[<?php echo $option_row; ?>][option_id]" value="<?php echo $product_option['option_id']; ?>" />
                                                 <input type="hidden" name="product_option[<?php echo $option_row; ?>][type]" value="<?php echo $product_option['type']; ?>" />
                                                 <div class="hidden">
-                                                    <label class="col-sm-2 control-label" for="input-required<?php echo $option_row; ?>"><?php echo $entry_required; ?></label>
+                                                    <label class="col-sm-12" for="input-required<?php echo $option_row; ?>"><?php echo $entry_required; ?></label>
                                                     <div class="col-sm-10">
                                                         <select name="product_option[<?php echo $option_row; ?>][required]" id="input-required<?php echo $option_row; ?>" class="form-control">
                                                             <?php if ($product_option['required']) { ?>
@@ -481,7 +496,7 @@
                                                                 <?php } ?>
                                                             </select>
                                                                 <input type="text hidden" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][weight]" value="<?php echo $product_option_value['weight']; ?>" placeholder="<?php echo $entry_weight; ?>" class="form-control" /></td>
-                                                            <td class="text-right"><button type="button" onclick="$(this).tooltip('destroy');$('#option-value-row<?php echo $option_value_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                                            <td class="text-right"><button type="button" onclick="$(this).tooltip('destroy');$('#option-value-row<?php echo $option_value_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa-minus-circle"></i></button></td>
                                                         </tr>
                                                         <?php $option_value_row++; ?>
                                                         <?php } ?>
@@ -489,7 +504,7 @@
                                                         <tfoot>
                                                         <tr>
                                                             <td colspan="2"></td>
-                                                            <td class="text-left"><button type="button" onclick="addOptionValue('<?php echo $option_row; ?>');" data-toggle="tooltip" title="<?php echo $button_option_value_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                                                            <td class="text-right"><button type="button" onclick="addOptionValue('<?php echo $option_row; ?>');" data-toggle="tooltip" title="<?php echo $button_option_value_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button></td>
                                                         </tr>
                                                         </tfoot>
                                                     </table>
@@ -582,16 +597,20 @@
             <input type="hidden" name="points" value="<?php echo $points; ?>" placeholder="<?php echo $entry_points; ?>" id="input-points" class="form-control" />
         </form>
     </div>
-    <style>
+    <style type="text/css"><!--
         #thumb-image img {
             width: 100% !important;
         }
-    </style>
+        .input-group.price .form-control {
+            min-width: 80px;
+        }
+    //--></style>
     <script type="text/javascript"><!--
     $(document).ready(function() {
         <?php foreach ($languages as $language) { ?>
-            textEditor('#input-description<?php echo $language["language_id"]; ?>');
-            <?php } ?>
+        textEditor('#input-description<?php echo $language["language_id"]; ?>');
+        <?php } ?>
+        
         $.fn.editable.defaults.mode = 'inline';
 
         $('.seo-url').editable({
@@ -621,6 +640,15 @@
                 url: 'index.php?route=catalog/manufacturer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
                 dataType: 'json',
                 success: function(json) {
+                    if ((typeof(json) != 'undefined' || typeof(json) != 'object') && (json == null || json == '')) {
+                        $('.btn-manufacturer-add').remove();
+                        $('.tooltip.fade.top.in').removeClass('in');
+
+                        html = '<button type="button" data-toggle="tooltip" title="<?php echo $button_manufacturer_add; ?>" class="btn btn-sm btn-default btn-manufacturer-add" data-original-title="Add New Manufacturer"><i class="fa fa-plus text-success"></i></button>';
+
+                        $('input[name=\'manufacturer\']').after(html);
+                    }
+
                     json.unshift({
                         manufacturer_id: 0,
                         name: '<?php echo $text_none; ?>'
@@ -636,10 +664,35 @@
             });
         },
         'select': function(item) {
+            $('.btn-manufacturer-add').remove();
+            $('.tooltip.fade.top.in').removeClass('in');
 
             $('input[name=\'manufacturer\']').val(item['label']);
             $('input[name=\'manufacturer_id\']').val(item['value']);
         }
+    });
+
+    $(document).on('click', '.btn-manufacturer-add', function() {
+        $.ajax({
+            url: 'index.php?route=catalog/manufacturer/quick&token=<?php echo $token; ?>',
+            type: 'post',
+            data: {name: $('#input-manufacturer').val(), sort_order: '0', status: '1'},
+            dataType: 'json',
+            success: function(json) {
+                if (json['success']) {
+                    $('.btn-manufacturer-add').remove();
+                    $('.tooltip.fade.top.in').removeClass('in');
+
+                    $('input[name=\'manufacturer_id\']').val(json['manufacturer_id']);
+
+                    $('#input-manufacturer').after('<p id="quick-manufacturer-success" class="text-success">' + json['success'] + '</p>').fadeIn(3000);
+                }
+            }
+        }).done(function() {
+            setTimeout(function(){
+                $('#quick-manufacturer-success').remove();
+            }, 3000);
+        });
     });
 
     <?php if (!empty($tag_key)) { ?>
@@ -733,6 +786,15 @@
                 url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
                 dataType: 'json',
                 success: function(json) {
+                    if ((typeof(json) != 'undefined' || typeof(json) != 'object') && (json == null || json == '')) {
+                        $('.btn-category-add').remove();
+                        $('.tooltip.fade.top.in').removeClass('in');
+
+                        html = '<a href="javascript:void(0);" data-toggle="tooltip" title="<?php echo $button_category_add; ?>" class="btn btn-sm btn-default btn-category-add" data-original-title="Add New Category"><i class="fa fa-plus text-success"></i></a>';
+
+                        $('input[name=\'category\']').after(html);
+                    }
+
                     response($.map(json, function(item) {
                         return {
                             label: item['name'],
@@ -745,14 +807,55 @@
         'select': function(item) {
             $('input[name=\'category\']').val('');
 
+            if (!$('#product-category').length) {
+                $('input[name=\'category\']').after('<div id="product-category" class="well well-sm" style="overflow: auto;"></div>');
+            }
+
             $('#product-category' + item['value']).remove();
 
             $('#product-category').append('<div id="product-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '" /></div>');
         }
     });
 
-    $('#product-category').delegate('.fa-minus-circle', 'click', function() {
+    // $('#product-category').delegate('.fa-minus-circle', 'click', function() {
+    $(document).on('click', '#product-category .fa-minus-circle', function() {
+
         $(this).parent().remove();
+
+        if (!$("div[id^='product-category'] i").hasClass('fa-minus-circle')) {
+            $('#product-category').remove();
+        }
+    });
+
+    $(document).on('click', '.btn-category-add', function() {
+        $.ajax({
+            url: 'index.php?route=catalog/category/quick&token=<?php echo $token; ?>',
+            type: 'post',
+            data: {name: $('#input-category').val(), sort_order: '0', status: '1', column: '1', parent_id: '0'},
+            dataType: 'json',
+            success: function(json) {
+                if (json['success']) {
+                    $('.btn-category-add').remove();
+                    $('.tooltip.fade.top.in').removeClass('in');
+
+                    html  = '<div id="product-category' + json['category_id'] + '">';
+                    html += '    <i class="fa fa-minus-circle"></i> ' + $('#input-category').val();
+                    html += '    <input type="hidden" name="product_category[]" value="' + json['category_id'] + '">';
+                    html += '</div>';
+
+                    $('#input-category').val('');
+
+                    $('#product-category').append(html);
+
+                    $('#input-category').after('<p id="quick-category-success" class="text-success">' + json['success'] + '</p>').fadeIn(3000);
+                }
+            }
+        }).done(function() {
+            setTimeout(function(){
+                $('#quick-category-success').fadeOut();
+                $('#quick-category-success').remove();
+            }, 3000);
+        });
     });
     //--></script>
     <script type="text/javascript"><!--
@@ -784,7 +887,7 @@
             html += '   <input type="hidden" name="product_option[' + option_row + '][type]" value="' + item['type'] + '" />';
 
             html += '   <div class="hidden">';
-            html += '     <label class="col-sm-2 control-label" for="input-required' + option_row + '"><?php echo $entry_required; ?></label>';
+            html += '     <label class="col-sm-12" for="input-required' + option_row + '"><?php echo $entry_required; ?></label>';
             html += '     <div class="col-sm-10"><select name="product_option[' + option_row + '][required]" id="input-required' + option_row + '" class="form-control">';
             html += '         <option value="1"><?php echo $text_yes; ?></option>';
             html += '         <option value="0" selected="selected"><?php echo $text_no; ?></option>';
@@ -848,7 +951,7 @@
                 html += '    <tfoot>';
                 html += '      <tr>';
                 html += '        <td colspan="2"></td>';
-                html += '        <td class="text-right"><button type="button" onclick="addOptionValue(' + option_row + ');" data-toggle="tooltip" title="<?php echo $button_option_value_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>';
+                html += '        <td class="text-right"><button type="button" onclick="addOptionValue(' + option_row + ');" data-toggle="tooltip" title="<?php echo $button_option_value_add; ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-circle"></i></button></td>';
                 html += '      </tr>';
                 html += '    </tfoot>';
                 html += '  </table>';
@@ -926,7 +1029,7 @@
         html += '    <option value="-">-</option>';
         html += '  </select>';
         html += '  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight]" value="" placeholder="<?php echo $entry_weight; ?>" class="form-control" /></td>';
-        html += '  <td class="text-right"><button type="button" onclick="$(this).tooltip(\'destroy\');$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" rel="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-right"><button type="button" onclick="$(this).tooltip(\'destroy\');$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" rel="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#option-value' + option_row + ' tbody').append(html);
@@ -942,9 +1045,9 @@
 
     function addImage() {
         html  = '<tr id="image-row' + image_row + '">';
-        html += '  <td class="text-left"><a href="" id="thumb-image' + image_row + '"data-toggle="image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /><input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
+        html += '  <td class="text-left"><a href="" id="thumb-image' + image_row + '"data-toggle="image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a><input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
         html += '  <td class="text-right"><input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
-        html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+        html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
         $('#images tbody').append(html);
@@ -970,7 +1073,7 @@
     $('#language a:first').tab('show');
     $('#option a:first').tab('show');
     //--></script></div>
-<script type="text/javascript">
+    <script type="text/javascript"><!--
     $(document).ready(function() {
         $("#input-image-addon").fileinput({
             allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
@@ -999,11 +1102,12 @@
 
         BasicImage.init();
     });
-</script>
+    //--></script>
 <?php echo $footer; ?>
 <link href="view/javascript/jquery/layout/jquery-ui.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="view/javascript/jquery/layout/jquery-ui.js" ></script>
 <script type="text/javascript" src="view/javascript/jquery/layout/jquery-lockfixed.js" ></script>
+<script type="text/javascript" src="view/javascript/jquery/layout/jquery.ui.touch-punch.js" ></script>
 <link href="view/javascript/bootstrap3-editable/css/bootstrap-editable.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="view/javascript/bootstrap3-editable/js/bootstrap-editable.js" ></script>
 <link href="../system/vendor/kartik-v/bootstrap-fileinput/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />

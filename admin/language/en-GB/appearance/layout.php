@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -16,16 +16,25 @@ $_['text_list']           = 'Layout List';
 $_['text_add']            = 'Add Layout';
 $_['text_edit']           = 'Edit Layout';
 $_['text_default']        = 'Default';
+$_['text_header_top']     = 'Header Top';
+$_['text_top']            = 'Top';
 $_['text_content_top']    = 'Content Top';
+$_['text_main_top']       = 'Main Top';
 $_['text_content_bottom'] = 'Content Bottom';
+$_['text_main_bottom']    = 'Main Bottom';
 $_['text_column_left']    = 'Column Left';
+$_['text_left']           = 'Left';
 $_['text_column_right']   = 'Column Right';
+$_['text_right']          = 'Right';
 $_['text_module']         = 'Modules';
 $_['text_header']         = 'Header';
+$_['text_bottom']         = 'Bottom';
 $_['text_footer']         = 'Footer';
+$_['text_footer_bottom']  = 'Footer Bottom';
 $_['text_drag_and_drop']  = 'Drag &amp; drop modules here';
 $_['text_confirm']        = 'Are you sure?';
 $_['text_close']          = 'Close';
+$_['text_theme']          = 'Using <em> %s </em> theme';
 
 // Button
 $_['button_new']         = 'New';

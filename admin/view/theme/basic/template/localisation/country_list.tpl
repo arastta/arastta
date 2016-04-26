@@ -3,7 +3,7 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right"><a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
-                <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-country').submit() : false;"><i class="fa fa-trash-o"></i></button>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirmItem('<?php echo $text_confirm_title; ?>', '<?php echo $text_confirm; ?>');"><i class="fa fa-trash-o"></i></button>
             </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
@@ -111,7 +111,9 @@
                                           </a>
                                           <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
                                               <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                                              <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-country').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                              <li><a onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i> <?php echo $button_enable; ?></a></li>
+                                              <li><a onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i> <?php echo $button_disable; ?></a></li>
+                                              <li><a onclick="confirmItem('<?php echo $text_confirm_title; ?>', '<?php echo $text_confirm; ?>');"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
                                           </ul>
                                         </span>
                                     </div></td>
@@ -130,6 +132,11 @@
                                     <?php } else { ?>
                                     <a href="<?php echo $sort_iso_code_3; ?>"><?php echo $column_iso_code_3; ?></a>
                                     <?php } ?></td>
+                                <td class="text-left"><?php if ($sort == 'status') { ?>
+                                    <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
+                                    <?php } else { ?>
+                                    <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
+                                    <?php } ?></td>
                             </tr>
                             </thead>
                             <tbody>
@@ -146,11 +153,12 @@
                                     <?php echo $country['name']; ?></td>
                                 <td class="text-left"><?php echo $country['iso_code_2']; ?></td>
                                 <td class="text-left"><?php echo $country['iso_code_3']; ?></td>
+                                <td class="text-left"><?php echo $country['status']; ?></td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>
                             <tr>
-                                <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+                                <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
                             </tr>
                             <?php } ?>
                             </tbody>

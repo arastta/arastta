@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -73,6 +73,7 @@ class User extends Object {
             $params = json_decode($user_query->row['params'], true);
 
             $this->session->data['theme'] = !empty($params['theme']) ? $params['theme'] : 'basic';
+            $this->session->data['admin_language'] = !empty($params['language']) ? $params['language'] : $this->config->get('config_admin_language');
 
             $this->user_id = $user_query->row['user_id'];
             $this->username = $user_query->row['username'];

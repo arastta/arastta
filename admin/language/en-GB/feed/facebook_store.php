@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -19,6 +19,7 @@ $_['tab_products']                   = 'Products';
 $_['text_edit']                      = 'Facebook Store Edit';
 $_['text_success']                   = 'Success: You have modified Facebook Store feed!';
 $_['text_remove_feed']               = 'Are you sure you want to remove this item?';
+$_['text_drag_and_drop']             = 'Drag &amp; drop modules here';
 
 // Entry
 $_['entry_app_id']                   = 'Facebook App ID';

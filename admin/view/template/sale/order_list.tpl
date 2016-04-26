@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </div>
-                <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+                <form method="post" action="" enctype="multipart/form-data" target="_blank" id="form-order">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead>
@@ -250,6 +250,10 @@
         }
     });
 
+    // IE and Edge fix!
+    $('#button-shipping, #button-invoice, #button-invoicepdf').on('click', function(e) {
+        $('#form-order').attr('action', this.getAttribute('formAction'));
+    });
     $('input[name^=\'selected\']:first').trigger('change');
 
     $('a[id^=\'button-delete\']').on('click', function(e) {

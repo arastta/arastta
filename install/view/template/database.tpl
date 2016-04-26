@@ -71,6 +71,9 @@
     </div>
 </form>
 <script type="text/javascript">
+    // set focus on username
+    $('input[name=db_username]').focus();
+    
     $('#advanced-settings').on('hidden.bs.collapse', function() {
         $('#btn-show-advanced').html('<i class="fa fa-chevron-down"></i>');
     });

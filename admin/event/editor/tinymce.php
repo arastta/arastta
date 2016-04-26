@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -14,14 +14,14 @@ class EventEditorTinymce extends Event
         'format'        => array('bold', 'italic'),
         'view'          => array('alignleft', 'aligncenter', 'alignright', 'alignjustify'),
         'file'          => array('bullist', 'numlist', 'outdent', 'indent'),
-        'insert'        => array('link', 'image'),
+        'insert'        => array('link', 'image_manager'),
         'tools'         => array('emoticons', 'autoresize', 'imagetools')
     );
 
     public $toolbar = array(
-        'insert'     => array('advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'print', 'preview', 'anchor'),
+        'insert'     => array('advlist', 'autolink', 'lists', 'link', 'charmap', 'print', 'preview', 'anchor'),
         'view'       => array('searchreplace', 'visualblocks', 'code', 'fullscreen'),
-        'table'      => array('insertdatetime', 'media', 'table', 'contextmenu', 'paste', 'imagetools'),
+        'table'      => array('insertdatetime', 'media', 'table', 'contextmenu', 'paste', 'image_manager'),
         'tools'      => array('emoticons', 'autoresize', 'textcolor', 'template' )
     );
 
@@ -32,6 +32,14 @@ class EventEditorTinymce extends Event
     public function preAdminEditor()
     {
         $editor = $this->config->get('config_text_editor');
+
+        if ($this->user->isLogged()) {
+            $user = $this->user->getParams();
+
+            if (!empty($user['editor'])) {
+                $editor = $user['editor'];
+            }
+        }
 
         $this->load->model('setting/setting');
 

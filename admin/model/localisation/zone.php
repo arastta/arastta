@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -102,6 +102,21 @@ class ModelLocalisationZone extends Model {
         return $query->rows;
     }
 
+    public function getZoneStatus()
+    {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone");
+
+        $zone_status = array();
+
+        foreach ($query->rows as $row) {
+            $zone_status[$row['zone_id']] = array(
+                'status' => $row['status']
+            );
+        }
+
+        return $zone_status;
+    }
+    
     public function getZonesByCountryId($country_id) {
         $zone_data = $this->cache->get('zone.' . (int)$country_id);
 

@@ -179,23 +179,4 @@
         pickTime: false
     });
     //--></script></div>
-
-<script type="text/javascript"><!--
-function changeStatus(status){
-    $.ajax({
-        url: 'index.php?route=common/edit/changeStatus&type=review&status='+ status +'&token=<?php echo $token; ?>',
-        dataType: 'json',
-        data: $("form[id^='form-']").serialize(),
-        success: function(json) {
-            if(json){
-                $('.panel.panel-default').before('<div class="alert alert-warning"><i class="fa fa-warning"></i> ' + json.warning + '<button type="button" class="close" data-dismiss="alert">×</button></div>');
-            }
-            else{
-                location.reload();
-            }
-        }
-    });
-}
-//--></script>
-
 <?php echo $footer; ?>

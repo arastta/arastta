@@ -6,8 +6,8 @@
             <div class="pull-right">
                 <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus"></i></a>
                 <a href="<?php echo $upload; ?>" data-toggle="tooltip" title="<?php echo $button_upload; ?>" class="btn btn-default" data-original-title="<?php echo $button_upload; ?>"><i class="fa fa-upload"></i></a>
-                <button type="button" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-default" onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i></button>
-                <button type="button" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-default" onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i></button>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-default" onclick="changeStatus(1)" <?php echo ($filter_type == 'module') ? 'disabled' : ''; ?>><i class="fa fa-check-circle text-success"></i></button>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-default" onclick="changeStatus(0)" <?php echo ($filter_type == 'module') ? 'disabled' : ''; ?>><i class="fa fa-times-circle text-danger"></i></button>
             </div>
         </div>
     </div>
@@ -55,6 +55,7 @@
                                     <option value="feed" <?php echo ($filter_type == 'feed') ? 'selected="selected"' : ''; ?> ><?php echo $text_feed; ?></option>
                                     <option value="editor" <?php echo ($filter_type == 'editor') ? 'selected="selected"' : ''; ?> ><?php echo $text_editor; ?></option>
                                     <option value="captcha" <?php echo ($filter_type == 'captcha') ? 'selected="selected"' : ''; ?> ><?php echo $text_captcha; ?></option>
+                                    <option value="twofactorauth" <?php echo ($filter_type == 'twofactorauth') ? 'selected="selected"' : ''; ?> ><?php echo $text_twofactorauth; ?></option>
                                     <option value="other" <?php echo ($filter_type == 'other') ? 'selected="selected"' : ''; ?> ><?php echo $text_other; ?></option>
                                 </select>
                             </div>
@@ -79,7 +80,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <form id="form" method="post">
+                    <form id="form-extension" method="post">
                         <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
@@ -153,12 +154,15 @@
                             </tbody>
                         </table>
                     </form>
+                    <div class="row">
+                        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+                        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
     url = 'index.php?route=extension/extension&token=<?php echo $token; ?>';
@@ -189,22 +193,5 @@ $('#button-filter').on('click', function() {
 
     location = url;
 });
-
-function changeStatus(status){
-    $.ajax({
-        url: 'index.php?route=extension/extension/changeStatus&status='+ status +'&token=<?php echo $token; ?>',
-        dataType: 'json',
-        data: $("form").serialize(),
-        success: function(json) {
-            if(json){
-                $('.panel.panel-default').before('<div class="alert alert-warning"><i class="fa fa-warning"></i> ' + json.warning + '<button type="button" class="close" data-dismiss="alert">×</button></div>');
-            }
-            else{
-                location.reload();
-            }
-        }
-    });
-}
 //--></script>
-
 <?php echo $footer; ?>

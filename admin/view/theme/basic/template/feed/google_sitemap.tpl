@@ -23,8 +23,8 @@
                         <div class="panel-body">
                             <div class="general">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-data-feed"><?php echo $entry_data_feed; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-data-feed"><?php echo $entry_data_feed; ?></label>
+                                    <div class="col-sm-12">
                                         <textarea rows="5" readonly="readonly" id="input-data-feed" class="form-control"><?php echo $data_feed; ?></textarea>
                                     </div>
                                 </div>
@@ -43,8 +43,8 @@
                         <div class="panel-body">
                             <div class="publish">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><?php echo $text_enabled; ?></label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-12"><?php echo $text_enabled; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($google_sitemap_status) { ?>
                                             <input type="radio" name="google_sitemap_status" value="1" checked="checked" />

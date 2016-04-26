@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -84,6 +84,7 @@ $_['entry_image_location']             = 'Store Image Size';
 $_['entry_width']                      = 'Width';
 $_['entry_height']                     = 'Height';
 $_['entry_secure']                     = 'Use SSL';
+$_['entry_timezone']                   = 'Time Zone';
 
 // Help
 $_['help_url']                         = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
@@ -108,6 +109,7 @@ $_['help_stock_display']               = 'Display stock quantity on the product 
 $_['help_stock_checkout']              = 'Allow customers to still checkout if the products they are ordering are not in stock.';
 $_['help_icon']                        = 'The icon should be a PNG that is 16px x 16px.';
 $_['help_secure']                      = 'To use SSL check with your host if a SSL certificate is installed.';
+$_['help_timezone']                    = 'Choose a city in the list to configure the date and time.';
 
 // Error
 $_['error_warning']                    = 'Warning: Please check the form carefully for errors!';

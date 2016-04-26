@@ -44,7 +44,8 @@
                                     <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control filter" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                    </span></div>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -84,7 +85,7 @@
                                           </a>
                                           <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
                                               <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
-                                              <li><a onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-upload').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
+                                              <li><a onclick="confirmItem('<?php echo $text_confirm_title; ?>', '<?php echo $text_confirm; ?>');"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>
                                           </ul>
                                         </span>
                                     </div></td>

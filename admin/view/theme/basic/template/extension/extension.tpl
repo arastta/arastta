@@ -56,6 +56,7 @@
                                     <option value="feed" <?php echo ($filter_type == 'feed') ? 'selected="selected"' : ''; ?> ><?php echo $text_feed; ?></option>
                                     <option value="editor" <?php echo ($filter_type == 'editor') ? 'selected="selected"' : ''; ?> ><?php echo $text_editor; ?></option>
                                     <option value="captcha" <?php echo ($filter_type == 'captcha') ? 'selected="selected"' : ''; ?> ><?php echo $text_captcha; ?></option>
+                                    <option value="twofactorauth" <?php echo ($filter_type == 'twofactorauth') ? 'selected="selected"' : ''; ?> ><?php echo $text_twofactorauth; ?></option>
                                     <option value="other" <?php echo ($filter_type == 'other') ? 'selected="selected"' : ''; ?> ><?php echo $text_other; ?></option>
                                 </select>
                                 <select name="filter_status" id="input-status" class="form-control filter hidden">
@@ -76,11 +77,12 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <form id="form" method="post">
+                    <form id="form-extension" method="post">
                         <table class="table table-hover">
                             <thead>
                             <tr>
                                 <td style="width: 70px;" class="text-center">
+                                    <?php if ($filter_type != 'module') { ?>
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
@@ -96,7 +98,14 @@
                                               <li><a onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i> <?php echo $button_disable; ?></a></li>
                                           </ul>
                                         </span>
-                                    </div></td>
+                                    </div>
+                                    <?php } else { ?>
+                                    <div class="bulk-action">
+                                        <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
+                                        <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
+                                        <span class="item-selected" style="border-bottom-right-radius: 3px; border-top-right-radius: 3px;"></span>
+                                    </div>
+                                <?php } ?></td>
                                 <td class="text-left"><?php if ($sort == 'name') { ?>
                                     <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
                                     <?php } else { ?>
@@ -129,7 +138,7 @@
                                 <td class="text-center"><input type="checkbox" name="selected[]" value="<?php echo $extension['type'] . '/' . $extension['code']; ?>" /></td>
                                 <td class="text-left">
                                     <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"  class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
-                                    <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>"  class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></a>
+                                    <a onclick="confirmItemSetLink('<?php echo $text_confirm_title; ?>', '<?php echo $text_confirm; ?>', '<?php echo $extension['uninstall']; ?>');" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>"  class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></a>
                                     <?php echo $extension['name']; ?>
                                     <?php if ($extension['instances']) { ?>
                                     <?php foreach ($extension['instances'] as $instance) { ?>
@@ -139,7 +148,7 @@
                                             <td class="text-left" colspan="6">
                                                 &nbsp;&nbsp;&nbsp;&#8618;&nbsp;&nbsp;<?php echo $instance['name']; ?>&nbsp;&nbsp;
                                                 <a href="<?php echo $instance['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
-                                                <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $instance['delete']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-trash"></i></a>
+                                                <a onclick="confirmItemSetLink('<?php echo $text_confirm_title; ?>', '<?php echo $text_confirm; ?>', '<?php echo $instance['delete']; ?>');" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     </table>
@@ -164,14 +173,16 @@
                             </tbody>
                         </table>
                     </form>
+                    <div class="row">
+                        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+                        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript"><!--
-var status_type = 'extension';
-
 function filter() {
     url = 'index.php?route=extension/extension&token=<?php echo $token; ?>';
 

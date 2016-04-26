@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -145,7 +145,21 @@ class ControllerCatalogCategory extends Controller {
 
             $this->session->data['success'] = $this->language->get('text_success');
 
-            $this->response->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL'));
+            $url = '';
+ 
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+ 
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+ 
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+ 
+            $this->response->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
 
         $this->getList();
@@ -257,6 +271,7 @@ class ControllerCatalogCategory extends Controller {
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
         $data['text_confirm'] = $this->language->get('text_confirm');
+        $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         $data['text_select'] = $this->language->get('text_select');
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
 
@@ -671,17 +686,17 @@ class ControllerCatalogCategory extends Controller {
             $results = $this->model_catalog_category->getCategories($filter_data);
 
             foreach ($results as $result) {
-                
                 $result['index'] = $result['name'];
-                if(strpos($result['name'], '&nbsp;&nbsp;&gt;&nbsp;&nbsp;')) {
-                    $result['name'] = explode ('&nbsp;&nbsp;&gt;&nbsp;&nbsp;', $result['name']);
-                    $result['name'] = end($result['name']);
+
+                if(strpos($result['index'], '&nbsp;&nbsp;&gt;&nbsp;&nbsp;')) {
+                    $result['index'] = explode ('&nbsp;&nbsp;&gt;&nbsp;&nbsp;', $result['index']);
+                    $result['index'] = end($result['index']);
                 }
                 
                 $json[] = array(
                     'category_id' => $result['category_id'],
-                    'index'          => $result['index'],
-                    'name'          => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
+                    'index'       => $result['index'],
+                    'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
                 );
             }
         }
@@ -696,6 +711,70 @@ class ControllerCatalogCategory extends Controller {
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
+    }
+
+    public function quick()
+    {
+        $this->load->language('catalog/category');
+
+        $json = array();
+
+        $this->load->model('catalog/category');
+        $this->load->model('catalog/url_alias');
+
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateQuick()) {
+            $this->trigger->fire('pre.admin.category.quick', array(&$this->request->post));
+
+            $this->load->model('localisation/language');
+
+            $languages = $this->model_localisation_language->getLanguages();
+
+            if ($this->request->post['name']) {
+                foreach ($languages as $language) {
+                    $this->request->post['category_description'][$language['language_id']]['name'] = $this->request->post['name'];
+                    $this->request->post['category_description'][$language['language_id']]['description'] = '';
+                    $this->request->post['category_description'][$language['language_id']]['meta_description'] = '';
+                    $this->request->post['category_description'][$language['language_id']]['meta_keyword'] = '';
+                    
+                    $this->request->post['seo_url'][$language['language_id']] = '';
+                }
+            }
+
+            $this->request->post['top'] = 1;
+
+            $this->request->post['category_store'][] = 0;
+
+            $this->load->model('setting/store');
+
+            $stores = $this->model_setting_store->getStores();
+
+            if ($stores) {
+                foreach ($stores as $store) {
+                    $this->request->post['category_store'][] = $store['store_id'];
+                }
+            }
+
+            $category_id = $this->model_catalog_category->addCategory($this->request->post);          
+
+            $this->trigger->fire('post.admin.category.quick', array($category_id));
+
+            $json['success'] = $this->language->get('text_success');
+            $json['category_id'] = $category_id;
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+
+    protected function validateQuick() 
+    {
+        if (!$this->user->hasPermission('modify', 'catalog/category')) {
+            $this->error['warning'] = $this->language->get('error_permission');
+        }
+
+        $this->trigger->fire('post.admin.category.validate.quick', array(&$this->error));
+
+        return !$this->error;
     }
 
     public function inline() {

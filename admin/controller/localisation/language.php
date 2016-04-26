@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -198,13 +198,14 @@ class ControllerLocalisationLanguage extends Controller {
         $data['languages'] = array();
 
         $filter_data = array(
+            'status'=> '*',
             'sort'  => $sort,
             'order' => $order,
             'start' => ($page - 1) * $this->config->get('config_limit_admin'),
             'limit' => $this->config->get('config_limit_admin')
         );
 
-        $language_total = $this->model_localisation_language->getTotalLanguages();
+        $language_total = $this->model_localisation_language->getTotalLanguages($filter_data);
 
         $results = $this->model_localisation_language->getLanguages($filter_data);
 
@@ -223,7 +224,11 @@ class ControllerLocalisationLanguage extends Controller {
 
         $data = $this->language->all($data);
 
-        if (isset($this->error['warning'])) {
+        if (isset($this->session->data['warning'])) {
+            $data['error_warning'] = $this->session->data['warning'];
+
+            unset($this->session->data['warning']);
+        } else if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {
             $data['error_warning'] = '';
@@ -254,6 +259,8 @@ class ControllerLocalisationLanguage extends Controller {
         if (isset($this->request->get['page'])) {
             $url .= '&page=' . $this->request->get['page'];
         }
+
+        $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
 
         $data['sort_name'] = $this->url->link('localisation/language', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
         $data['sort_code'] = $this->url->link('localisation/language', 'token=' . $this->session->data['token'] . '&sort=code' . $url, 'SSL');
@@ -295,7 +302,11 @@ class ControllerLocalisationLanguage extends Controller {
         $data = $this->language->all();
         $data['text_form'] = !isset($this->request->get['language_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-        if (isset($this->error['warning'])) {
+        if (isset($this->session->data['warning'])) {
+            $data['error_warning'] = $this->session->data['warning'];
+
+            unset($this->session->data['warning']);
+        } else if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {
             $data['error_warning'] = '';

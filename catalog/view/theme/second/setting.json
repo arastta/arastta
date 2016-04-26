@@ -1,0 +1,54 @@
+{
+    "general": {
+        "title": "",
+        "element": {
+            "element-1": {
+                "type": "select",
+                "label": "Logo Width",
+                "name": "logo_width",
+                "option": {
+                    "3": "25%",
+                    "4": "33%",
+                    "6": "50%",
+                    "8": "75%",
+                    "12": "100%"
+                },
+                "attribute": {
+                    "value": "4"
+                }
+            },
+            "element-2": {
+                "type": "textbox",
+                "label": "Facebook URL",
+                "name": "facebook_url",
+                "attribute": {
+                    "value": "https://facebook.com/#"
+                }
+            },
+            "element-3": {
+                "type": "textbox",
+                "label": "Twitter URL",
+                "name": "twitter_url",
+                "attribute": {
+                    "value": "https://twitter.com/#"
+                }
+            },
+            "element-4": {
+                "type": "textbox",
+                "label": "Pinterest URL",
+                "name": "pinterest_url",
+                "attribute": {
+                    "value": "https://pinterest.com/#"
+                }
+            },
+            "element-5": {
+                "type": "textbox",
+                "label": "Instagram URL",
+                "name": "instagram_url",
+                "attribute": {
+                    "value": "https://instagram.com/#"
+                }
+            }
+        }
+    }
+}

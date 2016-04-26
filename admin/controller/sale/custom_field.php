@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -235,7 +235,7 @@ class ControllerSaleCustomField extends Controller {
                 'name'            => $result['name'],
                 'location'        => $this->language->get('text_' . $result['location']),
                 'type'            => $type,
-                'status'          => $result['status'],
+                'status'          => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
                 'sort_order'      => $result['sort_order'],
                 'edit'            => $this->url->link('sale/custom_field/edit', 'token=' . $this->session->data['token'] . '&custom_field_id=' . $result['custom_field_id'] . $url, 'SSL')
             );
@@ -246,6 +246,7 @@ class ControllerSaleCustomField extends Controller {
         $data['text_list'] = $this->language->get('text_list');
         $data['text_no_results'] = $this->language->get('text_no_results');
         $data['text_confirm'] = $this->language->get('text_confirm');
+        $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
 
         $data['column_name'] = $this->language->get('column_name');
@@ -257,6 +258,8 @@ class ControllerSaleCustomField extends Controller {
 
         $data['button_add'] = $this->language->get('button_add');
         $data['button_edit'] = $this->language->get('button_edit');
+        $data['button_enable'] = $this->language->get('button_enable');
+        $data['button_disable'] = $this->language->get('button_disable');
         $data['button_delete'] = $this->language->get('button_delete');
 
         if (isset($this->error['warning'])) {

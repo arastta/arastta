@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -292,6 +292,8 @@ class ControllerUserUser extends Controller {
             $url .= '&page=' . $this->request->get['page'];
         }
 
+        $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
+
         $data['sort_firstname'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=firstname' . $url, 'SSL');
         $data['sort_lastname'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=lastname' . $url, 'SSL');
         $data['sort_email'] = $this->url->link('user/user', 'token=' . $this->session->data['token'] . '&sort=email' . $url, 'SSL');
@@ -369,6 +371,12 @@ class ControllerUserUser extends Controller {
             $data['error_lastname'] = $this->error['lastname'];
         } else {
             $data['error_lastname'] = '';
+        }
+
+        if (isset($this->error['twofactorauth'])) {
+            $data['error_twofactorauth'] = $this->error['twofactorauth'];
+        } else {
+            $data['error_twofactorauth'] = '';
         }
 
         if (isset($this->session->data['success'])) {
@@ -463,7 +471,7 @@ class ControllerUserUser extends Controller {
         } elseif (!empty($user_info)) {
             $data['use_theme'] = $params['theme'];
         } else {
-            $data['use_theme'] = 'basic';
+            $data['use_theme'] = $this->config->get('config_admin_template');
         }
 
         // Themes
@@ -474,14 +482,22 @@ class ControllerUserUser extends Controller {
 
         $themes = glob(DIR_ADMIN . 'view/theme/*', GLOB_ONLYDIR);
         
+        foreach ($themes as $theme) {
+            $data['themes'][] = array(
+                'theme' => basename($theme),
+                'text'  => $this->language->get('text_theme_' . basename($theme))
+            );
+        }
+        
         if (isset($this->request->post['params']) && isset($this->request->post['params']['basic_mode_message'])) {
             $data['basic_mode_message'] = $this->request->post['params']['basic_mode_message'];
         } elseif (!empty($user_info)) {
             $data['basic_mode_message'] = $params['basic_mode_message'];
         } else {
-            $data['basic_mode_message'] = 'show';
+            $data['basic_mode_message'] = $this->config->get('config_admin_theme');
         }
 
+        // Language option
         $this->load->model('localisation/language');
 
         $data['languages'] = $this->model_localisation_language->getLanguages();
@@ -491,20 +507,54 @@ class ControllerUserUser extends Controller {
         } elseif (!empty($user_info)) {
             $data['use_language'] = $params['language'];
         } else {
-            $data['use_language'] = $this->session->data['admin_language'];
+            $data['use_language'] = $this->config->get('config_admin_language');
         }
 
-        // This code changes
-        $data['editors'] = array(
-            'summernote', 'tinymce'
-        );        
+        // Editor option
+        $this->load->model('extension/editor');
 
-        foreach ($themes as $theme) {
-            $data['themes'][] = array(
-                'theme' => basename($theme),
-                'text'  => $this->language->get('text_theme_' . basename($theme))
-            );
-        }        
+        $data['editors'] = $this->model_extension_editor->getEditors();
+        if (isset($this->request->post['params']) && isset($this->request->post['params']['editor'])) {
+            $data['use_editor'] = $this->request->post['params']['editor'];
+        } elseif (!empty($user_info)) {
+            $data['use_editor'] = $params['editor'];
+        } else {
+            $data['use_editor'] = $this->config->get('config_text_editor');
+        }
+
+        // 2FA option
+        $this->load->model('extension/extension');
+
+        $twofactorauths = $this->model_extension_extension->getEnabledExtensions(array('filter_type' => 'twofactorauth'));
+
+        if (!empty($twofactorauths)) {
+            $data['twofactorauths'] = array();
+
+            foreach ($twofactorauths as $twofactorauth) {
+                $tfa = array();
+
+                $this->language->load('twofactorauth/' . $twofactorauth['code']);
+
+                $tfa['extension_id'] = $twofactorauth['extension_id'];
+                $tfa['code'] = $twofactorauth['code'];
+                $tfa['text'] = $this->language->get('heading_title');
+                $tfa['info'] = $twofactorauth['info'];
+                $tfa['params'] = $twofactorauth['params'];
+
+                $data['twofactorauths'][] = $tfa;
+            }
+
+            if (!empty($params['twofactorauth'])) {
+                $data['use_twofactorauth'] = $params['twofactorauth']['method'];
+            } elseif (!empty($this->request->post['params']['twofactorauth']['method'])) {
+                $data['use_twofactorauth'] = $this->request->post['params']['twofactorauth']['method'];
+            } else {
+                $data['use_twofactorauth'] = 'none';
+            }
+        } else {
+            $data['twofactorauths'] = '';
+            $data['use_twofactorauth'] = 'none';
+        }
 
         if (isset($this->request->post['image'])) {
             $data['image'] = $this->request->post['image'];
@@ -525,8 +575,6 @@ class ControllerUserUser extends Controller {
         }
         
         $data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-
-
         if (isset($this->request->post['status'])) {
             $data['status'] = $this->request->post['status'];
         } elseif (!empty($user_info)) {
@@ -534,6 +582,9 @@ class ControllerUserUser extends Controller {
         } else {
             $data['status'] = 0;
         }
+
+        $data['token'] = $this->session->data['token'];
+        $data['user_id'] = isset($this->request->get['user_id']) ?: 0;
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -581,7 +632,33 @@ class ControllerUserUser extends Controller {
             }
         }
 
+        if (($this->request->post['params']['twofactorauth']['method'] != 'none') && !$this->validateTwofactorauth()) {
+            $this->error['twofactorauth'] = $this->language->get('error_twofactorauth');
+        }
+
         return !$this->error;
+    }
+
+    public function validateTwofactorauth()
+    {
+        $method = $this->request->post['params']['twofactorauth']['method'];
+
+        // Check if already set up
+        $this->load->model('user/user');
+        $user_info = $this->model_user_user->getUser($this->request->get['user_id']);
+
+        $params = json_decode($user_info['params'], true);
+
+        if (isset($params['twofactorauth']) && ($params['twofactorauth']['method'] == $method)) {
+            return true;
+        }
+
+        // Validate new set up
+        $this->trigger->addFolder('twofactorauth');
+
+        $valid = $this->trigger->fire('pre.admin.twofactorauth.validate', array(&$method));
+
+        return $valid;
     }
 
     protected function validateDelete() {
@@ -685,7 +762,8 @@ class ControllerUserUser extends Controller {
         $this->response->setOutput(json_encode($json));
     }    
     
-    public function hide() {
+    public function hide()
+    {
         $json = array();
 
         if (isset($this->request->get['basic_mode_message'])) {
@@ -700,5 +778,39 @@ class ControllerUserUser extends Controller {
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
+    }
+
+    public function twofactorauth()
+    {
+        $method = $this->request->get['method'];
+
+        if ($method == 'none') {
+            $this->response->setOutput('');
+            return;
+        }
+
+        $this->language->load('twofactorauth/' . $method);
+
+        $data = $this->language->all();
+
+        $this->load->model('user/user');
+        $user_info = $this->model_user_user->getUser($this->request->get['user_id']);
+
+        if (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
+
+        $data['email'] = $user_info['email'];
+
+        // Get extra data from extensions
+        $this->trigger->addFolder('twofactorauth');
+        $this->trigger->fire('pre.admin.twofactorauth.display', array(&$method, &$data, &$user_info));
+
+        $data['token'] = $this->session->data['token'];
+        $data['user_id'] = isset($this->request->get['user_id']) ?: 0;
+
+        $this->response->setOutput($this->load->view('twofactorauth/' . $method . '_user.tpl', $data));
     }
 }

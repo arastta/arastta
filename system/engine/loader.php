@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -35,6 +35,14 @@ final class Loader {
     }
 
     public function model($model) {
+        // Create model name
+        $model_name = 'model_' . str_replace('/', '_', $model);
+        
+        // Return model instance if already created
+        if ($this->registry->get($model_name) !== null) {
+            return $this->registry->get($model_name);
+        }
+        
         $file = Client::getDir() . 'model/' . $model . '.php';
         $class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
 
@@ -45,7 +53,7 @@ final class Loader {
 
             $model_class = new $class($this->registry);
 
-            $this->registry->set('model_' . str_replace('/', '_', $model), $model_class);
+            $this->registry->set($model_name, $model_class);
 
             $this->trigger->fire('post.load.model', array(&$model_class));
         } else {

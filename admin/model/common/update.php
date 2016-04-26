@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -117,7 +117,7 @@ class ModelCommonUpdate extends Model
             // Required for ftp & remove extension functions
             $this->request->post['path'] = $path;
 
-            $ftp = $this->load->controller('extension/installer/ftp');
+            $ftp = $this->load->controller('extension/installer/parseFiles');
             $remove = $this->load->controller('extension/installer/remove');
 
             $this->db->query("UPDATE `" . DB_PREFIX . "addon` SET `product_version` = '" . $this->db->escape($version) . "' WHERE `product_id` = '" . (int)$product_id . "'");
@@ -146,7 +146,7 @@ class ModelCommonUpdate extends Model
 
             $this->load->model('extension/marketplace');
 
-            $addons = $this->model_extension_marketplace->getAddons();
+            $addons = $this->model_extension_marketplace->getAddons(true);
 
             $versions = $this->getVersions($addons);
 
@@ -192,11 +192,6 @@ class ModelCommonUpdate extends Model
             // Then addons
             if (!empty($addons)) {
                 foreach ($addons as $addon) {
-                    // This comes from Marketplace
-                    if (empty($addon['product_id'])) {
-                        continue;
-                    }
-
                     $type = $addon['product_type'];
 
                     $url = $base_url.'/'.$type.'/1.0/version/'.$addon['product_id'].'/'.$addon['product_version'].'/'.$info['arastta'];
@@ -241,7 +236,7 @@ class ModelCommonUpdate extends Model
         } else {
             $this->load->model('extension/marketplace');
 
-            $addons = $this->model_extension_marketplace->getAddons();
+            $addons = $this->model_extension_marketplace->getAddons(true);
             
             $type = $addons[$product_id]['product_type'];
 

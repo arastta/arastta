@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -31,6 +31,7 @@ $_['text_close']                    = 'Close';
 $_['text_pagination']               = 'Showing %d to %d of %d (%d Pages)';
 $_['text_loading']                  = 'Loading...';
 $_['text_no_results']               = 'No results!';
+$_['text_confirm_title']            = 'Confirm Delete %s';
 $_['text_confirm']                  = 'Are you sure?';
 $_['text_home']                     = 'Home';
 $_['text_bulk_action']              = 'Bulk Action';

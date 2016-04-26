@@ -303,7 +303,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="dashed dashed-module-list ui-droppable ui-sortable">
-                                        <div class="pull-center"><i>Drag &amp; drop modules here</i></div>
+                                        <div class="text-center"><i><?php echo $text_drag_and_drop; ?></i></div>
                                         <?php foreach ($feeds as $feed) { ?>
                                         <div class="mblock ui-draggable ui-draggable-handle" data-code="<?php echo $feed['code'] . '-' . $feed['id'] ; ?>">
                                             <div class="mblock-header">

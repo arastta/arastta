@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -75,13 +75,12 @@ class Route extends Object
             }
         }
 
-        $seo_url = str_replace('index.php/', '', $route);
+        $seo_url = str_replace('index.php', '', $route);
+        $seo_url = ltrim($seo_url, '/');
 
         // Add language code to URL
         $is_lang_home = false;
         if ($this->config->get('config_seo_lang_code')) {
-            $seo_url = ltrim($seo_url, '/');
-
             if ($seo_url == $this->session->data['language']) {
                 $is_lang_home = true;
             }
@@ -191,6 +190,9 @@ class Route extends Object
     {
         $url = '';
         $is_home = false;
+
+        // common/currency, $data['redirect']
+        $link = str_replace('amp;amp;', 'amp;', $link);
 
         $uri = new Uri($link);
 

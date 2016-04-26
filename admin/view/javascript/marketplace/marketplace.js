@@ -13,7 +13,7 @@ Marketplace.apps = {
     update: false
 };
 
-Marketplace.loadweb = function(url) {
+Marketplace.loadweb = function(url, data) {
     if ('' == url) { return false; }
 
     url += '&list='+(Marketplace.apps.list ? 'list' : 'grid')+'&version='+apps_version+'&token='+token;
@@ -27,25 +27,38 @@ Marketplace.loadweb = function(url) {
     $.ajax({
         url: url,
         dataType: 'jsonp',
+        method: 'post',
+        data: data,
         cache: true,
         jsonpCallback: "arapi_jsonpcallback",
         beforeSend: function () {
+            $('#marketplace-loading').remove();
+            $('.panel-body').css({"position": "relative"});
             elem = $('<div id="marketplace-loading" class="text-center"><div class="loading-wrap"><i class="fa fa-spinner fa-spin checkout-spin"></i></div></div>')
                 .css("background", "50% 15% no-repeat rgba(224, 224, 224, 0.8)")
-                .css("top", $('.panel-body').offset().top - $(window).scrollTop())
-                .css("left", $('.panel-body').offset().left - $(window).scrollLeft())
-                .css("width", $('.panel-body').outerWidth())
-                .css("height", $('.panel-body').outerHeight())
-                .css("position", "fixed")
-                .css("z-index", "100")
+                .css("top", 0)
+                .css("left", 0)
+                .css("width", "100%")
+                .css("height", "100%")
+                .css("position", "absolute")
+                .css("z-index", "8")
                 .css("opacity", "0.80")
                 .css("-ms-filter", "progid:DXImageTransform.Microsoft.Alpha(Opacity = 80)")
                 .css("filter", "alpha(opacity = 80)")
                 .appendTo('.panel-body');
         },
         success: function (response) {
+            if (response.message) {
+                $('.alert').remove();
+                $('.panel.panel-default').before('<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> '+response.message.success+'<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+            }
+            
             if (response.error) {
+                $('.alert').remove();
                 $('.panel.panel-default').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+response.error.warning+'<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('#marketplace-loading').remove();
+            } else if (response.redirect) {
+                Marketplace.loadweb(baseUrl + response.redirect);
             } else {
                 $('.panel-body').html(response.html);
                 uri = decodeURIComponent(ArrayToURL(URLToArray(url)));

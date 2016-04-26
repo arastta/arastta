@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -263,6 +263,8 @@ class ControllerCatalogManufacturer extends Controller {
         if (isset($this->request->get['page'])) {
             $url .= '&page=' . $this->request->get['page'];
         }
+
+        $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
 
         $data['sort_name'] = $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
         $data['sort_status'] = $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
@@ -558,6 +560,67 @@ class ControllerCatalogManufacturer extends Controller {
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
+    }
+
+    public function quick()
+    {
+        $this->load->language('catalog/manufacturer');
+
+        $json = array();
+
+        $this->load->model('catalog/manufacturer');
+        $this->load->model('catalog/url_alias');
+
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateQuick()) {
+            $this->trigger->fire('pre.admin.manufacturer.quick', array(&$this->request->post));
+
+            $this->load->model('localisation/language');
+
+            $languages = $this->model_localisation_language->getLanguages();
+
+            if ($this->request->post['name']) {
+                foreach ($languages as $language) {
+                    $this->request->post['manufacturer_description'][$language['language_id']]['name'] = $this->request->post['name'];
+                    $this->request->post['manufacturer_description'][$language['language_id']]['description'] = '';
+                    $this->request->post['manufacturer_description'][$language['language_id']]['meta_description'] = '';
+                    $this->request->post['manufacturer_description'][$language['language_id']]['meta_keyword'] = '';
+                    $this->request->post['seo_url'][$language['language_id']] = '';
+                }
+            }
+
+            $this->request->post['manufacturer_store'][] = 0;
+
+            $this->load->model('setting/store');
+
+            $stores = $this->model_setting_store->getStores();
+
+            if ($stores) {
+                foreach ($stores as $store) {
+                    $this->request->post['manufacturer_store'][] = $store['store_id'];
+                }
+            }
+
+            $manufacturer_id = $this->model_catalog_manufacturer->addManufacturer($this->request->post);
+
+            $this->trigger->fire('post.admin.manufacturer.quick', array($manufacturer_id));
+
+            $json['success'] = $this->language->get('text_success');
+            $json['manufacturer_id'] = $manufacturer_id;
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+
+    protected function validateQuick() 
+    {
+        if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
+            $this->error['warning'] = $this->language->get('error_permission');
+        }
+        
+        $this->trigger->fire('post.admin.manufacturer.validate.quick', array(&$this->error));
+
+        return !$this->error;
     }
 
     public function inline() {

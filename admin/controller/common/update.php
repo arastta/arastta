@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -46,7 +46,7 @@ class ControllerCommonUpdate extends Controller
         $data['changelog'] = $this->url->link('common/update/changelog', 'token=' . $this->session->data['token'], 'SSL');
 
         $this->load->model('extension/marketplace');
-        $data['addons'] = $this->model_extension_marketplace->getAddons();
+        $data['addons'] = $this->model_extension_marketplace->getAddons(true);
 
         $this->load->model('common/update');
         $data['updates'] = $this->model_common_update->getUpdates();

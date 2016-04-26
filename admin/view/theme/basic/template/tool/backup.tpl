@@ -24,16 +24,16 @@
             <div class="panel-body">
                 <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-restore" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-import"><?php echo $entry_restore; ?></label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-12" for="input-import"><?php echo $entry_restore; ?></label>
+                        <div class="col-sm-12">
                             <input type="file" name="import" id="input-import" />
                         </div>
                     </div>
                 </form>
                 <form action="<?php echo $backup; ?>" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label"><?php echo $entry_backup; ?></label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-12"><?php echo $entry_backup; ?></label>
+                        <div class="col-sm-12">
                             <div class="well well-sm" style="height: 150px; overflow: auto;">
                                 <?php foreach ($tables as $table) { ?>
                                 <div class="checkbox">
@@ -43,7 +43,8 @@
                                 </div>
                                 <?php } ?>
                             </div>
-                            <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
+                            <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -28,7 +28,7 @@ class Cli extends App
         $this->registry->set('filesystem', $filesystem);
 
         // Config
-        $this->registry->set('config', new Config());
+        $this->registry->set('config', new Object());
 
         // Loader
         $loader = new Loader($this->registry);
@@ -70,14 +70,25 @@ class Cli extends App
             $this->registry->set('language', $language);
         }
 
-        $cache = new Cache($this->config->get('config_cache_storage', 'file'), $this->config->get('config_cache_lifetime', 86400));
+        $cache = new Cache($this->config->get('config_cache_storage', 'file'), $this->config->get('config_cache_lifetime', 86400), $this->config);
         $this->registry->set('cache', $cache);
 
         $this->addCommandsToConsole();
 
+        $this->trigger->fire('post.app.initialise');
     }
 
-    public function call($callback, array $parameters = array())
+    public function ecommerce()
+    {
+        // Set time zone
+        date_default_timezone_set($this->config->get('config_timezone', 'UTC'));
+        $dt = new \DateTime();
+        $this->db->setTimezone($dt->format('P'));
+
+        $this->trigger->fire('post.app.ecommerce');
+    }
+
+        public function call($callback, array $parameters = array())
     {
         return call_user_func_array($callback, $parameters);
     }

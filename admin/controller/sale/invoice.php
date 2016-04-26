@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -52,6 +52,12 @@ class ControllerSaleInvoice extends Controller
             $filter_customer = null;
         }
 
+        if (isset($this->request->get['filter_total'])) {
+            $filter_total = $this->request->get['filter_total'];
+        } else {
+            $filter_total = null;
+        }
+		
         if (isset($this->request->get['filter_order_date'])) {
             $filter_order_date = $this->request->get['filter_order_date'];
         } else {
@@ -100,6 +106,10 @@ class ControllerSaleInvoice extends Controller
             $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
         }
 
+        if (isset($this->request->get['filter_total'])) {
+            $url .= '&filter_total=' . $this->request->get['filter_total'];
+        }
+		
         if (isset($this->request->get['filter_order_date'])) {
             $url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
         }
@@ -129,6 +139,7 @@ class ControllerSaleInvoice extends Controller
             'filter_invoice_number'=> $filter_invoice_number,
             'filter_order_status'  => $filter_order_status,
             'filter_customer'      => $filter_customer,
+            'filter_total'         => $filter_total,
             'filter_order_date'    => $filter_order_date,
             'filter_invoice_date'  => $filter_invoice_date,
             'sort'                 => $sort,
@@ -202,6 +213,10 @@ class ControllerSaleInvoice extends Controller
             $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
         }
 
+        if (isset($this->request->get['filter_total'])) {
+            $url .= '&filter_total=' . $this->request->get['filter_total'];
+        }
+		
         if (isset($this->request->get['filter_order_date'])) {
             $url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
         }
@@ -246,6 +261,10 @@ class ControllerSaleInvoice extends Controller
             $url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
         }
 
+        if (isset($this->request->get['filter_total'])) {
+            $url .= '&filter_total=' . $this->request->get['filter_total'];
+        }
+		
         if (isset($this->request->get['filter_order_date'])) {
             $url .= '&filter_order_date=' . $this->request->get['filter_order_date'];
         }
@@ -276,6 +295,7 @@ class ControllerSaleInvoice extends Controller
         $data['filter_invoice_number'] = $filter_invoice_number;
         $data['filter_order_status'] = $filter_order_status;
         $data['filter_customer'] = $filter_customer;
+        $data['filter_total'] = $filter_total;
         $data['filter_order_date'] = $filter_order_date;
         $data['filter_invoice_date'] = $filter_invoice_date;
 
@@ -307,6 +327,12 @@ class ControllerSaleInvoice extends Controller
             $filter_customer = null;
         }
 
+        if (isset($this->request->get['filter_total'])) {
+            $filter_total = $this->request->get['filter_total'];
+        } else {
+            $filter_total = null;
+        }
+		
         if (isset($this->request->get['filter_order_status'])) {
             $filter_order_status = $this->request->get['filter_order_status'];
         } else {
@@ -363,6 +389,7 @@ class ControllerSaleInvoice extends Controller
         $filter_data = array(
             'filter_order_id'      => $filter_order_id,
             'filter_customer'      => $filter_customer,
+            'filter_total'         => $filter_total,
             'filter_order_status'  => $filter_order_status,
             'filter_order_date'    => $filter_order_date
         );
@@ -807,28 +834,32 @@ class ControllerSaleInvoice extends Controller
         // Send Email
         $invoice_data = $this->model_sale_order->getOrder($invoice_info['order_id']);
 
-        $invoice_data['invoice_id'] = $invoice_info['invoice_id'];
-        $invoice_data['invoice_date'] = $invoice_info['invoice_date'];
-
         $invoice_file = DIR_UPLOAD . $invoice_data['invoice_prefix'] . $invoice_data['invoice_no'] . '.pdf';
+        
+        if (is_file($invoice_file)) {
+            $invoice_data['invoice_id'] = $invoice_info['invoice_id'];
+            $invoice_data['invoice_date'] = $invoice_info['invoice_date'];
+        
+            $subject = $this->emailtemplate->getSubject('Invoice', 'invoice_1', $invoice_data);
+            $message = $this->emailtemplate->getMessage('Invoice', 'invoice_1', $invoice_data);
 
-        $subject = $this->emailtemplate->getSubject('Invoice', 'invoice_1', $invoice_data);
-        $message = $this->emailtemplate->getMessage('Invoice', 'invoice_1', $invoice_data);
+            $mail = new Mail($this->config->get('config_mail'));
+            $mail->setTo($invoice_data['email']);
+            $mail->setFrom($this->config->get('config_email'));
+            $mail->setSender($invoice_data['store_name']);
+            $mail->setSubject($subject);
+            $mail->setHtml($message);
+            $mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+            $mail->addAttachment($invoice_file);
+            $mail->send();
 
-        $mail = new Mail($this->config->get('config_mail'));
-        $mail->setTo($invoice_data['email']);
-        $mail->setFrom($this->config->get('config_email'));
-        $mail->setSender($invoice_data['store_name']);
-        $mail->setSubject($subject);
-        $mail->setHtml($message);
-        $mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
-        $mail->addAttachment($invoice_file);
-        $mail->send();
+            // Delete the invoice file after it has been sent
+            $this->filesystem->remove($invoice_file);
 
-        // Delete the invoice file after it has been sent
-        $this->filesystem->remove($invoice_file);
-
-        $this->session->data['success'] = $this->language->get('text_email_success');
+            $this->session->data['success'] = $this->language->get('text_email_success');
+        } else {
+            $this->session->data['error'] = $this->language->get('error_invoice_no_file');
+        }
 
         $this->response->redirect($this->url->link('sale/invoice', 'token=' . $this->session->data['token'] . $url, 'SSL'));
     }

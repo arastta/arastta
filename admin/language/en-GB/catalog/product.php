@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -23,6 +23,10 @@ $_['text_percent']           = 'Percentage';
 $_['text_amount']            = 'Fixed Amount';
 $_['text_preview']           = 'View Product';
 $_['text_delete_image']      = 'Are you sure you want to delete this image?';
+
+// Button
+$_['button_category_add']    = 'Add New Category';
+$_['button_manufacturer_add']= 'Add New Manufacturer';
 
 // Column
 $_['column_name']            = 'Name';

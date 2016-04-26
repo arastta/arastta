@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -23,6 +23,7 @@ class ControllerAppearanceMenu extends Controller
         
         $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery-lockfixed.js');
+        $this->document->addScript('view/javascript/jquery/layout/jquery.ui.touch-punch.js');
         $this->document->addScript('view/javascript/menu/menu.js');
         
         $data['changeMenuPosition'] = $this->url->link('appearance/menu/changeMenuPosition', 'token=' . $this->session->data['token'], 'SSL');

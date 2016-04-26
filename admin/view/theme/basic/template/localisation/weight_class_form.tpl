@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-weight-class" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-attribute" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-attribute" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -23,7 +24,7 @@
         <?php } ?>
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal" id="form-weight-class">
             <div class="row">
-                <div class="left-col col-sm-12">
+                <div class="left-col col-sm-3">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="general">
@@ -36,8 +37,8 @@
                                     <?php foreach ($languages as $language) { ?>
                                     <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
                                         <div class="form-group required">
-                                            <label class="col-sm-2 control-label" for="input-title<?php echo $language['language_id']; ?>"><?php echo $entry_title; ?></label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-12" for="input-title<?php echo $language['language_id']; ?>"><?php echo $entry_title; ?></label>
+                                            <div class="col-sm-12">
                                                 <input type="text" name="weight_class_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($weight_class_description[$language['language_id']]) ? $weight_class_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" class="form-control" />
                                                 <?php if (isset($error_title[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_title[$language['language_id']]; ?></div>
@@ -45,8 +46,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group required">
-                                            <label class="col-sm-2 control-label" for="input-unit<?php echo $language['language_id']; ?>"><?php echo $entry_unit; ?></label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-12" for="input-unit<?php echo $language['language_id']; ?>"><?php echo $entry_unit; ?></label>
+                                            <div class="col-sm-12">
                                                 <input type="text" name="weight_class_description[<?php echo $language['language_id']; ?>][unit]" value="<?php echo isset($weight_class_description[$language['language_id']]) ? $weight_class_description[$language['language_id']]['unit'] : ''; ?>" placeholder="<?php echo $entry_unit; ?>" class="form-control" />
                                                 <?php if (isset($error_unit[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_unit[$language['language_id']]; ?></div>
@@ -59,6 +60,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-sm-9">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title"><?php echo $text_items; ?></h3>
@@ -69,8 +72,8 @@
                         <div class="panel-body">
                             <div class="items">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-value"><span data-toggle="tooltip" title="<?php echo $help_value; ?>"><?php echo $entry_value; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-value"><span data-toggle="tooltip" title="<?php echo $help_value; ?>"><?php echo $entry_value; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" class="form-control" />
                                     </div>
                                 </div>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -31,15 +31,29 @@ class ControllerSettingSetting extends Controller {
             if ($this->request->post['config_pagecache_exclude']) {
                 $ex_routes = '';
 
-                foreach (explode("\n", $this->request->post['config_pagecache_exclude']) as $id) {
-                    $id = trim($id);
+                foreach (explode("\n", $this->request->post['config_pagecache_exclude']) as $route) {
+                    $route = trim($route);
 
-                    if ($id) {
-                        $ex_routes .= $id.',';
+                    if ($route) {
+                        $ex_routes .= $route.',';
                     }
                 }
 
                 $this->request->post['config_pagecache_exclude'] = trim($ex_routes, ',');
+            }
+
+            if ($this->request->post['config_cache_memcache_servers']) {
+                $memcache_servers = '';
+
+                foreach (explode("\n", $this->request->post['config_cache_memcache_servers']) as $server) {
+                    $server = trim($server);
+
+                    if ($server) {
+                        $memcache_servers .= $server.',';
+                    }
+                }
+
+                $this->request->post['config_cache_memcache_servers'] = trim($memcache_servers, ',');
             }
 
             $this->model_setting_setting->editSetting('config', $this->request->post);
@@ -268,6 +282,18 @@ class ControllerSettingSetting extends Controller {
             $data['error_cache_lifetime'] = '';
         }
 
+        if (isset($this->error['cache_memcache_servers'])) {
+            $data['error_cache_memcache_servers'] = $this->error['cache_memcache_servers'];
+        } else {
+            $data['error_cache_memcache_servers'] = '';
+        }
+
+        if (isset($this->error['cache_redis_server'])) {
+            $data['error_cache_redis_server'] = $this->error['cache_redis_server'];
+        } else {
+            $data['error_cache_redis_server'] = '';
+        }
+
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
@@ -425,6 +451,32 @@ class ControllerSettingSetting extends Controller {
             $data['templates'][] = basename($directory);
         }
 
+        if (isset($this->request->post['config_admin_template'])) {
+            $data['config_admin_template'] = $this->request->post['config_admin_template'];
+        } else {
+            $data['config_admin_template'] = $this->config->get('config_admin_template', 'basic');
+        }
+
+        $data['admin_templates'][] = array(
+            'theme' => 'advanced',
+            'text'    => $this->language->get('text_error_advanced')
+        );
+
+        $admin_templates = glob(DIR_ADMIN . 'view/theme/*', GLOB_ONLYDIR);
+
+        foreach ($admin_templates as $admin_template) {
+            $data['admin_templates'][] = array(
+                'theme' => basename($admin_template),
+                'text'  => $this->language->get('text_error_' . basename($admin_template))
+            );
+        }
+
+        if (isset($this->request->post['config_admin_template_message'])) {
+            $data['config_admin_template_message'] = $this->request->post['config_admin_template_message'];
+        } else {
+            $data['config_admin_template_message'] = $this->config->get('config_admin_template_message', 'show');
+        }
+
         if (isset($this->request->post['config_country_id'])) {
             $data['config_country_id'] = $this->request->post['config_country_id'];
         } else {
@@ -511,12 +563,16 @@ class ControllerSettingSetting extends Controller {
             $data['config_limit_admin'] = $this->config->get('config_limit_admin');
         }
 
+        $this->load->model('extension/editor');
+
+        $data['editors'] = $this->model_extension_editor->getEditors();
+
         if (isset($this->request->post['config_text_editor'])) {
             $data['config_text_editor'] = $this->request->post['config_text_editor'];
         } else {
             $data['config_text_editor'] = $this->config->get('config_text_editor');
         }
-        
+
         if (isset($this->request->post['config_product_count'])) {
             $data['config_product_count'] = $this->request->post['config_product_count'];
         } else {
@@ -600,7 +656,7 @@ class ControllerSettingSetting extends Controller {
         } else {
             $data['config_customer_price'] = $this->config->get('config_customer_price');
         }
-        
+
         if (isset($this->request->post['config_login_attempts'])) {
             $data['config_login_attempts'] = $this->request->post['config_login_attempts'];
         } elseif ($this->config->has('config_login_attempts')) {
@@ -608,7 +664,7 @@ class ControllerSettingSetting extends Controller {
         } else {
             $data['config_login_attempts'] = 5;
         }
-        
+
         if (isset($this->request->post['config_account_id'])) {
             $data['config_account_id'] = $this->request->post['config_account_id'];
         } else {
@@ -1068,6 +1124,28 @@ class ControllerSettingSetting extends Controller {
             $data['config_cache_storage'] = $this->config->get('config_cache_storage', 'file');
         }
 
+        if (isset($this->request->post['config_cache_memcache_servers'])) {
+            $data['config_cache_memcache_servers'] = $this->request->post['config_cache_memcache_servers'];
+        } else {
+            $memcache_servers = '';
+
+            foreach (explode(",", $this->config->get('config_cache_memcache_servers', '')) as $server) {
+                $server = trim($server);
+
+                if ($server) {
+                    $memcache_servers .= $server."\n";
+                }
+            }
+
+            $data['config_cache_memcache_servers'] = $memcache_servers;
+        }
+
+        if (isset($this->request->post['config_cache_redis_server'])) {
+            $data['config_cache_redis_server'] = $this->request->post['config_cache_redis_server'];
+        } else {
+            $data['config_cache_redis_server'] = $this->config->get('config_cache_redis_server', '');
+        }
+
         if (isset($this->request->post['config_cache_lifetime'])) {
             $data['config_cache_lifetime'] = $this->request->post['config_cache_lifetime'];
         } else {
@@ -1088,20 +1166,18 @@ class ControllerSettingSetting extends Controller {
 
         if (isset($this->request->post['config_pagecache_exclude'])) {
             $data['config_pagecache_exclude'] = $this->request->post['config_pagecache_exclude'];
-        } elseif ($this->config->get('config_pagecache_exclude')) {
+        } else {
             $ex_routes = '';
 
-            foreach (explode(",", $this->config->get('config_pagecache_exclude')) as $id) {
-                $id = trim($id);
+            foreach (explode(",", $this->config->get('config_pagecache_exclude', '')) as $route) {
+                $route = trim($route);
 
-                if ($id) {
-                    $ex_routes .= $id."\n";
+                if ($route) {
+                    $ex_routes .= $route."\n";
                 }
             }
 
             $data['config_pagecache_exclude'] = $ex_routes;
-        } else {
-            $data['config_pagecache_exclude'] = '';
         }
 
         // Security
@@ -1219,6 +1295,14 @@ class ControllerSettingSetting extends Controller {
         } else {
             $data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
         }
+
+        if (isset($this->request->post['config_timezone'])) {
+            $data['config_timezone'] = $this->request->post['config_timezone'];
+        } else {
+            $data['config_timezone'] = $this->config->get('config_timezone', 'UTC');
+        }
+
+        $data['timezones'] = $this->getTimezones();
 
         if (isset($this->request->post['config_shared'])) {
             $data['config_shared'] = $this->request->post['config_shared'];
@@ -1400,6 +1484,14 @@ class ControllerSettingSetting extends Controller {
             $this->error['cache_lifetime'] = $this->language->get('error_cache_lifetime');
         }
 
+        if ((($this->request->post['config_cache_storage'] == 'memcache') || ($this->request->post['config_cache_storage'] == 'memcached')) && !$this->request->post['config_cache_memcache_servers']) {
+            $this->error['cache_memcache_servers'] = $this->language->get('error_cache_memcache_servers');
+        }
+
+        if (($this->request->post['config_cache_storage'] == 'redis') && !$this->request->post['config_cache_redis_server']) {
+            $this->error['cache_redis_server'] = $this->language->get('error_cache_redis_server');
+        }
+
         if ($this->error && !isset($this->error['warning'])) {
             $this->error['warning'] = $this->language->get('error_warning');
         }
@@ -1458,5 +1550,43 @@ class ControllerSettingSetting extends Controller {
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
+    }
+
+    public function getTimezones()
+    {
+        // The list of available timezone groups to use.
+        $use_zones = array('Africa', 'America', 'Antarctica', 'Arctic', 'Asia', 'Atlantic', 'Australia', 'Europe', 'Indian', 'Pacific');
+
+        // Get the list of time zones from the server.
+        $zones = DateTimeZone::listIdentifiers();
+
+        // Build the group lists.
+        foreach ($zones as $zone) {
+            // Time zones not in a group we will ignore.
+            if (strpos($zone, '/') === false) {
+                continue;
+            }
+
+            // Get the group/locale from the timezone.
+            list ($group, $locale) = explode('/', $zone, 2);
+
+            // Only use known groups.
+            if (in_array($group, $use_zones)) {
+                // Initialize the group if necessary.
+                if (!isset($groups[$group])) {
+                    $groups[$group] = array();
+                }
+
+                // Only add options where a locale exists.
+                if (!empty($locale)) {
+                    $groups[$group][$zone] = str_replace('_', ' ', $locale);
+                }
+            }
+        }
+
+        // Sort the group lists.
+        ksort($groups);
+
+        return $groups;
     }
 }

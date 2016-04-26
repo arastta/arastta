@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -94,6 +94,36 @@ class ModelExtensionExtension extends Model {
         }
     }
 
+    public function getEnabledExtensions($data = array()) {
+        $list = array();
+
+        $extensions = $this->getExtensions($data);
+
+        if (empty($extensions)) {
+            return $list;
+        }
+
+        $this->load->model('setting/setting');
+
+        foreach ($extensions as $extension) {
+            $setting = $this->model_setting_setting->getSetting($extension['code']);
+
+            if (!isset($setting[$extension['code'] . '_status']) || !$setting[$extension['code'] . '_status']) {
+                continue;
+            }
+
+            $list[] = $extension;
+        }
+
+        return $list;
+    }
+
+    public function getTotalExtensions($data = array()) {
+        $extensions = $this->getExtensions($data);
+
+        return count($extensions);
+    }
+
     public function deleteExtension($extension_id) {
         $this->db->query("DELETE FROM " . DB_PREFIX . "extension WHERE `extension_id` = '" . $this->db->escape($extension_id) . "'");
     }
@@ -101,20 +131,6 @@ class ModelExtensionExtension extends Model {
     public function deleteExtensionByCode($type, $code) {
         // Keep B/C
         $this->uninstall($type, $code);
-    }
-
-    public function changeStatus($code, $status) {
-        $code = $this->db->escape($code);
-
-        $current = $this->config->get($code . '_status');
-
-        if (is_null($current)) {
-            $store_id = $this->config->get('config_store_id');
-
-            $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET `store_id` = {$store_id}, `code` = '{$code}', `key` = '{$code}_status', `value` = {$status}, `serialized` = '0'");
-        } else {
-            $this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = {$status} WHERE `code` = '{$code}' AND `key` = '{$code}_status'", 'query');
-        }
     }
 
     public function getInstances($type, $code) {

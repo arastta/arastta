@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -170,12 +170,21 @@ class ControllerEditorSummernote extends Controller
 
         return $form->render(true);
     }
+
     protected function validate()
     {
         if (!$this->user->hasPermission('modify', 'editor/summernote')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
+        
+        $this->load->model('extension/editor');
 
+        $result = $this->model_extension_editor->check('summernote', $this->request->post);
+
+        if (!$result) {
+            $this->error['warning'] = $this->session->data['warning'];
+        }
+        
         return !$this->error;
     }
 }

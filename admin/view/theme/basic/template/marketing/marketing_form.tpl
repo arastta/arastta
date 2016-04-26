@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-marketing" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-marketing" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-marketing" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -28,8 +29,8 @@
                         <div class="panel-body">
                             <div class="general">
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-name"><?php echo $entry_name; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
                                         <?php if ($error_name) { ?>
                                         <div class="text-danger"><?php echo $error_name; ?></div>
@@ -37,14 +38,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-description"><?php echo $entry_description; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-description"><?php echo $entry_description; ?></label>
+                                    <div class="col-sm-12">
                                         <textarea name="description" rows="5" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control"><?php echo $description; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="<?php echo $help_code; ?>"><?php echo $entry_code; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-code"><span data-toggle="tooltip" title="<?php echo $help_code; ?>"><?php echo $entry_code; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
                                         <?php if ($error_code) { ?>
                                         <div class="text-danger"><?php echo $error_code; ?></div>
@@ -52,8 +53,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-example"><span data-toggle="tooltip" title="<?php echo $help_example; ?>"><?php echo $entry_example; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-example"><span data-toggle="tooltip" title="<?php echo $help_example; ?>"><?php echo $entry_example; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" placeholder="<?php echo $entry_example; ?>" id="input-example1" class="form-control" />
                                         <br />
                                         <input type="text" placeholder="<?php echo $entry_example; ?>" id="input-example2" class="form-control" />

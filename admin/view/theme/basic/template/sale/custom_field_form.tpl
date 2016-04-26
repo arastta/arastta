@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-custom-field" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success" data-original-title="Save"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-custom-field" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-custom-field" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -36,8 +37,8 @@
                                     <?php foreach ($languages as $language) { ?>
                                     <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
                                         <div class="form-group required">
-                                            <label class="col-sm-2 control-label" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-12" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
+                                            <div class="col-sm-12">
                                                 <input type="text" name="custom_field_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($custom_field_description[$language['language_id']]) ? $custom_field_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />                                 <?php if (isset($error_name[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
                                                 <?php } ?>
@@ -59,8 +60,8 @@
                         <div class="panel-body">
                             <div class="data">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-location"><?php echo $entry_location; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-location"><?php echo $entry_location; ?></label>
+                                    <div class="col-sm-12">
                                         <select name="location" id="input-location" class="form-control">
                                             <?php if ($location == 'account') { ?>
                                             <option value="account" selected="selected"><?php echo $text_account; ?></option>
@@ -76,8 +77,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-type"><?php echo $entry_type; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-type"><?php echo $entry_type; ?></label>
+                                    <div class="col-sm-12">
                                         <select name="type" id="input-type" class="form-control">
                                             <optgroup label="<?php echo $text_choose; ?>">
                                                 <?php if ($type == 'select') { ?>
@@ -136,14 +137,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group" id="display-value">
-                                    <label class="col-sm-2 control-label" for="input-value"><?php echo $entry_value; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-value"><?php echo $entry_value; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label"><?php echo $entry_customer_group; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12"><?php echo $entry_customer_group; ?></label>
+                                    <div class="col-sm-12">
                                         <?php $customer_group_row = 0; ?>
                                         <?php foreach ($customer_groups as $customer_group) { ?>
                                         <div class="checkbox">
@@ -162,8 +163,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label"><?php echo $entry_required; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12"><?php echo $entry_required; ?></label>
+                                    <div class="col-sm-12">
                                         <?php $customer_group_row = 0; ?>
                                         <?php foreach ($customer_groups as $customer_group) { ?>
                                         <div class="checkbox">
@@ -182,8 +183,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-sort-order"><span data-toggle="tooltip" title="<?php echo $help_sort_order; ?>"><?php echo $entry_sort_order; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-sort-order"><span data-toggle="tooltip" title="<?php echo $help_sort_order; ?>"><?php echo $entry_sort_order; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
                                     </div>
                                 </div>
@@ -236,8 +237,8 @@
                         <div class="panel-body">
                             <div class="publish">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><?php echo $text_enabled; ?></label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-12"><?php echo $text_enabled; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($status) { ?>
                                             <input type="radio" name="status" value="1" checked="checked" />

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -44,3 +44,4 @@ $_['error_permission']                        = 'Warning: You do not have permis
 $_['error_action']                            = 'Warning: Could not complete this action!';
 $_['error_generate_empty']                    = 'Warning: No order available to generate invoices!';
 $_['error_invoice_not_found']                 = 'Warning: Invoice not found!';
+$_['error_invoice_no_file']                   = 'Warning: Invoice file was not created! Please, check file/folder permissions of "upload" folder.';

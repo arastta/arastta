@@ -49,6 +49,7 @@
 
 .bulk-action-button a {
     margin-top: -5px;
+    text-decoration: none;
 }
 
 .bulk-action-activate input[type="checkbox"] {
@@ -222,4 +223,71 @@ a.editable-click:hover {
     padding: 0px 5px;
     margin-right: 2px;
     border: none;
+}
+
+.btn-manufacturer-add {
+    margin-top: -30px;
+    margin-right: 5px;
+    float: right;
+}
+
+.btn-category-add {
+    margin-top: -35px;
+    margin-right: 5px;
+    float: right;
+}
+
+#quick-manufacturer-success {
+    margin-top: 5px !important;
+    margin-bottom: -10px !important;
+}
+
+.star-rating {
+    font-size: 0;
+}
+
+.star-rating-wrap {
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.star-rating-wrap:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.star-rating-ico {
+    font-size: 2.5em;
+    float: right;
+    padding-left: 10px;
+    cursor: pointer;
+    color: #FFB300;
+}
+
+.star-rating-ico:last-child {
+    padding-left: 0;
+}
+
+.star-rating-input {
+    display: none;
+}
+
+.star-rating-ico:hover:before,
+.star-rating-ico:hover ~ .star-rating-ico:before,
+.star-rating-input:checked ~ .star-rating-ico:before {
+    content: "\f005";
+}
+
+div.required label.col-sm-12:not(span):before, td.required:before {
+    content: '* ';
+    color: #F00;
+    font-weight: bold;
+}
+
+.table thead td span[data-toggle="tooltip"]:after, label.col-sm-12 span:after {
+    font-family: FontAwesome;
+    color: #008db9;
+    content: "\f059";
+    margin-left: 4px;
 }

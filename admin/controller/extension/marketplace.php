@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -93,18 +93,48 @@ class ControllerExtensionMarketplace extends Controller
         $data['button_modifications'] = $this->language->get('button_modifications');
 
         if ((isset($this->request->get['changeApiKey']) && $this->request->get['changeApiKey']) || (empty($data['api_key']) || isset($data['error']))) {
+            Client::setName('catalog');
+            $this->load->language('account/login');
+            Client::setName('admin');
+
+            $data['text_new_customer'] = $this->language->get('text_new_customer');
+            $data['text_register'] = $this->language->get('text_register');
+            $data['text_forgotten'] = $this->language->get('text_forgotten');
+            $data['text_login_api_key'] = $this->language->get('text_login_api_key');
+            $data['text_login_email'] = $this->language->get('text_login_email');
+            $data['text_signin_same_email'] = $this->language->get('text_signin_same_email');
+            $data['text_by_registering_account'] = $this->language->get('text_by_registering_account');
+
+            $data['entry_email'] = $this->language->get('entry_email');
+            $data['entry_password'] = $this->language->get('entry_password');
+
+            $data['button_continue'] = $this->language->get('button_continue');
+            $data['button_login'] = $this->language->get('button_login_marketplace');
+
             $data['entry_api_key'] = $this->language->get('entry_api_key');
             $data['button_continue'] = $this->language->get('button_continue');
             $data['help_api_key'] = $this->language->get('help_api_key');
-            $data['changeApiKey'] = true;
 
-            $data['api_key_href'] = 'https://extensions.arastta.pro/index.php?route=account/api';
+            $data['email'] = '';
+            $data['password'] = '';
+
             $data['action'] = $this->url->link('extension/marketplace/saveApiKey', 'token=' . $this->session->data['token'], 'SSL');
+
+            $data['register'] = "Marketplace.loadweb(baseUrl + 'index.php?route=extension/marketplace/api&api=api/register')";
+            $data['login_action'] = "Marketplace.loadweb(baseUrl + 'index.php?route=extension/marketplace/login&api=api/marketplace/login', $('form').serialize())";
+
+            $data['forgotten'] = 'https://extensions.arastta.pro/index.php?route=account/forgotten';
+            $data['api_key_href'] = 'https://extensions.arastta.pro/index.php?route=account/api';
+
+        }
+
+        if ((isset($this->request->get['changeApiKey']) && $this->request->get['changeApiKey'])) {
+            $data['changeApiKey'] = true;
         }
 
         $data['url_data'] = array();
         foreach ($this->request->get as $key => $value) {
-            if ($key != 'route' && $key != 'token') {
+            if ($key !== 'route' && $key !== 'token') {
                 $data['url_data'][$key] = $value;
             }
         }
@@ -132,63 +162,75 @@ class ControllerExtensionMarketplace extends Controller
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        if ($this->validate()) {
+        if (isset($this->request->get['api'])) {
+            // Include any URL parameters
+            $url_data = array();
 
-            if (isset($this->session->data['cookie']) && isset($this->request->get['api'])) {
-                // Include any URL parameters
-                $url_data = array();
-
-                foreach ($this->request->get as $key => $value) {
-                    if ($key != 'route' && $key != 'token' && $key != 'store_id' && $key != 'api') {
-                        $url_data[$key] = $value;
-                    }
+            foreach ($this->request->get as $key => $value) {
+                if ($key !== 'route' && $key !== 'token' && $key !== 'store_id' && $key !== 'api') {
+                    $url_data[$key] = $value;
                 }
-
-                if (isset($this->request->get['store']) && !empty($this->request->get['store'])) {
-                    $this->apiBaseUrl = str_replace(parse_url($this->apiBaseUrl, PHP_URL_HOST), $this->request->get['store'] . '.' . parse_url($this->apiBaseUrl, PHP_URL_HOST), $this->apiBaseUrl);
-                }
-
-                $this->load->model('extension/marketplace');
-
-                $addons = $this->model_extension_marketplace->getAddons();
-                foreach ($addons as $addon) {
-                    $data[$addon['product_id']] = $addon['product_version'];
-                }
-
-                if (isset($data)) {
-                    $this->request->post['addons'] = $data;
-                }
-
-                $curl = curl_init();
-
-                curl_setopt($curl, CURLOPT_HEADER, false);
-                curl_setopt($curl, CURLINFO_HEADER_OUT, true);
-                curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-                curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-                curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
-                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($curl, CURLOPT_URL, $this->apiBaseUrl . 'index.php?route=' . $this->request->get['api'] . ($url_data ? '&' . http_build_query($url_data) : ''));
-
-                if ($this->request->post) {
-                    curl_setopt($curl, CURLOPT_POST, true);
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
-                }
-
-                curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
-
-                $json = curl_exec($curl);
-
-                curl_close($curl);
             }
-        } else {
 
-            $response = array();
-            $response['error']['warning'] = $this->error;
-            unset($this->error);
+            if (isset($this->request->get['store']) && !empty($this->request->get['store'])) {
+                $this->apiBaseUrl = str_replace(parse_url($this->apiBaseUrl, PHP_URL_HOST), $this->request->get['store'] . '.' . parse_url($this->apiBaseUrl, PHP_URL_HOST), $this->apiBaseUrl);
+            }
 
-            $json = json_encode($response);
+            $this->load->model('extension/marketplace');
+
+            $addons = $this->model_extension_marketplace->getAddons();
+            foreach ($addons as $addon) {
+                $data[$addon['product_id']] = $addon['product_version'];
+            }
+
+            if (isset($data)) {
+                $this->request->post['addons'] = $data;
+            }
+
+            $curl = curl_init();
+
+            curl_setopt($curl, CURLOPT_HEADER, false);
+            curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+            curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_URL, $this->apiBaseUrl . 'index.php?route=' . $this->request->get['api'] . ($url_data ? '&' . http_build_query($url_data) : ''));
+
+            if ($this->request->post) {
+                curl_setopt($curl, CURLOPT_POST, true);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
+            }
+
+            if (isset($this->session->data['cookie'])) {
+                curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
+            }
+
+            $json = curl_exec($curl);
+
+            curl_close($curl);
         }
+
+        if (strpos($this->request->get['api'], 'api/register') !== false) {
+            if (isset($this->request->get['callback']) && strpos($json, $this->request->get['callback']) !== false) {
+                $response = str_replace($this->request->get['callback'], '', $json);
+                $response = trim($response, '()');
+                $response = json_decode($response);
+            } else {
+                $response = json_decode($json);
+            }
+
+            if (isset($response->api_key)) {
+                $this->request->post['api_key'] = $response->api_key;
+                $this->saveApiKey();
+            }
+
+            if (isset($response->cookie)) {
+                $this->session->data['cookie'] = $response->cookie;
+            }
+        }
+
         if (!empty($this->request->server['HTTP_X_REQUESTED_WITH'])) {
             $this->response->addHeader('Content-Type: application/json');
             $this->response->setOutput($json);
@@ -221,7 +263,7 @@ class ControllerExtensionMarketplace extends Controller
 
         $params = json_decode($addon['params'], true);
 
-        if ($addon['product_type'] == 'translation') {
+        if ($addon['product_type'] === 'translation') {
             $this->load->model('localisation/language');
 
             $lang = $this->model_localisation_language->getLanguage($params['language_id']);
@@ -334,6 +376,27 @@ class ControllerExtensionMarketplace extends Controller
             $this->model_setting_setting->editSetting('api', $api);
         }
 
-        $this->response->redirect($this->url->link('extension/marketplace', 'token=' . $this->session->data['token'], 'SSL'));
+        if (basename($this->request->get['route']) === 'saveApiKey') {
+            $this->response->redirect($this->url->link('extension/marketplace', 'token=' . $this->session->data['token'], 'SSL'));
+        }
+    }
+
+    public function login()
+    {
+        $this->api();
+        $json = $this->response->get('output');
+
+        $json = str_replace($this->request->get['callback'], '', $json);
+        $json = trim($json, '()');
+        $json = json_decode($json);
+
+        if (isset($json->cookie)) {
+            $this->session->data['cookie'] = $json->cookie;
+        }
+
+        if (isset($json->api_key)) {
+            $this->request->post['api_key'] = $json->api_key;
+            $this->saveApiKey();
+        }
     }
 }

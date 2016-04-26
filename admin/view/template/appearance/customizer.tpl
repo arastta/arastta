@@ -38,16 +38,16 @@
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="customizer-controls" class="wrap wp-full-overlay-sidebar">
         <div id="customizer-header-actions" class="wp-full-overlay-header">
-            <button type="button" name="reset" id="reset" class="btn btn-danger button-primary reset" value="Reset">
+            <button type="button" name="reset" id="reset" class="btn btn-danger button-primary reset" data-toggle="tooltip" title="<?php echo $button_reset; ?>" data-original-title="Reset Customizer editing">
                 <i class="fa fa-trash-o"></i>
             </button>
-            <button type="submit" name="save" id="save" class="btn btn-primary button-primary save" value="Save">
-                <i class="fa fa-save"></i>
+            <button type="submit" name="save" id="save" class="btn btn-default button-primary save" data-toggle="tooltip" title="<?php echo $button_save; ?>" data-original-title="Save Customizer editing">
+                <i class="fa fa-save text-success"></i>
             </button>
             <div class="checkbox advance">
                 <label><input type="checkbox" id="advance-conrol" value=""><span><?php echo $text_advance; ?></span></label>
             </div>
-            <a class="customizer-controls-close" href="<?php echo $back;?>">
+            <a class="customizer-controls-close" href="javascript: history.go(-1);">
                 <span class="screen-reader-text"><?php echo $entry_close; ?></span>
             </a>
             <span class="control-panel-back" tabindex="-1">

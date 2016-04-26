@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -19,6 +19,7 @@ $_['entry_name']       = 'Module Name';
 $_['entry_banner']     = 'Banner';
 $_['entry_width']      = 'Width';
 $_['entry_height']     = 'Height';
+$_['entry_pagination'] = 'Pagination';
 $_['entry_status']     = 'Status';
 
 // Error

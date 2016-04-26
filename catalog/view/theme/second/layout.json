@@ -1,0 +1,13 @@
+{
+    "positions": {
+        "title": "Positions",
+        "header_top": [],
+        "top": ["top"],
+        "left": ["column_left"],
+        "main_top": ["content_top"],
+        "main_bottom": ["content_bottom"],
+        "right": ["column_right"],
+        "bottom": ["bottom_a", "bottom_b", "bottom_c"],
+        "footer_bottom": []
+    }
+}

@@ -6,7 +6,8 @@
                 <button type="submit" onclick="save('save')" form="form-tax-rate" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
                 <button type="submit" form="form-tax-rate" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
                 <button type="submit" onclick="save('new')" form="form-tax-rate" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -28,8 +29,8 @@
                         <div class="panel-body">
                             <div class="general">
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-name"><?php echo $entry_name; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
                                         <?php if ($error_name) { ?>
                                         <div class="text-danger"><?php echo $error_name; ?></div>
@@ -37,8 +38,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-rate"><?php echo $entry_rate; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-rate"><?php echo $entry_rate; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="rate" value="<?php echo $rate; ?>" placeholder="<?php echo $entry_rate; ?>" id="input-rate" class="form-control" />
                                         <?php if ($error_rate) { ?>
                                         <div class="text-danger"><?php echo $error_rate; ?></div>
@@ -46,8 +47,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-type"><?php echo $entry_type; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-type"><?php echo $entry_type; ?></label>
+                                    <div class="col-sm-12">
                                         <select name="type" id="input-type" class="form-control">
                                             <?php if ($type == 'P') { ?>
                                             <option value="P" selected="selected"><?php echo $text_percent; ?></option>
@@ -63,8 +64,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label"><?php echo $entry_customer_group; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12"><?php echo $entry_customer_group; ?></label>
+                                    <div class="col-sm-12">
                                         <?php foreach ($customer_groups as $customer_group) { ?>
                                         <div class="checkbox">
                                             <label>
@@ -81,8 +82,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
+                                    <div class="col-sm-12">
                                         <select name="geo_zone_id" id="input-geo-zone" class="form-control">
                                             <?php foreach ($geo_zones as $geo_zone) { ?>
                                             <?php  if ($geo_zone['geo_zone_id'] == $geo_zone_id) { ?>

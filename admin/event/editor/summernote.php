@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -30,6 +30,14 @@ class EventEditorSummernote extends Event
     public function preAdminEditor()
     {
         $editor = $this->config->get('config_text_editor');
+
+        if ($this->user->isLogged()) {
+            $user = $this->user->getParams();
+
+            if (!empty($user['editor'])) {
+                $editor = $user['editor'];
+            }
+        }
 
         $this->load->model('setting/setting');
 

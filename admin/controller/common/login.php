@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -15,14 +15,26 @@ class ControllerCommonLogin extends Controller {
 
         $this->document->setTitle($this->language->get('heading_title'));
 
+        $this->document->addStyle('view/stylesheet/login.css');
+
+        // Include extra event folders
+        $this->trigger->addFolder('authentication');
+        $this->trigger->addFolder('twofactorauth');
+
+        // Useful for 3rd party authentication
+        $this->trigger->fire('pre.admin.login');
+
         if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
             $this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'));
         }
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+            // Required for 2FA
+            $this->trigger->fire('post.admin.login');
+
             $this->session->data['token'] = md5(mt_rand());
 
-            if (!empty($this->request->post['lang'])) {
+            if (!empty($this->request->post['lang']) && $this->request->post['lang'] != '*') {
                 $this->session->data['admin_language'] = $this->request->post['lang'];
             }
 
@@ -44,7 +56,6 @@ class ControllerCommonLogin extends Controller {
                 $mail->setSubject($subject);
                 $mail->setHtml($message);
                 $mail->send();
-
             }
 
             if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0 || strpos($this->request->post['redirect'], HTTPS_SERVER) === 0 )) {
@@ -62,6 +73,14 @@ class ControllerCommonLogin extends Controller {
 
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
+
+        if (isset($this->session->data['warning'])) {
+            $data['error_warning'] = $this->session->data['warning'];
+
+            unset($this->session->data['warning']);
         } else {
             $data['error_warning'] = '';
         }
@@ -133,6 +152,17 @@ class ControllerCommonLogin extends Controller {
         } else {
             $data['languages'] = '';
             $this->session->data['admin_language'] = $this->config->get('config_admin_language');
+        }
+
+        // Two-Factor Authenticators
+        $this->load->model('extension/extension');
+
+        $twofactorauths = $this->model_extension_extension->getEnabledExtensions(array('filter_type' => 'twofactorauth'));
+
+        if (!empty($twofactorauths)) {
+            $data['twofactorauth'] = 'enabled';
+        } else {
+            $data['twofactorauth'] = '';
         }
 
         $data['config_admin_language'] = $this->config->get('config_admin_language');

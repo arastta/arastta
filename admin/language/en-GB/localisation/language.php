@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -43,3 +43,8 @@ $_['error_default']     = 'Warning: This language cannot be deleted as it is cur
 $_['error_admin']       = 'Warning: This Language cannot be deleted as it is currently assigned as the administration language!';
 $_['error_store']       = 'Warning: This language cannot be deleted as it is currently assigned to %s stores!';
 $_['error_order']       = 'Warning: This language cannot be deleted as it is currently assigned to %s orders!';
+
+$_['error_both_status']     = 'Warning: This language cannot be changed status as it is currently assigned as the administration and the default store language!';
+$_['error_default_status']  = 'Warning: This language cannot be changed status as it is currently assigned as the default store language!';
+$_['error_store_status']    = 'Warning: This language cannot be changed status as it is currently assigned to %s stores!';
+$_['error_admin_status']    = 'Warning: This language cannot be changed status as it is currently assigned as the administration!';

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -362,8 +362,8 @@ class ControllerExtensionModification extends Controller {
 
         $data['modifications'] = array();
 
-        $files_enable = glob(DIR_SYSTEM . 'xml/*.xml');
-        $files_disable = glob(DIR_SYSTEM . 'xml/*.xml_') == false ? array() : glob(DIR_SYSTEM . 'xml/*.xml_');
+        $files_enable  = ($files_enable = glob(DIR_SYSTEM . 'xml/*.xml')) == false ? array() : $files_enable;
+        $files_disable = ($files_disable = glob(DIR_SYSTEM . 'xml/*.xml_')) == false ? array() : $files_disable;
 
         $files_hide = array('core.xml');
 
@@ -521,6 +521,7 @@ class ControllerExtensionModification extends Controller {
         $data['text_list'] = $this->language->get('text_list');
         $data['text_no_results'] = $this->language->get('text_no_results');
         $data['text_confirm'] = $this->language->get('text_confirm');
+        $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         $data['text_refresh'] = $this->language->get('text_refresh');
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
         $data['text_selected_modification'] = $this->language->get('text_selected_modification');
@@ -639,8 +640,8 @@ class ControllerExtensionModification extends Controller {
     }
 
     protected function _checkVqmodfile() {
-        $files_enable  = glob(DIR_VQMOD . 'xml/*.xml');
-        $files_disable = glob(DIR_VQMOD . 'xml/*.xml_') == false ? array() : glob(DIR_VQMOD . 'xml/*.xml_');
+        $files_enable  = ($files_enable = glob(DIR_VQMOD . 'xml/*.xml')) == false ? array() : $files_enable;
+        $files_disable = ($files_disable = glob(DIR_VQMOD . 'xml/*.xml_')) == false ? array() : $files_disable;
 
         $files = array_merge($files_enable, $files_disable);
 

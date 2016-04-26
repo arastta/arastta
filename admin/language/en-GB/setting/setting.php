@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -75,6 +75,8 @@ $_['entry_meta_title']                 = 'Meta Title';
 $_['entry_meta_description']           = 'Meta Description';
 $_['entry_meta_keyword']               = 'Meta Keywords';
 $_['entry_layout']                     = 'Default Layout';
+$_['entry_admin_template']             = 'Admin Template';
+$_['entry_admin_template_message']     = 'Admin Template Message';
 $_['entry_template']                   = 'Template';
 $_['entry_country']                    = 'Country';
 $_['entry_zone']                       = 'Region / State';
@@ -194,10 +196,13 @@ $_['entry_sec_sql']                    = 'SQLi Protection';
 $_['entry_sec_xss']                    = 'XSS Protection';
 $_['entry_sec_htmlpurifier']           = 'Use HTMLPurifier';
 $_['entry_cache_storage']              = 'Storage';
+$_['entry_cache_memcache_servers']     = 'Memcache Servers';
+$_['entry_cache_redis_server']         = 'Redis Server';
 $_['entry_cache_lifetime']             = 'Lifetime';
 $_['entry_cache_clear']                = 'Clear After Save';
 $_['entry_pagecache']                  = 'Use Page Cache';
 $_['entry_pagecache_exclude']          = 'Exclude Routes';
+$_['entry_timezone']                   = 'Time Zone';
 
 // Help
 $_['help_geocode']                     = 'Please enter your store location geocode manually.';
@@ -292,10 +297,13 @@ $_['help_sec_sql']                     = '(SQL Injection) This feature will try 
 $_['help_sec_xss']                     = '(Cross Site Scripting) This feature will try to protect against Javascript attacks that might cause connection drop.';
 $_['help_sec_htmlpurifier']            = 'HTMLPurifier Library offers higher security level by cleaning the content of request variables. Enabling this option may affect the page load slightly.';
 $_['help_cache_storage']               = 'Select the storage to save the cached data. All options except File require a specific PHP extension to be installed in your server. Please, check the documentation for further details.';
+$_['help_cache_memcache_servers']      = 'Servers (i.e. 127.0.0.1:80) to be used as storage. Enter one server per line.';
+$_['help_cache_redis_server']          = 'Server (i.e. 127.0.0.1:80) to be used as storage.';
 $_['help_cache_lifetime']              = 'The maximum length of time in seconds for a cache file to be stored before it is refreshed. Default: 86400 (24 hours)';
 $_['help_cache_clear']                 = 'Clear the cache after a product, category, manufacturer, information is created/edited.';
 $_['help_pagecache']                   = 'Page Cache acts as like a page snapshot. It\'s super fast as it caches everything in HTML format. The cache is created on the first page visit by the first visitor of the store. After that, all other visitors will get this page loaded from the cache. Not applicable when visitor logged in or added product to cart or is in cart/checkout page.';
 $_['help_pagecache_exclude']           = 'Route values (i.e. common/home) to be excluded from the Page Cache. Enter one route per line.';
+$_['help_timezone']                    = 'Choose a city in the list to configure the date and time.';
 
 // Error
 $_['error_warning']                    = 'Warning: Please check the form carefully for errors!';
@@ -326,3 +334,5 @@ $_['error_image_location']             = 'Store Image Size dimensions required!'
 $_['error_error_filename']             = 'Error Log Filename required!';
 $_['error_encryption']                 = 'Encryption Key must be between 3 and 32 characters!';
 $_['error_cache_not_cleared']          = 'Cache Not Cleaned';
+$_['error_cache_memcache_servers']     = 'Memcache servers are required!';
+$_['error_cache_redis_server']         = 'Redis server is required!';

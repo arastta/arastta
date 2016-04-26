@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -12,7 +12,7 @@ class ControllerModuleSlideshow extends Controller {
 
         $this->load->model('design/banner');
         $this->load->model('tool/image');
-        
+
         $this->document->addStyle('catalog/view/javascript/jquery/owl-carousel/owl.carousel.css');
         $this->document->addScript('catalog/view/javascript/jquery/owl-carousel/owl.carousel.min.js');
 
@@ -29,6 +29,8 @@ class ControllerModuleSlideshow extends Controller {
                 );
             }
         }
+
+        $data['pagination'] = isset($setting['pagination']) ? $setting['pagination'] : true;
 
         $data['module'] = $module++;
 

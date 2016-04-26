@@ -94,8 +94,8 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group hidden">
-                        <label class="col-sm-2 control-label" for="input-language"><?php echo $entry_language; ?></label>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-language"><?php echo $entry_admin_language; ?></label>
                         <div class="col-sm-10">
                             <select name="params[language]" id="input-language" class="form-control">
                                 <?php foreach ($languages as $language) { ?>
@@ -108,15 +108,15 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group hidden">
+                    <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-editor"><?php echo $entry_editor; ?></label>
                         <div class="col-sm-10">
                             <select name="params[editor]" id="input-editor" class="form-control">
                                 <?php foreach ($editors as $editor) { ?>
-                                <?php if ($editor == $use_editor) { ?>
-                                <option value="<?php echo $editor; ?>" selected="selected"><?php echo ($use_editor != 'tinymce') ? 'Summernote' : 'Tinymce'; ?></option>
+                                <?php if ($editor['value'] == $use_editor) { ?>
+                                <option value="<?php echo $editor['value']; ?>" selected="selected"><?php echo $editor['text']; ?></option>
                                 <?php } else { ?>
-                                <option value="<?php echo $editor; ?>"><?php echo ($use_editor == 'tinymce') ? 'Summernote' : 'Tinymce'; ?></option>
+                                <option value="<?php echo $editor['value']; ?>"><?php echo $editor['text']; ?></option>
                                 <?php } ?>
                                 <?php } ?>
                             </select>
@@ -159,6 +159,29 @@
                             </label>
                         </div>
                     </div>
+                    <?php if ($error_twofactorauth) { ?>
+                    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_twofactorauth; ?>
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    </div>
+                    <?php } ?>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-twofactorauth"><?php echo $entry_twofactorauth; ?></label>
+                        <div class="col-sm-10">
+                            <?php if ($user_id) { ?>
+                            <select name="params[twofactorauth][method]" id="input-twofactorauth" class="form-control">
+                                <option value="none" <?php echo ($use_twofactorauth == 'none') ? 'selected="selected"' : ''; ?>><?php echo $text_none; ?></option>
+                                <?php if ($twofactorauths) { ?>
+                                <?php foreach ($twofactorauths as $twofactorauth) { ?>
+                                <option value="<?php echo $twofactorauth['code']; ?>" <?php echo ($twofactorauth['code'] == $use_twofactorauth) ? 'selected="selected"' : ''; ?>><?php echo $twofactorauth['text']; ?></option>
+                                <?php } ?>
+                                <?php } ?>
+                            </select>
+                            <?php } else { ?>
+                            <?php echo $text_twofactorauth; ?>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <div id="twofactorauth-content"></div>
                 </form>
             </div>
         </div>
@@ -173,5 +196,27 @@ function save(type){
     form = $("form[id^='form-']").append(input);
     form.submit();
 }
+//--></script>
+<script type="text/javascript"><!--
+$('select[name=\'params[twofactorauth][method]\']').on('change', function() {
+    $.ajax({
+        url: 'index.php?route=user/user/twofactorauth&token=<?php echo $token; ?>&user_id=<?php echo $user_id; ?>&method=' + this.value,
+        dataType: 'html',
+        beforeSend: function() {
+            $('#twofactorauth-content').html(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+        },
+        complete: function() {
+            $('.fa-spin').remove();
+        },
+        success: function(html) {
+            $('#twofactorauth-content').html(html);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('select[name=\'params[twofactorauth][method]\']').trigger('change');
 //--></script>
 <?php echo $footer; ?> 

@@ -7,7 +7,8 @@
                 <button type="button" id="button-send" data-toggle="tooltip" title="<?php echo $button_send; ?>" class="btn btn-default"><i class="fa fa-envelope"></i></button>
                 <?php } ?>
                 <button type="submit" form="form-voucher" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success"><i class="fa fa-check"></i></button>
-                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a></div>
+                <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -29,8 +30,8 @@
                         <div class="panel-body">
                             <div class="general">
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="<?php echo $help_code; ?>"><?php echo $entry_code; ?></span></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-code"><span data-toggle="tooltip" title="<?php echo $help_code; ?>"><?php echo $entry_code; ?></span></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
                                         <?php if ($error_code) { ?>
                                         <div class="text-danger"><?php echo $error_code; ?></div>
@@ -38,8 +39,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-from-name"><?php echo $entry_from_name; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-from-name"><?php echo $entry_from_name; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="from_name" value="<?php echo $from_name; ?>" placeholder="<?php echo $entry_from_name; ?>" id="input-from-name" class="form-control" />
                                         <?php if ($error_from_name) { ?>
                                         <div class="text-danger"><?php echo $error_from_name; ?></div>
@@ -47,8 +48,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-from-email"><?php echo $entry_from_email; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-from-email"><?php echo $entry_from_email; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="from_email" value="<?php echo $from_email; ?>" placeholder="<?php echo $entry_from_email; ?>" id="input-from-email" class="form-control" />
                                         <?php if ($error_from_email) { ?>
                                         <div class="text-danger"><?php echo $error_from_email; ?></div>
@@ -56,8 +57,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-to-name"><?php echo $entry_to_name; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-to-name"><?php echo $entry_to_name; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="to_name" value="<?php echo $to_name; ?>" placeholder="<?php echo $entry_to_name; ?>" id="input-to-name" class="form-control" />
                                         <?php if ($error_to_name) { ?>
                                         <div class="text-danger"><?php echo $error_to_name; ?></div>
@@ -65,8 +66,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-to-email"><?php echo $entry_to_email; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-to-email"><?php echo $entry_to_email; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="to_email" value="<?php echo $to_email; ?>" placeholder="<?php echo $entry_to_email; ?>" id="input-to-email" class="form-control" />
                                         <?php if ($error_to_email) { ?>
                                         <div class="text-danger"><?php echo $error_to_email; ?></div>
@@ -74,8 +75,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-theme"><?php echo $entry_theme; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-theme"><?php echo $entry_theme; ?></label>
+                                    <div class="col-sm-12">
                                         <select name="voucher_theme_id" id="input-theme" class="form-control">
                                             <?php foreach ($voucher_themes as $voucher_theme) { ?>
                                             <?php if ($voucher_theme['voucher_theme_id'] == $voucher_theme_id) { ?>
@@ -88,14 +89,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group required">
-                                    <label class="col-sm-2 control-label" for="input-message"><?php echo $entry_message; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-message"><?php echo $entry_message; ?></label>
+                                    <div class="col-sm-12">
                                         <textarea name="message" rows="5" placeholder="<?php echo $entry_message; ?>" id="input-message" class="form-control"><?php echo $message; ?></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-amount"><?php echo $entry_amount; ?></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12" for="input-amount"><?php echo $entry_amount; ?></label>
+                                    <div class="col-sm-12">
                                         <input type="text" name="amount" value="<?php echo $amount; ?>" placeholder="<?php echo $entry_amount; ?>" id="input-amount" class="form-control" />
                                         <?php if ($error_amount) { ?>
                                         <div class="text-danger"><?php echo $error_amount; ?></div>
@@ -132,8 +133,8 @@
                         <div class="panel-body">
                             <div class="publish">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label"><?php echo $text_enabled; ?></label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-12"><?php echo $text_enabled; ?></label>
+                                    <div class="col-sm-12">
                                         <label class="radio-inline">
                                             <?php if ($status) { ?>
                                             <input type="radio" name="status" value="1" checked="checked" />

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -23,10 +23,6 @@ error_reporting(E_ALL);
 // Check Version
 if (version_compare(PHP_VERSION, '5.3.10', '<')) {
     die('Your host needs to use PHP 5.3.10 or higher to run Arastta.');
-}
-
-if (!ini_get('date.timezone')) {
-    date_default_timezone_set('UTC');
 }
 
 // Windows IIS Compatibility
@@ -135,5 +131,4 @@ require_once(modification(DIR_SYSTEM . 'engine/model.php'));
 require_once(modification(DIR_SYSTEM . 'engine/registry.php'));
 
 // Helper
-require_once(DIR_SYSTEM . 'helper/json.php');
 require_once(DIR_SYSTEM . 'helper/utf8.php');

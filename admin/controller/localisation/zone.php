@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -234,6 +234,8 @@ class ControllerLocalisationZone extends Controller {
             'limit' => $this->config->get('config_limit_admin')
         );
 
+        $zone_status = $this->model_localisation_zone->getZoneStatus();
+
         if(!empty($filter_country) || !empty($filter_zone_name) || !empty($filter_zone_code) || !empty($filter_status)) {
             $zone_total = $this->model_localisation_zone->getTotalZonesFilter($filter_data);
         } else {
@@ -247,7 +249,7 @@ class ControllerLocalisationZone extends Controller {
                 'zone_id' => $result['zone_id'],
                 'country' => $result['country'],
                 'name'    => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : null),
-                'status'  => $result['status'],
+                'status'  => ($zone_status[$result['zone_id']]['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
                 'code'    => $result['code'],
                 'edit'    => $this->url->link('localisation/zone/edit', 'token=' . $this->session->data['token'] . '&zone_id=' . $result['zone_id'] . $url, 'SSL')
             );
@@ -260,6 +262,7 @@ class ControllerLocalisationZone extends Controller {
         $data['text_list'] = $this->language->get('text_list');
         $data['text_no_results'] = $this->language->get('text_no_results');
         $data['text_confirm'] = $this->language->get('text_confirm');
+        $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         $data['text_enabled']  = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
@@ -314,6 +317,7 @@ class ControllerLocalisationZone extends Controller {
         $data['sort_country'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . '&sort=c.name' . $url, 'SSL');
         $data['sort_name'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . '&sort=z.name' . $url, 'SSL');
         $data['sort_code'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . '&sort=z.code' . $url, 'SSL');
+        $data['sort_status'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . '&sort=z.status' . $url, 'SSL');
 
         $url = '';
 

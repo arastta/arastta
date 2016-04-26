@@ -300,16 +300,7 @@ var cart = {
                 }
 
                 if (json['success']) {
-                    $('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-                    // Need to set timeout otherwise it wont update the total
-                    setTimeout(function () {
-                        $('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
-                    }, 100);
-
-                    $('html, body').animate({ scrollTop: 0 }, 'slow');
-
-                    $('#cart > ul').load('index.php?route=common/cart/info ul li');
+                    cart.after('add', json);
                 }
             }
         });
@@ -337,6 +328,8 @@ var cart = {
                 } else {
                     $('#cart > ul').load('index.php?route=common/cart/info ul li');
                 }
+                
+                cart.after('update', json);
             }
         });
     },
@@ -363,7 +356,64 @@ var cart = {
                 } else {
                     $('#cart > ul').load('index.php?route=common/cart/info ul li');
                 }
+
+                cart.after('remove', json);
             }
+        });
+    },
+    'after': function(key, json) {
+        $('.tooltip.fade.top.in').remove();
+
+        if (key == 'add') {
+            $.ajax({
+                url: 'index.php?route=module/cart/popup',
+                type: 'post',
+                dataType: 'json',
+                success: function(responce) {
+                    if (responce['popup']) {
+                        $('#modal-popup-cart').remove();
+
+                        html  = '<div id="modal-popup-cart" class="modal">';
+                        html += '  <div class="modal-dialog">';
+                        html += '    <div class="modal-content">';
+                        html += '      <div class="modal-header">';
+                        html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+                        html += '        <h4 class="modal-title"> <i class="fa fa-shopping-cart"></i> ' + responce['total'] + '</h4>';
+                        html += '      </div>';
+                        html += '      <div class="modal-body">' + responce['html'] + '</div>';
+                        html += '    </div';
+                        html += '  </div>';
+                        html += '</div>';
+
+                        $('body').append(html);
+
+                        $('#modal-popup-cart .module-title').hide();
+                        $('#modal-popup-cart .buttons .button-continue').removeClass('hidden');
+
+                        $('#modal-popup-cart').modal('show');
+                    }
+
+                    if (responce['default']) {
+                        $('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                    }
+                }
+            });
+        }
+
+        // Need to set timeout otherwise it wont update the total
+        setTimeout(function () {
+            $('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
+        }, 100);
+
+        $('#cart > ul').load('index.php?route=common/cart/info ul li');
+
+        $.each($('.module-cart'), function(i, module) {
+            cart_id = $(module).attr('id');
+            module_cart_path = '&module_id=' + $(module).find('input[name="module-cart"]').val() + '&module=' + $(module).attr('id').replace('cart-', '');
+
+            $('#' + cart_id).load('index.php?route=module/cart/info' + module_cart_path + ' #' + cart_id + ' >');
         });
     }
 }

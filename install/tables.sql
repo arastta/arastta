@@ -25,6 +25,16 @@ CREATE TABLE IF NOT EXISTS `ar_addon` (
 -- --------------------------------------------------------
 
 --
+-- Dumping data for table `ar_addon`
+--
+
+INSERT INTO `ar_addon` (`addon_id`, `product_id`, `product_name`, `product_type`, `product_version`, `files`, `params`) VALUES
+(1, 0, 'Cart', 'module', '1.0.0', '["admin\\/controller\\\\module\\\\cart.php","catalog\\/controller\\\\module\\\\cart.php","admin\\/language\\\\en-GB\\\\module\\\\cart.php","catalog\\/language\\\\en-GB\\\\module\\\\cart.php","admin\\/view\\\\template\\\\module\\\\cart.tpl","catalog\\/view\\\\theme\\\\default\\\\template\\\\module\\\\cart.tpl"]', '{"theme_ids":[],"extension_ids":[444]}'),
+(2, 0, 'Summernote', 'editor', '1.0.0', '["admin\\/controller\\\\editor\\\\summernote.php","admin\\/language\\\\en-GB\\\\editor\\\\summernote.php","admin\\/view\\\\template\\\\editor\\\\summernote.tpl"]', '{"theme_ids":[],"extension_ids":[445]}'),
+(3, 0, 'Tinymce', 'editor', '1.0.0', '["admin\\/controller\\\\editor\\\\tinymce.php","admin\\/language\\\\en-GB\\\\editor\\\\tinymce.php","admin\\/view\\\\template\\\\editor\\\\tinymce.tpl"]', '{"theme_ids":[],"extension_ids":[446]}');
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ar_address`
 --
 
@@ -432,7 +442,7 @@ INSERT INTO `ar_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (54, 'Cuba', 'CU', 'CUB', '', 0, 1),
 (55, 'Cyprus', 'CY', 'CYP', '', 0, 1),
 (56, 'Czech Republic', 'CZ', 'CZE', '', 0, 1),
-(57, 'Denmark', 'DK', 'DNK', '', 0, 1),
+(57, 'Denmark', 'DK', 'DNK', '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 0, 1),
 (58, 'Djibouti', 'DJ', 'DJI', '', 0, 1),
 (59, 'Dominica', 'DM', 'DMA', '', 0, 1),
 (60, 'Dominican Republic', 'DO', 'DOM', '', 0, 1),
@@ -445,9 +455,9 @@ INSERT INTO `ar_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (67, 'Estonia', 'EE', 'EST', '', 0, 1),
 (68, 'Ethiopia', 'ET', 'ETH', '', 0, 1),
 (69, 'Falkland Islands (Malvinas)', 'FK', 'FLK', '', 0, 1),
-(70, 'Faroe Islands', 'FO', 'FRO', '', 0, 1),
+(70, 'Faroe Islands', 'FO', 'FRO', '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 0, 1),
 (71, 'Fiji', 'FJ', 'FJI', '', 0, 1),
-(72, 'Finland', 'FI', 'FIN', '', 0, 1),
+(72, 'Finland', 'FI', 'FIN', '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 0, 1),
 (74, 'France, Metropolitan', 'FR', 'FRA', '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 1, 1),
 (75, 'French Guiana', 'GF', 'GUF', '', 0, 1),
 (76, 'French Polynesia', 'PF', 'PYF', '', 0, 1),
@@ -459,7 +469,7 @@ INSERT INTO `ar_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (82, 'Ghana', 'GH', 'GHA', '', 0, 1),
 (83, 'Gibraltar', 'GI', 'GIB', '', 0, 1),
 (84, 'Greece', 'GR', 'GRC', '', 0, 1),
-(85, 'Greenland', 'GL', 'GRL', '', 0, 1),
+(85, 'Greenland', 'GL', 'GRL', '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 0, 1),
 (86, 'Grenada', 'GD', 'GRD', '', 0, 1),
 (87, 'Guadeloupe', 'GP', 'GLP', '', 0, 1),
 (88, 'Guam', 'GU', 'GUM', '', 0, 1),
@@ -472,7 +482,7 @@ INSERT INTO `ar_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (95, 'Honduras', 'HN', 'HND', '', 0, 1),
 (96, 'Hong Kong', 'HK', 'HKG', '', 0, 1),
 (97, 'Hungary', 'HU', 'HUN', '', 0, 1),
-(98, 'Iceland', 'IS', 'ISL', '', 0, 1),
+(98, 'Iceland', 'IS', 'ISL', '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 0, 1),
 (99, 'India', 'IN', 'IND', '', 0, 1),
 (100, 'Indonesia', 'ID', 'IDN', '', 0, 1),
 (101, 'Iran (Islamic Republic of)', 'IR', 'IRN', '', 0, 1),
@@ -534,7 +544,7 @@ INSERT INTO `ar_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (157, 'Niue', 'NU', 'NIU', '', 0, 1),
 (158, 'Norfolk Island', 'NF', 'NFK', '', 0, 1),
 (159, 'Northern Mariana Islands', 'MP', 'MNP', '', 0, 1),
-(160, 'Norway', 'NO', 'NOR', '', 0, 1),
+(160, 'Norway', 'NO', 'NOR', '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 0, 1),
 (161, 'Oman', 'OM', 'OMN', '', 0, 1),
 (162, 'Pakistan', 'PK', 'PAK', '', 0, 1),
 (163, 'Palau', 'PW', 'PLW', '', 0, 1),
@@ -615,7 +625,7 @@ INSERT INTO `ar_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (239, 'Zimbabwe', 'ZW', 'ZWE', '', 0, 1),
 (242, 'Montenegro', 'ME', 'MNE', '', 0, 1),
 (243, 'Serbia', 'RS', 'SRB', '', 0, 1),
-(244, 'Aaland Islands', 'AX', 'ALA', '', 0, 1),
+(244, 'Aaland Islands', 'AX', 'ALA', '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 0, 1),
 (245, 'Bonaire, Sint Eustatius and Saba', 'BQ', 'BES', '', 0, 1),
 (246, 'Curacao', 'CW', 'CUW', '', 0, 1),
 (247, 'Palestinian Territory, Occupied', 'PS', 'PSE', '', 0, 1),
@@ -639,7 +649,7 @@ INSERT INTO `ar_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 CREATE TABLE IF NOT EXISTS `ar_coupon` (
   `coupon_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
-  `code` varchar(10) NOT NULL,
+  `code` varchar(128) NOT NULL,
   `type` char(1) NOT NULL,
   `discount` decimal(15,4) NOT NULL,
   `logged` tinyint(1) NOT NULL,
@@ -1205,7 +1215,10 @@ INSERT INTO `ar_extension` (`extension_id`, `type`, `code`) VALUES
 (438, 'module', 'manufacturer'),
 (441, 'module', 'special'),
 (442, 'module', 'store'),
-(443, 'feed', 'google_sitemap');
+(444, 'module', 'cart'),
+(443, 'feed', 'google_sitemap'),
+(445, 'editor', 'summernote'),
+(446, 'editor', 'tinymce');
 
 -- --------------------------------------------------------
 
@@ -1302,7 +1315,7 @@ CREATE TABLE IF NOT EXISTS `ar_information_description` (
   `information_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `title` varchar(64) NOT NULL,
-  `description` text NOT NULL,
+  `description` mediumtext NOT NULL,
   `meta_title` varchar(255) NOT NULL,
   `meta_description` varchar(255) NOT NULL,
   `meta_keyword` varchar(255) NOT NULL,
@@ -1344,7 +1357,7 @@ CREATE TABLE IF NOT EXISTS `ar_information_to_store` (
 -- Table structure for table `ar_invoice`
 --
 
-CREATE TABLE `ar_invoice` (
+CREATE TABLE IF NOT EXISTS `ar_invoice` (
   `invoice_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `invoice_date` datetime NOT NULL,
@@ -1358,7 +1371,7 @@ CREATE TABLE `ar_invoice` (
 -- Table structure for table `ar_invoice_history`
 --
 
-CREATE TABLE `ar_invoice_history` (
+CREATE TABLE IF NOT EXISTS `ar_invoice_history` (
   `invoice_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `invoice_id` int(11) NOT NULL,
   `notify` tinyint(1) NOT NULL DEFAULT '0',
@@ -1429,7 +1442,7 @@ CREATE TABLE IF NOT EXISTS `ar_layout_module` (
   `layout_module_id` int(11) NOT NULL AUTO_INCREMENT,
   `layout_id` int(11) NOT NULL,
   `code` varchar(64) NOT NULL,
-  `position` varchar(14) NOT NULL,
+  `position` varchar(64) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`layout_module_id`),
   KEY `layout_id` (`layout_id`)
@@ -1499,7 +1512,7 @@ INSERT INTO `ar_length_class` (`length_class_id`, `value`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `ar_length_class_description` (
-  `length_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `length_class_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `title` varchar(32) NOT NULL,
   `unit` varchar(4) NOT NULL,
@@ -2679,7 +2692,7 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (316, 0, 'config', 'config_currency_auto', '1', 0),
 (317, 0, 'config', 'config_length_class_id', '1', 0),
 (318, 0, 'config', 'config_weight_class_id', '1', 0),
-(319, 0, 'config', 'config_template', 'default', 0),
+(319, 0, 'config', 'config_template', 'second', 0),
 (320, 0, 'config', 'config_layout_id', '4', 0),
 (321, 0, 'config', 'config_text_editor', 'summernote', 0),
 (322, 0, 'config', 'config_product_count', '1', 0),
@@ -2720,7 +2733,7 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (357, 0, 'config', 'config_affiliate_mail', '0', 0),
 (358, 0, 'config', 'config_return_id', '0', 0),
 (359, 0, 'config', 'config_return_status_id', '2', 0),
-(360, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
+(360, 0, 'config', 'config_logo', 'catalog/second.png', 0),
 (361, 0, 'config', 'config_icon', 'catalog/cart.png', 0),
 (362, 0, 'config', 'config_image_category_width', '80', 0),
 (363, 0, 'config', 'config_image_category_height', '80', 0),
@@ -2732,8 +2745,8 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (369, 0, 'config', 'config_image_product_height', '228', 0),
 (370, 0, 'config', 'config_image_additional_width', '74', 0),
 (371, 0, 'config', 'config_image_additional_height', '74', 0),
-(372, 0, 'config', 'config_image_related_width', '80', 0),
-(373, 0, 'config', 'config_image_related_height', '80', 0),
+(372, 0, 'config', 'config_image_related_width', '228', 0),
+(373, 0, 'config', 'config_image_related_height', '228', 0),
 (374, 0, 'config', 'config_image_compare_width', '90', 0),
 (375, 0, 'config', 'config_image_compare_height', '90', 0),
 (376, 0, 'config', 'config_image_wishlist_width', '47', 0),
@@ -2794,7 +2807,49 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (432, 0, 'config', 'config_debug_system', '0', 0),
 (433, 0, 'config', 'config_error_display', '1', 0),
 (434, 0, 'config', 'config_error_log', '0', 0),
-(435, 0, 'config', 'config_error_filename', 'error.log', 0);
+(435, 0, 'config', 'config_error_filename', 'error.log', 0),
+(436, 0, 'config', 'config_admin_template', 'basic', 0),
+(437, 0, 'config', 'config_admin_template_message', 'show', 0),
+(438, 0, 'summernote', 'summernote_status', '1', 0),
+(439, 0, 'summernote', 'summernote_height', '300', 0),
+(440, 0, 'summernote', 'summernote_sort_order', '1', 0),
+(441, 0, 'summernote', 'summernote_tool_style', '1', 0),
+(442, 0, 'summernote', 'summernote_tool_font_bold', '1', 0),
+(443, 0, 'summernote', 'summernote_tool_font_italic', '1', 0),
+(444, 0, 'summernote', 'summernote_tool_font_underline', '1', 0),
+(445, 0, 'summernote', 'summernote_tool_font_clear', '1', 0),
+(446, 0, 'summernote', 'summernote_tool_fontname', '1', 0),
+(447, 0, 'summernote', 'summernote_tool_fontsize', '1', 0),
+(448, 0, 'summernote', 'summernote_tool_color', '1', 0),
+(449, 0, 'summernote', 'summernote_tool_para_ol', '1', 0),
+(450, 0, 'summernote', 'summernote_tool_para_ul', '1', 0),
+(451, 0, 'summernote', 'summernote_tool_para_paragraph', '1', 0),
+(452, 0, 'summernote', 'summernote_tool_height', '1', 0),
+(453, 0, 'summernote', 'summernote_tool_table', '1', 0),
+(454, 0, 'summernote', 'summernote_tool_insert_link', '1', 0),
+(455, 0, 'summernote', 'summernote_tool_insert_picture', '1', 0),
+(456, 0, 'summernote', 'summernote_tool_insert_hr', '1', 0),
+(457, 0, 'summernote', 'summernote_tool_view_fullscreen', '1', 0),
+(458, 0, 'summernote', 'summernote_tool_view_codeview', '1', 0),
+(459, 0, 'summernote', 'summernote_tool_help', '1', 0),
+(460, 0, 'tinymce', 'tinymce_status', '1', 0),
+(461, 0, 'tinymce', 'tinymce_height', '300', 0),
+(462, 0, 'tinymce', 'tinymce_sort_order', '1', 0),
+(463, 0, 'tinymce', 'tinymce_menu_edit_undo', '1', 0),
+(464, 0, 'tinymce', 'tinymce_menu_edit_redo', '1', 0),
+(465, 0, 'tinymce', 'tinymce_menu_format_bold', '1', 0),
+(466, 0, 'tinymce', 'tinymce_menu_format_italic', '1', 0),
+(467, 0, 'tinymce', 'tinymce_menu_view_alignleft', '1', 0),
+(468, 0, 'tinymce', 'tinymce_menu_view_aligncenter', '1', 0),
+(469, 0, 'tinymce', 'tinymce_menu_view_alignright', '1', 0),
+(470, 0, 'tinymce', 'tinymce_menu_view_alignjustify', '1', 0),
+(471, 0, 'tinymce', 'tinymce_menu_file_bullist', '1', 0),
+(472, 0, 'tinymce', 'tinymce_menu_file_numlist', '1', 0),
+(473, 0, 'tinymce', 'tinymce_menu_file_outdent', '1', 0),
+(474, 0, 'tinymce', 'tinymce_menu_file_indent', '1', 0),
+(475, 0, 'tinymce', 'tinymce_menu_insert_link', '1', 0),
+(476, 0, 'tinymce', 'tinymce_menu_insert_image', '1', 0),
+(477, 0, 'tinymce', 'tinymce_menu_tools_imagetools', '1', 0);
 
 -- --------------------------------------------------------
 
@@ -2987,7 +3042,7 @@ CREATE TABLE IF NOT EXISTS `ar_user_group` (
 --
 
 INSERT INTO `ar_user_group` (`user_group_id`, `name`, `permission`) VALUES
-(1, 'Administrator', 'a:3:{s:9:"dashboard";a:7:{i:0;s:16:"dashboard/charts";i:1;s:16:"dashboard/online";i:2;s:20:"dashboard/recenttabs";i:3;s:18:"dashboard/customer";i:4;s:15:"dashboard/order";i:5;s:14:"dashboard/sale";i:6;s:13:"dashboard/map";}s:6:"access";a:133:{i:0;s:21:"appearance/customizer";i:1;s:17:"appearance/layout";i:2;s:15:"appearance/menu";i:3;s:16:"appearance/theme";i:4;s:13:"design/banner";i:5;s:17:"catalog/attribute";i:6;s:23:"catalog/attribute_group";i:7;s:16:"catalog/category";i:8;s:16:"catalog/download";i:9;s:14:"catalog/filter";i:10;s:19:"catalog/information";i:11;s:20:"catalog/manufacturer";i:12;s:14:"catalog/option";i:13;s:15:"catalog/product";i:14;s:17:"catalog/recurring";i:15;s:14:"catalog/review";i:16;s:18:"common/column_left";i:17;s:11:"common/edit";i:18;s:18:"common/filemanager";i:19;s:11:"common/menu";i:20;s:14:"common/profile";i:21;s:12:"common/stats";i:22;s:13:"common/update";i:23;s:17:"sale/custom_field";i:24;s:13:"sale/customer";i:25;s:20:"sale/customer_ban_ip";i:26;s:19:"sale/customer_group";i:27;s:19:"extension/extension";i:28;s:14:"extension/feed";i:29;s:19:"extension/installer";i:30;s:21:"extension/marketplace";i:31;s:22:"extension/modification";i:32;s:16:"extension/module";i:33;s:17:"extension/payment";i:34;s:18:"extension/shipping";i:35;s:15:"extension/total";i:36;s:19:"feed/facebook_store";i:37;s:16:"feed/google_base";i:38;s:19:"feed/google_sitemap";i:39;s:20:"localisation/country";i:40;s:21:"localisation/currency";i:41;s:21:"localisation/geo_zone";i:42;s:21:"localisation/language";i:43;s:25:"localisation/length_class";i:44;s:21:"localisation/location";i:45;s:25:"localisation/order_status";i:46;s:26:"localisation/return_action";i:47;s:26:"localisation/return_reason";i:48;s:26:"localisation/return_status";i:49;s:25:"localisation/stock_status";i:50;s:22:"localisation/tax_class";i:51;s:21:"localisation/tax_rate";i:52;s:25:"localisation/weight_class";i:53;s:17:"localisation/zone";i:54;s:19:"marketing/affiliate";i:55;s:17:"marketing/contact";i:56;s:16:"marketing/coupon";i:57;s:19:"marketing/marketing";i:58;s:14:"module/account";i:59;s:16:"module/affiliate";i:60;s:13:"module/banner";i:61;s:17:"module/bestseller";i:62;s:15:"module/carousel";i:63;s:15:"module/category";i:64;s:19:"module/categoryhome";i:65;s:15:"module/featured";i:66;s:13:"module/filter";i:67;s:22:"module/google_hangouts";i:68;s:11:"module/html";i:69;s:18:"module/information";i:70;s:13:"module/latest";i:71;s:12:"module/login";i:72;s:19:"module/manufacturer";i:73;s:16:"module/slideshow";i:74;s:14:"module/special";i:75;s:12:"module/store";i:76;s:21:"payment/bank_transfer";i:77;s:11:"payment/cod";i:78;s:21:"payment/free_checkout";i:79;s:19:"payment/pp_standard";i:80;s:16:"report/affiliate";i:81;s:25:"report/affiliate_activity";i:82;s:22:"report/affiliate_login";i:83;s:24:"report/customer_activity";i:84;s:22:"report/customer_credit";i:85;s:21:"report/customer_login";i:86;s:22:"report/customer_online";i:87;s:21:"report/customer_order";i:88;s:22:"report/customer_reward";i:89;s:16:"report/marketing";i:90;s:24:"report/product_purchased";i:91;s:21:"report/product_viewed";i:92;s:18:"report/sale_coupon";i:93;s:17:"report/sale_order";i:94;s:18:"report/sale_return";i:95;s:20:"report/sale_shipping";i:96;s:15:"report/sale_tax";i:97;s:10:"sale/order";i:98;s:14:"sale/recurring";i:99;s:11:"sale/return";i:100;s:12:"sale/voucher";i:101;s:18:"sale/voucher_theme";i:102;s:13:"search/search";i:103;s:15:"setting/setting";i:104;s:13:"setting/store";i:105;s:13:"shipping/flat";i:106;s:13:"shipping/free";i:107;s:13:"shipping/item";i:108;s:15:"shipping/weight";i:109;s:21:"system/email_template";i:110;s:24:"system/language_override";i:111;s:11:"tool/backup";i:112;s:14:"tool/error_log";i:113;s:18:"tool/export_import";i:114;s:17:"tool/file_manager";i:115;s:16:"tool/system_info";i:116;s:11:"tool/upload";i:117;s:12:"total/coupon";i:118;s:12:"total/credit";i:119;s:14:"total/handling";i:120;s:19:"total/low_order_fee";i:121;s:12:"total/reward";i:122;s:14:"total/shipping";i:123;s:15:"total/sub_total";i:124;s:9:"total/tax";i:125;s:11:"total/total";i:126;s:13:"total/voucher";i:127;s:8:"user/api";i:128;s:9:"user/user";i:129;s:20:"user/user_permission";i:130;s:12:"sale/invoice";i:131;s:17:"editor/summernote";i:132;s:14:"editor/tinymce";}s:6:"modify";a:133:{i:0;s:21:"appearance/customizer";i:1;s:17:"appearance/layout";i:2;s:15:"appearance/menu";i:3;s:16:"appearance/theme";i:4;s:13:"design/banner";i:5;s:17:"catalog/attribute";i:6;s:23:"catalog/attribute_group";i:7;s:16:"catalog/category";i:8;s:16:"catalog/download";i:9;s:14:"catalog/filter";i:10;s:19:"catalog/information";i:11;s:20:"catalog/manufacturer";i:12;s:14:"catalog/option";i:13;s:15:"catalog/product";i:14;s:17:"catalog/recurring";i:15;s:14:"catalog/review";i:16;s:18:"common/column_left";i:17;s:11:"common/edit";i:18;s:18:"common/filemanager";i:19;s:11:"common/menu";i:20;s:14:"common/profile";i:21;s:12:"common/stats";i:22;s:13:"common/update";i:23;s:17:"sale/custom_field";i:24;s:13:"sale/customer";i:25;s:20:"sale/customer_ban_ip";i:26;s:19:"sale/customer_group";i:27;s:19:"extension/extension";i:28;s:14:"extension/feed";i:29;s:19:"extension/installer";i:30;s:21:"extension/marketplace";i:31;s:22:"extension/modification";i:32;s:16:"extension/module";i:33;s:17:"extension/payment";i:34;s:18:"extension/shipping";i:35;s:15:"extension/total";i:36;s:19:"feed/facebook_store";i:37;s:16:"feed/google_base";i:38;s:19:"feed/google_sitemap";i:39;s:20:"localisation/country";i:40;s:21:"localisation/currency";i:41;s:21:"localisation/geo_zone";i:42;s:21:"localisation/language";i:43;s:25:"localisation/length_class";i:44;s:21:"localisation/location";i:45;s:25:"localisation/order_status";i:46;s:26:"localisation/return_action";i:47;s:26:"localisation/return_reason";i:48;s:26:"localisation/return_status";i:49;s:25:"localisation/stock_status";i:50;s:22:"localisation/tax_class";i:51;s:21:"localisation/tax_rate";i:52;s:25:"localisation/weight_class";i:53;s:17:"localisation/zone";i:54;s:19:"marketing/affiliate";i:55;s:17:"marketing/contact";i:56;s:16:"marketing/coupon";i:57;s:19:"marketing/marketing";i:58;s:14:"module/account";i:59;s:16:"module/affiliate";i:60;s:13:"module/banner";i:61;s:17:"module/bestseller";i:62;s:15:"module/carousel";i:63;s:15:"module/category";i:64;s:19:"module/categoryhome";i:65;s:15:"module/featured";i:66;s:13:"module/filter";i:67;s:22:"module/google_hangouts";i:68;s:11:"module/html";i:69;s:18:"module/information";i:70;s:13:"module/latest";i:71;s:12:"module/login";i:72;s:19:"module/manufacturer";i:73;s:16:"module/slideshow";i:74;s:14:"module/special";i:75;s:12:"module/store";i:76;s:21:"payment/bank_transfer";i:77;s:11:"payment/cod";i:78;s:21:"payment/free_checkout";i:79;s:19:"payment/pp_standard";i:80;s:16:"report/affiliate";i:81;s:25:"report/affiliate_activity";i:82;s:22:"report/affiliate_login";i:83;s:24:"report/customer_activity";i:84;s:22:"report/customer_credit";i:85;s:21:"report/customer_login";i:86;s:22:"report/customer_online";i:87;s:21:"report/customer_order";i:88;s:22:"report/customer_reward";i:89;s:16:"report/marketing";i:90;s:24:"report/product_purchased";i:91;s:21:"report/product_viewed";i:92;s:18:"report/sale_coupon";i:93;s:17:"report/sale_order";i:94;s:18:"report/sale_return";i:95;s:20:"report/sale_shipping";i:96;s:15:"report/sale_tax";i:97;s:10:"sale/order";i:98;s:14:"sale/recurring";i:99;s:11:"sale/return";i:100;s:12:"sale/voucher";i:101;s:18:"sale/voucher_theme";i:102;s:13:"search/search";i:103;s:15:"setting/setting";i:104;s:13:"setting/store";i:105;s:13:"shipping/flat";i:106;s:13:"shipping/free";i:107;s:13:"shipping/item";i:108;s:15:"shipping/weight";i:109;s:21:"system/email_template";i:110;s:24:"system/language_override";i:111;s:11:"tool/backup";i:112;s:14:"tool/error_log";i:113;s:18:"tool/export_import";i:114;s:17:"tool/file_manager";i:115;s:16:"tool/system_info";i:116;s:11:"tool/upload";i:117;s:12:"total/coupon";i:118;s:12:"total/credit";i:119;s:14:"total/handling";i:120;s:19:"total/low_order_fee";i:121;s:12:"total/reward";i:122;s:14:"total/shipping";i:123;s:15:"total/sub_total";i:124;s:9:"total/tax";i:125;s:11:"total/total";i:126;s:13:"total/voucher";i:127;s:8:"user/api";i:128;s:9:"user/user";i:129;s:20:"user/user_permission";i:130;s:12:"sale/invoice";i:131;s:17:"editor/summernote";i:132;s:14:"editor/tinymce";}}');
+(1, 'Administrator', 'a:3:{s:9:"dashboard";a:7:{i:0;s:16:"dashboard/charts";i:1;s:16:"dashboard/online";i:2;s:20:"dashboard/recenttabs";i:3;s:18:"dashboard/customer";i:4;s:15:"dashboard/order";i:5;s:14:"dashboard/sale";i:6;s:13:"dashboard/map";}s:6:"access";a:135:{i:0;s:21:"appearance/customizer";i:1;s:17:"appearance/layout";i:2;s:15:"appearance/menu";i:3;s:16:"appearance/theme";i:4;s:13:"design/banner";i:5;s:17:"catalog/attribute";i:6;s:23:"catalog/attribute_group";i:7;s:16:"catalog/category";i:8;s:16:"catalog/download";i:9;s:14:"catalog/filter";i:10;s:19:"catalog/information";i:11;s:20:"catalog/manufacturer";i:12;s:14:"catalog/option";i:13;s:15:"catalog/product";i:14;s:17:"catalog/recurring";i:15;s:14:"catalog/review";i:16;s:18:"common/column_left";i:17;s:19:"common/column_right";i:18;s:11:"common/edit";i:19;s:18:"common/filemanager";i:20;s:11:"common/menu";i:21;s:13:"common/update";i:22;s:17:"sale/custom_field";i:23;s:13:"sale/customer";i:24;s:20:"sale/customer_ban_ip";i:25;s:19:"sale/customer_group";i:26;s:17:"editor/summernote";i:27;s:14:"editor/tinymce";i:28;s:19:"extension/extension";i:29;s:14:"extension/feed";i:30;s:19:"extension/installer";i:31;s:21:"extension/marketplace";i:32;s:22:"extension/modification";i:33;s:16:"extension/module";i:34;s:17:"extension/payment";i:35;s:18:"extension/shipping";i:36;s:15:"extension/total";i:37;s:19:"feed/facebook_store";i:38;s:16:"feed/google_base";i:39;s:19:"feed/google_sitemap";i:40;s:20:"localisation/country";i:41;s:21:"localisation/currency";i:42;s:21:"localisation/geo_zone";i:43;s:21:"localisation/language";i:44;s:25:"localisation/length_class";i:45;s:21:"localisation/location";i:46;s:25:"localisation/order_status";i:47;s:26:"localisation/return_action";i:48;s:26:"localisation/return_reason";i:49;s:26:"localisation/return_status";i:50;s:25:"localisation/stock_status";i:51;s:22:"localisation/tax_class";i:52;s:21:"localisation/tax_rate";i:53;s:25:"localisation/weight_class";i:54;s:17:"localisation/zone";i:55;s:19:"marketing/affiliate";i:56;s:17:"marketing/contact";i:57;s:16:"marketing/coupon";i:58;s:19:"marketing/marketing";i:59;s:14:"module/account";i:60;s:16:"module/affiliate";i:61;s:13:"module/banner";i:62;s:17:"module/bestseller";i:63;s:15:"module/carousel";i:64;s:11:"module/cart";i:65;s:15:"module/category";i:66;s:19:"module/categoryhome";i:67;s:15:"module/featured";i:68;s:13:"module/filter";i:69;s:22:"module/google_hangouts";i:70;s:11:"module/html";i:71;s:18:"module/information";i:72;s:13:"module/latest";i:73;s:12:"module/login";i:74;s:19:"module/manufacturer";i:75;s:16:"module/slideshow";i:76;s:14:"module/special";i:77;s:12:"module/store";i:78;s:21:"payment/bank_transfer";i:79;s:11:"payment/cod";i:80;s:21:"payment/free_checkout";i:81;s:19:"payment/pp_standard";i:82;s:16:"report/affiliate";i:83;s:25:"report/affiliate_activity";i:84;s:22:"report/affiliate_login";i:85;s:24:"report/customer_activity";i:86;s:22:"report/customer_credit";i:87;s:21:"report/customer_login";i:88;s:22:"report/customer_online";i:89;s:21:"report/customer_order";i:90;s:22:"report/customer_reward";i:91;s:16:"report/marketing";i:92;s:24:"report/product_purchased";i:93;s:21:"report/product_viewed";i:94;s:18:"report/sale_coupon";i:95;s:17:"report/sale_order";i:96;s:18:"report/sale_return";i:97;s:20:"report/sale_shipping";i:98;s:15:"report/sale_tax";i:99;s:12:"sale/invoice";i:100;s:10:"sale/order";i:101;s:14:"sale/recurring";i:102;s:11:"sale/return";i:103;s:12:"sale/voucher";i:104;s:18:"sale/voucher_theme";i:105;s:13:"search/search";i:106;s:15:"setting/setting";i:107;s:13:"setting/store";i:108;s:13:"shipping/flat";i:109;s:13:"shipping/free";i:110;s:13:"shipping/item";i:111;s:15:"shipping/weight";i:112;s:21:"system/email_template";i:113;s:24:"system/language_override";i:114;s:11:"tool/backup";i:115;s:14:"tool/error_log";i:116;s:18:"tool/export_import";i:117;s:17:"tool/file_manager";i:118;s:16:"tool/system_info";i:119;s:11:"tool/upload";i:120;s:12:"total/coupon";i:121;s:12:"total/credit";i:122;s:14:"total/handling";i:123;s:19:"total/low_order_fee";i:124;s:12:"total/reward";i:125;s:14:"total/shipping";i:126;s:15:"total/sub_total";i:127;s:9:"total/tax";i:128;s:11:"total/total";i:129;s:13:"total/voucher";i:130;s:24:"twofactorauth/googleauth";i:131;s:21:"twofactorauth/yubikey";i:132;s:8:"user/api";i:133;s:9:"user/user";i:134;s:20:"user/user_permission";}s:6:"modify";a:135:{i:0;s:21:"appearance/customizer";i:1;s:17:"appearance/layout";i:2;s:15:"appearance/menu";i:3;s:16:"appearance/theme";i:4;s:13:"design/banner";i:5;s:17:"catalog/attribute";i:6;s:23:"catalog/attribute_group";i:7;s:16:"catalog/category";i:8;s:16:"catalog/download";i:9;s:14:"catalog/filter";i:10;s:19:"catalog/information";i:11;s:20:"catalog/manufacturer";i:12;s:14:"catalog/option";i:13;s:15:"catalog/product";i:14;s:17:"catalog/recurring";i:15;s:14:"catalog/review";i:16;s:18:"common/column_left";i:17;s:19:"common/column_right";i:18;s:11:"common/edit";i:19;s:18:"common/filemanager";i:20;s:11:"common/menu";i:21;s:13:"common/update";i:22;s:17:"sale/custom_field";i:23;s:13:"sale/customer";i:24;s:20:"sale/customer_ban_ip";i:25;s:19:"sale/customer_group";i:26;s:17:"editor/summernote";i:27;s:14:"editor/tinymce";i:28;s:19:"extension/extension";i:29;s:14:"extension/feed";i:30;s:19:"extension/installer";i:31;s:21:"extension/marketplace";i:32;s:22:"extension/modification";i:33;s:16:"extension/module";i:34;s:17:"extension/payment";i:35;s:18:"extension/shipping";i:36;s:15:"extension/total";i:37;s:19:"feed/facebook_store";i:38;s:16:"feed/google_base";i:39;s:19:"feed/google_sitemap";i:40;s:20:"localisation/country";i:41;s:21:"localisation/currency";i:42;s:21:"localisation/geo_zone";i:43;s:21:"localisation/language";i:44;s:25:"localisation/length_class";i:45;s:21:"localisation/location";i:46;s:25:"localisation/order_status";i:47;s:26:"localisation/return_action";i:48;s:26:"localisation/return_reason";i:49;s:26:"localisation/return_status";i:50;s:25:"localisation/stock_status";i:51;s:22:"localisation/tax_class";i:52;s:21:"localisation/tax_rate";i:53;s:25:"localisation/weight_class";i:54;s:17:"localisation/zone";i:55;s:19:"marketing/affiliate";i:56;s:17:"marketing/contact";i:57;s:16:"marketing/coupon";i:58;s:19:"marketing/marketing";i:59;s:14:"module/account";i:60;s:16:"module/affiliate";i:61;s:13:"module/banner";i:62;s:17:"module/bestseller";i:63;s:15:"module/carousel";i:64;s:11:"module/cart";i:65;s:15:"module/category";i:66;s:19:"module/categoryhome";i:67;s:15:"module/featured";i:68;s:13:"module/filter";i:69;s:22:"module/google_hangouts";i:70;s:11:"module/html";i:71;s:18:"module/information";i:72;s:13:"module/latest";i:73;s:12:"module/login";i:74;s:19:"module/manufacturer";i:75;s:16:"module/slideshow";i:76;s:14:"module/special";i:77;s:12:"module/store";i:78;s:21:"payment/bank_transfer";i:79;s:11:"payment/cod";i:80;s:21:"payment/free_checkout";i:81;s:19:"payment/pp_standard";i:82;s:16:"report/affiliate";i:83;s:25:"report/affiliate_activity";i:84;s:22:"report/affiliate_login";i:85;s:24:"report/customer_activity";i:86;s:22:"report/customer_credit";i:87;s:21:"report/customer_login";i:88;s:22:"report/customer_online";i:89;s:21:"report/customer_order";i:90;s:22:"report/customer_reward";i:91;s:16:"report/marketing";i:92;s:24:"report/product_purchased";i:93;s:21:"report/product_viewed";i:94;s:18:"report/sale_coupon";i:95;s:17:"report/sale_order";i:96;s:18:"report/sale_return";i:97;s:20:"report/sale_shipping";i:98;s:15:"report/sale_tax";i:99;s:12:"sale/invoice";i:100;s:10:"sale/order";i:101;s:14:"sale/recurring";i:102;s:11:"sale/return";i:103;s:12:"sale/voucher";i:104;s:18:"sale/voucher_theme";i:105;s:13:"search/search";i:106;s:15:"setting/setting";i:107;s:13:"setting/store";i:108;s:13:"shipping/flat";i:109;s:13:"shipping/free";i:110;s:13:"shipping/item";i:111;s:15:"shipping/weight";i:112;s:21:"system/email_template";i:113;s:24:"system/language_override";i:114;s:11:"tool/backup";i:115;s:14:"tool/error_log";i:116;s:18:"tool/export_import";i:117;s:17:"tool/file_manager";i:118;s:16:"tool/system_info";i:119;s:11:"tool/upload";i:120;s:12:"total/coupon";i:121;s:12:"total/credit";i:122;s:14:"total/handling";i:123;s:19:"total/low_order_fee";i:124;s:12:"total/reward";i:125;s:14:"total/shipping";i:126;s:15:"total/sub_total";i:127;s:9:"total/tax";i:128;s:11:"total/total";i:129;s:13:"total/voucher";i:130;s:24:"twofactorauth/googleauth";i:131;s:21:"twofactorauth/yubikey";i:132;s:8:"user/api";i:133;s:9:"user/user";i:134;s:20:"user/user_permission";}}');
 
 -- --------------------------------------------------------
 
@@ -3085,7 +3140,7 @@ INSERT INTO `ar_weight_class` (`weight_class_id`, `value`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `ar_weight_class_description` (
-  `weight_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `weight_class_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `title` varchar(32) NOT NULL,
   `unit` varchar(4) NOT NULL,

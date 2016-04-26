@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -120,7 +120,13 @@ class ModelSystemLanguageoverride extends Model
                     break 2;
                 }
 
-                $data[$key][$var] = htmlspecialchars($val);
+                // Convert special characters to HTML entities
+                $val = htmlspecialchars($val);
+
+                // Un-escape quotation
+                $val = stripslashes($val);
+
+                $data[$key][$var] = $val;
             }
         }
 
@@ -190,7 +196,10 @@ class ModelSystemLanguageoverride extends Model
                     continue;
                 }
 
-                if (($org_strings[$key] == html_entity_decode($value))) {
+                // Convert HTML entities
+                $value = html_entity_decode($value);
+
+                if (($org_strings[$key] == $value)) {
                     // Remove from overrides if it's the same as original
                     if (isset($ovr_strings[$key])) {
                         unset($ovr_strings[$key]);
@@ -199,7 +208,10 @@ class ModelSystemLanguageoverride extends Model
                     continue;
                 }
 
-                $new_strings[$key] = html_entity_decode($value);
+                // Escape quotation
+                $value = addslashes($value);
+
+                $new_strings[$key] = $value;
             }
 
             if (!empty($ovr_strings)) {

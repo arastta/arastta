@@ -65,9 +65,9 @@
                                 <label class="control-label" for="input-date-date_added"><?php echo $entry_date_added; ?></label>
                                 <div class="input-group date">
                                     <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-date_added" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                    </span></div>
                             </div>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <form action="" method="post" enctype="multipart/form-data" id="form">
+                <form action="" method="post" enctype="multipart/form-data" id="form-recurring">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead>
@@ -187,7 +187,7 @@
         location = url;
     });
 
-    $('#form input').keydown(function(e) {
+    $('#form-recurring input').keydown(function(e) {
         if (e.keyCode == 13) {
             filter();
         }

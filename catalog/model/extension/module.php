@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -15,5 +15,17 @@ class ModelExtensionModule extends Model {
         } else {
             return array();    
         }
-    }        
+    }
+
+    public function getModules() {
+        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module` ORDER BY `code`");
+
+        return $query->rows;
+    }
+
+    public function getModulesByCode($code) {
+        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "' ORDER BY `name`");
+
+        return $query->rows;
+    }      
 }

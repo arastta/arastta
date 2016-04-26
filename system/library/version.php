@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -18,21 +18,21 @@ final class Version extends Object
 
     protected $name = 'Arastta';
 
-    protected $code = 'Shkoder';
+    protected $code = 'Kastamonu';
 
     protected $major = '1';
 
-    protected $minor = '2';
+    protected $minor = '3';
 
-    protected $patch = '7';
+    protected $patch = '0';
 
     protected $build = '';
 
     protected $status = 'Stable';
 
-    protected $date = '13-February-2016';
+    protected $date = '26-April-2016';
 
-    protected $time = '10:00';
+    protected $time = '16:30';
 
     protected $zone = 'GMT +2';
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -18,7 +18,7 @@ class Admin extends App
         $this->registry->set('filesystem', new Filesystem());
 
         // Config
-        $this->registry->set('config', new Config());
+        $this->registry->set('config', new Object());
 
         // Database
         $this->registry->set('db', new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE));
@@ -82,7 +82,7 @@ class Admin extends App
         $this->registry->set('response', $response);
 
         // Cache
-        $cache = new Cache($this->config->get('config_cache_storage', 'file'), $this->config->get('config_cache_lifetime', 86400));
+        $cache = new Cache($this->config->get('config_cache_storage', 'file'), $this->config->get('config_cache_lifetime', 86400), $this->config);
         $this->registry->set('cache', $cache);
 
         // Session
@@ -117,6 +117,11 @@ class Admin extends App
 
     public function ecommerce()
     {
+        // Set time zone
+        date_default_timezone_set($this->config->get('config_timezone', 'UTC'));
+        $dt = new \DateTime();
+        $this->db->setTimezone($dt->format('P'));
+
         // Currency
         $this->registry->set('currency', new Currency($this->registry));
 
@@ -128,6 +133,9 @@ class Admin extends App
 
         // User
         $this->registry->set('user', new User($this->registry));
+
+        // Encryption
+        $this->registry->set('encryption', new Encryption($this->config->get('config_encryption')));
 
         // Email Template
         $this->registry->set('emailtemplate', new Emailtemplate($this->registry));

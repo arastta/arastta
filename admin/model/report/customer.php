@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -37,7 +37,7 @@ class ModelReportCustomer extends Model {
         for ($i = 0; $i < 7; $i++) {
             $date = date('Y-m-d', $date_start + ($i * 86400));
 
-            $order_data[date('w', strtotime($date))] = array(
+            $customer_data[date('w', strtotime($date))] = array(
                 'day'   => date('D', strtotime($date)),
                 'total' => 0
             );
@@ -120,6 +120,8 @@ class ModelReportCustomer extends Model {
 
         $sql .= " GROUP BY o.order_id";
 
+        $sql = "SELECT t.customer_id, t.customer, t.email, t.customer_group, t.status, COUNT(t.order_id) AS orders, SUM(t.products) AS products, SUM(t.total) AS total FROM (" . $sql . ") AS t GROUP BY t.customer_id ORDER BY total DESC";     
+
         if (isset($data['start']) || isset($data['limit'])) {
             if ($data['start'] < 0) {
                 $data['start'] = 0;
@@ -132,8 +134,6 @@ class ModelReportCustomer extends Model {
             $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
         }
         
-         $sql = "SELECT t.customer_id, t.customer, t.email, t.customer_group, t.status, COUNT(t.order_id) AS orders, SUM(t.products) AS products, SUM(t.total) AS total FROM (" . $sql . ") AS t GROUP BY t.customer_id ORDER BY total DESC";
-
         $query = $this->db->query($sql);
 
         return $query->rows;
