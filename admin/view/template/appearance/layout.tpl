@@ -15,6 +15,11 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
         <?php } ?>
+        <?php if ($success) { ?>
+        <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        <?php } ?>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_edit; ?></h3>
