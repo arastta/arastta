@@ -493,6 +493,7 @@ class ControllerAppearanceLayout extends Controller
         $this->document->addScript('view/javascript/layout/layout.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery-lockfixed.js');
+        $this->document->addScript('view/javascript/jquery/layout/jquery.ui.touch-punch.js');
     }
 
     protected function validate()

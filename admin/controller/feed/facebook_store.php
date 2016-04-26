@@ -22,6 +22,7 @@ class ControllerFeedFacebookStore extends Controller
         
         $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery-lockfixed.js');
+        $this->document->addScript('view/javascript/jquery/layout/jquery.ui.touch-punch.js');
         $this->document->addScript('view/javascript/facebook-store/facebook-store.js');
 
         $this->load->model('setting/setting');
