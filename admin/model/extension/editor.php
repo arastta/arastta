@@ -93,7 +93,7 @@ class ModelExtensionEditor extends Model
             $result = false;
             $this->language->load('extension/extension');
 
-            $this->session->data['warning'] = $this->language->get('error_setting_status');
+            $this->session->data['warning'] = $this->language->get('error_editor_setting');
         }
 
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE `status` = '1'");
@@ -112,7 +112,7 @@ class ModelExtensionEditor extends Model
         if ($user_total) {
             $this->language->load('extension/extension');
 
-            $this->session->data['warning'] = sprintf($this->language->get('error_user_status'), $user_total);
+            $this->session->data['warning'] = sprintf($this->language->get('error_editor_user'), $user_total);
         }
 
         $this->cache->delete('editor');

@@ -45,7 +45,7 @@ $_['help_model']       = 'Show Product Model';
 $_['help_quantity']    = 'Show Product Quantity';
 $_['help_price']       = 'Show Product Price';
 $_['help_total']       = 'Show Product Total Price';
-$_['help_coupon']      = 'Show Coupon';
+$_['help_coupon']      = 'Show Coupon Field';
 $_['help_continue']    = 'Show Continue Button';
 $_['help_cart']        = 'Show Cart Button';
 $_['help_checkout']    = 'Show Checkout Button';
@@ -54,4 +54,4 @@ $_['help_message']     = 'Show Success Message';
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify cart module!';
 $_['error_name']       = 'Module Name must be between 3 and 64 characters!';
-$_['error_popup']      = 'Warning: You do not have change module type. Already you can use this module <u><b> %s </b></u>';
+$_['error_popup']      = 'Warning: You cannot set this module as Popup as it is used by <u><b>%s</b></u> module!';
