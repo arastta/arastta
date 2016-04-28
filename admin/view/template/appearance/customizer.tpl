@@ -47,7 +47,7 @@
             <div class="checkbox advance">
                 <label><input type="checkbox" id="advance-conrol" value=""><span><?php echo $text_advance; ?></span></label>
             </div>
-            <a class="customizer-controls-close" href="javascript: history.go(-1);">
+            <a class="customizer-controls-close" href="<?php echo $button_back;?>">
                 <span class="screen-reader-text"><?php echo $entry_close; ?></span>
             </a>
             <span class="control-panel-back" tabindex="-1">
@@ -132,13 +132,13 @@
                                         <div class="checkbox">
                                             <label>
                                                 <?php
-                                                        if(!empty($default_data[$control_name])) {
-                                                        $selected = "selected=selected" ;
-                                                        } else if (!empty($control_value['default'])) {
-                                                        $selected = "selected=selected" ;
-                                                        } else {
-                                                            $selected = '';
-                                                        }
+                                                    if(!empty($default_data[$control_name])) {
+                                                    $selected = "selected=selected" ;
+                                                    } else if (!empty($control_value['default'])) {
+                                                    $selected = "selected=selected" ;
+                                                    } else {
+                                                        $selected = '';
+                                                    }
                                                      ?>
                                                 <input type="checkbox" name="<?php echo $control_name; ?>[]" id="<?php echo $choices_name; ?>" <?php echo $selected; ?>  value="<?php echo $choices_name; ?>">
                                                 <?php echo $choices_value; ?>
@@ -161,14 +161,14 @@
                                         <div class="radio">
                                             <label>
                                                 <?php
-                                                         if(!empty($default_data[$control_name])) {
-                                                            $selected = "selected=selected" ;
-                                                         } else if (!empty($control_value['default'])) {
-                                                            $selected = "selected=selected" ;
-                                                         } else {
-                                                            $selected = '';
-                                                        }
-                                                    ?>
+                                                if(!empty($default_data[$control_name])) {
+                                                    $selected = "selected=selected" ;
+                                                } else if (!empty($control_value['default'])) {
+                                                    $selected = "selected=selected" ;
+                                                } else {
+                                                    $selected = '';
+                                                }
+                                                ?>
                                                 <input type="radio" name="<?php echo $control_name; ?>" id="<?php echo $choices_name; ?>" <?php echo $selected; ?> value="<?php echo $choices_name; ?>">
                                                 <?php echo $choices_value; ?>
                                             </label>
@@ -228,14 +228,14 @@
                                     <?php         break; ?>
                                     <?php   case 'color': ?>
                                     <?php
-                                                     if(!empty($default_data[$control_name])) {
-                                                        $value = $default_data[$control_name];
-                                                     } else if (!empty($control_value['default'])) {
-                                                        $value = $control_value['default'];
-                                                     } else {
-                                                        $value = '';
-                                                     }
-                                                     ?>
+                                         if(!empty($default_data[$control_name])) {
+                                            $value = $default_data[$control_name];
+                                         } else if (!empty($control_value['default'])) {
+                                            $value = $control_value['default'];
+                                         } else {
+                                            $value = '';
+                                         }
+                                     ?>
                                     <div class="customizer-control-content">
                                         <div class="wp-picker-container">
                                                         <span class="wp-picker-input-wrap">
@@ -256,24 +256,24 @@
                                     <?php         break; ?>
                                     <?php   case 'image': ?>
                                     <?php
-                                                     if(!empty($default_data[$control_name])) {
-                                                        $value = $default_data[$control_name];
-                                                        $_value = $default_data[$control_name . '_raw'];
-                                                     } else if (!empty($control_value['default'])) {
-                                                        $value = $control_value['default'];
-                                                        $_value = $control_value['default_raw'];
-                                                     } else {
-                                                        $value = $no_image;
-                                                        $_value = '';
-                                                     }
-                                                     ?>
+                                         if(!empty($default_data[$control_name])) {
+                                            $value = $default_data[$control_name];
+                                            $_value = $default_data[$control_name . '_raw'];
+                                         } else if (!empty($control_value['default'])) {
+                                            $value = $control_value['default'];
+                                            $_value = $control_value['default_raw'];
+                                         } else {
+                                            $value = $no_image;
+                                            $_value = '';
+                                         }
+                                     ?>
                                     <div class="current">
-                                                        <span>
-                                                            <a href="javascript:void(0);" id="thumb-image" data-toggle="<?php echo $control_name; ?>" class="img-thumbnail">
-                                                                <img src="<?php echo $value; ?>" id="<?php echo $control_name; ?>-src" width="100" height="100" alt=""  title="" data-placeholder="" />
-                                                            </a>
-                                                            <input type="hidden" name="<?php echo $control_name; ?>" value="<?php echo $_value; ?>" id="<?php echo $control_name; ?>" />
-                                                        </span>
+                                        <span>
+                                            <a href="javascript:void(0);" id="thumb-image" data-toggle="<?php echo $control_name; ?>" class="img-thumbnail">
+                                                <img src="<?php echo $value; ?>" id="<?php echo $control_name; ?>-src" width="100" height="100" alt=""  title="" data-placeholder="" />
+                                            </a>
+                                            <input type="hidden" name="<?php echo $control_name; ?>" value="<?php echo $_value; ?>" id="<?php echo $control_name; ?>" />
+                                        </span>
                                     </div>
                                     <div style="clear:both"></div>
                                     <?php if ($control_name == 'logo') { ?>
@@ -309,6 +309,7 @@
                 <span class="collapse-sidebar-label"><?php echo $entry_collapse; ?></span>
             </a>
         </div>
+        <input type="hidden" name="button_back" id="button-back" value="<?php echo $button_back;?>" />
     </form>
     <div id="customizer-footer-actions" style="display:none;" class="wp-full-overlay-footer open-customizer">
         <a href="javascript:void(0);" class="collapse-sidebar button-secondary" title="">
@@ -442,7 +443,7 @@ $(document).ready(function() {
             url: '<?php echo str_replace("amp;", "", $reset); ?>',
             dataType: 'json',
             success: function(json) {
-                window.location=("<?php echo str_replace('amp;', '', $action); ?>");
+                window.location=("<?php echo str_replace('amp;', '', $action . '&button_back=' . base64_encode($button_back)); ?>");
             }
         });
     });
@@ -462,24 +463,26 @@ $(document).ready(function() {
         $('.advance').css('display', 'inherit');
 
         $( '#advance-conrol').on('change', function() {
-        if(advance == '0'){
-        $('.advance-hide').addClass('advance-show');
-        $('.advance-hide').removeClass('advance-hide');
+            if (advance == '0') {
+                $('.advance-hide').addClass('advance-show');
+                $('.advance-hide').removeClass('advance-hide');
 
-        $('.advance-show input').each(function( index ) {
-        $(this).prop('disabled', false);
-    });
-        advance = '1';
-    }else {
-        $('.advance-show').addClass('advance-hide');
-        $('.advance-show').removeClass('advance-show');
+                $('.advance-show input').each(function( index ) {
+                    $(this).prop('disabled', false);
+                });
+                
+                advance = '1';
+            } else {
+                $('.advance-show').addClass('advance-hide');
+                $('.advance-show').removeClass('advance-show');
 
-        $('.advance-hide input').each(function( index ) {
-        $(this).prop('disabled', true);
-    });
-        advance = '0';
-    }
-    });
+                $('.advance-hide input').each(function( index ) {
+                    $(this).prop('disabled', true);
+                });
+                
+                advance = '0';
+            }
+        });
         <?php  } ?>
 
     $.ajax({
@@ -487,8 +490,8 @@ $(document).ready(function() {
         type: 'post',
         data: {template : '<?php echo $theme; ?>'},
         error: function(xhr, ajaxOptions, thrownError) {
-        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-    }
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
     }).done(function() {
         $.ajax({
             url: '<?php echo $frontend; ?>',
@@ -520,44 +523,48 @@ $(document).ready(function() {
 
     $( "#customizer_themes" ).change(function() {
         var template = $('#customizer_themes').val();
+
         $.ajax({
             url: '<?php echo str_replace("amp;", "", $changeTheme); ?>',
-    type: 'post',
-    data: {template : template},
-    beforeSend: function() {
-        $('#customizer-preview').html('<div id="customizer-loading" class="text-center"><i class="fa fa-spinner fa-spin checkout-spin"></i></div>');
-    },
-    success: function(response) {
-        $('#customizer-loading').remove();
+            type: 'post',
+            data: {template : template},
+            beforeSend: function() {
+                $('#customizer-preview').html('<div id="customizer-loading" class="text-center"><i class="fa fa-spinner fa-spin checkout-spin"></i></div>');
+            },
+            success: function(response) {
+                $('#customizer-loading').remove();
 
-        window.location=("<?php echo str_replace('amp;', '', $action); ?>");
-        /* $('#customize-all-content').addClass('removeCustomizeAllContent');
-         $('#customize-all-content').before(response['html']);
-         $('.removeCustomizeAllContent').remove();
+                window.location=("<?php echo str_replace('amp;', '', $action); ?>");
+            /* 
+             $('#customize-all-content').addClass('removeCustomizeAllContent');
+             $('#customize-all-content').before(response['html']);
+             $('.removeCustomizeAllContent').remove();
 
-         $.ajax({
-         url: '<?php echo $frontend; ?>',
-         type: 'post',
-         beforeSend: function() {
-         $('#customizer-preview').html('<div id="customizer-loading" class="text-center"><i class="fa fa-spinner fa-spin checkout-spin"></i></div>');
-         },
-         success: function(response) {
-         $('#customizer-loading').remove();
-         iframe = $('<iframe />').appendTo( $('#customizer-preview') );
-         iframe[0].contentWindow.document.open();
-         iframe[0].contentWindow.document.write( response );
-         iframe[0].contentWindow.document.close();
-         },
-         error: function(xhr, ajaxOptions, thrownError) {
-         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-         }
-         });*/
+             $.ajax({
+                 url: '<?php echo $frontend; ?>',
+                 type: 'post',
+                 beforeSend: function() {
+                    $('#customizer-preview').html('<div id="customizer-loading" class="text-center"><i class="fa fa-spinner fa-spin checkout-spin"></i></div>');
+                 },
+                 success: function(response) {
+                     $('#customizer-loading').remove();
+                     
+                     iframe = $('<iframe />').appendTo( $('#customizer-preview') );
+                     iframe[0].contentWindow.document.open();
+                     iframe[0].contentWindow.document.write( response );
+                     iframe[0].contentWindow.document.close();
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+             });
+             */
 
-    },
-    error: function(xhr, ajaxOptions, thrownError) {
-        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-    }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
     });
-    });
-    });
+});
 //--></script>

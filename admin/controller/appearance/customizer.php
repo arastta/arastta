@@ -53,7 +53,6 @@ class ControllerAppearanceCustomizer extends Controller
 
         $data['action'] = $this->url->link('appearance/customizer', 'token=' . $this->session->data['token'], 'SSL');
         $data['reset'] = $this->url->link('appearance/customizer/reset', 'token=' . $this->session->data['token'], 'SSL');
-        $data['back'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
         $data['changeTheme'] = $this->url->link('appearance/customizer/changeTheme', 'token=' . $this->session->data['token'], 'SSL');
 
         $data['frontend'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG;
@@ -78,6 +77,14 @@ class ControllerAppearanceCustomizer extends Controller
             unset($this->session->data['success']);
         } else {
             $data['success'] = '';
+        }
+
+        if (isset($this->request->post['button_back'])) {
+            $data['button_back'] = $this->request->post['button_back'];
+        } elseif (isset($this->request->get['button_back'])) {
+            $data['button_back'] = base64_decode($this->request->get['button_back']);
+        } else {
+            $data['button_back'] = $this->request->server['HTTP_REFERER'];
         }
 
         if (isset($this->request->post['config_template'])) {
