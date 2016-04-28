@@ -838,6 +838,10 @@
                     $('.btn-category-add').remove();
                     $('.tooltip.fade.top.in').removeClass('in');
 
+                    if (!$('#product-category').length) {
+                        $('input[name=\'category\']').after('<div id="product-category" class="well well-sm" style="overflow: auto;"></div>');
+                    }
+
                     html  = '<div id="product-category' + json['category_id'] + '">';
                     html += '    <i class="fa fa-minus-circle"></i> ' + $('#input-category').val();
                     html += '    <input type="hidden" name="product_category[]" value="' + json['category_id'] + '">';
