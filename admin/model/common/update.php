@@ -69,7 +69,9 @@ class ModelCommonUpdate extends Model
         $version = $this->request->get['version'];
         $product_id = $this->request->get['product_id'];
 
-        $data = $this->downloadUpdate($product_id, $version);
+        if (!$data = $this->downloadUpdate($product_id, $version)) {
+            return false;
+        }
 
         $path = 'temp-' . md5(mt_rand());
         $file = DIR_UPLOAD . $path . '/upload.zip';
@@ -120,6 +122,14 @@ class ModelCommonUpdate extends Model
         } else {
             // Required for ftp & remove extension functions
             $this->request->post['path'] = $path;
+
+            if ($this->filesystem->exists(DIR_UPLOAD . $path . '/install.json')) {
+                $install_data = json_decode(file_get_contents(DIR_UPLOAD . $path . '/install.json'), true);
+
+                // Set it to use in the next step, addExtensionTheme
+                $this->session->data['product_id'] = $product_id;
+                $this->session->data['installer_info'] = $install_data;
+            }
 
             $ftp = $this->load->controller('extension/installer/parseFiles');
             $remove = $this->load->controller('extension/installer/remove');
