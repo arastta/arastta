@@ -114,8 +114,8 @@ class ControllerEditorTinymce extends Controller
         $menu_insert_image['value'] = $this->config->get('tinymce_menu_insert_image', 1);
         $menu_insert_image['labelclass'] = 'radio-inline';
 
-        $menu_tools_imagetools['value'] = $this->config->get('tinymce_menu_tools_imagetools', 1);
-        $menu_tools_imagetools['labelclass'] = 'radio-inline';
+        $menu_tools_emoticons['value'] = $this->config->get('tinymce_menu_tools_emoticons', 1);
+        $menu_tools_emoticons['labelclass'] = 'radio-inline';
 
         $form = new AForm('form-tinymce', $action);
 
@@ -147,8 +147,8 @@ class ControllerEditorTinymce extends Controller
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_file_outdent'), 'tinymce_menu_file_outdent', $menu_file_outdent, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_file_indent'), 'tinymce_menu_file_indent', $menu_file_indent, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_insert_link'), 'tinymce_menu_insert_link', $menu_insert_link, $option_text));
-        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_insert_image'), 'tinymce_menu_insert_image', $menu_insert_image, $option_text));
-        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_tools_imagetools'), 'tinymce_menu_tools_imagetools', $menu_tools_imagetools, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_insert_image'), 'tinymce_menu_insert_image_manager', $menu_insert_image, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_tools_imagetools'), 'tinymce_menu_tools_emoticons', $menu_tools_emoticons, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\HTML('</div>'));
 
         $form->addElement(new Arastta\Component\Form\Element\HTML('</div>'));
@@ -168,7 +168,7 @@ class ControllerEditorTinymce extends Controller
 
         $this->load->model('extension/editor');
 
-        $result = $this->model_extension_editor->check('summernote', $this->request->post);
+        $result = $this->model_extension_editor->check('tinymce', $this->request->post);
 
         if (!$result) {
             $this->error['warning'] = $this->session->data['warning'];
