@@ -312,3 +312,7 @@ div.required label.col-sm-12:not(span):before, td.required:before {
     content: "\f059";
     margin-left: 4px;
 }
+
+#form-product .left-col .panel:nth-child(3) .panel-body fieldset:nth-child(2) .form-group.required .col-sm-6:nth-child(2) > label:before {
+    content: "";
+}

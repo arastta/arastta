@@ -104,7 +104,7 @@
                             <div class="data">
                                 <fieldset>
                                     <legend><?php echo $entry_pricing; ?></legend>
-                                    <div class="form-group required">
+                                    <div class="form-group">
                                         <div class="col-sm-6">
                                             <label class="col-sm-12" for="input-price"><?php echo $entry_price; ?></label>
                                             <div class="col-sm-12">
@@ -161,7 +161,7 @@
                                 </fieldset>
                                 <fieldset class="data-fieldset">
                                     <legend><?php echo $entry_shipping_group; ?></legend>
-                                    <div class="form-group required">
+                                    <div class="form-group">
                                         <div class="col-sm-6">
                                             <label class="col-sm-12" for="input-weight"><?php echo $entry_weight; ?></label>
                                             <div class="col-sm-12">
