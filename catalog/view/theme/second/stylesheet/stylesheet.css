@@ -922,6 +922,9 @@ h2.price {
 }
 .product-list .product-thumb .button-group {
     border-left: 1px solid #ddd;
+    overflow: hidden;
+    display: block;
+    width: 100%;
 }
 @media (max-width: 768px) {
     .product-list .product-thumb .button-group {
