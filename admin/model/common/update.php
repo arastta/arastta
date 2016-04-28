@@ -41,6 +41,10 @@ class ModelCommonUpdate extends Model
             if ($release->tag_name <= VERSION) {
                 continue;
             }
+            
+            if ($release->prerelease == true) {
+                continue;
+            }
 
             if (empty($release->body)) {
                 continue;
