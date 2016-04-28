@@ -691,6 +691,9 @@ footer .copyright a {
     background-color: #b5a766;
     border-color: #b5a766;
 }
+.button-continue {
+    cursor: pointer;
+}
 
 /* checkout*/
 .checkout-wizard {
