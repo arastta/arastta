@@ -28,6 +28,9 @@ Allow: /catalog/view/javascript/
 Allow: /catalog/view/theme/default/image/
 Allow: /catalog/view/theme/default/javascript/
 Allow: /catalog/view/theme/default/stylesheet/
+Allow: /catalog/view/theme/second/image/
+Allow: /catalog/view/theme/second/javascript/
+Allow: /catalog/view/theme/second/stylesheet/
 Disallow: /download/
 Disallow: /system/
 Disallow: /upload/
