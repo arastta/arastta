@@ -158,7 +158,7 @@
             "footer-link-text-color_color": {
                 "type": "color",
                 "label": "text_footer_link_text_color_label",
-                "default": "#b5a766",
+                "default": "#fff",
                 "selector": "footer .container .row .col-sm-3 .list-unstyled li a",
                 "advance": "true"
             },
