@@ -49,7 +49,9 @@ class ControllerDashboardSale extends Controller {
             $suffix = '';
         }
 
-        $data['total'] = $this->currency->format($data['total'], $this->config->get('config_currency')) . $suffix;
+        $config_currency = $this->config->get('config_currency');
+
+        $data['total'] = $config_currency . ' ' . $this->currency->format($data['total'], $config_currency, '', false) . $suffix;
         
         $data['sale'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
 
