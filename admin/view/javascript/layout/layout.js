@@ -56,8 +56,8 @@ var Layout = function() {
         handleDraggable : function() {
             $('.module-block').draggable({
                 appendTo : document['body'],
-                helper 	 : 'clone',
-                cursor 	 : 'move',
+                helper   : 'clone',
+                cursor   : 'move',
                 zIndex   : 9999,
                 cancel   : '.btn-remove, .btn-edit',
                 distance : 2,
@@ -68,14 +68,14 @@ var Layout = function() {
             });
 
             $('.dashed').droppable({
-                activeClass 		 	: 'activeDroppable',
-                hoverClass 			    : 'hoverDroppable',
-                tolerance			 	: 'pointer',
-                forceHelperSize 	 	: false,
+                activeClass             : 'activeDroppable',
+                hoverClass              : 'hoverDroppable',
+                tolerance               : 'pointer',
+                forceHelperSize         : false,
                 forcePlaceholderSize    : false,
-                accept 				    : '.module-block',
-                cancel 				    : '.btn-remove, .btn-edit',
-                drop 				 	: function(event, ev) {
+                accept                  : '.module-block',
+                cancel                  : '.btn-remove, .btn-edit',
+                drop                    : function(event, ev) {
                     var data_code = $(ev['draggable']).attr('data-code');
                     var module_settnig_link = $(ev['draggable']).find('a').attr('href');
                     var data_position = $(this).attr('data-position');
@@ -87,21 +87,21 @@ var Layout = function() {
                     sort_order_value = $(this).find('.mblock').length;
 
                     var html  = '<div class="mblock ui-draggable ui-draggable-handle" data-code="' + data_code + '">';
-                    html += ' 	<div class="mblock-header">';
-                    html += ' 		<div class="mblock-header-title"><i class="fa fa-arrows-alt"></i><span class="module-name">' + ev['draggable']['text']() + '</span></div>';
-                    html += '		</div>';
-                    html += '		<div class="mblock-control-menu ui-sortable-handle">';
-                    html += '			<div class="mblock-action">';
-                    html += '				<a class="btn btn-xs btn-edit" onclick="moduleSetting(\'' + module_settnig_link + '\')" data-toggle="tooltip" title="' + module_list_title + '"> <i class="fa fa-cog"></i></a>';
-                    html += '			</div>';
-                    html += '			<div class="mblock-action pull-right">';
-                    html += '				<a class="btn btn-xs btn-remove" onclick="confirm(\'' + confirm_text + '\') ? removeLayoutModule(\'<?php echo $layout_id; ?>\', \'<?php echo $module_id; ?>\', $(this)):false;"><i class="fa fa-trash-o"></i></a>';
-                    html += '			</div>';
-                    html += '		</div>';
-                    html += '		<input type="hidden" name="layout_module[' + cDigit + '][code]" value="' + data_code + '"/>';
-                    html += '		<input type="hidden" name="layout_module[' + cDigit + '][position]" class="layout_position" value="' + data_position + '"/>';
-                    html += '		<input type="hidden" name="layout_module[' + cDigit + '][sort_order]" value="' + sort_order_value + '" class="sort"/>';
-                    html += '</div>';
+                        html += '   <div class="mblock-header">';
+                        html += '         <div class="mblock-header-title"><i class="fa fa-arrows-alt"></i><span class="module-name">' + ev['draggable']['text']() + '</span></div>';
+                        html += '   </div>';
+                        html += '    <div class="mblock-control-menu ui-sortable-handle">';
+                        html += '        <div class="mblock-action">';
+                        html += '            <a class="btn btn-xs btn-edit" onclick="moduleSetting(\'' + module_settnig_link + '\')" data-toggle="tooltip" title="' + module_list_title + '"> <i class="fa fa-cog"></i></a>';
+                        html += '        </div>';
+                        html += '        <div class="mblock-action pull-right">';
+                        html += '            <a class="btn btn-xs btn-remove" onclick="confirm(\'' + confirm_text + '\') ? removeLayoutModule(\'<?php echo $layout_id; ?>\', \'<?php echo $module_id; ?>\', $(this)):false;"><i class="fa fa-trash-o"></i></a>';
+                        html += '        </div>';
+                        html += '    </div>';
+                        html += '    <input type="hidden" name="layout_module[' + cDigit + '][code]" value="' + data_code + '"/>';
+                        html += '    <input type="hidden" name="layout_module[' + cDigit + '][position]" class="layout_position" value="' + data_position + '"/>';
+                        html += '    <input type="hidden" name="layout_module[' + cDigit + '][sort_order]" value="' + sort_order_value + '" class="sort"/>';
+                        html += '</div>';
 
                     $('.accordion-content-drop').find(ev['draggable']).remove();
 
@@ -115,8 +115,6 @@ var Layout = function() {
 
                     $('.row.colsliders .col-md-3.sidebar_column').attr('style','min-height:' + moduleListHeigth + 'px !important;');
                     $('.row.colsliders .col-md-3.sidebar_column .dashed').attr('style','min-height:' + moduleCol + 'px !important;');
-
-                    $('#layout-save').prop('disable', false);
                 }
             }).sortable({
                 appendTo    : document['body'],
@@ -129,8 +127,6 @@ var Layout = function() {
                 cancel      : '.btn-edit, .btn-remove',
                 update      : function(allBindingsAccessor, stopHere) {
                     $(this).find('.layout_position').attr('value', $(this).attr('data-position'));
-
-                    $('#layout-save').prop('disabled', false);
                 }
             }).disableSelection();
         },
@@ -140,21 +136,21 @@ var Layout = function() {
             var module_list_title = $('#module_list').attr('data-text-edit');
 
             var html  = '<div class="mblock ui-draggable ui-draggable-handle" data-code="' + module + '">';
-            html += ' 	<div class="mblock-header">';
-            html += ' 		<div class="mblock-header-title"><i class="fa fa-arrows-alt"></i><span class="module-name">' + moduleInstance + '</span></div>';
-            html += '		</div>';
-            html += '		<div class="mblock-control-menu ui-sortable-handle">';
-            html += '			<div class="mblock-action">';
-            html += '				<a class="btn btn-xs btn-edit" onclick="moduleSetting(\'' + ext + '\')" data-toggle="tooltip" title="' + module_list_title + '"> <i class="fa fa-cog"></i></a>';
-            html += '			</div>';
-            html += '			<div class="mblock-action pull-right">';
-            html += '				<a class="btn btn-xs btn-remove" onclick="confirm(\'' + confirm_text + '\') ? removeLayoutModule(\'<?php echo $layout_id; ?>\', \'<?php echo $module_id; ?>\', $(this)) : false;"><i class="fa fa-trash-o"></i></a>';
-            html += '			</div>';
-            html += '		</div>';
-            html += '		<input type="hidden" name="layout_module[' + module_data + '][code]" value="' + module + '"/>';
-            html += '		<input type="hidden" name="layout_module[' + module_data + '][position]" class="layout_position" value="' + array + '"/>';
-            html += '		<input type="hidden" name="layout_module[' + module_data + '][sort_order]" value="999" class="sort"/>';
-            html += '</div>';
+                html += '   <div class="mblock-header">';
+                html += '         <div class="mblock-header-title"><i class="fa fa-arrows-alt"></i><span class="module-name">' + moduleInstance + '</span></div>';
+                html += '   </div>';
+                html += '    <div class="mblock-control-menu ui-sortable-handle">';
+                html += '        <div class="mblock-action">';
+                html += '            <a class="btn btn-xs btn-edit" onclick="moduleSetting(\'' + ext + '\')" data-toggle="tooltip" title="' + module_list_title + '"> <i class="fa fa-cog"></i></a>';
+                html += '        </div>';
+                html += '        <div class="mblock-action pull-right">';
+                html += '            <a class="btn btn-xs btn-remove" onclick="confirm(\'' + confirm_text + '\') ? removeLayoutModule(\'<?php echo $layout_id; ?>\', \'<?php echo $module_id; ?>\', $(this)) : false;"><i class="fa fa-trash-o"></i></a>';
+                html += '        </div>';
+                html += '    </div>';
+                html += '    <input type="hidden" name="layout_module[' + module_data + '][code]" value="' + module + '"/>';
+                html += '    <input type="hidden" name="layout_module[' + module_data + '][position]" class="layout_position" value="' + array + '"/>';
+                html += '    <input type="hidden" name="layout_module[' + module_data + '][sort_order]" value="999" class="sort"/>';
+                html += '</div>';
 
             $("div[data-position='" + array + "']").append(html);
         },
