@@ -399,6 +399,20 @@
               "default": "#b5a766",
               "selector": ".module-title span",
               "advance": "true"
+            },
+            "panel-heading_color": {
+              "type": "color",
+              "label": "Panel Heading Color",
+              "default": "#b5a766",
+              "selector": ".panel-heading h4",
+              "advance": "true"
+            },
+            "checkout-step-bg_color": {
+              "type": "color",
+              "label": "Checkout Active Step Color",
+              "default": "#b5a766",
+              "selector": "#ar-step-account.text-primary, #ar-step-address.text-primary, #ar-step-payment.text-primary",
+              "advance": "true"
             }
         }
     },
