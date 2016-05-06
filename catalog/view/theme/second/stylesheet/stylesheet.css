@@ -318,7 +318,7 @@ header #cart > .dropdown-toggle:hover {
 }
 #cart.open > .btn {
     border: 1px solid #E6E6E6;
-    color: 
+    color:
 }
 #cart .dropdown-menu {
     background: #fff;
@@ -1102,18 +1102,10 @@ h2.price {
 }
 .module-title span {
     border-bottom: 1px solid #ddd;
+    border-top: 1px solid #b5a766;
     text-transform: uppercase;
     position: relative;
     padding: 5px;
-}
-.module-title span:after {
-    content: "";
-    position: absolute;
-    height: 1px;
-    width: 100%;
-    left: 0;
-    top: 0;
-    background: #b5a766;
 }
 /* Product Detail */
 .product-detail .col-sm-4 h1 {
@@ -1217,7 +1209,7 @@ h2.price {
     margin-bottom: 0 !important;
 }
 
-#ar-step-account .progress, 
+#ar-step-account .progress,
 #ar-step-address .progress {
     background: #fff;
 }

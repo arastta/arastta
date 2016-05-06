@@ -24,6 +24,18 @@
                     "default": "#666",
                     "selector": "body"
             },
+            "link_color": {
+                    "type": "color",
+                    "label": "Link Color",
+                    "default": "#b5a766",
+                    "selector": "a"
+            },
+            "link-hover_color": {
+                    "type": "color",
+                    "label": "Link Color",
+                    "default": "#9b8935",
+                    "selector": "a:hover"
+            },
             "header_background-color": {
                 "type": "color",
                 "label": "text_colors_header_background_label",
@@ -121,6 +133,14 @@
                 "selector": ".breadcrumb li a:hover",
                 "advance": "true"
             },
+            "heaeder_cart-color": {
+              "type": "color",
+              "label": "Cart Color in Header",
+              "description": "Change the link color of cart module in the heaeder",
+              "default": "#b5a766",
+              "selector": "header #cart > .btn-inverse",
+              "advance": "true"
+            },
             "footer_background-color": {
                 "type": "color",
                 "label": "text_footer_background_color_label",
@@ -152,13 +172,13 @@
                 "type": "color",
                 "label": "text_footer_text_color_label",
                 "default": "#008db9",
-                "selector": "footer .container .row .col-sm-3 h5",
+                "selector": "footer h3",
                 "advance": "true"
             },
             "footer-link-text-color_color": {
                 "type": "color",
                 "label": "text_footer_link_text_color_label",
-                "default": "#fff",
+                "default": "#b5a766",
                 "selector": "footer .container .row .col-sm-3 .list-unstyled li a",
                 "advance": "true"
             },
@@ -168,6 +188,13 @@
                 "default": "#9b8935",
                 "selector": "footer .container .row .col-sm-3 .list-unstyled li a:hover",
                 "advance": "true"
+            },
+            "price_color": {
+              "type": "color",
+              "label": "Price Color",
+              "default": "#b5a766",
+              "selector": ".product-thumb .price",
+              "advance": "true"
             },
             "button-group-first-button_background-color": {
                 "type": "color",
@@ -365,6 +392,13 @@
                 "default": "#333",
                 "selector": ".btn-default:hover",
                 "advance": "true"
+            },
+            "module-title_border-top-color": {
+              "type": "color",
+              "label": "Module Border Top Color",
+              "default": "#b5a766",
+              "selector": ".module-title span",
+              "advance": "true"
             }
         }
     },
