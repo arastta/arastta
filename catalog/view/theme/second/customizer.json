@@ -62,7 +62,7 @@
                 "label": "text_menu_color_label",
                 "description": "text_menu_color_description",
                 "default": "#b5a766",
-                "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav li a:first-child"
+                "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav li a:first-child, #menu #category, #menu .btn-navbar"
             },
             "menu-text-dropdown-menu_color": {
                 "type": "color",
