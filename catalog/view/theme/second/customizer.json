@@ -28,13 +28,13 @@
                     "type": "color",
                     "label": "Link Color",
                     "default": "#b5a766",
-                    "selector": "a"
+                    "selector": "a, header #cart > .btn-inverse, footer .copyright a, .social-links a:hover"
             },
             "link-hover_color": {
                     "type": "color",
-                    "label": "Link Color",
+                    "label": "Link Hover Color",
                     "default": "#9b8935",
-                    "selector": "a:hover"
+                    "selector": "a:hover, header #cart > .btn-inverse:hover, footer .copyright a:hover, #search .btn-lg:hover"
             },
             "header_background-color": {
                 "type": "color",
@@ -63,6 +63,13 @@
                 "description": "text_menu_color_description",
                 "default": "#b5a766",
                 "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav li a:first-child, #menu #category, #menu .btn-navbar"
+            },
+            "menu-hover_background-color": {
+              "type": "color",
+              "label": "Menu Hover Background",
+              "description": "Background color when hover over the root menu items",
+              "default": "#b5a766",
+              "selector": "#menu .nav > li > a:hover, #menu .nav > li.open > a"
             },
             "menu-text-dropdown-menu_color": {
                 "type": "color",
