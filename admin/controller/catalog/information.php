@@ -584,7 +584,7 @@ class ControllerCatalogInformation extends Controller {
 
         $route = new Route($this->registry);
 
-        $url .= $route->rewrite('index.php?route=information/information&information_id='.$information_id);
+        $url .= ltrim($route->rewrite('index.php?route=information/information&information_id='.$information_id), '/');
 
         if (!empty($old_session_code)) {
             $this->session->data['language'] = $old_session_code;
