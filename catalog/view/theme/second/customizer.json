@@ -437,6 +437,13 @@
         "control": {
             "logo": {
                 "selector": "#logo a img"
+            },
+            "headercartimg_background-image": {
+                    "type": "image",
+                    "label": "Cart Image in header area",
+                    "default": "../catalog/view/theme/second/image/headercart.png",
+                    "default_raw": "url(../image/headercart.png)",
+                    "selector": "header #cart > .btn-inverse"
             }
         }
     }

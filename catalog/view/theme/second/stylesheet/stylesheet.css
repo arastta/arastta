@@ -307,7 +307,11 @@ header span.cart-item {
     header #cart {margin-bottom: 20px; margin-top: 20px;}
 }
 header #cart > .btn-inverse {
-    background: transparent;
+    background-color: transparent;
+    background-image: url(../image/headercart.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 20% 0;
     color: #b5a766;
     font-size: 16px;
     line-height: 22px;
