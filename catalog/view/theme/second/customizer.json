@@ -72,6 +72,13 @@
                 "default": "#b5a766",
                 "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav li a:first-child, #menu #category, #menu .btn-navbar"
             },
+            "menu-hover_color": {
+                "type": "color",
+                "label": "Menu Hover Color",
+                "description": "Root menu items color on hover",
+                "default": "#ffffff",
+                "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav li a:first-child:hover, #menu #category, #menu .btn-navbar:hover"
+            },
             "menu-hover_background-color": {
               "type": "color",
               "label": "Menu Hover Background",
