@@ -43,6 +43,14 @@
                 "default": "#333",
                 "selector": "nav#top"
             },
+            "dropdowndown-hover_background-color": {
+                "type": "color",
+                "label": "Dropdown Menu Hover Background",
+                "description": "Background color of dropdown menu items on hover status",
+                "default": "#b5a766",
+                "selector": ".dropdown-menu li > a:hover, #top #currency .currency-select:hover",
+                "advance": "true"
+            },
             "menu_background-color": {
                 "type": "color",
                 "label": "text_colors_menu_background_label",
