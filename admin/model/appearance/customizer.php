@@ -10,7 +10,6 @@ class ModelAppearanceCustomizer extends Model
 {
     public function saveCustomizer($code, $data, $store_id = 0)
     {
-
         $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code . "_" . $this->config->get('config_template')) . "'");
 
         $customizerCss = '';
@@ -24,11 +23,14 @@ class ModelAppearanceCustomizer extends Model
                 }
             } elseif ($key == 'custom-css' || $key == 'custom-js') {
                 $element = explode("-", $key);
+
                 if ($element[1] == 'css') {
-                    $value = iconv("CP1257", "UTF-8", $value);
+                    $value = htmlspecialchars_decode(iconv("CP1257", "UTF-8", $value));
+
                     $this->filesystem->dumpFile(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/custom.css', $value);
                 } else {
-                    $value = iconv("CP1257", "UTF-8", $value);
+                    $value = htmlspecialchars_decode(iconv("CP1257", "UTF-8", $value));
+
                     $this->filesystem->dumpFile(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/javascript/custom.js', $value);
                 }
             }
@@ -38,6 +40,7 @@ class ModelAppearanceCustomizer extends Model
 
                 if ($key == 'layout_width' || $key == 'container_background-color' || $key == 'container-color_color' || $key == 'container_background-image') {
                     $element = explode("_", $key);
+
                     if (!empty($item['selector'])) {
                         if (!empty($value)) {
                             if ($key == 'container_background-image') {
@@ -58,6 +61,7 @@ class ModelAppearanceCustomizer extends Model
                 } elseif ($key == 'logo') {
                     if (!empty($value)) {
                         $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$store_id . "' AND `code` = 'config' AND `key` = 'config_logo'");
+
                         $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '" . (int)$store_id . "', `code` = 'config', `key` = 'config_logo', `value` = '" . $this->db->escape($value) . "'");
                     }
                 }
@@ -86,6 +90,7 @@ class ModelAppearanceCustomizer extends Model
     public function resetCustomizer($code, $store_id = 0)
     {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code . "_" . $this->config->get('config_template')) . "'");
+
         $this->filesystem->remove(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/customizer.css');
         $this->filesystem->remove(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/custom.css');
         $this->filesystem->remove(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/javascript/custom.js');
@@ -111,6 +116,7 @@ class ModelAppearanceCustomizer extends Model
 
                 if ($check_png !== false || $check_jpg !== false || $check_jpeg !== false || $check_jpe !== false || $check_gif !== false || $check_bmp !== false || $check_ico !== false) {
                     $setting_data[$result['key']. '_raw'] = $result['value'];
+
                     $result['value'] = $this->model_tool_image->resize($result['value'], 100, 100);
                 }
 

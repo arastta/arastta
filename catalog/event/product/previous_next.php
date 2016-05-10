@@ -25,7 +25,8 @@ class EventProductPreviousNext extends Event
         if (isset($this->request->get['path'])) {
             $parts = explode('_', (string)$this->request->get['path']);
 
-            $category_id = (int)array_pop($parts);
+            $category = array_pop($parts);
+            $category_id = (int)$category;
         } else {
             $categories = $this->model_catalog_product->getCategories($product_id);
 
@@ -33,7 +34,8 @@ class EventProductPreviousNext extends Event
                 return;
             }
 
-            $category_id = (int)array_shift($categories)['category_id'];
+            $category = array_shift($categories);
+            $category_id = (int)$category['category_id'];
         }
 
         $filter_data = array(

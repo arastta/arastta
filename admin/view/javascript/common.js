@@ -26,11 +26,6 @@ function redirectURL(url) {
     $(location).attr("href", url);
 }
 
-
-function redirectURL(url) {
-    $(location).attr("href", url);
-}
-
 function removeURLParameter(url, parameter) {
     var path = url.split('?');
 

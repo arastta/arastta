@@ -39,6 +39,7 @@ class ControllerAppearanceCustomizer extends Controller
         $data['fonts'] = $this ->getFonts();
 
         $this->load->model('tool/image');
+
         $data['image_fullpath'] = ($this->request->server['HTTPS']) ? HTTPS_IMAGE : HTTP_IMAGE;
         $data['no_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
@@ -53,7 +54,6 @@ class ControllerAppearanceCustomizer extends Controller
 
         $data['action'] = $this->url->link('appearance/customizer', 'token=' . $this->session->data['token'], 'SSL');
         $data['reset'] = $this->url->link('appearance/customizer/reset', 'token=' . $this->session->data['token'], 'SSL');
-        $data['back'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
         $data['changeTheme'] = $this->url->link('appearance/customizer/changeTheme', 'token=' . $this->session->data['token'], 'SSL');
 
         $data['frontend'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG;
@@ -78,6 +78,14 @@ class ControllerAppearanceCustomizer extends Controller
             unset($this->session->data['success']);
         } else {
             $data['success'] = '';
+        }
+
+        if (isset($this->request->post['button_back'])) {
+            $data['button_back'] = $this->request->post['button_back'];
+        } elseif (isset($this->request->get['button_back'])) {
+            $data['button_back'] = base64_decode($this->request->get['button_back']);
+        } else {
+            $data['button_back'] = $this->request->server['HTTP_REFERER'];
         }
 
         if (isset($this->request->post['config_template'])) {
@@ -114,6 +122,7 @@ class ControllerAppearanceCustomizer extends Controller
         if ($this->validate()) {
             $this->model_appearance_customizer->resetCustomizer('customizer');
         }
+
         $json['succes'] = true;
 
         $this->session->data['success'] = $this->language->get('text_remove');
@@ -138,6 +147,7 @@ class ControllerAppearanceCustomizer extends Controller
         $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
         $this->document->addScript('view/javascript/colorpicker/color-picker.js');
         $this->document->addScript('view/javascript/colorpicker/iris.min.js');
+
         if (is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/javascript/customizer.js')) {
             $this->document->addScript('../catalog/view/theme/' . $this->config->get('config_template') . '/javascript/customizer.js');
         }
@@ -334,6 +344,7 @@ class ControllerAppearanceCustomizer extends Controller
         $data['fonts'] = $this ->getFonts();
 
         $this->load->model('tool/image');
+
         $data['image_fullpath'] = ($this->request->server['HTTPS']) ? HTTPS_IMAGE : HTTP_IMAGE;
         $data['no_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 

@@ -177,6 +177,7 @@
                                 <?php } ?>
                             </select>
                             <?php } else { ?>
+                            <input type="hidden" name="params[twofactorauth][method]" value="none" />
                             <?php echo $text_twofactorauth; ?>
                             <?php } ?>
                         </div>

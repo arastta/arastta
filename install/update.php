@@ -299,3 +299,34 @@ if (version_compare(VERSION, '1.3.0', '<')) {
     // Update coupon table
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "coupon` CHANGE `code` `code` varchar(128) NOT NULL");
 }
+
+// 1.3.1 changes;
+if (version_compare(VERSION, '1.3.1', '<')) {
+    $tinymce = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "setting WHERE `code` = 'tinymce'");
+
+    if (!empty($tinymce->num_rows)) {
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menubar', `value` = '0'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_edit_insertfile', `value` = '0'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_styleselect_styleselect', `value` = '0'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_format_underline', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_format_visualchars', `value` = '0'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_format_visualblocks', `value` = '0'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_format_ltr', `value` = '0'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_format_rtl', `value` = '0'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_format_fontselect', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_format_fontsizeselect', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_format_charmap', `value` = '0'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_format_forecolor', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_format_backcolor', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_file_table', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_insert_image_manager', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_insert_media', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_insert_hr', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_tools_fullscreen', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_tools_code', `value` = '1'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_tools_searchreplace', `value` = '0'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_tools_pagebreak', `value` = '0'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_tools_nonbreaking', `value` = '0'");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_tools_emoticons', `value` = '0'");
+    }
+}

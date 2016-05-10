@@ -4,6 +4,7 @@
         <div class="container-fluid">
             <div class="pull-right">
                 <a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-success"><i class="fa fa-plus"></i></a>
+                <a href="<?php echo $repair; ?>" data-toggle="tooltip" title="<?php echo $button_rebuild; ?>" class="btn btn-default"><i class="fa fa-refresh"></i></a>
             </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>

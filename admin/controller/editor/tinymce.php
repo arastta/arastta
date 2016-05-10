@@ -72,17 +72,56 @@ class ControllerEditorTinymce extends Controller
         $height['value'] = $this->config->get('tinymce_height', 300);
         $height['placeholder'] = $this->language->get('entry_height');
 
-        $menu_edit_undo['value'] = $this->config->get('tinymce_menu_edit_undo', 1);
+        $menubar['value'] = $this->config->get('tinymce_menubar', 0);
+        $menubar['labelclass'] = 'radio-inline';
+
+        $menu_edit_insertfile['value'] = $this->config->get('tinymce_menu_edit_insertfile', 0);
+        $menu_edit_insertfile['labelclass'] = 'radio-inline';
+
+        $menu_edit_undo['value'] = $this->config->get('tinymce_menu_edit_undo', 0);
         $menu_edit_undo['labelclass'] = 'radio-inline';
 
-        $menu_edit_redo['value'] = $this->config->get('tinymce_menu_edit_redo', 1);
+        $menu_edit_redo['value'] = $this->config->get('tinymce_menu_edit_redo', 0);
         $menu_edit_redo['labelclass'] = 'radio-inline';
+
+        $menu_styleselect_styleselect['value'] = $this->config->get('tinymce_menu_styleselect_styleselect', 0);
+        $menu_styleselect_styleselect['labelclass'] = 'radio-inline';
 
         $menu_format_bold['value'] = $this->config->get('tinymce_menu_format_bold', 1);
         $menu_format_bold['labelclass'] = 'radio-inline';
 
         $menu_format_italic['value'] = $this->config->get('tinymce_menu_format_italic', 1);
         $menu_format_italic['labelclass'] = 'radio-inline';
+
+        $menu_format_underline['value'] = $this->config->get('tinymce_menu_format_underline', 1);
+        $menu_format_underline['labelclass'] = 'radio-inline';
+
+        $menu_format_visualchars['value'] = $this->config->get('tinymce_menu_format_visualchars', 0);
+        $menu_format_visualchars['labelclass'] = 'radio-inline';
+
+        $menu_format_visualblocks['value'] = $this->config->get('tinymce_menu_format_visualblocks', 0);
+        $menu_format_visualblocks['labelclass'] = 'radio-inline';
+
+        $menu_format_ltr['value'] = $this->config->get('tinymce_menu_format_ltr', 0);
+        $menu_format_ltr['labelclass'] = 'radio-inline';
+
+        $menu_format_rtl['value'] = $this->config->get('tinymce_menu_format_rtl', 0);
+        $menu_format_rtl['labelclass'] = 'radio-inline';
+
+        $menu_format_fontselect['value'] = $this->config->get('tinymce_menu_format_fontselect', 1);
+        $menu_format_fontselect['labelclass'] = 'radio-inline';
+
+        $menu_format_fontsizeselect['value'] = $this->config->get('tinymce_menu_format_fontsizeselect', 1);
+        $menu_format_fontsizeselect['labelclass'] = 'radio-inline';
+
+        $menu_format_charmap['value'] = $this->config->get('tinymce_menu_format_charmap', 0);
+        $menu_format_charmap['labelclass'] = 'radio-inline';
+
+        $menu_format_forecolor['value'] = $this->config->get('tinymce_menu_format_forecolor', 1);
+        $menu_format_forecolor['labelclass'] = 'radio-inline';
+
+        $menu_format_backcolor['value'] = $this->config->get('tinymce_menu_format_backcolor', 1);
+        $menu_format_backcolor['labelclass'] = 'radio-inline';
 
         $menu_view_alignleft['value'] = $this->config->get('tinymce_menu_view_alignleft', 1);
         $menu_view_alignleft['labelclass'] = 'radio-inline';
@@ -108,14 +147,38 @@ class ControllerEditorTinymce extends Controller
         $menu_file_indent['value'] = $this->config->get('tinymce_menu_file_indent', 1);
         $menu_file_indent['labelclass'] = 'radio-inline';
 
+        $menu_file_table['value'] = $this->config->get('tinymce_menu_file_table', 1);
+        $menu_file_table['labelclass'] = 'radio-inline';
+
         $menu_insert_link['value'] = $this->config->get('tinymce_menu_insert_link', 1);
         $menu_insert_link['labelclass'] = 'radio-inline';
 
         $menu_insert_image['value'] = $this->config->get('tinymce_menu_insert_image', 1);
         $menu_insert_image['labelclass'] = 'radio-inline';
 
-        $menu_tools_imagetools['value'] = $this->config->get('tinymce_menu_tools_imagetools', 1);
-        $menu_tools_imagetools['labelclass'] = 'radio-inline';
+        $menu_insert_media['value'] = $this->config->get('tinymce_menu_insert_media', 1);
+        $menu_insert_media['labelclass'] = 'radio-inline';
+
+        $menu_insert_hr['value'] = $this->config->get('tinymce_menu_insert_hr', 1);
+        $menu_insert_hr['labelclass'] = 'radio-inline';
+
+        $menu_tools_fullscreen['value'] = $this->config->get('tinymce_menu_tools_fullscreen', 1);
+        $menu_tools_fullscreen['labelclass'] = 'radio-inline';
+
+        $menu_tools_code['value'] = $this->config->get('tinymce_menu_tools_code', 1);
+        $menu_tools_code['labelclass'] = 'radio-inline';
+
+        $menu_tools_searchreplace['value'] = $this->config->get('tinymce_menu_tools_searchreplace', 0);
+        $menu_tools_searchreplace['labelclass'] = 'radio-inline';
+
+        $menu_tools_pagebreak['value'] = $this->config->get('tinymce_menu_tools_pagebreak', 0);
+        $menu_tools_pagebreak['labelclass'] = 'radio-inline';
+
+        $menu_tools_nonbreaking['value'] = $this->config->get('tinymce_menu_tools_nonbreaking', 0);
+        $menu_tools_nonbreaking['labelclass'] = 'radio-inline';
+
+        $menu_tools_emoticons['value'] = $this->config->get('tinymce_menu_tools_emoticons', 0);
+        $menu_tools_emoticons['labelclass'] = 'radio-inline';
 
         $form = new AForm('form-tinymce', $action);
 
@@ -129,15 +192,28 @@ class ControllerEditorTinymce extends Controller
         $form->addElement(new Arastta\Component\Form\Element\HTML('<div class="tab-pane active" id="tab-general">'));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_status'), 'tinymce_status', $status, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\Textbox($this->language->get('entry_height'), 'tinymce_height', $height));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menubar'), 'tinymce_menubar', $menubar, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\Textbox($this->language->get('entry_sort_order'), 'tinymce_sort_order', $sort_order));
         $form->addElement(new Arastta\Component\Form\Element\HTML('</div>'));
 
         $form->addElement(new Arastta\Component\Form\Element\HTML('<div class="tab-pane" id="tab-advanced">'));
         $form->addElement(new Arastta\Component\Form\Element\HTML('<legend>' . $this->language->get('text_tool') . '</legend>'));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_edit_insertfile'), 'tinymce_menu_edit_insertfile', $menu_edit_insertfile, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_edit_undo'), 'tinymce_menu_edit_undo', $menu_edit_undo, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_edit_redo'), 'tinymce_menu_edit_redo', $menu_edit_redo, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_styleselect_styleselect'), 'tinymce_menu_styleselect_styleselect', $menu_styleselect_styleselect, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_format_bold'), 'tinymce_menu_format_bold', $menu_format_bold, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_format_italic'), 'tinymce_menu_format_italic', $menu_format_italic, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_format_underline'), 'tinymce_menu_format_underline', $menu_format_underline, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_format_visualchars'), 'tinymce_menu_format_visualchars', $menu_format_visualchars, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_format_visualblocks'), 'tinymce_menu_format_visualblocks', $menu_format_visualblocks, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_format_ltr'), 'tinymce_menu_format_ltr', $menu_format_ltr, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_format_rtl'), 'tinymce_menu_format_rtl', $menu_format_rtl, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_format_fontselect'), 'tinymce_menu_format_fontselect', $menu_format_fontselect, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_format_fontsizeselect'), 'tinymce_menu_format_fontsizeselect', $menu_format_fontsizeselect, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_format_charmap'), 'tinymce_menu_format_charmap', $menu_format_charmap, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_format_forecolor'), 'tinymce_menu_format_forecolor', $menu_format_forecolor, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_format_backcolor'), 'tinymce_menu_format_backcolor', $menu_format_backcolor, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_view_alignleft'), 'tinymce_menu_view_alignleft', $menu_view_alignleft, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_view_aligncenter'), 'tinymce_menu_view_aligncenter', $menu_view_aligncenter, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_view_alignright'), 'tinymce_menu_view_alignright', $menu_view_alignright, $option_text));
@@ -146,9 +222,17 @@ class ControllerEditorTinymce extends Controller
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_file_numlist'), 'tinymce_menu_file_numlist', $menu_file_numlist, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_file_outdent'), 'tinymce_menu_file_outdent', $menu_file_outdent, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_file_indent'), 'tinymce_menu_file_indent', $menu_file_indent, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_file_table'), 'tinymce_menu_file_table', $menu_file_table, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_insert_link'), 'tinymce_menu_insert_link', $menu_insert_link, $option_text));
-        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_insert_image'), 'tinymce_menu_insert_image', $menu_insert_image, $option_text));
-        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_tools_imagetools'), 'tinymce_menu_tools_imagetools', $menu_tools_imagetools, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_insert_image'), 'tinymce_menu_insert_image_manager', $menu_insert_image, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_insert_media'), 'tinymce_menu_insert_media', $menu_insert_media, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_insert_hr'), 'tinymce_menu_insert_hr', $menu_insert_hr, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_tools_fullscreen'), 'tinymce_menu_tools_fullscreen', $menu_tools_fullscreen, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_tools_code'), 'tinymce_menu_tools_code', $menu_tools_code, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_tools_searchreplace'), 'tinymce_menu_tools_searchreplace', $menu_tools_searchreplace, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_tools_pagebreak'), 'tinymce_menu_tools_pagebreak', $menu_tools_pagebreak, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_tools_nonbreaking'), 'tinymce_menu_tools_nonbreaking', $menu_tools_nonbreaking, $option_text));
+        $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_menu_tools_emoticons'), 'tinymce_menu_tools_emoticons', $menu_tools_emoticons, $option_text));
         $form->addElement(new Arastta\Component\Form\Element\HTML('</div>'));
 
         $form->addElement(new Arastta\Component\Form\Element\HTML('</div>'));
@@ -168,7 +252,7 @@ class ControllerEditorTinymce extends Controller
 
         $this->load->model('extension/editor');
 
-        $result = $this->model_extension_editor->check('summernote', $this->request->post);
+        $result = $this->model_extension_editor->check('tinymce', $this->request->post);
 
         if (!$result) {
             $this->error['warning'] = $this->session->data['warning'];

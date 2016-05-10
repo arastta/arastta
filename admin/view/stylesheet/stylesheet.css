@@ -2732,3 +2732,7 @@ li.basic-advanced {
 .logo-image img {
     cursor: pointer;
 }
+
+.mce-fullscreen {
+    z-index: 99999 !important;
+}

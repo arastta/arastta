@@ -11,18 +11,18 @@ class EventEditorTinymce extends Event
     public $menu = array(
         'edit'          => array('insertfile', 'undo', 'redo'),
         'styleselect'   => array('styleselect'),
-        'format'        => array('bold', 'italic'),
-        'view'          => array('alignleft', 'aligncenter', 'alignright', 'alignjustify'),
+        'format'        => array('bold', 'italic', 'underline', 'visualchars', 'visualblocks', 'ltr', 'rtl', '|',  'fontselect', 'fontsizeselect', 'charmap', '|', 'forecolor', 'backcolor'),
         'file'          => array('bullist', 'numlist', 'outdent', 'indent'),
-        'insert'        => array('link', 'image_manager'),
-        'tools'         => array('emoticons', 'autoresize', 'imagetools')
+        'view'          => array('alignleft', 'aligncenter', 'alignright', 'alignjustify', '|', 'table'),
+        'insert'        => array('link', 'image_manager', 'media', 'hr'),
+        'tools'         => array('fullscreen', 'code', 'searchreplace', 'pagebreak', 'nonbreaking', 'emoticons')
     );
 
     public $toolbar = array(
-        'insert'     => array('advlist', 'autolink', 'lists', 'link', 'charmap', 'print', 'preview', 'anchor'),
-        'view'       => array('searchreplace', 'visualblocks', 'code', 'fullscreen'),
-        'table'      => array('insertdatetime', 'media', 'table', 'contextmenu', 'paste', 'image_manager'),
-        'tools'      => array('emoticons', 'autoresize', 'textcolor', 'template' )
+        'insert'     => array('advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'print', 'preview', 'hr', 'anchor', 'pagebreak'),
+        'view'       => array('searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen'),
+        'table'      => array('insertdatetime', 'media', 'nonbreaking', 'save', 'table', 'contextmenu', 'directionality', 'paste', 'image_manager'),
+        'tools'      => array('emoticons', 'colorpicker', 'textpattern', 'autoresize', 'textcolor', 'template')
     );
 
     public $height = 300;
@@ -122,6 +122,9 @@ class EventEditorTinymce extends Event
         $script .= "      ]," . chr(13) . chr(9) . chr(9);
         if (!empty($other_options)) {
             $script .= "      " . $other_options . chr(13) . chr(9) . chr(9);
+        }
+        if (empty($setting['tinymce_menubar'])) {
+            $script .= "      menubar: 'false'," . chr(13) . chr(9) . chr(9);
         }
         $script .= "      toolbar: '" . $menus . "'," . chr(13) . chr(9) . chr(9);
         $script .= "      language: '" . $editor_language . "'" . chr(13) . chr(9) . chr(9);

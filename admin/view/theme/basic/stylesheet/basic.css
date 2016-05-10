@@ -22,7 +22,7 @@
 .item-selected {
     position: absolute;
     color: #000;
-    padding: 5px;
+    padding: 3px 5px 3px 0;
     border: 1px solid #ddd;
     border-radius: 3px;
     border-bottom-right-radius: 0;
@@ -30,10 +30,21 @@
     height: 26px;
     margin-left: -27px;
     margin-top: -1px;
-    text-indent: 30px;
-    width: 7%;
+    width: 12%;
 }
-
+@media screen and (max-width: 767px) {
+    .bulk-action-activate {
+        position: relative;
+    }
+    .bulk-action-activate .item-selected {
+        margin-left: 0;
+        position: relative;
+        width: 100%;
+        display: inline-block !important;
+        left: 115px;
+        top: -3px;
+    }
+}
 .bulk-action {
     border: 1px solid #ddd;
     border-radius: 3px;
@@ -58,7 +69,7 @@
 
 .bulk-action-button {
     position: absolute;
-    left: 157px;
+    left: 15.1%;
     height: 26px;
     margin-top: -1px;
     padding-top: 5px;
@@ -85,6 +96,16 @@
     width: 15px !important;
     height: 15px !important;
 }
+@media screen and (max-width: 767px) {
+    #content input[type="radio"],
+    #content .radio input[type="radio"],
+    #content .radio-inline input[type="radio"],
+    #content input[type="checkbox"],
+    #content .checkbox input[type="checkbox"],
+    #content .checkbox-inline input[type="checkbox"] {
+        margin-left: 0;
+    }
+}
 
 input[type="checkbox"]:checked::after,
 .checkbox input[type="checkbox"]:checked::after,
@@ -109,11 +130,11 @@ a.editable-click:hover {
 }
 
 .options .tab-content .table-responsive  .table , #product-category {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .options .tab-content .table-responsive .input-group.price .btn-group.bootstrap-select.input-group-btn {
-	min-width: 46px !important;
+    min-width: 46px !important;
 }
 
 #product-category  div{
@@ -290,4 +311,8 @@ div.required label.col-sm-12:not(span):before, td.required:before {
     color: #008db9;
     content: "\f059";
     margin-left: 4px;
+}
+
+#form-product .left-col .panel:nth-child(3) .panel-body fieldset:nth-child(2) .form-group.required .col-sm-6:nth-child(2) > label:before {
+    content: "";
 }

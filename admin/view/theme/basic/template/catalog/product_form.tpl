@@ -104,7 +104,7 @@
                             <div class="data">
                                 <fieldset>
                                     <legend><?php echo $entry_pricing; ?></legend>
-                                    <div class="form-group required">
+                                    <div class="form-group">
                                         <div class="col-sm-6">
                                             <label class="col-sm-12" for="input-price"><?php echo $entry_price; ?></label>
                                             <div class="col-sm-12">
@@ -161,7 +161,7 @@
                                 </fieldset>
                                 <fieldset class="data-fieldset">
                                     <legend><?php echo $entry_shipping_group; ?></legend>
-                                    <div class="form-group required">
+                                    <div class="form-group">
                                         <div class="col-sm-6">
                                             <label class="col-sm-12" for="input-weight"><?php echo $entry_weight; ?></label>
                                             <div class="col-sm-12">
@@ -838,6 +838,10 @@
                     $('.btn-category-add').remove();
                     $('.tooltip.fade.top.in').removeClass('in');
 
+                    if (!$('#product-category').length) {
+                        $('input[name=\'category\']').after('<div id="product-category" class="well well-sm" style="overflow: auto;"></div>');
+                    }
+
                     html  = '<div id="product-category' + json['category_id'] + '">';
                     html += '    <i class="fa fa-minus-circle"></i> ' + $('#input-category').val();
                     html += '    <input type="hidden" name="product_category[]" value="' + json['category_id'] + '">';
@@ -1086,8 +1090,9 @@
             <?php } ?>
             ],
             initialPreviewConfig: [
+            <?php $image_count = 0; ?>
             <?php foreach ($product_images as $product_image) { ?>
-            {caption: "<?php echo basename($product_image['image']); ?>", url: "index.php?route=catalog/product/deleteImage&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>&image=<?php echo $product_image['image'] ; ?>", key: <?php echo $product_image['sort_order']; ?>},
+            {caption: "<?php echo basename($product_image['image']); ?>", url: "index.php?route=catalog/product/deleteImage&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>&image=<?php echo $product_image['image'] ; ?>", key: <?php echo $image_count++; ?>},
             <?php } ?>
             ]
         });
@@ -1098,6 +1103,11 @@
                 abort = false;
             }
             return abort; // you can also send any data/object that you can receive on `filecustomerror` event
+        });
+
+        $("#input-image-addon").on('filedeleted', function(event, key) {
+            $('input[name=\'product_image[' + key + '][image]\']').remove();
+            $('input[name=\'product_image[' + key + '][sort_order]\']').remove();
         });
 
         BasicImage.init();
