@@ -34,16 +34,16 @@ class ControllerDashboardSale extends Controller {
 
         if ($sale_total > 1000000000000) {
             $data['total'] = round($sale_total / 1000000000000, 1);
-            $suffix = 'T';
+            $suffix = $this->language->get('trillion_suffix');
         } elseif ($sale_total > 1000000000) {
             $data['total'] = round($sale_total / 1000000000, 1);
-            $suffix = 'B';
+            $suffix = $this->language->get('billion_suffix');
         } elseif ($sale_total > 1000000) {
             $data['total'] = round($sale_total / 1000000, 1);
-            $suffix = 'M';
+            $suffix = $this->language->get('million_suffix');
         } elseif ($sale_total > 1000) {
             $data['total'] = round($sale_total / 1000, 1);
-            $suffix = 'K';
+            $suffix = $this->language->get('thousand_suffix');
         } else {
             $data['total'] = round($sale_total);
             $suffix = '';
