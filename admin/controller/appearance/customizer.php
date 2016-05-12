@@ -39,6 +39,7 @@ class ControllerAppearanceCustomizer extends Controller
         $data['fonts'] = $this ->getFonts();
 
         $this->load->model('tool/image');
+
         $data['image_fullpath'] = ($this->request->server['HTTPS']) ? HTTPS_IMAGE : HTTP_IMAGE;
         $data['no_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
@@ -121,6 +122,7 @@ class ControllerAppearanceCustomizer extends Controller
         if ($this->validate()) {
             $this->model_appearance_customizer->resetCustomizer('customizer');
         }
+
         $json['succes'] = true;
 
         $this->session->data['success'] = $this->language->get('text_remove');
@@ -145,6 +147,7 @@ class ControllerAppearanceCustomizer extends Controller
         $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
         $this->document->addScript('view/javascript/colorpicker/color-picker.js');
         $this->document->addScript('view/javascript/colorpicker/iris.min.js');
+
         if (is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/javascript/customizer.js')) {
             $this->document->addScript('../catalog/view/theme/' . $this->config->get('config_template') . '/javascript/customizer.js');
         }
@@ -341,6 +344,7 @@ class ControllerAppearanceCustomizer extends Controller
         $data['fonts'] = $this ->getFonts();
 
         $this->load->model('tool/image');
+
         $data['image_fullpath'] = ($this->request->server['HTTPS']) ? HTTPS_IMAGE : HTTP_IMAGE;
         $data['no_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 

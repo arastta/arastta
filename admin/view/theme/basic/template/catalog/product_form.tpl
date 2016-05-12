@@ -1090,8 +1090,9 @@
             <?php } ?>
             ],
             initialPreviewConfig: [
+            <?php $image_count = 0; ?>
             <?php foreach ($product_images as $product_image) { ?>
-            {caption: "<?php echo basename($product_image['image']); ?>", url: "index.php?route=catalog/product/deleteImage&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>&image=<?php echo $product_image['image'] ; ?>", key: <?php echo $product_image['sort_order']; ?>},
+            {caption: "<?php echo basename($product_image['image']); ?>", url: "index.php?route=catalog/product/deleteImage&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>&image=<?php echo $product_image['image'] ; ?>", key: <?php echo $image_count++; ?>},
             <?php } ?>
             ]
         });
@@ -1102,6 +1103,11 @@
                 abort = false;
             }
             return abort; // you can also send any data/object that you can receive on `filecustomerror` event
+        });
+
+        $("#input-image-addon").on('filedeleted', function(event, key) {
+            $('input[name=\'product_image[' + key + '][image]\']').remove();
+            $('input[name=\'product_image[' + key + '][sort_order]\']').remove();
         });
 
         BasicImage.init();

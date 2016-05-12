@@ -676,7 +676,7 @@ class ControllerCatalogManufacturer extends Controller {
 
         $route = new Route($this->registry);
 
-        $url .= $route->rewrite('index.php?route=product/manufacturer/info&manufacturer_id='.$manufacturer_id);
+        $url .= ltrim($route->rewrite('index.php?route=product/manufacturer/info&manufacturer_id='.$manufacturer_id), '/');
         
         if (!empty($old_session_code)) {
             $this->session->data['language'] = $old_session_code;

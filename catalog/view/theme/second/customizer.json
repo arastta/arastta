@@ -24,12 +24,32 @@
                     "default": "#666",
                     "selector": "body"
             },
+            "link_color": {
+                    "type": "color",
+                    "label": "Link Color",
+                    "default": "#b5a766",
+                    "selector": "a, header #cart > .btn-inverse, footer .copyright a, .social-links a:hover"
+            },
+            "link-hover_color": {
+                    "type": "color",
+                    "label": "Link Hover Color",
+                    "default": "#9b8935",
+                    "selector": "a:hover, header #cart > .btn-inverse:hover, footer .copyright a:hover, #search .btn-lg:hover"
+            },
             "header_background-color": {
                 "type": "color",
                 "label": "text_colors_header_background_label",
                 "description": "text_colors_header_background_description",
                 "default": "#333",
                 "selector": "nav#top"
+            },
+            "dropdowndown-hover_background-color": {
+                "type": "color",
+                "label": "Dropdown Menu Hover Background",
+                "description": "Background color of dropdown menu items on hover status",
+                "default": "#b5a766",
+                "selector": ".dropdown-menu li > a:hover, #top #currency .currency-select:hover",
+                "advance": "true"
             },
             "menu_background-color": {
                 "type": "color",
@@ -50,7 +70,21 @@
                 "label": "text_menu_color_label",
                 "description": "text_menu_color_description",
                 "default": "#b5a766",
-                "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav li a:first-child"
+                "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav li a:first-child, #menu #category, #menu .btn-navbar"
+            },
+            "menu-hover_color": {
+                "type": "color",
+                "label": "Menu Hover Color",
+                "description": "Root menu items color on hover",
+                "default": "#ffffff",
+                "selector": "#menu .container .collapse.navbar-collapse .nav.navbar-nav li a:first-child:hover, #menu #category, #menu .btn-navbar:hover"
+            },
+            "menu-hover_background-color": {
+              "type": "color",
+              "label": "Menu Hover Background",
+              "description": "Background color when hover over the root menu items",
+              "default": "#b5a766",
+              "selector": "#menu .nav > li > a:hover, #menu .nav > li.open > a"
             },
             "menu-text-dropdown-menu_color": {
                 "type": "color",
@@ -121,6 +155,14 @@
                 "selector": ".breadcrumb li a:hover",
                 "advance": "true"
             },
+            "heaeder_cart-color": {
+              "type": "color",
+              "label": "Cart Color in Header",
+              "description": "Change the link color of cart module in the heaeder",
+              "default": "#b5a766",
+              "selector": "header #cart > .btn-inverse",
+              "advance": "true"
+            },
             "footer_background-color": {
                 "type": "color",
                 "label": "text_footer_background_color_label",
@@ -152,7 +194,7 @@
                 "type": "color",
                 "label": "text_footer_text_color_label",
                 "default": "#008db9",
-                "selector": "footer .container .row .col-sm-3 h5",
+                "selector": "footer h3",
                 "advance": "true"
             },
             "footer-link-text-color_color": {
@@ -168,6 +210,13 @@
                 "default": "#9b8935",
                 "selector": "footer .container .row .col-sm-3 .list-unstyled li a:hover",
                 "advance": "true"
+            },
+            "price_color": {
+              "type": "color",
+              "label": "Price Color",
+              "default": "#b5a766",
+              "selector": ".product-thumb .price",
+              "advance": "true"
             },
             "button-group-first-button_background-color": {
                 "type": "color",
@@ -365,6 +414,27 @@
                 "default": "#333",
                 "selector": ".btn-default:hover",
                 "advance": "true"
+            },
+            "module-title_border-top-color": {
+              "type": "color",
+              "label": "Module Border Top Color",
+              "default": "#b5a766",
+              "selector": ".module-title span",
+              "advance": "true"
+            },
+            "panel-heading_color": {
+              "type": "color",
+              "label": "Panel Heading Color",
+              "default": "#b5a766",
+              "selector": ".panel-heading h4",
+              "advance": "true"
+            },
+            "checkout-step-bg_color": {
+              "type": "color",
+              "label": "Checkout Active Step Color",
+              "default": "#b5a766",
+              "selector": "#ar-step-account.text-primary, #ar-step-address.text-primary, #ar-step-payment.text-primary",
+              "advance": "true"
             }
         }
     },
@@ -374,6 +444,13 @@
         "control": {
             "logo": {
                 "selector": "#logo a img"
+            },
+            "headercartimg_background-image": {
+                    "type": "image",
+                    "label": "Cart Image in header area",
+                    "default": "../catalog/view/theme/second/image/headercart.png",
+                    "default_raw": "url(../image/headercart.png)",
+                    "selector": "header #cart > .btn-inverse"
             }
         }
     }

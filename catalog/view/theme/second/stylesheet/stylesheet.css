@@ -307,7 +307,11 @@ header span.cart-item {
     header #cart {margin-bottom: 20px; margin-top: 20px;}
 }
 header #cart > .btn-inverse {
-    background: transparent;
+    background-color: transparent;
+    background-image: url(../image/headercart.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 20% 0;
     color: #b5a766;
     font-size: 16px;
     line-height: 22px;
@@ -1101,18 +1105,10 @@ h2.price {
 }
 .module-title span {
     border-bottom: 1px solid #ddd;
+    border-top: 1px solid #b5a766;
     text-transform: uppercase;
     position: relative;
     padding: 5px;
-}
-.module-title span:after {
-    content: "";
-    position: absolute;
-    height: 1px;
-    width: 100%;
-    left: 0;
-    top: 0;
-    background: #b5a766;
 }
 /* Product Detail */
 .product-detail .col-sm-4 h1 {
@@ -1216,7 +1212,7 @@ h2.price {
     margin-bottom: 0 !important;
 }
 
-#ar-step-account .progress, 
+#ar-step-account .progress,
 #ar-step-address .progress {
     background: #fff;
 }

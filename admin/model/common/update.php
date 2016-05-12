@@ -115,7 +115,11 @@ class ModelCommonUpdate extends Model
             $this->filesystem->remove($install_path);
 
             // Move all files/folders from temp path
-            $this->filesystem->mirror($temp_path, DIR_ROOT, null, array('override' => true));
+            try {
+                $this->filesystem->mirror($temp_path, DIR_ROOT, null, array('override' => true));
+            } catch (Exception $e) {
+                return false;
+            }
 
             // Delete the temp path
             $this->filesystem->remove($temp_path);
