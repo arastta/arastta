@@ -23,18 +23,22 @@ class ControllerDashboardOnline extends Controller {
         $online_total = $this->model_report_customer->getTotalCustomersOnline();
         
         if ($online_total > 1000000000000) {
-            $data['total'] = round($online_total / 1000000000000, 1) . 'T';
+            $data['total'] = round($online_total / 1000000000000, 1);
+            $suffix = $this->language->get('trillion_suffix');
         } elseif ($online_total > 1000000000) {
-            $data['total'] = round($online_total / 1000000000, 1) . 'B';
+            $data['total'] = round($online_total / 1000000000, 1);
+            $suffix = $this->language->get('billion_suffix');
         } elseif ($online_total > 1000000) {
-            $data['total'] = round($online_total / 1000000, 1) . 'M';
+            $data['total'] = round($online_total / 1000000, 1);
+            $suffix = $this->language->get('million_suffix');
         } elseif ($online_total > 1000) {
-            $data['total'] = round($online_total / 1000, 1) . 'K';                        
+            $data['total'] = round($online_total / 1000, 1);
+            $suffix = $this->language->get('thousand_suffix');
         } else {
             $data['total'] = $online_total;
         }            
         
-        $data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], 'SSL');
+        $data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], 'SSL') . $suffix;
 
         return $this->load->view('dashboard/online.tpl', $data);
     }
