@@ -1,4 +1,4 @@
-<link href="catalog/view/theme/default/stylesheet/offline.css" rel="stylesheet">
+<link href="catalog/view/theme/second/stylesheet/offline.css" rel="stylesheet">
 <div class="login">
     <div id="content">
         <div class="container-fluid">
