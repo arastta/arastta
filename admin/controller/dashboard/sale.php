@@ -30,28 +30,23 @@ class ControllerDashboardSale extends Controller {
             $data['percentage'] = 0;
         }
 
-        $sale_total = $this->model_report_sale->getTotalSales();
-
-        if ($sale_total > 1000000000000) {
-            $data['total'] = round($sale_total / 1000000000000, 1);
-            $suffix = 'T';
-        } elseif ($sale_total > 1000000000) {
-            $data['total'] = round($sale_total / 1000000000, 1);
-            $suffix = 'B';
-        } elseif ($sale_total > 1000000) {
-            $data['total'] = round($sale_total / 1000000, 1);
-            $suffix = 'M';
-        } elseif ($sale_total > 1000) {
-            $data['total'] = round($sale_total / 1000, 1);
-            $suffix = 'K';
-        } else {
-            $data['total'] = round($sale_total);
-            $suffix = '';
-        }
-
         $config_currency = $this->config->get('config_currency');
 
-        $data['total'] = $config_currency . ' ' . $this->currency->format($data['total'], $config_currency, '', false) . $suffix;
+        $sale_total = $this->currency->format($this->model_report_sale->getTotalSales(), $config_currency, '', false);
+
+        if ($sale_total > 1000000000000) {
+            $data['total'] = round($sale_total / 1000000000000, 1) . 'T';
+        } elseif ($sale_total > 1000000000) {
+            $data['total'] = round($sale_total / 1000000000, 1) . 'B';
+        } elseif ($sale_total > 1000000) {
+            $data['total'] = round($sale_total / 1000000, 1) . 'M';
+        } elseif ($sale_total > 1000) {
+            $data['total'] = round($sale_total / 1000, 1) . 'K';
+        } else {
+            $data['total'] = round($sale_total);
+        }
+
+        $data['total'] = $config_currency . ' ' . $data['total'];
         
         $data['sale'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
 
