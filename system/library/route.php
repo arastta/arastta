@@ -393,7 +393,7 @@ class Route extends Object
             if (is_array($value)) {
                 $this->parseNonSeoVariables($value);
             } else {
-                $value = urlencode($value);
+                $value = $this->request->clean($value);
 
                 $this->request->get[$variable] = $value;
             }
