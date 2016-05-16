@@ -50,15 +50,16 @@ $('a.thumbnail').on('click', function(e) {
     e.preventDefault();
 
     <?php if ($thumb) { ?>
-        $('#<?php echo $thumb; ?>').find('img').attr('src', $(this).find('img').attr('src'));
-        <?php } ?>
-    
+    $('#<?php echo $thumb; ?>').find('img').attr('src', $(this).find('img').attr('src'));
+    <?php } ?>
+
     <?php if($customizer) { ?>
-        $('#<?php echo $customizer; ?>').attr('src', $(this).find('img').attr('src'));
-        <?php } ?>
+    $('#<?php echo $customizer; ?>').attr('src', $(this).find('img').attr('src'));
+    <?php } ?>
+
     <?php if ($target) { ?>
-        $('#<?php echo $target; ?>').attr('value', $(this).parent().find('input').attr('value')).trigger('change');
-        <?php } else { ?>
+    $('#<?php echo $target; ?>').attr('value', $(this).parent().find('input').attr('value')).trigger('change');
+    <?php } else { ?>
         var range, sel = document.getSelection();
 
         if (sel.rangeCount) {
@@ -68,7 +69,11 @@ $('a.thumbnail').on('click', function(e) {
         range = sel.getRangeAt(0);
         range.insertNode(img);
     }
-        <?php } ?>
+    <?php } ?>
+
+    if (typeof InsertTinyMCEImage == 'function') {
+        InsertTinyMCEImage($(this).attr('href'));
+    }
 
     $('#modal-image').modal('hide');
 });
@@ -113,12 +118,12 @@ $('#button-search').on('click', function(e) {
     }
 
     <?php if ($thumb) { ?>
-        url += '&thumb=' + '<?php echo $thumb; ?>';
-        <?php } ?>
+    url += '&thumb=' + '<?php echo $thumb; ?>';
+    <?php } ?>
     
     <?php if ($target) { ?>
-        url += '&target=' + '<?php echo $target; ?>';
-        <?php } ?>
+    url += '&target=' + '<?php echo $target; ?>';
+    <?php } ?>
 
     $('#modal-image').load(url);
 });
