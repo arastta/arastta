@@ -954,9 +954,9 @@
     <script type="text/javascript"><!--
     $(document).ready(function() {
         <?php foreach ($languages as $language) { ?>
-            textEditor('#input-description<?php echo $language["language_id"]; ?>');
-            <?php } ?>
-        });
+        textEditor('#input-description<?php echo $language["language_id"]; ?>');
+        <?php } ?>
+    });
     //--></script>
     <script type="text/javascript"><!--
     // Manufacturer
@@ -986,11 +986,13 @@
             $('input[name=\'manufacturer_id\']').val(item['value']);
         }
     });
+
     <?php if (!empty($tag_key)) { ?>
-        var tag_key = '<?php echo $tag_key; ?>';
-        <?php } else  { ?>
-        var tag_key = 0;
-        <?php } ?>
+    var tag_key = '<?php echo $tag_key; ?>';
+    <?php } else  { ?>
+    var tag_key = 0;
+    <?php } ?>
+
     // Tag
     $('.tag-select').autocomplete({
         'source': function(request, response) {
@@ -1016,7 +1018,8 @@
 
             $(this).before('<span class="tag-choice">' + item['label'] + '<a class="tag-choice-close" onclick="removeTag(this);" data-tag-remove-index="' + tag_key + '"><i class="fa fa-times"></i></a></span>');
 
-            $(this).val();
+            $(this).val('');
+
             tag_key = tag_key + 1 ;
         }
     });
@@ -1210,7 +1213,7 @@
         <?php foreach ($languages as $language) { ?>
         html += '<div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span><textarea name="product_attribute[' + attribute_row + '][product_attribute_description][<?php echo $language['language_id']; ?>][text]" rows="5" placeholder="<?php echo $entry_text; ?>" class="form-control"></textarea></div>';
         <?php } ?>
-    html += '  </td>';
+        html += '  </td>';
         html += '  <td class="text-left"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
@@ -1436,7 +1439,7 @@
         <?php foreach ($customer_groups as $customer_group) { ?>
         html += '    <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo addslashes($customer_group['name']); ?></option>';
         <?php } ?>
-    html += '  </select></td>';
+        html += '  </select></td>';
         html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="<?php echo $entry_quantity; ?>" class="form-control" /></td>';
         html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="<?php echo $entry_priority; ?>" class="form-control" /></td>';
         html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>';
@@ -1463,7 +1466,7 @@
         <?php foreach ($customer_groups as $customer_group) { ?>
         html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo addslashes($customer_group['name']); ?></option>';
         <?php } ?>
-    html += '  </select></td>';
+        html += '  </select></td>';
         html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="<?php echo $entry_priority; ?>" class="form-control" /></td>';
         html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][price]" value="" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>';
         html += '  <td class="text-left" style="width: 20%;"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_start]" value="" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></td>';
@@ -1508,19 +1511,19 @@
         <?php foreach ($recurrings as $recurring) { ?>
         html += '      <option value="<?php echo $recurring['recurring_id']; ?>"><?php echo $recurring['name']; ?></option>';
         <?php } ?>
-    html += '    </select>';
+        html += '    </select>';
         html += '  </td>';
         html += '  <td class="left">';
         html += '    <select name="product_recurring[' + recurring_row + '][customer_group_id]" class="form-control">>';
         <?php foreach ($customer_groups as $customer_group) { ?>
         html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>';
         <?php } ?>
-    html += '    <select>';
-            html += '  </td>';
-    html += '  <td class="left">';
-            html += '    <a onclick="$(\'#recurring-row' + recurring_row + '\').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>';
-            html += '  </td>';
-    html += '</tr>';
+        html += '    <select>';
+        html += '  </td>';
+        html += '  <td class="left">';
+        html += '    <a onclick="$(\'#recurring-row' + recurring_row + '\').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>';
+        html += '  </td>';
+        html += '</tr>';
 
         $('#tab-recurring table tbody').append(html);
     }
@@ -1544,7 +1547,6 @@
     $('#seo-language a:first').tab('show');
     $('#option a:first').tab('show');
     //--></script></div>
-
 <script type="text/javascript"><!--
 function save(type){
     var input = document.createElement('input');
@@ -1555,5 +1557,4 @@ function save(type){
     form.submit();
 }
 //--></script>
-
 <?php echo $footer; ?> 

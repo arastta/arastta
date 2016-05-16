@@ -726,7 +726,7 @@
 
             $(this).before('<span class="tag-choice">' + item['label'] + '<a class="tag-choice-close" onclick="removeTag(this);" data-tag-remove-index="' + tag_key + '"><i class="fa fa-times"></i></a></span>');
 
-            $(this).val();
+            $(this).val('');
             tag_key = tag_key + 1 ;
         }
     });
