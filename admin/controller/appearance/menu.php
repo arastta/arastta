@@ -151,6 +151,10 @@ class ControllerAppearanceMenu extends Controller
     {
         $this->load->language('appearance/menu');
 
+        $this->load->model('setting/store');
+
+        $stores = $this->model_setting_store->getStores();
+
         $data = $this->language->all();
 
         $count = '0';
@@ -178,6 +182,7 @@ class ControllerAppearanceMenu extends Controller
             $html .= '   <input type="text" name="menu_name[' . $language['language_id'] . ']" value="' . $menu_desc[$menu['menu_id']][$language['language_id']]['name']. '" placeholder="' . $data['text_menu_name'] . '" class="form-control" />';
             $html .= '</div>';
         }
+
         $html .= '<br>';
 
         if ($menu['menu_type'] == 'custom') {
@@ -190,6 +195,12 @@ class ControllerAppearanceMenu extends Controller
             }
 
             $html .= '<br>';
+        } else {
+            $html .= '<br>';
+
+            foreach ($languages as $language) {
+                $html .= '<input type="hidden" name="menu_link[' . $language['language_id'] . ']" value="' . isset($menu_desc[$menu['menu_id']][$language['language_id']]['link']) ? $menu_desc[$menu['menu_id']][$language['language_id']]['link'] : '' . '" />';
+            }
         }
 
         $html .= $data['entry_columns'];
@@ -203,6 +214,43 @@ class ControllerAppearanceMenu extends Controller
         $html .= ' <button type="button" data-toggle="tooltip" title="" style="top:2px!important;font-size:1.2em !important;" class="btn btn-danger btn-xs btn-edit btn-group btn-loading" onclick="confirm(\'Are you sure?\') ? deleteMenu(\'' . $menu['menu_id'] . '\', \'menu-item-' . $menu['menu_id'] . '\') : false;" data-original-title="Delete"><i class="fa fa-trash-o"></i></button>';
         $html .= '</div>';
         $html .= '<br><br>';
+
+        if(count($stores) > 0) {
+            $html .= $this->language->get('entry_store');
+            $html .= '<br />';
+            $html .= '<div class="well well-sm" style="height: 100%; max-height: 150px;  margin-right: 10px; overflow: auto;padding-right: 10px; margin-bottom: 5px;">';
+            $html .= '  <div class="checkbox">';
+            $html .= '    <label>';
+            
+            if (in_array(0, $menu['store'])) {
+                $html .= '      <input type="checkbox" name="menu_store[]" value="0" checked="checked" />';
+                $html .= $this->language->get('text_default');
+            } else {
+                $html .= '      <input type="checkbox" name="menu_store[]" value="0" />';
+                $html .= $this->language->get('text_default');
+            }
+            
+            $html .= '    </label>';
+            $html .= '  </div>';
+            
+            foreach ($stores as $store) {
+                $html .= '  <div class="checkbox">';
+                $html .= '    <label>';
+                
+                if (in_array($store['store_id'], $menu['store'])) {
+                    $html .= '      <input type="checkbox" name="menu_store[]" value="' . $store['store_id'] . '" checked="checked" />';
+                    $html .= $store['name'];
+                } else {
+                    $html .= '      <input type="checkbox" name="menu_store[]" value="' . $store['store_id'] . '" />';
+                    $html .= $store['name'];
+                }
+                
+                $html .= '    </label>';
+                $html .= '  </div>';
+            }
+            
+            $html .= '</div>';
+        }
 
         $html .= '<input class="menu-item-data-typeMenu" type="hidden" name="menu-item-typeMenu[MainMenu-' . $menu['menu_id'].']" value="MainMenu">';
         $html .= '<input class="menu-item-data-db-id" type="hidden" name="menu-item-db-id[MainMenu-' . $menu['menu_id'] . ']" value="' . $menu['menu_id'] . '">';

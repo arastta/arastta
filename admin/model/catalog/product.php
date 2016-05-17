@@ -290,6 +290,24 @@ class ModelCatalogProduct extends Model {
             }
         }
 
+        // Main menu changed product status
+        $product_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu m LEFT JOIN " . DB_PREFIX . "menu_description md ON (m.menu_id = md.menu_id) WHERE m.menu_type = 'product' AND md.link = " . (int)$product_id);
+
+        if ($product_menus->num_rows) {
+            foreach ($product_menus->rows as $product_menu) {
+                $this->db->query("UPDATE " . DB_PREFIX . "menu SET status = '" . (int)$data['status'] . "' WHERE menu_id = '" . (int)$product_menu['menu_id'] . "'");
+            }
+        }
+
+        // Child menu changed product status
+        $product_child_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_child mc LEFT JOIN " . DB_PREFIX . "menu_child_description mcd ON (mc.menu_child_id = mcd.menu_child_id) WHERE mc.menu_type = 'product' AND mcd.link = " . (int)$product_id);
+
+        if ($product_child_menus->num_rows) {
+            foreach ($product_child_menus->rows as $product_child_menu) {
+                $this->db->query("UPDATE " . DB_PREFIX . "menu_child SET status = '" . (int)$data['status'] . "' WHERE menu_child_id = '" . (int)$product_child_menu['menu_child_id'] . "'");
+            }
+        }
+
         $this->cache->delete('product');
 
         $this->trigger->fire('post.admin.product.edit', array(&$product_id));
@@ -389,6 +407,26 @@ class ModelCatalogProduct extends Model {
                     $this->db->query("UPDATE " . DB_PREFIX . "product_special SET price = '" . $this->db->escape($value) . "' WHERE product_id = '" . (int)$product_id . "'");
 
                     break;
+                }
+            }
+        } elseif ($key == 'status') {
+            $this->db->query("UPDATE " . DB_PREFIX . "product SET " . $key . " = '" . $this->db->escape($value) . "' WHERE product_id = '" . (int)$product_id . "'");
+
+            // Main menu changed product status
+            $product_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu m LEFT JOIN " . DB_PREFIX . "menu_description md ON (m.menu_id = md.menu_id) WHERE m.menu_type = 'product' AND md.link = " . (int)$product_id);
+
+            if ($product_menus->num_rows) {
+                foreach ($product_menus->rows as $product_menu) {
+                    $this->db->query("UPDATE " . DB_PREFIX . "menu SET status = '" . (int)$value . "' WHERE menu_id = '" . (int)$product_menu['menu_id'] . "'");
+                }
+            }
+
+            // Child menu changed product status
+            $product_child_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_child mc LEFT JOIN " . DB_PREFIX . "menu_child_description mcd ON (mc.menu_child_id = mcd.menu_child_id) WHERE mc.menu_type = 'product' AND mcd.link = " . (int)$product_id);
+
+            if ($product_child_menus->num_rows) {
+                foreach ($product_child_menus->rows as $product_child_menu) {
+                    $this->db->query("UPDATE " . DB_PREFIX . "menu_child SET status = '" . (int)$value . "' WHERE menu_child_id = '" . (int)$product_child_menu['menu_child_id'] . "'");
                 }
             }
         } else {

@@ -458,8 +458,8 @@ class ControllerCatalogManufacturer extends Controller {
 
         if (isset($this->request->post['status'])) {
             $data['status'] = $this->request->post['status'];
-        } elseif (!empty($category_info)) {
-            $data['status'] = $category_info['status'];
+        } elseif (!empty($manufacturer_info)) {
+            $data['status'] = $manufacturer_info['status'];
         } else {
             $data['status'] = true;
         }
@@ -676,7 +676,7 @@ class ControllerCatalogManufacturer extends Controller {
 
         $route = new Route($this->registry);
 
-        $url .= ltrim($route->rewrite('index.php?route=product/manufacturer/info&manufacturer_id='.$manufacturer_id), '/');
+        $url .= ltrim($route->rewrite('index.php?route=product/manufacturer/info&manufacturer_id=' . $manufacturer_id), '/');
         
         if (!empty($old_session_code)) {
             $this->session->data['language'] = $old_session_code;

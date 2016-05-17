@@ -80,6 +80,24 @@ class ModelCatalogInformation extends Model {
             $this->model_catalog_url_alias->addAlias('information', $information_id, $alias, $language_id);
         }
 
+        // Main menu changed information status
+        $information_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu m LEFT JOIN " . DB_PREFIX . "menu_description md ON (m.menu_id = md.menu_id) WHERE m.menu_type = 'information' AND md.link = " . (int)$information_id);
+
+        if ($information_menus->num_rows) {
+            foreach ($information_menus->rows as $information_menu) {
+                $this->db->query("UPDATE " . DB_PREFIX . "menu SET status = '" . (int)$data['status'] . "' WHERE menu_id = '" . (int)$information_menu['menu_id'] . "'");
+            }
+        }
+
+        // Child menu changed information status
+        $information_child_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_child mc LEFT JOIN " . DB_PREFIX . "menu_child_description mcd ON (mc.menu_child_id = mcd.menu_child_id) WHERE mc.menu_type = 'information' AND mcd.link = " . (int)$information_id);
+
+        if ($information_child_menus->num_rows) {
+            foreach ($information_child_menus->rows as $information_child_menu) {
+                $this->db->query("UPDATE " . DB_PREFIX . "menu_child SET status = '" . (int)$data['status'] . "' WHERE menu_child_id = '" . (int)$information_child_menu['menu_child_id'] . "'");
+            }
+        }
+
         $this->cache->delete('information');
 
         $this->trigger->fire('post.admin.information.edit', array(&$information_id));

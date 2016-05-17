@@ -90,6 +90,24 @@ class ModelCatalogManufacturer extends Model {
             $this->model_catalog_url_alias->addAlias('manufacturer', $manufacturer_id, $alias, $language_id);
         }
 
+        // Main menu changed manufacturer status
+        $manufacturer_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu m LEFT JOIN " . DB_PREFIX . "menu_description md ON (m.menu_id = md.menu_id) WHERE m.menu_type = 'manufacturer' AND md.link = " . (int)$manufacturer_id);
+
+        if ($manufacturer_menus->num_rows) {
+            foreach ($manufacturer_menus->rows as $manufacturer_menu) {
+                $this->db->query("UPDATE " . DB_PREFIX . "menu SET status = '" . (int)$data['status'] . "' WHERE menu_id = '" . (int)$manufacturer_menu['menu_id'] . "'");
+            }
+        }
+
+        // Child menu changed manufacturer status
+        $manufacturer_child_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_child mc LEFT JOIN " . DB_PREFIX . "menu_child_description mcd ON (mc.menu_child_id = mcd.menu_child_id) WHERE mc.menu_type = 'manufacturer' AND mcd.link = " . (int)$manufacturer_id);
+
+        if ($manufacturer_child_menus->num_rows) {
+            foreach ($manufacturer_child_menus->rows as $manufacturer_child_menu) {
+                $this->db->query("UPDATE " . DB_PREFIX . "menu_child SET status = '" . (int)$data['status'] . "' WHERE menu_child_id = '" . (int)$manufacturer_child_menu['menu_child_id'] . "'");
+            }
+        }
+
         $this->cache->delete('manufacturer');
 
         $this->trigger->fire('post.admin.manufacturer.edit', array(&$manufacturer_id));
@@ -136,6 +154,26 @@ class ModelCatalogManufacturer extends Model {
 
         if ($key == 'name') {
             $this->db->query("UPDATE " . DB_PREFIX . "manufacturer_description SET " . $key . " = '" . $this->db->escape($value) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+        } elseif ($key == 'status') {
+            $this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET " . $key . " = '" . $this->db->escape($value) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+
+            // Main menu changed manufacturer status
+            $manufacturer_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu m LEFT JOIN " . DB_PREFIX . "menu_description md ON (m.menu_id = md.menu_id) WHERE m.menu_type = 'manufacturer' AND md.link = " . (int)$manufacturer_id);
+
+            if ($manufacturer_menus->num_rows) {
+                foreach ($manufacturer_menus->rows as $manufacturer_menu) {
+                    $this->db->query("UPDATE " . DB_PREFIX . "menu SET status = '" . (int)$value . "' WHERE menu_id = '" . (int)$manufacturer_menu['menu_id'] . "'");
+                }
+            }
+
+            // Child menu changed manufacturer status
+            $manufacturer_child_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_child mc LEFT JOIN " . DB_PREFIX . "menu_child_description mcd ON (mc.menu_child_id = mcd.menu_child_id) WHERE mc.menu_type = 'manufacturer' AND mcd.link = " . (int)$manufacturer_id);
+
+            if ($manufacturer_child_menus->num_rows) {
+                foreach ($manufacturer_child_menus->rows as $manufacturer_child_menu) {
+                    $this->db->query("UPDATE " . DB_PREFIX . "menu_child SET status = '" . (int)$value . "' WHERE menu_child_id = '" . (int)$manufacturer_child_menu['menu_child_id'] . "'");
+                }
+            }
         } else {
             $this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET " . $key . " = '" . $this->db->escape($value) . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
         }

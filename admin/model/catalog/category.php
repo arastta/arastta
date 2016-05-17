@@ -14,13 +14,16 @@ class ModelCatalogCategory extends Model {
 
         $category_id = $this->db->getLastId();
 
-        if(!empty($data['top'])) {
-            if(empty($data['parent_id'])) {
+        if (!empty($data['top'])) {
+            if (empty($data['parent_id'])) {
                 $this->db->query("INSERT INTO `" . DB_PREFIX . "menu` SET sort_order = '" . (int)$data['sort_order'] . "', columns = '" . (int)$data['column'] . "', menu_type = 'category', status = '" . $data['status'] . "'");
+
                 $menu_id = $this->db->getLastId();
+
                 foreach ($data['category_description'] as $language_id => $value) {
                     $this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', link = '" . $category_id . "'");
                 }
+
                 if (isset($data['category_store'])) {
                     foreach ($data['category_store'] as $store_id) {
                         $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET menu_id = '" . (int)$menu_id . "', store_id = '" . (int)$store_id . "'");
@@ -28,12 +31,16 @@ class ModelCatalogCategory extends Model {
                 }
             } else {
                 $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int)$data['parent_id'] . "'");
+
                 if (empty($query->num_rows)) {
                     $this->db->query("INSERT INTO `" . DB_PREFIX . "menu` SET sort_order = '" . (int)$data['sort_order'] . "', columns = '" . (int)$data['column'] . "', menu_type = 'category', status = '" . $data['status'] . "'");
+
                     $menu_id = $this->db->getLastId();
+
                     foreach ($data['category_description'] as $language_id => $value) {
                         $this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', link = '" . $category_id . "'");
                     }
+
                     if (isset($data['category_store'])) {
                         foreach ($data['category_store'] as $store_id) {
                             $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET menu_id = '" . (int)$menu_id . "', store_id = '" . (int)$store_id . "'");
@@ -41,11 +48,15 @@ class ModelCatalogCategory extends Model {
                     }
                 } else {
                     $menu_id = $query->row['menu_id'];
+
                     $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child SET menu_id = '" . (int)$menu_id . "', sort_order = '" . (int)$data['sort_order'] . "', menu_type = 'category', status = '" . $data['status'] . "'");
+
                     $menu_child_id = $this->db->getLastId();
+
                     foreach ($data['category_description'] as $language_id => $value) {
                         $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_description SET menu_child_id = '" . (int)$menu_child_id . "', language_id = '" . (int)$language_id  . "', menu_id = '" . (int)$menu_id . "', name = '" . $this->db->escape($value['name']) . "', link = '" . $category_id . "'");
                     }
+
                     if (isset($data['category_store'])) {
                         foreach ($data['category_store'] as $store_id) {
                             $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_to_store SET menu_child_id = '" . (int)$menu_child_id . "', store_id = '" . (int)$store_id . "'");
@@ -120,87 +131,132 @@ class ModelCatalogCategory extends Model {
             $this->db->query("UPDATE " . DB_PREFIX . "category SET image = '" . $this->db->escape($data['image']) . "' WHERE category_id = '" . (int)$category_id . "'");
         }
 
-        if(!empty($data['top'])) {
-            if(empty($data['parent_id'])) {
-                $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int)$category_id . "'");
-                if(empty($query->num_rows)){
-                    $this->db->query("INSERT INTO `" . DB_PREFIX . "menu` SET sort_order = '" . (int)$data['sort_order'] . "', columns = '" . (int)$data['column'] . "', menu_type = 'category', status = '" . $data['status'] . "'");
+        if (!empty($data['top'])) {
+            if (empty($data['parent_id'])) {
+                $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int) $category_id . "'");
+
+                if (empty($query->num_rows)) {
+                    $this->db->query("INSERT INTO `" . DB_PREFIX . "menu` SET sort_order = '" . (int) $data['sort_order'] . "', columns = '" . (int) $data['column'] . "', menu_type = 'category', status = '" . $data['status'] . "'");
+
                     $menu_id = $this->db->getLastId();
+
                     foreach ($data['category_description'] as $language_id => $value) {
-                        $this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', link = '" . $category_id . "'");
+                        $this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int) $menu_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', link = '" . $category_id . "'");
                     }
+
                     if (isset($data['category_store'])) {
                         foreach ($data['category_store'] as $store_id) {
-                            $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET menu_id = '" . (int)$menu_id . "', store_id = '" . (int)$store_id . "'");
+                            $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET menu_id = '" . (int) $menu_id . "', store_id = '" . (int) $store_id . "'");
                         }
                     }
-                } else if(!empty($data['update_menu_name'])) {
-                    foreach ($data['category_description'] as $language_id => $value) {
-                        $this->db->query("UPDATE " . DB_PREFIX . "menu_description AS md LEFT JOIN " . DB_PREFIX . "menu AS m ON md.menu_id = m.menu_id SET md.name = '" . $this->db->escape($value['name']) . "' WHERE m.menu_type = 'category' AND md.link = '" . (int)$category_id . "' AND md.language_id = '" . (int)$language_id . "'");
-                    }
-                    $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int)$category_id . "'");
-                    if(!empty($query->row['menu_id'])){
-                        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = '" . (int)$query->row['menu_id'] . "'");
-                        if (isset($data['category_store'])) {
-                            foreach ($data['category_store'] as $store_id) {
-                                $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET menu_id = '" . (int)$query->row['menu_id'] . "', store_id = '" . (int)$store_id . "'");
+                } else {
+                    if (!empty($data['update_menu_name'])) {
+                        foreach ($data['category_description'] as $language_id => $value) {
+                            $this->db->query("UPDATE " . DB_PREFIX . "menu_description AS md LEFT JOIN " . DB_PREFIX . "menu AS m ON md.menu_id = m.menu_id SET md.name = '" . $this->db->escape($value['name']) . "' WHERE m.menu_type = 'category' AND md.link = '" . (int) $category_id . "' AND md.language_id = '" . (int) $language_id . "'");
+                        }
+
+                        $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int) $category_id . "'");
+
+                        if (!empty($query->row['menu_id'])) {
+                            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = '" . (int) $query->row['menu_id'] . "'");
+
+                            if (isset($data['category_store'])) {
+                                foreach ($data['category_store'] as $store_id) {
+                                    $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET menu_id = '" . (int) $query->row['menu_id'] . "', store_id = '" . (int) $store_id . "'");
+                                }
                             }
+                        }
+                    }
+
+                    // Main menu changed category status
+                    $category_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu m LEFT JOIN " . DB_PREFIX . "menu_description md ON (m.menu_id = md.menu_id) WHERE m.menu_type = 'category' AND md.link = " . (int)$category_id);
+
+                    if ($category_menus->num_rows) {
+                        foreach ($category_menus->rows as $category_menu) {
+                            $this->db->query("UPDATE " . DB_PREFIX . "menu SET status = '" . (int)$data['status'] . "' WHERE menu_id = '" . (int)$category_menu['menu_id'] . "'");
                         }
                     }
                 }
             } else {
-                $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int)$data['parent_id'] . "'");
-                if(empty($query->num_rows)) {
+                $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int) $data['parent_id'] . "'");
+
+                if (empty($query->num_rows)) {
                     if (empty($query->row['menu_id'])) {
-                        $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int)$category_id . "'");
+                        $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int) $category_id . "'");
+
                         if (empty($query->num_rows)) {
-                            $this->db->query("INSERT INTO `" . DB_PREFIX . "menu` SET sort_order = '" . (int)$data['sort_order'] . "', columns = '" . (int)$data['column'] . "', menu_type = 'category', status = '" . $data['status'] . "'");
+                            $this->db->query("INSERT INTO `" . DB_PREFIX . "menu` SET sort_order = '" . (int) $data['sort_order'] . "', columns = '" . (int) $data['column'] . "', menu_type = 'category', status = '" . $data['status'] . "'");
+
                             $menu_id = $this->db->getLastId();
+
                             foreach ($data['category_description'] as $language_id => $value) {
-                                $this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int)$menu_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', link = '" . $category_id . "'");
+                                $this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET menu_id = '" . (int) $menu_id . "', language_id = '" . (int) $language_id . "', name = '" . $this->db->escape($value['name']) . "', link = '" . $category_id . "'");
                             }
+
                             if (isset($data['category_store'])) {
                                 foreach ($data['category_store'] as $store_id) {
-                                    $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET menu_id = '" . (int)$menu_id . "', store_id = '" . (int)$store_id . "'");
+                                    $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET menu_id = '" . (int) $menu_id . "', store_id = '" . (int) $store_id . "'");
                                 }
                             }
-                        }else if(!empty($data['update_menu_name'])) {
-                            foreach ($data['category_description'] as $language_id => $value) {
-                                $this->db->query("UPDATE " . DB_PREFIX . "menu_description AS md LEFT JOIN " . DB_PREFIX . "menu AS m ON md.menu_id = m.menu_id SET md.name = '" . $this->db->escape($value['name']) . "' WHERE m.menu_type = 'category' AND md.link = '" . (int)$category_id . "' AND md.language_id = '" . (int)$language_id . "'");
-                                $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int)$category_id . "'");
-                                if(!empty($query->row['menu_id'])){
-                                    $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = '" . (int)$query->row['menu_id'] . "'");
-                                    if (isset($data['category_store'])) {
-                                        foreach ($data['category_store'] as $store_id) {
-                                            $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET menu_id = '" . (int)$query->row['menu_id'] . "', store_id = '" . (int)$store_id . "'");
+                        } else {
+                            if (!empty($data['update_menu_name'])) {
+                                foreach ($data['category_description'] as $language_id => $value) {
+                                    $this->db->query("UPDATE " . DB_PREFIX . "menu_description AS md LEFT JOIN " . DB_PREFIX . "menu AS m ON md.menu_id = m.menu_id SET md.name = '" . $this->db->escape($value['name']) . "' WHERE m.menu_type = 'category' AND md.link = '" . (int) $category_id . "' AND md.language_id = '" . (int) $language_id . "'");
+
+                                    $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int) $category_id . "'");
+
+                                    if (!empty($query->row['menu_id'])) {
+                                        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = '" . (int) $query->row['menu_id'] . "'");
+
+                                        if (isset($data['category_store'])) {
+                                            foreach ($data['category_store'] as $store_id) {
+                                                $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET menu_id = '" . (int) $query->row['menu_id'] . "', store_id = '" . (int) $store_id . "'");
+                                            }
                                         }
                                     }
+                                }
+                            }
+
+                            // Child menu changed category status
+                            $category_child_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_child mc LEFT JOIN " . DB_PREFIX . "menu_child_description mcd ON (mc.menu_child_id = mcd.menu_child_id) WHERE mc.menu_type = 'category' AND mcd.link = " . (int)$category_id);
+
+                            if ($category_child_menus->num_rows) {
+                                foreach ($category_child_menus->rows as $category_child_menu) {
+                                    $this->db->query("UPDATE " . DB_PREFIX . "menu_child SET status = '" . (int)$data['status'] . "' WHERE menu_child_id = '" . (int)$category_child_menu['menu_child_id'] . "'");
                                 }
                             }
                         }
                     } else {
                         $menu_id = $query->row['menu_id'];
-                        $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_child_description` AS md LEFT JOIN `" . DB_PREFIX . "menu_child` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int)$category_id . "'");
+
+                        $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_child_description` AS md LEFT JOIN `" . DB_PREFIX . "menu_child` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int) $category_id . "'");
+
                         if (empty($query->num_rows)) {
-                            $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child SET menu_id = '" . (int)$menu_id . "', sort_order = '" . (int)$data['sort_order'] . "', menu_type = 'category', status = '" . $data['status'] . "'");
+                            $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child SET menu_id = '" . (int) $menu_id . "', sort_order = '" . (int) $data['sort_order'] . "', menu_type = 'category', status = '" . $data['status'] . "'");
+
                             $menu_child_id = $this->db->getLastId();
+
                             foreach ($data['category_description'] as $language_id => $value) {
-                                $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_description SET menu_child_id = '" . (int)$menu_child_id . "', language_id = '" . (int)$language_id . "', menu_id = '" . (int)$menu_id . "', name = '" . $this->db->escape($value['name']) . "', link = '" . $category_id . "'");
+                                $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_description SET menu_child_id = '" . (int) $menu_child_id . "', language_id = '" . (int) $language_id . "', menu_id = '" . (int) $menu_id . "', name = '" . $this->db->escape($value['name']) . "', link = '" . $category_id . "'");
                             }
+
                             if (isset($data['category_store'])) {
                                 foreach ($data['category_store'] as $store_id) {
-                                    $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_to_store SET menu_child_id = '" . (int)$menu_child_id . "', store_id = '" . (int)$store_id . "'");
+                                    $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_to_store SET menu_child_id = '" . (int) $menu_child_id . "', store_id = '" . (int) $store_id . "'");
                                 }
                             }
-                        }else if(!empty($data['update_menu_name'])) {
+                        } elseif (!empty($data['update_menu_name'])) {
                             foreach ($data['category_description'] as $language_id => $value) {
-                                $this->db->query("UPDATE " . DB_PREFIX . "menu_child_description AS md LEFT JOIN " . DB_PREFIX . "menu_child AS m ON md.menu_id = m.menu_id SET md.name = '" . $this->db->escape($value['name']) . "' WHERE m.menu_type = 'category' AND md.link = '" . (int)$category_id . "' AND md.language_id = '" . (int)$language_id . "'");
-                                $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_child_description` AS md LEFT JOIN `" . DB_PREFIX . "menu_child` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int)$category_id . "'");
-                                if(!empty($query->row['menu_child_id'])){
-                                    $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = '" . (int)$query->row['menu_child_id'] . "'");
+                                $this->db->query("UPDATE " . DB_PREFIX . "menu_child_description AS md LEFT JOIN " . DB_PREFIX . "menu_child AS m ON md.menu_id = m.menu_id SET md.name = '" . $this->db->escape($value['name']) . "' WHERE m.menu_type = 'category' AND md.link = '" . (int) $category_id . "' AND md.language_id = '" . (int) $language_id . "'");
+
+                                $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_child_description` AS md LEFT JOIN `" . DB_PREFIX . "menu_child` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int) $category_id . "'");
+
+                                if (!empty($query->row['menu_child_id'])) {
+                                    $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = '" . (int) $query->row['menu_child_id'] . "'");
+
                                     if (isset($data['category_store'])) {
                                         foreach ($data['category_store'] as $store_id) {
-                                            $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_to_store SET menu_id = '" . (int)$query->row['menu_child_id'] . "', store_id = '" . (int)$store_id . "'");
+                                            $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child_to_store SET menu_id = '" . (int) $query->row['menu_child_id'] . "', store_id = '" . (int) $store_id . "'");
                                         }
                                     }
                                 }
@@ -210,31 +266,37 @@ class ModelCatalogCategory extends Model {
                 }
             }
         } else {
-            if($isTop->row['top']) {
-                if(empty($data['parent_id'])) {
-                    $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int)$category_id . "'");
-                     if(!empty($query->row['menu_id'])){
+            if ($isTop->row['top']) {
+                if (empty($data['parent_id'])) {
+                    $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int) $category_id . "'");
+
+                    if (!empty($query->row['menu_id'])) {
                         $menu_id = $query->row['menu_id'];
-                        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu` WHERE menu_id = '" . (int)$menu_id . "'");
-                        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_description` WHERE menu_id = '" . (int)$menu_id . "'");
-                        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = '" . (int)$menu_id . "'");
+
+                        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu` WHERE menu_id = '" . (int) $menu_id . "'");
+                        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_description` WHERE menu_id = '" . (int) $menu_id . "'");
+                        $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = '" . (int) $menu_id . "'");
                     }
                 } else {
-                    $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int)$data['parent_id'] . "'");
-                    if(empty($query->row['menu_id'])) {
-                        $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int)$category_id . "'");
-                         if(!empty($query->row['menu_id'])){
+                    $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int) $data['parent_id'] . "'");
+
+                    if (empty($query->row['menu_id'])) {
+                        $query = $this->db->query("SELECT m.* FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'category' AND md.link = '" . (int) $category_id . "'");
+
+                        if (!empty($query->row['menu_id'])) {
                             $menu_id = $query->row['menu_id'];
-                            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_` WHERE menu_id = '" . (int)$menu_id . "'");
-                            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_description` WHERE menu_id = '" . (int)$menu_id . "'");                    
-                            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = '" . (int)$menu_id . "'");
+
+                            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_` WHERE menu_id = '" . (int) $menu_id . "'");
+                            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_description` WHERE menu_id = '" . (int) $menu_id . "'");
+                            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = '" . (int) $menu_id . "'");
                         }
                     } else {
-                        if(!empty($query->row['menu_id'])){
+                        if (!empty($query->row['menu_id'])) {
                             $menu_id = $query->row['menu_id'];
-                            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child` WHERE menu_id = '" . (int)$menu_id . "'");
-                            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_description` WHERE menu_id = '" . (int)$menu_id . "'");
-                            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_id = '" . (int)$menu_id . "'");
+
+                            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child` WHERE menu_id = '" . (int) $menu_id . "'");
+                            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_description` WHERE menu_id = '" . (int) $menu_id . "'");
+                            $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_id = '" . (int) $menu_id . "'");
                         }
                     }
                 }
@@ -410,9 +472,29 @@ class ModelCatalogCategory extends Model {
         $this->db->query("UPDATE " . DB_PREFIX . "category SET date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");
 
         if ($key == 'name') {
-            $this->db->query("UPDATE " . DB_PREFIX . "category_description SET " . $key . " = '" . $this->db->escape($value) . "' WHERE category_id = '" . (int)$category_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+            $this->db->query("UPDATE " . DB_PREFIX . "category_description SET " . $key . " = '" . $this->db->escape($value) . "' WHERE category_id = '" . (int) $category_id . "' AND language_id = '" . (int) $this->config->get('config_language_id') . "'");
+        } elseif ($key == 'status') {
+            $this->db->query("UPDATE " . DB_PREFIX . "category_description SET " . $key . " = '" . $this->db->escape($value) . "' WHERE category_id = '" . (int) $category_id . "' AND language_id = '" . (int) $this->config->get('config_language_id') . "'");
+
+            // Main menu changed category status
+            $category_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu m LEFT JOIN " . DB_PREFIX . "menu_description md ON (m.menu_id = md.menu_id) WHERE m.menu_type = 'category' AND md.link = " . (int)$category_id);
+
+            if ($category_menus->num_rows) {
+                foreach ($category_menus->rows as $category_menu) {
+                    $this->db->query("UPDATE " . DB_PREFIX . "menu SET status = '" . (int)$value . "' WHERE menu_id = '" . (int)$category_menu['menu_id'] . "'");
+                }
+            }
+
+            // Child menu changed category status
+            $category_child_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu_child mc LEFT JOIN " . DB_PREFIX . "menu_child_description mcd ON (mc.menu_child_id = mcd.menu_child_id) WHERE mc.menu_type = 'category' AND mcd.link = " . (int)$category_id);
+
+            if ($category_child_menus->num_rows) {
+                foreach ($category_child_menus->rows as $category_child_menu) {
+                    $this->db->query("UPDATE " . DB_PREFIX . "menu_child SET status = '" . (int)$value . "' WHERE menu_child_id = '" . (int)$category_child_menu['menu_child_id'] . "'");
+                }
+            }
         } else {
-            $this->db->query("UPDATE " . DB_PREFIX . "category SET " . $key . " = '" . $this->db->escape($value) . "' WHERE category_id = '" . (int)$category_id . "'");
+            $this->db->query("UPDATE " . DB_PREFIX . "category SET " . $key . " = '" . $this->db->escape($value) . "' WHERE category_id = '" . (int) $category_id . "'");
         }
     }
 
