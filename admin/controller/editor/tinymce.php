@@ -25,6 +25,8 @@ class ControllerEditorTinymce extends Controller
 
             $this->session->data['success'] = $this->language->get('text_success');
 
+            $this->cache->delete('editor');
+
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
                 $this->response->redirect($this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'], 'SSL'));
             }
