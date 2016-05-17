@@ -166,6 +166,11 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
+            <?php foreach ($category_filters as $category_filter) { ?>
+            <input type="hidden" name="category_filter[]" value="<?php echo $category_filter['filter_id']; ?>" />
+            </div>
+            <?php } ?>
             <?php if (in_array(0, $category_store)) { ?>
             <input type="hidden" name="category_store[]" value="0" checked="checked" />
             <?php } else { ?>
@@ -184,6 +189,28 @@
             <input type="hidden" name="category_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control" />
             <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_description]" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control hidden"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
             <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_keyword]" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control hidden"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
+            <?php } ?>
+            <select name="category_layout[0]" class="form-control hidden">
+                <option value=""></option>
+                <?php foreach ($layouts as $layout) { ?>
+                <?php if (isset($category_layout[0]) && $category_layout[0] == $layout['layout_id']) { ?>
+                <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+            </select>
+            <?php foreach ($stores as $store) { ?>
+            <select name="category_layout[<?php echo $store['store_id']; ?>]" class="form-control hidden">
+                <option value=""></option>
+                <?php foreach ($layouts as $layout) { ?>
+                <?php if (isset($category_layout[$store['store_id']]) && $category_layout[$store['store_id']] == $layout['layout_id']) { ?>
+                <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+            </select>
             <?php } ?>
         </form>
     </div>
@@ -243,35 +270,6 @@
             $('input[name=\'path\']').val(item['label']);
             $('input[name=\'parent_id\']').val(item['value']);
         }
-    });
-    //--></script>
-    <script type="text/javascript"><!--
-    $('input[name=\'filter\']').autocomplete({
-        'source': function(request, response) {
-            $.ajax({
-                url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-                dataType: 'json',
-                success: function(json) {
-                    response($.map(json, function(item) {
-                        return {
-                            label: item['name'],
-                            value: item['filter_id']
-                        }
-                    }));
-                }
-            });
-        },
-        'select': function(item) {
-            $('input[name=\'filter\']').val('');
-
-            $('#category-filter' + item['value']).remove();
-
-            $('#category-filter').append('<div id="category-filter' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '" /></div>');
-        }
-    });
-
-    $('#category-filter').delegate('.fa-minus-circle', 'click', function() {
-        $(this).parent().remove();
     });
     //--></script>
     <script type="text/javascript"><!--

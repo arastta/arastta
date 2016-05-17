@@ -287,8 +287,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-12" for="input-tag<?php echo $language['language_id']; ?>"><?php echo $entry_tag; ?></label>
+                                    <label class="col-sm-12" for="input-tag"><?php echo $entry_tag; ?></label>
                                     <div class="col-sm-12 tags-select">
+                                    <?php foreach ($languages as $language) { ?>
                                         <select id="tags-<?php echo $language['language_id']; ?>" name="product_description[<?php echo $language['language_id']; ?>][tag][]" class="inputbox chzn-done tags-multi-select hidden" size="5" multiple="multiple" style="display: none !important;">
                                             <?php if (!empty($product_description[$language['language_id']]['tag'])) {
                                                     foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
@@ -296,13 +297,14 @@
                                             <?php   }
                                                   } ?>
                                         </select>
+                                    <?php } ?>
                                         <div class="form-control">
                                             <?php if (!empty($product_description[$language['language_id']]['tag'])) {
                                                     foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
                                             <span class="tag-choice"><?php echo $tag_value; ?><a class="tag-choice-close" onclick="removeTag(this);" data-tag-remove-index="<?php echo $tag_key; ?>"><i class="fa fa-times"></i></a></span>
                                             <?php   }
                                                   } ?>
-                                            <input type="text" name="tag" value="" style="margin-top: -5px;" placeholder="<?php echo $entry_tag; ?>" id="input-tag<?php echo $language['language_id']; ?>" class="form-control input-full-width tag-select" />
+                                            <input type="text" name="tag" value="" style="margin-top: -5px;" placeholder="<?php echo $entry_tag; ?>" id="input-tag" class="form-control input-full-width tag-select" />
                                         </div>
                                     </div>
                                 </div>
@@ -566,6 +568,7 @@
             <textarea name="product_description[<?php echo $language['language_id']; ?>][meta_description]" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control hidden"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
             <textarea name="product_description[<?php echo $language['language_id']; ?>][meta_keyword]" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control hidden"><?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
             <?php } ?>
+            <input type="hidden" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
             <?php foreach ($product_filters as $product_filter) { ?>
             <input type="hidden" name="product_filter[]" value="<?php echo $product_filter['filter_id']; ?>" />
             <?php } ?>
@@ -581,11 +584,79 @@
             <input type="hidden" name="product_store[]" value="<?php echo $store['store_id']; ?>" />
             <?php } ?>
             <?php } ?>
+            <input type="hidden" name="download" value="" placeholder="<?php echo $entry_download; ?>" id="input-download" class="form-control" />
             <?php foreach ($product_downloads as $product_download) { ?>
             <input type="hidden" name="product_download[]" value="<?php echo $product_download['download_id']; ?>" />
             <?php } ?>
+            <input type="hidden" name="related" value="" placeholder="<?php echo $entry_related; ?>" id="input-related" class="form-control" />
             <?php foreach ($product_relateds as $product_related) { ?>
             <input type="hidden" name="product_related[]" value="<?php echo $product_related['product_id']; ?>" />
+            <?php } ?>
+            <?php $attribute_row = 0; ?>
+            <?php foreach ($product_attributes as $product_attribute) { ?>
+            <input type="hidden" name="product_attribute[<?php echo $attribute_row; ?>][name]" value="<?php echo $product_attribute['name']; ?>" placeholder="<?php echo $entry_attribute; ?>" class="form-control" />
+            <input type="hidden" name="product_attribute[<?php echo $attribute_row; ?>][attribute_id]" value="<?php echo $product_attribute['attribute_id']; ?>" /></td>
+            <?php foreach ($languages as $language) { ?>
+            <textarea name="product_attribute[<?php echo $attribute_row; ?>][product_attribute_description][<?php echo $language['language_id']; ?>][text]" rows="5" placeholder="<?php echo $entry_text; ?>" class="form-control hidden"><?php echo isset($product_attribute['product_attribute_description'][$language['language_id']]) ? $product_attribute['product_attribute_description'][$language['language_id']]['text'] : ''; ?></textarea>
+            <?php } ?>
+            <?php $attribute_row++; ?>
+            <?php } ?>
+            <?php $recurring_row = 0; ?>
+            <?php foreach ($product_recurrings as $product_recurring) { ?>
+            <select name="product_recurring[<?php echo $recurring_row; ?>][recurring_id]" class="form-control hidden">
+                <?php foreach ($recurrings as $recurring) { ?>
+                <?php if ($recurring['recurring_id'] == $product_recurring['recurring_id']) { ?>
+                <option value="<?php echo $recurring['recurring_id']; ?>" selected="selected"><?php echo $recurring['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $recurring['recurring_id']; ?>"><?php echo $recurring['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+            </select>
+            <select name="product_recurring[<?php echo $recurring_row; ?>][customer_group_id]" class="form-control hidden">
+                <?php foreach ($customer_groups as $customer_group) { ?>
+                <?php if ($customer_group['customer_group_id'] == $product_recurring['customer_group_id']) { ?>
+                <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+            </select>
+            <?php $recurring_row++; ?>
+            <?php } ?>
+            <?php $discount_row = 0; ?>
+            <?php foreach ($product_discounts as $product_discount) { ?>
+            <select name="product_discount[<?php echo $discount_row; ?>][customer_group_id]" class="form-control hidden">
+                <?php foreach ($customer_groups as $customer_group) { ?>
+                <?php if ($customer_group['customer_group_id'] == $product_discount['customer_group_id']) { ?>
+                <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+            </select>
+            <input type="hidden" name="product_discount[<?php echo $discount_row; ?>][quantity]" value="<?php echo $product_discount['quantity']; ?>" placeholder="<?php echo $entry_quantity; ?>" class="form-control" />
+            <input type="hidden" name="product_discount[<?php echo $discount_row; ?>][priority]" value="<?php echo $product_discount['priority']; ?>" placeholder="<?php echo $entry_priority; ?>" class="form-control" />
+            <input type="hidden" name="product_discount[<?php echo $discount_row; ?>][price]" value="<?php echo $product_discount['price']; ?>" placeholder="<?php echo $entry_price; ?>" class="form-control" />
+            <input type="hidden" name="product_discount[<?php echo $discount_row; ?>][date_start]" value="<?php echo $product_discount['date_start']; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" class="form-control" />
+            <input type="hidden" name="product_discount[<?php echo $discount_row; ?>][date_end]" value="<?php echo $product_discount['date_end']; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" class="form-control" />
+            <?php $discount_row++; ?>
+            <?php } ?>
+            <?php $special_row = 0; ?>
+            <?php foreach ($product_specials as $product_special) { ?>
+            <select name="product_special[<?php echo $special_row; ?>][customer_group_id]" class="form-control hidden">
+                <?php foreach ($customer_groups as $customer_group) { ?>
+                <?php if ($customer_group['customer_group_id'] == $product_special['customer_group_id']) { ?>
+                <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+            </select>
+            <input type="hidden" name="product_special[<?php echo $special_row; ?>][priority]" value="<?php echo $product_special['priority']; ?>" placeholder="<?php echo $entry_quantity; ?>" class="form-control" />
+            <input type="hidden" name="product_special[<?php echo $special_row; ?>][price]" value="<?php echo $product_special['price']; ?>" placeholder="<?php echo $entry_price; ?>" class="form-control" />
+            <input type="hidden" name="product_special[<?php echo $special_row; ?>][date_start]" value="<?php echo $product_special['date_start']; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" class="form-control" />
+            <input type="hidden" name="product_special[<?php echo $special_row; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" class="form-control" />
+            <?php $special_row++; ?>
             <?php } ?>
             <?php $image_row = 0; ?>
             <?php foreach ($product_images as $product_image) { ?>
@@ -595,6 +666,31 @@
             <?php $image_row++; ?>
             <?php } ?>
             <input type="hidden" name="points" value="<?php echo $points; ?>" placeholder="<?php echo $entry_points; ?>" id="input-points" class="form-control" />
+            <?php foreach ($customer_groups as $customer_group) { ?>
+                <input type="hidden" name="product_reward[<?php echo $customer_group['customer_group_id']; ?>][points]" value="<?php echo isset($product_reward[$customer_group['customer_group_id']]) ? $product_reward[$customer_group['customer_group_id']]['points'] : ''; ?>" class="form-control" />
+            <?php } ?>
+            <select name="product_layout[0]" class="form-control hidden">
+                <option value=""></option>
+                <?php foreach ($layouts as $layout) { ?>
+                <?php if (isset($product_layout[0]) && $product_layout[0] == $layout['layout_id']) { ?>
+                <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+            </select>
+            <?php foreach ($stores as $store) { ?>
+            <select name="product_layout[<?php echo $store['store_id']; ?>]" class="form-control hidden">
+                <option value=""></option>
+                <?php foreach ($layouts as $layout) { ?>
+                <?php if (isset($product_layout[$store['store_id']]) && $product_layout[$store['store_id']] == $layout['layout_id']) { ?>
+                <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+            </select>
+            <?php } ?>
         </form>
     </div>
     <style type="text/css"><!--

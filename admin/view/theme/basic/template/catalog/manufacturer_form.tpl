@@ -147,6 +147,28 @@
             <textarea name="manufacturer_description[<?php echo $language['language_id']; ?>][meta_description]" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control hidden"><?php echo isset($manufacturer_description[$language['language_id']]) ? $manufacturer_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
             <textarea name="manufacturer_description[<?php echo $language['language_id']; ?>][meta_keyword]" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control hidden"><?php echo isset($manufacturer_description[$language['language_id']]) ? $manufacturer_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
             <?php } ?>
+            <select name="manufacturer_layout[0]" class="form-control hidden">
+                <option value=""></option>
+                <?php foreach ($layouts as $layout) { ?>
+                <?php if (isset($manufacturer_layout[0]) && $manufacturer_layout[0] == $layout['layout_id']) { ?>
+                <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+            </select>
+            <?php foreach ($stores as $store) { ?>
+            <select name="manufacturer_layout[<?php echo $store['store_id']; ?>]" class="form-control hidden">
+                <option value=""></option>
+                <?php foreach ($layouts as $layout) { ?>
+                <?php if (isset($manufacturer_layout[$store['store_id']]) && $manufacturer_layout[$store['store_id']] == $layout['layout_id']) { ?>
+                <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+            </select>
+            <?php } ?>
         </form>
     </div>
 </div>
