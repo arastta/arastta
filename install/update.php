@@ -346,6 +346,6 @@ if (version_compare(VERSION, '1.3.2', '<')) {
         $description = str_replace('<a href="{order_href}" target="_blank">{order_href}</a>', '{order_href}', $description);
         $description = str_replace('&lt;a href=&quot;{order_href}&quot; target=&quot;_blank&quot;>{order_href} &lt;/a&gt;', '{order_href}', $description);
 
-        $this->db->query("UPDATE `" . DB_PREFIX . "email_description` SET `description` = '" . $description . "' WHERE `id` = '" . $email_description['id'] . "';");
+        $this->db->query("UPDATE `" . DB_PREFIX . "email_description` SET `description` = '" . $this->db->escape($description) . "' WHERE `id` = '" . $email_description['id'] . "';");
     }
 }
