@@ -168,10 +168,20 @@ class Emailtemplate
         return $email_template_data;
     }
 
+    // Store Logo
+    public function storeLogo()
+    {
+        $store_url = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
+        $store_name = $this->config->get('config_name');
+        $store_logo = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+
+        return '<a href="' . $store_url . '" title="' . $store_name . '"><img src="' . $store_logo . '"></a>';
+    }
+
     // Admin Login
     public function getLoginFind()
     {
-        $result = array( '{username}', '{store_name}', '{ip_address}' );
+        $result = array( '{store_logo}', '{username}', '{store_name}', '{ip_address}' );
         
         return $result;
     }
@@ -179,6 +189,7 @@ class Emailtemplate
     public function getLoginReplace($data)
     {
         $result = array(
+            'store_logo' => $this->storeLogo(),
             'username'   => $data['username'],
             'store_name' => $data['store_name'],
             'ip_address' => $data['ip_address']
@@ -190,7 +201,7 @@ class Emailtemplate
     // Affilate
     public function getAffiliateFind()
     {
-        $result = array( '{firstname}', '{lastname}', '{date}', '{store_name}', '{description}', '{order_id}', '{amount}', '{total}', '{email}','{password}', '{affiliate_code}', '{account_href}' );
+        $result = array( '{store_logo}', '{firstname}', '{lastname}', '{date}', '{store_name}', '{description}', '{order_id}', '{amount}', '{total}', '{email}','{password}', '{affiliate_code}', '{account_href}' );
         
         return $result;
     }
@@ -198,6 +209,7 @@ class Emailtemplate
     public function getAffiliateReplace($data)
     {
         $result = array(
+            'store_logo'     => $this->storeLogo(),
             'firstname'      => (!empty($data['firstname'])) ? $data['firstname'] : '',
             'lastname'       => (!empty($data['lastname'])) ? $data['lastname'] : '',
             'date'           => date($this->language->get('date_format_short'), strtotime(date("Y-m-d H:i:s"))),
@@ -218,7 +230,7 @@ class Emailtemplate
     // Customer
     public function getCustomerFind()
     {
-        $result = array( '{firstname}', '{lastname}', '{date}', '{store_name}', '{email}', '{password}', '{account_href}', '{activate_href}' );
+        $result = array( '{store_logo}', '{firstname}', '{lastname}', '{date}', '{store_name}', '{email}', '{password}', '{account_href}', '{activate_href}' );
         
         return $result;
     }
@@ -226,6 +238,7 @@ class Emailtemplate
     public function getCustomerReplace($data)
     {
         $result = array(
+            'store_logo'     => $this->storeLogo(),
             'firstname'      => $data['firstname'],
             'lastname'       => $data['lastname'],
             'date'           => date($this->language->get('date_format_short'), strtotime(date("Y-m-d H:i:s"))),
@@ -242,7 +255,7 @@ class Emailtemplate
     // Contact ( Information )
     public function getContactFind()
     {
-        $result = array( '{name}', '{email}', '{store_name}', '{enquiry}' );
+        $result = array( '{store_logo}', '{name}', '{email}', '{store_name}', '{enquiry}' );
         
         return $result;
     }
@@ -250,6 +263,7 @@ class Emailtemplate
     public function getContactReplace($data)
     {
         $result = array(
+            'store_logo' => $this->storeLogo(),
             'name'       => (!empty($data['name'])) ? $data['name'] : '',
             'email'      => (!empty($data['email'])) ? $data['email'] : '',
             'store_name' => $this->config->get('config_name'),
@@ -263,7 +277,7 @@ class Emailtemplate
     public function getOrderAllFind()
     {
         $result = array (
-            '{firstname}', '{lastname}', '{delivery_address}', '{shipping_address}', '{payment_address}', '{order_date}', '{product:start}', '{product:stop}',
+            '{store_logo}', '{firstname}', '{lastname}', '{delivery_address}', '{shipping_address}', '{payment_address}', '{order_date}', '{product:start}', '{product:stop}',
             '{total:start}', '{total:stop}', '{voucher:start}', '{voucher:stop}', '{special}', '{date}', '{payment}', '{shipment}', '{order_id}', '{total}', '{invoice_number}',
             '{order_href}', '{store_url}', '{status_name}', '{store_name}', '{ip}', '{comment:start}', '{comment:stop}', '{comment}', '{sub_total}', '{shipping_cost}',
             '{client_comment}', '{tax:start}', '{tax:stop}', '{tax_amount}', '{email}', '{telephone}'
@@ -351,6 +365,7 @@ class Emailtemplate
         }
 
         $result = array(
+            'store_logo'      => $this->storeLogo(),
             'firstname'       => $order_info['firstname'],
             'lastname'        => $order_info['lastname'],
             'delivery_address'=> $address,
@@ -370,7 +385,7 @@ class Emailtemplate
             'order_id'        => $order_info['order_id'],
             'total'           => $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value']),
             'invoice_number'  => $order_info['invoice_prefix'] . $invoice_no,
-            'order_href'      => $order_href,
+            'order_href'      => '<a href="' . $order_href . '" target="_blank">' . $order_href . '</a>',
             'store_url'       => $order_info['store_url'],
             'status_name'     => $order_status,
             'store_name'      => $order_info['store_name'],
@@ -395,7 +410,7 @@ class Emailtemplate
     public function getInvoiceFind()
     {
         $result = array(
-            '{invoice_id}', '{invoice_date}', '{invoice_no}', '{invoice_prefix}', '{order_id}',
+            '{store_logo}','{invoice_id}', '{invoice_date}', '{invoice_no}', '{invoice_prefix}', '{order_id}',
             '{store_name}', '{customer}', '{email}', '{telephone}', '{fax}', '{comment}', '{ip}',
             '{date_added}', '{date_modified}'
         );
@@ -406,6 +421,7 @@ class Emailtemplate
     public function getInvoiceReplace($data)
     {
         $result = array(
+            'store_logo' => $this->storeLogo(),
             'invoice_id' => $data['invoice_id'],
             'invoice_date' => $data['invoice_date'],
             'invoice_no' => $data['invoice_no'],
@@ -428,7 +444,7 @@ class Emailtemplate
     //Return
     public function getReturnFind()
     {
-        $result = array( '{store_name}', '{order_id}', '{date_ordered}', '{firstname}', '{lastname}', '{email}', '{telephone}', '{product}', '{model}', '{quantity}', '{return_reason}', '{opened}', '{comment}' );
+        $result = array( '{store_logo}', '{store_name}', '{order_id}', '{date_ordered}', '{firstname}', '{lastname}', '{email}', '{telephone}', '{product}', '{model}', '{quantity}', '{return_reason}', '{opened}', '{comment}' );
         
         return $result;
     }
@@ -436,6 +452,7 @@ class Emailtemplate
     public function getReturnReplace($data)
     {
         $result = array(
+            'store_logo' => $this->storeLogo(),
             'store_name' => $this->config->get('config_name'),
             'order_id' => $data['order_id'],
             'date_ordered' => $data['date_ordered'],
@@ -457,7 +474,7 @@ class Emailtemplate
     // Review
     public function getReviewFind()
     {
-        $result = array( '{author}', '{review}', '{date}', '{rating}', '{product}' );
+        $result = array( '{store_logo}', '{author}', '{review}', '{date}', '{rating}', '{product}' );
         
         return $result;
     }
@@ -465,6 +482,7 @@ class Emailtemplate
     public function getReviewReplace($data)
     {
         $result = array(
+            'store_logo' => $this->storeLogo(),
             'author'   => $data['name'],
             'review'   => $data['text'],
             'date'     => date($this->language->get('date_format_short'), time()),
@@ -478,7 +496,7 @@ class Emailtemplate
     // Stock
     public function getStockFind()
     {
-        $result = array( '{store_name}', '{total_products}' );
+        $result = array( '{store_logo}', '{store_name}', '{total_products}' );
         
         return $result;
     }
@@ -486,6 +504,7 @@ class Emailtemplate
     public function getStockReplace($data)
     {
         $result = array(
+            'store_logo'     => $this->storeLogo(),
             'store_name'     => $this->config->get('config_name'),
             'total_products' => $data['outofstock']
         );
@@ -496,7 +515,7 @@ class Emailtemplate
     // Voucher
     public function getVoucherFind()
     {
-        $result = array( '{recip_name}', '{recip_email}', '{date}', '{store_name}', '{name}', '{amount}', '{message}', '{store_href}', '{image}', '{code}' );
+        $result = array( '{store_logo}', '{recip_name}', '{recip_email}', '{date}', '{store_name}', '{name}', '{amount}', '{message}', '{store_href}', '{image}', '{code}' );
         
         return $result;
     }
@@ -504,6 +523,7 @@ class Emailtemplate
     public function getVoucherReplace($data)
     {
         $result = array(
+            'store_logo'  => $this->storeLogo(),
             'recip_name'  => $data['recip_name'],
             'recip_email' => $data['recip_email'],
             'date'        => date($this->language->get('date_format_short'), strtotime(date("Y-m-d H:i:s"))),
@@ -698,7 +718,7 @@ class Emailtemplate
         $getProduct = $this->getProduct($product['product_id']);
 
         $result = array(
-            'product_image'       => $image,
+            'product_image'       => '<img src="' . $image . '" style="width: 50px;height: 50px;padding: auto;">',
             'product_name'        => $product['name'],
             'product_model'       => $product['model'],
             'product_quantity'    => $product['quantity'],

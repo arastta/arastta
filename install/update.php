@@ -330,3 +330,22 @@ if (version_compare(VERSION, '1.3.1', '<')) {
         $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'tinymce', `key` = 'tinymce_menu_tools_emoticons', `value` = '0'");
     }
 }
+
+// 1.3.2 changes;
+if (version_compare(VERSION, '1.3.2', '<')) {
+    $email_descriptions = $this->db->query("SELECT * FROM " . DB_PREFIX . "email_description");
+
+    foreach ($email_descriptions->rows as $email_description) {
+        // Store logo short code changed
+        $description = str_replace('&lt;a href=&quot;{site_url}&quot; title=&quot;{store_name}&quot;&gt; &lt;img src=&quot;{logo}&quot;&gt; &lt;/a&gt;', '{store_logo}', $email_description['description']);
+
+        // Product image short code changed
+        $description = str_replace('&lt;img src=&quot;{product_image}&quot; style=&quot;width: 50px;height: 50px;padding: auto;&quot;&gt;', '{product_image}', $description);
+
+        // Order href code changed
+        $description = str_replace('<a href="{order_href}" target="_blank">{order_href}</a>', '{order_href}', $description);
+        $description = str_replace('&lt;a href=&quot;{order_href}&quot; target=&quot;_blank&quot;>{order_href} &lt;/a&gt;', '{order_href}', $description);
+
+        $this->db->query("UPDATE `" . DB_PREFIX . "email_description` SET `description` = '" . $description . "' WHERE `id` = '" . $email_description['id'] . "';");
+    }
+}

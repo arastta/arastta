@@ -82,6 +82,7 @@ $_['{tax_amount}']       = 'Tax Amount';
 $_['{telephone}']        = 'Telephone';
 
 // Demo Data
+$_['demo_store_logo']       = '<img src="../image/catalog/logo.png" />';
 $_['demo_username']         = 'Super User';
 $_['demo_store_name']       = 'Arastta eCommerce';
 $_['demo_ip_address']       = '127.0.0.1';
@@ -111,7 +112,7 @@ $_['demo_special']          = '$100';
 $_['demo_payment']          = 'Cash On Delivery';
 $_['demo_shipment']         = 'Flat';
 $_['demo_invoice_number']   = 'Invoice Number';
-$_['demo_order_href']       = 'https://arastta.pro/';
+$_['demo_order_href']       = '<a href="https://arastta.pro/" target="_blank">https://arastta.pro/</a>';
 $_['demo_store_url']        = 'https://arastta.org/';
 $_['demo_status_name']      = 'Complete';
 $_['demo_ip']               = '192.168.2.1';
@@ -121,7 +122,7 @@ $_['demo_shipping_cost']    = '$50';
 $_['demo_client_comment']   = 'Client Comment';
 $_['demo_tax_amount']       = '$150';
 $_['demo_telephone']        = '+90 (555) 555 55 55';
-$_['demo_product_image']         = '../image/no_image.png';
+$_['demo_product_image']         = '<img src="../image/no_image.png" style="width: 50px;height: 50px;padding: auto;">';
 $_['demo_product_name']          = 'Canon 550D';
 $_['demo_product_model']         = 'Model 999';
 $_['demo_product_quantity']      = '1';
