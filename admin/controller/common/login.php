@@ -125,7 +125,11 @@ class ControllerCommonLogin extends Controller {
         }
 
         if ($this->config->get('config_password')) {
-            $data['forgotten'] = $this->url->link('common/forgotten', '', 'SSL');
+            if ($this->config->get('config_sec_admin_keyword')) {
+                $data['forgotten'] = $this->url->link('common/forgotten', $this->config->get('config_sec_admin_keyword'), 'SSL');
+            } else {
+                $data['forgotten'] = $this->url->link('common/forgotten', '', 'SSL');
+            }
         } else {
             $data['forgotten'] = '';
         }
