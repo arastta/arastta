@@ -474,7 +474,7 @@ class ModelCatalogCategory extends Model {
         if ($key == 'name') {
             $this->db->query("UPDATE " . DB_PREFIX . "category_description SET " . $key . " = '" . $this->db->escape($value) . "' WHERE category_id = '" . (int) $category_id . "' AND language_id = '" . (int) $this->config->get('config_language_id') . "'");
         } elseif ($key == 'status') {
-            $this->db->query("UPDATE " . DB_PREFIX . "category_description SET " . $key . " = '" . $this->db->escape($value) . "' WHERE category_id = '" . (int) $category_id . "' AND language_id = '" . (int) $this->config->get('config_language_id') . "'");
+            $this->db->query("UPDATE " . DB_PREFIX . "category SET " . $key . " = '" . $this->db->escape($value) . "' WHERE category_id = '" . (int) $category_id . "'");
 
             // Main menu changed category status
             $category_menus = $this->db->query("SELECT * FROM " . DB_PREFIX . "menu m LEFT JOIN " . DB_PREFIX . "menu_description md ON (m.menu_id = md.menu_id) WHERE m.menu_type = 'category' AND md.link = " . (int)$category_id);
