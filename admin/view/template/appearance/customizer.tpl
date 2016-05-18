@@ -188,9 +188,9 @@
                                     <select name="<?php echo $control_name; ?>" id="<?php echo $control_name; ?>" class="form-control">
                                         <?php foreach($control_value['choices'] as $choices_name => $choices_value){ ?>
                                         <?php
-                                             if(!empty($default_data[$control_name])) {
+                                             if(!empty($default_data[$control_name]) && ($choices_name == $default_data[$control_name])) {
                                                 $selected = "selected=selected" ;
-                                             } else if (!empty($control_value['default'])) {
+                                             } else if (!isset($default_data[$control_name]) && !empty($control_value['default'])) {
                                                 $selected = "selected=selected" ;
                                              } else {
                                                 $selected = '';
