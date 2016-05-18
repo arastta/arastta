@@ -1270,8 +1270,8 @@ class ControllerCatalogProduct extends Controller {
         foreach ($data['languages'] as $language) {
             $data['preview'][$language['language_id']] = $this->getSeoLink($data['product_id'], $language['code']);
         }
-        
-        $data['language_code'] = $this->config->get('config_admin_language');
+
+        $data['language_code'] = isset($this->session->data['admin_language']) ? $this->session->data['admin_language'] : $this->config->get('config_admin_language');
 
         $this->load->model('appearance/layout');
 

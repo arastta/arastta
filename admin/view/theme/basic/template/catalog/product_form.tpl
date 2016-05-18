@@ -1176,6 +1176,7 @@
     <script type="text/javascript"><!--
     $(document).ready(function() {
         $("#input-image-addon").fileinput({
+            language: "<?php echo $language_code; ?>",
             allowedFileExtensions: ["jpg", "png", "gif", "jpeg"],
             uploadUrl: "index.php?route=catalog/product/uploads&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>",
             uploadAsync: true,
