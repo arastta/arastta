@@ -183,6 +183,10 @@ class ModelSaleCustomer extends Model {
                 $store_url = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'index.php?route=account/login';
             }
 
+            $credit = $this->getCreditTotal($customer_id);
+
+            $customer_info['credit'] = $credit;
+
             $customer_info['store_name'] = $store_name;
             $customer_info['account_href'] = $store_url;
 
@@ -384,14 +388,17 @@ class ModelSaleCustomer extends Model {
                 $store_name = $this->config->get('config_name');
             }
 
-            $message  = sprintf($this->language->get('text_credit_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
-            $message .= sprintf($this->language->get('text_credit_total'), $this->currency->format($this->getCreditTotal($customer_id)));
+            $customer_info['received_credit'] = $this->currency->format($amount, $this->config->get('config_currency'));
+            $customer_info['total_credit'] = $this->currency->format($this->getCreditTotal($customer_id), $this->session->data['currency']);
+
+            $subject = $this->emailtemplate->getSubject('Customer', 'customer_6', $customer_info);
+            $message = $this->emailtemplate->getMessage('Customer', 'customer_6', $customer_info);
 
             $mail = new Mail($this->config->get('config_mail'));
             $mail->setTo($customer_info['email']);
             $mail->setFrom($this->config->get('config_email'));
             $mail->setSender($store_name);
-            $mail->setSubject(sprintf($this->language->get('text_credit_subject'), $this->config->get('config_name')));
+            $mail->setSubject($subject);
             $mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
             $mail->send();
         }
@@ -542,6 +549,10 @@ class ModelSaleCustomer extends Model {
         }
 
         $this->load->model('sale/customer_group');
+
+        $credit = $this->getCreditTotal($data['customer_id']);
+
+        $data['credit'] = $credit;
 
         $customer_group_info = $this->model_sale_customer_group->getCustomerGroup($customer_group_id);
 

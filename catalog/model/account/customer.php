@@ -32,6 +32,10 @@ class ModelAccountCustomer extends Model {
             $this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
         }
 
+        $credit = $this->getCreditTotal($customer_id);
+
+        $data['credit'] = $credit;
+
         #Get Email Template
         if(!$customer_group_info['approval']){
             #Customer Registration Register
@@ -158,10 +162,13 @@ class ModelAccountCustomer extends Model {
     public function resetPasswordMail($email, $password) {
         $customer = $this->getCustomerByEmail($email);
 
+        $credit = $this->getCreditTotal($customer['customer_id']);
+
         $data = array (
             'firstname' => $customer['firstname'],
             'lastname'  => $customer['lastname'],
             'email'     => $customer['email'],
+            'credit'    => $credit,
             'password'  => $password
         );
 
@@ -176,5 +183,11 @@ class ModelAccountCustomer extends Model {
         $mail->setSubject($subject);
         $mail->setHTML($message);
         $mail->send();
+    }
+
+    public function getCreditTotal($customer_id) {
+        $query = $this->db->query("SELECT SUM(amount) AS total FROM " . DB_PREFIX . "customer_credit WHERE customer_id = '" . (int)$customer_id . "'");
+
+        return $query->row['total'];
     }
 }

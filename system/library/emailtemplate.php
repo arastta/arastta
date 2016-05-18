@@ -230,8 +230,8 @@ class Emailtemplate
     // Customer
     public function getCustomerFind()
     {
-        $result = array( '{store_logo}', '{firstname}', '{lastname}', '{date}', '{store_name}', '{email}', '{password}', '{account_href}', '{activate_href}' );
-        
+        $result = array( '{store_logo}', '{firstname}', '{lastname}', '{credit}', '{received_credit}', '{total_credit}', '{date}', '{store_name}', '{email}', '{password}', '{account_href}', '{activate_href}' );
+
         return $result;
     }
 
@@ -241,6 +241,9 @@ class Emailtemplate
             'store_logo'     => $this->storeLogo(),
             'firstname'      => $data['firstname'],
             'lastname'       => $data['lastname'],
+            'credit'         => isset($data['credit']) ? $data['credit'] : '0',
+            'received_credit'=> isset($data['received_credit']) ? $data['received_credit'] : '0',
+            'total_credit'   => isset($data['total_credit']) ? $data['total_credit'] : '0',
             'date'           => date($this->language->get('date_format_short'), strtotime(date("Y-m-d H:i:s"))),
             'store_name'     => $this->config->get('config_name'),
             'email'          => $data['email'],
