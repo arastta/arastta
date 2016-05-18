@@ -99,7 +99,7 @@ class ModelSetting extends Model
             $user_image = 'admin-default.png';
         }
         
-        $params = '{"theme":"basic","basic_mode_message":"show","language":"' . $this->session->data['lang_code'] . '","editor":"summernote"}';
+        $params = '{"theme":"basic","basic_mode_message":"show","language":"' . $this->session->data['lang_code'] . '","editor":"tinymce"}';
 
         $db->query("DELETE FROM `" . DB_PREFIX . "user` WHERE user_id = '1'");
 

@@ -25,7 +25,7 @@ class ModelExtensionEditor extends Model
 
         $params = json_decode($query->row['params'], true);
 
-        $editor_code = 'summernote';
+        $editor_code = 'tinymce';
 
         if (!empty($params['editor'])) {
             $editor_code = $params['editor'];
