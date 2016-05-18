@@ -29,6 +29,9 @@ class ControllerAppearanceLayout extends Controller
 
         $data = $this->language->all();
 
+        $heading_title = $this->language->get('heading_title');
+        $text_edit = $this->language->get('text_edit');
+
         $this->document->setTitle($data['heading_title']);
 
         $this->load->model('setting/setting');
@@ -64,6 +67,9 @@ class ControllerAppearanceLayout extends Controller
         $this->load->language('theme/' . $theme);
         
         $data = $this->language->all($data);
+
+        $data['heading_title'] = $heading_title;
+        $data['text_edit'] = $text_edit;
 
         $data['text_theme'] = sprintf($this->language->get('text_theme'), ucfirst(strtolower($theme)));
 
