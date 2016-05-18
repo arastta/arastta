@@ -4,7 +4,7 @@
     <ul id="right-menu">
 <?php } ?>
         <?php foreach ($menu_items as $id=>$item) { ?>
-        <?php if (!isset($item['permission']) || (isset($item['permission']) && $item['permission']) && (isset($menu_position) && $menu_position == 'right' && $item['position'] == 'right') || ((empty($menu_position) || $menu_position != 'right') && $item['position'] != 'right')) { ?>
+        <?php if (!isset($item['permission']) || (isset($item['permission']) && $item['permission']) && ((isset($menu_position) && $menu_position == 'right' && $item['position'] == 'right') || ((empty($menu_position) || $menu_position != 'right') && $item['position'] != 'right'))) { ?>
         <li id="<?php echo $id; ?>">
             <a<?php if (!empty($item['href'])) { ?> href="<?php echo $item['href']; ?>"<?php } ?><?php if (isset($item['children']) && count($item['children']) > 0) { ?> class="parent"<?php } ?>><?php if (isset($item['icon'])) { ?><i class="fa <?php echo $item['icon']; ?> fa-fw"></i> <?php } ?> <span><?php echo $item['text']; ?></span></a>
             <?php if (isset($item['children']) && count($item['children']) > 0) { ?>
