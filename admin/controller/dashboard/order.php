@@ -34,13 +34,13 @@ class ControllerDashboardOrder extends Controller {
         $order_total = $this->model_sale_order->getTotalOrders();
         
         if ($order_total > 1000000000000) {
-            $data['total'] = round($order_total / 1000000000000, 1) . 'T';
+            $data['total'] = round($order_total / 1000000000000, 1) . $this->language->get('trillion_suffix');
         } elseif ($order_total > 1000000000) {
-            $data['total'] = round($order_total / 1000000000, 1) . 'B';
+            $data['total'] = round($order_total / 1000000000, 1) . $this->language->get('billion_suffix');
         } elseif ($order_total > 1000000) {
-            $data['total'] = round($order_total / 1000000, 1) . 'M';
+            $data['total'] = round($order_total / 1000000, 1) . $this->language->get('million_suffix');
         } elseif ($order_total > 1000) {
-            $data['total'] = round($order_total / 1000, 1) . 'K';                        
+            $data['total'] = round($order_total / 1000, 1) . $this->language->get('thousand_suffix');
         } else {
             $data['total'] = $order_total;
         }

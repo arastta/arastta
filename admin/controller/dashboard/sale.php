@@ -35,13 +35,13 @@ class ControllerDashboardSale extends Controller {
         $sale_total = $this->currency->format($this->model_report_sale->getTotalSales(), $config_currency, '', false);
 
         if ($sale_total > 1000000000000) {
-            $data['total'] = round($sale_total / 1000000000000, 1) . 'T';
+            $data['total'] = round($sale_total / 1000000000000, 1) . $this->language->get('trillion_suffix');
         } elseif ($sale_total > 1000000000) {
-            $data['total'] = round($sale_total / 1000000000, 1) . 'B';
+            $data['total'] = round($sale_total / 1000000000, 1) . $this->language->get('billion_suffix');
         } elseif ($sale_total > 1000000) {
-            $data['total'] = round($sale_total / 1000000, 1) . 'M';
+            $data['total'] = round($sale_total / 1000000, 1) . $this->language->get('million_suffix');
         } elseif ($sale_total > 1000) {
-            $data['total'] = round($sale_total / 1000, 1) . 'K';
+            $data['total'] = round($sale_total / 1000, 1) . $this->language->get('thousand_suffix');
         } else {
             $data['total'] = round($sale_total);
         }
