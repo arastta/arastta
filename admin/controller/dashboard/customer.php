@@ -34,18 +34,22 @@ class ControllerDashboardCustomer extends Controller {
         $customer_total = $this->model_sale_customer->getTotalCustomers();
         
         if ($customer_total > 1000000000000) {
-            $data['total'] = round($customer_total / 1000000000000, 1) . 'T';
+            $data['total'] = round($customer_total / 1000000000000, 1);
+            $suffix = $this->language->get('trillion_suffix');
         } elseif ($customer_total > 1000000000) {
-            $data['total'] = round($customer_total / 1000000000, 1) . 'B';
+            $data['total'] = round($customer_total / 1000000000, 1);
+            $suffix = $this->language->get('billion_suffix');
         } elseif ($customer_total > 1000000) {
-            $data['total'] = round($customer_total / 1000000, 1) . 'M';
+            $data['total'] = round($customer_total / 1000000, 1);
+            $suffix = $this->language->get('million_suffix');
         } elseif ($customer_total > 1000) {
-            $data['total'] = round($customer_total / 1000, 1) . 'K';                        
+            $data['total'] = round($customer_total / 1000, 1);
+            $suffix = $this->language->get('thousand_suffix');
         } else {
             $data['total'] = $customer_total;
         }
                 
-        $data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL');
+        $data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL') . $suffix;
 
         return $this->load->view('dashboard/customer.tpl', $data);
     }
