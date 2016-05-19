@@ -10,7 +10,13 @@ class ControllerDashboardSale extends Controller {
     public function index() {
         $this->load->language('dashboard/sale');
 
-        $data['heading_title'] = $this->language->get('heading_title');
+        $this->load->model('localisation/currency');
+
+        $config_currency = $this->config->get('config_currency');
+
+        $currency = $this->model_localisation_currency->getCurrencyByCode($config_currency);
+
+        $data['heading_title'] = $this->language->get('heading_title') . ' (' . $currency['title'] . ')';
 
         $data['text_view'] = $this->language->get('text_view');
 
@@ -30,8 +36,6 @@ class ControllerDashboardSale extends Controller {
             $data['percentage'] = 0;
         }
 
-        $config_currency = $this->config->get('config_currency');
-
         $sale_total = $this->currency->format($this->model_report_sale->getTotalSales(), $config_currency, '', false);
 
         if ($sale_total > 1000000000000) {
@@ -45,8 +49,6 @@ class ControllerDashboardSale extends Controller {
         } else {
             $data['total'] = round($sale_total);
         }
-
-        $data['total'] = $config_currency . ' ' . $data['total'];
         
         $data['sale'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
 
