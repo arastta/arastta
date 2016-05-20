@@ -95,7 +95,7 @@
                     <li><a href="<?php echo $return; ?>"><span class="label label-danger pull-right"><?php echo $return_total; ?></span><?php echo $text_return; ?></a></li>
                 </ul>
             </li>
-            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><?php if(!empty($alert_customer)) { ?><span class="label label-danger pull-left"><?php echo $alert_customer; ?></span><?php } ?><i class="fa fa-user fa-lg"></i></a>
+            <li class="dropdown hidden-xs"><a class="dropdown-toggle" data-toggle="dropdown"><?php if(!empty($alert_customer)) { ?><span class="label label-danger pull-left"><?php echo $alert_customer; ?></span><?php } ?><i class="fa fa-user fa-lg"></i></a>
                 <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
                     <li class="dropdown-header"><?php echo $text_customer; ?></li>
                     <li><a href="<?php echo $online; ?>"><span class="label label-success pull-right"><?php echo $online_total; ?></span><?php echo $text_online; ?></a></li>
@@ -113,7 +113,7 @@
                 </ul>
             </li>
             <?php if ($languages) { ?>
-            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag fa-lg"></i></a>
+            <li class="dropdown hidden-xs"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag fa-lg"></i></a>
                 <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
                     <li class="dropdown-header"><?php echo $text_language; ?></li>
                     <?php foreach ($languages as $language) { ?>
@@ -125,7 +125,7 @@
             <?php if ($preturn_update) { ?>
             <li><a href="<?php echo $update; ?>" title="<?php echo $alert_update . ' ' . $text_update; ?>"><?php if(!empty($alert_update)) { ?><span class="label label-danger pull-left"><?php echo $alert_update; ?></span><?php } ?><i class="fa fa-refresh fa-lg"></i></a></li>
             <?php } ?>
-            <li class="dropdown"><a href="http://arastta.org/learn" target="_blank"><i class="fa fa-life-ring fa-lg"></i></a></li>
+            <li class="dropdown hidden-xs"><a href="http://arastta.org/learn" target="_blank"><i class="fa fa-life-ring fa-lg"></i></a></li>
 
             <li class="basic-advanced">
                 <?php if ($theme == 'basic') { ?>

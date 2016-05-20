@@ -83,7 +83,7 @@
             </li>
         </ul>
         <ul class="nav pull-right">
-            <li class="dropdown hidden-xs"><a class="dropdown-toggle" data-toggle="dropdown"><?php if(!empty($alert_order)) { ?><span class="label label-danger pull-left"><?php echo $alert_order; ?></span><?php } ?><i class="fa fa-shopping-cart fa-lg"></i></a>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><?php if(!empty($alert_order)) { ?><span class="label label-danger pull-left"><?php echo $alert_order; ?></span><?php } ?><i class="fa fa-shopping-cart fa-lg"></i></a>
                 <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
                     <li class="dropdown-header"><?php echo $text_order; ?></li>
                     <li><a href="<?php echo $order_status; ?>" style="display: block; overflow: auto;"><span class="label label-warning pull-right"><?php echo $order_status_total; ?></span><?php echo $text_order_status; ?></a></li>
@@ -109,7 +109,7 @@
                 </ul>
             </li>
             <?php if ($languages) { ?>
-            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag fa-lg"></i></a>
+            <li class="dropdown hidden-xs"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag fa-lg"></i></a>
                 <ul class="dropdown-menu dropdown-menu-right alerts-dropdown">
                     <li class="dropdown-header"><?php echo $text_language; ?></li>
                     <?php foreach ($languages as $language) { ?>
