@@ -10,7 +10,13 @@ class ControllerDashboardSale extends Controller {
     public function index() {
         $this->load->language('dashboard/sale');
 
-        $data['heading_title'] = $this->language->get('heading_title');
+        $this->load->model('localisation/currency');
+
+        $config_currency = $this->config->get('config_currency');
+
+        $currency = $this->model_localisation_currency->getCurrencyByCode($config_currency);
+
+        $data['heading_title'] = $this->language->get('heading_title') . ' (' . $currency['title'] . ')';
 
         $data['text_view'] = $this->language->get('text_view');
 
@@ -30,26 +36,19 @@ class ControllerDashboardSale extends Controller {
             $data['percentage'] = 0;
         }
 
-        $sale_total = $this->model_report_sale->getTotalSales();
+        $sale_total = $this->currency->format($this->model_report_sale->getTotalSales(), $config_currency, '', false);
 
         if ($sale_total > 1000000000000) {
-            $data['total'] = round($sale_total / 1000000000000, 1);
-            $suffix = 'T';
+            $data['total'] = round($sale_total / 1000000000000, 1) . $this->language->get('trillion_suffix');
         } elseif ($sale_total > 1000000000) {
-            $data['total'] = round($sale_total / 1000000000, 1);
-            $suffix = 'B';
+            $data['total'] = round($sale_total / 1000000000, 1) . $this->language->get('billion_suffix');
         } elseif ($sale_total > 1000000) {
-            $data['total'] = round($sale_total / 1000000, 1);
-            $suffix = 'M';
+            $data['total'] = round($sale_total / 1000000, 1) . $this->language->get('million_suffix');
         } elseif ($sale_total > 1000) {
-            $data['total'] = round($sale_total / 1000, 1);
-            $suffix = 'K';
+            $data['total'] = round($sale_total / 1000, 1) . $this->language->get('thousand_suffix');
         } else {
             $data['total'] = round($sale_total);
-            $suffix = '';
         }
-
-        $data['total'] = $this->currency->format($data['total'], $this->config->get('config_currency')) . $suffix;
         
         $data['sale'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
 
