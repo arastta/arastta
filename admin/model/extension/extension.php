@@ -119,6 +119,10 @@ class ModelExtensionExtension extends Model {
     }
 
     public function getTotalExtensions($data = array()) {
+        if (isset($data['start']) || isset($data['limit'])) {
+            unset($data['start'], $data['limit']);
+        }
+
         $extensions = $this->getExtensions($data);
 
         return count($extensions);
