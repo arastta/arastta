@@ -41,6 +41,11 @@ class Route extends Object
         $route = str_replace($this->url->getFullUrl(), '', rawurldecode($this->uri->toString()));
         $route = str_replace('?'.$query_string, '', $route);
 
+        // www Redirection
+        if ($this->config->get('config_seo_www_red')) {
+            $this->checkWwwRedirection();
+        }
+
         // Don't parse if home page
         if (empty($route)) {
             $this->request->get['route'] = 'common/home';
@@ -56,11 +61,6 @@ class Route extends Object
             }
 
             return;
-        }
-
-        // www Redirection
-        if ($this->config->get('config_seo_www_red')) {
-            $this->checkWwwRedirection();
         }
 
         // non-SEO variables
