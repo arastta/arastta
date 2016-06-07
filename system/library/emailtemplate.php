@@ -886,6 +886,15 @@ class Emailtemplate
     {
         $result = array();
 
+        // Sort
+        $sort_order = array();
+
+        foreach ($getTotal as $key => $value) {
+            $sort_order[$key] = $value['sort_order'];
+        }
+
+        array_multisort($sort_order, SORT_ASC, $getTotal);
+
         foreach ($getTotal as $total) {
             // Replace Product Short Code to Values
             $total_find = $this->getTotalFind();
