@@ -51,6 +51,25 @@ $(document).ready(function() {
                     }
 				});
 
+                // Image manager relative path
+                content = content.replace(/<img[^>]+>/g, function( image ) {
+                    var match;
+
+                    if (image.indexOf( 'data-image="image"' ) !== -1) {
+                        if (match = image.match( /src="([^"]+)"/ )) {
+                            path = match[1];
+                        }
+
+                        if (match = image.match( /data-original-src="([^"]+)"/ )) {
+                            real_path = match[1];
+                        }
+
+                        image = image.replace(path, real_path);
+                    }
+
+                    return image;
+                });
+
 				value.value = content;
 			}
 		});
@@ -68,6 +87,27 @@ $(document).ready(function() {
 						return '<img src="view/image/read-more.png" title="Read More" alt="" data-readmore="more" data-readmore-text="" data-mce-resize="false" data-mce-placeholder="1" data-mce-selected="1">';
 					});
 				}
+
+                // Image manager relative path
+                content = content.replace(/<img[^>]+>/g, function( image ) {
+                    var match;
+
+                    if (image.indexOf( 'data-image="image"' ) !== -1) {
+                        if (match = image.match( /src="([^"]+)"/ )) {
+                            path = match[1];
+                        }
+
+                        if (match = image.match( /data-original-src="([^"]+)"/ )) {
+                            real_path = match[1];
+                            real_path = '../' + real_path;
+                        }
+
+                        image = image.replace(path, real_path);
+                    }
+
+                    return image;
+                });
+
 				$('#' + editor_content).code(content);
 			}
 		});

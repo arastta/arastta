@@ -31,7 +31,7 @@
                         <?php echo $image['name']; ?></label>
                     <?php } ?>
                     <?php if ($image['type'] == 'image') { ?>
-                    <a href="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
+                    <a href="<?php echo $image['href']; ?>" data-original-src="<?php echo $image['original']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
                     <label>
                         <input type="checkbox" name="path[]" value="<?php echo $image['path']; ?>" />
                         <?php echo $image['name']; ?></label>
@@ -60,9 +60,9 @@ $('a.thumbnail').on('click', function(e) {
     <?php if ($target) { ?>
     $('#<?php echo $target; ?>').attr('value', $(this).parent().find('input').attr('value')).trigger('change');
     <?php } else { ?>
-        var range, sel = document.getSelection();
+    var range, sel = document.getSelection();
 
-        if (sel.rangeCount) {
+    if (sel.rangeCount) {
         var img = document.createElement('img');
         img.src = $(this).attr('href');
 
@@ -72,7 +72,7 @@ $('a.thumbnail').on('click', function(e) {
     <?php } ?>
 
     if (typeof InsertTinyMCEImage == 'function') {
-        InsertTinyMCEImage($(this).attr('href'));
+        InsertTinyMCEImage($(this).attr('href'), $(this).attr('data-original-src'));
     }
 
     $('#modal-image').modal('hide');
