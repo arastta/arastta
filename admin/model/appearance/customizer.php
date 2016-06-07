@@ -76,7 +76,11 @@ class ModelAppearanceCustomizer extends Model
                     $customizerCss .= $item['selector'] . " { \r\n \t" .  $element[1] . " : " . $value . "; \r\n } \n\n ";
                 } else {
                     if (!empty($value)) {
-                        $customizerCss .= $item['selector'] . " { \r\n \t" .  $element[1] . " : url('../../../../../image/" . $value . "'); \r\n } \n\n ";
+                        if (strpos($value, 'url(') !== false) {
+                            $customizerCss .= $item['selector'] . " { \r\n \t" .  $element[1] . " : " . $value . "; \r\n } \n\n ";
+                        } else {
+                            $customizerCss .= $item['selector'] . " { \r\n \t" .  $element[1] . " : url('../../../../../image/" . $value . "'); \r\n } \n\n ";
+                        }
                     }
                 }
             } elseif ($key == 'font') {
