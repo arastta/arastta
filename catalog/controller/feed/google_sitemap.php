@@ -73,6 +73,7 @@ class ControllerFeedGoogleSitemap extends Controller {
             if ($result['image']) {
                 $products[] = array(
                     'name'  => $result['name'],
+                    'added' => $result['date_added'],
                     'date'  => $result['date_modified'],
                     'prior' => '1.0',
                     'url'   => $this->url->link('product/product', 'product_id=' . $result['product_id']),
@@ -97,6 +98,7 @@ class ControllerFeedGoogleSitemap extends Controller {
             }
 
             $categories[] = array(
+                'added' => $result['date_added'],
                 'date'  => $result['date_modified'],
                 'prior' => '0.7',
                 'url'   => $this->url->link('product/category', 'path=' . $new_path)

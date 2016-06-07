@@ -3,10 +3,12 @@
     <?php foreach ($results as $result) { ?>
     <url>
         <loc><?php echo $result['url']; ?></loc>
-        <?php if (isset($result['date'])) { ?>
-        <lastmod><?php echo $result['date']; ?></lastmod>
+        <?php if (isset($result['date']) && $result['date'] != 0) { ?>
+        <lastmod><?php echo date('Y-m-d', strtotime($result['date'])); ?></lastmod>
+        <?php } else if (isset($result['date']) && $result['date'] == 0) { ?>
+        <lastmod><?php echo date('Y-m-d', strtotime($result['added'])); ?></lastmod>
         <?php } else { ?>
-        <lastmod><?php echo date('Y-m-d H:i:s'); ?></lastmod>
+        <lastmod><?php echo date('Y-m-d'); ?></lastmod>
         <?php } ?>
         <changefreq>weekly</changefreq>
         <?php if (isset($result['prior'])) { ?>

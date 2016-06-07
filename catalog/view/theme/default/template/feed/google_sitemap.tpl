@@ -3,8 +3,10 @@
     <?php foreach ($results as $result) { ?>
     <url>
         <loc><?php echo $result['url']; ?></loc>
-        <?php if (isset($result['date'])) { ?>
+        <?php if (isset($result['date']) && $result['date'] != 0) { ?>
         <lastmod><?php echo date('Y-m-d', strtotime($result['date'])); ?></lastmod>
+        <?php } else if (isset($result['date']) && $result['date'] == 0) { ?>
+        <lastmod><?php echo date('Y-m-d', strtotime($result['added'])); ?></lastmod>
         <?php } else { ?>
         <lastmod><?php echo date('Y-m-d'); ?></lastmod>
         <?php } ?>
