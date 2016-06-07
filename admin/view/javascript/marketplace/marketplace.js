@@ -260,7 +260,7 @@ $(document).on('click', '.uninstall-button-product', function() {
 });
 
 // Set last page opened on the menu
-$(document).on('click', '.panel-body a[onclick]', function() {
+$(document).on('click', '.panel-body #marketplace-menu a[onclick]', function() {
     url = $(this).attr('onclick').replace("Marketplace.loadweb(baseUrl + '", "");
     url = $(this).attr('onclick').replace("')", "");
     uri = decodeURIComponent(ArrayToURL(URLToArray(url)));
