@@ -73,8 +73,7 @@ class ControllerFeedGoogleSitemap extends Controller {
             if ($result['image']) {
                 $products[] = array(
                     'name'  => $result['name'],
-                    'added' => $result['date_added'],
-                    'date'  => $result['date_modified'],
+                    'date' => ($result['date_modified'] != 0) ? $result['date_modified'] : $result['date_added'],
                     'prior' => '1.0',
                     'url'   => $this->url->link('product/product', 'product_id=' . $result['product_id']),
                     'img'   => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'))
@@ -98,8 +97,7 @@ class ControllerFeedGoogleSitemap extends Controller {
             }
 
             $categories[] = array(
-                'added' => $result['date_added'],
-                'date'  => $result['date_modified'],
+                'date' => ($result['date_modified'] != 0) ? $result['date_modified'] : $result['date_added'],
                 'prior' => '0.7',
                 'url'   => $this->url->link('product/category', 'path=' . $new_path)
             );
