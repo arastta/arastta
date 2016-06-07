@@ -6,10 +6,12 @@
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-class ModelExtensionModification extends Model {
+class ModelExtensionModification extends Model
+{
     public $is_vqmod = true;
 
-    public static function handleXMLError($errno, $errstr, $errfile, $errline) {
+    public static function handleXMLError($errno, $errstr, $errfile, $errline)
+    {
         if ($errno == E_WARNING && (substr_count($errstr, 'DOMDocument::loadXML()') > 0)) {
             throw new DOMException(str_replace('DOMDocument::loadXML()', '', $errstr));
         } else {
@@ -17,7 +19,8 @@ class ModelExtensionModification extends Model {
         }
     }
 
-    public function applyMod() {
+    public function applyMod()
+    {
         // To catch XML syntax errors
         set_error_handler(array('ModelExtensionModification', 'handleXMLError'));
 
@@ -25,9 +28,9 @@ class ModelExtensionModification extends Model {
             $files = ($files = glob(DIR_SYSTEM . 'xml/*.xml')) ? $files : array();
         } else {
             // Merge vQmods and OCmods files
-            $vqmod_files = ($vqmod_files = glob(DIR_VQMOD . 'xml/*.xml')) ? $vqmod_files : array();
+            $vqmod_files  = ($vqmod_files = glob(DIR_VQMOD . 'xml/*.xml')) ? $vqmod_files : array();
             $system_files = ($system_files = glob(DIR_SYSTEM . 'xml/*.xml')) ? $system_files : array();
-            $files = array_merge($vqmod_files, $system_files);
+            $files        = array_merge($vqmod_files, $system_files);
         }
 
         if (!empty($files) && $files) {
@@ -50,6 +53,7 @@ class ModelExtensionModification extends Model {
         }
 
         $dom = new DOMDocument('1.0', 'UTF-8');
+
         $dom->preserveWhiteSpace = false;
 
         foreach ($xmls as $file => $xml) {
@@ -60,8 +64,10 @@ class ModelExtensionModification extends Model {
 
                 $version = '2.5.1';
                 $vqmver  = $modification_node->getElementsByTagName('vqmver')->item(0);
+
                 if ($vqmver) {
                     $version_check = $vqmver->getAttribute('required');
+
                     if (strtolower($version_check) == 'true' && version_compare($version, $vqmver->nodeValue, '<')) {
                         $log[] = "Modification::applyMod - VQMOD VERSION '" . $vqmver->nodeValue . "' OR ABOVE REQUIRED, XML FILE HAS BEEN SKIPPED";
                         $log[] = "  vqmver = '$vqmver'";
@@ -77,8 +83,10 @@ class ModelExtensionModification extends Model {
             }
 
             $this->isVqmod($dom);
+
             $file_nodes      = $modification_node->getElementsByTagName('file');
             $modification_id = @$modification_node->getElementsByTagName('id')->item(0)->nodeValue;
+
             if (!$modification_id) {
                 $modification_id = $modification_node->getElementsByTagName('code')->item(0)->nodeValue;
             }
@@ -87,8 +95,8 @@ class ModelExtensionModification extends Model {
             $log[] = "";
 
             foreach ($file_nodes as $file_node) {
-
                 $files = $this->getFiles($file_node, $log);
+
                 if ($files === false) {
                     return false;
                 }
@@ -97,6 +105,7 @@ class ModelExtensionModification extends Model {
 
                 foreach ($files as $file) {
                     $key = $this->getFileKey($file);
+
                     if ($key == '') {
                         $log[] = "Modification::applyMod - UNABLE TO GENERATE FILE KEY:";
                         $log[] = "  modification id = '$modification_id'";
@@ -104,6 +113,7 @@ class ModelExtensionModification extends Model {
                         $log[] = "";
                         continue;
                     }
+
                     if (!isset($modification[$key])) {
                         $modification[$key] = preg_replace('~\r?\n~', "\n", file_get_contents($file));
                         $original[$key]     = $modification[$key];
@@ -114,7 +124,6 @@ class ModelExtensionModification extends Model {
                     if (!$log = $this->operationNode($operation_nodes, $modification, $modification_id, $file, $key, $log)) {
                         return false;
                     }
-
                 } // $files
             } // $file_nodes
 
@@ -129,17 +138,21 @@ class ModelExtensionModification extends Model {
         $this->writeMods($modification, $original);
     }
 
-    public function writeLog($log) {
+    public function writeLog($log)
+    {
         if ((defined('DIR_LOG'))) {
             $modification = new Log('modification.log');
             $modification->write(implode("\n", $log));
         }
     }
 
-    public function isVqmod(DOMDocument $dom) {
+    public function isVqmod(DOMDocument $dom)
+    {
         $modification_node = $dom->getElementsByTagName('modification')->item(0);
+
         if ($modification_node) {
             $vqmver_node = $modification_node->getElementsByTagName('vqmver')->item(0);
+
             if ($vqmver_node) {
                 $this->is_vqmod = true;
 
@@ -150,16 +163,20 @@ class ModelExtensionModification extends Model {
         $this->is_vqmod = false;
     }
 
-    public function getFiles($file_node, &$log) {
+    public function getFiles($file_node, &$log)
+    {
         $file_node_path  = $file_node->getAttribute('path');
         $file_node_name  = $file_node->getAttribute('name');
         $file_node_error = $file_node->getAttribute('error');
 
-        $files      = array();
+        $files = array();
+
         $file_names = explode(',', $file_node_name);
+
         if (isset($file_names[0]) && $file_names[0] == '') {
-            $file_names = explode(',', $file_node_path);
+            $file_names     = explode(',', $file_node_path);
             $file_node_path = '';
+
             if ($file_names === false) {
                 $file_names = array();
             }
@@ -223,8 +240,10 @@ class ModelExtensionModification extends Model {
         return $files;
     }
 
-    public function getFileKey($file) {
+    public function getFileKey($file)
+    {
         $key = '';
+
         if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
             $key = 'catalog/' . substr($file, strlen(DIR_CATALOG));
         } elseif (substr($file, 0, strlen(DIR_ADMIN)) == DIR_ADMIN) {
@@ -236,17 +255,21 @@ class ModelExtensionModification extends Model {
         return $key;
     }
 
-    public function operationNode($nodes, &$modification, $modification_id, $file, $key, $log) {
+    public function operationNode($nodes, &$modification, $modification_id, $file, $key, $log)
+    {
         foreach ($nodes as $operation_node) {
             $operation_node_error = $operation_node->getAttribute('error');
+
             if (($operation_node_error != 'skip') && ($operation_node_error != 'log') && $this->is_vqmod) {
                 $operation_node_error = 'abort';
             }
 
             $ignoreif_node = $operation_node->getElementsByTagName('ignoreif')->item(0);
+
             if ($ignoreif_node) {
                 $ignoreif_node_regex = $ignoreif_node->getAttribute('regex');
                 $ignoreif_node_value = trim($ignoreif_node->nodeValue);
+
                 if ($ignoreif_node_regex == 'true' && preg_match($ignoreif_node_value, $modification[$key])) {
                     continue;
                 } elseif (strpos($modification[$key], $ignoreif_node_value) !== false) {
@@ -279,6 +302,7 @@ class ModelExtensionModification extends Model {
 
             $search_node_regex = ($search_node->getAttribute('regex')) ? $search_node->getAttribute('regex') : 'false';
             $limit             = $search_node->getAttribute('limit');
+
             if (!$limit) {
                 $limit = -1;
             }
@@ -299,14 +323,16 @@ class ModelExtensionModification extends Model {
                     break;
                 case 'bottom':
                     $offset = $line_max - (int) $_offset;
+
                     if ($offset < 0) {
                         $tmp[-1] = $add_node_value;
                     } else {
-                        $tmp[$offset] .= $add_node_value;;
+                        $tmp[$offset] .= $add_node_value;
                     }
                     break;
                 default:
                     $changed = false;
+
                     foreach ($tmp as $line_num => $line) {
                         if (strlen($search_node_value) == 0 && ($operation_node_error == 'log' || $operation_node_error == 'abort')) {
                             $log[] = "Modification::operationNode - EMPTY SEARCH CONTENT ERROR:";
@@ -318,6 +344,7 @@ class ModelExtensionModification extends Model {
 
                         if ($search_node_regex == 'true') {
                             $pos = @preg_match($search_node_value, $line);
+
                             if ($pos === false) {
                                 if ($operation_node_error == 'log' || $operation_node_error == 'abort') {
                                     $log[] = "Modification::operationNode - INVALID REGEX ERROR:";
@@ -326,6 +353,7 @@ class ModelExtensionModification extends Model {
                                     $log[] = "  search = '$search_node_value'";
                                     $log[] = "";
                                 }
+
                                 continue 2; // continue with next operation_node
                             } elseif ($pos == 0) {
                                 $pos = false;
@@ -334,20 +362,22 @@ class ModelExtensionModification extends Model {
                             $pos = strpos($line, $search_node_value);
                         }
 
-
                         if ($pos !== false) {
                             $index_count++;
                             $changed = true;
+
                             if (!$search_node_indexes || ($search_node_indexes && in_array($index_count, $search_node_indexes))) {
                                 $this->positionAttr($position, $line_num, $_offset, $tmp, $add_node_value, $line_max, $search_node_value, $line, $search_node_regex, $limit);
+
                                 $status = true;
                             }
                         }
                     }
 
                     if (!$changed) {
-                        $skip_text = ($operation_node_error == 'skip' || $operation_node_error == 'log') ? '(SKIPPED)' : '(ABORTING MOD)';
-                        if ($operation_node_error == 'log' || $operation_node_error) {
+                        $skip_text = ($operation_node_error == 'log') ? '(SKIPPED)' : '(ABORTING MOD)';
+
+                        if ($operation_node_error == 'log' || $operation_node_error == 'abort') {
                             $log[] = "Modification::operationNode - SEARCH NOT FOUND $skip_text:";
                             $log[] = "  modification id = '$modification_id'";
                             $log[] = "  file name = '$file'";
@@ -369,7 +399,6 @@ class ModelExtensionModification extends Model {
             ksort($tmp);
             $modification[$key] = implode("\n", $tmp);
 
-
             if (!$status && $search_node_regex == 'true') {
                 $match = array();
 
@@ -389,25 +418,26 @@ class ModelExtensionModification extends Model {
                 $modification[$key] = preg_replace($search_node_value, $add_node_value, $modification[$key], $limit);
             }
 
-
-            if (!$status && !$this->is_vqmod) {
+            if ($operation_node_error != 'skip' && !$status && !$this->is_vqmod) {
                 // Log
                 $log[] = 'NOT FOUND!';
             }
-
         }
 
         return $log;
     }
 
-    public function getIndexes($search_node_index) {
+    public function getIndexes($search_node_index)
+    {
         if ($search_node_index !== '') {
             $tmp = explode(',', $search_node_index);
+
             foreach ($tmp as $k => $v) {
                 if (!$this->is_vqmod) {
                     $tmp[$k] += 1;
                 }
             }
+
             $tmp = array_unique($tmp);
 
             return empty($tmp) ? false : $tmp;
@@ -416,7 +446,8 @@ class ModelExtensionModification extends Model {
         }
     }
 
-    public function writeMods($modification, $original) {
+    public function writeMods($modification, $original)
+    {
         foreach ($modification as $key => $value) {
             // Only create a file if there are changes
             if ($original[$key] != $value) {
@@ -425,7 +456,8 @@ class ModelExtensionModification extends Model {
         }
     }
 
-    protected function positionAttr($position, $line_num, $_offset, &$tmp, $add_node_value, $line_max, $search_node_value, $line, $search_node_regex, $limit) {
+    protected function positionAttr($position, $line_num, $_offset, &$tmp, $add_node_value, $line_max, $search_node_value, $line, $search_node_regex, $limit)
+    {
         switch ($position) {
             case 'before':
                 $offset       = ($line_num - $_offset < 0) ? -1 : $line_num - $_offset;
@@ -457,6 +489,7 @@ class ModelExtensionModification extends Model {
                         }
                     }
                 }
+
                 if ($search_node_regex == 'true') {
                     $tmp[$line_num] = preg_replace($search_node_value, $add_node_value, $line, $limit);
                 } else {
