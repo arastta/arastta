@@ -207,29 +207,45 @@ $(document).ready(function() {
 
                     for (i = 0; i < count; i++) {
                         html += '<li data-value="' + json[i]['value'] + '">';
+
                         if ($('#search').hasClass('facebook-search')) {
                             html += '<a href="' + json[i]['href'] + '" target="_blank">';
                         } else {
                             html += '<a href="' + json[i]['href'] + '">';
                         }
+
                         html += '<div class="ajaxadvance">';
                         html += '<div class="image">';
                         html += '<img title="' + json[i]['value'] + '" src="' + json[i]['image'] + '"/>';
                         html += '</div>';
                         html += '<div class="content">';
                         html += 	'<div class="name">' + json[i]['label'] + '</div>';
-                        html += 	'<div class="price">' + json[i]['price'] + '</div>';
+
+                        if (json[i]['price']) {
+                            if (json[i]['special']) {
+                                html += '<div class="price">' + json[i]['special'] + '  <span class="price-old">' + json[i]['price'] + '</span></div>';
+                            } else {
+                                html += '<div class="price">' + json[i]['price'] + '</div>';
+                            }
+
+                            if (json[i]['tax']) {
+                                html += '<span class="price-tax">' + json[i]['tax'] + '</span>';
+                            }
+                        }
+
                         html +='</div>';
                         html += '</div></a></li>'
                     }
 
                     if(count == 5) {
                         html += '<li data-value="' + json[i]['value'] + '">';
+
                         if ($('#search').hasClass('facebook-search')) {
                             html += '<a href="' + json[i]['searchall'] + '" target="_blank">';
                         } else {
                             html += '<a href="' + json[i]['searchall'] + '">';
                         }
+
                         html += '<div class="ajaxadvance">';
                         html += ' -- View All -- ';
                         html += '</div></a></li>'
@@ -265,6 +281,8 @@ $(document).ready(function() {
                                 value: item.product_id,
                                 image: item.image,
                                 price: item.price,
+                                special: item.special,
+                                tax: item.tax,
                                 href: item.href,
                                 searchall: item.searchall,
                             }

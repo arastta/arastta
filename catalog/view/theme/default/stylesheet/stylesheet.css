@@ -191,11 +191,15 @@ div.required .control-label:before {
 }
 #search .dropdown-menu li, .ui-menu .ui-menu-item {
     margin-bottom: 10px;
+    min-height: 60px;
 }
 #search .dropdown-menu a {
     border-radius: 0;
     white-space: normal;
 }
+#search .ajaxadvance {
+    min-height: 50px;
+}   
 #search .ajaxadvance .name {
     margin:0;
     font-size: 21px;
@@ -203,7 +207,7 @@ div.required .control-label:before {
 #search .ajaxadvance .image {
     display:inline-flex;
     float: left;
-    margin-right:10px;
+    margin-right:20px;
 }
 #search .ajaxadvance .content {
     display:inline-block;
