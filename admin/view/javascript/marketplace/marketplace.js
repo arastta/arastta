@@ -103,6 +103,9 @@ function ArrayToURL(array) {
 
 var step = new Array();
 Marketplace.installfromweb = function (product_id, product_name, product_version, obj) {
+    if (store == "" && $(obj).attr('data-store') != "") {
+            store = $(obj).attr('data-store');
+    }
     $.ajax({
         url: 'index.php?route=extension/installer/install&token=' + token,
         dataType: 'json',
