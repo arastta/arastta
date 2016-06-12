@@ -216,7 +216,6 @@ class ControllerApiOrders extends Controller
                             $row['image'] = $this->model_tool_image->resize('placeholder.png', $thumb_width, $thumb_height);
                         }
                     }
-                    unset($row['image']);
 
                     $order_products[] = $row;
                 }
