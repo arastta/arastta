@@ -441,17 +441,73 @@ class ModelCheckoutOrder extends Model {
                 $totals = array();
                 $tax_amount = 0;
 
-                if (strlen($order_info['shipping_firstname']) <> 0) {
-                    $address = $order_info['shipping_firstname'] . ' ' . $order_info['shipping_lastname'] . '<br />' . ((strlen($order_info['shipping_company']) <> 0) ? $order_info['shipping_company'] . '<br />' : '') . '' . $order_info['shipping_address_1'] . '<br />' . $order_info['shipping_city'] . ' ' . $order_info['shipping_postcode'] . '<br />' . $order_info['shipping_zone'] . ' ' . $order_info['shipping_country'];
+                if ($order_info['payment_address_format']) {
+                    $format = $order_info['payment_address_format'];
                 } else {
-                    $address = '';
+                    $format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
                 }
 
-                if (strlen($order_info['payment_firstname']) <> 0) {
-                    $payment_address = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'] . '<br />' . ((strlen($order_info['payment_company']) <> 0) ? $order_info['payment_company'] . '<br />' : '') . '' . $order_info['payment_address_1'] . '<br />' . $order_info['payment_city'] . ' ' . $order_info['payment_postcode'] . '<br />' . $order_info['payment_zone'] . ' ' . $order_info['payment_country'];
+                $find = array(
+                    '{firstname}',
+                    '{lastname}',
+                    '{company}',
+                    '{address_1}',
+                    '{address_2}',
+                    '{city}',
+                    '{postcode}',
+                    '{zone}',
+                    '{zone_code}',
+                    '{country}'
+                );
+
+                $replace = array(
+                    'firstname' => $order_info['payment_firstname'],
+                    'lastname'  => $order_info['payment_lastname'],
+                    'company'   => $order_info['payment_company'],
+                    'address_1' => $order_info['payment_address_1'],
+                    'address_2' => $order_info['payment_address_2'],
+                    'city'      => $order_info['payment_city'],
+                    'postcode'  => $order_info['payment_postcode'],
+                    'zone'      => $order_info['payment_zone'],
+                    'zone_code' => $order_info['payment_zone_code'],
+                    'country'   => $order_info['payment_country']
+                );
+
+                $payment_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+
+                if ($order_info['shipping_address_format']) {
+                    $format = $order_info['shipping_address_format'];
                 } else {
-                    $payment_address = '';
+                    $format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
                 }
+
+                $find = array(
+                    '{firstname}',
+                    '{lastname}',
+                    '{company}',
+                    '{address_1}',
+                    '{address_2}',
+                    '{city}',
+                    '{postcode}',
+                    '{zone}',
+                    '{zone_code}',
+                    '{country}'
+                );
+
+                $replace = array(
+                    'firstname' => $order_info['shipping_firstname'],
+                    'lastname'  => $order_info['shipping_lastname'],
+                    'company'   => $order_info['shipping_company'],
+                    'address_1' => $order_info['shipping_address_1'],
+                    'address_2' => $order_info['shipping_address_2'],
+                    'city'      => $order_info['shipping_city'],
+                    'postcode'  => $order_info['shipping_postcode'],
+                    'zone'      => $order_info['shipping_zone'],
+                    'zone_code' => $order_info['shipping_zone_code'],
+                    'country'   => $order_info['shipping_country']
+                );
+
+                $address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
                 $order_total = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_info['order_id'] . "'");
 
@@ -467,7 +523,7 @@ class ModelCheckoutOrder extends Model {
                     }
                 }
 
-                $special = NULL;
+                $special = null;
 
                 $data = array(
                     'template_id'       => 'order_' . (int)$order_status_id,
