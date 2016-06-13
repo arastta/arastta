@@ -223,10 +223,14 @@ class Mail {
         $message->setSubject($this->subject);
 
         if (!empty($this->html)) {
+            $this->html = $this->replaceFullImagePath($this->html);
+
             $message->setBody($this->html, 'text/html', $this->charset);
         }
 
         if (!empty($this->text)) {
+            $this->text = $this->replaceFullImagePath($this->text);
+
             $message->addPart($this->text, 'text/plain', $this->charset);
         }
 
@@ -271,5 +275,19 @@ class Mail {
         $result = $mailer->send($message);
 
         return $result;
+    }
+
+    protected function replaceFullImagePath ($html)
+    {
+        $new_path = HTTPS_SERVER;
+
+        if (HTTPS_CATALOG) {
+            $new_path = HTTPS_CATALOG;
+        }
+
+        $html = str_replace('src=&quot;../', 'src=&quot;' . $new_path, $html);
+        $html = str_replace('src="../', 'src="' . $new_path, $html);
+
+        return $html;
     }
 }

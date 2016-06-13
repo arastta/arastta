@@ -85,7 +85,6 @@ class Emailtemplate
 
         if (!empty($template['description'])) {
             if (ucwords($type) == 'OrderAll') {
-
                 preg_match('/{product:start}(.*){product:stop}/Uis', $template['description'], $template_product);
                 if (!empty($template_product[1])) {
                     $template['description'] = str_replace($template_product[1], '', $template['description']);
@@ -117,6 +116,8 @@ class Emailtemplate
             $message = $this->getDefaultMessage($type, $template_id, $data);
         }
 
+        $this->trigger->fire('post.emailtemplate.message.message', array(&$message));
+
         $data['title'] = $this->getSubject($type, $template_id, $data);
         $data['message'] = $message;
         $data['site_url'] = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
@@ -130,7 +131,7 @@ class Emailtemplate
         } else {
             $message = $this->load->view('mail/default.tpl', $data);
         }
-        
+
         return $message;
     }
 
@@ -171,9 +172,9 @@ class Emailtemplate
     // Store Logo
     public function storeLogo()
     {
-        $store_url = ($this->request->server['HTTPS']) ? HTTPS_SERVER : HTTP_SERVER;
+        $store_url = (HTTPS_CATALOG) ? HTTPS_CATALOG : HTTPS_SERVER;
         $store_name = $this->config->get('config_name');
-        $store_logo = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+        $store_logo = HTTPS_IMAGE . $this->config->get('config_logo');
 
         return '<a href="' . $store_url . '" title="' . $store_name . '"><img src="' . $store_logo . '"></a>';
     }
@@ -1519,9 +1520,9 @@ class Emailtemplate
         }
 
         if ($_SERVER['HTTPS']) {
-            return $this->config->get('config_ssl') . 'image/' . $new_image;
+            return HTTPS_IMAGE . $new_image;
         } else {
-            return $this->config->get('config_url') . 'image/' . $new_image;
+            return HTTP_IMAGE . $new_image;
         }
     }
 
