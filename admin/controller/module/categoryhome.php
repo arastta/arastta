@@ -28,9 +28,25 @@ class ControllerModuleCategoryhome extends Controller
 
             $this->session->data['success'] = $this->language->get('text_success');
 
+            if (isset($this->request->post['button']) && $this->request->post['button'] == 'save') {
+                $module_id = '';
+
+                if (isset($this->request->get['module_id'])) {
+                    $module_id = '&module_id=' . $this->request->get['module_id'];
+                } elseif ($this->db->getLastId()) {
+                    $module_id = '&module_id=' . $this->db->getLastId();
+                }
+
+                $this->response->redirect($this->url->link('module/categoryhome', 'token=' . $this->session->data['token'] . $module_id, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) && $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('module/categoryhome', 'token=' . $this->session->data['token'], 'SSL'));
+            }
+
             $this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
         }
-                
+
         $data['heading_title'] = $this->language->get('heading_title');
 
         $data['text_edit'] = $this->language->get('text_edit');
@@ -42,6 +58,8 @@ class ControllerModuleCategoryhome extends Controller
         $data['entry_status'] = $this->language->get('entry_status');
 
         $data['button_save'] = $this->language->get('button_save');
+        $data['button_savenew'] = $this->language->get('button_savenew');
+        $data['button_saveclose'] = $this->language->get('button_saveclose');
         $data['button_cancel'] = $this->language->get('button_cancel');
 
         $results = $this->model_catalog_category->getCategories(0);
@@ -64,30 +82,6 @@ class ControllerModuleCategoryhome extends Controller
             $data['error_warning'] = $this->error['warning'];
         } else {
             $data['error_warning'] = '';
-        }
-
-        $data['breadcrumbs'] = array();
-
-        $data['breadcrumbs'][] = array(
-            'text'      => $this->language->get('text_home'),
-            'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-        );
-
-        $data['breadcrumbs'][] = array(
-            'text'      => $this->language->get('text_module'),
-            'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
-        );
-        
-        if (!isset($this->request->get['module_id'])) {
-            $data['breadcrumbs'][] = array(
-            'text'      => $this->language->get('heading_title'),
-            'href' => $this->url->link('module/categoryhome', 'token=' . $this->session->data['token'], 'SSL')
-            );
-        } else {
-            $data['breadcrumbs'][] = array(
-                'text' => $this->language->get('heading_title'),
-                'href' => $this->url->link('module/categoryhome', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL')
-            );
         }
 
         if (!isset($this->request->get['module_id'])) {
@@ -132,7 +126,7 @@ class ControllerModuleCategoryhome extends Controller
 
         $this->response->setOutput($this->load->view('module/categoryhome.tpl', $data));
     }
-    
+
     private function validate()
     {
         if (!$this->user->hasPermission('modify', 'module/categoryhome')) {
@@ -142,7 +136,7 @@ class ControllerModuleCategoryhome extends Controller
         if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 64)) {
             $this->error['name'] = $this->language->get('error_name');
         }
-            
+
         return !$this->error;
     }
 }

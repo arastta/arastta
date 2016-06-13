@@ -25,16 +25,20 @@ class ControllerModuleSlideshow extends Controller {
 
             $this->session->data['success'] = $this->language->get('text_success');
 
-            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                $route = $this->request->get['route'];
+            if (isset($this->request->post['button']) && $this->request->post['button'] == 'save') {
                 $module_id = '';
+
                 if (isset($this->request->get['module_id'])) {
                     $module_id = '&module_id=' . $this->request->get['module_id'];
-                }
-                elseif ($this->db->getLastId()) {
+                } elseif ($this->db->getLastId()) {
                     $module_id = '&module_id=' . $this->db->getLastId();
                 }
-                $this->response->redirect($this->url->link($route, 'token=' . $this->session->data['token'] . $module_id, 'SSL'));
+
+                $this->response->redirect($this->url->link('module/slideshow', 'token=' . $this->session->data['token'] . $module_id, 'SSL'));
+            }
+
+            if (isset($this->request->post['button']) && $this->request->post['button'] == 'new') {
+                $this->response->redirect($this->url->link('module/slideshow', 'token=' . $this->session->data['token'], 'SSL'));
             }
 
             $this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
@@ -80,31 +84,6 @@ class ControllerModuleSlideshow extends Controller {
             $data['error_height'] = $this->error['height'];
         } else {
             $data['error_height'] = '';
-        }
-
-        $data['breadcrumbs'] = array();
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-        );
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_module'),
-            'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
-        );
-
-
-        if (!isset($this->request->get['module_id'])) {
-            $data['breadcrumbs'][] = array(
-                'text' => $this->language->get('heading_title'),
-                'href' => $this->url->link('module/slideshow', 'token=' . $this->session->data['token'], 'SSL')
-            );
-        } else {
-            $data['breadcrumbs'][] = array(
-                'text' => $this->language->get('heading_title'),
-                'href' => $this->url->link('module/slideshow', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL')
-            );
         }
 
         if (!isset($this->request->get['module_id'])) {
