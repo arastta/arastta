@@ -11,7 +11,7 @@ class ControllerApiProducts extends Controller
 
     public function getProduct($args = array())
     {
-        $this->load->language('api/customers');
+        $this->load->language('api/products');
 
         $json = array();
 

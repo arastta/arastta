@@ -230,7 +230,7 @@ class ControllerApiOrders extends Controller
 
     public function getHistories($args = array())
     {
-        $this->load->language('api/order');
+        $this->load->language('api/orders');
 
         $json = array();
 
@@ -248,7 +248,7 @@ class ControllerApiOrders extends Controller
 
     public function addHistory($args = array())
     {
-        $this->load->language('api/order');
+        $this->load->language('api/orders');
 
         $json = array();
 
