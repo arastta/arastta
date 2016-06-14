@@ -170,9 +170,9 @@ class ModelAppearanceLayout extends Model
                 if (strpos($layout_module['code'], '.') === false) {
                     $layout_module['name'] = $this->getModuleName($layout_module['code']);
                     $layout_module['link'] = $this->url->link('module/' . $layout_module['code'], 'token=' . $this->session->data['token'], 'SSL');
-
                 } else {
                     $_code = explode('.', $layout_module['code']);
+
                     $layout_module['name'] = $this->getModuleName($_code[0], 1, $_code[1]);
                     $layout_module['link'] = $this->url->link('module/' . $_code[0], 'module_id=' . $_code[1] . '&token=' . $this->session->data['token'], 'SSL');
                 }
@@ -183,11 +183,11 @@ class ModelAppearanceLayout extends Model
                     $data[] = $layout_module;
                 }
             }
+
             return $data;
         } else {
             return $query->rows;
         }
-
     }
 
     public function getTotalLayouts()
@@ -261,5 +261,20 @@ class ModelAppearanceLayout extends Model
         $this->trigger->fire('pre.admin.layout.position', array(&$positions));
 
         return $positions;
+    }
+
+    public function getCheckLayoutToStore($data)
+    {
+        $sql = "SELECT * FROM " . DB_PREFIX . "layout_route";
+
+        if (isset($data['layout_id']) && isset($data['store_id'])) {
+            $sql .= " WHERE layout_id = " . (int)$data['layout_id'] . " AND store_id = " . $data['store_id'];
+        } else {
+            return false;
+        }
+
+        $query = $this->db->query($sql);
+
+        return $query->num_rows;
     }
 }

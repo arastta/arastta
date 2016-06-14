@@ -12,6 +12,7 @@ $_['heading_title']       = 'Layouts';
 // Text
 $_['text_layout']         = 'Layout';
 $_['text_success']        = 'Success: You have modified layouts!';
+$_['text_assign']         = 'Success: Layout assign on store!';
 $_['text_list']           = 'Layout List';
 $_['text_add']            = 'Add Layout';
 $_['text_edit']           = 'Edit Layout';
@@ -64,3 +65,4 @@ $_['error_store']         = 'Warning: This layout cannot be deleted as it is cur
 $_['error_product']       = 'Warning: This layout cannot be deleted as it is currently assigned to %s products!';
 $_['error_category']      = 'Warning: This layout cannot be deleted as it is currently assigned to %s categories!';
 $_['error_information']   = 'Warning: This layout cannot be deleted as it is currently assigned to %s information pages!';
+$_['error_layout']        = 'Warning: Please, assign this layout to the store first. <a onclick="assignLayout()">Click</a> here to assign it.';

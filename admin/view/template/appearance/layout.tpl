@@ -3,7 +3,11 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
+                <?php if($stores && !$layout_enable) { ?>
+                <button disabled type="submit" onclick="save('save')" form="form-layout" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success" data-original-title="Save" id="layout-save"><i class="fa fa-check"></i></button>
+                <?php } else { ?>
                 <button type="submit" onclick="save('save')" form="form-layout" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success" data-original-title="Save" id="layout-save"><i class="fa fa-check"></i></button>
+                <?php } ?>
                 <a href="<?php echo  $extension_module; ?>" data-toggle="tooltip" title="<?php echo $button_module; ?>" class="btn btn-default" data-original-title="<?php echo $button_module; ?>"><i class="fa fa-cubes"></i></a>
             </div>
             <h1><?php echo $heading_title; ?></h1>
@@ -12,6 +16,11 @@
     <div class="container-fluid">
         <?php if ($error_warning) { ?>
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        <?php } ?>
+        <?php if ($error_layout) { ?>
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_layout; ?>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
         <?php } ?>
@@ -28,7 +37,6 @@
                 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-layout" class="form-horizontal">
                     <div class="row layout-builder" id="layout-builder">
                         <div class="col-md-3 col-sm-4 hidden-xs">
-                            
                             <div class="layout">
                                 <?php if ($stores) { ?>
                                 <div class="row">
@@ -69,7 +77,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="left-module-block">
                                 <div id="module_list" class="module_list" data-text-confirm="<?php echo $text_confirm;?>" data-text-edit="<?php echo $text_edit;?>">
                                     <div class="heading-accordion">&nbsp;<?php echo $text_module; ?></div>
@@ -123,6 +130,9 @@
                         </div>
                         <div class="col-md-9 col-sm-8" style="top: 5px;">
                             <div class="accordion-content-drop">
+                                <?php if($stores && !$layout_enable) { ?>
+                                <div class="modal-backdrop fade in" style="height: 100%;left: 15px; right: 15px; background-color: rgba(0, 0, 0, 0.6); z-index: 99";></div>
+                                <?php } ?>
                                 <div class="container-fluid">
                                     <?php $module_id = 0; ?>
                                     <?php if (!empty($positions['header_top'])) { ?>
@@ -468,7 +478,6 @@
                         </div>
                     </div>
                     <div id="data_index" data-index="<?php echo $module_id;?>"></div>
-
                     <input type="hidden" name="layout_id" value="<?php echo $layout_id; ?>">
                     <input type="hidden" name="name" value="<?php echo !empty($name)? $name : ''; ?>">
                 </form>
@@ -481,11 +490,27 @@
         Layout.init();
 
         $("#store").change(function() {
-            redirectURL('index.php?route=appearance/layout&token=<?php echo $token;?>&store_id=' + $(this).val());
+            layout_id = getURLVar('layout_id');
+
+            url = 'index.php?route=appearance/layout&token=<?php echo $token;?>&store_id=' + $(this).val();
+
+            if (layout_id) {
+                url = url + '&layout_id=' + layout_id;
+            }
+
+            redirectURL(url);
         });
 
         $("#change_layouts").change(function() {
-            redirectURL('index.php?route=appearance/layout&token=<?php echo $token;?>&layout_id=' + $(this).val());
+            store_id = getURLVar('store_id');
+
+            url = 'index.php?route=appearance/layout&token=<?php echo $token;?>&layout_id=' + $(this).val();
+
+            if (store_id) {
+                url = url + '&store_id=' + store_id;
+            }
+
+            redirectURL(url);
         });
 
         var moduleListHeigth = $('.row.colsliders .col-md-6').height() - 12;

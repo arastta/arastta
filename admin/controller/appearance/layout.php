@@ -104,6 +104,12 @@ class ControllerAppearanceLayout extends Controller
             $data['success'] = false;
         }
 
+        $data['layout_enable'] = $this->model_appearance_layout->getCheckLayoutToStore($data);
+
+        if (!$data['layout_enable']) {
+            $data['error_layout'] = $this->language->get('error_layout');
+        }
+
         $data['token'] = $this->session->data['token'];
 
         $data['header'] = $this->load->controller('common/header');
@@ -476,6 +482,34 @@ class ControllerAppearanceLayout extends Controller
         $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'module/' . $extension);
 
         $this->load->controller('module/' . $extension . '/install');
+    }
+
+    public function checkLayoutToStore()
+    {
+        $data = $json = array();
+
+        $this->load->language('appearance/layout');
+
+        $this->load->model('appearance/layout');
+
+        if (!empty($this->request->post['layout_id'])) {
+            $data['layout_id'] = $this->request->post['layout_id'];
+        }
+
+        if (!empty($this->request->post['store_id'])) {
+            $data['store_id'] = $this->request->post['store_id'];
+        }
+
+        $result = $this->model_appearance_layout->getCheckLayoutToStore($data);
+
+        if ($result) {
+            $json['success'] = $this->language->get('text_assign');
+        } else {
+            $json['warning'] = $this->language->get('error_layout');
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
     }
 
     private function getModuleListHTML()

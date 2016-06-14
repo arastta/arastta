@@ -192,6 +192,57 @@ function btn_edit_click(event) {
     $('#module-modal').modal('show');
 }
 
+function checkLayoutToStore() {
+    queryString = '';
+
+    layout_id = getURLVar('layout_id');
+
+    if (layout_id) {
+        queryString += '&layout_id=' + layout_id;
+    }
+
+    store_id = getURLVar('store_id');
+
+    if (store_id) {
+        queryString += '&store_id=' + store_id;
+    }
+
+    $.ajax({
+        url: 'index.php?route=appearance/layout/checkLayoutToStore&token=' + getURLVar('token'),
+        type: 'post',
+        data: queryString,
+        dataType: 'json',
+        cache: false,
+        success: function(json) {
+            $('.alert.alert-danger').remove();
+
+            if (json['success']) {
+                $('.accordion-content-drop .modal-backdrop').remove();
+                $('#layout-save').prop('disabled', false);
+            }
+
+            if (json['warning']) {
+                html  = '<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i>' + json['warning'];
+                html += '   <button type="button" class="close" data-dismiss="alert">&times;</button>';
+                html += '</div>';
+
+                $('.panel.panel-default').before(html);
+
+                $('#layout-save').prop('disabled', true);
+
+                $('.accordion-content-drop .container-fluid').before('<div class="modal-backdrop fade in" style="height: 100%;left: 15px; right: 15px; background-color: rgba(0, 0, 0, 0.6); z-index: 99";></div>');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
+
+function assignLayout() {
+    $('.layout-buttons a:first-child').trigger( "click" );
+}
+
 $(document).ready(function() {
     $(document).on('hide.bs.modal','.modal-box', function () {
         $('body').removeClass('modal-open');
@@ -263,6 +314,10 @@ $(document).ready(function() {
 
         if (current_url.indexOf('appearance/layout/add') < 0) {
             $('#layout-add').modal('hide');
+
+            if ($('#store').length) {
+                checkLayoutToStore();
+            }
         } else if (current_url.indexOf('appearance/layout/add') > -1) {
             iframe.contents().find('html,body').css({
                 height: 'auto'
@@ -303,6 +358,10 @@ $(document).ready(function() {
 
         if (current_url.indexOf('appearance/layout/edit') < 0) {
             $('#layout-edit').modal('hide');
+
+            if ($('#store').length) {
+                checkLayoutToStore();
+            }
         } else if (current_url.indexOf('appearance/layout/edit') > -1) {
             iframe.contents().find('html,body').css({
                 height: 'auto'
