@@ -16,6 +16,7 @@
         "ezyang/htmlpurifier": "4.7.*",
         "erusev/parsedown": "1.6.*",
         "erusev/parsedown-extra": "0.7.*",
+        "icanboogie/inflector": "1.4.*",
         "joomla/cache": "1.*@dev",
         "joomla/profiler": "1.*@dev",
         "joomla/uri": "1.*@dev",
