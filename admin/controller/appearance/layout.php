@@ -106,10 +106,6 @@ class ControllerAppearanceLayout extends Controller
 
         $data['layout_enable'] = $this->model_appearance_layout->getCheckLayoutToStore($data);
 
-        if (!$data['layout_enable']) {
-            $data['error_layout'] = $this->language->get('error_layout');
-        }
-
         $data['token'] = $this->session->data['token'];
 
         $data['header'] = $this->load->controller('common/header');

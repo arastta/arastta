@@ -19,7 +19,7 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
         <?php } ?>
-        <?php if ($error_layout) { ?>
+        <?php if ($stores && !$layout_enable) { ?>
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_layout; ?>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
