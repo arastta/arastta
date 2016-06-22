@@ -13,7 +13,7 @@
         <?php } else { ?>
         <?php $class = 'col-sm-12'; ?>
         <?php } ?>
-        <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?><?php echo $content_bottom; ?></div>
+        <?php if($content_top || $content_bottom) : ?><div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?><?php echo $content_bottom; ?></div><?php endif; ?>
         <?php echo $column_right; ?></div>
 </div>
 <?php if($bottom_a) : ?>
