@@ -172,7 +172,7 @@ class Emailtemplate
     // Store Logo
     public function storeLogo()
     {
-        $store_url = (HTTPS_CATALOG) ? HTTPS_CATALOG : HTTPS_SERVER;
+        $store_url = defined('HTTPS_CATALOG') ? HTTPS_CATALOG : HTTPS_SERVER;
         $store_name = $this->config->get('config_name');
         $store_logo = HTTPS_IMAGE . $this->config->get('config_logo');
 
@@ -545,7 +545,6 @@ class Emailtemplate
     // Order Text
     public function getOrderText($template_id, $data)
     {
-
         foreach ($data as $dataKey => $dataValue) {
             $$dataKey = $dataValue;
         }
@@ -787,7 +786,6 @@ class Emailtemplate
     public function getVoucherTemplate($order_info, $getVouchers, $template_voucher)
     {
         $result = array();
-
 
         foreach ($getVouchers as $voucher) {
             // Replace Product Short Code to Values
@@ -1050,7 +1048,8 @@ class Emailtemplate
         if ($type_id == 'affiliate_4') {
             $message  = sprintf($this->language->get('text_approve_welcome'), $this->config->get('config_name')) . "\n\n";
             $message .= $this->language->get('text_approve_login') . "\n";
-            $message .= ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'index.php?route=affiliate/login' . "\n\n";
+            $store_url = defined('HTTPS_CATALOG') ? HTTPS_CATALOG : HTTPS_SERVER;
+            $message .= $store_url. 'index.php?route=affiliate/login' . "\n\n";
             $message .= $this->language->get('text_approve_services') . "\n\n";
             $message .= $this->language->get('text_approve_thanks') . "\n";
             $message .= $this->config->get('config_name');
@@ -1109,7 +1108,8 @@ class Emailtemplate
 
         if ($type_id == 'customer_4') {
             $store_name = $this->config->get('config_name');
-            $store_url = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG . 'index.php?route=account/login';
+            $store_url = defined('HTTPS_CATALOG') ? HTTPS_CATALOG : HTTPS_SERVER;
+            $store_url .= 'index.php?route=account/login';
 
             $message = sprintf($this->language->get('text_approve_welcome'), $store_name) . "\n\n";
             $message .= $this->language->get('text_approve_login') . "\n";
@@ -1448,7 +1448,6 @@ class Emailtemplate
 
         return $subject;
     }
-
 
     public function getDefaultVoucherMessage($type_id, $data)
     {

@@ -279,11 +279,7 @@ class Mail {
 
     protected function replaceFullImagePath ($html)
     {
-        $new_path = HTTPS_SERVER;
-
-        if (HTTPS_CATALOG) {
-            $new_path = HTTPS_CATALOG;
-        }
+        $new_path = defined('HTTPS_CATALOG') ? HTTPS_CATALOG : HTTPS_SERVER;
 
         $html = str_replace('src=&quot;../', 'src=&quot;' . $new_path, $html);
         $html = str_replace('src="../', 'src="' . $new_path, $html);
