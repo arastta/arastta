@@ -20,7 +20,7 @@ $_['text_details']              = 'Theme Details';
 // Buttons
 $_['button_default']            = 'Set Default';
 $_['button_preview']            = 'Live Preview';
-$_['button_customize']          = 'Customize';
+$_['button_customize']          = 'Customise';
 $_['button_uninstall']          = 'Uninstall';
 $_['button_setting']            = 'Settings';
 $_['button_new_theme']          = 'Add New Theme';

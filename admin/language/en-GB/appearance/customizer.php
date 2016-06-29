@@ -26,9 +26,9 @@ $_['text_general_description']                  = 'General';
 $_['text_general_sitename_label']               = 'Site Title';
 $_['text_general_font_label']                   = 'Site Font';
 $_['text_general_layout_label']                 = 'Layout';
-$_['text_colors_title']                         = 'Colors';
-$_['text_colors_container_background_label']    = 'Background Color';
-$_['text_colors_container_color_label']         = 'Text Color';
+$_['text_colors_title']                         = 'Colours';
+$_['text_colors_container_background_label']    = 'Background Colour';
+$_['text_colors_container_color_label']         = 'Text Colour';
 $_['text_images_title']                         = 'Images';
 $_['text_images_description']                   = '';
 $_['text_images_logo_label']                    = 'Logo';
@@ -48,8 +48,8 @@ $_['entry_default']         = 'Default';
 $_['entry_clear']           = 'Clear';
 $_['entry_collapse']        = 'Collapse';
 $_['entry_collapse_sidebar']= 'Collapse Sidebar';
-$_['entry_select_color']    = 'Select Color';
-$_['entry_current_color']   = 'Current Color';
+$_['entry_select_color']    = 'Select Colour';
+$_['entry_current_color']   = 'Current Colour';
 
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify customizer!';
