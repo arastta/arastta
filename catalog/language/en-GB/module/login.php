@@ -7,7 +7,7 @@
  */
 
 // Heading 
-$_['heading_title']                 = 'Login';
+$_['heading_title']             = 'Login';
 $_['text_welcome']              = 'Welcome';
 
 // Entry
@@ -25,7 +25,7 @@ $_['text_my_newsletter']        = 'My Newsletter';
 $_['text_information']          = 'Edit Account';
 $_['text_password']             = 'Change Password';
 $_['text_address']              = 'Update Address';
-$_['text_history']               = 'View order history';
+$_['text_history']              = 'View order history';
 $_['text_download']             = 'Downloads';
 $_['text_newsletter']           = 'Newsletter';
 $_['text_create']               = 'Create Account';
