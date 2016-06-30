@@ -7,7 +7,7 @@
  */
 
 // Text
-$_['text_upload']    = 'Your file was successfully uploaded!';
+$_['text_upload']    = 'Your file was uploaded!';
 
 // Error
 $_['error_filename'] = 'Filename must be between 3 and 64 characters!';
