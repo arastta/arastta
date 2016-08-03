@@ -573,6 +573,7 @@ footer .copyright a {
     -webkit-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     padding: 20px;
+    overflow: hidden;
 }
 #content .register > h1 {
     margin-top: 0;
