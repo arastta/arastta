@@ -175,9 +175,17 @@ class ModelCommonUpdate extends Model
                         $addon = $addons[$id];
                         $type = $addon['product_type'];
 
-                        if (version_compare($addon['product_version'], $addon_version) != 0) {
-                            $data[$type][$addon['product_id']] = $addon_version;
+                        // English (en-GB) language, always up-to-date
+                        if ($addon['product_id'] == 225) {
+                            continue;
                         }
+
+                        // Up-to-date
+                        if (version_compare($addon['product_version'], $addon_version) == 0) {
+                            continue;
+                        }
+
+                        $data[$type][$addon['product_id']] = $addon_version;
                     }
                 } elseif ($key == 'core') {
                     if (version_compare(VERSION, $version) != 0) {

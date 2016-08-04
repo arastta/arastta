@@ -35,7 +35,9 @@ class ModelLanguage extends Model
             $this->session->data['lang_code'] = 'en';
             $this->session->data['lang_image'] = 'gb.png';
             $this->session->data['lang_directory'] = 'en-GB';
-            
+            $this->session->data['lang_product_id'] = '225';
+            $this->session->data['lang_version'] = '';
+
             // Workaround to mutual session ids
             $this->session->data['config_language'] = 'en';
             $this->session->data['config_admin_language'] = 'en';
@@ -81,7 +83,9 @@ class ModelLanguage extends Model
         $this->session->data['lang_code'] = $json['translation']['code'];
         $this->session->data['lang_image'] = $json['translation']['image'];
         $this->session->data['lang_directory'] = $json['translation']['directory'];
-            
+        $this->session->data['lang_product_id'] = $json['translation']['product_id'];
+        $this->session->data['lang_version'] = $json['translation']['version'];
+
         // Workaround to mutual session ids
         $this->session->data['config_language'] = $json['translation']['code'];
         $this->session->data['config_admin_language'] = $json['translation']['code'];

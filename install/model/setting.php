@@ -147,11 +147,21 @@ class ModelSetting extends Model
         $lang_code = $this->session->data['lang_code'];
         $lang_image = $this->session->data['lang_image'];
         $lang_directory = $this->session->data['lang_directory'];
+        $lang_product_id = $this->session->data['lang_product_id'];
+        $lang_version = $this->session->data['lang_version'];
 
         $db->query("INSERT INTO `" . DB_PREFIX . "language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`)
                     VALUES (1, '" . $db->escape($lang_name) . "', '" . $db->escape($lang_code) . "', '', '" . $db->escape($lang_image) . "', '" . $db->escape($lang_directory) . "', 1, 1);");
 
         $db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_language', value = '" . $db->escape($lang_code) . "'");
         $db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_admin_language', value = '" . $db->escape($lang_code) . "'");
+
+        $addon_params['language_id'] = '1';
+        $addon_params['theme_ids'] = array();
+        $addon_params['extension_ids'] = array();
+
+        $addon_params = json_encode($addon_params);
+
+        $db->query("INSERT INTO " . DB_PREFIX . "addon SET `product_id` = " . (int) $lang_product_id . ", `product_name` = '" . $db->escape($lang_name) . "', `product_type` = 'translation', `product_version` = '" . $db->escape($lang_version) . "', `files` = '', `params` = '" . $db->escape($addon_params) . "'");
     }
 }
