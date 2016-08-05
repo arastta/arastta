@@ -451,6 +451,34 @@ class ControllerProductSearch extends Controller {
             $data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
         }
 
+        if ((isset($this->request->get['search']) || isset($this->request->get['tag'])) && $this->config->get('config_customer_search')) {
+            $this->load->model('account/search');
+
+            if ($this->customer->isLogged()) {
+                $customer_id = $this->customer->getId();
+            } else {
+                $customer_id = 0;
+            }
+
+            if (isset($this->request->server['REMOTE_ADDR'])) {
+                $ip = $this->request->server['REMOTE_ADDR'];
+            } else {
+                $ip = '';
+            }
+
+            $search_data = array(
+                'keyword'       => $search,
+                'category_id'   => $category_id,
+                'sub_category'  => $sub_category,
+                'description'   => $description,
+                'products'      => $product_total,
+                'customer_id'   => $customer_id,
+                'ip'            => $ip
+            );
+
+            $this->model_account_search->addSearch($search_data);
+        }
+
         $data['search'] = $search;
         $data['description'] = $description;
         $data['category_id'] = $category_id;

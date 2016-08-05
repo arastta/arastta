@@ -107,6 +107,7 @@ class ControllerCommonMenu extends Controller {
         $p_return_customer_order = $this->user->hasPermission('access','report/customer_order');
         $p_return_customer_reward = $this->user->hasPermission('access','report/customer_reward');
         $p_return_customer_credit = $this->user->hasPermission('access','report/customer_credit');
+        $p_return_customer_search = $this->user->hasPermission('access','report/customer_search');
         $p_return_report_marketing = $this->user->hasPermission('access','report/marketing');
         $p_return_report_affiliate = $this->user->hasPermission('access','report/affiliate');
         $p_return_report_affiliate_activity = $this->user->hasPermission('access','report/affiliate_activity');
@@ -157,7 +158,7 @@ class ControllerCommonMenu extends Controller {
             'reports' => array(
                 'text' => $data['text_reports'],
                 'icon' => 'fa-bar-chart-o',
-                'permission' => $p_return_sale_order || $p_return_sale_tax || $p_return_sale_shipping || $p_return_sale_return || $p_return_sale_coupon || $p_return_product_viewed || $p_return_product_purchased || $p_return_customer_online || $p_return_customer_activity || $p_return_customer_order || $p_return_customer_reward || $p_return_customer_credit || $p_return_report_marketing || $p_return_report_affiliate || $p_return_report_affiliate_activity,
+                'permission' => $p_return_sale_order || $p_return_sale_tax || $p_return_sale_shipping || $p_return_sale_return || $p_return_sale_coupon || $p_return_product_viewed || $p_return_product_purchased || $p_return_customer_online || $p_return_customer_activity || $p_return_customer_order || $p_return_customer_reward || $p_return_customer_credit || $p_return_customer_search || $p_return_report_marketing || $p_return_report_affiliate || $p_return_report_affiliate_activity,
                 'sort_order' => 6,
                 'position' => 'left'
             ),
@@ -451,7 +452,7 @@ class ControllerCommonMenu extends Controller {
             'customers' => array(
                 'text' => $data['text_customer'],
                 'sort_order' => 3,
-                'permission' => $p_return_customer_online || $p_return_customer_activity || $p_return_customer_order || $p_return_customer_reward || $p_return_customer_credit,
+                'permission' => $p_return_customer_online || $p_return_customer_activity || $p_return_customer_order || $p_return_customer_reward || $p_return_customer_credit|| $p_return_customer_search,
                 'children' => array(
                     'customers_online' => array(
                         'text' => $data['text_report_customer_online'],
@@ -482,6 +483,12 @@ class ControllerCommonMenu extends Controller {
                         'href' => $this->url->link('report/customer_credit', 'token=' . $this->session->data['token'], 'SSL'),
                         'sort_order' => 5,
                         'permission' => $p_return_customer_credit
+                    ),
+                    'search' => array(
+                        'text' => $data['text_report_customer_search'],
+                        'href' => $this->url->link('report/customer_search', 'token=' . $this->session->data['token'], 'SSL'),
+                        'sort_order' => 6,
+                        'permission' => $p_return_customer_search
                     ),
                 )
             ),
