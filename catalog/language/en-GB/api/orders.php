@@ -7,7 +7,8 @@
  */
 
 // Text
-$_['text_success']          = 'You have successfully modified customers';
+$_['text_success']          = 'You have successfully modified orders';
+$_['text_missing']          = 'Missing Orders';
 
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to access the API!';
