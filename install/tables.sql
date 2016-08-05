@@ -247,26 +247,12 @@ CREATE TABLE IF NOT EXISTS `ar_banner` (
 CREATE TABLE IF NOT EXISTS `ar_banner_image` (
   `banner_image_id` int(11) NOT NULL AUTO_INCREMENT,
   `banner_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `title` varchar(64) NOT NULL,
   `link` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`banner_image_id`),
-  KEY `banner_id` (`banner_id`)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ar_banner_image_description`
---
-
-CREATE TABLE IF NOT EXISTS `ar_banner_image_description` (
-  `banner_image_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `banner_id` int(11) NOT NULL,
-  `title` varchar(64) NOT NULL,
-  PRIMARY KEY (`banner_image_id`,`language_id`),
-  KEY `language_id` (`language_id`),
   KEY `banner_id` (`banner_id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

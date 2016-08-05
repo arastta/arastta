@@ -36,33 +36,19 @@ INSERT INTO `ar_banner` (`banner_id`, `name`, `status`) VALUES
 (7, 'Home Page Slideshow', 1),
 (8, 'Manufacturers', 1);
 
-INSERT INTO `ar_banner_image` (`banner_image_id`, `banner_id`, `link`, `image`, `sort_order`) VALUES
-(108, 8, '', 'catalog/demo/manufacturer/bellfield.jpg', 0),
-(109, 8, '', 'catalog/demo/manufacturer/bonds.jpg', 0),
-(110, 8, '', 'catalog/demo/manufacturer/edwin.jpg', 0),
-(111, 8, '', 'catalog/demo/manufacturer/minimum.jpg', 0),
-(112, 8, '', 'catalog/demo/manufacturer/obey.jpg', 0),
-(113, 8, '', 'catalog/demo/manufacturer/skagen.jpg', 0),
-(114, 8, '', 'catalog/demo/manufacturer/spiral.jpg', 0),
-(115, 8, '', 'catalog/demo/manufacturer/supra.jpg', 0),
-(116, 8, '', 'catalog/demo/manufacturer/timberland.jpg', 0),
-(117, 8, '', 'catalog/demo/manufacturer/wrangler.jpg', 0),
-(118, 7, 'index.php?route=product/product&amp;path=18_46&amp;product_id=47', 'catalog/demo/banners/slide-1.jpg', 0),
-(119, 7, 'index.php?route=product/product&amp;path=34&amp;product_id=48', 'catalog/demo/banners/slide-2.jpg', 0);
-
-INSERT INTO `ar_banner_image_description` (`banner_image_id`, `language_id`, `banner_id`, `title`) VALUES
-(108, 1, 8, 'BellField'),
-(109, 1, 8, 'BONDS'),
-(110, 1, 8, 'EDWIN'),
-(111, 1, 8, 'Minimum'),
-(112, 1, 8, 'OBEY'),
-(113, 1, 8, 'SKAGEN'),
-(114, 1, 8, 'Spiral'),
-(115, 1, 8, 'SUPRA'),
-(116, 1, 8, 'Timberland'),
-(117, 1, 8, 'Wrangler'),
-(118, 1, 7, 'Slide 1'),
-(119, 1, 7, 'Slide 2');
+INSERT INTO `ar_banner_image` (`banner_image_id`, `banner_id`, `language_id`, `title`, `link`, `image`, `sort_order`) VALUES
+(108, 8, 1, 'BellField', '', 'catalog/demo/manufacturer/bellfield.jpg', 0),
+(109, 8, 1, 'BONDS', '', 'catalog/demo/manufacturer/bonds.jpg', 0),
+(110, 8, 1, 'EDWIN', '', 'catalog/demo/manufacturer/edwin.jpg', 0),
+(111, 8, 1, 'Minimum', '', 'catalog/demo/manufacturer/minimum.jpg', 0),
+(112, 8, 1, 'OBEY', '', 'catalog/demo/manufacturer/obey.jpg', 0),
+(113, 8, 1, 'SKAGEN', '', 'catalog/demo/manufacturer/skagen.jpg', 0),
+(114, 8, 1, 'Spiral', '', 'catalog/demo/manufacturer/spiral.jpg', 0),
+(115, 8, 1, 'SUPRA', '', 'catalog/demo/manufacturer/supra.jpg', 0),
+(116, 8, 1, 'Timberland', '', 'catalog/demo/manufacturer/timberland.jpg', 0),
+(117, 8, 1, 'Wrangler', '', 'catalog/demo/manufacturer/wrangler.jpg', 0),
+(118, 7, 1, 'Slide 1', 'index.php?route=product/product&amp;path=18_46&amp;product_id=47', 'catalog/demo/banners/slide-1.jpg', 0),
+(119, 7, 1, 'Slide 2', 'index.php?route=product/product&amp;path=34&amp;product_id=48', 'catalog/demo/banners/slide-2.jpg', 0);
 
 INSERT INTO `ar_category` (`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES
 (18, '', 0, 1, 0, 2, 1, '2015-05-18 00:00:00', '2016-04-18 14:16:22'),
