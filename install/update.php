@@ -366,4 +366,35 @@ if (version_compare(VERSION, '1.4.0', '<')) {
 
     // Delete banner_image_description table
     $this->db->query("DROP TABLE `" . DB_PREFIX . "banner_image_description`");
+
+    // Customer Search
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "customer_search` (
+  `customer_search_id` int(11) NOT NULL AUTO_INCREMENT,
+  `store_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `keyword` varchar(255) NOT NULL,
+  `category_id` int(11),
+  `sub_category` tinyint(1) NOT NULL,
+  `description` tinyint(1) NOT NULL,
+  `products` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_search_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    // Insert setting table
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET `store_id` = 0, `code` = 'config', `key` = 'config_customer_search', `value` = '0', `serialized` = 0");
+
+    // Update user groups
+    $user_groups = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group");
+
+    foreach ($user_groups->rows as $user_group) {
+        $user_group['permission'] = unserialize($user_group['permission']);
+
+        $user_group['permission']['access'][] = 'report/customer_search';
+        $user_group['permission']['modify'][] = 'report/customer_search';
+
+        $this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
+    }
 }
