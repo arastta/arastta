@@ -349,3 +349,21 @@ if (version_compare(VERSION, '1.3.2', '<')) {
         $this->db->query("UPDATE `" . DB_PREFIX . "email_description` SET `description` = '" . $this->db->escape($description) . "' WHERE `id` = '" . $email_description['id'] . "';");
     }
 }
+
+// 1.4.0 changes;
+if (version_compare(VERSION, '1.4.0', '<')) {
+    // Update banner_image table
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "banner_image` ADD `langauge_id` INT(11) NOT NULL AFTER `banner_id`");
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "banner_image`  ADD `title` VARCHAR( 64 ) NOT NULL AFTER `langauge_id`");
+
+    $banner_image_description = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner_image_description WHERE 1");
+
+    if ($banner_image_description->num_rows) {
+        foreach ($banner_image_description->rows as $banner_image) {
+            $this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `langauge_id` = '" . (int)$banner_image['language_id'] . "', `title` = '" . $this->db->escape($banner_image['title']) . "' WHERE `banner_image_id` = '" . (int)$banner_image['banner_image_id'] . "';");
+        }
+    }
+
+    // Delete banner_image_description table
+    $this->db->query("DROP TABLE `" . DB_PREFIX . "banner_image_description`");
+}
