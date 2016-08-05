@@ -151,6 +151,35 @@ class ControllerApiOrders extends Controller
         $this->response->setOutput(json_encode($json));
     }
 
+    public function getStatuses($args = array())
+    {
+        $this->load->language('api/orders');
+
+        $json = array();
+
+        if (!isset($this->session->data['api_id'])) {
+            $json['error'] = $this->language->get('error_permission');
+        } else {
+            $this->load->model('api/orders');
+
+            $statuses = array();
+            $statuses[] = array('order_status_id' => '0', 'name' => $this->language->get('text_missing'));
+
+            $rows = $this->model_api_orders->getStatuses();
+
+            if (!empty($rows)) {
+                foreach($rows as $row) {
+                    $statuses[] = array('order_status_id' => $row['order_status_id'], 'name' => $row['name']);
+                }
+            }
+
+            $json = $statuses;
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+
     public function getProducts($args = array())
     {
         $this->load->language('api/orders');
@@ -174,8 +203,8 @@ class ControllerApiOrders extends Controller
                 foreach ($rows as $row) {
                     $currency_value = false;
 
-                    if (isset($data['currency_code'])) {
-                        $currency_code = $data['currency_code'];
+                    if (isset($args['currency_code'])) {
+                        $currency_code = $args['currency_code'];
                     } elseif (isset($row['currency_code'])) {
                         $currency_code = $row['currency_code'];
                         $currency_value = $row['currency_value'];
@@ -186,7 +215,7 @@ class ControllerApiOrders extends Controller
                     $row['nice_price'] = $this->currency->format($row['price'], $currency_code, $currency_value);
                     $row['quantity'] = intval($row['quantity']);
 
-                    $order_product_options = $this->model_account_order->getOrderOptions($data['id'], $row['order_product_id']);
+                    $order_product_options = $this->model_account_order->getOrderOptions($args['id'], $row['order_product_id']);
 
                     $option_data = array();
                     foreach ($order_product_options as $option) {
@@ -206,14 +235,20 @@ class ControllerApiOrders extends Controller
 
                     $row['options'] = $option_data;
 
-                    if (!$data['skip_images']) {
+                    if (empty($args['skip_images'])) {
                         $thumb_width = $this->config->get('config_image_thumb_width', 300);
                         $thumb_height = $this->config->get('config_image_thumb_height', 300);
 
-                        if (isset($row['image']) && strlen($row['image']) > 0) {
+                        if (!empty($row['image'])) {
                             $row['image'] = $this->model_tool_image->resize($row['image'], $thumb_width, $thumb_height);
                         } else {
                             $row['image'] = $this->model_tool_image->resize('placeholder.png', $thumb_width, $thumb_height);
+                        }
+
+                        if ($this->request->server['HTTPS']) {
+                            $row['image'] = str_replace($this->config->get('config_ssl'), '', $row['image']);
+                        } else {
+                            $row['image'] = str_replace($this->config->get('config_url'), '', $row['image']);
                         }
                     }
 
@@ -237,9 +272,9 @@ class ControllerApiOrders extends Controller
         if (!isset($this->session->data['api_id'])) {
             $json['error'] = $this->language->get('error_permission');
         } else {
-            $this->load->model('account/order');
+            $this->load->model('api/orders');
 
-            $json = $this->model_account_order->getOrderHistories($args['id']);
+            $json = $this->model_api_orders->getOrderHistories($args['id']);
         }
 
         $this->response->addHeader('Content-Type: application/json');
@@ -260,7 +295,6 @@ class ControllerApiOrders extends Controller
             // Add keys for missing post vars
             $keys = array(
                 'notify',
-                'append',
                 'comment'
             );
 
