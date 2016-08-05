@@ -233,7 +233,9 @@ class ControllerSaleCustomer extends Controller {
         }
 
         if ($customers && $this->validateApprove()) {
-            $this->model_sale_customer->approve($this->request->get['customer_id']);
+            foreach ($customers as $customer_id) {
+                $this->model_sale_customer->approve($customer_id);
+            }
 
             $this->session->data['success'] = $this->language->get('text_success');
 
@@ -462,6 +464,7 @@ class ControllerSaleCustomer extends Controller {
 
         $data['add'] = $this->url->link('sale/customer/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $data['delete'] = $this->url->link('sale/customer/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+        $data['approve'] = $this->url->link('sale/customer/approve', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
         $data['customers'] = array();
 
