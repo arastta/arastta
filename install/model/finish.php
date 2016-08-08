@@ -24,6 +24,14 @@ class ModelFinish extends Model
             // Discard chmod failure, some systems may not support it
         }
 
+        // Try to rename the robots.txt file
+        try {
+            $this->filesystem->rename(DIR_ROOT . 'robots.txt.dist', DIR_ROOT . 'robots.txt');
+        } catch (Exception $e) {
+            // Do nothing
+        }
+
+        // Try to remove the install folder
         try {
             $this->filesystem->remove(DIR_ROOT . 'install');
         } catch (Exception $e) {
