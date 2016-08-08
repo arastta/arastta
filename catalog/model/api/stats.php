@@ -41,8 +41,11 @@ class ModelApiStats extends Model
             $day = $date->format('Y-m-d');
 
             $query = $this->db->query($sql . " WHERE DATE(date_added) = DATE('" . $day . "')");
+            
+            $row = $query->row;
+            $row['date'] = $day;
 
-            $stats[$day] = $query->row;
+            $stats[] = $row;
 
             $date->add(new DateInterval('P1D'));
         }
