@@ -304,12 +304,10 @@ class ControllerApiOrders extends Controller
                 }
             }
 
-            $args['order_status_id'] = $args['status'];
-
             $order_info = $this->model_checkout_order->getOrder($args['id']);
 
             if ($order_info) {
-                $this->model_checkout_order->addOrderHistory($args['id'], $args['order_status_id'], $args['comment'], $args['notify']);
+                $this->model_checkout_order->addOrderHistory($args['id'], $args['status'], $args['comment'], $args['notify']);
 
                 $json['success'] = $this->language->get('text_success');
             } else {
