@@ -36,7 +36,7 @@ class ControllerCommonHeader extends Controller {
             $server = $this->config->get('config_url');
         }
 
-        if(is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/customizer.css')){
+        if (is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/customizer.css')) {
             $this->document->addStyle('catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/customizer.css');
             $this->checkFont();
             $this->checkCustom();
@@ -131,17 +131,21 @@ class ControllerCommonHeader extends Controller {
         $menus = $this->model_appearance_menu->getMenus();
         $menu_child = $this->model_appearance_menu->getChildMenus();
 
-        foreach($menus as $id => $menu) {
+        foreach ($menus as $id => $menu) {
             $children_data = array();
-        
-            foreach($menu_child as $child_id => $child_menu) {
+
+            $child_active = false;
+
+            foreach ($menu_child as $child_id => $child_menu) {
+                $active = false;
+
                 if (($menu['menu_id'] != $child_menu['menu_id']) or !is_numeric($child_id)) {
                     continue;
                 }
 
                 $child_name = '';
 
-                if (($menu['menu_type'] == 'category') and ($child_menu['menu_type'] == 'category')){
+                if (($menu['menu_type'] == 'category') and ($child_menu['menu_type'] == 'category')) {
                     $filter_data = array(
                         'filter_category_id'  => $child_menu['link'],
                         'filter_sub_category' => true
@@ -150,9 +154,16 @@ class ControllerCommonHeader extends Controller {
                     $child_name = ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : '');
                 }
 
+                $active = $this->checkActive($child_menu);
+
+                if (!($child_active) && $active) {
+                    $child_active = true;
+                }
+
                 $children_data[] = array(
-                    'name' => $child_menu['name'] . $child_name,
-                    'href' => $this->getMenuLink($menu, $child_menu)
+                    'name'   => $child_menu['name'] . $child_name,
+                    'href'   => $this->getMenuLink($menu, $child_menu),
+                    'active' => $active
                 );
             }
 
@@ -160,7 +171,8 @@ class ControllerCommonHeader extends Controller {
                 'name'     => $menu['name'] ,
                 'children' => $children_data,
                 'column'   => $menu['columns'] ? $menu['columns'] : 1,
-                'href'     => $this->getMenuLink($menu)
+                'href'     => $this->getMenuLink($menu),
+                'active'   => ($child_active) ? true : $this->checkActive($menu)
             );
         }
         
@@ -193,7 +205,8 @@ class ControllerCommonHeader extends Controller {
         }
     }
 
-    public function getMenuLink($parent, $child = null) {
+    public function getMenuLink($parent, $child = null)
+    {
         $item = empty($child) ? $parent : $child;
 
         switch ($item['menu_type']) {
@@ -203,20 +216,20 @@ class ControllerCommonHeader extends Controller {
                 if (!empty($child)) {
                     $args = 'path=' . $parent['link'] . '_' . $item['link'];
                 } else {
-                    $args = 'path='.$item['link'];
+                    $args = 'path=' . $item['link'];
                 }
                 break;
             case 'product':
                 $route = 'product/product';
-                $args = 'product_id='.$item['link'];
+                $args = 'product_id=' . $item['link'];
                 break;
             case 'manufacturer':
                 $route = 'product/manufacturer/info';
-                $args = 'manufacturer_id='.$item['link'];
+                $args = 'manufacturer_id=' . $item['link'];
                 break;
             case 'information':
                 $route = 'information/information';
-                $args = 'information_id='.$item['link'];
+                $args = 'information_id=' . $item['link'];
                 break;
             default:
                 $tmp = explode('&', str_replace('index.php?route=', '', $item['link']));
@@ -225,8 +238,7 @@ class ControllerCommonHeader extends Controller {
                     $route = $tmp[0];
                     unset($tmp[0]);
                     $args = (!empty($tmp)) ? implode('&', $tmp) : '';
-                }
-                else {
+                } else {
                     $route = $item['link'];
                     $args = '';
                 }
@@ -245,23 +257,71 @@ class ControllerCommonHeader extends Controller {
         return $link;
     }
 
-    public function checkFont(){
+    public function checkFont()
+    {
         $this->load->model('appearance/customizer');
 
         $data = $this->model_appearance_customizer->getDefaultData('customizer');
 
-        if(!empty($data['font']) && $data['font'] != 'inherit' && $data['font'] != 'Georgia, serif' && $data['font'] != 'Helvetica, sans-serif'){
-            $this->document->addStyle('//fonts.googleapis.com/css?family=' . str_replace(' ', '+', $data['font']), 'stylesheet' , '');
+        if (!empty($data['font']) && $data['font'] != 'inherit' && $data['font'] != 'Georgia, serif' && $data['font'] != 'Helvetica, sans-serif') {
+            $this->document->addStyle('//fonts.googleapis.com/css?family=' . str_replace(' ', '+', $data['font']), 'stylesheet', '');
         }
     }
 
-    public function checkCustom(){
-        if(is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/custom.css')) {
+    public function checkCustom()
+    {
+        if (is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/custom.css')) {
             $this->document->addStyle('catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/custom.css');
         }
 
-        if(is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/javascript/custom.js')) {
+        if (is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/javascript/custom.js')) {
             $this->document->addScript('catalog/view/theme/' . $this->config->get('config_template') . '/javascript/custom.js');
         }
+    }
+
+    public function checkActive($menu)
+    {
+        if (!isset($this->request->get['route'])) {
+            return false;
+        }
+
+        $route = basename($this->request->get['route']);
+
+        if ($route != $menu['menu_type'] && $this->request->get['route'] != 'product/manufacturer/info') {
+            return false;
+        }
+
+        switch ($menu['menu_type']) {
+            case 'category':
+                if (isset($this->request->get['path'])) {
+                    $paths = explode('_', $this->request->get['path']);
+
+                    if (in_array($menu['link'], $paths)) {
+                        return true;
+                    }
+                } elseif (isset($this->request->get['category_id']) && $menu['link'] == $this->request->get['category_id']) {
+                    return true;
+                }
+                break;
+            case 'product':
+                if (isset($this->request->get['product_id']) && $menu['link'] == $this->request->get['product_id']) {
+                    return true;
+                }
+                break;
+            case 'manufacturer':
+                if (isset($this->request->get['manufacturer_id']) && $menu['link'] == $this->request->get['manufacturer_id']) {
+                    return true;
+                }
+                break;
+            case 'information':
+                if (isset($this->request->get['information_id']) && $menu['link'] == $this->request->get['information_id']) {
+                    return true;
+                }
+                break;
+            default :
+                return false;
+        }
+
+        return false;
     }
 }
