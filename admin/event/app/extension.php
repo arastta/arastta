@@ -16,18 +16,29 @@ class EventAppExtension extends Event
 
     public function rewrite($url)
     {
-        if (!strstr($url, 'extension/')) {
+        if (!strstr($url, 'extension/')
+            && !strstr($url, 'editor/')
+            && !strstr($url, 'feed/')
+            && !strstr($url, 'module/')
+            && !strstr($url, 'other/')
+            && !strstr($url, 'payment/')
+            && !strstr($url, 'shipping/')
+            && !strstr($url, 'total/')
+            && !strstr($url, 'twofactorauth/')) {
             return $url;
         }
 
         $uri = new Uri($url);
 
         switch ($uri->getVar('route')) {
+            case 'extension/editor':
+            case 'extension/feed':
+            case 'extension/module':
+            case 'extension/other':
             case 'extension/payment':
             case 'extension/shipping':
-            case 'extension/module':
             case 'extension/total':
-            case 'extension/feed':
+            case 'extension/twofactorauth':
                 $uri->setVar('route', 'extension/extension');
                 break;
         }
