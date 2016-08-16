@@ -28,10 +28,6 @@ class Url extends Object {
     }
 
     public function link($route, $args = '', $secure = false) {
-        if (strstr($route, 'extension/') && Client::isAdmin()) {
-            $this->checkExtManagerRoute($route, $args);
-        }
-
         if (empty($this->ssl)) {
             $this->ssl = str_replace('http://', 'https://', $this->domain);
         }
@@ -133,20 +129,5 @@ class Url extends Object {
         }
 
         return $ret;
-    }
-
-    public function checkExtManagerRoute(&$route, &$args) {
-        switch ($route) {
-            case 'extension/payment':
-            case 'extension/shipping':
-            case 'extension/module':
-            case 'extension/total':
-            case 'extension/feed':
-                $r = explode('/', $route);
-
-                $route = 'extension/extension';
-                $args = 'filter_type='.$r[1].'&'.$args;
-                break;
-        }
     }
 }
