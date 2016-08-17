@@ -271,8 +271,20 @@ class Mail {
 
         // Finally, send the mail
         $mailer = Swift_Mailer::newInstance($transport);
+        
+        $log = new Log('mail.log');
 
-        $result = $mailer->send($message);
+        $result = '';
+        
+        try {
+            $result = $mailer->send($message);
+        } catch (Swift_SwiftException $e) {
+            $log->write($e->getMessage());
+        } catch (Swift_TransportException $e) {
+            $log->write($e->getMessage());
+        } catch (Exception $e) {
+            $log->write($e->getMessage());
+        }
 
         return $result;
     }
