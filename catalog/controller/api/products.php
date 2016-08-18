@@ -23,6 +23,9 @@ class ControllerApiProducts extends Controller
 
             $product = $this->model_catalog_product->getProduct($args['id']);
 
+            $product['name'] = html_entity_decode($product['name'], ENT_QUOTES, 'UTF-8');
+            $product['description'] = html_entity_decode($product['description'], ENT_QUOTES, 'UTF-8');
+
             $currency_value = false;
 
             if (isset($args['currency_code'])) {
@@ -89,6 +92,9 @@ class ControllerApiProducts extends Controller
 
                 foreach ($results as $result) {
                     $product = $this->model_catalog_product->getProduct($result['product_id']);
+
+                    $product['name'] = html_entity_decode($product['name'], ENT_QUOTES, 'UTF-8');
+                    $product['description'] = html_entity_decode($product['description'], ENT_QUOTES, 'UTF-8');
 
                     $currency_value = false;
 
