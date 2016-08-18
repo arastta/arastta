@@ -83,6 +83,11 @@
                         <table class="table table-hover ">
                             <thead>
                             <tr>
+								<td class="text-center">
+									<div id="sort-order-list" data-toggle="tooltip" title="<?php echo $column_sortable; ?>">
+										<i class="fa fa-sort" aria-hidden="true"></i>
+									</div>
+								</td>
                                 <td style="width: 70px;" class="text-center">
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
@@ -113,10 +118,24 @@
                                     <?php } ?></td>
                             </tr>
                             </thead>
-                            <tbody>
+							<?php if ($sortable) { ?>
+							<tbody class="sortable-list">
+							<?php } else { ?>
+							<tbody>
+								<input type="hidden" name="sort_order_type"  id="sort-order-type" value="m.sort_order" class="form-control"/>
+							<?php } ?>
                             <?php if ($manufacturers) { ?>
                             <?php foreach ($manufacturers as $manufacturer) { ?>
                             <tr>
+								<td class="text-center sortable">
+									<?php if ($sortable) { ?>
+									<i class="fa fa-bars" aria-hidden="true"></i>
+									<?php } else { ?>
+									<div data-toggle="tooltip" title="<?php echo $text_sortable; ?>">
+										<i class="fa fa-bars" aria-hidden="true"></i>
+									</div>
+									<?php } ?>
+								</td>
                                 <td class="text-center"><?php if (in_array($manufacturer['manufacturer_id'], $selected)) { ?>
                                     <input type="checkbox" name="selected[]" value="<?php echo $manufacturer['manufacturer_id']; ?>" checked="checked" />
                                     <?php } else { ?>
@@ -129,11 +148,14 @@
                                 <td class="text-right">
                                     <span class="manufacturer-status" data-prepend="<?php echo $text_select; ?>" data-source="{'1': '<?php echo $text_enabled; ?>', '0': '<?php echo $text_disabled; ?>'}"><?php echo $manufacturer['status']; ?></span>
                                 </td>
+								<td class="hidden">
+									<input type="hidden" name="items[sort_order][]" value="<?php echo $manufacturer['manufacturer_id']; ?>" class="form-control"/>
+								</td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>
                             <tr>
-                                <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
+                                <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
                             </tr>
                             <?php } ?>
                             </tbody>

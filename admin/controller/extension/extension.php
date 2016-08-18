@@ -412,6 +412,10 @@ class ControllerExtensionExtension extends Controller
             $url .= '&order=' . $this->request->get['order'];
         }
 
+        if (isset($this->request->get['sortable'])) {
+            $url .= '&sortable=' . $this->request->get['sortable'];
+        }
+
         $pagination = new Pagination();
         $pagination->total = $extension_total;
         $pagination->page = $page;
@@ -429,6 +433,10 @@ class ControllerExtensionExtension extends Controller
         $data['sort'] = $sort;
         $data['order'] = $order;
         $data['token'] = $this->session->data['token'];
+
+        $data['sortable'] = (isset($this->request->get['sortable']) && $this->request->get['sortable'] == 'active') ? true : false;
+
+        $data['sortable_active'] = (($filter_type == 'payment') || ($filter_type == 'shipping') || ($filter_type == 'total')) ? true : false;
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

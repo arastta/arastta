@@ -81,6 +81,13 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
+								<?php if ($sortable_active) { ?>
+								<td class="text-center">
+									<div id="sort-order-list" data-toggle="tooltip" title="<?php echo $column_sortable; ?>">
+										<i class="fa fa-sort" aria-hidden="true"></i>
+									</div>
+								</td>
+								<?php } ?>
                                 <td style="width: 70px;" class="text-center">
                                     <?php if ($filter_type != 'module') { ?>
                                     <div class="bulk-action">
@@ -131,10 +138,30 @@
                                 <td class="text-right column-120"><?php echo $column_sort_order; ?></td>
                             </tr>
                             </thead>
+							<?php if ($sortable_active) { ?>
+							<?php if ($sortable) { ?>
+							<tbody class="sortable-list">
+							<?php } else { ?>
+							<tbody>
+								<input type="hidden" name="sort_order_type"  id="sort-order-type" value="sort_order" class="form-control"/>
+							<?php } ?>
+							<?php } else { ?>
                             <tbody>
+							<?php } ?>
                             <?php if ($extensions) { ?>
                             <?php foreach ($extensions as $extension) { ?>
                             <tr>
+								<?php if ($sortable_active) { ?>
+								<td class="text-center sortable">
+									<?php if ($sortable) { ?>
+									<i class="fa fa-bars" aria-hidden="true"></i>
+									<?php } else { ?>
+									<div data-toggle="tooltip" title="<?php echo $text_sortable; ?>">
+										<i class="fa fa-bars" aria-hidden="true"></i>
+									</div>
+									<?php } ?>
+								</td>
+								<?php } ?>
                                 <td class="text-center"><input type="checkbox" name="selected[]" value="<?php echo $extension['type'] . '/' . $extension['code']; ?>" /></td>
                                 <td class="text-left">
                                     <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"  class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
@@ -162,12 +189,19 @@
                                 <?php } ?>
                                 <td class="text-left"><?php echo $extension['status'] ?></td>
                                 <td class="text-right"><?php echo $extension['sort_order']; ?></td>
-
+								<td class="hidden">
+									<input type="hidden" name="items[code][]" value="<?php echo $extension['code']; ?>" class="form-control"/>
+									<input type="hidden" name="items[sort_order][]" value="<?php echo $extension['extension_id']; ?>" class="form-control"/>
+								</td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>
                             <tr>
+								<?php if ($sortable_active) { ?>
+                                <td class="text-center" colspan="9"><?php echo $text_no_results; ?></td>
+								<?php } else { ?>
                                 <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+								<?php } ?>
                             </tr>
                             <?php } ?>
                             </tbody>

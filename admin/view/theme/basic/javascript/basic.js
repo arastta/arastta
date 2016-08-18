@@ -25,7 +25,12 @@ $(document).ready(function() {
             $('.bulk-action').addClass('bulk-action-activate');
             $('.bulk-action-activate').removeClass('bulk-action');
 
-            $('thead td:not(:first)').hide();
+            if ($('table tbody').hasClass('sortable-list') || $('table tbody td:first').hasClass('sortable')) {
+                $('thead td:not(:nth-child(2))').hide();
+            } else {
+                $('thead td:not(:first)').hide();
+            }
+
             $('.table.table-hover thead tr').append('<td id="td-selected"></td>');
             $('.item-selected').css('display', 'inline');
             $('.bulk-action-button').css('display', 'inline');
@@ -51,6 +56,59 @@ $(document).ready(function() {
 
     $('.well .row .input-group select').on('change', function() {
         filter();
+    });
+
+    $(".sortable-list").sortable({
+        update : function() {
+            $.ajax({
+                url: 'index.php?route=common/edit/sortOrder&token=' + getURLVar('token'),
+                type: 'post',
+                dataType: 'json',
+                data: $("form[id^='form-']").serialize() + '&route=' + getURLVar('route') + '&sort=' + getURLVar('sort') + '&order=' + getURLVar('order') + '&page=' + getURLVar('page') + '&filter_type=' + getURLVar('filter_type'),
+                beforeSend: function() {
+                    var html = '<div class="spinner"><span class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></span></div>';
+
+                    $('.panel.panel-default').append(html);
+                },
+                success: function(json) {
+                    $('.spinner').remove();
+
+                    $('.alert-success, .alert-danger').remove();
+
+                    if (json['error']) {
+                        $('.panel.panel-default').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+                    }
+
+                    if (json['success']) {
+                        $('.panel.panel-default').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+                    }
+                }
+            });
+        },
+        cancel: ".ui-state-disabled"
+    });
+
+    $(".sortable-list tr").disableSelection();
+
+    $(document).on('click', '#sort-order-list', function(e) {
+        e.preventDefault();
+
+        var table_body = $(this).parent().parent().parent().parent().find('tbody').hasClass('sortable-list');
+
+        if (table_body) {
+            var url = 'index.php?route=' + getURLVar('route') + '&token='+ getURLVar('token');
+
+            location = url;
+        } else {
+            var sort = $('tbody #sort-order-type').val();
+
+            var filter_type = getURLVar('filter_type');
+            var page = getURLVar('page');
+
+            var url = 'index.php?route=' + getURLVar('route') + '&token='+ getURLVar('token') + '&page=' + page + '&filter_type=' + filter_type + '&sort=' + sort + '&order=ASC&sortable=active';
+
+            location = url;
+        }
     });
 });
 

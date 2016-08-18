@@ -84,6 +84,11 @@
                         <table class="table table-hover ">
                             <thead>
                             <tr>
+								<td class="text-center">
+									<div id="sort-order-list" data-toggle="tooltip" title="<?php echo $column_sortable; ?>">
+										<i class="fa fa-sort" aria-hidden="true"></i>
+									</div>
+								</td>
                                 <td style="width: 70px;" class="text-center">
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
@@ -117,10 +122,28 @@
                                 </td>
                             </tr>
                             </thead>
-                            <tbody>
+							<?php if ($sortable) { ?>
+							<tbody class="sortable-list">
+							<?php } else { ?>
+							<tbody>
+								<input type="hidden" name="sort_order_type"  id="sort-order-type" value="sort_order" class="form-control"/>
+							<?php } ?>
                             <?php if ($categories) { ?>
                             <?php foreach ($categories as $category) { ?>
-                            <tr>
+							<?php if ($sortable && $category['parent_id']) { ?>
+								<tr class="ui-state-disabled">
+							<?php } else { ?>
+								<tr>
+							<?php } ?>
+								<td class="text-center sortable">
+									<?php if ($sortable) { ?>
+									<i class="fa fa-bars" aria-hidden="true"></i>
+									<?php } else { ?>
+									<div data-toggle="tooltip" title="<?php echo $text_sortable; ?>">
+										<i class="fa fa-bars" aria-hidden="true"></i>
+									</div>
+									<?php } ?>
+								</td>
                                 <td class="text-center"><?php if (in_array($category['category_id'], $selected)) { ?>
                                     <input type="checkbox" name="selected[]" value="<?php echo $category['category_id']; ?>" checked="checked" />
                                     <?php } else { ?>
@@ -142,11 +165,16 @@
                                 <td class="text-right">
                                     <span class="category-status" data-prepend="<?php echo $text_select; ?>" data-source="{'1': '<?php echo $text_enabled; ?>', '0': '<?php echo $text_disabled; ?>'}"><?php echo $category['status']; ?></span>
                                 </td>
+								<?php if (!$category['parent_id']) { ?>
+								<td class="hidden">
+									<input type="hidden" name="items[sort_order][]" value="<?php echo $category['category_id']; ?>" class="form-control"/>
+								</td>
+								<?php } ?>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>
                             <tr>
-                                <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
+                                <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
                             </tr>
                             <?php } ?>
                             </tbody>

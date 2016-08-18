@@ -476,10 +476,10 @@ class ModelCatalogProduct extends Model {
         }
 
         if (isset($data['filter_category']) && !is_null($data['filter_category'])) {
-            $lGroup = False ;
+            $lGroup = false;
             $sql .= " AND p2c.category_id = '" . $this->db->escape($data['filter_category']) . "'";
         }else{
-            $lGroup = True ;
+            $lGroup = true;
         }
         
         if (isset($data['filter_quantity']) && !is_null($data['filter_quantity'])) {
@@ -506,6 +506,10 @@ class ModelCatalogProduct extends Model {
             $sql .= " ORDER BY " . $data['sort'];
         } else {
             $sql .= " ORDER BY pd.name";
+        }
+
+        if (isset($data['sort']) && $data['sort'] == 'p.sort_order') {
+            $sql .= ", pd.name";
         }
 
         if (isset($data['order']) && ($data['order'] == 'DESC')) {

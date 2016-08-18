@@ -48,6 +48,44 @@ class ControllerCommonEdit extends Controller
         $this->response->setOutput(json_encode($json));
     }
 
+    public function sortOrder()
+    {
+        $json = array();
+
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateSortOrder()) {
+            $type = basename($this->request->post['route']);
+
+            $is_extension = false;
+
+            $url = '';
+
+            if ($type == 'extension' || $type == 'feed' || $type == 'payment' || $type == 'shipping' || $type == 'total') {
+                $is_extension = true;
+
+                if (!empty($this->request->post['filter_type'])) {
+                    $url =  'filter_type=' . $this->request->post['filter_type'] . '&';
+                }
+            }
+
+            $this->language->load($this->request->post['route']);
+
+            $this->load->model('common/edit');
+
+            $this->model_common_edit->changeSortOrder($type, $this->request->post, $is_extension);
+
+            $this->cache->delete($type);
+
+            $this->session->data['success'] = $this->language->get('text_success');
+
+            $json['redirect'] = str_replace('&amp;', '&', $this->url->link($this->request->post['route'], $url . 'token=' . $this->session->data['token'], 'SSL'));
+        } else {
+            $json['warning'] = $this->error['warning'];
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+
     protected function validate()
     {
         if ($this->request->post['route'] != 'extension/extension' && !$this->user->hasPermission('modify', $this->request->post['route'])) {
@@ -56,11 +94,19 @@ class ControllerCommonEdit extends Controller
 
         if (!isset($this->request->post['selected'])) {
             $this->error['warning'] = $this->language->get('error_selected');
-
         }
 
         if (is_null($this->request->post['status'])) {
             $this->error['warning'] = $this->language->get('error_status');
+        }
+
+        return !$this->error;
+    }
+
+    protected function validateSortOrder()
+    {
+        if ($this->request->post['route'] != 'extension/extension' && !$this->user->hasPermission('modify', $this->request->post['route'])) {
+            $this->error['warning'] = $this->language->get('error_permission');
         }
 
         return !$this->error;

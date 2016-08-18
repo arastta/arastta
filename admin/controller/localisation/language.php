@@ -276,6 +276,10 @@ class ControllerLocalisationLanguage extends Controller {
             $url .= '&order=' . $this->request->get['order'];
         }
 
+        if (isset($this->request->get['sortable'])) {
+            $url .= '&sortable=' . $this->request->get['sortable'];
+        }
+
         $pagination = new Pagination();
         $pagination->total = $language_total;
         $pagination->page = $page;
@@ -290,6 +294,8 @@ class ControllerLocalisationLanguage extends Controller {
         $data['order'] = $order;
 
         $data['token'] = $this->session->data['token'];
+
+        $data['sortable'] = (isset($this->request->get['sortable']) && $this->request->get['sortable'] == 'active') ? true : false;
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
