@@ -22,17 +22,17 @@ final class Version extends Object
 
     protected $major = '1';
 
-    protected $minor = '3';
+    protected $minor = '4';
 
-    protected $patch = '5';
+    protected $patch = '0';
 
     protected $build = '';
 
-    protected $status = 'Stable';
+    protected $status = 'RC 1';
 
-    protected $date = '04-August-2016';
+    protected $date = '18-August-2016';
 
-    protected $time = '13:00';
+    protected $time = '17:30';
 
     protected $zone = 'GMT +2';
 
