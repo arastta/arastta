@@ -176,6 +176,10 @@ class ModelCatalogInformation extends Model {
                 $sql .= " ORDER BY id.title";
             }
 
+            if (isset($data['sort']) && $data['sort'] == 'i.sort_order') {
+                $sql .= ", id.title";
+            }
+
             if (isset($data['order']) && ($data['order'] == 'DESC')) {
                 $sql .= " DESC";
             } else {

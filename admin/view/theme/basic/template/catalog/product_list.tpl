@@ -131,6 +131,11 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
+                                <td class="text-center">
+                                    <div id="sort-order-list" data-toggle="tooltip" title="<?php echo $column_sortable; ?>">
+                                        <i class="fa fa-sort" aria-hidden="true"></i>
+                                    </div>
+                                </td>
                                 <td style="width: 70px;" class="text-center">
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
@@ -172,10 +177,24 @@
                                     <?php } ?></td>
                             </tr>
                             </thead>
+							<?php if ($sortable) { ?>
+                            <tbody class="sortable-list">
+							<?php } else { ?>
                             <tbody>
+								<input type="hidden" name="sort_order_type"  id="sort-order-type" value="p.sort_order" class="form-control"/>
+							<?php } ?>
                             <?php if ($products) { ?>
                             <?php foreach ($products as $product) { ?>
                             <tr>
+                                <td class="text-center sortable">
+                                    <?php if ($sortable) { ?>
+                                        <i class="fa fa-bars" aria-hidden="true"></i>
+                                    <?php } else { ?>
+                                    <div data-toggle="tooltip" title="<?php echo $text_sortable; ?>">
+                                        <i class="fa fa-bars" aria-hidden="true"></i>
+                                    </div>
+                                    <?php } ?>
+                                </td>
                                 <td class="text-center"><?php if (in_array($product['product_id'], $selected)) { ?>
                                     <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" checked="checked" />
                                     <?php } else { ?>
@@ -212,6 +231,9 @@
                                     <?php } ?></td>
                                 <td class="text-left">
                                     <span class="product-status" data-prepend="<?php echo $text_select; ?>" data-source="{'1': '<?php echo $text_enabled; ?>', '0': '<?php echo $text_disabled; ?>'}"><?php echo $product['status']; ?></span>
+                                </td>
+                                <td class="hidden">
+                                    <input type="hidden" name="items[sort_order][]" value="<?php echo $product['product_id']; ?>" class="form-control"/>
                                 </td>
                             </tr>
                             <?php } ?>

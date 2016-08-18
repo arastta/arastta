@@ -381,6 +381,10 @@ class ModelLocalisationLanguage extends Model {
                 $sql .= " ORDER BY sort_order, name";
             }
 
+            if (isset($data['sort']) && $data['sort'] == 'sort_order') {
+                $sql .= ", name";
+            }
+
             if (isset($data['order']) && ($data['order'] == 'DESC')) {
                 $sql .= " DESC";
             } else {

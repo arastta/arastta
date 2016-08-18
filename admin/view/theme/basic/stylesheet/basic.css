@@ -316,3 +316,35 @@ div.required label.col-sm-12:not(span):before, td.required:before {
 #form-product .left-col .panel:nth-child(3) .panel-body fieldset:nth-child(2) .form-group.required .col-sm-6:nth-child(2) > label:before {
     content: "";
 }
+
+tbody.sortable-list.ui-sortable .ui-sortable-handle:hover {
+    cursor: -webkit-grab;
+}
+
+tbody.sortable-list.ui-sortable .ui-sortable-handle.ui-sortable-helper {
+    cursor: -webkit-grabbing;
+}
+
+tbody tr td div i.fa.fa-bars {
+    opacity: 0.3;
+}
+
+.panel-default {
+    position: relative;
+}
+.panel.panel-default .spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    z-index: 9;
+}
+
+.spinner .fa-spinner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 68px;
+}

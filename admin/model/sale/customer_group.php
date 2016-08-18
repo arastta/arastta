@@ -57,6 +57,10 @@ class ModelSaleCustomerGroup extends Model {
             $sql .= " ORDER BY cgd.name";
         }
 
+        if (isset($data['sort']) && $data['sort'] == 'cg.sort_order') {
+            $sql .= ", cgd.name";
+        }
+
         if (isset($data['order']) && ($data['order'] == 'DESC')) {
             $sql .= " DESC";
         } else {

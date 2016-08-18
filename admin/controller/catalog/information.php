@@ -211,11 +211,13 @@ class ControllerCatalogInformation extends Controller {
         $data['text_confirm'] = $this->language->get('text_confirm');
         $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
+        $data['text_sortable'] = $this->language->get('text_sortable');
 
         $data['column_title'] = $this->language->get('column_title');
         $data['column_sort_order'] = $this->language->get('column_sort_order');
         $data['column_action'] = $this->language->get('column_action');
         $data['column_status'] = $this->language->get('column_status');
+        $data['column_sortable'] = $this->language->get('column_sortable');
 
         $data['button_add'] = $this->language->get('button_add');
         $data['button_edit'] = $this->language->get('button_edit');
@@ -268,6 +270,10 @@ class ControllerCatalogInformation extends Controller {
             $url .= '&order=' . $this->request->get['order'];
         }
 
+        if (isset($this->request->get['sortable'])) {
+            $url .= '&sortable=' . $this->request->get['sortable'];
+        }
+
         $pagination = new Pagination();
         $pagination->total = $information_total;
         $pagination->page = $page;
@@ -282,6 +288,8 @@ class ControllerCatalogInformation extends Controller {
 
         $data['sort'] = $sort;
         $data['order'] = $order;
+
+        $data['sortable'] = (isset($this->request->get['sortable']) && $this->request->get['sortable'] == 'active') ? true : false;
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

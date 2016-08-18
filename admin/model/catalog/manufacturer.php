@@ -219,7 +219,11 @@ class ModelCatalogManufacturer extends Model {
             } else {
                 $sql .= " ORDER BY md.name";
             }
-    
+
+            if (isset($data['sort']) && $data['sort'] == 'm.sort_order') {
+                $sql .= ", md.name";
+            }
+
             if (isset($data['order']) && ($data['order'] == 'DESC')) {
                 $sql .= " DESC";
             } else {
