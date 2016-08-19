@@ -14,8 +14,11 @@ class EventLocalisationLanguage extends Event
 
         $data['selected'][] = $this->request->get['language_id'];
 
-        $this->preAdminLanguageStatusEdit($data);
+        $result = $this->preAdminLanguageStatusEdit($data);
 
+        if ($result) {
+            return;
+        }
 
         $url = '';
 
@@ -45,7 +48,7 @@ class EventLocalisationLanguage extends Event
     public function preAdminLanguageStatusEdit($data)
     {
         if (!empty($data['status'])) {
-            return;
+            return true;
         }
 
         $this->load->model('setting/store');
@@ -55,10 +58,10 @@ class EventLocalisationLanguage extends Event
 
         $stores = $this->model_setting_store->getStores();
 
+        $store_languages = array();
+
         if ($stores) {
             $this->load->model('setting/setting');
-
-            $store_languages = array();
 
             foreach ($stores as $store) {
                 $setting = $this->model_setting_setting->getSetting('config', $store['store_id']);
@@ -84,12 +87,12 @@ class EventLocalisationLanguage extends Event
                 $store_total++;
 
                 $this->session->data['warning'] = $this->language->get('error_both_status');
-            } else if ($site_language['language_id'] == $id) {
+            } elseif ($site_language['language_id'] == $id) {
                 $default = true;
                 $store_total++;
 
                 $this->session->data['warning'] = $this->language->get('error_default_status');
-            } else if ($admin_language['language_id'] == $id) {
+            } elseif ($admin_language['language_id'] == $id) {
                 $default = true;
 
                 $this->session->data['warning'] = $this->language->get('error_admin_status');
@@ -112,7 +115,7 @@ class EventLocalisationLanguage extends Event
             }
 
             if (!empty($data['return']) && $data['return'] == 'back') {
-                return;
+                return false;
             }
 
             $json['redirect'] = str_replace('&amp;', '&', $this->url->link('localisation/language', 'token=' . $this->session->data['token'], 'SSL'));
@@ -123,5 +126,7 @@ class EventLocalisationLanguage extends Event
 
             exit();
         }
+
+        return true;
     }
 }
