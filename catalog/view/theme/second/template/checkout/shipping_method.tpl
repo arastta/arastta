@@ -4,7 +4,11 @@
 <?php if ($shipping_methods) { ?>
 <p><?php echo $text_shipping_method; ?></p>
 <?php foreach ($shipping_methods as $shipping_method) { ?>
-<p><strong><?php echo $shipping_method['title']; ?></strong></p>
+<p><strong><?php echo $shipping_method['title']; ?></strong>
+<?php if (isset($shipping_method['description']) && $shipping_method['description']) { ?>
+<br /><span class="shipping-method-desc"><?php echo $shipping_method['description']; ?></span>
+<?php } ?>
+</p>
 <?php if (!$shipping_method['error']) { ?>
 <?php foreach ($shipping_method['quote'] as $quote) { ?>
 <div class="radio">
@@ -15,7 +19,11 @@
         <?php } else { ?>
         <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" />
         <?php } ?>
-        <?php echo $quote['title']; ?> - <?php echo $quote['text']; ?></label>
+        <?php echo $quote['title']; ?> - <?php echo $quote['text']; ?>
+        <?php if (isset($quote['description']) && $quote['description']) { ?>
+        <br /><span class="shipping-quote-desc"><?php echo $quote['description']; ?></span>
+        <?php } ?>
+    </label>
 </div>
 <?php } ?>
 <?php } else { ?>
