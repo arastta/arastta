@@ -71,9 +71,11 @@ $('a.thumbnail').on('click', function(e) {
     }
     <?php } ?>
 
+	<?php if (empty($thumb) && empty($target)) { ?>
     if (typeof InsertTinyMCEImage == 'function') {
         InsertTinyMCEImage($(this).attr('href'), $(this).attr('data-original-src'));
     }
+    <?php } ?>
 
     $('#modal-image').modal('hide');
 });
