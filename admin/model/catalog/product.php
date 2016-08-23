@@ -368,22 +368,24 @@ class ModelCatalogProduct extends Model {
 
         $this->load->model('catalog/url_alias');
         $this->model_catalog_url_alias->clearAliases('product', $product_id);
-        
+
         // Main Menu Item 
         $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'product' AND md.link = '" . (int)$product_id . "'");
-         
-        if(!empty($query->row['menu_id'])){
+
+        if (!empty($query->row['menu_id'])) {
             $menu_id = $query->row['menu_id'];
+
             $this->db->query("DELETE FROM `" . DB_PREFIX . "menu` WHERE menu_id = '" . (int)$menu_id . "'");
             $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_description` WHERE menu_id = '" . (int)$menu_id . "'");
             $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = '" . (int)$menu_id . "'");
         }
-        
+
         // Child Menu Item
         $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_child_description` AS mcd LEFT JOIN `" . DB_PREFIX . "menu_child` AS mc ON mc.menu_child_id = mcd.menu_child_id WHERE mc.menu_type = 'product' AND mcd.link = '" . (int)$product_id . "'");
-        
-        if(!empty($query->row['menu_child_id'])){
+
+        if (!empty($query->row['menu_child_id'])) {
             $menu_child_id = $query->row['menu_child_id'];
+
             $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child` WHERE menu_child_id = '" . (int)$menu_child_id . "'");
             $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_description` WHERE menu_child_id = '" . (int)$menu_child_id . "'");
             $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = '" . (int)$menu_child_id . "'");
@@ -442,14 +444,18 @@ class ModelCatalogProduct extends Model {
         $query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
         $product = $query->row;
-        $product['seo_url'] = array();
 
-        $this->load->model('catalog/url_alias');
-        $aliases = $this->model_catalog_url_alias->getAliases('product', $product_id);
+        if ($product) {
+            $product['seo_url'] = array();
 
-        if ($aliases) {
-            foreach ($aliases as $row) {
-                $product['seo_url'][$row['language_id']] = $row['keyword'];
+            $this->load->model('catalog/url_alias');
+
+            $aliases = $this->model_catalog_url_alias->getAliases('product', $product_id);
+
+            if ($aliases) {
+                foreach ($aliases as $row) {
+                    $product['seo_url'][$row['language_id']] = $row['keyword'];
+                }
             }
         }
 
