@@ -166,6 +166,7 @@ function changeFilterType(text, filter_type) {
     $('.filter').addClass('hidden');
     $('input[name=\'' + filter_type + '\']').removeClass('hidden');
     $('select[name=\'' + filter_type + '\']').removeClass('hidden');
+
     if (filter_type == 'filter_date_added' || filter_type == 'filter_date_modified' || filter_type == 'filter_date_start' || filter_type == 'filter_date_end' || filter_type == 'filter_order_date' || filter_type == 'filter_invoice_date'){
         $('.well .input-group-btn .' + filter_type).removeClass('hidden');
         $('.well .input-group .' + filter_type).removeClass('hidden');
@@ -230,9 +231,35 @@ var BasicImage = function() {
                 }
             }).disableSelection();
         },
+        'manage': function() {
+            $('#modal-image').remove();
 
+            var element = this;
+
+            $.ajax({
+                url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&mode=basic',
+                dataType: 'html',
+                beforeSend: function() {
+                    $('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+                    $('#button-image').prop('disabled', true);
+                },
+                complete: function() {
+                    $('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+                    $('#button-image').prop('disabled', false);
+                },
+                success: function(html) {
+                    $('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+
+                    $('#modal-image').modal('show');
+                }
+            });
+        },
         init : function() {
             start();
         }
     };
 }();
+
+function removeBasicImage(image) {
+    image.parent().parent().parent().parent().remove();
+}

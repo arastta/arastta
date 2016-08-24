@@ -145,6 +145,14 @@ class ControllerCommonFileManager extends Controller {
         } else {
             $data['customizer'] = '';
         }
+
+        // Return the thumbnail for the file manager to show a thumbnail
+        if (isset($this->request->get['mode'])) {
+            $data['mode'] = $this->request->get['mode'];
+        } else {
+            $data['mode'] = '';
+        }
+
         // Parent
         $url = '';
 
