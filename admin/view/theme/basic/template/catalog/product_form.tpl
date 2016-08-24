@@ -88,6 +88,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <input name="file[]" value="" type="file" multiple=true class="file-loading" id="input-image-addon" />
+                                        <button type="button" id="image-manage" onclick="BasicImage.manage();" data-toggle="tooltip" title="<?php echo 'Manage'; ?>" class="btn btn-success"><i class="fa fa-folder"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -1208,7 +1209,15 @@
         });
 
         BasicImage.init();
+
+        var manage_button = $('#image-manage');
+        $('#image-manage').remove();
+
+        $('button.btn.btn-default.fileinput-remove.fileinput-remove-button').before(manage_button);
     });
+
+    var image_row = <?php echo $image_row; ?>;
+    var image_sort = <?php echo empty($product_image['sort_order']) ? 0 : $product_image['sort_order']; ?>
     //--></script>
 <?php echo $footer; ?>
 <link href="view/javascript/jquery/layout/jquery-ui.css" type="text/css" rel="stylesheet" />
