@@ -133,12 +133,18 @@ class ControllerExtensionMarketplace extends Controller
         }
 
         $data['url_data'] = array();
+
         foreach ($this->request->get as $key => $value) {
             if ($key !== 'route' && $key !== 'token') {
                 $data['url_data'][$key] = $value;
             }
         }
 
+        $data['redirect'] = '';
+
+        if (isset($this->request->get['redirect']) && $this->request->get['redirect'] == 'modification') {
+            $data['redirect'] = 'modification';
+        }
 
         if (isset($this->session->data['success'])) {
             $data['success'] = $this->session->data['success'];
@@ -310,7 +316,6 @@ class ControllerExtensionMarketplace extends Controller
                     // Delete theme
                     $this->model_appearance_theme->deleteTheme($theme_id);
                 }
-
             }
 
             // No files to delete

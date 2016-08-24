@@ -100,8 +100,10 @@
     $(document).ready(function() {
         if (!Marketplace.apps.loaded && !error) {
             url_data = <?php echo json_encode($url_data); ?>;
-            Marketplace.apps.initialize(url_data);
+            Marketplace.apps.initialize(url_data)
+            <?php if (empty($redirect)) { ?>
             checkMenu();
+            <?php } ?>
         }
     });
     function checkMenu() {
