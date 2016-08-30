@@ -81,9 +81,17 @@ class ModelApiCustomers extends Model
 
     public function getCustomers($data = array())
     {
-        $sql = "SELECT *, CONCAT(c.firstname, ' ', c.lastname) AS name, cgd.name AS customer_group FROM " . DB_PREFIX . "customer c LEFT JOIN " . DB_PREFIX . "customer_group_description cgd ON (c.customer_group_id = cgd.customer_group_id) WHERE cgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+        $sql = "SELECT *, CONCAT(c.firstname, ' ', c.lastname) AS name, cgd.name AS customer_group FROM " . DB_PREFIX . "customer c LEFT JOIN " . DB_PREFIX . "customer_group_description cgd ON (c.customer_group_id = cgd.customer_group_id)";
 
-        $sql .= $this->getExtraConditions($data);
+        $conditions = $this->getExtraConditions($data);
+
+        if (empty($conditions)) {
+            $conditions = " WHERE cgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+        } else {
+            $conditions .= " AND cgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+        }
+
+        $sql .= $conditions;
 
         $sort_data = array(
             'name',
@@ -192,48 +200,10 @@ class ModelApiCustomers extends Model
 
         return $address_data;
     }
-    
-    public function getOrders($customer_id, $data)
-    {        
-        $sql = "SELECT 
-                  o.order_id, 
-                  o.firstname, 
-                  o.lastname, 
-                  os.name as status, 
-                  o.date_added, 
-                  o.total, 
-                  o.currency_code, 
-                  o.currency_value, 
-                  o.invoice_no, 
-                  o.order_status_id 
-                FROM `" . DB_PREFIX . "order` o 
-                LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id) 
-                WHERE o.customer_id = '" . (int)$customer_id . "' 
-                AND o.order_status_id > '0' 
-                AND o.store_id = '" . (int)$this->config->get('config_store_id') . "' 
-                AND os.language_id = '" . (int)$this->config->get('config_language_id') . "' 
-                ORDER BY o.order_id DESC";
-        
-        if (isset($data['start']) || isset($data['limit'])) {
-            if ($data['start'] < 0) {
-                $data['start'] = 0;
-            }
-
-            if ($data['limit'] < 1) {
-                $data['limit'] = 20;
-            }
-
-            $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-        }
-        
-        $query = $this->db->query($sql);
-
-        return $query->rows;
-    }
 
     public function getTotals($data = array())
     {
-        $sql = "SELECT COUNT(*) AS number FROM " . DB_PREFIX . "customer";
+        $sql = "SELECT COUNT(*) AS number FROM " . DB_PREFIX . "customer c";
 
         $sql .= $this->getExtraConditions($data);
 
@@ -253,27 +223,27 @@ class ModelApiCustomers extends Model
         }
 
         if (!empty($data['group'])) {
-            $implode[] = "customer_group_id = '" . (int)$data['group'] . "'";
+            $implode[] = "c.customer_group_id = '" . (int)$data['group'] . "'";
         }
 
         if (!empty($data['ip'])) {
-            $implode[] = "customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($data['ip']) . "')";
+            $implode[] = "c.customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($data['ip']) . "')";
         }
 
         if (isset($data['status']) && !is_null($data['status'])) {
-            $implode[] = "status = '" . (int)$data['status'] . "'";
+            $implode[] = "c.status = '" . (int)$data['status'] . "'";
         }
 
         if (isset($data['approved']) && !is_null($data['approved'])) {
-            $implode[] = "approved = '" . (int)$data['approved'] . "'";
+            $implode[] = "c.approved = '" . (int)$data['approved'] . "'";
         }
 
         if (!empty($data['date_from'])) {
-            $implode[] = "DATE(c.date_added) >= DATE('" . $this->db->escape($data['date_from']) . "')";
+            $implode[] = "DATE(c.date_added) >= DATE('" . $this->db->escape($data['date_from']) . " 00:00:00')";
         }
 
         if (!empty($data['date_to'])) {
-            $implode[] = "DATE(c.date_added) <= DATE('" . $this->db->escape($data['date_to']) . "')";
+            $implode[] = "DATE(c.date_added) <= DATE('" . $this->db->escape($data['date_to']) . " 23:59:59')";
         }
 
         if ($implode) {

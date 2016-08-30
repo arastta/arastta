@@ -29,6 +29,11 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
+								<td class="text-center">
+									<div id="sort-order-list" data-toggle="tooltip" title="<?php echo $column_sortable; ?>">
+										<i class="fa fa-sort" aria-hidden="true"></i>
+									</div>
+								</td>
                                 <td style="width: 70px;" class="text-center">
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
@@ -52,10 +57,23 @@
                                     <?php } ?></td>
                             </tr>
                             </thead>
-                            <tbody>
-                            <?php if ($options) { ?>
+							<?php if ($sortable) { ?>
+							<tbody class="sortable-list">
+							<?php } else { ?>
+							<tbody>
+								<input type="hidden" name="sort_order_type"  id="sort-order-type" value="o.sort_order" class="form-control"/>
+							<?php } ?>                            <?php if ($options) { ?>
                             <?php foreach ($options as $option) { ?>
                             <tr>
+								<td class="text-center sortable">
+									<?php if ($sortable) { ?>
+									<i class="fa fa-bars" aria-hidden="true"></i>
+									<?php } else { ?>
+									<div data-toggle="tooltip" title="<?php echo $text_sortable; ?>">
+										<i class="fa fa-bars" aria-hidden="true"></i>
+									</div>
+									<?php } ?>
+								</td>
                                 <td class="text-center"><?php if (in_array($option['option_id'], $selected)) { ?>
                                     <input type="checkbox" name="selected[]" value="<?php echo $option['option_id']; ?>" checked="checked" />
                                     <?php } else { ?>
@@ -65,6 +83,9 @@
                                     <a href="<?php echo $option['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $option['name']; ?>
                                 </td>
+								<td class="hidden">
+									<input type="hidden" name="items[sort_order][]" value="<?php echo $option['option_id']; ?>" class="form-control"/>
+								</td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>

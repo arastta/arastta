@@ -41,9 +41,11 @@ $_['text_home']                     = 'Home';
 $_['text_bulk_action']              = 'Bulk Action';
 $_['text_selected']                 = ' Selected';
 $_['text_publish']                  = 'Publish';
+$_['text_sortable']                 = 'Please sort by order to enable reordering';
 
 // Column
 $_['column_status']                 = 'Status';
+$_['column_sortable']               = 'Sortable List';
 
 // Button
 $_['button_add']                    = 'Add New';

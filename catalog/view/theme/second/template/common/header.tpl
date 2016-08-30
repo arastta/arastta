@@ -139,13 +139,21 @@ if ($theme_config->get('logo_width') == 12) {
             <ul class="nav navbar-nav">
                 <?php foreach ($categories as $category) { ?>
                 <?php if ($category['children']) { ?>
-                <li class="dropdown"><a href="<?php echo $category['href']; ?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $category['name']; ?></a>
+				<?php if ($category['active']) { ?>
+				<li class="dropdown active"><a href="<?php echo $category['href']; ?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $category['name']; ?></a>
+				<?php } else { ?>
+				<li class="dropdown"><a href="<?php echo $category['href']; ?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $category['name']; ?></a>
+				<?php } ?>
                     <div class="dropdown-menu">
                         <div class="dropdown-inner">
                             <?php foreach (array_chunk($category['children'], ceil(count($category['children']) / $category['column'])) as $children) { ?>
                             <ul class="list-unstyled">
                                 <?php foreach ($children as $child) { ?>
+								<?php if ($child['active']) { ?>
+                                <li class="active"><a href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a></li>
+								<?php } else { ?>
                                 <li><a href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a></li>
+								<?php } ?>
                                 <?php } ?>
                             </ul>
                             <?php } ?>
@@ -156,7 +164,11 @@ if ($theme_config->get('logo_width') == 12) {
                     </div>
                 </li>
                 <?php } else { ?>
+				<?php if ($category['active']) { ?>
+                <li class="active"><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
+				<?php } else { ?>
                 <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
+                <?php } ?>
                 <?php } ?>
                 <?php } ?>
             </ul>

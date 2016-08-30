@@ -105,6 +105,10 @@ class ModelCatalogOption extends Model {
             $sql .= " ORDER BY od.name";
         }
 
+        if (isset($data['sort']) && $data['sort'] == 'o.sort_order') {
+            $sql .= ", od.name";
+        }
+
         if (isset($data['order']) && ($data['order'] == 'DESC')) {
             $sql .= " DESC";
         } else {

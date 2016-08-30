@@ -122,27 +122,30 @@ class ModelCatalogManufacturer extends Model {
         $this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer_to_store WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 
         $this->load->model('catalog/url_alias');
+
         $this->model_catalog_url_alias->clearAliases('manufacturer', $manufacturer_id);
-        
+
         // Main Menu Item 
         $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_description` AS md LEFT JOIN `" . DB_PREFIX . "menu` AS m ON m.menu_id = md.menu_id WHERE m.menu_type = 'manufacturer' AND md.link = '" . (int)$manufacturer_id . "'");
-         
-        if(!empty($query->row['menu_id'])){
+
+        if (!empty($query->row['menu_id'])) {
             $menu_id = $query->row['menu_id'];
+
             $this->db->query("DELETE FROM `" . DB_PREFIX . "menu` WHERE menu_id = '" . (int)$menu_id . "'");
             $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_description` WHERE menu_id = '" . (int)$menu_id . "'");
             $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = '" . (int)$menu_id . "'");
         }
-        
+
         // Child Menu Item
         $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_child_description` AS mcd LEFT JOIN `" . DB_PREFIX . "menu_child` AS mc ON mc.menu_child_id = mcd.menu_child_id WHERE mc.menu_type = 'manufacturer' AND mcd.link = '" . (int)$manufacturer_id . "'");
-        
-        if(!empty($query->row['menu_child_id'])){
+
+        if (!empty($query->row['menu_child_id'])) {
             $menu_child_id = $query->row['menu_child_id'];
+
             $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child` WHERE menu_child_id = '" . (int)$menu_child_id . "'");
             $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_description` WHERE menu_child_id = '" . (int)$menu_child_id . "'");
             $this->db->query("DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = '" . (int)$menu_child_id . "'");
-        }            
+        }
 
         $this->cache->delete('manufacturer');
 
@@ -183,14 +186,18 @@ class ModelCatalogManufacturer extends Model {
         $query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_description md ON (m.manufacturer_id = md.manufacturer_id) WHERE m.manufacturer_id = '" . (int)$manufacturer_id . "' AND md.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
         $manufacturer = $query->row;
-        $manufacturer['seo_url'] = array();
 
-        $this->load->model('catalog/url_alias');
-        $aliases = $this->model_catalog_url_alias->getAliases('manufacturer', $manufacturer_id);
+        if ($manufacturer) {
+            $manufacturer['seo_url'] = array();
 
-        if ($aliases) {
-            foreach ($aliases as $row) {
-                $manufacturer['seo_url'][$row['language_id']] = $row['keyword'];
+            $this->load->model('catalog/url_alias');
+
+            $aliases = $this->model_catalog_url_alias->getAliases('manufacturer', $manufacturer_id);
+
+            if ($aliases) {
+                foreach ($aliases as $row) {
+                    $manufacturer['seo_url'][$row['language_id']] = $row['keyword'];
+                }
             }
         }
 
@@ -219,7 +226,11 @@ class ModelCatalogManufacturer extends Model {
             } else {
                 $sql .= " ORDER BY md.name";
             }
-    
+
+            if (isset($data['sort']) && $data['sort'] == 'm.sort_order') {
+                $sql .= ", md.name";
+            }
+
             if (isset($data['order']) && ($data['order'] == 'DESC')) {
                 $sql .= " DESC";
             } else {

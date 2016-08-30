@@ -349,3 +349,81 @@ if (version_compare(VERSION, '1.3.2', '<')) {
         $this->db->query("UPDATE `" . DB_PREFIX . "email_description` SET `description` = '" . $this->db->escape($description) . "' WHERE `id` = '" . $email_description['id'] . "';");
     }
 }
+
+// 1.4.0 changes;
+if (version_compare(VERSION, '1.4.0', '<')) {
+    // Update banner_image table
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "banner_image` ADD `language_id` INT(11) NOT NULL AFTER `banner_id`");
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "banner_image`  ADD `title` VARCHAR( 64 ) NOT NULL AFTER `language_id`");
+
+    $banners = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner WHERE 1");
+
+    if ($banners->num_rows) {
+        $banner_image_data = array();
+
+        foreach ($banners->rows as $banner) {
+            $banner_image_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner_image WHERE banner_id = '" . (int)$banner['banner_id'] . "' ORDER BY sort_order ASC");
+
+            foreach ($banner_image_query->rows as $banner_image) {
+                $banner_image_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner_image_description WHERE banner_image_id = '" . (int)$banner_image['banner_image_id'] . "' AND banner_id = '" . (int)$banner['banner_id'] . "'");
+
+                foreach ($banner_image_description_query->rows as $banner_image_description) {
+                    $banner_image_data[$banner['banner_id']][$banner_image_description['language_id']][] = array(
+                        'banner_id'  => $banner['banner_id'],
+                        'title'      => $banner_image_description['title'],
+                        'link'       => $banner_image['link'],
+                        'image'      => $banner_image['image'],
+                        'sort_order' => $banner_image['sort_order']
+                    );
+                }
+            }
+        }
+
+        // Truncate banner_image table
+        $this->db->query("TRUNCATE `" . DB_PREFIX . "banner_image`");
+
+        if ($banner_image_data) {
+            foreach ($banner_image_data as $banner_id => $banner_image_value) {
+                foreach ($banner_image_value as $language_id => $value) {
+                    foreach ($value as $banner_image) {
+                        $this->db->query("INSERT INTO " . DB_PREFIX . "banner_image SET banner_id = '" . (int)$banner_id . "', language_id = '" . (int)$language_id . "', title = '" .  $this->db->escape($banner_image['title']) . "', link = '" .  $this->db->escape($banner_image['link']) . "', image = '" .  $this->db->escape($banner_image['image']) . "', sort_order = '" .  (int)$banner_image['sort_order'] . "'");
+                    }
+                }
+            }
+        }
+    }
+
+    // Delete banner_image_description table
+    $this->db->query("DROP TABLE `" . DB_PREFIX . "banner_image_description`");
+
+    // Customer Search
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "customer_search` (
+  `customer_search_id` int(11) NOT NULL AUTO_INCREMENT,
+  `store_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `keyword` varchar(255) NOT NULL,
+  `category_id` int(11),
+  `sub_category` tinyint(1) NOT NULL,
+  `description` tinyint(1) NOT NULL,
+  `products` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_search_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    // Insert setting table
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET `store_id` = 0, `code` = 'config', `key` = 'config_customer_search', `value` = '0', `serialized` = 0");
+
+    // Update user groups
+    $user_groups = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group");
+
+    foreach ($user_groups->rows as $user_group) {
+        $user_group['permission'] = unserialize($user_group['permission']);
+
+        $user_group['permission']['access'][] = 'report/customer_search';
+        $user_group['permission']['modify'][] = 'report/customer_search';
+
+        $this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
+    }
+}

@@ -590,6 +590,29 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                       <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_customer_search; ?>"><?php echo $entry_customer_search; ?></span></label>
+                                       <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_customer_search) { ?>
+                                                <input type="radio" name="config_customer_search" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_customer_search" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_customer_search) { ?>
+                                                <input type="radio" name="config_customer_search" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_customer_search" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                       </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-12" for="input-customer-group"><span data-toggle="tooltip" title="<?php echo $help_customer_group; ?>"><?php echo $entry_customer_group; ?></span></label>
                                         <div class="col-sm-12">
                                             <select name="config_customer_group_id" id="input-customer-group" class="form-control">

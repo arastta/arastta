@@ -140,6 +140,11 @@ class EventAppApi extends Event
                 break;
             case 'post':
                 $args = $this->request->post;
+
+                // Resource ID
+                if (!empty($path[2]) && is_numeric($path[2])) {
+                    $args['id'] = $path[2];
+                }
                 break;
             case 'put':
                 parse_str(file_get_contents('php://input'), $args);

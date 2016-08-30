@@ -412,6 +412,10 @@ class ControllerExtensionExtension extends Controller
             $url .= '&order=' . $this->request->get['order'];
         }
 
+        if (isset($this->request->get['sortable'])) {
+            $url .= '&sortable=' . $this->request->get['sortable'];
+        }
+
         $pagination = new Pagination();
         $pagination->total = $extension_total;
         $pagination->page = $page;
@@ -429,6 +433,10 @@ class ControllerExtensionExtension extends Controller
         $data['sort'] = $sort;
         $data['order'] = $order;
         $data['token'] = $this->session->data['token'];
+
+        $data['sortable'] = (isset($this->request->get['sortable']) && $this->request->get['sortable'] == 'active') ? true : false;
+
+        $data['sortable_active'] = (($filter_type == 'payment') || ($filter_type == 'shipping') || ($filter_type == 'total')) ? true : false;
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -579,13 +587,43 @@ class ControllerExtensionExtension extends Controller
             return $instances;
         }
 
+        $url = '';
+
+        if (isset($this->request->get['filter_name'])) {
+            $url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+        }
+
+        if (isset($this->request->get['filter_author'])) {
+            $url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
+        }
+
+        if (isset($this->request->get['filter_type'])) {
+            $url .= '&filter_type=' . $this->request->get['filter_type'];
+        }
+
+        if (isset($this->request->get['filter_status'])) {
+            $url .= '&filter_status=' . $this->request->get['filter_status'];
+        }
+
+        if (isset($this->request->get['sort'])) {
+            $url .= '&sort=' . $this->request->get['sort'];
+        }
+
+        if (isset($this->request->get['order'])) {
+            $url .= '&order=' . $this->request->get['order'];
+        }
+
+        if (isset($this->request->get['page'])) {
+            $url .= '&page=' . $this->request->get['page'];
+        }
+
         $instances = $this->model_extension_extension->getInstances($type, $code);
 
         foreach ($instances as $id => $row) {
             $var = $type.'_id';
 
-            $instances[$id]['edit'] = $this->url->link($type . '/' . $code, 'token=' . $this->session->data['token'] . '&' . $var . '=' . $row[$var], 'SSL');
-            $instances[$id]['delete'] = $this->url->link('extension/' . $type . '/delete', 'token=' . $this->session->data['token'] . '&' . $var . '=' . $row[$var], 'SSL');
+            $instances[$id]['edit'] = $this->url->link($type . '/' . $code, 'token=' . $this->session->data['token'] . '&' . $var . '=' . $row[$var] . $url, 'SSL');
+            $instances[$id]['delete'] = $this->url->link('extension/' . $type . '/delete', 'token=' . $this->session->data['token'] . '&' . $var . '=' . $row[$var] . $url, 'SSL');
         }
 
         return $instances;

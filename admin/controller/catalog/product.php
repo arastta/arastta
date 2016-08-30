@@ -411,6 +411,7 @@ class ControllerCatalogProduct extends Controller {
                 'special'    => $special,
                 'quantity'   => $result['quantity'],
                 'status'     => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+                'sort_order' => $result['sort_order'],
                 'edit'       => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL')
             );
         }
@@ -425,6 +426,7 @@ class ControllerCatalogProduct extends Controller {
         $data['text_confirm'] = $this->language->get('text_confirm');
         $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
+        $data['text_sortable'] = $this->language->get('text_sortable');
 
         $data['column_image'] = $this->language->get('column_image');
         $data['column_name'] = $this->language->get('column_name');
@@ -434,6 +436,7 @@ class ControllerCatalogProduct extends Controller {
         $data['column_quantity'] = $this->language->get('column_quantity');
         $data['column_status'] = $this->language->get('column_status');
         $data['column_action'] = $this->language->get('column_action');
+        $data['column_sortable'] = $this->language->get('column_sortable');
 
         $data['entry_name'] = $this->language->get('entry_name');
         $data['entry_model'] = $this->language->get('entry_model');
@@ -543,6 +546,10 @@ class ControllerCatalogProduct extends Controller {
             $url .= '&order=' . $this->request->get['order'];
         }
 
+        if (isset($this->request->get['sortable'])) {
+            $url .= '&sortable=' . $this->request->get['sortable'];
+        }
+
         $this->load->model('localisation/language');
 
         $data['languages'] = $this->model_localisation_language->getLanguages();
@@ -566,6 +573,8 @@ class ControllerCatalogProduct extends Controller {
 
         $data['sort'] = $sort;
         $data['order'] = $order;
+
+        $data['sortable'] = (isset($this->request->get['sortable']) && $this->request->get['sortable'] == 'active') ? true : false;
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

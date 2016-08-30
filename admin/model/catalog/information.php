@@ -143,14 +143,18 @@ class ModelCatalogInformation extends Model {
         $query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "information WHERE information_id = '" . (int)$information_id . "'");
 
         $information = $query->row;
-        $information['seo_url'] = array();
 
-        $this->load->model('catalog/url_alias');
-        $aliases = $this->model_catalog_url_alias->getAliases('information', $information_id);
+        if ($information) {
+            $information['seo_url'] = array();
 
-        if ($aliases) {
-            foreach ($aliases as $row) {
-                $information['seo_url'][$row['language_id']] = $row['keyword'];
+            $this->load->model('catalog/url_alias');
+
+            $aliases = $this->model_catalog_url_alias->getAliases('information', $information_id);
+
+            if ($aliases) {
+                foreach ($aliases as $row) {
+                    $information['seo_url'][$row['language_id']] = $row['keyword'];
+                }
             }
         }
 
@@ -174,6 +178,10 @@ class ModelCatalogInformation extends Model {
                 $sql .= " ORDER BY " . $data['sort'];
             } else {
                 $sql .= " ORDER BY id.title";
+            }
+
+            if (isset($data['sort']) && $data['sort'] == 'i.sort_order') {
+                $sql .= ", id.title";
             }
 
             if (isset($data['order']) && ($data['order'] == 'DESC')) {

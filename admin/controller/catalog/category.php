@@ -256,6 +256,7 @@ class ControllerCatalogCategory extends Controller {
         foreach ($results as $result) {
             $data['categories'][] = array(
                 'category_id' => $result['category_id'],
+                'parent_id'   => $result['parent_id'],
                 'name'        => $result['name'],
                 'sort_order'  => $result['sort_order'],
                 'status'      => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
@@ -274,11 +275,13 @@ class ControllerCatalogCategory extends Controller {
         $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         $data['text_select'] = $this->language->get('text_select');
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
+        $data['text_sortable'] = $this->language->get('text_sortable');
 
         $data['column_name'] = $this->language->get('column_name');
         $data['column_sort_order'] = $this->language->get('column_sort_order');
         $data['column_action'] = $this->language->get('column_action');
         $data['column_status'] = $this->language->get('column_status');
+        $data['column_sortable'] = $this->language->get('column_sortable');
 
         $data['button_add'] = $this->language->get('button_add');
         $data['button_edit'] = $this->language->get('button_edit');
@@ -344,6 +347,10 @@ class ControllerCatalogCategory extends Controller {
             $url .= '&order=' . $this->request->get['order'];
         }
 
+        if (isset($this->request->get['sortable'])) {
+            $url .= '&sortable=' . $this->request->get['sortable'];
+        }
+
         $pagination = new Pagination();
         $pagination->total = $category_total;
         $pagination->page = $page;
@@ -360,6 +367,8 @@ class ControllerCatalogCategory extends Controller {
 
         $data['sort'] = $sort;
         $data['order'] = $order;
+
+        $data['sortable'] = (isset($this->request->get['sortable']) && $this->request->get['sortable'] == 'active') ? true : false;
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

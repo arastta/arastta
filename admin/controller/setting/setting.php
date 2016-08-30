@@ -633,6 +633,12 @@ class ControllerSettingSetting extends Controller {
             $data['config_customer_online'] = $this->config->get('config_customer_online');
         }
 
+        if (isset($this->request->post['config_customer_search'])) {
+            $data['config_customer_search'] = $this->request->post['config_customer_search'];
+        } else {
+            $data['config_customer_search'] = $this->config->get('config_customer_search');
+        }
+
         if (isset($this->request->post['config_customer_group_id'])) {
             $data['config_customer_group_id'] = $this->request->post['config_customer_group_id'];
         } else {

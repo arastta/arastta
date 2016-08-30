@@ -23,14 +23,14 @@ class ControllerExtensionModification extends Controller {
         $this->load->language('extension/modification');
 
         $this->document->setTitle($this->language->get('heading_title'));
-        if (isset($this->request->post['selected']) && $this->validate()) {
-            foreach ($this->request->post['selected'] as $modification_id) {
 
-                if(file_exists(DIR_SYSTEM . 'xml/'.$modification_id)) {
-                    unlink(DIR_SYSTEM . 'xml/'.$modification_id);
-                } else if(file_exists(DIR_VQMOD . 'xml/'.$modification_id)){
-                    unlink(DIR_VQMOD . 'xml/'.$modification_id);
-                }
+        $this->load->model('extension/modification');
+
+        $json = array();
+
+        if (isset($this->request->post['selected']) && $this->validateDelete()) {
+            foreach ($this->request->post['selected'] as $modification_id) {
+                $this->model_extension_modification->removeModification($modification_id);
             }
 
             $this->session->data['success'] = $this->language->get('text_success');
@@ -49,16 +49,15 @@ class ControllerExtensionModification extends Controller {
                 $url .= '&page=' . $this->request->get['page'];
             }
 
-            if(empty($this->request->get['extensionInstaller'])) {
+            if (empty($this->request->get['extensionInstaller'])) {
                 $this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
             } else {
-                $json = array();
                 $json['success'] = $this->language->get('text_success');
                 $json['files']   = $this->request->post['selected'];
             }
         }
 
-        if(empty($this->request->get['extensionInstaller'])) {
+        if (empty($this->request->get['extensionInstaller'])) {
             $this->getList();
         } else {
             $this->response->addHeader('Content-Type: application/json');
@@ -70,6 +69,7 @@ class ControllerExtensionModification extends Controller {
         $this->load->language('extension/modification');
 
         $this->document->setTitle($this->language->get('heading_title'));
+
         $this->load->model('extension/modification');
 
         if ($this->validate()) {
@@ -98,15 +98,19 @@ class ControllerExtensionModification extends Controller {
                 }
                 $this->session->data['error'] = sprintf($this->language->get('error_remove'), $filename);
 
-                if(empty($this->request->get['extensionInstaller'])) {
+                if (empty($this->request->get['extensionInstaller'])) {
                     $this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
                 } else {
                     $json = array();
+
                     unset($this->session->data['success']);
                     unset($this->session->data['error']);
+
                     $json['error'] = sprintf($this->language->get('error_remove'), $filename);
+
                     $this->response->addHeader('Content-Type: application/json');
                     $this->response->setOutput(json_encode($json));
+
                     return;
                 }
             }
@@ -119,18 +123,21 @@ class ControllerExtensionModification extends Controller {
 
             $this->session->data['success'] = $this->language->get('text_success');
 
-            if(empty($this->request->get['extensionInstaller'])) {
+            if (empty($this->request->get['extensionInstaller'])) {
                 $this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
             } else {
                 $json = array();
+
                 unset($this->session->data['success']);
+
                 $json['notice'] = $this->language->get('text_success');
+
                 $this->response->addHeader('Content-Type: application/json');
                 $this->response->setOutput(json_encode($json));
             }
         }
 
-        if(empty($this->request->get['extensionInstaller'])) {
+        if (empty($this->request->get['extensionInstaller'])) {
             $this->getList();
         }
     }
@@ -164,10 +171,10 @@ class ControllerExtensionModification extends Controller {
                 } else {
                     $filename = $e->getPath();
                 }
+
                 $this->session->data['error'] = sprintf($this->language->get('error_remove'), $filename);
 
                 $this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-
             }
 
             $this->session->data['success'] = $this->language->get('text_success');
@@ -182,21 +189,20 @@ class ControllerExtensionModification extends Controller {
         $this->load->language('extension/modification');
 
         $this->document->setTitle($this->language->get('heading_title'));
-        $json = array();
 
-        $json['success'] = "0";
-        $json['error']   = $this->language->get('error_enabled');
-        $json['status']  = "0";
-        $json['link']    = "0";
-        $json['enable']  = "0";
-        $json['disable'] = "0";
+        $this->load->model('extension/modification');
+
+        $json = array(
+            'success' => 0,
+            'error'   => $this->language->get('error_enabled'),
+            'status'  => 0,
+            'link'    => 0,
+            'enable'  => 0,
+            'disable' => 0,
+        );
+
         if (isset($this->request->get['modification_id']) && $this->validate()) {
-
-            if(file_exists(DIR_SYSTEM . 'xml/' . $this->request->get['modification_id'])) {
-                rename(DIR_SYSTEM . 'xml/' . $this->request->get['modification_id'], DIR_SYSTEM . 'xml/' . str_replace('.xml_', '.xml', $this->request->get['modification_id']));
-            } else if(file_exists(DIR_VQMOD . 'xml/' . $this->request->get['modification_id'])){
-                rename(DIR_VQMOD . 'xml/' . $this->request->get['modification_id'], DIR_VQMOD . 'xml/' . str_replace('.xml_', '.xml', $this->request->get['modification_id']));
-            }
+            $this->model_extension_modification->changeModificationStatus($this->request->get['modification_id'], 'enable');
 
             $this->session->data['success'] = $this->language->get('text_success');
 
@@ -214,12 +220,14 @@ class ControllerExtensionModification extends Controller {
                 $url .= '&page=' . $this->request->get['page'];
             }
 
-            $json['success'] = $this->language->get('text_success');
-            $json['error']   = "0";
-            $json['status']  = "1";
-            $json['enable']  = "1";
-            $json['disable'] = "0";
-            $json['link']    =  $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . str_replace('.xml_', '.xml', $this->request->get['modification_id']), 'SSL');
+            $json = array(
+                'success' => $this->language->get('text_success'),
+                'error'   => 0,
+                'status'  => 1,
+                'link'    => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . str_replace('.xml_', '.xml', $this->request->get['modification_id']) . $url, 'SSL'),
+                'enable'  => 1,
+                'disable' => 0,
+            );
         }
 
         $this->response->addHeader('Content-Type: application/json');
@@ -230,22 +238,20 @@ class ControllerExtensionModification extends Controller {
         $this->load->language('extension/modification');
 
         $this->document->setTitle($this->language->get('heading_title'));
-        $json = array();
 
-        $json['success'] = "0";
-        $json['error']   = $this->language->get('error_enabled');
-        $json['status']  = "0";
-        $json['link']    = "0";
-        $json['enable']  = "0";
-        $json['disable'] = "0";
+        $this->load->model('extension/modification');
+
+        $json = array(
+            'success' => 0,
+            'error'   => $this->language->get('error_disabled'),
+            'status'  => 0,
+            'link'    => 0,
+            'enable'  => 0,
+            'disable' => 0,
+        );
 
         if (isset($this->request->get['modification_id']) && $this->validate()) {
-
-            if(file_exists(DIR_SYSTEM . 'xml/' . $this->request->get['modification_id'])) {
-                rename(DIR_SYSTEM . 'xml/' . $this->request->get['modification_id'], DIR_SYSTEM . 'xml/' . str_replace('.xml', '.xml_', $this->request->get['modification_id']));
-            } else if(file_exists(DIR_VQMOD . 'xml/' . $this->request->get['modification_id'])) {
-                rename(DIR_VQMOD . 'xml/' . $this->request->get['modification_id'], DIR_VQMOD . 'xml/' . str_replace('.xml', '.xml_', $this->request->get['modification_id']));
-            }
+            $this->model_extension_modification->changeModificationStatus($this->request->get['modification_id'], 'disable');
 
             $this->session->data['success'] = $this->language->get('text_success');
 
@@ -263,12 +269,14 @@ class ControllerExtensionModification extends Controller {
                 $url .= '&page=' . $this->request->get['page'];
             }
 
-            $json['success'] = $this->language->get('text_success');
-            $json['error']   = 0;
-            $json['status']  = "1";
-            $json['disable'] = "1";
-            $json['enable']  = "0";
-            $json['link']    =  $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . str_replace('.xml', '.xml_', $this->request->get['modification_id']), 'SSL');
+            $json = array(
+                'success' => $this->language->get('text_success'),
+                'error'   => 0,
+                'status'  => 1,
+                'link'    => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . str_replace('.xml', '.xml_', $this->request->get['modification_id']) . $url, 'SSL'),
+                'enable'  => 0,
+                'disable' => 1,
+            );
         }
 
         $this->response->addHeader('Content-Type: application/json');
@@ -299,12 +307,12 @@ class ControllerExtensionModification extends Controller {
                 $url .= '&page=' . $this->request->get['page'];
             }
 
-            if(!$clean) {
+            if (!$clean) {
                 $this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
             }
         }
 
-        if(!$clean) {
+        if (!$clean) {
             $this->getList();
         }
     }
@@ -312,6 +320,7 @@ class ControllerExtensionModification extends Controller {
     protected function getList() {
         // To catch XML syntax errors
         set_error_handler(array('ModelExtensionModification', 'handleXMLError'));
+
         if (isset($this->request->get['sort'])) {
             $sort = $this->request->get['sort'];
         } else {
@@ -369,8 +378,7 @@ class ControllerExtensionModification extends Controller {
 
         $files = array_merge($files_enable, $files_disable);
 
-        foreach($files as $file) {
-
+        foreach ($files as $file) {
             $file_path = explode('/', $file);
             $file_name = end($file_path);
 
@@ -383,10 +391,12 @@ class ControllerExtensionModification extends Controller {
 
             if (!empty($xml)) {
                 $dom = new DOMDocument('1.0', 'UTF-8');
+
                 $invalid_xml = '';
+
                 try {
                     $dom->loadXml($xml);
-                } catch(Exception $exception) {
+                } catch (Exception $exception) {
                     $invalid_xml = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
                 }
 
@@ -394,8 +404,7 @@ class ControllerExtensionModification extends Controller {
 
                 if (!empty($name)) {
                     $name = $name->nodeValue;
-                }
-                else {
+                } else {
                     $name = basename($file, '');
                 }
 
@@ -403,8 +412,7 @@ class ControllerExtensionModification extends Controller {
 
                 if (!empty($code)) {
                     $code = $code->nodeValue;
-                }
-                else {
+                } else {
                     $code = '';
                 }
 
@@ -412,8 +420,7 @@ class ControllerExtensionModification extends Controller {
 
                 if (!empty($author)) {
                     $author = $author->nodeValue;
-                }
-                else {
+                } else {
                     $author = $this->language->get('text_none');
                 }
 
@@ -421,8 +428,7 @@ class ControllerExtensionModification extends Controller {
 
                 if (!empty($version)) {
                     $version = $version->nodeValue;
-                }
-                else {
+                } else {
                     $version = $this->language->get('text_none');
                 }
 
@@ -430,8 +436,7 @@ class ControllerExtensionModification extends Controller {
 
                 if (!empty($link)) {
                     $link = $link->nodeValue;
-                }
-                else {
+                } else {
                     $link = '';
                 }
 
@@ -457,11 +462,9 @@ class ControllerExtensionModification extends Controller {
         }
 
         if (file_exists(DIR_VQMOD . 'xml/')) {
-
             $data['vqmods'] = $this->_checkVqmodfile();
 
             if (!empty($data['vqmods'])) {
-
                 $modification_vqmod = array();
 
                 foreach ($data['modifications'] as $modification) {
@@ -471,7 +474,7 @@ class ControllerExtensionModification extends Controller {
                     } else {
                         if (empty($vqmod_add)) {
                             $vqmod_add = 1;
-                            
+
                             foreach ($data['vqmods'] as $vqmod) {
                                 if (substr($vqmod['vqmod_id'], -5) != '.xml_') {
                                     # enable vQmod
@@ -479,9 +482,9 @@ class ControllerExtensionModification extends Controller {
                                 }
                             }
                         }
-                        
+
                         $modification_vqmod [] = $modification;
-                   }
+                    }
                 }
 
                 if (empty($vqmod_add)) {
@@ -639,27 +642,55 @@ class ControllerExtensionModification extends Controller {
         return !$this->error;
     }
 
+    protected function validateDelete() {
+        if (!$this->user->hasPermission('modify', 'extension/modification')) {
+            $this->error['warning'] = $this->language->get('error_permission');
+        }
+
+        if ($this->request->post['selected']) {
+            $modifications = $this->request->post['selected'];
+
+            foreach ($modifications as $modification) {
+                $result = $this->model_extension_modification->checkAddon($modification);
+
+                if ($result) {
+                    if ($result['product_id']) {
+                        $this->error['warning'] = sprintf($this->language->get('error_marketplace'), $this->url->link('extension/marketplace', 'api=api/product&product_id=' . $result['product_id'] . '&store=' . $result['product_type'] . 's&redirect=modification&token=' . $this->session->data['token'], 'SSL'));
+                    } elseif (isset($this->request->get['addon']) && $this->request->get['addon'] == 'delete') {
+                        $this->model_extension_modification->removeAddon($result);
+                    } else {
+                        $this->error['warning'] = sprintf($this->language->get('error_addon'), $this->url->link('extension/modification/delete', 'addon=delete&token=' . $this->session->data['token'], 'SSL'), $modification);
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        return !$this->error;
+    }
+
     protected function _checkVqmodfile() {
         $files_enable  = ($files_enable = glob(DIR_VQMOD . 'xml/*.xml')) == false ? array() : $files_enable;
         $files_disable = ($files_disable = glob(DIR_VQMOD . 'xml/*.xml_')) == false ? array() : $files_disable;
 
         $files = array_merge($files_enable, $files_disable);
 
-        if(!empty($files)) {
-
-            foreach($files as $file) {
-
+        if (!empty($files)) {
+            foreach ($files as $file) {
                 $file_path = explode('/', $file);
                 $file_name = end($file_path);
 
                 $xml = file_get_contents($file);
 
                 if (!empty($xml)) {
-                    $dom = new DOMDocument('1.0', 'UTF-8');
+                    $dom         = new DOMDocument('1.0', 'UTF-8');
+
                     $invalid_xml = '';
+
                     try {
                         $dom->loadXml($xml);
-                    } catch(Exception $exception) {
+                    } catch (Exception $exception) {
                         $invalid_xml = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
                     }
 
@@ -667,10 +698,10 @@ class ControllerExtensionModification extends Controller {
 
                     if (!empty($name)) {
                         $name = $name->nodeValue;
-                    }
-                    else {
+                    } else {
                         $name = basename($file, '');
                     }
+
                     $_code = explode('.', $file_name);
                     $code  = $_code[0];
 
@@ -678,8 +709,7 @@ class ControllerExtensionModification extends Controller {
 
                     if (!empty($author)) {
                         $author = $author->nodeValue;
-                    }
-                    else {
+                    } else {
                         $author = $this->language->get('text_none');
                     }
 
@@ -687,8 +717,7 @@ class ControllerExtensionModification extends Controller {
 
                     if (!empty($version)) {
                         $version = $version->nodeValue;
-                    }
-                    else {
+                    } else {
                         $version = $this->language->get('text_none');
                     }
 
@@ -710,14 +739,14 @@ class ControllerExtensionModification extends Controller {
                         'enable'          => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $vqmod_id, 'SSL'),
                         'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $vqmod_id, 'SSL'),
                         'enabled'         => $status,
-                        'invalid_xml'       => $invalid_xml
+                        'invalid_xml'     => $invalid_xml
                     );
                 }
             }
         }
 
-        if(empty($data)) {
-            $data = NULL;
+        if (empty($data)) {
+            $data = null;
         }
 
         return $data;

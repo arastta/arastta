@@ -71,9 +71,33 @@ $('a.thumbnail').on('click', function(e) {
     }
     <?php } ?>
 
+	<?php if (empty($thumb) && empty($target) && empty($mode)) { ?>
     if (typeof InsertTinyMCEImage == 'function') {
         InsertTinyMCEImage($(this).attr('href'), $(this).attr('data-original-src'));
     }
+    <?php } ?>
+
+	<?php if ($mode == 'basic') { ?>
+	var basic  = '<div class="file-preview-frame">';
+		basic += '	<img src="' + $(this).find('img').attr('src') + '" class="file-preview-image" title="' + $(this).find('img').attr('src') + '" alt="' + $(this).find('img').attr('src') + '" style="width:auto;height:160px;">';
+		basic += '	<div class="file-thumbnail-footer">';
+		basic += '		<div class="file-footer-caption" title="' + $(this).find('img').attr('src') + '">' + $(this).parent().find('input').attr('value').split('/').pop() + '</div>';
+		basic += ' 		<div class="file-actions">';
+		basic += '			<div class="file-footer-buttons">';
+		basic += '				<button type="button" class="kv-file-remove btn btn-xs btn-default" title="Remove file" onclick="removeBasicImage($(this));"><i class="glyphicon glyphicon-trash text-danger"></i></button>';
+		basic += '			</div>';
+		basic += '			<div class="file-upload-indicator" title=""></div>';
+		basic += '			<div class="clearfix"></div>';
+		basic += '		</div>';
+		basic += '	</div>';
+		basic += '	<input type="hidden" name="product_image[' + image_row + '][image]" value="' + $(this).parent().find('input').attr('value') + '" id="input-image' + image_row + '" />';
+		basic += '	<input type="hidden" name="product_image[' + image_row + '][sort_order]" value="' + image_sort + '" />';
+		basic += '</div>';
+
+		image_row++;
+		image_sort++;
+	$('.file-preview-thumbnails').append(basic);
+	<?php } ?>
 
     $('#modal-image').modal('hide');
 });
@@ -132,16 +156,16 @@ $('#button-search').on('click', function(e) {
 $('#button-upload').on('click', function() {
     $('#form-upload').remove();
 
-    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value="" /></form>');
+    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file[]" value="" multiple=true /></form>');
 
-    $('#form-upload input[name=\'file\']').trigger('click');
+    $('#form-upload input[name=\'file[]\']').trigger('click');
 
     if (typeof timer != 'undefined') {
         clearInterval(timer);
     }
 
     timer = setInterval(function() {
-        if ($('#form-upload input[name=\'file\']').val() != '') {
+        if ($('#form-upload input[name=\'file[]\']').val() != '') {
             clearInterval(timer);
 
             $.ajax({

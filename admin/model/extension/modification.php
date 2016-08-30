@@ -498,4 +498,85 @@ class ModelExtensionModification extends Model
                 break;
         }
     }
+
+    public function changeModificationStatus($modification_id, $type = 'enable')
+    {
+        switch ($type) {
+            case 'enable':
+                if ($this->filesystem->exists(DIR_SYSTEM . 'xml/' . $modification_id)) {
+                    $this->filesystem->rename(DIR_SYSTEM . 'xml/' . $modification_id, DIR_SYSTEM . 'xml/' . str_replace('.xml_', '.xml', $modification_id));
+                } elseif ($this->filesystem->exists(DIR_VQMOD . 'xml/' . $modification_id)) {
+                    $this->filesystem->rename(DIR_VQMOD . 'xml/' . $modification_id, DIR_VQMOD . 'xml/' . str_replace('.xml_', '.xml', $modification_id));
+                }
+                break;
+            case 'disable':
+                if ($this->filesystem->exists(DIR_SYSTEM . 'xml/' . $modification_id)) {
+                    $this->filesystem->rename(DIR_SYSTEM . 'xml/' . $modification_id, DIR_SYSTEM . 'xml/' . str_replace('.xml', '.xml_', $modification_id));
+                } elseif ($this->filesystem->exists(DIR_VQMOD . 'xml/' . $modification_id)) {
+                    $this->filesystem->rename(DIR_VQMOD . 'xml/' . $modification_id, DIR_VQMOD . 'xml/' . str_replace('.xml', '.xml_', $modification_id));
+                }
+                break;
+        }
+    }
+
+    public function removeModification($modification_id)
+    {
+        if ($this->filesystem->exists(DIR_SYSTEM . 'xml/' . $modification_id)) {
+            $this->filesystem->remove(DIR_SYSTEM . 'xml/' . $modification_id);
+        } elseif ($this->filesystem->exists(DIR_VQMOD . 'xml/' . $modification_id)) {
+            $this->filesystem->remove(DIR_VQMOD . 'xml/' . $modification_id);
+        }
+
+        // Clear cache
+        $this->cache->remove('addon');
+        $this->cache->remove('update');
+        $this->cache->remove('version');
+    }
+
+    public function checkAddon($modification)
+    {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "addon WHERE `files` LIKE '%" . $this->db->escape($modification) . "%' ");
+
+        if ($query->num_rows) {
+            $files = json_decode($query->row['files']);
+
+            if (count($files) > 1) {
+                return $query->row;
+            }
+        }
+
+        return false;
+    }
+
+    public function removeAddon($result)
+    {
+        $this->load->model('extension/marketplace');
+
+        if (!empty($result['files'])) {
+            $absolute_paths = array();
+
+            $files = json_decode($result['files'], true);
+
+            foreach ($files as $file) {
+                $absolute_paths[] = DIR_ROOT . $file;
+            }
+
+            // Remove files
+            $this->filesystem->remove($absolute_paths);
+
+            // Refresh modifications
+            $this->request->get['extensionInstaller'] = 1;
+
+            $this->load->controller('extension/modification/refresh');
+
+            unset($this->request->get['extensionInstaller']);
+
+            // Clear cache
+            $this->cache->remove('addon');
+            $this->cache->remove('update');
+            $this->cache->remove('version');
+        }
+
+        $this->model_extension_marketplace->deleteAddon($result['addon_id']);
+    }
 }

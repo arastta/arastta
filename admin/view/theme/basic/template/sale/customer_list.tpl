@@ -161,6 +161,7 @@
                                           </a>
                                           <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
                                               <li class="dropdown-header"><?php echo $text_bulk_action; ?></li>
+                                              <li><a onclick="$('form').attr('action', '<?php echo $approve; ?>'); $('form').submit();"><i class="fa fa-thumbs-o-up text-success"></i> <?php echo $button_approve; ?></a></li>
                                               <li><a onclick="changeStatus(1)"><i class="fa fa-check-circle text-success"></i> <?php echo $button_enable; ?></a></li>
                                               <li><a onclick="changeStatus(0)"><i class="fa fa-times-circle text-danger"></i> <?php echo $button_disable; ?></a></li>
                                               <li><a onclick="confirmItem('<?php echo $text_confirm_title; ?>', '<?php echo $text_confirm; ?>');"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></a></li>

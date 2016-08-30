@@ -48,47 +48,56 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <div class="images table-responsive">
-                                <table id="images" class="table table-striped table-hover">
-                                    <thead>
-                                    <tr>
-                                        <td class="text-left"><?php echo $entry_title; ?></td>
-                                        <td class="text-left"><?php echo $entry_link; ?></td>
-                                        <td class="text-left"><?php echo $entry_image; ?></td>
-                                        <td class="text-right hidden"><?php echo $entry_sort_order; ?></td>
-                                        <td></td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php $image_row = 0; ?>
-                                    <?php foreach ($banner_images as $banner_image) { ?>
-                                    <tr id="image-row<?php echo $image_row; ?>">
-                                        <td class="text-left"><?php foreach ($languages as $language) { ?>
-                                            <div class="input-group pull-left"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> </span>
-                                                <input type="text" name="banner_image[<?php echo $image_row; ?>][banner_image_description][<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($banner_image['banner_image_description'][$language['language_id']]) ? $banner_image['banner_image_description'][$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" class="form-control" />
-                                            </div>
-                                            <?php if (isset($error_banner_image[$image_row][$language['language_id']])) { ?>
-                                            <div class="text-danger"><?php echo $error_banner_image[$image_row][$language['language_id']]; ?></div>
-                                            <?php } ?>
-                                            <?php } ?></td>
-                                        <td class="text-left" style="width: 30%;"><input type="text" name="banner_image[<?php echo $image_row; ?>][link]" value="<?php echo $banner_image['link']; ?>" placeholder="<?php echo $entry_link; ?>" class="form-control" /></td>
-                                        <td class="text-left"><a href="" id="thumb-image<?php echo $image_row; ?>" data-toggle="image" class="img-thumbnail"><img src="<?php echo $banner_image['thumb']; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
-                                            <input type="hidden" name="banner_image[<?php echo $image_row; ?>][image]" value="<?php echo $banner_image['image']; ?>" id="input-image<?php echo $image_row; ?>" /></td>
-                                        <td class="text-right hidden" style="width: 10%;"><input type="text" name="banner_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $banner_image['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
-                                        <td class="text-left"><a onclick="$('#image-row<?php echo $image_row; ?>, .tooltip').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></a></td>
-                                    </tr>
-                                    <?php $image_row++; ?>
-                                    <?php } ?>
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <td colspan="3"></td>
-                                        <td class="text-left"><a onclick="addImage();" data-toggle="tooltip" title="<?php echo $button_banner_add; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-plus-circle"></i></a></td>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
+                            <div class="images">
+								<ul class="nav nav-tabs" id="language">
+									<?php foreach ($languages as $language) { ?>
+									<li><a href="#language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
+									<?php } ?>
+								</ul>
+								<div class="tab-content">
+									<?php foreach ($languages as $language) { ?>
+									<div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
+										<table id="images<?php echo $language['language_id']; ?>" class="table table-striped table-hover">
+											<thead>
+											<tr>
+												<td class="text-left"><?php echo $entry_title; ?></td>
+												<td class="text-left"><?php echo $entry_link; ?></td>
+												<td class="text-left"><?php echo $entry_image; ?></td>
+												<td class="text-right hidden"><?php echo $entry_sort_order; ?></td>
+												<td></td>
+											</tr>
+											</thead>
+											<tbody>
+											<?php $image_row = 0; ?>
+											<?php if (isset($banner_images[$language['language_id']])) { ?>
+											<?php foreach ($banner_images[$language['language_id']] as $banner_image) { ?>
+											<tr id="image-row<?php echo $language['language_id']; ?>-<?php echo $image_row; ?>">
+												<td class="text-left"><input type="text" name="banner_image[<?php echo $language['language_id']; ?>][<?php echo $image_row; ?>][title]" value="<?php echo $banner_image['title']; ?>" placeholder="<?php echo $entry_title; ?>" class="form-control" />
+													<?php if (isset($error_banner_image[$language['language_id']][$image_row])) { ?>
+													<div class="text-danger"><?php echo $error_banner_image[$language['language_id']][$image_row]; ?></div>
+													<?php } ?></td>
+												<td class="text-left" style="width: 30%;"><input type="text" name="banner_image[<?php echo $language['language_id']; ?>][<?php echo $image_row; ?>][link]" value="<?php echo $banner_image['link']; ?>" placeholder="<?php echo $entry_link; ?>" class="form-control" /></td>
+												<td class="text-left"><a href="" id="thumb-image<?php echo $image_row; ?>" data-toggle="image" class="img-thumbnail"><img src="<?php echo $banner_image['thumb']; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
+													<input type="hidden" name="banner_image[<?php echo $language['language_id']; ?>][<?php echo $image_row; ?>][image]" value="<?php echo $banner_image['image']; ?>" id="input-image<?php echo $language['language_id']; ?>-<?php echo $image_row; ?>" /></td>
+												<td class="text-right hidden" style="width: 10%;"><input type="text" name="banner_image[<?php echo $language['language_id']; ?>][<?php echo $image_row; ?>][sort_order]" value="<?php echo $banner_image['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
+												<td class="text-left"><button type="button" onclick="$('#image-row<?php echo $language['language_id']; ?>-<?php echo $image_row; ?>, .tooltip').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></button></td>
+											</tr>
+											<?php $image_row++; ?>
+											<?php } ?>
+											<?php } ?>
+											</tbody>
+											<tfoot>
+											<tr>
+												<td colspan="3"></td>
+												<td class="text-left"><a onclick="addImage(<?php echo $language['language_id']; ?>);" data-toggle="tooltip" title="<?php echo $button_banner_add; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-plus-circle"></i></a></td>
+											</tr>
+											</tfoot>
+										</table>
+									</div>
+									<?php } ?>
+								</div>
+							</div>
+						</div>
                     </div>
                 </div>
                 <div class="right-col col-sm-4">
@@ -140,24 +149,21 @@
     <script type="text/javascript"><!--
     var image_row = <?php echo $image_row; ?>;
 
-    function addImage() {
-        html  = '<tr id="image-row' + image_row + '">';
-        html += '  <td class="text-left">';
-        <?php foreach ($languages as $language) { ?>
-        html += '    <div class="input-group pull-left">';
-        html += '      <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span><input type="text" name="banner_image[' + image_row + '][banner_image_description][<?php echo $language['language_id']; ?>][title]" value="" placeholder="<?php echo $entry_title; ?>" class="form-control" />';
-        html += '    </div>';
-        <?php } ?>
-        html += '  </td>';  
-        html += '  <td class="text-left" style="width: 30%;"><input type="text" name="banner_image[' + image_row + '][link]" value="" placeholder="<?php echo $entry_link; ?>" class="form-control" /></td>';
-        html += '  <td class="text-left"><a href="" id="thumb-image' + image_row + '" data-toggle="image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a><input type="hidden" name="banner_image[' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
-        html += '  <td class="text-right hidden" style="width: 10%;"><input type="text" name="banner_image[' + image_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
-        html += '  <td class="text-left"><a onclick="$(\'#image-row' + image_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></a></td>';
-        html += '</tr>';
+    function addImage(language_id) {
+		html  = '<tr id="image-row' + language_id + '-' + image_row + '">';
+		html += '  <td class="text-left"><input type="text" name="banner_image[' + language_id + '][' + image_row + '][title]" value="" placeholder="<?php echo $entry_title; ?>" class="form-control" /></td>';
+		html += '  <td class="text-left" style="width: 30%;"><input type="text" name="banner_image[' + language_id + '][' + image_row + '][link]" value="" placeholder="<?php echo $entry_link; ?>" class="form-control" /></td>';
+		html += '  <td class="text-left"><a href="" id="thumb-image' + language_id + '-' + image_row + '" data-toggle="image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a><input type="hidden" name="banner_image[' + language_id + '][' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
+		html += '  <td class="text-right hidden" style="width: 10%;"><input type="text" name="banner_image[' + language_id + '][' + image_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
+		html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + language_id + '-' + image_row  + ', .tooltip\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm btn-basic-list"><i class="fa fa-minus-circle"></i></button></td>';
+		html += '</tr>';
 
-        $('#images tbody').append(html);
+		$('#images' + language_id + ' tbody').append(html);
 
         image_row++;
     }
-    //--></script></div>
+    //--></script>
+	<script type="text/javascript"><!--
+		$('#language a:first').tab('show');
+	//--></script></div>
 <?php echo $footer; ?>

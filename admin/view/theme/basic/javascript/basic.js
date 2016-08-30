@@ -25,7 +25,12 @@ $(document).ready(function() {
             $('.bulk-action').addClass('bulk-action-activate');
             $('.bulk-action-activate').removeClass('bulk-action');
 
-            $('thead td:not(:first)').hide();
+            if ($('table tbody').hasClass('sortable-list') || $('table tbody td:first').hasClass('sortable')) {
+                $('thead td:not(:nth-child(2))').hide();
+            } else {
+                $('thead td:not(:first)').hide();
+            }
+
             $('.table.table-hover thead tr').append('<td id="td-selected"></td>');
             $('.item-selected').css('display', 'inline');
             $('.bulk-action-button').css('display', 'inline');
@@ -51,6 +56,59 @@ $(document).ready(function() {
 
     $('.well .row .input-group select').on('change', function() {
         filter();
+    });
+
+    $(".sortable-list").sortable({
+        update : function() {
+            $.ajax({
+                url: 'index.php?route=common/edit/sortOrder&token=' + getURLVar('token'),
+                type: 'post',
+                dataType: 'json',
+                data: $("form[id^='form-']").serialize() + '&route=' + getURLVar('route') + '&sort=' + getURLVar('sort') + '&order=' + getURLVar('order') + '&page=' + getURLVar('page') + '&filter_type=' + getURLVar('filter_type'),
+                beforeSend: function() {
+                    var html = '<div class="spinner"><span class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></span></div>';
+
+                    $('.panel.panel-default').append(html);
+                },
+                success: function(json) {
+                    $('.spinner').remove();
+
+                    $('.alert-success, .alert-danger').remove();
+
+                    if (json['error']) {
+                        $('.panel.panel-default').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+                    }
+
+                    if (json['success']) {
+                        $('.panel.panel-default').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+                    }
+                }
+            });
+        },
+        cancel: ".ui-state-disabled"
+    });
+
+    $(".sortable-list tr").disableSelection();
+
+    $(document).on('click', '#sort-order-list', function(e) {
+        e.preventDefault();
+
+        var table_body = $(this).parent().parent().parent().parent().find('tbody').hasClass('sortable-list');
+
+        if (table_body) {
+            var url = 'index.php?route=' + getURLVar('route') + '&token='+ getURLVar('token');
+
+            location = url;
+        } else {
+            var sort = $('tbody #sort-order-type').val();
+
+            var filter_type = getURLVar('filter_type');
+            var page = getURLVar('page');
+
+            var url = 'index.php?route=' + getURLVar('route') + '&token='+ getURLVar('token') + '&page=' + page + '&filter_type=' + filter_type + '&sort=' + sort + '&order=ASC&sortable=active';
+
+            location = url;
+        }
     });
 });
 
@@ -108,6 +166,7 @@ function changeFilterType(text, filter_type) {
     $('.filter').addClass('hidden');
     $('input[name=\'' + filter_type + '\']').removeClass('hidden');
     $('select[name=\'' + filter_type + '\']').removeClass('hidden');
+
     if (filter_type == 'filter_date_added' || filter_type == 'filter_date_modified' || filter_type == 'filter_date_start' || filter_type == 'filter_date_end' || filter_type == 'filter_order_date' || filter_type == 'filter_invoice_date'){
         $('.well .input-group-btn .' + filter_type).removeClass('hidden');
         $('.well .input-group .' + filter_type).removeClass('hidden');
@@ -172,9 +231,35 @@ var BasicImage = function() {
                 }
             }).disableSelection();
         },
+        'manage': function() {
+            $('#modal-image').remove();
 
+            var element = this;
+
+            $.ajax({
+                url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&mode=basic',
+                dataType: 'html',
+                beforeSend: function() {
+                    $('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+                    $('#button-image').prop('disabled', true);
+                },
+                complete: function() {
+                    $('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+                    $('#button-image').prop('disabled', false);
+                },
+                success: function(html) {
+                    $('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+
+                    $('#modal-image').modal('show');
+                }
+            });
+        },
         init : function() {
             start();
         }
     };
 }();
+
+function removeBasicImage(image) {
+    image.parent().parent().parent().parent().remove();
+}
