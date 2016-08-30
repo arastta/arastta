@@ -18,7 +18,7 @@ final class Version extends Object
 
     protected $name = 'Arastta';
 
-    protected $code = 'Kastamonu';
+    protected $code = 'Kolari';
 
     protected $major = '1';
 
@@ -28,11 +28,11 @@ final class Version extends Object
 
     protected $build = '';
 
-    protected $status = 'RC 2';
+    protected $status = 'Stable';
 
-    protected $date = '24-August-2016';
+    protected $date = '30-August-2016';
 
-    protected $time = '17:00';
+    protected $time = '18:30';
 
     protected $zone = 'GMT +2';
 
