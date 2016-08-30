@@ -353,14 +353,43 @@ if (version_compare(VERSION, '1.3.2', '<')) {
 // 1.4.0 changes;
 if (version_compare(VERSION, '1.4.0', '<')) {
     // Update banner_image table
-    $this->db->query("ALTER TABLE `" . DB_PREFIX . "banner_image` ADD `langauge_id` INT(11) NOT NULL AFTER `banner_id`");
-    $this->db->query("ALTER TABLE `" . DB_PREFIX . "banner_image`  ADD `title` VARCHAR( 64 ) NOT NULL AFTER `langauge_id`");
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "banner_image` ADD `language_id` INT(11) NOT NULL AFTER `banner_id`");
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "banner_image`  ADD `title` VARCHAR( 64 ) NOT NULL AFTER `language_id`");
 
-    $banner_image_description = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner_image_description WHERE 1");
+    $banners = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner WHERE 1");
 
-    if ($banner_image_description->num_rows) {
-        foreach ($banner_image_description->rows as $banner_image) {
-            $this->db->query("UPDATE `" . DB_PREFIX . "banner_image` SET `langauge_id` = '" . (int)$banner_image['language_id'] . "', `title` = '" . $this->db->escape($banner_image['title']) . "' WHERE `banner_image_id` = '" . (int)$banner_image['banner_image_id'] . "';");
+    if ($banners->num_rows) {
+        $banner_image_data = array();
+
+        foreach ($banners->rows as $banner) {
+            $banner_image_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner_image WHERE banner_id = '" . (int)$banner['banner_id'] . "' ORDER BY sort_order ASC");
+
+            foreach ($banner_image_query->rows as $banner_image) {
+                $banner_image_description_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "banner_image_description WHERE banner_image_id = '" . (int)$banner_image['banner_image_id'] . "' AND banner_id = '" . (int)$banner['banner_id'] . "'");
+
+                foreach ($banner_image_description_query->rows as $banner_image_description) {
+                    $banner_image_data[$banner['banner_id']][$banner_image_description['language_id']][] = array(
+                        'banner_id'  => $banner['banner_id'],
+                        'title'      => $banner_image_description['title'],
+                        'link'       => $banner_image['link'],
+                        'image'      => $banner_image['image'],
+                        'sort_order' => $banner_image['sort_order']
+                    );
+                }
+            }
+        }
+
+        // Truncate banner_image table
+        $this->db->query("TRUNCATE `" . DB_PREFIX . "banner_image`");
+
+        if ($banner_image_data) {
+            foreach ($banner_image_data as $banner_id => $banner_image_value) {
+                foreach ($banner_image_value as $language_id => $value) {
+                    foreach ($value as $banner_image) {
+                        $this->db->query("INSERT INTO " . DB_PREFIX . "banner_image SET banner_id = '" . (int)$banner_id . "', language_id = '" . (int)$language_id . "', title = '" .  $this->db->escape($banner_image['title']) . "', link = '" .  $this->db->escape($banner_image['link']) . "', image = '" .  $this->db->escape($banner_image['image']) . "', sort_order = '" .  (int)$banner_image['sort_order'] . "'");
+                    }
+                }
+            }
         }
     }
 
