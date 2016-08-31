@@ -320,6 +320,10 @@ class ControllerCatalogProduct extends Controller {
             $url .= '&filter_price=' . $this->request->get['filter_price'];
         }
 
+        if (isset($this->request->get['filter_category'])) {
+            $url .= '&filter_category=' . $this->request->get['filter_category'];
+        }
+
         if (isset($this->request->get['filter_quantity'])) {
             $url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
         }
@@ -490,6 +494,10 @@ class ControllerCatalogProduct extends Controller {
             $url .= '&filter_price=' . $this->request->get['filter_price'];
         }
 
+        if (isset($this->request->get['filter_category'])) {
+            $url .= '&filter_category=' . $this->request->get['filter_category'];
+        }
+
         if (isset($this->request->get['filter_quantity'])) {
             $url .= '&filter_quantity=' . $this->request->get['filter_quantity'];
         }
@@ -528,6 +536,10 @@ class ControllerCatalogProduct extends Controller {
 
         if (isset($this->request->get['filter_price'])) {
             $url .= '&filter_price=' . $this->request->get['filter_price'];
+        }
+
+        if (isset($this->request->get['filter_category'])) {
+            $url .= '&filter_category=' . $this->request->get['filter_category'];
         }
 
         if (isset($this->request->get['filter_quantity'])) {
