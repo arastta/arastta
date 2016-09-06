@@ -43,7 +43,11 @@ class ModelFeedFacebookStore extends Model
 
             if ($query->num_rows) {
                 foreach ($query->rows as $row) {
-                    $product_data[$row['product_id']] = $this->getProduct($row['product_id']);
+                    $product = $this->getProduct($row['product_id']);
+
+                    if ($product) {
+                        $product_data[$row['product_id']] = $product;
+                    }
                 }
             }
 
