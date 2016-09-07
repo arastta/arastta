@@ -13,25 +13,28 @@ class ControllerCheckoutSuccess extends Controller {
         if (isset($this->session->data['order_id'])) {
             $this->cart->clear();
 
-            // Add to activity log
-            $this->load->model('account/activity');
             $this->load->model('checkout/success');
 
-            if ($this->customer->isLogged()) {
-                $activity_data = array(
-                    'customer_id' => $this->customer->getId(),
-                    'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName(),
-                    'order_id'    => $this->session->data['order_id']
-                );
+            // Add to activity log
+            if ($this->config->get('config_customer_activity')) {
+                $this->load->model('account/activity');
 
-                $this->model_account_activity->addActivity('order_account', $activity_data);
-            } else {
-                $activity_data = array(
-                    'name'     => $this->session->data['guest']['firstname'] . ' ' . $this->session->data['guest']['lastname'],
-                    'order_id' => $this->session->data['order_id']
-                );
+                if ($this->customer->isLogged()) {
+                    $activity_data = array(
+                        'customer_id' => $this->customer->getId(),
+                        'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName(),
+                        'order_id'    => $this->session->data['order_id']
+                    );
 
-                $this->model_account_activity->addActivity('order_guest', $activity_data);
+                    $this->model_account_activity->addActivity('order_account', $activity_data);
+                } else {
+                    $activity_data = array(
+                        'name'     => $this->session->data['guest']['firstname'] . ' ' . $this->session->data['guest']['lastname'],
+                        'order_id' => $this->session->data['order_id']
+                    );
+
+                    $this->model_account_activity->addActivity('order_guest', $activity_data);
+                }
             }
 
             // Get Message order status message

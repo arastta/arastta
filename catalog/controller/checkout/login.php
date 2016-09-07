@@ -103,14 +103,16 @@ class ControllerCheckoutLogin extends Controller {
             //$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 
             // Add to activity log
-            $this->load->model('account/activity');
+            if ($this->config->get('config_customer_activity')) {
+                $this->load->model('account/activity');
 
-            $activity_data = array(
-                'customer_id' => $this->customer->getId(),
-                'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-            );
+                $activity_data = array(
+                    'customer_id' => $this->customer->getId(),
+                    'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+                );
 
-            $this->model_account_activity->addActivity('login', $activity_data);
+                $this->model_account_activity->addActivity('login', $activity_data);
+            }
         }
 
         $this->response->addHeader('Content-Type: application/json');

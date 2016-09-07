@@ -427,3 +427,9 @@ if (version_compare(VERSION, '1.4.0', '<')) {
         $this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
     }
 }
+
+// 1.4.1 changes;
+if (version_compare(VERSION, '1.4.1', '<')) {
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_customer_activity', `value` = '0'");
+}
+
