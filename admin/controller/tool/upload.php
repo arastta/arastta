@@ -138,8 +138,8 @@ class ControllerToolUpload extends Controller {
         $data['uploads'] = array();
 
         $filter_data = array(
-            'filter_name'        => $filter_name,
-            'filter_date_added'    => $filter_date_added,
+            'filter_name'       => $filter_name,
+            'filter_date_added' => $filter_date_added,
             'sort'              => $sort,
             'order'             => $order,
             'start'             => ($page - 1) * $this->config->get('config_limit_admin'),
@@ -205,6 +205,14 @@ class ControllerToolUpload extends Controller {
         }
 
         $url = '';
+
+        if (isset($this->request->get['filter_name'])) {
+            $url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+        }
+
+        if (isset($this->request->get['filter_date_added'])) {
+            $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+        }
 
         if ($order == 'ASC') {
             $url .= '&order=DESC';
