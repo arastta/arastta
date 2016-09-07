@@ -31,8 +31,8 @@
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_date_end; ?>', 'filter_date_end');"><?php echo $entry_date_end; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_affiliate" value="<?php echo $filter_affiliate; ?>" id="input-affiliate" class="form-control filter" />
-                                <input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" id="input-ip" class="form-control filter hidden" />
+                                <input type="text" name="filter_affiliate" value="<?php echo $filter_affiliate; ?>" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" class="form-control filter" />
+                                <input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" placeholder="<?php echo $entry_ip; ?>"  id="input-ip" class="form-control filter hidden" />
                                 <div class="input-group date filter hidden filter hidden filter_date_start">
                                   <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control filter hidden" />
                                   <span class="input-group-btn">
@@ -139,6 +139,27 @@
 
         location = url;
     }
+    //--></script>
+    <script type="text/javascript"><!--
+    $('input[name=\'filter_affiliate\']').autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=marketing/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['name'],
+                            value: item['affiliate_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $('input[name=\'filter_affiliate\']').val(item['label']);
+        }
+    });
     //--></script>
     <script type="text/javascript"><!--
     $('.date').datetimepicker({
