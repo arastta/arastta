@@ -72,7 +72,7 @@ class ControllerFeedGoogleSitemap extends Controller {
         foreach ($this->model_catalog_product->getProducts() as $result) {
             if ($result['image']) {
                 $products[] = array(
-                    'name'  => $result['name'],
+                    'name'  => htmlspecialchars($result['name'], ENT_QUOTES),
                     'date'  => ($result['date_modified'] != 0) ? $result['date_modified'] : $result['date_added'],
                     'prior' => '1.0',
                     'url'   => $this->url->link('product/product', 'product_id=' . $result['product_id']),
