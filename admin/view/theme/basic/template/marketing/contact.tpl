@@ -208,8 +208,12 @@
     });
 
     function send(url) {
-        // Summer not fix
-        $('textarea[name=\'message\']').val($('#input-message').code());
+        if (typeof InsertTinyMCEImage == 'function') {
+            $('textarea[name=\'message\']').val(tinyMCE.activeEditor.getContent());
+        } else {
+            // Summer not fix
+            $('textarea[name=\'message\']').val($('#input-message').code());
+        }
 
         $.ajax({
             url: url,
