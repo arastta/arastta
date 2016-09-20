@@ -364,7 +364,7 @@
             <?php if ($products) { ?>
             <h3><?php echo $text_related; ?></h3>
             <div class="row">
-                <?php $i = 0; ?>
+                <?php $i = 1; ?>
                 <?php foreach ($products as $product) { ?>
                 <?php if ($column_left && $column_right) { ?>
                 <?php $class = 'col-lg-6 col-md-6 col-sm-12 col-xs-12'; ?>
@@ -381,8 +381,8 @@
                             <p><?php echo $product['description']; ?></p>
                             <?php if ($product['rating']) { ?>
                             <div class="rating">
-                                <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                <?php if ($product['rating'] < $i) { ?>
+                                <?php for ($j = 1; $j <= 5; $j++) { ?>
+                                <?php if ($product['rating'] < $j) { ?>
                                 <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
                                 <?php } else { ?>
                                 <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
