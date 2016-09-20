@@ -63,6 +63,7 @@ class ControllerPaymentPPStandard extends Controller {
         $data['entry_reversed_status'] = $this->language->get('entry_reversed_status');
         $data['entry_voided_status'] = $this->language->get('entry_voided_status');
         $data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+        $data['entry_no_shipping_status'] = $this->language->get('entry_no_shipping_status');
         $data['entry_status'] = $this->language->get('entry_status');
         $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
@@ -199,6 +200,12 @@ class ControllerPaymentPPStandard extends Controller {
             $data['pp_standard_voided_status_id'] = $this->request->post['pp_standard_voided_status_id'];
         } else {
             $data['pp_standard_voided_status_id'] = $this->config->get('pp_standard_voided_status_id');
+        }
+
+        if (isset($this->request->post['pp_standard_no_shipping_status'])) {
+            $data['pp_standard_no_shipping_status'] = $this->request->post['pp_standard_no_shipping_status'];
+        } else {
+            $data['pp_standard_no_shipping_status'] = $this->config->get('pp_standard_no_shipping_status', 1);
         }
 
         $this->load->model('localisation/order_status');

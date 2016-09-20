@@ -94,6 +94,7 @@ class ControllerPaymentPPStandard extends Controller {
             $data['return'] = $this->url->link('checkout/success');
             $data['notify_url'] = $this->url->link('payment/pp_standard/callback', '', 'SSL');
             $data['cancel_return'] = $this->url->link('checkout/checkout', '', 'SSL');
+            $data['no_shipping'] = $this->config->get('pp_standard_no_shipping_status', 1);
 
             if (!$this->config->get('pp_standard_transaction')) {
                 $data['paymentaction'] = 'authorization';
