@@ -765,7 +765,14 @@
         return node.nodeValue.length;
       }
 
-      return node.childNodes.length;
+      // https://github.com/summernote/summernote/blob/develop/src/js/base/core/dom.js#L200
+      //return node.childNodes.length;
+
+      if (node) {
+        return node.childNodes.length;
+      }
+
+      return false;
     };
 
     /**
