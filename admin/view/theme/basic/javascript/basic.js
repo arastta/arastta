@@ -64,7 +64,7 @@ $(document).ready(function() {
                 url: 'index.php?route=common/edit/sortOrder&token=' + getURLVar('token'),
                 type: 'post',
                 dataType: 'json',
-                data: $("form[id^='form-']").serialize() + '&route=' + getURLVar('route') + '&sort=' + getURLVar('sort') + '&order=' + getURLVar('order') + '&page=' + getURLVar('page') + '&filter_type=' + getURLVar('filter_type'),
+                data: $("form[id^='form-']").serialize() + '&' + String(document.location).split('?')[1],
                 beforeSend: function() {
                     var html = '<div class="spinner"><span class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></span></div>';
 
@@ -93,19 +93,15 @@ $(document).ready(function() {
     $(document).on('click', '#sort-order-list', function(e) {
         e.preventDefault();
 
+        var query = String(document.location).split('?');
         var table_body = $(this).parent().parent().parent().parent().find('tbody').hasClass('sortable-list');
 
         if (table_body) {
-            var url = 'index.php?route=' + getURLVar('route') + '&token='+ getURLVar('token');
+            var url = 'index.php?' + query[1].replace('&order=ASC&sortable=active', '');
 
             location = url;
         } else {
-            var sort = $('tbody #sort-order-type').val();
-
-            var filter_type = getURLVar('filter_type');
-            var page = getURLVar('page');
-
-            var url = 'index.php?route=' + getURLVar('route') + '&token='+ getURLVar('token') + '&page=' + page + '&filter_type=' + filter_type + '&sort=' + sort + '&order=ASC&sortable=active';
+            var url = 'index.php?' + query[1] + '&order=ASC&sortable=active';
 
             location = url;
         }

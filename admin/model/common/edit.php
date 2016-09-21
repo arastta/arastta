@@ -120,33 +120,6 @@ class ModelCommonEdit extends Model
                 $sort_order++;
             }
         } else {
-            // Get route all items
-            $this->load->model($route);
-
-            $filter_data = array(
-                'sort'  => $sort,
-                'order' => $order
-            );
-
-            $model = 'model_' . str_replace('/', '_', $route);
-
-            $function = 'get' . str_replace('ry', 'rie', $type) . 's';
-
-            $results = $this->{$model}->{$function}($filter_data);
-
-            if (empty($results)) {
-                return false;
-            }
-
-            //
-            foreach ($results as $key => $result) {
-                if (in_array($result[$type . '_id'], $items)) {
-                    unset($results[$key]);
-                }
-            }
-
-            unset($key, $result);
-
             $sort_order = (($page - 1) * $this->config->get('config_limit_admin')) + 1;
 
             foreach ($items as $item) {
@@ -155,18 +128,51 @@ class ModelCommonEdit extends Model
                 $sort_order++;
             }
 
-            foreach ($results as $result) {
-                if (!empty($result['sort_order']) && $result['sort_order'] < $sort_order) {
-                    continue;
+            $post_keys = array_keys($data);
+
+            $is_filter = preg_grep("/filter_+/", $post_keys);
+
+            if (!$is_filter) {
+                // Get route all items
+                $this->load->model($route);
+
+                $filter_data = array(
+                    'sort'  => $sort,
+                    'order' => $order
+                );
+
+                $model = 'model_' . str_replace('/', '_', $route);
+
+                $function = 'get' . str_replace('ry', 'rie', $type) . 's';
+
+                $results = $this->{$model}->{$function}($filter_data);
+
+                if (empty($results)) {
+                    return false;
                 }
 
-                if ($type == 'category' && $result['parent_id']) {
-                    continue;
+                //
+                foreach ($results as $key => $result) {
+                    if (in_array($result[$type . '_id'], $items)) {
+                        unset($results[$key]);
+                    }
                 }
 
-                $this->db->query("UPDATE `" . DB_PREFIX . $type . "` SET `sort_order` = " . (int)$sort_order . " WHERE `" . $type . "_id` = " . (int)$result[$type . '_id']);
+                unset($key, $result);
 
-                $sort_order++;
+                foreach ($results as $result) {
+                    if (!empty($result['sort_order']) && $result['sort_order'] < $sort_order) {
+                        continue;
+                    }
+
+                    if ($type == 'category' && $result['parent_id']) {
+                        continue;
+                    }
+
+                    $this->db->query("UPDATE `" . DB_PREFIX . $type . "` SET `sort_order` = " . (int)$sort_order . " WHERE `" . $type . "_id` = " . (int)$result[$type . '_id']);
+
+                    $sort_order++;
+                }
             }
         }
 

@@ -315,6 +315,12 @@ function filter() {
         url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
     }
 
+    var filter_sortable = getURLVar('sortable');
+
+    if (filter_sortable) {
+        url += '&order=ASC&sortable=active';
+    }
+
     location = url;
 };
 //--></script>

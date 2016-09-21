@@ -244,6 +244,12 @@ function filter() {
         url += '&filter_status=' + encodeURIComponent(filter_status);
     }
 
+    var filter_sortable = getURLVar('sortable');
+
+    if (filter_sortable) {
+        url += '&order=ASC&sortable=active';
+    }
+
     location = url;
 }
 //--></script>
