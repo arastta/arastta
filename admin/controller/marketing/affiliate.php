@@ -1155,7 +1155,7 @@ class ControllerMarketingAffiliate extends Controller {
         if (!$this->request->post['code']) {
             $this->error['code'] = $this->language->get('error_code');
         }
-        
+
         if ($this->error && !isset($this->error['warning'])) {
             //$this->error['warning'] = $this->language->get('error_warning');
         }

@@ -45,20 +45,21 @@
                             <?php } ?>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-filename"><span data-toggle="tooltip" title="<?php echo $help_filename; ?>"><?php echo $entry_filename; ?></span></label>
                         <div class="col-sm-10">
                             <div class="input-group upload">
                                 <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="form-control" />
-                <span class="input-group-btn">
-                <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-                </span> </div>
+                                <span class="input-group-btn">
+                                    <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+                                </span>
+                            </div>
                             <?php if ($error_filename) { ?>
                             <div class="text-danger"><?php echo $error_filename; ?></div>
                             <?php } ?>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-mask"><span data-toggle="tooltip" title="<?php echo $help_mask; ?>"><?php echo $entry_mask; ?></span></label>
                         <div class="col-sm-10">
                             <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" id="input-mask" class="form-control" />

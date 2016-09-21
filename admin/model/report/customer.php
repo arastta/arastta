@@ -120,7 +120,7 @@ class ModelReportCustomer extends Model {
 
         $sql .= " GROUP BY o.order_id";
 
-        $sql = "SELECT t.customer_id, t.customer, t.email, t.customer_group, t.status, COUNT(t.order_id) AS orders, SUM(t.products) AS products, SUM(t.total) AS total FROM (" . $sql . ") AS t GROUP BY t.customer_id ORDER BY total DESC";     
+        $sql = "SELECT t.customer_id, t.customer, t.email, t.customer_group, t.status, COUNT(DISTINCT t.order_id) AS orders, SUM(t.products) AS products, SUM(t.total) AS total FROM (" . $sql . ") AS t GROUP BY t.customer_id ORDER BY total DESC";     
 
         if (isset($data['start']) || isset($data['limit'])) {
             if ($data['start'] < 0) {

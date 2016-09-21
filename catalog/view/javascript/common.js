@@ -399,7 +399,7 @@ var cart = {
                         html += '        <h4 class="modal-title"> <i class="fa fa-shopping-cart"></i> ' + responce['total'] + '</h4>';
                         html += '      </div>';
                         html += '      <div class="modal-body">' + responce['html'] + '</div>';
-                        html += '    </div';
+                        html += '    </div>';
                         html += '  </div>';
                         html += '</div>';
 

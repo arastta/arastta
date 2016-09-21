@@ -2736,3 +2736,11 @@ li.basic-advanced {
 .mce-fullscreen {
     z-index: 99999 !important;
 }
+
+.alert.alert-danger a {
+    cursor: pointer;
+}
+
+.alert.alert-danger  .close {
+    right: 10px;
+}

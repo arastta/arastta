@@ -31,7 +31,7 @@ class Catalog extends App
         }
 
         if ($store_query->num_rows) {
-            $this->config->set('config_store_id', $store_query->row['store_id']);
+            $this->config->set('config_store_id', (int)$store_query->row['store_id']);
         } else {
             $this->config->set('config_store_id', 0);
         }
