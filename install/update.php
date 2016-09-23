@@ -431,5 +431,6 @@ if (version_compare(VERSION, '1.4.0', '<')) {
 // 1.4.1 changes;
 if (version_compare(VERSION, '1.4.1', '<')) {
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_customer_activity', `value` = '0'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_affiliate_activity', `value` = '0'");
 }
 

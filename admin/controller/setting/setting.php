@@ -787,6 +787,12 @@ class ControllerSettingSetting extends Controller {
             $data['config_stock_mail'] = '';
         }
 
+        if (isset($this->request->post['config_affiliate_activity'])) {
+            $data['config_affiliate_activity'] = $this->request->post['config_affiliate_activity'];
+        } else {
+            $data['config_affiliate_activity'] = $this->config->get('config_affiliate_activity');
+        }
+
         if (isset($this->request->post['config_affiliate_approval'])) {
             $data['config_affiliate_approval'] = $this->request->post['config_affiliate_approval'];
         } elseif ($this->config->has('config_affiliate_approval')) {
@@ -837,7 +843,7 @@ class ControllerSettingSetting extends Controller {
             $data['config_return_status_id'] = $this->config->get('config_return_status_id');
         }
     
-    if (isset($this->request->post['config_return_mail'])) {
+        if (isset($this->request->post['config_return_mail'])) {
             $data['config_return_mail'] = $this->request->post['config_return_mail'];
         } elseif ($this->config->has('config_return_mail')) {
             $data['config_return_mail'] = $this->config->get('config_return_mail');
