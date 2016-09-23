@@ -30,6 +30,12 @@ class ControllerReportCustomerOrder extends Controller {
             $filter_order_status_id = 0;
         }
 
+        if (isset($this->request->get['filter_customer'])) {
+            $filter_customer = $this->request->get['filter_customer'];
+        } else {
+            $filter_customer = '';
+        }
+
         if (isset($this->request->get['page'])) {
             $page = $this->request->get['page'];
         } else {
@@ -48,6 +54,10 @@ class ControllerReportCustomerOrder extends Controller {
 
         if (isset($this->request->get['filter_order_status_id'])) {
             $url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+        }
+
+        if (isset($this->request->get['filter_customer'])) {
+            $url .= '&filter_customer=' . urlencode($this->request->get['filter_customer']);
         }
 
         if (isset($this->request->get['page'])) {
@@ -71,9 +81,10 @@ class ControllerReportCustomerOrder extends Controller {
         $data['customers'] = array();
 
         $filter_data = array(
-            'filter_date_start'         => $filter_date_start,
-            'filter_date_end'         => $filter_date_end,
+            'filter_date_start'      => $filter_date_start,
+            'filter_date_end'        => $filter_date_end,
             'filter_order_status_id' => $filter_order_status_id,
+            'filter_customer'        => $filter_customer,
             'start'                  => ($page - 1) * $this->config->get('config_limit_admin'),
             'limit'                  => $this->config->get('config_limit_admin')
         );
@@ -114,6 +125,7 @@ class ControllerReportCustomerOrder extends Controller {
         $data['entry_date_start'] = $this->language->get('entry_date_start');
         $data['entry_date_end'] = $this->language->get('entry_date_end');
         $data['entry_status'] = $this->language->get('entry_status');
+        $data['entry_customer'] = $this->language->get('entry_customer');
 
         $data['button_edit'] = $this->language->get('button_edit');
         $data['button_filter'] = $this->language->get('button_filter');
@@ -140,6 +152,10 @@ class ControllerReportCustomerOrder extends Controller {
             $url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
         }
 
+        if (isset($this->request->get['filter_customer'])) {
+            $url .= '&filter_customer=' . urlencode($this->request->get['filter_customer']);
+        }
+
         $pagination = new Pagination();
         $pagination->total = $customer_total;
         $pagination->page = $page;
@@ -153,6 +169,7 @@ class ControllerReportCustomerOrder extends Controller {
         $data['filter_date_start'] = $filter_date_start;
         $data['filter_date_end'] = $filter_date_end;
         $data['filter_order_status_id'] = $filter_order_status_id;
+        $data['filter_customer'] = $filter_customer;
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

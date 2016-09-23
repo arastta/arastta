@@ -27,6 +27,7 @@
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_date_start; ?>', 'filter_date_start');"><?php echo $entry_date_start; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_date_end; ?>', 'filter_date_end');"><?php echo $entry_date_end; ?></a></li>
+                                        <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_customer; ?>', 'filter_customer');"><?php echo $entry_customer; ?></a></li>
                                     </ul>
                                 </div>
                                 <div class="input-group date filter filter_date_start">
@@ -39,10 +40,11 @@
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                                   </span></div>
+                                <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>"id="input-customer" class="form-control hidden filter" />
                             </div>
                         </div>
                     </div>
-                    <?php if (!empty($filter_date_start) || !empty($filter_date_end)) { ?>
+                    <?php if (!empty($filter_date_start) || !empty($filter_date_end) || !empty($filter_customer)) { ?>
                     <div class="row">
                         <div class="col-lg-12 filter-tag">
                             <?php if ($filter_date_start) { ?>
@@ -55,6 +57,12 @@
                             <div class="filter-info pull-left">
                                 <label class="control-label"><?php echo $entry_date_end; ?>:</label> <label class="filter-label"> <?php echo $filter_date_end; ?></label>
                                 <a class="filter-remove" onclick="removeFilter(this, 'filter_date_end');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_customer) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_customer; ?>:</label> <label class="filter-label"> <?php echo $filter_customer; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_customer');"><i class="fa fa-times"></i></a>
                             </div>
                             <?php } ?>
                         </div>
@@ -120,6 +128,12 @@
             url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
         }
 
+        var filter_customer = $('input[name=\'filter_customer\']').val();
+
+        if (filter_customer) {
+            url += '&filter_customer=' + encodeURIComponent(filter_customer);
+        }
+
         location = url;
     }
     //--></script>
@@ -127,5 +141,26 @@
     $('.date').datetimepicker({
         pickTime: false
     });
-    //--></script></div>
+    //--></script>
+    <script type="text/javascript"><!--
+    $('input[name=\'filter_customer\']').autocomplete({
+      'source': function(request, response) {
+        $.ajax({
+          url: 'index.php?route=customer/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+          dataType: 'json',
+          success: function(json) {
+            response($.map(json, function(item) {
+              return {
+                label: item['name'],
+                value: item['customer_id']
+              }
+            }));
+          }
+        });
+      },
+      'select': function(item) {
+        $('input[name=\'filter_customer\']').val(item['label']);
+      }
+    });
+    //--></script> </div>
 <?php echo $footer; ?>

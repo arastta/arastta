@@ -118,6 +118,10 @@ class ModelReportCustomer extends Model {
             $sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
         }
 
+        if (!empty($data['filter_customer'])) {
+            $sql .= " AND CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
+        }
+
         $sql .= " GROUP BY o.order_id";
 
         $sql = "SELECT t.customer_id, t.customer, t.email, t.customer_group, t.status, COUNT(DISTINCT t.order_id) AS orders, SUM(t.products) AS products, SUM(t.total) AS total FROM (" . $sql . ") AS t GROUP BY t.customer_id ORDER BY total DESC";     
@@ -140,7 +144,7 @@ class ModelReportCustomer extends Model {
     }
 
     public function getTotalOrders($data = array()) {
-        $sql = "SELECT COUNT(DISTINCT o.customer_id) AS total FROM `" . DB_PREFIX . "order` o WHERE o.customer_id > '0'";
+        $sql = "SELECT COUNT(DISTINCT o.customer_id) AS total FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "customer` c ON (o.customer_id = c.customer_id) WHERE o.customer_id > '0'";
 
         if (!empty($data['filter_order_status_id'])) {
             $sql .= " AND o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
@@ -154,6 +158,10 @@ class ModelReportCustomer extends Model {
 
         if (!empty($data['filter_date_end'])) {
             $sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+        }
+
+        if (!empty($data['filter_customer'])) {
+            $sql .= " AND CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
         }
 
         $query = $this->db->query($sql);
@@ -170,6 +178,10 @@ class ModelReportCustomer extends Model {
 
         if (!empty($data['filter_date_end'])) {
             $sql .= " AND DATE(cr.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+        }
+
+        if (!empty($data['filter_customer'])) {
+            $sql .= " AND CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
         }
 
         $sql .= " GROUP BY cr.customer_id ORDER BY points DESC";
@@ -192,16 +204,20 @@ class ModelReportCustomer extends Model {
     }
 
     public function getTotalRewardPoints($data = array()) {
-        $sql = "SELECT COUNT(DISTINCT customer_id) AS total FROM `" . DB_PREFIX . "customer_reward`";
+        $sql = "SELECT COUNT(DISTINCT cr.customer_id) AS total FROM `" . DB_PREFIX . "customer_reward` cr LEFT JOIN `" . DB_PREFIX . "customer` c ON (cr.customer_id = c.customer_id)";
 
         $implode = array();
 
         if (!empty($data['filter_date_start'])) {
-            $implode[] = "DATE(date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+            $implode[] = "DATE(cr.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
         }
 
         if (!empty($data['filter_date_end'])) {
-            $implode[] = "DATE(date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+            $implode[] = "DATE(cr.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+        }
+
+        if (!empty($data['filter_customer'])) {
+            $implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
         }
 
         if ($implode) {
@@ -224,6 +240,10 @@ class ModelReportCustomer extends Model {
             $sql .= " AND DATE(ct.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
         }
 
+        if (!empty($data['filter_customer'])) {
+            $sql .= " AND CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
+        }
+
         $sql .= " GROUP BY ct.customer_id ORDER BY total DESC";
 
         if (isset($data['start']) || isset($data['limit'])) {
@@ -244,16 +264,20 @@ class ModelReportCustomer extends Model {
     }
 
     public function getTotalCredit($data = array()) {
-        $sql = "SELECT COUNT(DISTINCT customer_id) AS total FROM `" . DB_PREFIX . "customer_credit`";
+        $sql = "SELECT COUNT(DISTINCT cc.customer_id) AS total FROM `" . DB_PREFIX . "customer_credit` cc LEFT JOIN `" . DB_PREFIX . "customer` c ON (cc.customer_id = c.customer_id)";
 
         $implode = array();
 
         if (!empty($data['filter_date_start'])) {
-            $implode[] = "DATE(date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+            $implode[] = "DATE(cc.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
         }
 
         if (!empty($data['filter_date_end'])) {
-            $implode[] = "DATE(date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+            $implode[] = "DATE(cc.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+        }
+
+        if (!empty($data['filter_customer'])) {
+            $implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
         }
 
         if ($implode) {

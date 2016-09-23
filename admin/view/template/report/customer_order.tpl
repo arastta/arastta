@@ -27,20 +27,28 @@
                                 <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
                                 <div class="input-group date">
                                     <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
                                 <div class="input-group date">
                                     <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
+                                <div class="input-group">
+                                    <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
                                 <select name="filter_order_status_id" id="input-status" class="form-control">
@@ -123,6 +131,12 @@
             url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
         }
 
+        var filter_customer = $('input[name=\'filter_customer\']').val();
+
+        if (filter_customer) {
+            url += '&filter_customer=' + encodeURIComponent(filter_customer);
+        }
+
         location = url;
     });
     //--></script>
@@ -130,5 +144,26 @@
     $('.date').datetimepicker({
         pickTime: false
     });
-    //--></script></div>
+    //--></script>
+    <script type="text/javascript"><!--
+    $('input[name=\'filter_customer\']').autocomplete({
+      'source': function(request, response) {
+        $.ajax({
+          url: 'index.php?route=customer/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+          dataType: 'json',
+          success: function(json) {
+            response($.map(json, function(item) {
+              return {
+                label: item['name'],
+                value: item['customer_id']
+              }
+            }));
+          }
+        });
+      },
+      'select': function(item) {
+        $('input[name=\'filter_customer\']').val(item['label']);
+      }
+    });
+    //--></script> </div>
 <?php echo $footer; ?>

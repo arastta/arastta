@@ -27,9 +27,16 @@
                                 <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
                                 <div class="input-group date">
                                     <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                    <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
+                                <div class="input-group">
+                                    <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -37,9 +44,10 @@
                                 <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
                                 <div class="input-group date">
                                     <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
                             </div>
                             <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
                         </div>
@@ -100,6 +108,12 @@
             url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
         }
 
+        var filter_customer = $('input[name=\'filter_customer\']').val();
+
+        if (filter_customer) {
+            url += '&filter_customer=' + encodeURIComponent(filter_customer);
+        }
+
         location = url;
     });
     //--></script>
@@ -108,5 +122,25 @@
         pickTime: false
     });
     //--></script>
-</div>
+    <script type="text/javascript"><!--
+    $('input[name=\'filter_customer\']').autocomplete({
+      'source': function(request, response) {
+        $.ajax({
+          url: 'index.php?route=customer/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+          dataType: 'json',
+          success: function(json) {
+            response($.map(json, function(item) {
+              return {
+                label: item['name'],
+                value: item['customer_id']
+              }
+            }));
+          }
+        });
+      },
+      'select': function(item) {
+        $('input[name=\'filter_customer\']').val(item['label']);
+      }
+    });
+    //--></script> </div>
 <?php echo $footer; ?>
