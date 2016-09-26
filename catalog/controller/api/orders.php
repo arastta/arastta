@@ -11,7 +11,7 @@ class ControllerApiOrders extends Controller
 
     public function getOrder($args = array())
     {
-        $this->load->language('api/customers');
+        $this->load->language('api/orders');
 
         $json = array();
 
@@ -19,10 +19,23 @@ class ControllerApiOrders extends Controller
             $json['error'] = $this->language->get('error_permission');
         } else {
             $this->load->model('checkout/order');
+            $this->load->model('account/order');
 
             $order = $this->model_checkout_order->getOrder($args['id']);
 
             $order['nice_total'] = $this->currency->format($order['total'], $order['currency_code'], $order['currency_value']);
+
+            $order['products'] = array();
+
+            $products = $this->model_account_order->getOrderProducts($args['id']);
+
+            if (!empty($products)) {
+                foreach ($products as $product) {
+                    $product['nice_total'] = $this->currency->format($product['total'], $order['currency_code'], $order['currency_value']);
+
+                    $order['products'][] = $product;
+                }
+            }
 
             $json = $order;
         }
@@ -33,7 +46,7 @@ class ControllerApiOrders extends Controller
 
     public function addOrder($args = array())
     {
-        $this->load->language('api/customers');
+        $this->load->language('api/orders');
 
         $json = array();
 
@@ -51,7 +64,7 @@ class ControllerApiOrders extends Controller
 
     public function editOrder($args = array())
     {
-        $this->load->language('api/customers');
+        $this->load->language('api/orders');
 
         $json = array();
 
@@ -71,7 +84,7 @@ class ControllerApiOrders extends Controller
     
     public function deleteOrder($args = array())
     {
-        $this->load->language('api/order');
+        $this->load->language('api/orders');
 
         $json = array();
 
@@ -97,7 +110,7 @@ class ControllerApiOrders extends Controller
 
     public function getOrders($args = array())
     {
-        $this->load->language('api/customers');
+        $this->load->language('api/orders');
 
         $json = array();
 
@@ -105,6 +118,7 @@ class ControllerApiOrders extends Controller
             $json['error'] = $this->language->get('error_permission');
         } else {
             $this->load->model('api/orders');
+            $this->load->model('account/order');
 
             $order_data = array();
 
@@ -117,6 +131,18 @@ class ControllerApiOrders extends Controller
                     $order = $this->model_checkout_order->getOrder($result['order_id']);
 
                     $order['nice_total'] = $this->currency->format($order['total'], $order['currency_code'], $order['currency_value']);
+
+                    $order['products'] = array();
+
+                    $products = $this->model_account_order->getOrderProducts($result['order_id']);
+
+                    if (!empty($products)) {
+                        foreach ($products as $product) {
+                            $product['nice_total'] = $this->currency->format($product['total'], $order['currency_code'], $order['currency_value']);
+
+                            $order['products'][] = $product;
+                        }
+                    }
 
                     $order_data[] = $order;
                 }
