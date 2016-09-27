@@ -88,7 +88,7 @@ class Cli extends App
         $this->trigger->fire('post.app.ecommerce');
     }
 
-        public function call($callback, array $parameters = array())
+    public function call($callback, array $parameters = array())
     {
         return call_user_func_array($callback, $parameters);
     }
@@ -106,7 +106,7 @@ class Cli extends App
 
         $finder = new Finder();
 
-        $finder->files()->in(DIR_SYSTEM . 'library/command')->name('*.php');
+        $finder->files()->in(DIR_CLI)->name('*.php');
 
         foreach ($finder as $file) {
             $name = str_replace('.php', '', $file->getRelativePathname());

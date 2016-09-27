@@ -30,7 +30,7 @@ RewriteEngine On
 RewriteRule ^sitemap.xml$ index.php?route=feed/google_sitemap [L]
 RewriteRule ^googlebase.xml$ index.php?route=feed/google_base [L]
 # Prevent direct access to protected folders
-RewriteRule ^(download|upload|vqmod)/(.*) /index.php?route=error/not_found [L]
+RewriteRule ^(cli|download|upload|vqmod)/(.*) /index.php?route=error/not_found [L]
 # Prevent direct access to system folder except img,js and css files
 RewriteRule ^(system)\/(.*)\.((?!ico|gif|jpg|jpeg|png|js|css).)*$ /index.php?route=error/not_found [L]
 # If the requested path and file is not /index.php and the request

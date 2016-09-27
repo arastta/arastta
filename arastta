@@ -28,11 +28,11 @@ $base = __DIR__;
 
 define('DIR_BASE',          $base . '/');
 define('DIR_ROOT',          $base . '/');
+define('DIR_CLI',       	DIR_ROOT . 'cli/');
 define('DIR_INSTALL',       DIR_ROOT . 'install/');
 define('DIR_SYSTEM',        DIR_ROOT . 'system/');
 define('DIR_ADMIN',         DIR_ROOT . 'admin/');
 define('DIR_CATALOG',       DIR_ROOT . 'catalog/');
-define('DIR_CLI',           DIR_SYSTEM . 'console/');
 define('DIR_VQMOD',         DIR_ROOT . 'vqmod/');
 define('DIR_IMAGE',         DIR_ROOT . 'image/');
 define('DIR_DOWNLOAD',      DIR_ROOT . 'download/');

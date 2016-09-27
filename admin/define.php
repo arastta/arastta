@@ -29,6 +29,7 @@ array_pop($parts);
 
 define('DIR_BASE', $base . '/');
 define('DIR_ROOT', implode(DIRECTORY_SEPARATOR, $parts) . '/');
+define('DIR_CLI', DIR_ROOT . 'cli/');
 define('DIR_INSTALL', DIR_ROOT . 'install/');
 define('DIR_SYSTEM', DIR_ROOT . 'system/');
 define('DIR_ADMIN', DIR_ROOT . 'admin/');
@@ -44,5 +45,5 @@ define('DIR_MODIFICATION', DIR_SYSTEM . 'modification/');
 define('DIR_LANGUAGE', DIR_ADMIN . 'language/');
 define('DIR_TEMPLATE', DIR_ADMIN . 'view/template/');
 
-define('DIR_APPLICATION', DIR_ROOT . 'admin/'); // depreciated due to app instances, use DIR_ADMIN
-define('DIR_LOGS', DIR_SYSTEM . 'log/'); // depreciated due to plural usage, use DIR_LOG
+define('DIR_APPLICATION', DIR_ADMIN); // depreciated due to app instances, use DIR_ADMIN
+define('DIR_LOGS', DIR_LOG); // depreciated due to plural usage, use DIR_LOG
