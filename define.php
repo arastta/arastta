@@ -26,6 +26,7 @@ $base = __DIR__;
 
 define('DIR_BASE', $base . '/');
 define('DIR_ROOT', $base . '/');
+define('DIR_CLI', DIR_ROOT . 'cli/');
 define('DIR_INSTALL', DIR_ROOT . 'install/');
 define('DIR_SYSTEM', DIR_ROOT . 'system/');
 define('DIR_ADMIN', DIR_ROOT . 'admin/');
@@ -41,5 +42,5 @@ define('DIR_LOG', DIR_SYSTEM . 'log/');
 define('DIR_LANGUAGE', DIR_CATALOG . 'language/');
 define('DIR_TEMPLATE', DIR_CATALOG . 'view/theme/');
 
-define('DIR_APPLICATION', DIR_ROOT . 'catalog/'); // depreciated due to app instances, use DIR_CATALOG
-define('DIR_LOGS', DIR_SYSTEM . 'log/'); // depreciated due to plural usage, use DIR_LOG
+define('DIR_APPLICATION', DIR_CATALOG); // depreciated due to app instances, use DIR_CATALOG
+define('DIR_LOGS', DIR_LOG); // depreciated due to plural usage, use DIR_LOG
