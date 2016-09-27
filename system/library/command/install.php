@@ -67,10 +67,12 @@ class Install extends Command
         }
 
         //before we create the database tables we need to add language data to the session
-        $this->install->session->data['lang_name']      = 'English';
-        $this->install->session->data['lang_code']      = 'en';
-        $this->install->session->data['lang_image']     = 'gb.png';
-        $this->install->session->data['lang_directory'] = 'en-GB';
+        $this->install->session->data['lang_name']          = 'English';
+        $this->install->session->data['lang_code']          = 'en';
+        $this->install->session->data['lang_image']         = 'gb.png';
+        $this->install->session->data['lang_directory']     = 'en-GB';
+        $this->install->session->data['lang_product_id']    = '225';
+        $this->install->session->data['lang_version']       = '';
 
         $this->install->model_setting->createDatabaseTables($options);
 
