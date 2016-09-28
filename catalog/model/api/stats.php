@@ -40,9 +40,7 @@ class ModelApiStats extends Model
         while ($date <= $date_end) {
             $day = $date->format('Y-m-d');
 
-            $sql .= " WHERE DATE(date_added) = DATE('" . $day . "')" . $this->getExtraConditions($data, $type);
-
-            $query = $this->db->query($sql);
+            $query = $this->db->query($sql ." WHERE DATE(date_added) = DATE('" . $day . "')" . $this->getExtraConditions($data, $type));
             
             $row = $query->row;
             $row['date'] = $day;
