@@ -50,7 +50,9 @@ class ControllerApiSettings extends Controller
             if (!empty($args['url'])) {
                 $config['config_url'] = $args['url'];
             } else {
-                $url = str_replace('http://', '', $config['config_url']);
+                $config_url = !empty($config['config_url']) ? $config['config_url'] : $this->config->get('config_url');
+                
+                $url = str_replace('http://', '', $config_url);
                 $url = str_replace('https://', '', $url);
                 $url = rtrim($url, '/');
 
