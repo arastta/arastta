@@ -97,7 +97,7 @@ class ControllerFeedFacebookStore extends Controller
         } elseif ($this->config->get('facebook_store_show_header_currency')) {
             $data['show_header_currency'] = $this->config->get('facebook_store_show_header_currency');
         } else {
-            $data['show_header_currency'] = 1;
+            $data['show_header_currency'] = 0;
         }
 
         if (isset($this->request->post['facebook_store_show_header_language'])) {
@@ -105,7 +105,7 @@ class ControllerFeedFacebookStore extends Controller
         } elseif ($this->config->get('facebook_store_show_header_language')) {
             $data['show_header_language'] = $this->config->get('facebook_store_show_header_language');
         } else {
-            $data['show_header_language'] = 1;
+            $data['show_header_language'] = 0;
         }
 
         if (isset($this->request->post['facebook_store_show_header_category'])) {
@@ -113,7 +113,7 @@ class ControllerFeedFacebookStore extends Controller
         } elseif ($this->config->get('facebook_store_show_header_category')) {
             $data['show_header_category'] = $this->config->get('facebook_store_show_header_category');
         } else {
-            $data['show_header_category'] = 1;
+            $data['show_header_category'] = 0;
         }
 
         if (isset($this->request->post['facebook_store_show_header_search'])) {
@@ -121,7 +121,7 @@ class ControllerFeedFacebookStore extends Controller
         } elseif ($this->config->get('facebook_store_show_header_search')) {
             $data['show_header_search'] = $this->config->get('facebook_store_show_header_search');
         } else {
-            $data['show_header_search'] = 1;
+            $data['show_header_search'] = 0;
         }
 
         if (isset($this->request->post['facebook_store_show_footer'])) {
@@ -159,7 +159,7 @@ class ControllerFeedFacebookStore extends Controller
         } elseif ($this->config->get('facebook_store_show_product_price')) {
             $data['show_product_price'] = $this->config->get('facebook_store_show_product_price');
         } else {
-            $data['show_product_price'] = 1;
+            $data['show_product_price'] = 0;
         }
 
         if (isset($this->request->post['facebook_store_show_product_rating'])) {
@@ -175,7 +175,7 @@ class ControllerFeedFacebookStore extends Controller
         } elseif ($this->config->get('facebook_store_show_addtocart')) {
             $data['show_addtocart'] = $this->config->get('facebook_store_show_addtocart');
         } else {
-            $data['show_addtocart'] = 1;
+            $data['show_addtocart'] = 0;
         }
 
         if (isset($this->request->post['facebook_store_status'])) {

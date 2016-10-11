@@ -23,15 +23,15 @@ $_['text_drag_and_drop']             = 'Drag &amp; drop modules here';
 
 // Entry
 $_['entry_app_id']                   = 'Facebook App ID';
-$_['entry_show_header_category']     = 'Show Category';
-$_['entry_show_header_search']       = 'Show Search';
-$_['entry_show_header_currency']     = 'Show Currency';
-$_['entry_show_header_language']     = 'Show Language';
-$_['entry_show_footer']              = 'Show Footer';
-$_['entry_show_product_description'] = 'Show Product Description';
-$_['entry_show_product_price']       = 'Show Product Price';
-$_['entry_show_product_rating']      = 'Show Product Rating';
-$_['entry_show_addtocart']           = 'Show Product AddtoCart Button';
+$_['entry_show_header_category']     = 'Display Category Select';
+$_['entry_show_header_search']       = 'Display Search Field';
+$_['entry_show_header_currency']     = 'Display Currency Select';
+$_['entry_show_header_language']     = 'Display Language Select';
+$_['entry_show_footer']              = 'Display Footer';
+$_['entry_show_product_description'] = 'Display Product Description';
+$_['entry_show_product_price']       = 'Display Product Price';
+$_['entry_show_product_rating']      = 'Display Product Rating';
+$_['entry_show_addtocart']           = 'Display Add to Cart Button';
 $_['entry_status']                   = 'Status';
 $_['entry_data_feed']                = 'Generated Code';
 
