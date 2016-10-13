@@ -66,6 +66,19 @@
                                     <?php } ?>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label" for="input-payment"><?php echo $entry_payment; ?></label>
+                                <select name="filter_payment_code" id="input-payment" class="form-control">
+                                    <option value="0"><?php echo $text_all_payment; ?></option>
+                                    <?php foreach ($payment_methods as $payment_method) { ?>
+                                    <?php if ($payment_method['code'] == $filter_payment_code) { ?>
+                                    <option value="<?php echo $payment_method['code']; ?>" selected="selected"><?php echo $payment_method['code']; ?></option>
+                                    <?php } else { ?>
+                                    <option value="<?php echo $payment_method['code']; ?>"><?php echo $payment_method['code']; ?></option>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </select>
+                            </div>
                             <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
                         </div>
                     </div>
@@ -135,6 +148,12 @@
 
         if (filter_order_status_id != 0) {
             url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+        }
+
+        var filter_payment_code = $('select[name=\'filter_payment_code\']').val();
+
+        if (filter_payment_code) {
+            url += '&filter_payment_code=' + encodeURIComponent(filter_payment_code);
         }
 
         location = url;
