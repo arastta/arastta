@@ -272,6 +272,8 @@ class ControllerSaleOrder extends Controller {
         $results = $this->model_sale_order->getOrders($filter_data);
 
         foreach ($results as $result) {
+            $order_info = $this->model_sale_order->getOrder($result['order_id']);
+
             $data['orders'][] = array(
                 'order_id'      => $result['order_id'],
                 'customer'      => $result['customer'],
@@ -280,6 +282,7 @@ class ControllerSaleOrder extends Controller {
                 'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
                 'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
                 'shipping_code' => $result['shipping_code'],
+                'invoice_no'    => ($order_info['invoice_no']) ? $order_info['invoice_prefix'] . $order_info['invoice_no'] : '',
                 'view'          => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
                 'edit'          => $this->url->link('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
                 'delete'        => $this->url->link('sale/order/delete', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')

@@ -140,6 +140,7 @@
                                     <?php } else { ?>
                                     <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" />
                                     <?php } ?>
+                                    <input type="hidden" name="invoice_no[]" value="<?php echo $order['invoice_no']; ?>" />
                                     <input type="hidden" name="shipping_code[]" value="<?php echo $order['shipping_code']; ?>" /></td>
                                 <td class="text-right"><?php echo $order['order_id']; ?></td>
                                 <td class="text-left"><?php echo $order['customer']; ?></td>
@@ -238,10 +239,13 @@
 
         if (selected.length) {
             $('#button-invoice').prop('disabled', false);
-            $('#button-invoicepdf').prop('disabled', false);
         }
 
         for (i = 0; i < selected.length; i++) {
+            if ($(selected[i]).parent().find('input[name^=\'invoice_no\']').val()) {
+                $('#button-invoicepdf').prop('disabled', false);
+            }
+
             if ($(selected[i]).parent().find('input[name^=\'shipping_code\']').val()) {
                 $('#button-shipping').prop('disabled', false);
 
