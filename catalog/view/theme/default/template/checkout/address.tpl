@@ -385,6 +385,7 @@ $('input[name=\'payment_address\']').on('change', function() {
     if (this.value == 'new') {
         $('#payment-existing').hide();
         $('#payment-new').show();
+        $('#payment-new select[name=\'payment_country_id\']').trigger('change');
     } else {
         $('#payment-existing').show();
         $('#payment-new').hide();
