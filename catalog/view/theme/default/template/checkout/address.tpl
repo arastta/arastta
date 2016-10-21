@@ -459,6 +459,12 @@ $('select[name=\'payment_zone_id\']').on('change', function() {
         reloadTotals();
         <?php } ?>
     });
+
+$('input[name=\'payment_postcode\']').on('change', function() {
+    if ($('input[name=\'same_address\']').is(':checked')) {
+        reloadShippingMethods();
+    }
+});
 //--></script>
 
 <script type="text/javascript"><!--
@@ -730,6 +736,10 @@ $('#payment-address select[name=\'payment_country_id\']').ready(function() {
     });
 
     $('select[name=\'shipping_zone_id\']').on('change', function() {
+        reloadShippingMethods();
+    });
+
+    $('input[name=\'shipping_postcode\']').on('change', function() {
         reloadShippingMethods();
     });
 
