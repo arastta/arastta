@@ -75,7 +75,7 @@
     </div>
 </div>
 <script type="text/javascript">
-var wpColorPickerL10n = {"clear":"Clear","defaultString":"Default","pick":"Select Colour","current":"Current Colour"};
+    var wpColorPickerL10n = {"clear":"<?php echo $entry_clear; ?>","defaultString":"<?php echo $entry_default; ?>","pick":"<?php echo $entry_pick; ?>","current":"<?php echo $entry_current; ?>"};
 </script>
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');

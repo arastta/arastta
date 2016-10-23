@@ -289,9 +289,12 @@ class ControllerLocalisationStockStatus extends Controller {
         $data['text_publish'] = $this->language->get('text_publish');
 
         $data['entry_name'] = $this->language->get('entry_name');
-        $data['entry_color'] = $this->language->get('entry_color');
         $data['entry_default'] = $this->language->get('entry_default');
         $data['entry_sort_order'] = $this->language->get('entry_sort_order');
+        $data['entry_color'] = $this->language->get('entry_color');
+        $data['entry_clear'] = $this->language->get('entry_clear');
+        $data['entry_pick'] = $this->language->get('entry_pick');
+        $data['entry_current'] = $this->language->get('entry_current');
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_savenew'] = $this->language->get('button_savenew');
