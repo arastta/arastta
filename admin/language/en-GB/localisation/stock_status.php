@@ -21,6 +21,7 @@ $_['column_action']    = 'Action';
 
 // Entry
 $_['entry_name']       = 'Stock Status Name';
+$_['entry_color']      = 'Colour';
 $_['entry_default']    = 'Default';
 
 // Error

@@ -48,7 +48,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-12"><?php echo $entry_name; ?></label>
+                                            <label class="col-sm-12"><?php echo $entry_color; ?></label>
                                             <div class="col-sm-12">
                                                 <div class="customizer-control-content">
                                                     <div class="wp-picker-container">
@@ -75,7 +75,7 @@
     </div>
 </div>
 <script type="text/javascript">
-var wpColorPickerL10n = {"clear":"Clear","defaultString":"Default","pick":"Select Color","current":"Current Color"};
+var wpColorPickerL10n = {"clear":"Clear","defaultString":"Default","pick":"Select Colour","current":"Current Colour"};
 </script>
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');

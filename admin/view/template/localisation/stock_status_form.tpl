@@ -52,16 +52,16 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
+                                <label class="col-sm-2 control-label"><?php echo $entry_color; ?></label>
                                 <div class="col-sm-10">
                                     <div class="customizer-control-content">
                                         <div class="wp-picker-container">
-                      <span class="wp-picker-input-wrap">
-                       <div class="input-group">
-                           <input type="text" name="stock_status[<?php echo $language['language_id']; ?>][color]" id="stock_status_color_<?php echo $language['language_id']; ?>" class="color-picker-hex wp-color-picker" maxlength="7" value="<?php echo $stock_status[$language['language_id']]['color']; ?>" data-default-color="<?php echo $stock_status[$language['language_id']]['color']; ?>" style="display: none;">
-                           <input type="button" class="button button-small hidden wp-picker-default" value="<?php echo $entry_default; ?>">
-                       </div>
-                      </span>
+                                            <span class="wp-picker-input-wrap">
+                                                <div class="input-group">
+                                                    <input type="text" name="stock_status[<?php echo $language['language_id']; ?>][color]" id="stock_status_color_<?php echo $language['language_id']; ?>" class="color-picker-hex wp-color-picker" maxlength="7" value="<?php echo $stock_status[$language['language_id']]['color']; ?>" data-default-color="<?php echo $stock_status[$language['language_id']]['color']; ?>" style="display: none;">
+                                                    <input type="button" class="button button-small hidden wp-picker-default" value="<?php echo $entry_default; ?>">
+                                                </div>
+                                            </span>
                                             <div class="wp-picker-holder"></div>
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    var wpColorPickerL10n = {"clear":"Clear","defaultString":"Default","pick":"Select Color","current":"Current Color"};
+    var wpColorPickerL10n = {"clear":"Clear","defaultString":"Default","pick":"Select Colour","current":"Current Colour"};
 </script>
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');
