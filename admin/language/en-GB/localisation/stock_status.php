@@ -22,6 +22,10 @@ $_['column_action']    = 'Action';
 // Entry
 $_['entry_name']       = 'Stock Status Name';
 $_['entry_default']    = 'Default';
+$_['entry_color']      = 'Colour';
+$_['entry_clear']      = 'Clear';
+$_['entry_pick']       = 'Select Colour';
+$_['entry_current']    = 'Current Colour';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify stock statuses!';

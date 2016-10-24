@@ -284,19 +284,23 @@ class ControllerLocalisationStockStatus extends Controller {
 
     protected function getForm() {
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_form'] = !isset($this->request->get['stock_status_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
         $data['text_publish'] = $this->language->get('text_publish');
-        
+
         $data['entry_name'] = $this->language->get('entry_name');
         $data['entry_default'] = $this->language->get('entry_default');
         $data['entry_sort_order'] = $this->language->get('entry_sort_order');
+        $data['entry_color'] = $this->language->get('entry_color');
+        $data['entry_clear'] = $this->language->get('entry_clear');
+        $data['entry_pick'] = $this->language->get('entry_pick');
+        $data['entry_current'] = $this->language->get('entry_current');
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_savenew'] = $this->language->get('button_savenew');
-        $data['button_saveclose'] = $this->language->get('button_saveclose');        
+        $data['button_saveclose'] = $this->language->get('button_saveclose');
         $data['button_cancel'] = $this->language->get('button_cancel');
-        
+
         $this->document->addStyle('view/stylesheet/color-picker.css');
 
         $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
