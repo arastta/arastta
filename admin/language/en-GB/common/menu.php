@@ -31,6 +31,7 @@ $_['text_download']                    = 'Downloads';
 $_['text_email_template']              = 'Email Templates';
 $_['text_language_override']           = 'Language Overrides';
 $_['text_error_log']                   = 'Error Logs';
+$_['text_cache']                       = 'Cache Manager';
 $_['text_system_info']                 = 'System Information';
 $_['text_extension']                   = 'Extensions';
 $_['text_export_import']               = 'Export / Import';
