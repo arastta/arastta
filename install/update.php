@@ -434,3 +434,17 @@ if (version_compare(VERSION, '1.4.1', '<')) {
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_affiliate_activity', `value` = '0'");
 }
 
+// 1.5.0 changes;
+if (version_compare(VERSION, '1.5.0', '<')) {
+    // Update the user groups
+    $user_groups = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group");
+
+    foreach ($user_groups->rows as $user_group) {
+        $user_group['permission'] = unserialize($user_group['permission']);
+        
+        $user_group['permission']['access'][] = 'tool/cache';
+        $user_group['permission']['modify'][] = 'tool/cache';
+
+        $this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
+    }
+}
