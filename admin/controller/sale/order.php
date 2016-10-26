@@ -2131,6 +2131,7 @@ class ControllerSaleOrder extends Controller {
 
         $this->load->model('sale/order');
         $this->load->model('sale/customer');
+
         $order_info = $this->model_sale_order->getOrder($order_id);
         $customer_info = $this->model_sale_customer->getCustomer($order_info['customer_id']);
 
@@ -2143,6 +2144,10 @@ class ControllerSaleOrder extends Controller {
         $app->request->get['route'] = 'account/order/invoice';
         $app->request->get['order_id'] = $order_id;
         $app->request->post = array();
+
+        if (isset($selected)) {
+            $app->request->post['selected'] = $selected;
+        }
 
         $app->ecommerce();
         if (!empty($customer_info)) {
