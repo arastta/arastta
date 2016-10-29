@@ -519,7 +519,7 @@ class Emailtemplate
     // Voucher
     public function getVoucherFind()
     {
-        $result = array( '{store_logo}', '{recip_name}', '{recip_email}', '{date}', '{store_name}', '{name}', '{amount}', '{message}', '{store_href}', '{image}', '{code}' );
+        $result = array( '{store_logo}', '{recip_name}', '{recip_email}', '{date}', '{store_name}', '{name}', '{amount}', '{message}', '{store_href}', '{store_url}', '{image}', '{code}' );
         
         return $result;
     }
@@ -536,6 +536,7 @@ class Emailtemplate
             'amount'      => $data['amount'],
             'message'     => $data['message'],
             'store_href'  => $data['store_href'],
+            'store_url'   => '<a href="' . $data['store_href'] . '" title="' . $data['store_href'] . '">' . $data['store_href'] . '</a>',
             'image'       => (file_exists(DIR_IMAGE . $data['image'])) ? 'cid:' . md5(basename($data['image'])) : '', 'code' => $data['code']
         );
         
