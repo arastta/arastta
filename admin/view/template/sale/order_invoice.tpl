@@ -14,7 +14,11 @@
 <div class="container">
     <?php foreach ($orders as $order) { ?>
     <div style="page-break-after: always;">
-        <h1><?php echo $text_invoice; ?> <?php echo $order['order_id']; ?></h1>
+        <?php if ($order['invoice_no']) { ?>
+        <h1><?php echo $text_invoice; ?></h1>
+        <?php } else { ?>
+        <h1><?php echo $text_invoice_proforma; ?></h1>
+        <?php } ?>
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -23,25 +27,30 @@
             </thead>
             <tbody>
             <tr>
-                <td style="width: 50%;"><address>
+                <td style="width: 50%;">
+                    <address>
                     <strong><?php echo $order['store_name']; ?></strong><br />
                     <?php echo $order['store_address']; ?>
-                </address>
+                    </address>
                     <b><?php echo $text_telephone; ?></b> <?php echo $order['store_telephone']; ?><br />
                     <?php if ($order['store_fax']) { ?>
                     <b><?php echo $text_fax; ?></b> <?php echo $order['store_fax']; ?><br />
                     <?php } ?>
                     <b><?php echo $text_email; ?></b> <?php echo $order['store_email']; ?><br />
-                    <b><?php echo $text_website; ?></b> <a href="<?php echo $order['store_url']; ?>"><?php echo $order['store_url']; ?></a></td>
-                <td style="width: 50%;"><b><?php echo $text_date_added; ?></b> <?php echo $order['date_added']; ?><br />
+                    <b><?php echo $text_website; ?></b> <a href="<?php echo $order['store_url']; ?>"><?php echo $order['store_url']; ?></a>
+                </td>
+                <td style="width: 50%;">
                     <?php if ($order['invoice_no']) { ?>
                     <b><?php echo $text_invoice_no; ?></b> <?php echo $order['invoice_no']; ?><br />
+                    <b><?php echo $text_invoice_date; ?></b> <?php echo $order['invoice_date']; ?><br />
                     <?php } ?>
                     <b><?php echo $text_order_id; ?></b> <?php echo $order['order_id']; ?><br />
+                    <b><?php echo $text_date_added; ?></b> <?php echo $order['date_added']; ?><br />
                     <b><?php echo $text_payment_method; ?></b> <?php echo $order['payment_method']; ?><br />
                     <?php if ($order['shipping_method']) { ?>
                     <b><?php echo $text_shipping_method; ?></b> <?php echo $order['shipping_method']; ?><br />
-                    <?php } ?></td>
+                    <?php } ?>
+                </td>
             </tr>
             </tbody>
         </table>

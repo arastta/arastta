@@ -55,6 +55,14 @@ class ModelSaleOrder extends Model {
                 $shipping_zone_code = '';
             }
 
+            $invoice_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "invoice WHERE order_id = '" . (int)$order_id . "'");
+
+            if ($invoice_query->num_rows) {
+                $invoice_date = $invoice_query->row['invoice_date'];
+            } else {
+                $invoice_date = '';
+            }
+
             if ($order_query->row['affiliate_id']) {
                 $affiliate_id = $order_query->row['affiliate_id'];
             } else {
@@ -89,6 +97,7 @@ class ModelSaleOrder extends Model {
                 'order_id'                => $order_query->row['order_id'],
                 'invoice_no'              => $order_query->row['invoice_no'],
                 'invoice_prefix'          => $order_query->row['invoice_prefix'],
+                'invoice_date'            => $invoice_date,
                 'store_id'                => $order_query->row['store_id'],
                 'store_name'              => $order_query->row['store_name'],
                 'store_url'               => $order_query->row['store_url'],
