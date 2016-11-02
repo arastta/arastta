@@ -34,7 +34,8 @@ class ControllerApiCustomers extends Controller
                 $customer['order_number'] = count($orders);
 
                 if (empty($orders)) {
-                    $customer['order_total'] = $this->currency->format('0');
+                    $customer['order_total'] = '0';
+                    $customer['order_nice_total'] = $this->currency->format('0');
                 } else {
                     $total = 0;
 
@@ -42,7 +43,7 @@ class ControllerApiCustomers extends Controller
                         $total += $order['total'];
                     }
 
-                    $customer['order_total'] = $total;
+                    $customer['order_total'] = (string) $total;
                     $customer['order_nice_total'] = $this->currency->format($total, $order['currency_code'], $order['currency_value']);
                 }
 
@@ -138,7 +139,8 @@ class ControllerApiCustomers extends Controller
                     $customer['order_number'] = count($orders);
 
                     if (empty($orders)) {
-                        $customer['order_total'] = $this->currency->format('0');
+                        $customer['order_total'] = '0';
+                        $customer['order_nice_total'] = $this->currency->format('0');
                     } else {
                         $total = 0;
 
@@ -146,7 +148,7 @@ class ControllerApiCustomers extends Controller
                             $total += $order['total'];
                         }
 
-                        $customer['order_total'] = $total;
+                        $customer['order_total'] = (string) $total;
                         $customer['order_nice_total'] = $this->currency->format($total, $order['currency_code'], $order['currency_value']);
                     }
 
