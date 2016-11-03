@@ -239,12 +239,26 @@ class ControllerUserUser extends Controller {
             $user_total = $this->model_user_user->getTotalUsers();
         }
 
+        $this->load->model('user/activity');
         $this->load->model('user/user_group');
-        
+
         $results = $this->model_user_user->getUsers($filter_data);
 
         foreach ($results as $result) {
             $group = $this->model_user_user_group->getUserGroup($result['user_group_id']);
+
+            $filter_activity = array(
+                'filter_user_id' => $result['user_id'],
+                'filter_key' => 'login',
+                'order' => 'DESC',
+                'start' => '0',
+                'limit' => '1'
+            );
+
+            $last_login = $this->model_user_activity->getActivities($filter_activity);
+            if (empty($last_login)) {
+                $last_login[0]['date_added'] = '';
+            }
 
             $data['users'][] = array(
                 'user_id'    => $result['user_id'],
@@ -254,6 +268,7 @@ class ControllerUserUser extends Controller {
                 'user_group' => $group['name'],
                 'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
                 'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+                'date_login' => date($this->language->get('date_format_short'), strtotime($last_login[0]['date_added'])),
                 'edit'       => $this->url->link('user/user/edit', 'token=' . $this->session->data['token'] . '&user_id=' . $result['user_id'] . $url, 'SSL')
             );
         }
