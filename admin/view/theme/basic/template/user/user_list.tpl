@@ -151,6 +151,7 @@
                                     <?php } else { ?>
                                     <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
                                     <?php } ?></td>
+                                <td class="text-left"><?php echo $column_date_login; ?></td>
                             </tr>
                             </thead>
                             <tbody>
@@ -170,6 +171,7 @@
                                 <td class="text-left"><?php echo $user['user_group']; ?></td>
                                 <td class="text-left"><?php echo $user['status']; ?></td>
                                 <td class="text-left"><?php echo $user['date_added']; ?></td>
+                                <td class="text-left"><?php echo $user['date_login']; ?></td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>

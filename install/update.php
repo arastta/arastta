@@ -447,4 +447,16 @@ if (version_compare(VERSION, '1.5.0', '<')) {
 
         $this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
     }
+    
+    // Create user_activity table
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "user_activity` (
+        `activity_id` int(11) NOT NULL AUTO_INCREMENT,
+        `user_id` int(11) NOT NULL,
+        `key` varchar(64) NOT NULL,
+        `data` text NOT NULL,
+        `ip` varchar(40) NOT NULL,
+        `date_added` datetime NOT NULL,
+        PRIMARY KEY (`activity_id`),
+        KEY `user_id` (`user_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 }
