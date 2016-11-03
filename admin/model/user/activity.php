@@ -12,12 +12,12 @@ class ModelUserActivity extends Model
     public function addActivity($key, $data)
     {
         if (isset($data['user_id'])) {
-            $customer_id = $data['user_id'];
+            $user_id = $data['user_id'];
         } else {
-            $customer_id = 0;
+            $user_id = 0;
         }
 
-        $this->db->query("INSERT INTO `" . DB_PREFIX . "user_activity` SET `user_id` = '" . (int)$customer_id . "', `key` = '" . $this->db->escape($key) . "', `data` = '" . $this->db->escape(serialize($data)) . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', `date_added` = NOW()");
+        $this->db->query("INSERT INTO `" . DB_PREFIX . "user_activity` SET `user_id` = '" . (int)$user_id . "', `key` = '" . $this->db->escape($key) . "', `data` = '" . $this->db->escape(serialize($data)) . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', `date_added` = NOW()");
     }
 
     public function getActivities($data = array())
@@ -62,6 +62,7 @@ class ModelUserActivity extends Model
             'ua.activity_id',
             'ua.user_id',
             'ua.key',
+            'ua.ip',
             'ua.date_added'
         );
 
