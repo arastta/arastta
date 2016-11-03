@@ -2,19 +2,19 @@
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/arastta/arastta) [![Crowdin](https://d322cqt584bo4o.cloudfront.net/arastta/localized.png)](https://crowdin.com/project/arastta) [![Code Climate](https://codeclimate.com/github/arastta/arastta/badges/gpa.svg)](https://codeclimate.com/github/arastta/arastta) [![Dependency Status](https://www.versioneye.com/user/projects/558a9f56306662001a000726/badge.svg?style=flat)](https://www.versioneye.com/user/projects/558a9f56306662001a000726)
 
-Arastta is the next generation of Open Source eCommerce software built with modern technologies such as Symfony, Doctrine (soon), MVC, Bootstrap, jQuery, Swift Mailer etc.
+Arastta is the next generation of Open Source eCommerce software built with modern technologies such as Symfony, Bootstrap, jQuery, Swift Mailer, RESTful API etc.
 
-* [Home](http://arastta.org) - The house of Arastta
-* [Blog](http://arastta.org/blog) - Get the latest news
-* [Ideas](http://arastta.org/ideas) - Share your ideas
-* [Forum](http://arastta.org/forum) - Join the community
-* [Tutorials](http://arastta.org/docs) - Learn more about Arastta
+* [Home](https://arastta.org) - The house of Arastta
+* [Blog](https://arastta.org/blog) - Get the latest news
+* [Ideas](https://arastta.org/ideas) - Share your ideas
+* [Forum](https://arastta.org/forum) - Join the community
+* [Tutorials](https://arastta.org/docs) - Learn more about Arastta
 
 ## Requirements
 
 * PHP 5.3.10 or higher
 * MySQLi 5.1 or higher
-* [Other libraries](http://arastta.org/docs/requirements)
+* [Other libraries](https://arastta.org/docs/requirements)
 
 ## Installation
 
