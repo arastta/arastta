@@ -31,4 +31,4 @@ $_['entry_date_start']  = 'Date Start';
 $_['entry_date_end']    = 'Date End';
 $_['entry_group']       = 'Group By';
 $_['entry_status']      = 'Order Status';
-$_['entry_payment']     = 'Payment Method Code';
+$_['entry_payment']     = 'Payment Method';

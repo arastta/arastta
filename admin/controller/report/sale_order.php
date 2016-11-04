@@ -148,7 +148,18 @@ class ControllerReportSaleOrder extends Controller {
 
         $this->load->model('extension/extension');
 
-        $data['payment_methods'] = $this->model_extension_extension->getExtensions(array('filter_type' => 'payment'));
+        $payment_methods = $this->model_extension_extension->getExtensions(array('filter_type' => 'payment'));
+
+        $data['payment_methods'] = array();
+
+        foreach ($payment_methods as $payment_method) {
+            $this->load->language('payment/' . $payment_method['code']);
+
+            $data['payment_methods'][] = array(
+                'code'  => $payment_method['code'],
+                'title' => $this->language->get('heading_title'),
+            );
+        }
 
         $data['groups'] = array();
 

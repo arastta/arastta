@@ -65,9 +65,9 @@
                                     <option value="0"><?php echo $text_all_payment; ?></option>
                                     <?php foreach ($payment_methods as $payment_method) { ?>
                                     <?php if ($payment_method['code'] == $payment_method) { ?>
-                                    <option value="<?php echo $payment_method['code']; ?>" selected="selected"><?php echo $payment_method['code']; ?></option>
+                                    <option value="<?php echo $payment_method['code']; ?>" selected="selected"><?php echo $payment_method['title']; ?></option>
                                     <?php } else { ?>
-                                    <option value="<?php echo $payment_method['code']; ?>"><?php echo $payment_method['code']; ?></option>
+                                    <option value="<?php echo $payment_method['code']; ?>"><?php echo $payment_method['title']; ?></option>
                                     <?php } ?>
                                     <?php } ?>
                                 </select>
@@ -114,7 +114,7 @@
                                 <label class="filter-label"> 
                                 <?php foreach ($payment_methods as $payment_method) { ?>
                                 <?php if ($payment_method['code'] == $filter_payment_code) { ?>
-                                <?php echo $payment_method['code']; ?>
+                                <?php echo $payment_method['title']; ?>
                                 <?php } ?>
                                 <?php } ?>
                                 </label>
