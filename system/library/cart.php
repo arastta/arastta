@@ -246,6 +246,15 @@ class Cart {
                         $recurring = false;
                     }
 
+                    // Pre-Order Stock Status
+                    $stock_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE stock_status_id = '" . $product_query->row['stock_status_id'] . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+                    if ($stock_status_query->row['preorder']) {
+                        $preorder = true;
+                    } else {
+                        $preorder = false;
+                    }
+
                     $this->data[$key] = array(
                         'key'             => $key,
                         'product_id'      => $product_query->row['product_id'],
@@ -259,6 +268,7 @@ class Cart {
                         'minimum'         => $product_query->row['minimum'],
                         'subtract'        => $product_query->row['subtract'],
                         'stock'           => $stock,
+                        'preorder'        => $preorder,
                         'price'           => ($price + $option_price),
                         'total'           => ($price + $option_price) * $quantity,
                         'reward'          => $reward * $quantity,

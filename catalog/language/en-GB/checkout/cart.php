@@ -31,7 +31,9 @@ $_['text_recurring_item']      = 'Recurring Item';
 $_['text_payment_recurring']   = 'Payment Profile';
 $_['text_trial_description']   = '%s every %d %s(s) for %d payment(s) then';
 $_['text_payment_description'] = '%s every %d %s(s) for %d payment(s)';
-$_['text_payment_cancel']      = '%s every %d %s(s) until canceled';
+$_['text_payment_cancel']      = '%s every %d %s(s) until cancelled';
+$_['text_sold_out']            = '***';
+$_['text_preorder']            = 'Pre-order';
 
 // Column
 $_['column_image']             = 'Image';
@@ -42,7 +44,9 @@ $_['column_price']             = 'Unit Price';
 $_['column_total']             = 'Total';
 
 // Error
-$_['error_stock']              = 'Products marked with *** are not available in the desired quantity or not in stock!';
+$_['error_stock']              = 'Products marked with <strong>%s</strong> are not available in the desired quantity, or not in stock. You will have to reduce the quantity, or remove the product from the cart, before you can continue the checkout process.';
+$_['error_stock_checkout']     = 'Products marked with <strong>%s</strong> are not available in the desired quantity, or not in stock. You can continue the checkout process, and they will be delivered as soon as they get in.';
+$_['error_stock_preorder']     = 'Products marked with <strong>%s</strong> are not available in the desired quantity, or not in stock, they will be delivered as soon as they get in.';
 $_['error_minimum']            = 'Minimum order amount for %s is %s!';
 $_['error_required']           = '%s required!';
 $_['error_product']            = 'Warning: There are no products in your cart!';

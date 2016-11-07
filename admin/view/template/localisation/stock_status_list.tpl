@@ -40,6 +40,8 @@
                                     <?php } else { ?>
                                     <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
                                     <?php } ?></td>
+                                <td class="text-center"><?php echo $column_color; ?></td>
+                                <td class="text-center"><?php echo $column_preorder; ?></td>
                                 <td class="text-right"><?php echo $column_action; ?></td>
                             </tr>
                             </thead>
@@ -53,6 +55,8 @@
                                     <input type="checkbox" name="selected[]" value="<?php echo $stock_status['stock_status_id']; ?>" />
                                     <?php } ?></td>
                                 <td class="text-left"><?php echo $stock_status['name']; ?></td>
+                                <td class="text-center"><i class="fa fa-2x fa-circle" style="color:<?php echo $stock_status['color']; ?>;"></i></td>
+                                <td class="text-center"><?php echo ($stock_status['preorder'] != 1 ? $text_no : $text_yes) ?></td>
                                 <td class="text-right"><a href="<?php echo $stock_status['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                             </tr>
                             <?php } ?>

@@ -2893,6 +2893,7 @@ CREATE TABLE IF NOT EXISTS `ar_stock_status` (
   `language_id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
   `color` varchar(32) NOT NULL,
+  `preorder` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`stock_status_id`,`language_id`),
   KEY `language_id` (`language_id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -2901,11 +2902,11 @@ CREATE TABLE IF NOT EXISTS `ar_stock_status` (
 -- Dumping data for table `ar_stock_status`
 --
 
-INSERT INTO `ar_stock_status` (`stock_status_id`, `language_id`, `name`, `color`) VALUES
-(5, 1, 'Out Of Stock', '#FF0000'),
-(6, 1, '2-3 Days', '#FFA500'),
-(7, 1, 'In Stock', '#008000'),
-(8, 1, 'Pre-Order', '#FFFF00');
+INSERT INTO `ar_stock_status` (`stock_status_id`, `language_id`, `name`, `color`, `preorder`) VALUES
+(5, 1, 'Out Of Stock', '#FF0000', 0),
+(6, 1, '2-3 Days', '#FFA500', 0),
+(7, 1, 'In Stock', '#008000', 0),
+(8, 1, 'Pre-Order', '#FFFF00', 1);
 
 -- --------------------------------------------------------
 
