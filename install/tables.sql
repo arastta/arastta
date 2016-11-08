@@ -2722,7 +2722,7 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (339, 0, 'config', 'config_login_attempts', '5', 0),
 (340, 0, 'config', 'config_account_id', '0', 0),
 (341, 0, 'config', 'config_account_mail', '0', 0),
-(342, 0, 'config', 'config_invoice_prefix', 'INV-2016-00', 0),
+(342, 0, 'config', 'config_invoice_prefix', CONCAT('INV-',YEAR(NOW()),'-00'), 0),
 (343, 0, 'config', 'config_api_id', '2', 0),
 (344, 0, 'config', 'config_cart_weight', '1', 0),
 (345, 0, 'config', 'config_checkout_guest', '1', 0),
