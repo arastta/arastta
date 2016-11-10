@@ -155,6 +155,10 @@ class ModelReportSale extends Model {
             $sql .= " WHERE o.order_status_id > '0'";
         }
 
+        if (!empty($data['filter_payment_code'])) {
+            $sql .= " AND o.payment_code = '" . $data['filter_payment_code'] . "'";
+        }
+
         if (!empty($data['filter_date_start'])) {
             $sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
         }
@@ -231,6 +235,10 @@ class ModelReportSale extends Model {
             $sql .= " WHERE order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
         } else {
             $sql .= " WHERE order_status_id > '0'";
+        }
+
+        if (!empty($data['filter_payment_code'])) {
+            $sql .= " AND payment_code = '" . $data['filter_payment_code'] . "'";
         }
 
         if (!empty($data['filter_date_start'])) {

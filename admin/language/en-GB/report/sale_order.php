@@ -16,6 +16,7 @@ $_['text_month']        = 'Months';
 $_['text_week']         = 'Weeks';
 $_['text_day']          = 'Days';
 $_['text_all_status']   = 'All Statuses';
+$_['text_all_payment']  = 'All Payment Methods';
 
 // Column
 $_['column_date_start'] = 'Date Start';
@@ -30,3 +31,4 @@ $_['entry_date_start']  = 'Date Start';
 $_['entry_date_end']    = 'Date End';
 $_['entry_group']       = 'Group By';
 $_['entry_status']      = 'Order Status';
+$_['entry_payment']     = 'Payment Method';

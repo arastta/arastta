@@ -29,6 +29,7 @@
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_date_end; ?>', 'filter_date_end');"><?php echo $entry_date_end; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_group; ?>', 'filter_group');"><?php echo $entry_group; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_status; ?>', 'filter_order_status_id');"><?php echo $entry_status; ?></a></li>
+                                        <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_status; ?>', 'filter_payment_code');"><?php echo $entry_payment; ?></a></li>
                                     </ul>
                                 </div>
                                 <div class="input-group date filter filter_date_start">
@@ -60,10 +61,20 @@
                                     <?php } ?>
                                     <?php } ?>
                                 </select>
+                                <select name="filter_payment_code" id="input-payment" class="form-control filter hidden">
+                                    <option value="0"><?php echo $text_all_payment; ?></option>
+                                    <?php foreach ($payment_methods as $payment_method) { ?>
+                                    <?php if ($payment_method['code'] == $payment_method) { ?>
+                                    <option value="<?php echo $payment_method['code']; ?>" selected="selected"><?php echo $payment_method['title']; ?></option>
+                                    <?php } else { ?>
+                                    <option value="<?php echo $payment_method['code']; ?>"><?php echo $payment_method['title']; ?></option>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <?php if (!empty($filter_date_start) || !empty($filter_date_end) || !empty($filter_group) || isset($filter_order_status_id)) { ?>
+                    <?php if (!empty($filter_date_start) || !empty($filter_date_end) || !empty($filter_group) || isset($filter_order_status_id) || isset($filter_payment_code)) { ?>
                     <div class="row">
                         <div class="col-lg-12 filter-tag">
                             <?php if ($filter_date_start) { ?>
@@ -95,6 +106,19 @@
                                 <?php } ?>
                                 </label>
                                 <a class="filter-remove" onclick="removeFilter(this, 'filter_order_status_id');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_payment_code) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_payment; ?>:</label> 
+                                <label class="filter-label"> 
+                                <?php foreach ($payment_methods as $payment_method) { ?>
+                                <?php if ($payment_method['code'] == $filter_payment_code) { ?>
+                                <?php echo $payment_method['title']; ?>
+                                <?php } ?>
+                                <?php } ?>
+                                </label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_payment_code');"><i class="fa fa-times"></i></a>
                             </div>
                             <?php } ?>
                         </div>
@@ -166,6 +190,12 @@
 
         if (filter_order_status_id != 0) {
             url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+        }
+
+        var filter_payment_code = $('select[name=\'filter_payment_code\']').val();
+
+        if (filter_payment_code != 0) {
+            url += '&filter_payment_code=' + encodeURIComponent(filter_payment_code);
         }
 
         location = url;
