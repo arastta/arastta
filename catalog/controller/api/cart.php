@@ -141,13 +141,13 @@ class ControllerApiCart extends Controller {
 
             foreach ($products as $product) {
                 if (!$product['preorder'] && !$product['stock'] && !$this->config->get('config_stock_checkout')) {
-                    $data['error_warning'] = sprintf($this->language->get('error_stock'), $this->language->get('text_sold_out'));
+                    $json['error_warning'] = sprintf($this->language->get('error_stock'), $this->language->get('text_sold_out'));
                 } else if (!$product['preorder'] && !$product['stock'] && ($this->config->get('config_stock_checkout') && $this->config->get('config_stock_warning'))) {
-                    $data['error_warning'] = sprintf($this->language->get('error_stock_checkout'), $this->language->get('text_sold_out'));
+                    $json['error_warning'] = sprintf($this->language->get('error_stock_checkout'), $this->language->get('text_sold_out'));
                 }
 
                 if ($product['preorder']) {
-                    $data['attention'] = sprintf($this->language->get('error_stock_preorder'), $this->language->get('text_preorder'));
+                    $json['attention'] = sprintf($this->language->get('error_stock_preorder'), $this->language->get('text_preorder'));
                 }
 
                 $product_total = 0;
