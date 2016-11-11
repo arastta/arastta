@@ -348,3 +348,25 @@ tbody tr td div i.fa.fa-bars {
     top: 50%;
     font-size: 68px;
 }
+
+.seo-preview-title {
+    color: #1a0dab;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.seo-preview-url {
+    color: #006621;
+    display: block;
+    font-size: 13px;
+    line-height: 16px;
+    margin-bottom: 2px;
+    word-wrap: break-word;
+}
+
+.seo-preview-description {
+    color: #545454;
+    display: block;
+    font-size: 13px;
+    line-height: 18px;
+}
