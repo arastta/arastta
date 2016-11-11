@@ -23,6 +23,7 @@ $_['text_percent']           = 'Percentage';
 $_['text_amount']            = 'Fixed Amount';
 $_['text_preview']           = 'View Product';
 $_['text_delete_image']      = 'Are you sure you want to delete this image?';
+$_['text_new_product_seo']   = 'Are you sure you want to delete this image?';
 
 // Button
 $_['button_category_add']    = 'Add New Category';
