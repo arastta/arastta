@@ -164,6 +164,79 @@
                             </div>
                         </div>
                     </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><?php echo $tab_seo; ?></h3>
+                            <div class="pull-right">
+                                <div class="panel-chevron"><i class="fa fa-chevron-up rotate-reset"></i></div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="seo">
+                                <ul class="nav nav-tabs" id="seo-language">
+                                    <?php foreach ($languages as $language) { ?>
+                                    <li><a href="#seo-language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
+                                    <?php } ?>
+                                </ul>
+                                <div class="tab-content" style="padding-top:0 !important;">
+                                    <?php foreach ($languages as $language) { ?>
+                                    <div class="tab-pane" id="seo-language<?php echo $language['language_id']; ?>">
+                                        <div class="pull-right">
+                                            <button type="button" id="seo-show-<?php echo $language['language_id']; ?>" onclick="editSEO(<?php echo $language['language_id']; ?>);" data-toggle="tooltip" title="<?php echo $button_seo; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></button>
+                                        </div>
+                                        <?php if (!empty($seo_url[$language['language_id']])) { ?>
+                                        <div id="seo-preview-<?php echo $language['language_id']; ?>" class="form-group">
+                                            <div class="col-sm-12 seo-preview-title"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_title'] : ''; ?></div>
+                                            <div class="col-sm-12 seo-preview-url">
+                                                <?php $link = str_replace(basename($preview[$language['language_id']]), '', $preview[$language['language_id']]);
+                                                    echo $link; ?><span id="seo-url-<?php echo $language['language_id']; ?>"><?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?></span>
+                                            </div>
+                                            <div class="col-sm-12 seo-preview-description"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_description'] : ''; ?></div>
+                                        </div>
+                                        <?php } else { ?>
+                                        <div id="seo-new-product-<?php echo $language['language_id']; ?>">
+                                            <?php echo $text_new_category_seo; ?>
+                                        </div>
+                                        <?php } ?>
+                                        <div id="seo-edit-language-<?php echo $language['language_id']; ?>" class="hidden">
+                                            <hr>
+                                            <div class="form-group">
+                                                <label class="col-sm-12" for="input-meta-title<?php echo $language['language_id']; ?>"><?php echo $entry_meta_title; ?></label>
+                                                <div class="col-sm-12">
+                                                    <input type="text" name="category_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control input-full-width" />
+                                                </div>
+                                            </div>
+                                            <?php if (!empty($seo_url[$language['language_id']])) { ?>
+                                            <div class="form-group">
+                                                <label class="col-sm-12" for="input-seo-url-<?php echo $language['language_id']; ?>"><?php echo $entry_seo_url; ?></label>
+                                                <div class="col-sm-12" style="padding-top: 5px;">
+                                                    <span>
+                                                    <?php $link = str_replace(basename($preview[$language['language_id']]), '', $preview[$language['language_id']]);
+                                                        echo $link; ?><span class="seo-url" data-lang="<?php echo $language['language_id']; ?>"><?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?></span>
+                                                    </span>
+                                                    <input type="hidden" name="seo_url[<?php echo $language['language_id']; ?>]" value="<?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?>" placeholder="<?php echo $entry_seo_url; ?>" id="input-seo-url-<?php echo $language['language_id']; ?>" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <?php } ?>
+                                            <div class="form-group">
+                                                <label class="col-sm-12" for="input-meta-description<?php echo $language['language_id']; ?>"><?php echo $entry_meta_description; ?></label>
+                                                <div class="col-sm-12">
+                                                    <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_description]" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control input-full-width"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group hidden">
+                                                <label class="col-sm-12" for="input-meta-keyword<?php echo $language['language_id']; ?>"><?php echo $entry_meta_keyword; ?></label>
+                                                <div class="col-sm-12">
+                                                    <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_keyword]" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control input-full-width"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <input type="hidden" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
@@ -184,12 +257,12 @@
             <?php } ?>
             <?php } ?>
             <input type="hidden" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
-            <?php foreach ($languages as $language) { ?>
-            <input type="hidden" name="seo_url[<?php echo $language['language_id']; ?>]" value="<?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?>" placeholder="<?php echo $entry_seo_url; ?>" id="input-seo-url-<?php echo $language['language_id']; ?>" class="form-control" />
-            <input type="hidden" name="category_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control" />
-            <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_description]" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control hidden"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
-            <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_keyword]" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control hidden"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
-            <?php } ?>
+
+
+
+
+
+
             <select name="category_layout[0]" class="form-control hidden">
                 <option value=""></option>
                 <?php foreach ($layouts as $layout) { ?>
@@ -235,6 +308,7 @@
                     async: false,
                     success: function(json) {
                         $('#input-seo-url-' +  json['language_id']).val(params.value);
+                        $('.seo-url').html(params.value);
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         return false;
@@ -242,6 +316,16 @@
                 })
             },
             showbuttons: false,
+        });
+
+        $('.seo-url').on('hidden', function(e, reason) {
+            if (reason === 'onblur') {
+                language_id = parseInt($(this).data('lang'));
+
+                if ($('#seo-preview-' + language_id).length) {
+                    $('#seo-preview-' + language_id + ' .seo-preview-url #seo-url-' + language_id).html($(this).html());
+                }
+            }
         });
     });
     //--></script>
@@ -269,6 +353,63 @@
         'select': function(item) {
             $('input[name=\'path\']').val(item['label']);
             $('input[name=\'parent_id\']').val(item['value']);
+        }
+    });
+    //--></script>
+    <script type="text/javascript"><!--
+    function editSEO(language_id) {
+        $('#seo-edit-language-' + language_id).removeClass('hidden');
+        $('#seo-show-' + language_id).addClass('hidden');
+    }
+
+    $('.seo input, .seo textarea').on('keyup', function() {
+        language_id = parseInt($(this).attr('id').replace('input-meta-title', '').replace('input-meta-description', ''));
+
+        if ($('#seo-preview-' + language_id).length) {
+            if ($(this).is('input')) {
+                $('#seo-preview-' + language_id + ' .seo-preview-title').html($(this).val());
+            } else {
+                $('#seo-preview-' + language_id + ' .seo-preview-description').html($(this).val());
+            }
+        } else {
+            seo_html  = '<div id="seo-preview-' + language_id + '" class="form-group">';
+
+            if ($(this).is('input')) {
+                seo_html += '    <div class="col-sm-12 seo-preview-title">';
+                seo_html +=     $(this).val();
+                seo_html += '    </div>';
+                /*
+                 seo_html += '    <div class="col-sm-12 seo-preview-url">';
+                 seo_html += '        <span id="seo-url-' + language_id + '"></span>';
+                 seo_html += '     </div>';
+                 */
+                seo_html += '     <div class="col-sm-12 seo-preview-description"></div>';
+            } else {
+                seo_html += '    <div class="col-sm-12 seo-preview-title"></div>';
+
+                seo_html += '    <div class="col-sm-12 seo-preview-url">';
+                /*
+                 seo_html += '        ';
+                 seo_html += '        <span id="seo-url-' + language_id + '"></span>';
+                 seo_html += '     </div>';
+                 */
+                seo_html += '     <div class="col-sm-12 seo-preview-description">';
+                seo_html +=     $(this).val();
+                seo_html += '    </div>';
+            }
+
+            seo_html += '</div>';
+
+            $('#seo-new-product-'+ language_id).before(seo_html);
+            $('#seo-new-product-'+ language_id).remove();
+        }
+    });
+
+    $(document).delegate('.editable-input .form-control.input-sm', 'keyup', function() {
+        language_id = parseInt($(this).parent().parent().parent().parent().parent().parent().parent().find('.seo-url').data('lang'));
+
+        if ($('#seo-preview-' + language_id).length) {
+            $('#seo-preview-' + language_id + ' .seo-preview-url #seo-url-' + language_id).html($(this).val());
         }
     });
     //--></script>

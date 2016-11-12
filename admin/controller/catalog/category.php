@@ -52,7 +52,7 @@ class ControllerCatalogCategory extends Controller {
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                  $this->response->redirect($this->url->link('catalog/category/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
             }
-            
+
             $this->response->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
 
@@ -92,7 +92,7 @@ class ControllerCatalogCategory extends Controller {
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                  $this->response->redirect($this->url->link('catalog/category/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
             }
-            
+
             $this->response->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
 
@@ -146,19 +146,19 @@ class ControllerCatalogCategory extends Controller {
             $this->session->data['success'] = $this->language->get('text_success');
 
             $url = '';
- 
+
             if (isset($this->request->get['sort'])) {
                 $url .= '&sort=' . $this->request->get['sort'];
             }
- 
+
             if (isset($this->request->get['order'])) {
                 $url .= '&order=' . $this->request->get['order'];
             }
- 
+
             if (isset($this->request->get['page'])) {
                 $url .= '&page=' . $this->request->get['page'];
             }
- 
+
             $this->response->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
 
@@ -197,7 +197,7 @@ class ControllerCatalogCategory extends Controller {
         }
 
         $url = '';
-        
+
         if (isset($this->request->get['filter_name'])) {
             $url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
         }
@@ -217,7 +217,7 @@ class ControllerCatalogCategory extends Controller {
         if (isset($this->request->get['page'])) {
             $url .= '&page=' . $this->request->get['page'];
         }
-        
+
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
@@ -229,7 +229,7 @@ class ControllerCatalogCategory extends Controller {
             'text' => $this->language->get('heading_title'),
             'href' => $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL')
         );
-        
+
         $data['add'] = $this->url->link('catalog/category/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $data['delete'] = $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $data['repair'] = $this->url->link('catalog/category/repair', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -289,10 +289,10 @@ class ControllerCatalogCategory extends Controller {
         $data['button_rebuild'] = $this->language->get('button_rebuild');
         $data['button_enable'] = $this->language->get('button_enable');
         $data['button_disable'] = $this->language->get('button_disable');
-        $data['button_filter'] = $this->language->get('button_filter');        
+        $data['button_filter'] = $this->language->get('button_filter');
         $data['button_show_filter'] = $this->language->get('button_show_filter');
         $data['button_hide_filter'] = $this->language->get('button_hide_filter');
-            
+
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {
@@ -358,10 +358,10 @@ class ControllerCatalogCategory extends Controller {
         $pagination->url = $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
         $data['pagination'] = $pagination->render();
-        
+
         $data['filter_name'] = $filter_name;
         $data['filter_status'] = $filter_status;
-        $data['token'] = $this->session->data['token'];   
+        $data['token'] = $this->session->data['token'];
 
         $data['results'] = sprintf($this->language->get('text_pagination'), ($category_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($category_total - $this->config->get('config_limit_admin'))) ? $category_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $category_total, ceil($category_total / $this->config->get('config_limit_admin')));
 
@@ -381,7 +381,7 @@ class ControllerCatalogCategory extends Controller {
         $data = $this->language->all();
         // leaving the followings for extension B/C purpose
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_form'] = !isset($this->request->get['category_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
         $data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -393,7 +393,7 @@ class ControllerCatalogCategory extends Controller {
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_cancel'] = $this->language->get('button_cancel');
-            
+
         $data['tab_general'] = $this->language->get('tab_general');
         $data['tab_design'] = $this->language->get('tab_design');
 
@@ -414,7 +414,7 @@ class ControllerCatalogCategory extends Controller {
         } else {
             $data['error_meta_title'] = array();
         }
-        
+
         if (isset($this->error['seo_url'])) {
             $data['error_seo_url'] = $this->error['seo_url'];
         } else {
@@ -428,7 +428,7 @@ class ControllerCatalogCategory extends Controller {
         } else {
             $data['success'] = '';
         }
-        
+
         $url = '';
 
         if (isset($this->request->get['filter_name'])) {
@@ -450,7 +450,7 @@ class ControllerCatalogCategory extends Controller {
         if (isset($this->request->get['page'])) {
             $url .= '&page=' . $this->request->get['page'];
         }
-        
+
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
@@ -462,7 +462,7 @@ class ControllerCatalogCategory extends Controller {
             'text' => $this->language->get('heading_title'),
             'href' => $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL')
         );
-        
+
         if (!isset($this->request->get['category_id'])) {
             $data['action'] = $this->url->link('catalog/category/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
         } else {
@@ -607,7 +607,7 @@ class ControllerCatalogCategory extends Controller {
         } else {
             $data['category_layout'] = array();
         }
-        
+
         if (isset($this->request->get['category_id'])) { 
             $data['menu_name_override'] = '1';
         }
@@ -618,7 +618,7 @@ class ControllerCatalogCategory extends Controller {
         foreach ($data['languages'] as $language) {
             $data['preview'][$language['language_id']] = $this->getSeoLink($data['category_id'], $language['code']);
         }
-            
+
         $this->load->model('appearance/layout');
 
         $data['layouts'] = $this->model_appearance_layout->getLayouts();
@@ -697,11 +697,11 @@ class ControllerCatalogCategory extends Controller {
             foreach ($results as $result) {
                 $result['index'] = $result['name'];
 
-                if(strpos($result['index'], '&nbsp;&nbsp;&gt;&nbsp;&nbsp;')) {
-                    $result['index'] = explode ('&nbsp;&nbsp;&gt;&nbsp;&nbsp;', $result['index']);
+                if (strpos($result['index'], '&nbsp;&nbsp;&gt;&nbsp;&nbsp;')) {
+                    $result['index'] = explode('&nbsp;&nbsp;&gt;&nbsp;&nbsp;', $result['index']);
                     $result['index'] = end($result['index']);
                 }
-                
+
                 $json[] = array(
                     'category_id' => $result['category_id'],
                     'index'       => $result['index'],
@@ -763,7 +763,7 @@ class ControllerCatalogCategory extends Controller {
                 }
             }
 
-            $category_id = $this->model_catalog_category->addCategory($this->request->post);          
+            $category_id = $this->model_catalog_category->addCategory($this->request->post);
 
             $this->trigger->fire('post.admin.category.quick', array($category_id));
 
@@ -775,7 +775,7 @@ class ControllerCatalogCategory extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    protected function validateQuick() 
+    protected function validateQuick()
     {
         if (!$this->user->hasPermission('modify', 'catalog/category')) {
             $this->error['warning'] = $this->language->get('error_permission');
@@ -796,13 +796,14 @@ class ControllerCatalogCategory extends Controller {
                 $this->load->model('catalog/url_alias');
 
                 $this->model_catalog_url_alias->addAlias('category', $this->request->get['category_id'], $this->request->post['seo_url'], $this->request->post['language_id']);
+
                 $json['language_id'] = $this->request->post['language_id'];
             } else {
                 foreach ($this->request->post as $key => $value) {
                     $this->model_catalog_category->updateCategory($this->request->get['category_id'], $key, $value);
                 }
             }
-        }        
+        }
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
@@ -840,11 +841,11 @@ class ControllerCatalogCategory extends Controller {
         $route = new Route($this->registry);
 
         $url .= ltrim($route->rewrite('index.php?route=product/category&path='.$category_id), '/');
-        
+
         if (!empty($old_session_code)) {
             $this->session->data['language'] = $old_session_code;
         }
-        
+
         $this->config->set('config_language', $old_config_code);
 
         return $url;

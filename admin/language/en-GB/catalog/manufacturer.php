@@ -19,6 +19,8 @@ $_['text_percent']          = 'Percentage';
 $_['text_amount']           = 'Fixed Amount';
 $_['text_preview']          = 'View Manufacturer';
 
+$_['text_new_manufacturer_seo']  = 'Add a title and description to see how this manufacturer might appear in a search engine listing.';
+
 // Column
 $_['column_name']           = 'Manufacturer Name';
 $_['column_sort_order']     = 'Sort Order';

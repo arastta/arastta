@@ -52,7 +52,7 @@ class ControllerCatalogManufacturer extends Controller {
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                  $this->response->redirect($this->url->link('catalog/manufacturer/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
             }
-            
+
             $this->response->redirect($this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
 
@@ -92,7 +92,7 @@ class ControllerCatalogManufacturer extends Controller {
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                  $this->response->redirect($this->url->link('catalog/manufacturer/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
             }
-            
+
             $this->response->redirect($this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
 
@@ -187,7 +187,7 @@ class ControllerCatalogManufacturer extends Controller {
         if (isset($this->request->get['page'])) {
             $url .= '&page=' . $this->request->get['page'];
         }
-        
+
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
@@ -199,7 +199,7 @@ class ControllerCatalogManufacturer extends Controller {
             'text' => $this->language->get('heading_title'),
             'href' => $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . $url, 'SSL')
         );
-        
+
         $data['add'] = $this->url->link('catalog/manufacturer/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $data['delete'] = $this->url->link('catalog/manufacturer/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
@@ -227,7 +227,7 @@ class ControllerCatalogManufacturer extends Controller {
                 'manufacturer_id' => $result['manufacturer_id'],
                 'name'            => $result['name'],
                 'sort_order'      => $result['sort_order'],
-                'status'      => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+                'status'          => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
                 'edit'            => $this->url->link('catalog/manufacturer/edit', 'token=' . $this->session->data['token'] . '&manufacturer_id=' . $result['manufacturer_id'] . $url, 'SSL')
             );
         }
@@ -353,7 +353,7 @@ class ControllerCatalogManufacturer extends Controller {
         } else {
             $data['success'] = '';
         }
-        
+
         $url = '';
 
         if (isset($this->request->get['filter_name'])) {
@@ -387,7 +387,7 @@ class ControllerCatalogManufacturer extends Controller {
             'text' => $this->language->get('heading_title'),
             'href' => $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . $url, 'SSL')
         );
-        
+
         if (!isset($this->request->get['manufacturer_id'])) {
             $data['action'] = $this->url->link('catalog/manufacturer/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
         } else {
@@ -512,7 +512,7 @@ class ControllerCatalogManufacturer extends Controller {
                 $this->error['seo_url'][$language_id] = sprintf($this->language->get('error_seo_url'));
             }
         }
-        
+
         return !$this->error;
     }
 
@@ -623,7 +623,7 @@ class ControllerCatalogManufacturer extends Controller {
         if (!$this->user->hasPermission('modify', 'catalog/manufacturer')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
-        
+
         $this->trigger->fire('post.admin.manufacturer.validate.quick', array(&$this->error));
 
         return !$this->error;
@@ -634,11 +634,12 @@ class ControllerCatalogManufacturer extends Controller {
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateInline()) {
             $this->load->model('catalog/manufacturer');
-            
+
             if (isset($this->request->post['seo_url'])) {
                 $this->load->model('catalog/url_alias');
 
                 $this->model_catalog_url_alias->addAlias('manufacturer', $this->request->get['manufacturer_id'], $this->request->post['seo_url'], $this->request->post['language_id']);
+
                 $json['language_id'] = $this->request->post['language_id'];
             } else {
                 foreach ($this->request->post as $key => $value) {
@@ -683,7 +684,7 @@ class ControllerCatalogManufacturer extends Controller {
         $route = new Route($this->registry);
 
         $url .= ltrim($route->rewrite('index.php?route=product/manufacturer/info&manufacturer_id=' . $manufacturer_id), '/');
-        
+
         if (!empty($old_session_code)) {
             $this->session->data['language'] = $old_session_code;
         }

@@ -18,6 +18,8 @@ $_['text_edit']              = 'Edit Information';
 $_['text_default']           = 'Default';
 $_['text_preview']           = 'View Information';
 
+$_['text_new_information_seo']  = 'Add a title and description to see how this information might appear in a search engine listing.';
+
 // Column
 $_['column_title']           = 'Information Title';
 $_['column_sort_order']      = 'Sort Order';
