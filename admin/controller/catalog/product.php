@@ -70,11 +70,11 @@ class ControllerCatalogProduct extends Controller {
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                 $this->response->redirect($this->url->link('catalog/product/edit', 'product_id='.$product_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
+                $this->response->redirect($this->url->link('catalog/product/edit', 'product_id='.$product_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
-                 $this->response->redirect($this->url->link('catalog/product/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+                $this->response->redirect($this->url->link('catalog/product/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             $this->response->redirect($this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL'));
@@ -134,11 +134,11 @@ class ControllerCatalogProduct extends Controller {
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                 $this->response->redirect($this->url->link('catalog/product/edit', 'product_id='.$this->request->get['product_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+                $this->response->redirect($this->url->link('catalog/product/edit', 'product_id='.$this->request->get['product_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
-                 $this->response->redirect($this->url->link('catalog/product/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+                $this->response->redirect($this->url->link('catalog/product/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             $this->response->redirect($this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL'));
@@ -287,7 +287,7 @@ class ControllerCatalogProduct extends Controller {
         } else {
             $filter_category = null;
         }
-        
+
         if (isset($this->request->get['filter_quantity'])) {
             $filter_quantity = $this->request->get['filter_quantity'];
         } else {
@@ -375,9 +375,9 @@ class ControllerCatalogProduct extends Controller {
         $data['products'] = array();
 
         $filter_data = array(
-            'filter_name'      => $filter_name,
-            'filter_model'      => $filter_model,
-            'filter_price'      => $filter_price,
+            'filter_name'     => $filter_name,
+            'filter_model'    => $filter_model,
+            'filter_price'    => $filter_price,
             'filter_category' => $filter_category,
             'filter_quantity' => $filter_quantity,
             'filter_status'   => $filter_status,
@@ -466,9 +466,9 @@ class ControllerCatalogProduct extends Controller {
         $data['button_delete'] = $this->language->get('button_delete');
         $data['button_filter'] = $this->language->get('button_filter');
         $data['button_show_filter'] = $this->language->get('button_show_filter');
-        $data['button_hide_filter'] = $this->language->get('button_hide_filter');        
+        $data['button_hide_filter'] = $this->language->get('button_hide_filter');
         $data['button_enable'] = $this->language->get('button_enable');
-        $data['button_disable'] = $this->language->get('button_disable');       
+        $data['button_disable'] = $this->language->get('button_disable');
 
         $data['token'] = $this->session->data['token'];
 
@@ -1457,7 +1457,6 @@ class ControllerCatalogProduct extends Controller {
         }
 
         if (isset($this->request->get['tag_name'])) {
-
             $this->load->model('catalog/product');
 
             if (isset($this->request->get['tag_name'])) {
@@ -1468,7 +1467,7 @@ class ControllerCatalogProduct extends Controller {
 
             $filter = null;
 
-            if(isset($this->request->post['tag_text'])) {
+            if (isset($this->request->post['tag_text'])) {
                 $filter = $this->request->post['tag_text'];
             }
 
@@ -1496,6 +1495,7 @@ class ControllerCatalogProduct extends Controller {
                 $this->load->model('catalog/url_alias');
 
                 $this->model_catalog_url_alias->addAlias('product', $this->request->get['product_id'], $this->request->post['seo_url'], $this->request->post['language_id']);
+
                 $json['language_id'] = $this->request->post['language_id'];
             } else {
                 foreach ($this->request->post as $key => $value) {
@@ -1595,7 +1595,8 @@ class ControllerCatalogProduct extends Controller {
 
         if (!$json) {
             $_filename = explode('.', $filename);
-            $filename = $_filename[0] . '-' . rand(1,10000) . '-' . '.' . $_filename[1];
+
+            $filename = $_filename[0] . '-' . rand(1, 10000) . '-' . '.' . $_filename[1];
 
             move_uploaded_file($this->request->files['file']['tmp_name'][0], $directory . '/' . $filename);
 

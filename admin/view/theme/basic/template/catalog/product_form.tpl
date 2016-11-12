@@ -573,6 +573,7 @@
                                                     <input type="text" name="product_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control input-full-width" />
                                                 </div>
                                             </div>
+                                            <?php if (!empty($seo_url[$language['language_id']])) { ?>
                                             <div class="form-group">
                                                 <label class="col-sm-12" for="input-seo-url-<?php echo $language['language_id']; ?>"><?php echo $entry_seo_url; ?></label>
                                                 <div class="col-sm-12" style="padding-top: 5px;">
@@ -583,6 +584,7 @@
                                                     <input type="hidden" name="seo_url[<?php echo $language['language_id']; ?>]" value="<?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?>" placeholder="<?php echo $entry_seo_url; ?>" id="input-seo-url-<?php echo $language['language_id']; ?>" class="form-control" />
                                                 </div>
                                             </div>
+                                            <?php } ?>
                                             <div class="form-group">
                                                 <label class="col-sm-12" for="input-meta-description<?php echo $language['language_id']; ?>"><?php echo $entry_meta_description; ?></label>
                                                 <div class="col-sm-12">
@@ -1320,17 +1322,21 @@
                     seo_html += '    <div class="col-sm-12 seo-preview-title">';
                     seo_html +=     $(this).val();
                     seo_html += '    </div>';
+                    /*
                     seo_html += '    <div class="col-sm-12 seo-preview-url">';
                     seo_html += '        ';
                     seo_html += '        <span id="seo-url-' + language_id + '"></span>';
                     seo_html += '     </div>';
+                    */
                     seo_html += '     <div class="col-sm-12 seo-preview-description"></div>';
                 } else {
                     seo_html += '    <div class="col-sm-12 seo-preview-title"></div>';
+                    /*
                     seo_html += '    <div class="col-sm-12 seo-preview-url">';
                     seo_html += '        ';
                     seo_html += '        <span id="seo-url-' + language_id + '"></span>';
                     seo_html += '     </div>';
+                    */
                     seo_html += '     <div class="col-sm-12 seo-preview-description">';
                     seo_html +=     $(this).val();
                     seo_html += '    </div>';
