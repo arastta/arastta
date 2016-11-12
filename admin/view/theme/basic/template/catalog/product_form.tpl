@@ -549,7 +549,7 @@
                                     <?php foreach ($languages as $language) { ?>
                                     <div class="tab-pane" id="seo-language<?php echo $language['language_id']; ?>">
                                         <div class="pull-right">
-                                            <button type="button" id="seo-show-<?php echo $language['language_id']; ?>" onclick="editSEO(<?php echo $language['language_id']; ?>);" data-toggle="tooltip" title="<?php echo 'Edit SEO'; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></button>
+                                            <button type="button" id="seo-show-<?php echo $language['language_id']; ?>" onclick="editSEO(<?php echo $language['language_id']; ?>);" data-toggle="tooltip" title="<?php echo $button_seo; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></button>
                                         </div>
                                         <?php if (!empty($seo_url[$language['language_id']])) { ?>
                                         <div id="seo-preview-<?php echo $language['language_id']; ?>" class="form-group">
