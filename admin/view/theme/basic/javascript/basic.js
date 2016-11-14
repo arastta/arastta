@@ -25,19 +25,19 @@ $(document).ready(function() {
             $('.bulk-action').addClass('bulk-action-activate');
             $('.bulk-action-activate').removeClass('bulk-action');
 
-            if ($('table tbody').hasClass('sortable-list') || $('table tbody td:first').hasClass('sortable')) {
+            /*if ($('table tbody').hasClass('sortable-list') || $('table tbody td:first').hasClass('sortable')) {
                 $('thead td:not(:nth-child(2))').hide();
             } else {
                 $('thead td:not(:first)').hide();
             }
 
-            $('.table.table-hover thead tr').append('<td id="td-selected"></td>');
+            $('.table.table-hover thead tr').append('<td id="td-selected"></td>');*/
             $('.item-selected').css('display', 'inline');
             $('.bulk-action-button').css('display', 'inline');
             $('.item-selected').html(selected + text_selected);
         } else {
-            $('#td-selected').remove();
-            $('thead td').show();
+            //$('#td-selected').remove();
+            //$('thead td').show();
             $('.item-selected').css('display', 'none');
             $('.bulk-action-button').css('display', 'none');
             $('.bulk-caret').show();
