@@ -34,10 +34,9 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $column_name; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $column_name; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $column_name; ?>', 'filter_name');"><?php echo $column_name; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $column_author; ?>', 'filter_author');"><?php echo $column_author; ?></a></li>
@@ -45,10 +44,10 @@
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $column_status; ?>', 'filter_status');"><?php echo $column_status; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" id="input-name" class="form-control filter" autocomplete="off" />
-                                <input type="text" name="filter_author" value="<?php echo $filter_author; ?>" placeholder="<?php echo $column_author; ?>" id="input-author" class="form-control filter hidden" autocomplete="off" />
+                                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $text_filter . $column_name; ?>" id="input-name" class="form-control filter" autocomplete="off" />
+                                <input type="text" name="filter_author" value="<?php echo $filter_author; ?>" placeholder="<?php echo $text_filter . $column_author; ?>" id="input-author" class="form-control filter hidden" autocomplete="off" />
                                 <select name="filter_type" class="form-control filter hidden">
-                                    <option value="*"></option>
+                                    <option value="*"><?php echo $text_filter . $column_type; ?></option>
                                     <option value="payment" <?php echo ($filter_type == 'payment') ? 'selected="selected"' : ''; ?> ><?php echo $text_payment; ?></option>
                                     <option value="shipping" <?php echo ($filter_type == 'shipping') ? 'selected="selected"' : ''; ?> ><?php echo $text_shipping; ?></option>
                                     <option value="module" <?php echo ($filter_type == 'module') ? 'selected="selected"' : ''; ?> ><?php echo $text_module; ?></option>
@@ -60,7 +59,7 @@
                                     <option value="other" <?php echo ($filter_type == 'other') ? 'selected="selected"' : ''; ?> ><?php echo $text_other; ?></option>
                                 </select>
                                 <select name="filter_status" id="input-status" class="form-control filter hidden">
-                                    <option value="*"></option>
+                                    <option value="*"><?php echo $text_filter . $column_status; ?></option>
                                     <?php if ($filter_status) { ?>
                                     <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                                     <?php } else { ?>
@@ -75,19 +74,49 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (!empty($filter_name) || !empty($filter_author) || !empty($filter_type) || isset($filter_status)) { ?>
+                    <div class="row">
+                        <div class="col-lg-12 filter-tag">
+                            <?php if ($filter_name) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_name; ?>:</label> <label class="filter-label"> <?php echo $filter_name; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_name');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_author) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_author; ?>:</label> <label class="filter-label"> <?php echo $filter_author; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_author');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if (isset($filter_type)) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_type; ?>:</label> <label class="filter-label"> <?php echo $filter_type; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_type');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if (isset($filter_status)) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $column_status; ?>:</label> <label class="filter-label"> <?php echo ($filter_status) ? $text_enabled : $text_disabled; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_status');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <div class="table-responsive">
                     <form id="form-extension" method="post">
                         <table class="table table-hover">
                             <thead>
                             <tr>
-								<?php if ($sortable_active) { ?>
-								<td class="text-center">
-									<div id="sort-order-list" data-toggle="tooltip" title="<?php echo $column_sortable; ?>">
-										<i class="fa fa-sort" aria-hidden="true"></i>
-									</div>
-								</td>
-								<?php } ?>
+                                <?php if ($sortable_active) { ?>
+                                <td class="text-center">
+                                    <div id="sort-order-list" data-toggle="tooltip" title="<?php echo $column_sortable; ?>">
+                                        <i class="fa fa-sort" aria-hidden="true"></i>
+                                    </div>
+                                </td>
+                                <?php } ?>
                                 <td style="width: 70px;" class="text-center">
                                     <?php if ($filter_type != 'module') { ?>
                                     <div class="bulk-action">
@@ -138,30 +167,30 @@
                                 <td class="text-right column-120"><?php echo $column_sort_order; ?></td>
                             </tr>
                             </thead>
-							<?php if ($sortable_active) { ?>
-							<?php if ($sortable) { ?>
-							<tbody class="sortable-list">
-							<?php } else { ?>
-							<tbody>
-								<input type="hidden" name="sort_order_type"  id="sort-order-type" value="sort_order" class="form-control"/>
-							<?php } ?>
-							<?php } else { ?>
+                            <?php if ($sortable_active) { ?>
+                            <?php if ($sortable) { ?>
+                            <tbody class="sortable-list">
+                            <?php } else { ?>
                             <tbody>
-							<?php } ?>
+                                <input type="hidden" name="sort_order_type"  id="sort-order-type" value="sort_order" class="form-control"/>
+                            <?php } ?>
+                            <?php } else { ?>
+                            <tbody>
+                            <?php } ?>
                             <?php if ($extensions) { ?>
                             <?php foreach ($extensions as $extension) { ?>
                             <tr>
-								<?php if ($sortable_active) { ?>
-								<td class="text-center sortable">
-									<?php if ($sortable) { ?>
-									<i class="fa fa-bars" aria-hidden="true"></i>
-									<?php } else { ?>
-									<div data-toggle="tooltip" title="<?php echo $text_sortable; ?>">
-										<i class="fa fa-bars" aria-hidden="true"></i>
-									</div>
-									<?php } ?>
-								</td>
-								<?php } ?>
+                                <?php if ($sortable_active) { ?>
+                                <td class="text-center sortable">
+                                    <?php if ($sortable) { ?>
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                    <?php } else { ?>
+                                    <div data-toggle="tooltip" title="<?php echo $text_sortable; ?>">
+                                        <i class="fa fa-bars" aria-hidden="true"></i>
+                                    </div>
+                                    <?php } ?>
+                                </td>
+                                <?php } ?>
                                 <td class="text-center"><input type="checkbox" name="selected[]" value="<?php echo $extension['type'] . '/' . $extension['code']; ?>" /></td>
                                 <td class="text-left">
                                     <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>"  class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
@@ -189,19 +218,19 @@
                                 <?php } ?>
                                 <td class="text-left"><?php echo $extension['status'] ?></td>
                                 <td class="text-right"><?php echo $extension['sort_order']; ?></td>
-								<td class="hidden">
-									<input type="hidden" name="items[code][]" value="<?php echo $extension['code']; ?>" class="form-control"/>
-									<input type="hidden" name="items[sort_order][]" value="<?php echo $extension['extension_id']; ?>" class="form-control"/>
-								</td>
+                                <td class="hidden">
+                                    <input type="hidden" name="items[code][]" value="<?php echo $extension['code']; ?>" class="form-control"/>
+                                    <input type="hidden" name="items[sort_order][]" value="<?php echo $extension['extension_id']; ?>" class="form-control"/>
+                                </td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>
                             <tr>
-								<?php if ($sortable_active) { ?>
+                                <?php if ($sortable_active) { ?>
                                 <td class="text-center" colspan="9"><?php echo $text_no_results; ?></td>
-								<?php } else { ?>
+                                <?php } else { ?>
                                 <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
-								<?php } ?>
+                                <?php } ?>
                             </tr>
                             <?php } ?>
                             </tbody>
@@ -217,6 +246,18 @@
     </div>
 </div>
 <script type="text/javascript"><!--
+$(document).ready(function() {
+    <?php if (!empty($filter_name)) { ?>
+    changeFilterType('<?php echo $column_name; ?>', 'filter_name');
+    <?php } elseif (!empty($filter_author)) { ?>
+    changeFilterType('<?php echo $column_author; ?>', 'filter_author');
+    <?php } elseif (isset($filter_type)) { ?>
+    changeFilterType('<?php echo $column_type; ?>', 'filter_type');
+    <?php } elseif (isset($filter_status)) { ?>
+    changeFilterType('<?php echo $column_status; ?>', 'filter_status');
+    <?php } ?>
+});
+
 function filter() {
     url = 'index.php?route=extension/extension&token=<?php echo $token; ?>';
 

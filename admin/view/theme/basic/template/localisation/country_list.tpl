@@ -33,10 +33,9 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $column_name; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $column_name; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $column_name; ?>', 'filter_country');"><?php echo $column_name; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $column_iso_code_2; ?>', 'filter_iso_code_2');"><?php echo $column_iso_code_2; ?></a></li>
@@ -44,11 +43,11 @@
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_status; ?>', 'filter_status');"><?php echo $entry_status; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_country"  value="<?php echo $filter_country; ?>" id="input-country" class="form-control filter">
-                                <input type="text" name="filter_iso_code_2"  value="<?php echo $filter_iso_code_2; ?>" id="input-iso-code-2" class="form-control filter hidden">
-                                <input type="text" name="filter_iso_code_3"  value="<?php echo $filter_iso_code_3; ?>" id="input-iso-code-3" class="form-control filter hidden">
+                                <input type="text" name="filter_country"  value="<?php echo $filter_country; ?>" placeholder="<?php echo $text_filter . $column_name; ?>" id="input-country" class="form-control filter">
+                                <input type="text" name="filter_iso_code_2"  value="<?php echo $filter_iso_code_2; ?>" placeholder="<?php echo $text_filter . $column_iso_code_2; ?>" id="input-iso-code-2" class="form-control filter hidden">
+                                <input type="text" name="filter_iso_code_3"  value="<?php echo $filter_iso_code_3; ?>" placeholder="<?php echo $text_filter . $column_iso_code_3; ?>" id="input-iso-code-3" class="form-control filter hidden">
                                 <select name="filter_status" id="input-status" class="form-control filter hidden">
-                                    <option value="*"></option>
+                                    <option value="*"><?php echo $text_filter . $column_status; ?></option>
                                     <?php if ($filter_status) { ?>
                                     <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                                     <?php } else { ?>
@@ -63,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php if (!empty($filter_country) || !empty($filter_iso_code_2) || !empty($filter_iso_code_3) || !empty($filter_status)) { ?>
+                    <?php if (!empty($filter_country) || !empty($filter_iso_code_2) || !empty($filter_iso_code_3) || isset($filter_status)) { ?>
                     <div class="row">
                         <div class="col-lg-12 filter-tag">
                             <?php if ($filter_country) { ?>
@@ -84,9 +83,9 @@
                                 <a class="filter-remove" onclick="removeFilter(this, 'filter_iso_code_3');"><i class="fa fa-times"></i></a>
                             </div>
                             <?php } ?>
-                            <?php if ($filter_status) { ?>
+                            <?php if (isset($filter_status)) { ?>
                             <div class="filter-info pull-left">
-                                <label class="control-label"><?php echo $entry_status; ?>:</label> <label class="filter-label"> <?php echo $filter_status; ?></label>
+                                <label class="control-label"><?php echo $entry_status; ?>:</label> <label class="filter-label"> <?php echo ($filter_status) ? $text_enabled : $text_disabled;; ?></label>
                                 <a class="filter-remove" onclick="removeFilter(this, 'filter_status');"><i class="fa fa-times"></i></a>
                             </div>
                             <?php } ?>
@@ -174,6 +173,18 @@
     </div>
 </div>
 <script type="text/javascript"><!--
+$(document).ready(function() {
+    <?php if (!empty($filter_country)) { ?>
+    changeFilterType('<?php echo $column_name; ?>', 'filter_country');
+    <?php } elseif (!empty($filter_iso_code_2)) { ?>
+    changeFilterType('<?php echo $column_iso_code_2; ?>', 'filter_iso_code_2');
+    <?php } elseif (!empty($filter_iso_code_3)) { ?>
+    changeFilterType('<?php echo $column_iso_code_3; ?>', 'filter_iso_code_3');
+    <?php } elseif (isset($filter_status)) { ?>
+    changeFilterType('<?php echo $column_status; ?>', 'filter_status');
+    <?php } ?>
+});
+
 $('input[name=\'filter_country\']').autocomplete({
     'source': function(request, response) {
         $.ajax({

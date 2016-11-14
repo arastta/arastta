@@ -42,6 +42,7 @@ $_['text_bulk_action']              = 'Bulk Action';
 $_['text_selected']                 = ' Selected';
 $_['text_publish']                  = 'Publish';
 $_['text_sortable']                 = 'Please sort by order to enable reordering';
+$_['text_filter']                   = 'Type here to filter ';
 
 // Column
 $_['column_status']                 = 'Status';

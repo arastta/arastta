@@ -33,20 +33,19 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $entry_name; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $entry_name; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_name; ?>', 'filter_name');"><?php echo $entry_name; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_code; ?>', 'filter_code');"><?php echo $entry_code; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_date_added; ?>', 'filter_date_added');"><?php echo $entry_date_added; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control filter">
-                                <input type="text" name="filter_code"  value="<?php echo $filter_code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control filter hidden">
+                                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $text_filter . $entry_name; ?>" id="input-name" class="form-control filter">
+                                <input type="text" name="filter_code"  value="<?php echo $filter_code; ?>" placeholder="<?php echo $text_filter . $entry_code; ?>" id="input-code" class="form-control filter hidden">
                                 <div class="input-group date filter hidden filter_date_added">
-                                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
+                                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $text_filter . $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                                   </span></div>
@@ -153,6 +152,16 @@
         </div>
     </div>
     <script type="text/javascript"><!--
+    $(document).ready(function() {
+        <?php if (!empty($filter_name)) { ?>
+        changeFilterType('<?php echo $entry_name; ?>', 'filter_name');
+        <?php } elseif (!empty($filter_code)) { ?>
+        changeFilterType('<?php echo $entry_code; ?>', 'filter_code');
+        <?php } elseif (!empty($filter_date_added)) { ?>
+        changeFilterType('<?php echo $entry_date_added; ?>', 'filter_date_added');
+        <?php } ?>
+    });
+
     function filter() {
         url = 'index.php?route=marketing/marketing&token=<?php echo $token; ?>';
 

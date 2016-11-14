@@ -370,3 +370,20 @@ tbody tr td div i.fa.fa-bars {
     font-size: 13px;
     line-height: 18px;
 }
+
+.basic-filter-button {
+    padding-right: 25px;
+    padding-left: 25px;
+    position: relative;
+    width: 100%;
+}
+
+.basic-filter-button .filter-type {
+    float: left;
+}
+
+.basic-filter-button .caret {
+    position: absolute;
+    right: 8px;
+    bottom: 15px;
+}

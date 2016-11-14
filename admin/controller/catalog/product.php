@@ -409,7 +409,7 @@ class ControllerCatalogProduct extends Controller {
 
             $product_specials = $this->model_catalog_product->getProductSpecials($result['product_id']);
 
-            foreach ($product_specials  as $product_special) {
+            foreach ($product_specials as $product_special) {
                 if (($product_special['date_start'] == '0000-00-00' || strtotime($product_special['date_start']) < time()) && ($product_special['date_end'] == '0000-00-00' || strtotime($product_special['date_end']) > time())) {
                     $special = $product_special['price'];
 
@@ -443,6 +443,7 @@ class ControllerCatalogProduct extends Controller {
         $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
         $data['text_sortable'] = $this->language->get('text_sortable');
+        $data['text_filter'] = $this->language->get('text_filter');
 
         $data['column_image'] = $this->language->get('column_image');
         $data['column_name'] = $this->language->get('column_name');

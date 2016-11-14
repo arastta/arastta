@@ -276,6 +276,7 @@ class ControllerCatalogCategory extends Controller {
         $data['text_select'] = $this->language->get('text_select');
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
         $data['text_sortable'] = $this->language->get('text_sortable');
+        $data['text_filter'] = $this->language->get('text_filter');
 
         $data['column_name'] = $this->language->get('column_name');
         $data['column_sort_order'] = $this->language->get('column_sort_order');

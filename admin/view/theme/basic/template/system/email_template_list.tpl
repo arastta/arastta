@@ -30,10 +30,9 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $entry_text; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $entry_text; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_text; ?>', 'filter_text');"><?php echo $entry_text; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_context; ?>', 'filter_context');"><?php echo $entry_context; ?></a></li>
@@ -42,11 +41,11 @@
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_status; ?>', 'filter_status');"><?php echo $entry_status; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_text"  value="<?php echo $filter_text; ?>" placeholder="<?php echo $entry_text; ?>" id="input-text" class="form-control filter">
-                                <input type="text" name="filter_context"  value="<?php echo $filter_context; ?>" placeholder="<?php echo $entry_context; ?>" id="input-context" class="form-control filter hidden">
-                                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control filter hidden">
+                                <input type="text" name="filter_text"  value="<?php echo $filter_text; ?>" placeholder="<?php echo $text_filter . $entry_text; ?>" id="input-text" class="form-control filter">
+                                <input type="text" name="filter_context"  value="<?php echo $filter_context; ?>" placeholder="<?php echo $text_filter . $entry_context; ?>" id="input-context" class="form-control filter hidden">
+                                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $text_filter . $entry_name; ?>" id="input-name" class="form-control filter hidden">
                                 <select name="filter_type" id="input-type" class="form-control filter hidden">
-                                    <option value=""></option>
+                                    <option value=""><?php echo $text_filter . $entry_type; ?></option>
                                     <?php foreach ($types as $type) { ?>
                                     <?php if ($filter_type == $type['id']) { ?>
                                     <option value="<?php echo $type['id']; ?>" selected="selected"><?php echo $type['value']; ?></option>
@@ -56,7 +55,7 @@
                                     <?php } ?>
                                 </select>
                                 <select name="filter_status" id="input-status" class="form-control filter hidden">
-                                    <option value="*"></option>
+                                    <option value="*"><?php echo $text_filter . $entry_status; ?></option>
                                     <?php if ($filter_status) { ?>
                                     <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                                     <?php } else { ?>
@@ -71,7 +70,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php if (!empty($filter_text) || !empty($filter_context) || !empty($filter_name) || !empty($filter_type) || !empty($filter_status)) { ?>
+                    <?php if (!empty($filter_text) || !empty($filter_context) || !empty($filter_name) || !empty($filter_type) || isset($filter_status)) { ?>
                     <div class="row">
                         <div class="col-lg-12 filter-tag">
                             <?php if ($filter_text) { ?>
@@ -105,7 +104,7 @@
                                 <a class="filter-remove" onclick="removeFilter(this, 'filter_type');"><i class="fa fa-times"></i></a>
                             </div>
                             <?php } ?>
-                            <?php if ($filter_status) { ?>
+                            <?php if (isset($filter_status)) { ?>
                             <div class="filter-info pull-left">
                                 <label class="control-label"><?php echo $entry_status; ?>:</label> <label class="filter-label"> <?php echo ($filter_status) ? $text_enabled : $text_disabled; ?></label>
                                 <a class="filter-remove" onclick="removeFilter(this, 'filter_status');"><i class="fa fa-times"></i></a>
@@ -179,6 +178,20 @@
     </div>
 </div>
 <script type="text/javascript"><!--
+$(document).ready(function() {
+    <?php if (!empty($filter_text)) { ?>
+    changeFilterType('<?php echo $entry_text; ?>', 'filter_text');
+    <?php } elseif (isset($filter_context)) { ?>
+    changeFilterType('<?php echo $entry_context; ?>', 'filter_context');
+    <?php } elseif (isset($filter_name)) { ?>
+    changeFilterType('<?php echo $entry_name; ?>', 'filter_name');
+    <?php } elseif (isset($filter_type)) { ?>
+    changeFilterType('<?php echo $entry_type; ?>', 'filter_type');
+    <?php } elseif (isset($filter_status)) { ?>
+    changeFilterType('<?php echo $column_status; ?>', 'filter_status');
+    <?php } ?>
+});
+
 $('input[name=\'filter_name\']').autocomplete({
     'source': function(request, response) {
         $.ajax({

@@ -33,10 +33,9 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $entry_product; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $entry_product; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_product; ?>', 'filter_product');"><?php echo $entry_product; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_author; ?>', 'filter_author');"><?php echo $entry_author; ?></a></li>
@@ -44,10 +43,10 @@
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_date_added; ?>', 'filter_date_added');"><?php echo $entry_date_added; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_product"  value="<?php echo $filter_product; ?>" id="input-product" class="form-control filter">
-                                <input type="text" name="filter_author" value="<?php echo $filter_author; ?>" id="input-author" class="form-control hidden filter" />
+                                <input type="text" name="filter_product"  value="<?php echo $filter_product; ?>" placeholder="<?php echo $text_filter . $entry_product; ?>" id="input-product" class="form-control filter">
+                                <input type="text" name="filter_author" value="<?php echo $filter_author; ?>" placeholder="<?php echo $text_filter . $entry_author; ?>" id="input-author" class="form-control hidden filter" />
                                 <select name="filter_status" id="input-status" class="form-control filter hidden">
-                                    <option value="*"></option>
+                                    <option value="*"><?php echo $text_filter . $entry_status; ?></option>
                                     <?php if ($filter_status) { ?>
                                     <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                                     <?php } else { ?>
@@ -60,7 +59,7 @@
                                     <?php } ?>
                                 </select>
                                 <div class="input-group date filter hidden filter_date_added">
-                                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
+                                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $text_filter . $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                                   </span></div>
@@ -259,6 +258,16 @@
             },
             showbuttons: false,
         });
+
+        <?php if (!empty($filter_product)) { ?>
+        changeFilterType('<?php echo $entry_product; ?>', 'filter_product');
+        <?php } elseif (!empty($filter_author)) { ?>
+        changeFilterType('<?php echo $entry_author; ?>', 'filter_author');
+        <?php } elseif (isset($filter_status)) { ?>
+        changeFilterType('<?php echo $entry_status; ?>', 'filter_status');
+        <?php } elseif (!empty($filter_date_added)) { ?>
+        changeFilterType('<?php echo $entry_date_added; ?>', 'filter_date_added');
+        <?php } ?>
     });
 
     $('input[name=\'filter_product\']').autocomplete({

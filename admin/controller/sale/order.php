@@ -290,13 +290,14 @@ class ControllerSaleOrder extends Controller {
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_list'] = $this->language->get('text_list');
         $data['text_no_results'] = $this->language->get('text_no_results');
         $data['text_confirm'] = $this->language->get('text_confirm');
         $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         $data['text_missing'] = $this->language->get('text_missing');
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
+        $data['text_filter'] = $this->language->get('text_filter');
 
         $data['column_order_id'] = $this->language->get('column_order_id');
         $data['column_customer'] = $this->language->get('column_customer');
@@ -465,7 +466,7 @@ class ControllerSaleOrder extends Controller {
         $this->load->model('sale/customer');
 
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
         $data['text_no_results'] = $this->language->get('text_no_results');
         $data['text_default'] = $this->language->get('text_default');
@@ -548,7 +549,7 @@ class ControllerSaleOrder extends Controller {
         } else {
             $data['error_warning'] = '';
         }
-        
+
         if (isset($this->session->data['success'])) {
             $data['success'] = $this->session->data['success'];
 
@@ -659,7 +660,7 @@ class ControllerSaleOrder extends Controller {
 
             // Add products to the API
             $data['order_products'] = array();
-            
+
             $products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
 
             foreach ($products as $product) {
@@ -782,7 +783,7 @@ class ControllerSaleOrder extends Controller {
         $this->load->model('sale/custom_field');
 
         $data['custom_fields'] = array();
-        
+
         $filter_data = array(
             'sort'  => 'cf.sort_order',
             'order' => 'ASC'
@@ -1101,15 +1102,15 @@ class ControllerSaleOrder extends Controller {
             $data['email'] = $order_info['email'];
             $data['telephone'] = $order_info['telephone'];
             $data['fax'] = $order_info['fax'];
-            
+
             $data['account_custom_field'] = $order_info['custom_field'];
         
             // Uploaded files			
             $this->load->model('tool/upload');
-                
+
             // Custom Fields
             $this->load->model('sale/custom_field');
-            
+
             $data['account_custom_fields'] = array();
 
             $custom_fields = $this->model_sale_custom_field->getCustomFields();
@@ -1118,7 +1119,7 @@ class ControllerSaleOrder extends Controller {
                 if ($custom_field['location'] == 'account' && isset($order_info['custom_field'][$custom_field['custom_field_id']])) {
                     if ($custom_field['type'] == 'select' || $custom_field['type'] == 'radio') {
                         $custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($order_info['custom_field'][$custom_field['custom_field_id']]);
-                        
+
                         if ($custom_field_value_info) {
                             $data['account_custom_fields'][] = array(
                                 'name'  => $custom_field['name'],
@@ -1126,27 +1127,27 @@ class ControllerSaleOrder extends Controller {
                             );
                         }
                     }
-                    
+
                     if ($custom_field['type'] == 'checkbox' && is_array($order_info['custom_field'][$custom_field['custom_field_id']])) {
                         foreach ($order_info['custom_field'][$custom_field['custom_field_id']] as $custom_field_value_id) {
                             $custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($custom_field_value_id);
-                            
-                            if ($custom_field_value_info) {                        
+
+                            if ($custom_field_value_info) {
                                 $data['account_custom_fields'][] = array(
                                     'name'  => $custom_field['name'],
                                     'value' => $custom_field_value_info['name']
-                                );    
+                                );
                             }
                         }
                     }
-                                        
+
                     if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
                         $data['account_custom_fields'][] = array(
                             'name'  => $custom_field['name'],
                             'value' => $order_info['custom_field'][$custom_field['custom_field_id']]
-                        );                        
+                        );
                     }
-                    
+
                     if ($custom_field['type'] == 'file') {
                         $upload_info = $this->model_tool_upload->getUploadByCode($order_info['custom_field'][$custom_field['custom_field_id']]);
 
@@ -1154,12 +1155,12 @@ class ControllerSaleOrder extends Controller {
                             $data['account_custom_fields'][] = array(
                                 'name'  => $custom_field['name'],
                                 'value' => $upload_info['name']
-                            );                            
+                            );
                         }
                     }
                 }
             }
-            
+
             $data['comment'] = nl2br($order_info['comment']);
             $data['shipping_method'] = $order_info['shipping_method'];
             $data['payment_method'] = $order_info['payment_method'];
@@ -1202,7 +1203,7 @@ class ControllerSaleOrder extends Controller {
             $data['accept_language'] = $order_info['accept_language'];
             $data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
             $data['date_modified'] = date($this->language->get('date_format_short'), strtotime($order_info['date_modified']));
-            
+
             // Payment
             $data['payment_firstname'] = $order_info['payment_firstname'];
             $data['payment_lastname'] = $order_info['payment_lastname'];
@@ -1222,7 +1223,7 @@ class ControllerSaleOrder extends Controller {
                 if ($custom_field['location'] == 'address' && isset($order_info['payment_custom_field'][$custom_field['custom_field_id']])) {
                     if ($custom_field['type'] == 'select' || $custom_field['type'] == 'radio') {
                         $custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($order_info['payment_custom_field'][$custom_field['custom_field_id']]);
-                        
+
                         if ($custom_field_value_info) {
                             $data['payment_custom_fields'][] = array(
                                 'name'  => $custom_field['name'],
@@ -1230,27 +1231,27 @@ class ControllerSaleOrder extends Controller {
                             );
                         }
                     }
-                    
+
                     if ($custom_field['type'] == 'checkbox' && is_array($order_info['payment_custom_field'][$custom_field['custom_field_id']])) {
                         foreach ($order_info['payment_custom_field'][$custom_field['custom_field_id']] as $custom_field_value_id) {
                             $custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($custom_field_value_id);
-                            
-                            if ($custom_field_value_info) {                        
+
+                            if ($custom_field_value_info) {
                                 $data['payment_custom_fields'][] = array(
                                     'name'  => $custom_field['name'],
                                     'value' => $custom_field_value_info['name']
-                                );    
+                                );
                             }
                         }
                     }
-                                        
+
                     if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
                         $data['payment_custom_fields'][] = array(
                             'name'  => $custom_field['name'],
                             'value' => $order_info['payment_custom_field'][$custom_field['custom_field_id']]
-                        );                        
+                        );
                     }
-                    
+
                     if ($custom_field['type'] == 'file') {
                         $upload_info = $this->model_tool_upload->getUploadByCode($order_info['payment_custom_field'][$custom_field['custom_field_id']]);
 
@@ -1258,12 +1259,12 @@ class ControllerSaleOrder extends Controller {
                             $data['payment_custom_fields'][] = array(
                                 'name'  => $custom_field['name'],
                                 'value' => $upload_info['name']
-                            );                            
+                            );
                         }
                     }
                 }
-            }            
-            
+            }
+
             // Shipping
             $data['shipping_firstname'] = $order_info['shipping_firstname'];
             $data['shipping_lastname'] = $order_info['shipping_lastname'];
@@ -1275,14 +1276,14 @@ class ControllerSaleOrder extends Controller {
             $data['shipping_zone'] = $order_info['shipping_zone'];
             $data['shipping_zone_code'] = $order_info['shipping_zone_code'];
             $data['shipping_country'] = $order_info['shipping_country'];
-            
+
             $data['shipping_custom_fields'] = array();
-            
+
             foreach ($custom_fields as $custom_field) {
                 if ($custom_field['location'] == 'address' && isset($order_info['shipping_custom_field'][$custom_field['custom_field_id']])) {
                     if ($custom_field['type'] == 'select' || $custom_field['type'] == 'radio') {
                         $custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($order_info['shipping_custom_field'][$custom_field['custom_field_id']]);
-                        
+
                         if ($custom_field_value_info) {
                             $data['shipping_custom_fields'][] = array(
                                 'name'  => $custom_field['name'],
@@ -1290,27 +1291,27 @@ class ControllerSaleOrder extends Controller {
                             );
                         }
                     }
-                    
+
                     if ($custom_field['type'] == 'checkbox' && is_array($order_info['shipping_custom_field'][$custom_field['custom_field_id']])) {
                         foreach ($order_info['shipping_custom_field'][$custom_field['custom_field_id']] as $custom_field_value_id) {
                             $custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($custom_field_value_id);
-                            
-                            if ($custom_field_value_info) {                        
+
+                            if ($custom_field_value_info) {
                                 $data['shipping_custom_fields'][] = array(
                                     'name'  => $custom_field['name'],
                                     'value' => $custom_field_value_info['name']
-                                );    
+                                );
                             }
                         }
                     }
-                                        
+
                     if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
                         $data['shipping_custom_fields'][] = array(
                             'name'  => $custom_field['name'],
                             'value' => $order_info['shipping_custom_field'][$custom_field['custom_field_id']]
-                        );                        
+                        );
                     }
-                    
+
                     if ($custom_field['type'] == 'file') {
                         $upload_info = $this->model_tool_upload->getUploadByCode($order_info['shipping_custom_field'][$custom_field['custom_field_id']]);
 
@@ -1318,11 +1319,11 @@ class ControllerSaleOrder extends Controller {
                             $data['shipping_custom_fields'][] = array(
                                 'name'  => $custom_field['name'],
                                 'value' => $upload_info['name']
-                            );                            
+                            );
                         }
                     }
                 }
-            }                
+            }
 
             $data['products'] = array();
 
@@ -1378,7 +1379,7 @@ class ControllerSaleOrder extends Controller {
                     'href'        => $this->url->link('sale/voucher/edit', 'token=' . $this->session->data['token'] . '&voucher_id=' . $voucher['voucher_id'], 'SSL')
                 );
             }
-            
+
             $data['totals'] = array();
 
             $totals = $this->model_sale_order->getOrderTotals($this->request->get['order_id']);
@@ -2152,9 +2153,11 @@ class ControllerSaleOrder extends Controller {
         }
 
         $app->ecommerce();
+
         if (!empty($customer_info)) {
             $app->customer->login($customer_info['email'], '', true);
         }
+
         $app->route();
         $app->dispatch();
 

@@ -44,14 +44,14 @@ class ControllerMarketingCoupon extends Controller {
             if (isset($this->request->get['page'])) {
                 $url .= '&page=' . $this->request->get['page'];
             }
-            
+
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
                 $this->response->redirect($this->url->link('marketing/coupon/edit', 'coupon_id='.$coupon_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                 $this->response->redirect($this->url->link('marketing/coupon/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-            }            
+            }
 
             $this->response->redirect($this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
@@ -92,7 +92,7 @@ class ControllerMarketingCoupon extends Controller {
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                 $this->response->redirect($this->url->link('marketing/coupon/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
             }
-            
+
             $this->response->redirect($this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
 
@@ -139,37 +139,37 @@ class ControllerMarketingCoupon extends Controller {
         } else {
             $filter_name = null;
         }
-        
+
         if (isset($this->request->get['filter_code'])) {
             $filter_code = $this->request->get['filter_code'];
         } else {
             $filter_code = null;
         }
-        
+
         if (isset($this->request->get['filter_date_start'])) {
             $filter_date_start = $this->request->get['filter_date_start'];
         } else {
             $filter_date_start = null;
         }
-                
+
         if (isset($this->request->get['filter_date_end'])) {
             $filter_date_end = $this->request->get['filter_date_end'];
         } else {
             $filter_date_end = null;
         }
-                
+
         if (isset($this->request->get['filter_discount'])) {
             $filter_discount = $this->request->get['filter_discount'];
         } else {
             $filter_discount = null;
         }
-                
+
         if (isset($this->request->get['filter_status'])) {
             $filter_status = $this->request->get['filter_status'];
         } else {
             $filter_status = null;
         }
-        
+
         if (isset($this->request->get['sort'])) {
             $sort = $this->request->get['sort'];
         } else {
@@ -189,31 +189,31 @@ class ControllerMarketingCoupon extends Controller {
         }
 
         $url = '';
-        
+
         if (isset($this->request->get['filter_name'])) {
             $url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
         }
-        
+
         if (isset($this->request->get['filter_code'])) {
             $url .= '&filter_code=' . $this->request->get['filter_code'];
         }
-        
+
         if (isset($this->request->get['filter_date_start'])) {
             $url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
         }
-                
+
         if (isset($this->request->get['filter_date_end'])) {
             $url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
         }
-                
+
         if (isset($this->request->get['filter_discount'])) {
             $url .= '&filter_discount=' . $this->request->get['filter_discount'];
         }
-                
+
         if (isset($this->request->get['filter_status'])) {
             $url .= '&filter_status=' . $this->request->get['filter_status'];
         }
-        
+
         if (isset($this->request->get['sort'])) {
             $url .= '&sort=' . $this->request->get['sort'];
         }
@@ -244,11 +244,11 @@ class ControllerMarketingCoupon extends Controller {
         $data['coupons'] = array();
 
         $filter_data = array(
-            'filter_name'         => $filter_name,
-            'filter_code'         => $filter_code,
+            'filter_name'       => $filter_name,
+            'filter_code'       => $filter_code,
             'filter_date_start' => $filter_date_start,
-            'filter_date_end'     => $filter_date_end,
-            'filter_discount'     => $filter_discount,
+            'filter_date_end'   => $filter_date_end,
+            'filter_discount'   => $filter_discount,
             'filter_status'     => $filter_status,
             'sort'  => $sort,
             'order' => $order,
@@ -256,12 +256,12 @@ class ControllerMarketingCoupon extends Controller {
             'limit' => $this->config->get('config_limit_admin')
         );
 
-        if(!empty($filter_name) || !empty($filter_code) || !empty($filter_date_start) || !empty($filter_date_end) || !empty($filter_discount) || !empty($filter_status)) {
+        if (!empty($filter_name) || !empty($filter_code) || !empty($filter_date_start) || !empty($filter_date_end) || !empty($filter_discount) || isset($filter_status)) {
             $coupon_total = $this->model_marketing_coupon->getTotalCouponsFilter($filter_data);
         } else {
             $coupon_total = $this->model_marketing_coupon->getTotalCoupons();
         }
-        
+
         $results = $this->model_marketing_coupon->getCoupons($filter_data);
 
         foreach ($results as $result) {
@@ -278,7 +278,7 @@ class ControllerMarketingCoupon extends Controller {
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
         $data['text_list'] = $this->language->get('text_list');
@@ -286,6 +286,7 @@ class ControllerMarketingCoupon extends Controller {
         $data['text_confirm'] = $this->language->get('text_confirm');
         $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
+        $data['text_filter'] = $this->language->get('text_filter');
 
         $data['column_name'] = $this->language->get('column_name');
         $data['column_code'] = $this->language->get('column_code');
@@ -369,10 +370,10 @@ class ControllerMarketingCoupon extends Controller {
         $data['filter_date_end'] = $filter_date_end;
         $data['filter_discount'] = $filter_discount;
         $data['filter_status'] = $filter_status;
-        
+
         $data['sort'] = $sort;
         $data['order'] = $order;
-        
+
         $data ['token'] = $this->session->data['token'];
 
         $data['header'] = $this->load->controller('common/header');
@@ -384,7 +385,7 @@ class ControllerMarketingCoupon extends Controller {
 
     protected function getForm() {
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_form'] = !isset($this->request->get['coupon_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
@@ -421,7 +422,7 @@ class ControllerMarketingCoupon extends Controller {
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_savenew'] = $this->language->get('button_savenew');
-        $data['button_saveclose'] = $this->language->get('button_saveclose');        
+        $data['button_saveclose'] = $this->language->get('button_saveclose');
         $data['button_cancel'] = $this->language->get('button_cancel');
 
         $data['tab_general'] = $this->language->get('tab_general');
@@ -472,7 +473,7 @@ class ControllerMarketingCoupon extends Controller {
         } else {
             $data['success'] = '';
         }
-        
+
         $url = '';
 
         if (isset($this->request->get['page'])) {
@@ -739,7 +740,7 @@ class ControllerMarketingCoupon extends Controller {
 
         $this->response->setOutput($this->load->view('marketing/coupon_history.tpl', $data));
     }
-    
+
     public function autocomplete() {
         $json = array();
 

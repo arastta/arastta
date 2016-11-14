@@ -20,10 +20,9 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $entry_date_start; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $entry_date_start; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_date_start; ?>', 'filter_date_start');"><?php echo $entry_date_start; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_date_end; ?>', 'filter_date_end');"><?php echo $entry_date_end; ?></a></li>
@@ -31,12 +30,12 @@
                                     </ul>
                                 </div>
                                 <div class="input-group date filter filter_date_start">
-                                  <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control filter" />
+                                  <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $text_filter . $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control filter" />
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                                   </span></div>
                                 <div class="input-group date filter hidden filter_date_end">
-                                  <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
+                                  <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $text_filter . $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                                   </span></div>
@@ -123,6 +122,16 @@
         </div>
     </div>
     <script type="text/javascript"><!--
+    $(document).ready(function() {
+        <?php if (!empty($filter_date_start)) { ?>
+        changeFilterType('<?php echo $entry_date_start; ?>', 'filter_date_start');
+        <?php } elseif (!empty($filter_date_end)) { ?>
+        changeFilterType('<?php echo $entry_date_end; ?>', 'filter_date_end');
+        <?php } elseif (!empty($filter_order_status_id)) { ?>
+        changeFilterType('<?php echo $entry_status; ?>', 'filter_order_status_id');
+        <?php } ?>
+    });
+
     function filter() {
         url = 'index.php?route=report/marketing&token=<?php echo $token; ?>';
 

@@ -44,7 +44,7 @@ class ControllerLocalisationCountry extends Controller {
             if (isset($this->request->get['page'])) {
                 $url .= '&page=' . $this->request->get['page'];
             }
-            
+
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
                 $this->response->redirect($this->url->link('localisation/country/edit', 'country_id='.$country_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
             }
@@ -84,14 +84,14 @@ class ControllerLocalisationCountry extends Controller {
             if (isset($this->request->get['page'])) {
                 $url .= '&page=' . $this->request->get['page'];
             }
-            
+
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
                 $this->response->redirect($this->url->link('localisation/country/edit', 'country_id='.$this->request->get['country_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                 $this->response->redirect($this->url->link('localisation/country/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-            }    
+            }
 
             $this->response->redirect($this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
@@ -156,7 +156,7 @@ class ControllerLocalisationCountry extends Controller {
             $filter_status = $this->request->get['filter_status'];
         } else {
             $filter_status = null;
-        }                
+        }
         
         if (isset($this->request->get['sort'])) {
             $sort = $this->request->get['sort'];
@@ -180,19 +180,19 @@ class ControllerLocalisationCountry extends Controller {
 
         if (isset($this->request->get['filter_country'])) {
             $url .= '&filter_country=' . urlencode(html_entity_decode($this->request->get['filter_country'], ENT_QUOTES, 'UTF-8'));
-        }    
-        
+        }
+
         if (isset($this->request->get['filter_iso_code_2'])) {
             $url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
-        }    
-        
+        }
+
         if (isset($this->request->get['filter_iso_code_3'])) {
             $url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
-        }    
-        
+        }
+
         if (isset($this->request->get['filter_status'])) {
             $url .= '&filter_status=' . $this->request->get['filter_status'];
-        }        
+        }
 
         if (isset($this->request->get['sort'])) {
             $url .= '&sort=' . $this->request->get['sort'];
@@ -205,7 +205,7 @@ class ControllerLocalisationCountry extends Controller {
         if (isset($this->request->get['page'])) {
             $url .= '&page=' . $this->request->get['page'];
         }
-        
+
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
@@ -217,7 +217,7 @@ class ControllerLocalisationCountry extends Controller {
             'text' => $this->language->get('heading_title'),
             'href' => $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, 'SSL')
         );
-        
+
         $data['add'] = $this->url->link('localisation/country/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $data['delete'] = $this->url->link('localisation/country/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
@@ -233,13 +233,12 @@ class ControllerLocalisationCountry extends Controller {
             'start' => ($page - 1) * $this->config->get('config_limit_admin'),
             'limit' => $this->config->get('config_limit_admin')
         );
-        
-        if(!empty($filter_country) || !empty($filter_iso_code_2) || !empty($filter_iso_code_3) || !empty($filter_status)) {
+
+        if (!empty($filter_country) || !empty($filter_iso_code_2) || !empty($filter_iso_code_3) || isset($filter_status)) {
             $country_total = $this->model_localisation_country->getTotalCountriesFilter($filter_data);
         } else {
             $country_total = $this->model_localisation_country->getTotalCountries();
-        }        
-
+        }
 
         $results = $this->model_localisation_country->getCountries($filter_data);
 
@@ -257,7 +256,7 @@ class ControllerLocalisationCountry extends Controller {
         $data['heading_title'] = $this->language->get('heading_title');
 
         $data['entry_status'] = $this->language->get('entry_status');
-        
+
         $data['text_list'] = $this->language->get('text_list');
         $data['text_no_results'] = $this->language->get('text_no_results');
         $data['text_confirm'] = $this->language->get('text_confirm');
@@ -265,6 +264,7 @@ class ControllerLocalisationCountry extends Controller {
         $data['text_enabled']  = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
+        $data['text_filter'] = $this->language->get('text_filter');
 
         $data['column_name'] = $this->language->get('column_name');
         $data['column_iso_code_2'] = $this->language->get('column_iso_code_2');
@@ -274,10 +274,10 @@ class ControllerLocalisationCountry extends Controller {
 
         $data['button_add'] = $this->language->get('button_add');
         $data['button_edit'] = $this->language->get('button_edit');
-        $data['button_delete'] = $this->language->get('button_delete');       
+        $data['button_delete'] = $this->language->get('button_delete');
         $data['button_enable']  = $this->language->get('button_enable');
         $data['button_disable'] = $this->language->get('button_disable');
-        $data['button_filter'] = $this->language->get('button_filter');    
+        $data['button_filter'] = $this->language->get('button_filter');
         $data['button_show_filter'] = $this->language->get('button_show_filter');
         $data['button_hide_filter'] = $this->language->get('button_hide_filter');
 
@@ -342,10 +342,10 @@ class ControllerLocalisationCountry extends Controller {
         $data['filter_iso_code_2'] = $filter_iso_code_2;
         $data['filter_iso_code_3'] = $filter_iso_code_3;
         $data['filter_status'] = $filter_status;
-        
+
         $data['sort'] = $sort;
         $data['order'] = $order;
-        
+
         $data ['token'] = $this->session->data['token'];
 
         $data['header'] = $this->load->controller('common/header');
@@ -357,7 +357,7 @@ class ControllerLocalisationCountry extends Controller {
 
     protected function getForm() {
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_form'] = !isset($this->request->get['country_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
@@ -376,7 +376,7 @@ class ControllerLocalisationCountry extends Controller {
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_savenew'] = $this->language->get('button_savenew');
-        $data['button_saveclose'] = $this->language->get('button_saveclose');         
+        $data['button_saveclose'] = $this->language->get('button_saveclose');
         $data['button_cancel'] = $this->language->get('button_cancel');
 
         if (isset($this->error['warning'])) {
@@ -390,7 +390,7 @@ class ControllerLocalisationCountry extends Controller {
         } else {
             $data['error_name'] = '';
         }
-        
+
         if (isset($this->session->data['success'])) {
             $data['success'] = $this->session->data['success'];
 
@@ -424,7 +424,7 @@ class ControllerLocalisationCountry extends Controller {
             'text' => $this->language->get('heading_title'),
             'href' => $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, 'SSL')
         );
-        
+
         if (!isset($this->request->get['country_id'])) {
             $data['action'] = $this->url->link('localisation/country/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
         } else {
@@ -571,7 +571,7 @@ class ControllerLocalisationCountry extends Controller {
             } else {
                 $filter_iso_code_2 = '';
             }
-            
+
             if (isset($this->request->get['filter_iso_code_3'])) {
                 $filter_iso_code_3 = $this->request->get['filter_iso_code_3'];
             } else {
@@ -594,20 +594,19 @@ class ControllerLocalisationCountry extends Controller {
 
             $results = $this->model_localisation_country->getCountries($filter_data);
 
-            if(!empty ($results)) {
+            if (!empty($results)) {
                 foreach ($results as $result) {
                     $json[] = array(
                             'country_id' => $result['country_id'],
                             'country'    => $result['name'],
                             'iso_code_2'    => $result['iso_code_2'],
                             'iso_code_3'    => $result['iso_code_3']
-                        );    
+                        );
                 }
-            }                        
-        
+            }
         }
-        
+
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
-    }                
+    }
 }
