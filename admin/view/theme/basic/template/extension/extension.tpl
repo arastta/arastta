@@ -117,7 +117,7 @@
                                     </div>
                                 </td>
                                 <?php } ?>
-                                <td style="width: 70px;" class="text-center">
+                                <td style="width: 70px; position: relative;" class="text-center">
                                     <?php if ($filter_type != 'module') { ?>
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />

@@ -70,7 +70,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <td style="width: 70px;" class="text-center">
+                                <td style="width: 70px; position: relative;" class="text-center">
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
