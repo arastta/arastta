@@ -44,14 +44,14 @@ class ControllerLocalisationZone extends Controller {
             if (isset($this->request->get['page'])) {
                 $url .= '&page=' . $this->request->get['page'];
             }
-            
+
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
                 $this->response->redirect($this->url->link('localisation/zone/edit', 'zone_id='.$zone_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                 $this->response->redirect($this->url->link('localisation/zone/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-            }            
+            }
 
             $this->response->redirect($this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
@@ -92,7 +92,7 @@ class ControllerLocalisationZone extends Controller {
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                 $this->response->redirect($this->url->link('localisation/zone/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
             }
-            
+
             $this->response->redirect($this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
 
@@ -139,7 +139,7 @@ class ControllerLocalisationZone extends Controller {
         } else {
             $filter_country = null;
         }
-        
+
         if (isset($this->request->get['filter_zone_name'])) {
             $filter_zone_name = $this->request->get['filter_zone_name'];
         } else {
@@ -151,13 +151,13 @@ class ControllerLocalisationZone extends Controller {
         } else {
             $filter_zone_code = null;
         }
-        
+
         if (isset($this->request->get['filter_status'])) {
             $filter_status = $this->request->get['filter_status'];
         } else {
             $filter_status = null;
-        }        
-        
+        }
+
         if (isset($this->request->get['sort'])) {
             $sort = $this->request->get['sort'];
         } else {
@@ -177,11 +177,11 @@ class ControllerLocalisationZone extends Controller {
         }
 
         $url = '';
-        
+
         if (isset($this->request->get['filter_country'])) {
             $url .= '&filter_country=' . urlencode(html_entity_decode($this->request->get['filter_country'], ENT_QUOTES, 'UTF-8'));
         }
-        
+
         if (isset($this->request->get['filter_zone_name'])) {
             $url .= '&filter_zone_name=' . urlencode(html_entity_decode($this->request->get['filter_zone_name'], ENT_QUOTES, 'UTF-8'));
         }
@@ -192,7 +192,7 @@ class ControllerLocalisationZone extends Controller {
 
         if (isset($this->request->get['filter_status'])) {
             $url .= '&filter_status=' . $this->request->get['filter_status'];
-        }    
+        }
 
         if (isset($this->request->get['sort'])) {
             $url .= '&sort=' . $this->request->get['sort'];
@@ -236,12 +236,12 @@ class ControllerLocalisationZone extends Controller {
 
         $zone_status = $this->model_localisation_zone->getZoneStatus();
 
-        if(!empty($filter_country) || !empty($filter_zone_name) || !empty($filter_zone_code) || !empty($filter_status)) {
+        if (!empty($filter_country) || !empty($filter_zone_name) || !empty($filter_zone_code) || isset($filter_status)) {
             $zone_total = $this->model_localisation_zone->getTotalZonesFilter($filter_data);
         } else {
             $zone_total = $this->model_localisation_zone->getTotalZones();
-        }        
-        
+        }
+
         $results = $this->model_localisation_zone->getZones($filter_data);
 
         foreach ($results as $result) {
@@ -266,6 +266,7 @@ class ControllerLocalisationZone extends Controller {
         $data['text_enabled']  = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
+        $data['text_filter'] = $this->language->get('text_filter');
 
         $data['column_country'] = $this->language->get('column_country');
         $data['column_name'] = $this->language->get('column_name');
@@ -343,12 +344,12 @@ class ControllerLocalisationZone extends Controller {
         $data['filter_zone_name'] = $filter_zone_name;
         $data['filter_zone_code'] = $filter_zone_code;
         $data['filter_status'] = $filter_status;
-        
+
         $data['sort'] = $sort;
         $data['order'] = $order;
 
         $data ['token'] = $this->session->data['token'];
-        
+
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
@@ -358,10 +359,10 @@ class ControllerLocalisationZone extends Controller {
 
     protected function getForm() {
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_form'] = !isset($this->request->get['zone_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
         $data['text_publish'] = $this->language->get('text_publish');
-        
+
         $data['entry_status'] = $this->language->get('entry_status');
         $data['entry_name'] = $this->language->get('entry_name');
         $data['entry_code'] = $this->language->get('entry_code');
@@ -372,7 +373,7 @@ class ControllerLocalisationZone extends Controller {
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_savenew'] = $this->language->get('button_savenew');
-        $data['button_saveclose'] = $this->language->get('button_saveclose');         
+        $data['button_saveclose'] = $this->language->get('button_saveclose');
         $data['button_cancel'] = $this->language->get('button_cancel');
 
         if (isset($this->error['warning'])) {
@@ -394,7 +395,7 @@ class ControllerLocalisationZone extends Controller {
         } else {
             $data['success'] = '';
         }
-        
+
         $url = '';
 
         if (isset($this->request->get['sort'])) {
@@ -530,7 +531,7 @@ class ControllerLocalisationZone extends Controller {
 
         return !$this->error;
     }
-    
+
     public function autocomplete() {
         $json = array();
 
@@ -549,7 +550,7 @@ class ControllerLocalisationZone extends Controller {
             } else {
                 $filter_zone_name = '';
             }
-            
+
             if (isset($this->request->get['filter_zone_code'])) {
                 $filter_zone_code = $this->request->get['filter_zone_code'];
             } else {
@@ -563,43 +564,42 @@ class ControllerLocalisationZone extends Controller {
             }
 
             $filter_data = array(
-                'filter_country'  => $filter_country,
+                'filter_country'   => $filter_country,
                 'filter_zone_name' => $filter_zone_name,
                 'filter_zone_code' => $filter_zone_code,
-                'start'        => 0,
-                'limit'        => $limit
+                'start'            => 0,
+                'limit'            => $limit
             );
 
-            if(!empty($filter_zone_name) || !empty($filter_zone_code)) {
+            if (!empty($filter_zone_name) || !empty($filter_zone_code)) {
                 $results = $this->model_localisation_zone->getZones($filter_data);
 
-                if(!empty ($results)) {
+                if (!empty($results)) {
                     foreach ($results as $result) {
                         $json[] = array(
-                                    'zone_id'    => $result['zone_id'],
-                                    'name'       => $result['name'],
-                                    'code'       => $result['code']
-                                );
+                            'zone_id' => $result['zone_id'],
+                            'name'    => $result['name'],
+                            'code'    => $result['code']
+                        );
                     }
-                }        
+                }
             }
-            
-            if(!empty($filter_country)) {
+
+            if (!empty($filter_country)) {
                 $results = $this->model_localisation_country->getCountries($filter_data);
 
-                if(!empty ($results)) {
+                if (!empty($results)) {
                     foreach ($results as $result) {
                         $json[] = array(
-                                    'country_id' => $result['country_id'],
-                                    'country'    => $result['name']
-                                );    
+                            'country_id' => $result['country_id'],
+                            'country'    => $result['name']
+                        );
                     }
-                }                        
+                }
             }
-            
         }
-        
+
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
-    }    
+    }
 }
