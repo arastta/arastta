@@ -101,11 +101,12 @@ class ControllerReportMarketing extends Controller {
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_list'] = $this->language->get('text_list');
         $data['text_no_results'] = $this->language->get('text_no_results');
         $data['text_confirm'] = $this->language->get('text_confirm');
         $data['text_all_status'] = $this->language->get('text_all_status');
+        $data['text_filter'] = $this->language->get('text_filter');
 
         $data['column_campaign'] = $this->language->get('column_campaign');
         $data['column_code'] = $this->language->get('column_code');
@@ -120,7 +121,7 @@ class ControllerReportMarketing extends Controller {
 
         $data['button_filter'] = $this->language->get('button_filter');
         $data['button_show_filter'] = $this->language->get('button_show_filter');
-        $data['button_hide_filter'] = $this->language->get('button_hide_filter');        
+        $data['button_hide_filter'] = $this->language->get('button_hide_filter');
 
         $data['token'] = $this->session->data['token'];
 
