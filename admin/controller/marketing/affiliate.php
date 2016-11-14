@@ -64,14 +64,14 @@ class ControllerMarketingAffiliate extends Controller {
             if (isset($this->request->get['page'])) {
                 $url .= '&page=' . $this->request->get['page'];
             }
-            
+
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
                 $this->response->redirect($this->url->link('marketing/affiliate/edit', 'affiliate_id='.$affiliate_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                 $this->response->redirect($this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-            }            
+            }
 
             $this->response->redirect($this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
@@ -124,14 +124,14 @@ class ControllerMarketingAffiliate extends Controller {
             if (isset($this->request->get['page'])) {
                 $url .= '&page=' . $this->request->get['page'];
             }
-            
+
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
                 $this->response->redirect($this->url->link('marketing/affiliate/edit', 'affiliate_id='.$this->request->get['affiliate_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                 $this->response->redirect($this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-            }            
+            }
 
             $this->response->redirect($this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
@@ -244,7 +244,7 @@ class ControllerMarketingAffiliate extends Controller {
 
         $this->getList();
     }
-    
+
     public function unlock() {
         $this->load->language('marketing/affiliate');
 
@@ -296,7 +296,7 @@ class ControllerMarketingAffiliate extends Controller {
 
         $this->getList();
     }
-    
+
     protected function getList() {
         if (isset($this->request->get['filter_name'])) {
             $filter_name = $this->request->get['filter_name'];
@@ -419,16 +419,16 @@ class ControllerMarketingAffiliate extends Controller {
                 $approve = $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL');
             } else {
                 $approve = '';
-            }            
-            
+            }
+
             $login_info = $this->model_marketing_affiliate->getTotalLoginAttempts($result['email']);
-            
+
             if ($login_info && $login_info['total'] >= $this->config->get('config_login_attempts')) {
                 $unlock = $this->url->link('marketing/affiliate/unlock', 'token=' . $this->session->data['token'] . '&email=' . $result['email'] . $url, 'SSL');
             } else {
                 $unlock = '';
             }
-                        
+
             $data['affiliates'][] = array(
                 'affiliate_id' => $result['affiliate_id'],
                 'name'         => $result['name'],
@@ -443,7 +443,7 @@ class ControllerMarketingAffiliate extends Controller {
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_list'] = $this->language->get('text_list');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
@@ -454,6 +454,7 @@ class ControllerMarketingAffiliate extends Controller {
         $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         $data['text_none'] = $this->language->get('text_none');
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
+        $data['text_filter'] = $this->language->get('text_filter');
 
         $data['column_name'] = $this->language->get('column_name');
         $data['column_email'] = $this->language->get('column_email');
@@ -470,14 +471,14 @@ class ControllerMarketingAffiliate extends Controller {
 
         $data['button_approve'] = $this->language->get('button_approve');
         $data['button_add'] = $this->language->get('button_add');
-        $data['button_edit'] = $this->language->get('button_edit');        
+        $data['button_edit'] = $this->language->get('button_edit');
         $data['button_enable'] = $this->language->get('button_enable');
         $data['button_disable'] = $this->language->get('button_disable');
         $data['button_delete'] = $this->language->get('button_delete');
         $data['button_filter'] = $this->language->get('button_filter');
         $data['button_show_filter'] = $this->language->get('button_show_filter');
         $data['button_hide_filter'] = $this->language->get('button_hide_filter');
-        
+
         $data['token'] = $this->session->data['token'];
 
         if (isset($this->error['warning'])) {
@@ -595,7 +596,7 @@ class ControllerMarketingAffiliate extends Controller {
 
     protected function getForm() {
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_form'] = !isset($this->request->get['affiliate_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
@@ -644,7 +645,7 @@ class ControllerMarketingAffiliate extends Controller {
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_savenew'] = $this->language->get('button_savenew');
-        $data['button_saveclose'] = $this->language->get('button_saveclose');        
+        $data['button_saveclose'] = $this->language->get('button_saveclose');
         $data['button_cancel'] = $this->language->get('button_cancel');
         $data['button_commission_add'] = $this->language->get('button_commission_add');
         $data['button_remove'] = $this->language->get('button_remove');
@@ -762,7 +763,7 @@ class ControllerMarketingAffiliate extends Controller {
         } else {
             $data['success'] = '';
         }
-        
+
         $url = '';
 
         if (isset($this->request->get['filter_name'])) {
@@ -1047,18 +1048,18 @@ class ControllerMarketingAffiliate extends Controller {
 
         /*
         if (isset($this->request->post['send_email'])) {
-			$data['send_email'] = $this->request->post['send_email'];
+            $data['send_email'] = $this->request->post['send_email'];
         } elseif (!empty($affiliate_info)) {
             $data['send_email'] = $affiliate_info['send_email'];
         } else {
-			$data['send_email'] = '';
-		}
+            $data['send_email'] = '';
+        }
 
         $data['show_send_email'] = '';
         if (!isset($this->request->get['affiliate_id'])) {
             $data['show_send_email'] = true;
         }
-		*/
+        */
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
