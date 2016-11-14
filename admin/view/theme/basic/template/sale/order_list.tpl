@@ -32,10 +32,9 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $entry_order_id; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $entry_order_id; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_order_id; ?>', 'filter_order_id');"><?php echo $entry_order_id; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_customer; ?>', 'filter_customer');"><?php echo $entry_customer; ?></a></li>
@@ -45,11 +44,11 @@
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_date_modified; ?>', 'filter_date_modified');"><?php echo $entry_date_modified; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>"id="input-order-id" class="form-control filter" />
-                                <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>"id="input-customer" class="form-control hidden filter" />
-                                <input type="text" name="filter_total" value="<?php echo $filter_total; ?>" id="input-total" class="form-control hidden filter" />
+                                <input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" placeholder="<?php echo $text_filter . $entry_order_id; ?>" id="input-order-id" class="form-control filter" />
+                                <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" placeholder="<?php echo $text_filter . $entry_customer; ?>" id="input-customer" class="form-control hidden filter" />
+                                <input type="text" name="filter_total" value="<?php echo $filter_total; ?>" placeholder="<?php echo $text_filter . $entry_total; ?>" id="input-total" class="form-control hidden filter" />
                                 <select name="filter_order_status" id="input-order-status" class="form-control hidden filter">
-                                    <option value="*"></option>
+                                    <option value="*"><?php echo $text_filter . $entry_order_status; ?></option>
                                     <?php if ($filter_order_status == '0') { ?>
                                     <option value="0" selected="selected"><?php echo $text_missing; ?></option>
                                     <?php } else { ?>
@@ -64,12 +63,12 @@
                                     <?php } ?>
                                 </select>
                                 <div class="input-group date hidden filter filter_date_added">
-                                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>"data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control hidden filter" />
+                                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $text_filter . $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control hidden filter" />
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                                   </span></div>
                                 <div class="input-group date hidden filter filter_date_modified">
-                                  <input type="text" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>"  data-date-format="YYYY-MM-DD" id="input-date-modified" class="form-control hidden filter" />
+                                  <input type="text" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" placeholder="<?php echo $text_filter . $entry_date_modified; ?>" data-date-format="YYYY-MM-DD" id="input-date-modified" class="form-control hidden filter" />
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                                   </span></div>
@@ -224,6 +223,22 @@
         </div>
     </div>
     <script type="text/javascript"><!--
+    $(document).ready(function() {
+        <?php if (!empty($filter_order_id)) { ?>
+        changeFilterType('<?php echo $entry_order_id; ?>', 'filter_order_id');
+        <?php } elseif (!empty($filter_customer)) { ?>
+        changeFilterType('<?php echo $entry_customer; ?>', 'filter_customer');
+        <?php } elseif (!empty($filter_order_status)) { ?>
+        changeFilterType('<?php echo $entry_order_status; ?>', 'filter_order_status');
+        <?php } elseif (!empty($filter_total)) { ?>
+        changeFilterType('<?php echo $entry_total; ?>', 'filter_total');
+        <?php } elseif (!empty($filter_date_added)) { ?>
+        changeFilterType('<?php echo $entry_date_added; ?>', 'filter_date_added');
+        <?php } elseif (!empty($filter_date_modified)) { ?>
+        changeFilterType('<?php echo $entry_date_modified; ?>', 'filter_date_modified');
+        <?php } ?>
+    });
+
     $('input[name=\'filter_customer\']').autocomplete({
         'source': function(request, response) {
             $.ajax({
