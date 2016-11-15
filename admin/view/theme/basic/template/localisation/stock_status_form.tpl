@@ -63,6 +63,20 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-12" for="input-stock-status-preorder-<?php echo $language['language_id']; ?>"><span data-toggle="tooltip" title="<?php echo $help_preorder; ?>"><?php echo $entry_preorder; ?></span></label>
+                                            <div class="col-sm-12">
+                                                <select name="stock_status[<?php echo $language['language_id']; ?>][preorder]" id="input-stock-status-preorder-<?php echo $language['language_id']; ?>" class="form-control">
+                                                    <?php if ($stock_status[$language['language_id']]['preorder']) { ?>
+                                                    <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                                                    <option value="0"><?php echo $text_no; ?></option>
+                                                    <?php } else { ?>
+                                                    <option value="1"><?php echo $text_yes; ?></option>
+                                                    <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <?php } ?>
                                 </div>

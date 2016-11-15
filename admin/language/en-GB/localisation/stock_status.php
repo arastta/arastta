@@ -18,6 +18,8 @@ $_['text_edit']        = 'Edit Stock Status';
 // Column
 $_['column_name']      = 'Stock Status Name';
 $_['column_action']    = 'Action';
+$_['column_color']     = 'Colour';
+$_['column_preorder']  = 'Pre-Order';
 
 // Entry
 $_['entry_name']       = 'Stock Status Name';
@@ -26,6 +28,10 @@ $_['entry_color']      = 'Colour';
 $_['entry_clear']      = 'Clear';
 $_['entry_pick']       = 'Select Colour';
 $_['entry_current']    = 'Current Colour';
+$_['entry_preorder']   = 'Allow Pre-Order';
+
+// Help
+$_['help_preorder']    = 'Allow customers to checkout if the products have this status, even if Stock Checkout is set to No in settings.';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify stock statuses!';

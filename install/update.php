@@ -459,4 +459,7 @@ if (version_compare(VERSION, '1.5.0', '<')) {
         PRIMARY KEY (`activity_id`),
         KEY `user_id` (`user_id`)
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    // Update stock_status table
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "stock_status` ADD `preorder` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `color`";
 }

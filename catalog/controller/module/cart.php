@@ -35,9 +35,7 @@ class ControllerModuleCart extends Controller
             }
         }
 
-        if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
-            $data['error_warning'] = $this->language->get('error_stock');
-        } elseif (isset($this->session->data['error'])) {
+        if (isset($this->session->data['error'])) {
             $data['error_warning'] = $this->session->data['error'];
 
             unset($this->session->data['error']);
@@ -78,6 +76,16 @@ class ControllerModuleCart extends Controller
             $product_total = 0;
 
             foreach ($products as $product_2) {
+                if (!$product['preorder'] && !$product['stock'] && !$this->config->get('config_stock_checkout')) {
+                    $data['error_warning'] = sprintf($this->language->get('error_stock'), $this->language->get('text_sold_out'));
+                } else if (!$product['preorder'] && !$product['stock'] && ($this->config->get('config_stock_checkout') && $this->config->get('config_stock_warning'))) {
+                    $data['error_warning'] = sprintf($this->language->get('error_stock_checkout'), $this->language->get('text_sold_out'));
+                }
+
+                if ($product['preorder']) {
+                    $data['attention'] = sprintf($this->language->get('error_stock_preorder'), $this->language->get('text_preorder'));
+                }
+
                 if ($product_2['product_id'] == $product['product_id']) {
                     $product_total += $product_2['quantity'];
                 }

@@ -120,15 +120,23 @@ class ControllerCheckoutShippingMethod extends Controller {
             $json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
         }
 
-        // Validate cart has products and has stock.
-        if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+        // Validate cart has products.
+        if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers']))) {
             $json['redirect'] = $this->url->link('checkout/cart');
         }
 
-        // Validate minimum quantity requirements.
+        // Get products in cart.
         $products = $this->cart->getProducts();
 
         foreach ($products as $product) {
+            // Validate cart has stock or pre-order
+            if ($product['preorder'] || $product['stock'] || $this->config->get('config_stock_checkout')) {
+                continue;
+            } else if ((!$product['preorder'] || !$product['stock'])) {
+                $json['redirect'] = $this->url->link('checkout/cart');
+            }
+
+            // Validate minimum quantity requirements.
             $product_total = 0;
 
             foreach ($products as $product_2) {

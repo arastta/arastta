@@ -199,6 +199,7 @@ class ControllerLocalisationStockStatus extends Controller {
                 'stock_status_id' => $result['stock_status_id'],
                 'name'            => $result['name'],
                 'color'           => empty($result['color']) ? '#ddd' : $result['color'],
+                'preorder'        => $result['preorder'],
                 'edit'            => $this->url->link('localisation/stock_status/edit', 'token=' . $this->session->data['token'] . '&stock_status_id=' . $result['stock_status_id'] . $url, 'SSL')
             );
         }
@@ -210,8 +211,12 @@ class ControllerLocalisationStockStatus extends Controller {
         $data['text_confirm'] = $this->language->get('text_confirm');
         $data['text_confirm_title'] = sprintf($this->language->get('text_confirm_title'), $this->language->get('heading_title'));
         $data['text_bulk_action'] = $this->language->get('text_bulk_action');
+        $data['text_yes'] = $this->language->get('text_yes');
+        $data['text_no'] = $this->language->get('text_no');
 
         $data['column_name'] = $this->language->get('column_name');
+        $data['column_color'] = $this->language->get('column_color');
+        $data['column_preorder'] = $this->language->get('column_preorder');
         $data['column_action'] = $this->language->get('column_action');
 
         $data['button_add'] = $this->language->get('button_add');
@@ -283,6 +288,8 @@ class ControllerLocalisationStockStatus extends Controller {
     }
 
     protected function getForm() {
+        $data = $this->language->all();
+        // leaving the followings for extension B/C purpose
         $data['heading_title'] = $this->language->get('heading_title');
 
         $data['text_form'] = !isset($this->request->get['stock_status_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
@@ -291,10 +298,6 @@ class ControllerLocalisationStockStatus extends Controller {
         $data['entry_name'] = $this->language->get('entry_name');
         $data['entry_default'] = $this->language->get('entry_default');
         $data['entry_sort_order'] = $this->language->get('entry_sort_order');
-        $data['entry_color'] = $this->language->get('entry_color');
-        $data['entry_clear'] = $this->language->get('entry_clear');
-        $data['entry_pick'] = $this->language->get('entry_pick');
-        $data['entry_current'] = $this->language->get('entry_current');
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_savenew'] = $this->language->get('button_savenew');
