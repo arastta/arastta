@@ -23,7 +23,7 @@
     position: absolute;
     background: #00a0d2;
     color: #fff;
-    padding: 4px 5px 3px 0;
+    padding: 6px 5px 3px 0;
     border-radius: 3px;
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
@@ -72,7 +72,7 @@
     left: 148px;
     height: 26px;
     margin-top: -1px;
-    padding-top: 4px;
+    padding-top: 6px;
     background: #00a0d2;
     border-bottom-right-radius: 3px;
     border-top-right-radius: 3px;
@@ -385,10 +385,12 @@ tbody tr td div i.fa.fa-bars {
 
 .basic-filter-button .filter-type {
     float: left;
+    position: relative;
+    top: 1px;
 }
 
 .basic-filter-button .caret {
     position: absolute;
     right: 8px;
-    bottom: 15px;
+    bottom: 14px;
 }
