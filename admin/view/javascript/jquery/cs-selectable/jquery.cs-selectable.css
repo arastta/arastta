@@ -1,0 +1,45 @@
+#s-rectBox {
+    position       : absolute;
+    z-index        : 1090;
+    pointer-events : none;
+    border         : 2px dashed #CBD3E3;
+}
+
+#image-multiselect .cs-selection-box {
+    border     : 1px dotted #BBBBBB;
+    background : rgba(0, 0, 0, 0.04);
+}
+
+#image-multiselect .directory {
+    padding       : 23px 10px;
+    display       : block;
+    border-radius : 3px;
+}
+
+#image-multiselect .thumbnail {
+    margin-bottom : 0;
+    padding       : 4px 4px 0 4px;
+}
+
+#image-multiselect label {
+    padding : 10px;
+    margin  : 0;
+    display : block;
+}
+
+#image-multiselect label input[type="radio"], input[type="checkbox"] {
+    margin : 5px 5px 0 0;
+}
+
+#image-multiselect .cs-selected > label {
+    background                 : #1E91CF;
+    color                      : #FFFFFF;
+    border-bottom-left-radius  : 3px;
+    border-bottom-right-radius : 3px;
+}
+
+#image-multiselect .cs-selected .thumbnail {
+    border-bottom-color        : #1E91CF;
+    border-bottom-left-radius  : 0;
+    border-bottom-right-radius : 0;
+}

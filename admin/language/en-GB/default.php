@@ -49,6 +49,7 @@ $_['column_status']                 = 'Status';
 $_['column_sortable']               = 'Sortable List';
 
 // Button
+$_['button_add_image']              = 'Add';
 $_['button_add']                    = 'Add New';
 $_['button_delete']                 = 'Delete';
 $_['button_save']                   = 'Save';
