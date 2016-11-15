@@ -134,7 +134,7 @@ a.editable-click:hover {
     background: #FDFDFD;
 }
 
-.options .tab-content .table-responsive  .table , #product-category {
+.options .tab-content .table-responsive  .table , #product-category, #product-tag {
     margin-bottom: 0px;
 }
 

@@ -19,8 +19,8 @@ class ModelCatalogProduct extends Model {
         }
 
         foreach ($data['product_description'] as $language_id => $value) {
-                    empty($value['meta_title']) ? $value['meta_title'] = $value['name'] : $value['meta_title'];
-                    $value['tag'] = !empty($value['tag']) ? implode(',', $value['tag']) : '';
+            empty($value['meta_title']) ? $value['meta_title'] = $value['name'] : $value['meta_title'];
+            $value['tag'] = !empty($data['product_tag'][$language_id]) ? implode(',', $data['product_tag'][$language_id]) : '';
 
             $this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int)$product_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
         }
@@ -151,7 +151,7 @@ class ModelCatalogProduct extends Model {
 
         foreach ($data['product_description'] as $language_id => $value) {
             empty($value['meta_title']) ? $value['meta_title'] = $value['name'] : $value['meta_title'];
-                    $value['tag'] = !empty($value['tag']) ? implode(',', $value['tag']) : '';
+            $value['tag'] = !empty($data['product_tag'][$language_id]) ? implode(',', $data['product_tag'][$language_id]) : '';
 
             $this->db->query("INSERT INTO " . DB_PREFIX . "product_description SET product_id = '" . (int)$product_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', description = '" . $this->db->escape($value['description']) . "', tag = '" . $this->db->escape($value['tag']) . "', meta_title = '" . $this->db->escape($value['meta_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keyword = '" . $this->db->escape($value['meta_keyword']) . "'");
         }
@@ -566,6 +566,18 @@ class ModelCatalogProduct extends Model {
         return $product_description_data;
     }
 
+    public function getProductTags($product_id) {
+        $product_tag_data = array();
+
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_description WHERE product_id = '" . (int)$product_id . "'");
+
+        foreach ($query->rows as $result) {
+            $product_tag_data[$result['language_id']] = !empty($result['tag']) ? explode(',', $result['tag']) : $result['tag'];
+        }
+
+        return $product_tag_data;
+    }
+
     public function getProductCategories($product_id) {
         $product_category_data = array();
 
@@ -832,7 +844,7 @@ class ModelCatalogProduct extends Model {
         return $query->row['total'];
     }
 
-    public function getTags($tag_name, $filter_tags = null) {
+    public function getTags($tag_name = null, $filter_tags = null) {
         $tags = $tags_filter = array();
 
         $check_search = true;
