@@ -1309,6 +1309,15 @@ class ControllerCatalogProduct extends Controller {
             $data['preview'][$language['language_id']] = $this->getSeoLink($data['product_id'], $language['code']);
         }
 
+        // Show All
+        foreach ($data['languages'] as $language) {
+            $data['show_all'][$language['language_id']] = array(
+                'manufacturer' => $this->url->link('catalog/product/viewAll', 'type=manufacturer&product_id=' . $data['product_id'] . '&language_id=' . $language['language_id'] . '&token=' . $this->session->data['token'], 'SSL'),
+                'category'     => $this->url->link('catalog/product/viewAll', 'type=category&product_id=' . $data['product_id'] . '&language_id=' . $language['language_id'] . '&token=' . $this->session->data['token'], 'SSL'),
+                'tags'         => $this->url->link('catalog/product/viewAll', 'type=tag&product_id=' . $data['product_id'] . '&language_id=' . $language['language_id'] . '&token=' . $this->session->data['token'], 'SSL')
+            );
+        }
+
         $data['language_code'] = isset($this->session->data['admin_language']) ? $this->session->data['admin_language'] : $this->config->get('config_admin_language');
 
         $this->load->model('appearance/layout');
@@ -1478,6 +1487,13 @@ class ControllerCatalogProduct extends Controller {
                 $json[] = array(
                     'tag' => $result,
                     'tag_id' => $result
+                );
+            }
+
+            if (empty($results) && !empty($tag_name)) {
+                $json['new'][] = array(
+                    'tag'    => $tag_name,
+                    'tag_id' => $tag_name
                 );
             }
         }
@@ -1657,5 +1673,64 @@ class ControllerCatalogProduct extends Controller {
         $this->config->set('config_language', $old_config_code);
 
         return $url;
+    }
+
+    public function viewAll()
+    {
+        $this->load->language('catalog/product');
+        $this->load->model('catalog/product');
+
+        $data['text_applicable'] = $this->language->get('text_applicable');
+        $data['text_applied'] = $this->language->get('text_applied');
+
+        $type = $this->request->get['type'];
+
+        $data['type'] = $type;
+
+        switch ($type) {
+            case 'manufacturer':
+                $data['text_all'] = $this->language->get('entry_all_manufacturer');
+
+                $this->load->model('catalog/manufacturer');
+
+                $product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+
+                $data['applied'][] = $product_info['manufacturer_id'];
+
+                $data['all'] = $this->model_catalog_manufacturer->getManufacturers();
+                break;
+            case 'category':
+                $data['text_all'] = $this->language->get('entry_all_category');
+
+                $this->load->model('catalog/category');
+
+                $categories = $this->model_catalog_product->getProductCategories($this->request->get['product_id']);
+
+                foreach ($categories as $category_id) {
+                    $category_info = $this->model_catalog_category->getCategory($category_id);
+
+                    if ($category_info) {
+                        $data['applied'][] = $category_info['category_id'];
+                    }
+                }
+
+                $data['all'] = $this->model_catalog_category->getCategories();
+                break;
+            case 'tag':
+                $data['text_all'] = $this->language->get('entry_all_tags');
+
+                $tags = $this->model_catalog_product->getProductTags($this->request->get['product_id']);
+
+                $data['applied'] = (!empty($tags)) ? $tags : array();
+
+                $data['all'] = $this->model_catalog_product->getTags();
+                break;
+        }
+
+        $this->load->model('localisation/language');
+
+        $data['languages'] = $this->model_localisation_language->getLanguages();
+
+        $this->response->setOutput($this->load->view('common/show_all.tpl', $data));
     }
 }

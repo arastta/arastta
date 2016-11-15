@@ -266,14 +266,24 @@
                         <div class="panel-body">
                             <div class="links">
                                 <div class="form-group">
-                                    <label class="col-sm-12" for="input-manufacturer"><span data-toggle="tooltip" title="<?php echo $help_manufacturer; ?>"><?php echo $entry_manufacturer; ?></span></label>
+                                    <label class="col-sm-12" for="input-manufacturer">
+                                        <div class="view-all pull-right">
+                                            <a href="<?php echo $show_all[$language['language_id']]['manufacturer']; ?>" class="popup"><?php echo $entry_view_all; ?></a>
+                                        </div>
+                                        <span data-toggle="tooltip" title="<?php echo $help_manufacturer; ?>"><?php echo $entry_manufacturer; ?></span>
+                                    </label>
                                     <div class="col-sm-12">
                                         <input type="text" name="manufacturer" value="<?php echo $manufacturer ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer" class="form-control input-full-width" />
                                         <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-12" for="input-category"><span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_category; ?></span></label>
+                                    <label class="col-sm-12" for="input-category">
+                                        <div class="view-all pull-right">
+                                            <a href="<?php echo $show_all[$language['language_id']]['category']; ?>" class="popup"><?php echo $entry_view_all; ?></a>
+                                        </div>
+                                        <span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_category; ?></span>
+                                    </label>
                                     <div class="col-sm-12">
                                         <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control input-full-width" style="margin-bottom: 5px !important;"/>
                                         <?php if (!empty($product_categories)) { ?>
@@ -288,24 +298,33 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-12" for="input-tag"><?php echo $entry_tag; ?></label>
-                                    <div class="col-sm-12 tags-select">
-                                        <?php foreach ($languages as $language) { ?>
-                                        <select id="tags-<?php echo $language['language_id']; ?>" name="product_description[<?php echo $language['language_id']; ?>][tag][]" class="inputbox chzn-done tags-multi-select hidden" size="5" multiple="multiple" style="display: none !important;">
-                                            <?php if (!empty($product_description[$language['language_id']]['tag'])) {
-                                                    foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
-                                            <option data-tag-remove="<?php echo $tag_key; ?>" value="<?php echo $tag_value; ?>" selected="selected"><?php echo $tag_value; ?></option>
-                                            <?php   }
-                                                  } ?>
-                                        </select>
-                                        <?php } ?>
-                                        <div class="form-control">
-                                            <?php if (!empty($product_description[$language['language_id']]['tag'])) {
-                                                    foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
-                                            <span class="tag-choice"><?php echo $tag_value; ?><a class="tag-choice-close" onclick="removeTag(this);" data-tag-remove-index="<?php echo $tag_key; ?>"><i class="fa fa-times"></i></a></span>
-                                            <?php   }
-                                                  } ?>
-                                            <input type="text" name="tag" value="" style="margin-top: -5px;" placeholder="<?php echo $entry_tag; ?>" id="input-tag" class="form-control input-full-width tag-select" />
+                                    <label class="col-sm-12" for="input-tag">
+                                        <span data-toggle="tooltip" title="<?php echo $help_tag; ?>"><?php echo $entry_tag; ?></span>
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <ul class="nav nav-pills" id="tag-language">
+                                            <?php foreach ($languages as $language) { ?>
+                                            <li><a href="#tag-language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
+                                            <?php } ?>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <?php foreach ($languages as $language) { ?>
+                                                <div class="tab-pane" id="tag-language<?php echo $language['language_id']; ?>">
+                                                    <div class="view-all pull-right">
+                                                        <b><a href="<?php echo $show_all[$language['language_id']]['tags']; ?>" class="popup"><?php echo $entry_view_all; ?></a></b>
+                                                    </div>
+                                                    <input type="text" name="tag" value="" placeholder="<?php echo $entry_tag; ?>" id="input-tag<?php echo $language['language_id']; ?>" class="form-control input-full-width" style="margin-bottom: 5px !important;" />
+                                                    <?php if (!empty($product_description[$language['language_id']]['tag'])) { ?>
+                                                    <div id="product-tag-<?php echo $language['language_id']; ?>" class="well well-sm" style="overflow: auto;">
+                                                        <?php foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
+                                                        <div id="product-tag<?php echo $tag_key; ?>"><i class="fa fa-minus-circle"></i> <?php echo $tag_value; ?>
+                                                            <input type="hidden" name="product_tag[<?php echo $language['language_id']; ?>][]" value="<?php echo $tag_value; ?>" />
+                                                        </div>
+                                                        <?php } ?>
+                                                    </div>
+                                                    <?php } ?>
+                                                </div>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -549,7 +568,7 @@
                                     <?php foreach ($languages as $language) { ?>
                                     <div class="tab-pane" id="seo-language<?php echo $language['language_id']; ?>">
                                         <div class="pull-right">
-                                            <button type="button" id="seo-show-<?php echo $language['language_id']; ?>" onclick="editSEO(<?php echo $language['language_id']; ?>);" data-toggle="tooltip" title="<?php echo $button_seo; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></button>
+                                            <button type="button" id="seo-show-<?php echo $language['language_id']; ?>" onclick="editSEO(<?php echo $language['language_id']; ?>);" data-toggle="tooltip" title="<?php echo 'Edit SEO'; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></button>
                                         </div>
                                         <?php if (!empty($seo_url[$language['language_id']])) { ?>
                                         <div id="seo-preview-<?php echo $language['language_id']; ?>" class="form-group">
@@ -870,89 +889,111 @@
             });
         });
 
-        <?php if (!empty($tag_key)) { ?>
-        var tag_key = '<?php echo $tag_key; ?>';
-        <?php } else  { ?>
-        var tag_key = 0;
-        <?php } ?>
-
         // Tag
-        $('.tag-select').autocomplete({
+        $('input[name=\'tag\']').autocomplete({
             'source': function(request, response) {
                 $.ajax({
                     url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&tag_name=' +  encodeURIComponent(request),
                     type: 'post',
-                    data: { tag_text: $(this).parent().parent().find('.tags-multi-select').serializeArray() },
+                    data: { tag_text: $('#product-tag input').serializeArray() },
                     dataType: 'json',
                     success: function(json) {
-                        response($.map(json, function(item) {
-                            return {
-                                label: item['tag'],
-                                value: item['tag_id']
+                        if (json['new']) {
+                            add_tag = true;
+
+                            new_tag = $('input[name=\'tag\']').val();
+
+                            tags = $('#product-tag input').serializeArray();
+
+                            $.each(tags, function(key, tag) {
+                                if (tag.value == new_tag) {
+                                    add_tag = false;
+
+                                    return false;
+                                }
+                            });
+
+                            if (add_tag) {
+                                response($.map(json['new'], function (item) {
+                                    return {
+                                        label: '<i class="fa fa-plus-circle"></i> &nbsp;<?php echo $button_add; ?> <b>' + item['tag'] + '</b>',
+                                        value: item['tag_id']
+                                    }
+                                }));
                             }
-                        }));
+                        } else {
+                            response($.map(json, function(item) {
+                                return {
+                                    label: item['tag'],
+                                    value: item['tag_id']
+                                }
+                            }));
+                        }
                     }
                 });
             },
             'select': function(item) {
-                var tag_value = item['label'];
+                $('input[name=\'tag\']').val('');
 
-                $(this).parent().parent().find('.tags-multi-select').append('<option data-tag-remove="' + tag_key + '" value="' + tag_value +'" selected="selected">' + tag_value + '</option>');
+                $('#product-tag' + item['value']).remove();
 
-                $(this).before('<span class="tag-choice">' + item['label'] + '<a class="tag-choice-close" onclick="removeTag(this);" data-tag-remove-index="' + tag_key + '"><i class="fa fa-times"></i></a></span>');
+                tag_language = parseInt($(this).attr('id').replace('input-tag',''));
 
-                $(this).val('');
-                tag_key = tag_key + 1 ;
+                if (!$('#product-tag-' + tag_language).length) {
+                    $(this).parent().append('<div id="product-tag' + tag_language + '" class="well well-sm" style="overflow: auto;"></div>');
+                }
+
+                $('#product-tag-' + tag_language).append('<div id="product-tag' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['value'] + '<input type="hidden" name="product_tag[' + tag_language  +'][]" value="' + item['value'] + '" /></div>');
             }
         });
 
-        function removeTag(tag) {
-            var tag_value = $(tag).data('tag-remove-index');
+        $('div[id^=\'product-tag-\']').delegate('.fa-minus-circle', 'click', function() {
+            $(this).parent().remove();
+        });
 
-            $(tag).parent().parent().parent().parent().find('.tags-multi-select option[data-tag-remove="' + tag_value + '"]').remove();
-            $(tag).parent().remove();
-        }
+        $('input[name=\'tag\']').keypress(function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
 
-        $('.tag-select').keypress(function(event) {
-            if(event.keyCode == 13){
-                event.preventDefault();
-                label = $(this).val();
-                var add_tag = 1;
-                var error = '';
+                add_tag = true;
 
-                if (label == '') {
-                    add_tag = 0;
-                    error  = '<div class="alert alert-danger tag-error"><i class="fa fa-exclamation-circle"></i>  <?php echo $error_tag_empty; ?>';
-                    error += '    <button type="button" class="close" data-dismiss="alert">&times;</button>';
-                    error += '</div>';
+                new_tag = $(this).val();
+
+                $('input[name=\'tag\']').val('');
+
+                $('#product-tag' + new_tag).remove();
+
+                tag_language = parseInt($(this).attr('id').replace('input-tag',''));
+
+                if (!$('#product-tag-' + tag_language).length) {
+                    $(this).parent().append('<div id="product-tag' + tag_language + '" class="well well-sm" style="overflow: auto;"></div>');
                 }
+                tags = $('#product-tag input').serializeArray();
 
-                $(this).parent().parent().find( '.tags-multi-select option:selected' ).each(function() {
-                    if ($(this).val() == label) {
-                        add_tag = 0;
-                        error  = '<div class="alert alert-danger tag-error"><i class="fa fa-exclamation-circle"></i>  <?php echo $error_tag; ?>';
-                        error += '    <button type="button" class="close" data-dismiss="alert">&times;</button>';
-                        error += '</div>';
+                $.each(tags, function(key, tag) {
+                    if (tag.value == new_tag) {
+                        add_tag = false;
+
+                        return false;
                     }
                 });
 
-                if (add_tag == 1) {
-                    $(this).parent().parent().find('.tags-multi-select').append('<option data-tag-remove="' + tag_key + '" value="' + label +'" selected="selected">' + label + '</option>');
-
-                    $(this).before('<span class="tag-choice">' + label + '<a class="tag-choice-close" onclick="removeTag(this);" data-tag-remove-index="' + tag_key + '"><i class="fa fa-times"></i></a></span>');
-
-                    $(this).val('');
-
-                    tag_key = tag_key + 1 ;
+                if (add_tag) {
+                    $('#product-tag-' + tag_language).append('<div id="product-tag' + new_tag + '"><i class="fa fa-minus-circle"></i> ' + new_tag + '<input type="hidden" name="product_tag[' + tag_language  +'][]" value="' + new_tag + '" /></div>');
                 } else {
-                    $(this).parent().after(error);
-                    $('.tag-error').delay(5000).fadeOut('slow');
+                    $('input[name=\'tag\']').attr({
+                        title                : '<?php echo $error_add_same_tag; ?>',
+                        'data-original-title': '<?php echo $error_add_same_tag; ?>',
+                        'data-toggle'        : 'tooltip',
+                        'data-placement'     : 'bottom',
+                    }).tooltip('show').addClass('tag-error');
+
+                    setTimeout(function(){
+                        $('input[name=\'tag\']').removeAttr('title data-original-title data-toggle data-placement');
+                    }, 5000);
                 }
             }
-        });
-
-        $(".tags-select").click(function () {
-            $(this).children('.form-control').find('.tag-select').focus();
         });
 
         // Category
