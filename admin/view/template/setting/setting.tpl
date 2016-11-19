@@ -2012,6 +2012,41 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-maintenance-message"><span data-toggle="tooltip" title="<?php echo $help_maintenance_message; ?>"><?php echo $entry_maintenance_message; ?></span></label>
+                                <div class="col-sm-10">
+                                    <textarea name="config_maintenance_message" rows="5" placeholder="<?php echo $entry_maintenance_message; ?>" id="input-maintenance-message" class="form-control"><?php echo $config_maintenance_message; ?></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-maintenance-image"><span data-toggle="tooltip" title="<?php echo $help_maintenance_image; ?>"><?php echo $entry_maintenance_image; ?></span></label>
+                                <div class="col-sm-10"><a href="" id="thumb-maintenance-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $maintenance_image; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
+                                    <input type="hidden" name="config_maintenance_image" value="<?php echo $config_maintenance_image; ?>" id="input-maintenance-image" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_maintenance_login; ?>"><?php echo $entry_maintenance_login; ?></span></label>
+                                <div class="col-sm-10">
+                                    <label class="radio-inline">
+                                        <?php if ($config_maintenance_login) { ?>
+                                        <input type="radio" name="config_maintenance_login" value="1" checked="checked" />
+                                        <?php echo $text_yes; ?>
+                                        <?php } else { ?>
+                                        <input type="radio" name="config_maintenance_login" value="1" />
+                                        <?php echo $text_yes; ?>
+                                        <?php } ?>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <?php if (!$config_maintenance_login) { ?>
+                                        <input type="radio" name="config_maintenance_login" value="0" checked="checked" />
+                                        <?php echo $text_no; ?>
+                                        <?php } else { ?>
+                                        <input type="radio" name="config_maintenance_login" value="0" />
+                                        <?php echo $text_no; ?>
+                                        <?php } ?>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_password; ?>"><?php echo $entry_password; ?></span></label>
                                 <div class="col-sm-10">
                                     <label class="radio-inline">

@@ -1340,6 +1340,32 @@ class ControllerSettingSetting extends Controller {
             $data['config_maintenance'] = $this->config->get('config_maintenance');
         }
 
+        if (isset($this->request->post['config_maintenance_message'])) {
+            $data['config_maintenance_message'] = $this->request->post['config_maintenance_message'];
+        } else {
+            $data['config_maintenance_message'] = $this->config->get('config_maintenance_message');
+        }
+
+        if (isset($this->request->post['config_maintenance_image'])) {
+            $data['config_maintenance_image'] = $this->request->post['config_maintenance_image'];
+        } else {
+            $data['config_maintenance_image'] = $this->config->get('config_maintenance_image');
+        }
+
+        if (isset($this->request->post['config_maintenance_image']) && is_file(DIR_IMAGE . $this->request->post['config_maintenance_image'])) {
+            $data['maintenance_image'] = $this->model_tool_image->resize($this->request->post['config_maintenance_image'], 100, 100);
+        } elseif ($this->config->get('config_maintenance_image') && is_file(DIR_IMAGE . $this->config->get('config_maintenance_image'))) {
+            $data['maintenance_image'] = $this->model_tool_image->resize($this->config->get('config_maintenance_image'), 100, 100);
+        } else {
+            $data['maintenance_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+        }
+
+        if (isset($this->request->post['config_maintenance_login'])) {
+            $data['config_maintenance_login'] = $this->request->post['config_maintenance_login'];
+        } else {
+            $data['config_maintenance_login'] = $this->config->get('config_maintenance_login');
+        }
+
         if (isset($this->request->post['config_password'])) {
             $data['config_password'] = $this->request->post['config_password'];
         } else {

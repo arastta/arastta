@@ -459,4 +459,9 @@ if (version_compare(VERSION, '1.5.0', '<')) {
         PRIMARY KEY (`activity_id`),
         KEY `user_id` (`user_id`)
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    // Add maintenance display settings
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_maintenance_message', `value` = ''");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_maintenance_image', `value` = ''");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_maintenance_login', `value` = '1'");
 }
