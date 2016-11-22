@@ -2816,7 +2816,7 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (431, 0, 'config', 'config_password', '1', 0),
 (432, 0, 'config', 'config_compression', '0', 0),
 (433, 0, 'config', 'config_debug_system', '0', 0),
-(434, 0, 'config', 'config_error_display', '1', 0),
+(434, 0, 'config', 'config_error_display', '0', 0),
 (435, 0, 'config', 'config_error_log', '0', 0),
 (436, 0, 'config', 'config_error_filename', 'error.log', 0),
 (437, 0, 'config', 'config_admin_template', 'basic', 0),
