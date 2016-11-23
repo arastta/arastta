@@ -445,6 +445,9 @@ if (version_compare(VERSION, '1.5.0', '<')) {
         $user_group['permission']['access'][] = 'tool/cache';
         $user_group['permission']['modify'][] = 'tool/cache';
 
+        $user_group['permission']['access'][] = 'report/graph';
+        $user_group['permission']['modify'][] = 'report/graph';
+
         $this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
     }
     
