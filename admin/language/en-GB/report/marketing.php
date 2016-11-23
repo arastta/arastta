@@ -11,6 +11,9 @@ $_['heading_title']    = 'Marketing Report';
 
 // Text
 $_['text_list']         = 'Marketing List';
+$_['text_sale']         = 'Sales';
+$_['text_order']        = 'Orders';
+$_['text_click']        = 'Clicks';
 $_['text_all_status']   = 'All Statuses';
 
 // Column
