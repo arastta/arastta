@@ -1336,6 +1336,22 @@
                                         <?php } ?>
                                     </div>
                                 </div>
+                                <div class="form-group required">
+                                    <label class="col-sm-12" for="input-image-location"><?php echo $entry_image_maintenance; ?></label>
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input type="text" name="config_image_maintenance_width" value="<?php echo $config_image_maintenance_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-location" class="form-control" />
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="config_image_maintenance_height" value="<?php echo $config_image_maintenance_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <?php if ($error_image_maintenance) { ?>
+                                        <div class="text-danger"><?php echo $error_image_maintenance; ?></div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2048,29 +2064,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_maintenance; ?>"><?php echo $entry_maintenance; ?></span></label>
-                                    <div class="col-sm-12">
-                                        <label class="radio-inline">
-                                            <?php if ($config_maintenance) { ?>
-                                            <input type="radio" name="config_maintenance" value="1" checked="checked" />
-                                            <?php echo $text_yes; ?>
-                                            <?php } else { ?>
-                                            <input type="radio" name="config_maintenance" value="1" />
-                                            <?php echo $text_yes; ?>
-                                            <?php } ?>
-                                        </label>
-                                        <label class="radio-inline">
-                                            <?php if (!$config_maintenance) { ?>
-                                            <input type="radio" name="config_maintenance" value="0" checked="checked" />
-                                            <?php echo $text_no; ?>
-                                            <?php } else { ?>
-                                            <input type="radio" name="config_maintenance" value="0" />
-                                            <?php echo $text_no; ?>
-                                            <?php } ?>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_password; ?>"><?php echo $entry_password; ?></span></label>
                                     <div class="col-sm-12">
                                         <label class="radio-inline">
@@ -2152,6 +2145,76 @@
                                         <?php if ($error_error_filename) { ?>
                                         <div class="text-danger"><?php echo $error_error_filename; ?></div>
                                         <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><?php echo $tab_maintenance; ?></h3>
+                            <div class="pull-right">
+                                <div class="panel-chevron"><i class="fa fa-chevron-up rotate-reset"></i></div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="server">
+                                <div class="form-group">
+                                    <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_maintenance; ?>"><?php echo $entry_maintenance; ?></span></label>
+                                    <div class="col-sm-12">
+                                        <label class="radio-inline">
+                                            <?php if ($config_maintenance) { ?>
+                                            <input type="radio" name="config_maintenance" value="1" checked="checked" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_maintenance" value="1" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } ?>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <?php if (!$config_maintenance) { ?>
+                                            <input type="radio" name="config_maintenance" value="0" checked="checked" />
+                                            <?php echo $text_no; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_maintenance" value="0" />
+                                            <?php echo $text_no; ?>
+                                            <?php } ?>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12" for="input-maintenance-message"><span data-toggle="tooltip" title="<?php echo $help_maintenance_message; ?>"><?php echo $entry_maintenance_message; ?></span></label>
+                                    <div class="col-sm-12">
+                                        <textarea name="config_maintenance_message" rows="5" placeholder="<?php echo $entry_maintenance_message; ?>" id="input-maintenance-message" class="form-control"><?php echo $config_maintenance_message; ?></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12" for="input-maintenance-image"><span data-toggle="tooltip" title="<?php echo $help_maintenance_image; ?>"><?php echo $entry_maintenance_image; ?></span></label>
+                                    <div class="col-sm-12"><a href="" id="thumb-maintenance-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $maintenance_image; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
+                                        <input type="hidden" name="config_maintenance_image" value="<?php echo $config_maintenance_image; ?>" id="input-maintenance-image" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12"><span data-toggle="tooltip" title="<?php echo $help_maintenance_login; ?>"><?php echo $entry_maintenance_login; ?></span></label>
+                                    <div class="col-sm-12">
+                                        <label class="radio-inline">
+                                            <?php if ($config_maintenance_login) { ?>
+                                            <input type="radio" name="config_maintenance_login" value="1" checked="checked" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_maintenance_login" value="1" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } ?>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <?php if (!$config_maintenance_login) { ?>
+                                            <input type="radio" name="config_maintenance_login" value="0" checked="checked" />
+                                            <?php echo $text_no; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_maintenance_login" value="0" />
+                                            <?php echo $text_no; ?>
+                                            <?php } ?>
+                                        </label>
                                     </div>
                                 </div>
                             </div>

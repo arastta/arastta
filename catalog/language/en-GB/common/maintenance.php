@@ -12,7 +12,7 @@ $_['heading_title']    = 'Maintenance';
 // Text
 $_['text_heading']     = 'Maintenance';
 $_['text_maintenance'] = 'Maintenance';
-$_['text_message']     = '<h1 style="text-align:center;">We are currently performing some scheduled maintenance. <br/>We will be back as soon as possible. Please check back soon.</h1>';
+$_['text_message']     = 'We are currently performing some scheduled maintenance.<br/>We will be back as soon as possible. Please check back soon.';
 $_['text_login']       = 'Please enter your login details.';
 $_['text_forgotten']   = 'Forgotten Password';
 $_['text_back_to']     = 'Back to';

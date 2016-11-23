@@ -167,6 +167,7 @@ $_['tab_recurring']                 = 'Recurring';
 $_['tab_action']                    = 'Action';
 $_['tab_cache']                     = 'Cache';
 $_['tab_commission']                = 'Commission';
+$_['tab_maintenance']               = 'Maintenance';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';
