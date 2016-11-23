@@ -2,6 +2,10 @@
 <div id="content">
     <div class="page-header">
         <div class="container-fluid">
+            <div class="pull-right">
+                <button id="button-output" data-toggle="tooltip" title="<?php echo $button_output; ?>" class="btn btn-default"><i class="fa fa-print"></i></button>
+                <button id="button-export" data-toggle="tooltip" title="<?php echo $button_export; ?>" class="btn btn-default"><i class="fa fa-file-excel-o"></i></button>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -31,13 +35,15 @@
                                 <div class="input-group date filter filter_date_start">
                                   <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $text_filter . $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control filter" />
                                   <span class="input-group-btn">
-                                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                  </span></div>
+                                      <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                  </span>
+                                </div>
                                 <div class="input-group date filter hidden filter_date_end">
                                   <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $text_filter . $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
                                   <span class="input-group-btn">
-                                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                  </span></div>
+                                      <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                  </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -60,6 +66,7 @@
                     </div>
                     <?php } ?>
                 </div>
+                <?php echo $graph; ?>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>

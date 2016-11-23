@@ -11,6 +11,9 @@ $_['heading_title']         = 'Customer Reward Points Report';
 
 // Text
 $_['text_list']             = 'Customer Reward Points List';
+$_['text_sale']             = 'Sales';
+$_['text_order']            = 'Orders';
+$_['text_point']            = 'Points';
 
 // Column
 $_['column_customer']       = 'Customer Name';
@@ -26,4 +29,3 @@ $_['column_action']         = 'Action';
 $_['entry_date_start']      = 'Date Start';
 $_['entry_date_end']        = 'Date End';
 $_['entry_customer']        = 'Customer';
-

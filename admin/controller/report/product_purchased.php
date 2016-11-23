@@ -109,6 +109,8 @@ class ControllerReportProductPurchased extends Controller {
         $data['entry_status'] = $this->language->get('entry_status');
 
         $data['button_filter'] = $this->language->get('button_filter');
+        $data['button_output'] = $this->language->get('button_output');
+        $data['button_export'] = $this->language->get('button_export');
         $data['button_show_filter'] = $this->language->get('button_show_filter');
         $data['button_hide_filter'] = $this->language->get('button_hide_filter');
 
@@ -145,6 +147,31 @@ class ControllerReportProductPurchased extends Controller {
         $data['filter_date_start'] = $filter_date_start;
         $data['filter_date_end'] = $filter_date_end;
         $data['filter_order_status_id'] = $filter_order_status_id;
+
+        $graph = array(
+            'sales' => array(
+                'model'            => 'product',
+                'function'         => 'purchased',
+                'title'            => $this->language->get('text_sale'),
+                'link'             => str_replace('&amp;', '&', $this->url->link('report/graph/graph', 'title=name&range=special&token=' . $this->session->data['token'] . '&' . http_build_query($filter_data) . '&page=' . $page, 'SSL')),
+                'color'            => '#008db9',
+                'background-color' => '#FFFFFF',
+                'total'            => 'total',
+                'price'            => true
+            ),
+            'orders'   => array(
+                'model'            => 'product',
+                'function'         => 'purchased',
+                'title'            => $this->language->get('text_quantity'),
+                'link'             => str_replace('&amp;', '&', $this->url->link('report/graph/graph', 'title=name&range=special&token=' . $this->session->data['token'] . '&' . http_build_query($filter_data) . '&page=' . $page, 'SSL')),
+                'color'            => '#5cb85c',
+                'background-color' => '#FFFFFF',
+                'total'            => 'quantity',
+                'price'            => false
+            )
+        );
+
+        $data['graph'] = $this->load->controller('report/graph', $graph);
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

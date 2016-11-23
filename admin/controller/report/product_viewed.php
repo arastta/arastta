@@ -79,6 +79,8 @@ class ControllerReportProductViewed extends Controller {
         $data['column_percent'] = $this->language->get('column_percent');
 
         $data['button_reset'] = $this->language->get('button_reset');
+        $data['button_output'] = $this->language->get('button_output');
+        $data['button_export'] = $this->language->get('button_export');
 
         $url = '';
 
@@ -115,6 +117,21 @@ class ControllerReportProductViewed extends Controller {
         $data['pagination'] = $pagination->render();
         
         $data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($product_total - $this->config->get('config_limit_admin'))) ? $product_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $product_total, ceil($product_total / $this->config->get('config_limit_admin')));
+
+        $graph = array(
+            'sales' => array(
+                'model'            => 'product',
+                'function'         => 'productsviewed',
+                'title'            => $this->language->get('text_viewed'),
+                'link'             => str_replace('&amp;', '&', $this->url->link('report/graph/graph', 'title=name&range=special&token=' . $this->session->data['token'] . '&' . http_build_query($filter_data) . '&page=' . $page, 'SSL')),
+                'color'            => '#008db9',
+                'background-color' => '#FFFFFF',
+                'total'            => 'viewed',
+                'price'            => false
+            )
+        );
+
+        $data['graph'] = $this->load->controller('report/graph', $graph);
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
