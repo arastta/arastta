@@ -11,7 +11,7 @@ $_['heading_title']    = 'Backup &amp; Restore';
 
 // Text
 $_['text_backup']      = 'Download Backup';
-$_['text_success']     = 'Success: You have successfully imported your database!<br />Note! We recommend you clear the cache under "System -> Settings -> Cache" to ensure all is loaded correctly.';
+$_['text_success']     = 'Success: You have successfully imported your database!<br />Note! We recommend you clear the cached content under "Tools -> Cache Manager" to ensure all is loaded correctly.';
 $_['text_list']        = 'Upload List';
 
 // Entry
