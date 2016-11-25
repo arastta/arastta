@@ -9,37 +9,40 @@
 class Seo extends Object
 {
 
-    protected $db;
-    protected $config;
-    protected $request;
-    protected $session;
-    protected $language;
+    protected $registry;
 
-    public function __construct($registry = '')
+    public function __construct($registry)
     {
-        if (empty($registry)) {
-            return;
-        }
+        $this->registry = $registry;
+    }
 
-        $this->db = $registry->get('db');
-        $this->config = $registry->get('config');
-        $this->request = $registry->get('request');
-        $this->session = $registry->get('session');
-        $this->language = $registry->get('language');
+    public function __get($key)
+    {
+        return $this->registry->get($key);
+    }
+
+    public function __set($key, $value)
+    {
+        $this->registry->set($key, $value);
     }
 
     public function getAlias($id, $type = 'product')
     {
-        $id = intval($id);
+        static $rows = array('product' => array(), 'category' => array(), 'manufacturer' => array(), 'information' => array(), 'other' => array());
+        
+        if ($type == 'other') {
+            $query = $id;
+        } else {
+            $id = intval($id);
 
-        if (empty($id)) {
-            return '';
+            if (empty($id)) {
+                return '';
+            }
+
+            $query = $type.'_id='.$id;
         }
 
-        static $rows = array('product' => array(), 'category' => array(), 'manufacturer' => array(), 'information' => array());
-
         if (!isset($rows[$type][$id])) {
-            $query = $type.'_id='.$id;
             $results = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE query = '" . $this->db->escape($query) . "'");
 
             if ($results->num_rows) {
@@ -67,7 +70,11 @@ class Seo extends Object
 
                 $alias = !empty($found) ? $found : $tmp;
             } else {
-                $alias = $type.'-'.$id;
+                if ($type == 'other') {
+                    $alias = $id;
+                } else {
+                    $alias = $type.'-'.$id;
+                }
             }
 
             $rows[$type][$id] = $alias;
