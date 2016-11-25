@@ -102,7 +102,7 @@
                                 <td class="text-left"><?php echo $alias['keyword']; ?></td>
                                 <td class="text-left"><?php echo $alias['query']; ?></td>
                                 <td class="text-left"><?php echo $alias['type']; ?></td>
-                                <td class="text-left"><?php echo $alias['language_name']; ?></td>
+                                <td class="text-center"><img src="view/image/flags/<?php echo $alias['language_image']; ?>" title="<?php echo $alias['language_name']; ?>" /></td>
                                 <td class="text-right"><a href="<?php echo $alias['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                             </tr>
                             <?php } ?>

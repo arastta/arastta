@@ -303,6 +303,7 @@ class ControllerSystemUrlmanager extends Controller
             }
 
             $language_name = '';
+            $language_image = '';
 
             foreach ($data['languages'] as $language) {
                 if ($language['language_id'] != $result['language_id']) {
@@ -310,6 +311,7 @@ class ControllerSystemUrlmanager extends Controller
                 }
 
                 $language_name = $language['name'];
+                $language_image = $language['image'];
             }
 
             $data['aliases'][] = array(
@@ -318,6 +320,7 @@ class ControllerSystemUrlmanager extends Controller
                 'keyword' => $result['keyword'],
                 'language_id' => $result['language_id'],
                 'language_name' => $language_name,
+                'language_image' => $language_image,
                 'type' => $type,
                 'edit' => $this->url->link('system/url_manager/edit', 'token=' . $this->session->data['token'] . '&url_alias_id=' . $result['url_alias_id'] . $url, 'SSL')
             );
