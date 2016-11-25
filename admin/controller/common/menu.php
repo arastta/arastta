@@ -68,6 +68,7 @@ class ControllerCommonMenu extends Controller {
         $p_return_user_api = $this->user->hasPermission('access','user/api');
         $p_return_email_template = $this->user->hasPermission('access','system/email_template');
         $p_return_language_override = $this->user->hasPermission('access','system/language_override');
+        $p_return_url_manager = $this->user->hasPermission('access','system/url_manager');
         $p_return_localisation = $this->user->hasPermission('access','localisation/localisation');
         $p_return_language = $this->user->hasPermission('access','localisation/language');
         $p_return_currency = $this->user->hasPermission('access','localisation/currency');
@@ -770,6 +771,12 @@ class ControllerCommonMenu extends Controller {
                 'href' => $this->url->link('system/language_override', 'token=' . $this->session->data['token'], 'SSL'),
                 'sort_order' => 6,
                 'permission' => $p_return_language_override
+            ),
+            'url_manager' => array(
+                'text' => $data['text_url_manager'],
+                'href' => $this->url->link('system/url_manager', 'token=' . $this->session->data['token'], 'SSL'),
+                'sort_order' => 7,
+                'permission' => $p_return_url_manager
             )
         );
 

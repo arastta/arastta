@@ -30,6 +30,7 @@ $_['text_design']                      = 'Design';
 $_['text_download']                    = 'Downloads';
 $_['text_email_template']              = 'Email Templates';
 $_['text_language_override']           = 'Language Overrides';
+$_['text_url_manager']                 = 'URL Manager';
 $_['text_error_log']                   = 'Error Logs';
 $_['text_cache']                       = 'Cache Manager';
 $_['text_system_info']                 = 'System Information';
