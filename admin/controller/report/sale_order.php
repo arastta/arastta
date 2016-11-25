@@ -138,6 +138,8 @@ class ControllerReportSaleOrder extends Controller {
         $data['entry_payment'] = $this->language->get('entry_payment');
 
         $data['button_filter'] = $this->language->get('button_filter');
+        $data['button_output'] = $this->language->get('button_output');
+        $data['button_export'] = $this->language->get('button_export');
         $data['button_show_filter'] = $this->language->get('button_show_filter');
         $data['button_hide_filter'] = $this->language->get('button_hide_filter');
 
@@ -221,6 +223,41 @@ class ControllerReportSaleOrder extends Controller {
         $data['filter_group'] = $filter_group;
         $data['filter_order_status_id'] = $filter_order_status_id;
         $data['filter_payment_code'] = $filter_payment_code;
+
+        $graph = array(
+            'sales' => array(
+                'model'            => 'sale',
+                'function'         => 'orders',
+                'title'            => $this->language->get('text_sale'),
+                'link'             => str_replace('&amp;', '&', $this->url->link('report/graph/graph', 'token=' . $this->session->data['token'] . '&' . http_build_query($filter_data) . '&page=' . $page, 'SSL')),
+                'color'            => '#008db9',
+                'background-color' => '#FFFFFF',
+                'total'            => 'total',
+                'price'            => true
+            ),
+            'orders'   => array(
+                'model'            => 'sale',
+                'function'         => 'orders',
+                'title'            => $this->language->get('text_order'),
+                'link'             => str_replace('&amp;', '&', $this->url->link('report/graph/graph', 'token=' . $this->session->data['token'] . '&' . http_build_query($filter_data) . '&page=' . $page, 'SSL')),
+                'color'            => '#5cb85c',
+                'background-color' => '#FFFFFF',
+                'total'            => 'orders',
+                'price'            => false
+            ),
+            'products' => array(
+                'model'            => 'sale',
+                'function'         => 'orders',
+                'title'            => $this->language->get('text_product'),
+                'link'             => str_replace('&amp;', '&', $this->url->link('report/graph/graph', 'token=' . $this->session->data['token'] . '&' . http_build_query($filter_data) . '&page=' . $page, 'SSL')),
+                'color'            => '#d9534f',
+                'background-color' => '#FFFFFF',
+                'total'            => 'products',
+                'price'            => false
+            )
+        );
+
+        $data['graph'] = $this->load->controller('report/graph', $graph);
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

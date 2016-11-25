@@ -2,6 +2,10 @@
 <div id="content">
     <div class="page-header">
         <div class="container-fluid">
+            <div class="pull-right">
+                <button id="button-output" data-toggle="tooltip" title="<?php echo $button_output; ?>" class="btn btn-default"><i class="fa fa-print"></i></button>
+                <button id="button-export" data-toggle="tooltip" title="<?php echo $button_export; ?>" class="btn btn-default"><i class="fa fa-file-excel-o"></i></button>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
             <ul class="breadcrumb">
                 <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -27,17 +31,19 @@
                                 <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
                                 <div class="input-group date">
                                     <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                      <span class="input-group-btn">
+                                          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                      </span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
                                 <div class="input-group date">
                                     <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                      <span class="input-group-btn">
+                                          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                      </span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -83,6 +89,7 @@
                         </div>
                     </div>
                 </div>
+                <?php echo $graph; ?>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
