@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label class="control-label" for="input-name"><?php echo $column_text; ?></label>
+                                <label class="control-label" for="input-name"><?php echo $filter_text_constant; ?></label>
                                 <input type="text" name="filter_text" value="<?php echo $filter_text; ?>" placeholder="<?php echo $column_text; ?>" id="input-name" class="form-control" autocomplete="off" />
                             </div>
                         </div>
