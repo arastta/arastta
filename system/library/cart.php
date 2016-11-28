@@ -105,6 +105,8 @@ class Cart {
                                         'weight'                  => $option_value_query->row['weight'],
                                         'weight_prefix'           => $option_value_query->row['weight_prefix']
                                     );
+
+                                    $option_model = $option_value_query->row['model'];
                                 }
                             } elseif ($option_query->row['type'] == 'checkbox' && is_array($value)) {
                                 foreach ($value as $product_option_value_id) {
@@ -152,6 +154,8 @@ class Cart {
                                             'weight'                  => $option_value_query->row['weight'],
                                             'weight_prefix'           => $option_value_query->row['weight_prefix']
                                         );
+
+                                        $option_model = $option_value_query->row['model'];
                                     }
                                 }
                             } elseif ($option_query->row['type'] == 'text' || $option_query->row['type'] == 'textarea' || $option_query->row['type'] == 'file' || $option_query->row['type'] == 'date' || $option_query->row['type'] == 'datetime' || $option_query->row['type'] == 'time') {
@@ -174,6 +178,10 @@ class Cart {
                                     'weight'                  => '',
                                     'weight_prefix'           => ''
                                 );
+
+                                if (!isset($option_model)) {
+                                    $option_model = '';
+                                }
                             }
                         }
                     }
@@ -261,13 +269,11 @@ class Cart {
                         $preorder = false;
                     }
 
-                    $option_model = end($option_data);
-
                     $this->data[$key] = array(
                         'key'             => $key,
                         'product_id'      => $product_query->row['product_id'],
                         'name'            => $product_query->row['name'],
-                        'model'           => ($option_model['model']) ? $option_model['model'] : $product_query->row['model'],
+                        'model'           => ($option_model) ? $option_model : $product_query->row['model'],
                         'shipping'        => $product_query->row['shipping'],
                         'image'           => $product_query->row['image'],
                         'option'          => $option_data,

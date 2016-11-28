@@ -717,7 +717,7 @@ class ControllerProductProduct extends Controller {
 
             if ($option['product_option_value']) {
                 foreach ($option['product_option_value'] as $product_option_value) {
-                    if (in_array($product_option_value['product_option_value_id'], $options[$option['product_option_id']])) {
+                    if (!in_array($product_option_value['product_option_value_id'], $options[$option['product_option_id']])) {
                         continue;
                     }
 
