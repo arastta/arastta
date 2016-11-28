@@ -2299,6 +2299,7 @@ CREATE TABLE IF NOT EXISTS `ar_product_option` (
   `option_id` int(11) NOT NULL,
   `value` text NOT NULL,
   `required` tinyint(1) NOT NULL,
+  `combination` tinyint(1) NOT NULL,
   PRIMARY KEY (`product_option_id`),
   KEY `product_id` (`product_id`),
   KEY `option_id` (`option_id`)
@@ -2316,6 +2317,8 @@ CREATE TABLE IF NOT EXISTS `ar_product_option_value` (
   `product_id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
   `option_value_id` int(11) NOT NULL,
+  `model` varchar(255) NOT NULL,
+  `sku` varchar(255) NOT NULL,
   `quantity` int(3) NOT NULL,
   `subtract` tinyint(1) NOT NULL,
   `price` decimal(15,4) NOT NULL,
@@ -2329,6 +2332,63 @@ CREATE TABLE IF NOT EXISTS `ar_product_option_value` (
   KEY `product_id` (`product_id`),
   KEY `option_id` (`option_id`),
   KEY `option_value_id` (`option_value_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_product_option_combination`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_product_option_combination` (
+  `product_option_combination_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `parent` int(11) NOT NULL,
+  PRIMARY KEY (`product_option_combination_id`),
+  KEY `product_id` (`product_id`),
+  KEY `option_id` (`option_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_product_option_combination_value`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_product_option_combination_value` (
+  `product_option_combination_value_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_option_combination_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `option_value_id` int(11) NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  PRIMARY KEY (`product_option_combination_value_id`),
+  KEY `product_option_combination_id` (`product_option_combination_id`),
+  KEY `product_id` (`product_id`),
+  KEY `option_id` (`option_id`),
+  KEY `option_value_id` (`option_value_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_product_option_combination_value_description`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_product_option_combination_value_description` (
+  `product_option_combination_value_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `model` varchar(255) NOT NULL,
+  `sku` varchar(255) NOT NULL,
+  `quantity` int(3) NOT NULL,
+  `subtract` tinyint(1) NOT NULL,
+  `price` decimal(15,4) NOT NULL,
+  `price_prefix` varchar(1) NOT NULL,
+  `points` int(8) NOT NULL,
+  `points_prefix` varchar(1) NOT NULL,
+  `weight` decimal(15,8) NOT NULL,
+  `weight_prefix` varchar(1) NOT NULL
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------

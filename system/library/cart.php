@@ -61,7 +61,7 @@ class Cart {
 
                         if ($option_query->num_rows) {
                             if ($option_query->row['type'] == 'select' || $option_query->row['type'] == 'radio' || $option_query->row['type'] == 'image') {
-                                $option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$value . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+                                $option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix, pov.model, pov.sku FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$value . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
                                 if ($option_value_query->num_rows) {
                                     if ($option_value_query->row['price_prefix'] == '+') {
@@ -94,6 +94,8 @@ class Cart {
                                         'name'                    => $option_query->row['name'],
                                         'value'                   => $option_value_query->row['name'],
                                         'type'                    => $option_query->row['type'],
+                                        'model'                   => $option_value_query->row['model'],
+                                        'sku'                     => $option_value_query->row['sku'],
                                         'quantity'                => $option_value_query->row['quantity'],
                                         'subtract'                => $option_value_query->row['subtract'],
                                         'price'                   => $option_value_query->row['price'],
@@ -106,7 +108,7 @@ class Cart {
                                 }
                             } elseif ($option_query->row['type'] == 'checkbox' && is_array($value)) {
                                 foreach ($value as $product_option_value_id) {
-                                    $option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$product_option_value_id . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+                                    $option_value_query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix, pov.model, pov.sku FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_option_value_id = '" . (int)$product_option_value_id . "' AND pov.product_option_id = '" . (int)$product_option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
                                     if ($option_value_query->num_rows) {
                                         if ($option_value_query->row['price_prefix'] == '+') {
@@ -139,6 +141,8 @@ class Cart {
                                             'name'                    => $option_query->row['name'],
                                             'value'                   => $option_value_query->row['name'],
                                             'type'                    => $option_query->row['type'],
+                                            'model'                   => $option_value_query->row['model'],
+                                            'sku'                     => $option_value_query->row['sku'],
                                             'quantity'                => $option_value_query->row['quantity'],
                                             'subtract'                => $option_value_query->row['subtract'],
                                             'price'                   => $option_value_query->row['price'],
@@ -159,6 +163,8 @@ class Cart {
                                     'name'                    => $option_query->row['name'],
                                     'value'                   => $value,
                                     'type'                    => $option_query->row['type'],
+                                    'model'                   => '',
+                                    'sku'                     => '',
                                     'quantity'                => '',
                                     'subtract'                => '',
                                     'price'                   => '',
@@ -255,11 +261,13 @@ class Cart {
                         $preorder = false;
                     }
 
+                    $option_model = end($option_data);
+
                     $this->data[$key] = array(
                         'key'             => $key,
                         'product_id'      => $product_query->row['product_id'],
                         'name'            => $product_query->row['name'],
-                        'model'           => $product_query->row['model'],
+                        'model'           => ($option_model['model']) ? $option_model['model'] : $product_query->row['model'],
                         'shipping'        => $product_query->row['shipping'],
                         'image'           => $product_query->row['image'],
                         'option'          => $option_data,

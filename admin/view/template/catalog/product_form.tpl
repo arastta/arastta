@@ -497,13 +497,16 @@
                                 <div class="col-sm-2">
                                     <ul class="nav nav-pills nav-stacked" id="option">
                                         <?php $option_row = 0; ?>
+                                        <?php $combination = false; ?>
                                         <?php foreach ($product_options as $product_option) { ?>
                                         <li><a href="#tab-option<?php echo $option_row; ?>" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$('a[href=\'#tab-option<?php echo $option_row; ?>\']').parent().remove(); $('#tab-option<?php echo $option_row; ?>').remove(); $('#option a:first').tab('show');"></i> <?php echo $product_option['name']; ?></a></li>
                                         <?php $option_row++; ?>
+                                        <?php if ($product_option['combination']) { $combination = true; } ?>
                                         <?php } ?>
                                         <li>
                                             <input type="text" name="option" value="" placeholder="<?php echo $entry_option; ?>" id="input-option" class="form-control" />
                                         </li>
+                                        <li id="combination" class="<?php echo($combination) ? '' : ' hidden';?>"><a href="#tab-option<?php echo $option_row; ?>" data-toggle="tab" class="bg-info">Combination</a></li>
                                     </ul>
                                 </div>
                                 <div class="col-sm-10">
@@ -521,6 +524,20 @@
                                                 <div class="col-sm-10">
                                                     <select name="product_option[<?php echo $option_row; ?>][required]" id="input-required<?php echo $option_row; ?>" class="form-control">
                                                         <?php if ($product_option['required']) { ?>
+                                                        <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                                                        <option value="0"><?php echo $text_no; ?></option>
+                                                        <?php } else { ?>
+                                                        <option value="1"><?php echo $text_yes; ?></option>
+                                                        <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" for="input-combination<?php echo $option_row; ?>"><?php echo $entry_combination; ?></label>
+                                                <div class="col-sm-10">
+                                                    <select name="product_option[<?php echo $option_row; ?>][combination]" id="input-combination<?php echo $option_row; ?>" class="form-control">
+                                                        <?php if ($product_option['combination']) { ?>
                                                         <option value="1" selected="selected"><?php echo $text_yes; ?></option>
                                                         <option value="0"><?php echo $text_no; ?></option>
                                                         <?php } else { ?>
@@ -594,11 +611,13 @@
                                             </div>
                                             <?php } ?>
                                             <?php if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') { ?>
-                                            <div class="table-responsive">
+                                            <div class="table-responsive<?php echo($product_option['combination']) ? ' hidden' : '';?>">
                                                 <table id="option-value<?php echo $option_row; ?>" class="table table-striped table-bordered table-hover">
                                                     <thead>
                                                     <tr>
                                                         <td class="text-left"><?php echo $entry_option_value; ?></td>
+                                                        <td class="text-right"><?php echo $entry_model; ?></td>
+                                                        <td class="text-right"><?php echo $entry_sku; ?></td>
                                                         <td class="text-right"><?php echo $entry_quantity; ?></td>
                                                         <td class="text-left"><?php echo $entry_subtract; ?></td>
                                                         <td class="text-right"><?php echo $entry_price; ?></td>
@@ -622,6 +641,8 @@
                                                             <?php } ?>
                                                         </select>
                                                             <input type="hidden" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][product_option_value_id]" value="<?php echo $product_option_value['product_option_value_id']; ?>" /></td>
+                                                        <td class="text-right"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][model]" value="<?php echo $product_option_value['model']; ?>" placeholder="<?php echo $entry_model; ?>" class="form-control" /></td>
+                                                        <td class="text-right"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][sku]" value="<?php echo $product_option_value['sku']; ?>" placeholder="<?php echo $entry_sku; ?>" class="form-control" /></td>
                                                         <td class="text-right"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][quantity]" value="<?php echo $product_option_value['quantity']; ?>" placeholder="<?php echo $entry_quantity; ?>" class="form-control" /></td>
                                                         <td class="text-left"><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][subtract]" class="form-control">
                                                             <?php if ($product_option_value['subtract']) { ?>
@@ -678,7 +699,7 @@
                                                     </tbody>
                                                     <tfoot>
                                                     <tr>
-                                                        <td colspan="6"></td>
+                                                        <td colspan="8"></td>
                                                         <td class="text-left"><button type="button" onclick="addOptionValue('<?php echo $option_row; ?>');" data-toggle="tooltip" title="<?php echo $button_option_value_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                                                     </tr>
                                                     </tfoot>
@@ -697,6 +718,110 @@
                                         </div>
                                         <?php $option_row++; ?>
                                         <?php } ?>
+                                        <div class="tab-pane combination" id="tab-option<?php echo $option_row; ?>">
+                                            <div class="table-responsive<?php echo($product_option['combination'] && empty($product_option_combinations)) ? ' hidden' : '';?>">
+                                                <?php if ($product_option_combinations) { ?>
+                                                <table id="option-value<?php echo $option_row; ?>" class="table table-striped table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <?php foreach($product_option_combinations['name'] as $key => $value) { ?>
+                                                        <td class="text-left"><?php echo $value; ?></td>
+                                                        <?php } ?>
+                                                        <td class="text-right"><?php echo $entry_model; ?></td>
+                                                        <td class="text-right"><?php echo $entry_sku; ?></td>
+                                                        <td class="text-right"><?php echo $entry_quantity; ?></td>
+                                                        <td class="text-left"><?php echo $entry_subtract; ?></td>
+                                                        <td class="text-right"><?php echo $entry_price; ?></td>
+                                                        <td class="text-right"><?php echo $entry_option_points; ?></td>
+                                                        <td class="text-right"><?php echo $entry_weight; ?></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php foreach ($product_option_combinations['product_option_value'] as $key => $product_option_value) { ?>
+                                                    <?php var_dump($product_option_combinations['product_option_value']); ?>
+                                                    <tr id="option-value-row<?php echo $option_value_row; ?>">
+                                                        <td class="text-left">
+                                                            <?php if ($product_option_combinations['type'][$key-1] == 'select' || $product_option_combinations['type'][$key-1] == 'radio' || $product_option_combinations['type'][$key-1] == 'checkbox' || $product_option_combinations['type'][$key-1] == 'image') { ?>
+                                                            <select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][option_value_id]" class="form-control">
+                                                                <?php if (isset($option_values[$product_option['option_id']])) { ?>
+                                                                <?php foreach ($option_values[$product_option['option_id']] as $option_value) { ?>
+                                                                <?php if ($option_value['option_value_id'] == $product_option_value['option_value_id']) { ?>
+                                                                <option value="<?php echo $option_value['option_value_id']; ?>" selected="selected"><?php echo $option_value['name']; ?></option>
+                                                                <?php } else { ?>
+                                                                <option value="<?php echo $option_value['option_value_id']; ?>"><?php echo $option_value['name']; ?></option>
+                                                                <?php } ?>
+                                                                <?php } ?>
+                                                                <?php } ?>
+                                                            </select>
+                                                            <?php } ?></td>
+                                                        <td class="text-right"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][model]" value="<?php echo $product_option_value['model']; ?>" placeholder="<?php echo $entry_model; ?>" class="form-control" /></td>
+                                                        <td class="text-right"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][sku]" value="<?php echo $product_option_value['sku']; ?>" placeholder="<?php echo $entry_sku; ?>" class="form-control" /></td>
+                                                        <td class="text-right"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][quantity]" value="<?php echo $product_option_value['quantity']; ?>" placeholder="<?php echo $entry_quantity; ?>" class="form-control" /></td>
+                                                        <td class="text-left"><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][subtract]" class="form-control">
+                                                                <?php if ($product_option_value['subtract']) { ?>
+                                                                <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                                                                <option value="0"><?php echo $text_no; ?></option>
+                                                                <?php } else { ?>
+                                                                <option value="1"><?php echo $text_yes; ?></option>
+                                                                <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                                                                <?php } ?>
+                                                            </select></td>
+                                                        <td class="text-right"><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][price_prefix]" class="form-control">
+                                                                <?php if ($product_option_value['price_prefix'] == '+') { ?>
+                                                                <option value="+" selected="selected">+</option>
+                                                                <?php } else { ?>
+                                                                <option value="+">+</option>
+                                                                <?php } ?>
+                                                                <?php if ($product_option_value['price_prefix'] == '-') { ?>
+                                                                <option value="-" selected="selected">-</option>
+                                                                <?php } else { ?>
+                                                                <option value="-">-</option>
+                                                                <?php } ?>
+                                                            </select>
+                                                            <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][price]" value="<?php echo $product_option_value['price']; ?>" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>
+                                                        <td class="text-right"><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][points_prefix]" class="form-control">
+                                                                <?php if ($product_option_value['points_prefix'] == '+') { ?>
+                                                                <option value="+" selected="selected">+</option>
+                                                                <?php } else { ?>
+                                                                <option value="+">+</option>
+                                                                <?php } ?>
+                                                                <?php if ($product_option_value['points_prefix'] == '-') { ?>
+                                                                <option value="-" selected="selected">-</option>
+                                                                <?php } else { ?>
+                                                                <option value="-">-</option>
+                                                                <?php } ?>
+                                                            </select>
+                                                            <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][points]" value="<?php echo $product_option_value['points']; ?>" placeholder="<?php echo $entry_points; ?>" class="form-control" /></td>
+                                                        <td class="text-right"><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][weight_prefix]" class="form-control">
+                                                                <?php if ($product_option_value['weight_prefix'] == '+') { ?>
+                                                                <option value="+" selected="selected">+</option>
+                                                                <?php } else { ?>
+                                                                <option value="+">+</option>
+                                                                <?php } ?>
+                                                                <?php if ($product_option_value['weight_prefix'] == '-') { ?>
+                                                                <option value="-" selected="selected">-</option>
+                                                                <?php } else { ?>
+                                                                <option value="-">-</option>
+                                                                <?php } ?>
+                                                            </select>
+                                                            <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][weight]" value="<?php echo $product_option_value['weight']; ?>" placeholder="<?php echo $entry_weight; ?>" class="form-control" /></td>
+                                                        <td class="text-left"><button type="button" onclick="$(this).tooltip('destroy');$('#option-value-row<?php echo $option_value_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                                                    </tr>
+                                                    <?php $option_value_row++; ?>
+                                                    <?php } ?>
+                                                    </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <td colspan="8"></td>
+                                                        <td class="text-left"><button type="button" onclick="addOptionValue('<?php echo $option_row; ?>');" data-toggle="tooltip" title="<?php echo $button_option_value_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                                                    </tr>
+                                                    </tfoot>
+                                                </table>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                        <?php $option_row++; ?>
                                     </div>
                                 </div>
                             </div>
@@ -1330,6 +1455,14 @@
             html += '     </select></div>';
             html += '   </div>';
 
+            html += '   <div class="form-group">';
+            html += '     <label class="col-sm-2 control-label" for="input-combination' + option_row + '"><?php echo $entry_combination; ?></label>';
+            html += '     <div class="col-sm-10"><select name="product_option[' + option_row + '][combination]" id="input-combination' + option_row + '" class="form-control">';
+            html += '         <option value="1"><?php echo $text_yes; ?></option>';
+            html += '         <option value="0" selected="selected"><?php echo $text_no; ?></option>';
+            html += '     </select></div>';
+            html += '   </div>';
+
             if (item['type'] == 'text') {
                 html += '   <div class="form-group">';
                 html += '     <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
@@ -1378,6 +1511,8 @@
                 html += '    <thead>';
                 html += '      <tr>';
                 html += '        <td class="text-left"><?php echo $entry_option_value; ?></td>';
+                html += '        <td class="text-right"><?php echo $entry_model; ?></td>';
+                html += '        <td class="text-right"><?php echo $entry_sku; ?></td>';
                 html += '        <td class="text-right"><?php echo $entry_quantity; ?></td>';
                 html += '        <td class="text-left"><?php echo $entry_subtract; ?></td>';
                 html += '        <td class="text-right"><?php echo $entry_price; ?></td>';
@@ -1390,7 +1525,7 @@
                 html += '    </tbody>';
                 html += '    <tfoot>';
                 html += '      <tr>';
-                html += '        <td colspan="6"></td>';
+                html += '        <td colspan="8"></td>';
                 html += '        <td class="text-left"><button type="button" onclick="addOptionValue(' + option_row + ');" data-toggle="tooltip" title="<?php echo $button_option_value_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>';
                 html += '      </tr>';
                 html += '    </tfoot>';
@@ -1409,7 +1544,7 @@
 
             $('#tab-option .tab-content').append(html);
 
-            $('#option > li:last-child').before('<li><a href="#tab-option' + option_row + '" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$(\'a[href=\\\'#tab-option' + option_row + '\\\']\').parent().remove(); $(\'#tab-option' + option_row + '\').remove(); $(\'#option a:first\').tab(\'show\')"></i> ' + item['label'] + '</li>');
+            $('#option > li:nth-last-child(2)').before('<li><a href="#tab-option' + option_row + '" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$(\'a[href=\\\'#tab-option' + option_row + '\\\']\').parent().remove(); $(\'#tab-option' + option_row + '\').remove(); $(\'#option a:first\').tab(\'show\')"></i> ' + item['label'] + '</li>');
 
             $('#option a[href=\'#tab-option' + option_row + '\']').tab('show');
             
@@ -1443,6 +1578,8 @@
         html += '  <td class="text-left"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][option_value_id]" class="form-control">';
         html += $('#option-values' + option_row).html();
         html += '  </select><input type="hidden" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][product_option_value_id]" value="" /></td>';
+        html += '  <td class="text-right"><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][model]" value="" placeholder="<?php echo $entry_model; ?>" class="form-control" /></td>';
+        html += '  <td class="text-right"><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][sku]" value="" placeholder="<?php echo $entry_sku; ?>" class="form-control" /></td>';
         html += '  <td class="text-right"><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][quantity]" value="" placeholder="<?php echo $entry_quantity; ?>" class="form-control" /></td>';
         html += '  <td class="text-left"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][subtract]" class="form-control">';
         html += '    <option value="1"><?php echo $text_yes; ?></option>';
@@ -1583,6 +1720,140 @@
         pickDate: true,
         pickTime: true
     });
+    //--></script>
+    <script type="text/javascript"><!--
+        $('#tab-option').delegate('select[id^=\'input-combination\']', 'change', function() {
+            option_id = parseInt($(this).attr('id').replace('input-combination', ''));
+
+            if ($(this).val() == '1') {
+                $('#option-value' + option_id).parent().addClass('hidden');
+
+                $('#combination').removeClass('hidden');
+
+                combination_html = getCombination();
+
+                $('.combination').html(combination_html);
+
+                $('#option #combination a').tab('show');
+            } else {
+                $('#option-value' + option_id).parent().removeClass('hidden');
+            }
+        });
+
+        function getCombination() {
+            html = '';
+
+            column = 7;
+
+            html += '<div class="table-responsive">';
+            html += '  <table id="combination-option-value" class="table table-striped table-bordered table-hover">';
+            html += '    <thead>';
+            html += '      <tr>';
+
+            $.each($('select[id^=\'input-combination\']'), function(index) {
+                if ($(this).val() == '0') {
+                    return true;
+                }
+
+                option_row_id = parseInt($(this).attr('id').replace('input-combination', ''));
+
+                product_option_id = $('input[name=\'product_option[' + option_row_id +'][product_option_id]\']').val();
+
+                label = $('input[name=\'product_option[' + option_row_id +'][name]\']').val();
+                value = $('input[name=\'product_option[' + option_row_id +'][option_id]\']').val();
+                type  = $('input[name=\'product_option[' + option_row_id +'][type]\']').val();
+
+                html += '        <td class="text-left">';
+                html += '           <input type="hidden" name="product_option_combination[product_option_id][' + option_row_id + ']" value="' + product_option_id + '" />';
+                html += '           <input type="hidden" name="product_option_combination[name][' + option_row_id + ']" value="' + label + '" />';
+                html += '           <input type="hidden" name="product_option_combination[option_id][' + option_row_id + ']" value="' + value + '" />';
+                html += '           <input type="hidden" name="product_option_combination[type][' + option_row_id + ']" value="' + type + '" />';
+                html +=             label;
+                html += '         </td>';
+
+                column++;
+            });
+
+            html += '        <td class="text-right"><?php echo $entry_model; ?></td>';
+            html += '        <td class="text-right"><?php echo $entry_sku; ?></td>';
+            html += '        <td class="text-right"><?php echo $entry_quantity; ?></td>';
+            html += '        <td class="text-left"><?php echo $entry_subtract; ?></td>';
+            html += '        <td class="text-right"><?php echo $entry_price; ?></td>';
+            html += '        <td class="text-right"><?php echo $entry_option_points; ?></td>';
+            html += '        <td class="text-right"><?php echo $entry_weight; ?></td>';
+            html += '        <td></td>';
+            html += '      </tr>';
+            html += '    </thead>';
+            html += '    <tbody>';
+            html += '    </tbody>';
+            html += '    <tfoot>';
+            html += '      <tr>';
+            html += '        <td colspan="' + column + '"></td>';
+            html += '        <td class="text-left"><button type="button" onclick="addCombinationOptionValue();" data-toggle="tooltip" title="<?php echo $button_option_value_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>';
+            html += '      </tr>';
+            html += '    </tfoot>';
+            html += '  </table>';
+            html += '</div>';
+
+            return html;
+        }
+        
+        function addCombinationOptionValue(option_row) {
+            html  = '<tr id="option-value-row' + option_value_row + '">';
+
+            $.each($('select[id^=\'input-combination\']'), function(index) {
+                if ($(this).val() == '0') {
+                    return true;
+                }
+
+                option_row_id = parseInt($(this).attr('id').replace('input-combination', ''));
+
+                type  = $('input[name=\'product_option[' + option_row_id +'][type]\']').val();
+
+                if (type == 'select' || type == 'radio' || type == 'checkbox' || type == 'image') {
+                    html += '  <td class="text-left">';
+                    html += '    <select name="product_option_combination[product_option_value][' + option_value_row + '][option_value_id][' + option_row_id + ']" class="form-control">';
+                    html += $('#option-values' + option_row_id).html();
+                    html += '  </select><input type="hidden" name="product_option_combination[product_option_value][' + option_value_row + '][product_option_value_id][' + option_row_id + ']" value="" /></td>';
+                } else {
+                    html += '  <td class="text-left">';
+                    html += '    <select name="product_option_combination[product_option_value][' + option_value_row + '][option_value_id][' + option_row_id + ']" class="form-control">';
+                    html += '        <option value="0">Show</option>';
+                    html += '        <option value="1">Hide</option>';
+                    html += '  </select><input type="hidden" name="product_option_combination[product_option_value][' + option_value_row + '][product_option_value_id][' + option_row_id + ']" value="" /></td>';
+                }
+            });
+
+            html += '  <td class="text-right"><input type="text" name="product_option_combination[product_option_value][' + option_value_row + '][model]" value="" placeholder="<?php echo $entry_model; ?>" class="form-control" /></td>';
+            html += '  <td class="text-right"><input type="text" name="product_option_combination[product_option_value][' + option_value_row + '][sku]" value="" placeholder="<?php echo $entry_sku; ?>" class="form-control" /></td>';
+            html += '  <td class="text-right"><input type="text" name="product_option_combination[product_option_value][' + option_value_row + '][quantity]" value="" placeholder="<?php echo $entry_quantity; ?>" class="form-control" /></td>';
+            html += '  <td class="text-left"><select name="product_option_combination[product_option_value][' + option_value_row + '][subtract]" class="form-control">';
+            html += '    <option value="1"><?php echo $text_yes; ?></option>';
+            html += '    <option value="0"><?php echo $text_no; ?></option>';
+            html += '  </select></td>';
+            html += '  <td class="text-right"><select name="product_option_combination[product_option_value][' + option_value_row + '][price_prefix]" class="form-control">';
+            html += '    <option value="+">+</option>';
+            html += '    <option value="-">-</option>';
+            html += '  </select>';
+            html += '  <input type="text" name="product_option_combination[product_option_value][' + option_value_row + '][price]" value="" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>';
+            html += '  <td class="text-right"><select name="product_option_combination[product_option_value][' + option_value_row + '][points_prefix]" class="form-control">';
+            html += '    <option value="+">+</option>';
+            html += '    <option value="-">-</option>';
+            html += '  </select>';
+            html += '  <input type="text" name="product_option_combination[product_option_value][' + option_value_row + '][points]" value="" placeholder="<?php echo $entry_points; ?>" class="form-control" /></td>';
+            html += '  <td class="text-right"><select name="product_option_combination[product_option_value][' + option_value_row + '][weight_prefix]" class="form-control">';
+            html += '    <option value="+">+</option>';
+            html += '    <option value="-">-</option>';
+            html += '  </select>';
+            html += '  <input type="text" name="product_option_combination[product_option_value][' + option_value_row + '][weight]" value="" placeholder="<?php echo $entry_weight; ?>" class="form-control" /></td>';
+            html += '  <td class="text-left"><button type="button" onclick="$(this).tooltip(\'destroy\');$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" rel="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+            html += '</tr>';
+
+            $('#combination-option-value tbody').append(html);
+            $('[rel=tooltip]').tooltip();
+
+            option_value_row++;
+        }
     //--></script>
     <script type="text/javascript"><!--
     $('#language a:first').tab('show');

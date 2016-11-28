@@ -1131,6 +1131,8 @@ class ControllerCatalogProduct extends Controller {
                     $product_option_value_data[] = array(
                         'product_option_value_id' => $product_option_value['product_option_value_id'],
                         'option_value_id'         => $product_option_value['option_value_id'],
+                        'model'                   => $product_option_value['model'],
+                        'sku'                     => $product_option_value['sku'],
                         'quantity'                => $product_option_value['quantity'],
                         'subtract'                => $product_option_value['subtract'],
                         'price'                   => $product_option_value['price'],
@@ -1150,6 +1152,7 @@ class ControllerCatalogProduct extends Controller {
                 'name'                 => $product_option['name'],
                 'type'                 => $product_option['type'],
                 'value'                => isset($product_option['value']) ? $product_option['value'] : '',
+                'combination'          => $product_option['combination'],
                 'required'             => $product_option['required']
             );
         }
@@ -1162,6 +1165,14 @@ class ControllerCatalogProduct extends Controller {
                     $data['option_values'][$product_option['option_id']] = $this->model_catalog_option->getOptionValues($product_option['option_id']);
                 }
             }
+        }
+
+        if (isset($this->request->post['product_option'])) {
+            $data['product_option_combinations'] = $this->request->post['product_option'];
+        } elseif (isset($this->request->get['product_id'])) {
+            $data['product_option_combinations'] = $this->model_catalog_product->getProductOptionCombinations($this->request->get['product_id']);
+        } else {
+            $data['product_option_combinations'] = array();
         }
 
         $this->load->model('sale/customer_group');

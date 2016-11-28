@@ -475,4 +475,50 @@ if (version_compare(VERSION, '1.5.0', '<')) {
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_maintenance_login', `value` = '1'");
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_image_maintenance_width', `value` = '268'");
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_image_maintenance_height', `value` = '50'");
+
+    // Option Combination & Model/SKU
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` ADD `combination` TINYINT( 1 ) NOT NULL AFTER `required`";
+ 
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option_value` ADD `model` VARCHAR( 255 ) NOT NULL AFTER `option_value_id`";
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option_value` ADD `sku` VARCHAR( 255 ) NOT NULL AFTER `model`";
+
+    // Create combination tables
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "product_option_combination` (
+            `product_option_combination_id` int(11) NOT NULL AUTO_INCREMENT,
+            `product_id` int(11) NOT NULL,
+            `option_id` int(11) NOT NULL,
+            `parent` int(11) NOT NULL,
+            PRIMARY KEY (`product_option_combination_id`),
+            KEY `product_id` (`product_id`),
+            KEY `option_id` (`option_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "product_option_combination_value` (
+            `product_option_combination_value_id` int(11) NOT NULL AUTO_INCREMENT,
+            `product_option_combination_id` int(11) NOT NULL,
+            `product_id` int(11) NOT NULL,
+            `option_id` int(11) NOT NULL,
+            `option_value_id` int(11) NOT NULL,
+            `parent_id` int(11) NOT NULL,
+            PRIMARY KEY (`product_option_combination_value_id`),
+            KEY `product_option_combination_id` (`product_option_combination_id`),
+            KEY `product_id` (`product_id`),
+            KEY `option_id` (`option_id`),
+            KEY `option_value_id` (`option_value_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "product_option_combination_value_description` (
+            `product_option_combination_value_id` int(11) NOT NULL,
+            `product_id` int(11) NOT NULL,
+            `model` varchar(255) NOT NULL,
+            `sku` varchar(255) NOT NULL,
+            `quantity` int(3) NOT NULL,
+            `subtract` tinyint(1) NOT NULL,
+            `price` decimal(15,4) NOT NULL,
+            `price_prefix` varchar(1) NOT NULL,
+            `points` int(8) NOT NULL,
+            `points_prefix` varchar(1) NOT NULL,
+            `weight` decimal(15,8) NOT NULL,
+            `weight_prefix` varchar(1) NOT NULL
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 }
