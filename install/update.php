@@ -475,4 +475,8 @@ if (version_compare(VERSION, '1.5.0', '<')) {
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_maintenance_login', `value` = '1'");
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_image_maintenance_width', `value` = '268'");
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_image_maintenance_height', `value` = '50'");
+
+    // Option Model/SKU
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option_value` ADD `model` VARCHAR( 255 ) NOT NULL AFTER `option_value_id`";
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option_value` ADD `sku` VARCHAR( 255 ) NOT NULL AFTER `model`";
 }

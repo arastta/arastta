@@ -2294,6 +2294,7 @@ class ControllerSaleOrder extends Controller {
 
                 foreach ($products as $product) {
                     $product_info = $this->model_catalog_product->getProduct($product['product_id']);
+                    $options_info = $this->model_catalog_product->getProductOptions($product['product_id']);
 
                     $option_data = array();
 
@@ -2316,15 +2317,32 @@ class ControllerSaleOrder extends Controller {
                             'name'  => $option['name'],
                             'value' => $value
                         );
+
+                        foreach ($options_info as $option_info) {
+                            if ($option['product_option_id'] != $option_info['product_option_id']) {
+                                continue;
+                            }
+
+                            foreach ($option_info['product_option_value'] as $option_info_value) {
+                                if ($option['product_option_value_id'] != $option_info_value['product_option_value_id']) {
+                                    continue;
+                                }
+
+                                $option_model = $option_info_value['model'];
+                                $option_sku = $option_info_value['sku'];
+
+                                $product_info['weight'] += $option_info_value['weight'];
+                            }
+                        }
                     }
 
                     $product_data[] = array(
                         'name'     => $product_info['name'],
-                        'model'    => $product_info['model'],
+                        'model'    => !empty($option_model) ? $option_model : $product_info['model'],
                         'option'   => $option_data,
                         'quantity' => $product['quantity'],
                         'location' => $product_info['location'],
-                        'sku'      => $product_info['sku'],
+                        'sku'      => !empty($option_sku) ? $option_sku : $product_info['sku'],
                         'upc'      => $product_info['upc'],
                         'ean'      => $product_info['ean'],
                         'jan'      => $product_info['jan'],
