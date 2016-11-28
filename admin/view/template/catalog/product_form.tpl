@@ -599,6 +599,8 @@
                                                     <thead>
                                                     <tr>
                                                         <td class="text-left"><?php echo $entry_option_value; ?></td>
+                                                        <td class="text-right"><?php echo $entry_model; ?></td>
+                                                        <td class="text-right"><?php echo $entry_sku; ?></td>
                                                         <td class="text-right"><?php echo $entry_quantity; ?></td>
                                                         <td class="text-left"><?php echo $entry_subtract; ?></td>
                                                         <td class="text-right"><?php echo $entry_price; ?></td>
@@ -622,6 +624,8 @@
                                                             <?php } ?>
                                                         </select>
                                                             <input type="hidden" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][product_option_value_id]" value="<?php echo $product_option_value['product_option_value_id']; ?>" /></td>
+                                                        <td class="text-right"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][model]" value="<?php echo $product_option_value['model']; ?>" placeholder="<?php echo $entry_model; ?>" class="form-control" /></td>
+                                                        <td class="text-right"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][sku]" value="<?php echo $product_option_value['sku']; ?>" placeholder="<?php echo $entry_sku; ?>" class="form-control" /></td>
                                                         <td class="text-right"><input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][quantity]" value="<?php echo $product_option_value['quantity']; ?>" placeholder="<?php echo $entry_quantity; ?>" class="form-control" /></td>
                                                         <td class="text-left"><select name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][subtract]" class="form-control">
                                                             <?php if ($product_option_value['subtract']) { ?>
@@ -678,7 +682,7 @@
                                                     </tbody>
                                                     <tfoot>
                                                     <tr>
-                                                        <td colspan="6"></td>
+                                                        <td colspan="8"></td>
                                                         <td class="text-left"><button type="button" onclick="addOptionValue('<?php echo $option_row; ?>');" data-toggle="tooltip" title="<?php echo $button_option_value_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                                                     </tr>
                                                     </tfoot>
@@ -1378,6 +1382,8 @@
                 html += '    <thead>';
                 html += '      <tr>';
                 html += '        <td class="text-left"><?php echo $entry_option_value; ?></td>';
+                html += '        <td class="text-right"><?php echo $entry_model; ?></td>';
+                html += '        <td class="text-right"><?php echo $entry_sku; ?></td>';
                 html += '        <td class="text-right"><?php echo $entry_quantity; ?></td>';
                 html += '        <td class="text-left"><?php echo $entry_subtract; ?></td>';
                 html += '        <td class="text-right"><?php echo $entry_price; ?></td>';
@@ -1390,7 +1396,7 @@
                 html += '    </tbody>';
                 html += '    <tfoot>';
                 html += '      <tr>';
-                html += '        <td colspan="6"></td>';
+                html += '        <td colspan="8"></td>';
                 html += '        <td class="text-left"><button type="button" onclick="addOptionValue(' + option_row + ');" data-toggle="tooltip" title="<?php echo $button_option_value_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>';
                 html += '      </tr>';
                 html += '    </tfoot>';
@@ -1443,6 +1449,8 @@
         html += '  <td class="text-left"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][option_value_id]" class="form-control">';
         html += $('#option-values' + option_row).html();
         html += '  </select><input type="hidden" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][product_option_value_id]" value="" /></td>';
+        html += '  <td class="text-right"><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][model]" value="" placeholder="<?php echo $entry_model; ?>" class="form-control" /></td>';
+        html += '  <td class="text-right"><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][sku]" value="" placeholder="<?php echo $entry_sku; ?>" class="form-control" /></td>';
         html += '  <td class="text-right"><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][quantity]" value="" placeholder="<?php echo $entry_quantity; ?>" class="form-control" /></td>';
         html += '  <td class="text-left"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][subtract]" class="form-control">';
         html += '    <option value="1"><?php echo $text_yes; ?></option>';
