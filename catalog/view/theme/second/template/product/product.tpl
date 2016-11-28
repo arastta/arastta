@@ -115,12 +115,8 @@
                                         <input type="radio" name="rating" value="5" />
                                         &nbsp;<?php echo $entry_good; ?></div>
                                 </div>
-                                <?php if ($site_key) { ?>
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
-                                    </div>
-                                </div>
+                                <?php if ($captcha) { ?>
+                                <?php echo $captcha; ?>
                                 <?php } ?>
                                 <div class="buttons clearfix">
                                     <div class="pull-right">
@@ -152,29 +148,29 @@
                         <?php if ($manufacturer) { ?>
                         <li><?php echo $text_manufacturer; ?> <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></li>
                         <?php } ?>
-                        <li class="product-model"><?php echo $text_model; ?> <?php echo $model; ?></li>
+                        <li><?php echo $text_model; ?> <?php echo $model; ?></li>
                         <?php if ($reward) { ?>
                         <li><?php echo $text_reward; ?> <?php echo $reward; ?></li>
                         <?php } ?>
-                        <li class="product-stock"><?php echo $text_stock; ?>  </li>
+                        <li><?php echo $text_stock; ?> <span class="stock-status"><?php echo $stock; ?></span></li>
                     </ul>
                     <?php if ($price) { ?>
                     <ul class="list-unstyled">
                         <?php if (!$special) { ?>
                         <li>
-                            <h2 class="product-price"><?php echo $price; ?></h2>
+                            <h2><?php echo $price; ?></h2>
                         </li>
                         <?php } else { ?>
-                        <li><span class="product-price" style="text-decoration: line-through;"><?php echo $price; ?></span></li>
+                        <li><span style="text-decoration: line-through;"><?php echo $price; ?></span></li>
                         <li>
-                            <h2 class="product-special"><?php echo $special; ?></h2>
+                            <h2><?php echo $special; ?></h2>
                         </li>
                         <?php } ?>
                         <?php if ($tax) { ?>
-                        <li class="product-tax"><?php echo $text_tax; ?> <?php echo $tax; ?></li>
+                        <li><?php echo $text_tax; ?> <?php echo $tax; ?></li>
                         <?php } ?>
                         <?php if ($points) { ?>
-                        <li class="product-points"><?php echo $text_points; ?> <?php echo $points; ?></li>
+                        <li><?php echo $text_points; ?> <?php echo $points; ?></li>
                         <?php } ?>
                         <?php if ($discounts) { ?>
                         <li>

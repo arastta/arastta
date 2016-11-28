@@ -246,12 +246,6 @@ class ControllerSettingSetting extends Controller {
             $data['error_image_location'] = '';
         }
 
-        if (isset($this->error['image_maintenance'])) {
-            $data['error_image_maintenance'] = $this->error['image_maintenance'];
-        } else {
-            $data['error_image_maintenance'] = '';
-        }
-
         if (isset($this->error['error_filename'])) {
             $data['error_error_filename'] = $this->error['error_filename'];
         } else {
@@ -1009,18 +1003,6 @@ class ControllerSettingSetting extends Controller {
             $data['config_image_location_height'] = $this->config->get('config_image_location_height');
         }
 
-        if (isset($this->request->post['config_image_maintenancen_width'])) {
-            $data['config_image_lmaintenance_width'] = $this->request->post['config_image_maintenance_width'];
-        } else {
-            $data['config_image_maintenance_width'] = $this->config->get('config_image_maintenance_width');
-        }
-
-        if (isset($this->request->post['config_image_maintenance_height'])) {
-            $data['config_image_maintenance_height'] = $this->request->post['config_image_maintenance_height'];
-        } else {
-            $data['config_image_maintenance_height'] = $this->config->get('config_image_maintenance_height');
-        }
-
         if (isset($this->request->post['config_mail'])) {
             $config_mail = $this->request->post['config_mail'];
 
@@ -1140,18 +1122,6 @@ class ControllerSettingSetting extends Controller {
         $data['config_sitemap_products'] = str_replace('admin/', '', $this->url->link('feed/google_sitemap/products'));
         $data['config_sitemap_categories'] = str_replace('admin/', '', $this->url->link('feed/google_sitemap/categories'));
         $data['config_sitemap_manufacturers'] = str_replace('admin/', '', $this->url->link('feed/google_sitemap/manufacturers'));
-
-        if (isset($this->request->post['config_google_analytics'])) {
-            $data['config_google_analytics'] = $this->request->post['config_google_analytics'];
-        } else {
-            $data['config_google_analytics'] = $this->config->get('config_google_analytics');
-        }
-
-        if (isset($this->request->post['config_google_analytics_status'])) {
-            $data['config_google_analytics_status'] = $this->request->post['config_google_analytics_status'];
-        } else {
-            $data['config_google_analytics_status'] = $this->config->get('config_google_analytics_status');
-        }
 
         // Cache
         if (isset($this->request->post['config_cache_storage'])) {
@@ -1289,50 +1259,30 @@ class ControllerSettingSetting extends Controller {
             $data['config_file_mime_allowed'] = $this->config->get('config_file_mime_allowed');
         }
 
-        if (isset($this->request->post['config_google_captcha_public'])) {
-            $data['config_google_captcha_public'] = $this->request->post['config_google_captcha_public'];
+        if (isset($this->request->post['config_captcha'])) {
+            $data['config_captcha'] = $this->request->post['config_captcha'];
         } else {
-            $data['config_google_captcha_public'] = $this->config->get('config_google_captcha_public');
+            $data['config_captcha'] = $this->config->get('config_captcha', '');
         }
 
-        if (isset($this->request->post['config_google_captcha_secret'])) {
-            $data['config_google_captcha_secret'] = $this->request->post['config_google_captcha_secret'];
-        } else {
-            $data['config_google_captcha_secret'] = $this->config->get('config_google_captcha_secret');
+        // List of installed captcha extensions
+        $this->load->model('extension/extension');
+
+        $captchas = $this->model_extension_extension->getInstalled('captcha');
+
+        foreach ($captchas as $code) {
+            if (!$this->config->get($code . '_captcha_status')) {
+                continue;
+            }
+
+            $this->load->language('captcha/' . $code);
+
+            $data['captchas'][] = array(
+                'name'  => $this->language->get('heading_title'),
+                'value' => $code
+            );
         }
 
-        if (isset($this->request->post['config_google_captcha_status'])) {
-            $data['config_google_captcha_status'] = $this->request->post['config_google_captcha_status'];
-        } else {
-            $data['config_google_captcha_status'] = $this->config->get('config_google_captcha_status');
-        }
-
-        // Fraud
-        if (isset($this->request->post['config_fraud_detection'])) {
-            $data['config_fraud_detection'] = $this->request->post['config_fraud_detection'];
-        } else {
-            $data['config_fraud_detection'] = $this->config->get('config_fraud_detection');
-        }
-
-        if (isset($this->request->post['config_fraud_key'])) {
-            $data['config_fraud_key'] = $this->request->post['config_fraud_key'];
-        } else {
-            $data['config_fraud_key'] = $this->config->get('config_fraud_key');
-        }
-
-        if (isset($this->request->post['config_fraud_score'])) {
-            $data['config_fraud_score'] = $this->request->post['config_fraud_score'];
-        } else {
-            $data['config_fraud_score'] = $this->config->get('config_fraud_score');
-        }
-
-        if (isset($this->request->post['config_fraud_status_id'])) {
-            $data['config_fraud_status_id'] = $this->request->post['config_fraud_status_id'];
-        } else {
-            $data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
-        }
-
-        // Server
         if (isset($this->request->post['config_timezone'])) {
             $data['config_timezone'] = $this->request->post['config_timezone'];
         } else {
@@ -1351,6 +1301,12 @@ class ControllerSettingSetting extends Controller {
             $data['config_robots'] = $this->request->post['config_robots'];
         } else {
             $data['config_robots'] = $this->config->get('config_robots');
+        }
+
+        if (isset($this->request->post['config_maintenance'])) {
+            $data['config_maintenance'] = $this->request->post['config_maintenance'];
+        } else {
+            $data['config_maintenance'] = $this->config->get('config_maintenance');
         }
 
         if (isset($this->request->post['config_password'])) {
@@ -1388,40 +1344,7 @@ class ControllerSettingSetting extends Controller {
         } else {
             $data['config_error_filename'] = $this->config->get('config_error_filename');
         }
-
-        // Maintenance
-        if (isset($this->request->post['config_maintenance'])) {
-            $data['config_maintenance'] = $this->request->post['config_maintenance'];
-        } else {
-            $data['config_maintenance'] = $this->config->get('config_maintenance');
-        }
-
-        if (isset($this->request->post['config_maintenance_message'])) {
-            $data['config_maintenance_message'] = $this->request->post['config_maintenance_message'];
-        } else {
-            $data['config_maintenance_message'] = $this->config->get('config_maintenance_message');
-        }
-
-        if (isset($this->request->post['config_maintenance_image'])) {
-            $data['config_maintenance_image'] = $this->request->post['config_maintenance_image'];
-        } else {
-            $data['config_maintenance_image'] = $this->config->get('config_maintenance_image');
-        }
-
-        if (isset($this->request->post['config_maintenance_image']) && is_file(DIR_IMAGE . $this->request->post['config_maintenance_image'])) {
-            $data['maintenance_image'] = $this->model_tool_image->resize($this->request->post['config_maintenance_image'], 100, 100);
-        } elseif ($this->config->get('config_maintenance_image') && is_file(DIR_IMAGE . $this->config->get('config_maintenance_image'))) {
-            $data['maintenance_image'] = $this->model_tool_image->resize($this->config->get('config_maintenance_image'), 100, 100);
-        } else {
-            $data['maintenance_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-        }
-
-        if (isset($this->request->post['config_maintenance_login'])) {
-            $data['config_maintenance_login'] = $this->request->post['config_maintenance_login'];
-        } else {
-            $data['config_maintenance_login'] = $this->config->get('config_maintenance_login');
-        }
-
+        
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
@@ -1520,10 +1443,6 @@ class ControllerSettingSetting extends Controller {
 
         if (!$this->request->post['config_image_location_width'] || !$this->request->post['config_image_location_height']) {
             $this->error['image_location'] = $this->language->get('error_image_location');
-        }
-
-        if (!$this->request->post['config_image_maintenance_width'] || !$this->request->post['config_image_maintenance_height']) {
-            $this->error['image_maintenance'] = $this->language->get('error_image_maintenance');
         }
 
         if (!$this->request->post['config_error_filename']) {

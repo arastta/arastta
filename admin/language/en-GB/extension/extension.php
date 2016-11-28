@@ -20,6 +20,8 @@ $_['text_feed']             = 'Feed';
 $_['text_editor']           = 'Editor';
 $_['text_captcha']          = 'Captcha';
 $_['text_twofactorauth']    = 'Two-Factor Authenticator';
+$_['text_analytics']        = 'Analytics';
+$_['text_antifraud']        = 'Anti-Fraud';
 $_['text_other']            = 'Other';
 
 // Button

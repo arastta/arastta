@@ -13,7 +13,7 @@ class Trigger extends Object
 
     protected $registry;
     protected $stop = false;
-    protected $folders = array('app', 'menu', 'editor', 'captcha');
+    protected $folders = array('app', 'menu', 'editor', 'analytics');
     protected $listeners = array();
     protected $add_listeners = array();
     protected $skip_listeners = array();
