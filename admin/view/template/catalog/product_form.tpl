@@ -1723,6 +1723,7 @@
     //--></script>
     <script type="text/javascript"><!--
         $('#tab-option').delegate('select[id^=\'input-combination\']', 'change', function() {
+            /*
             option_id = parseInt($(this).attr('id').replace('input-combination', ''));
 
             if ($(this).val() == '1') {
@@ -1738,6 +1739,7 @@
             } else {
                 $('#option-value' + option_id).parent().removeClass('hidden');
             }
+            */
         });
 
         function getCombination() {
