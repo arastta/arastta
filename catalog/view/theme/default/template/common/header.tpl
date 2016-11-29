@@ -71,7 +71,7 @@
     <?php if ($script_declarations) { ?>
     <?php foreach ($script_declarations as $script_declaration) { ?>
     <?php if ($script_declaration['add_tag']) { ?>
-    <script type="<?php echo $script['type']; ?>">
+    <script type="<?php echo $script_declaration['type']; ?>">
     <?php } ?>
     <?php echo $script_declaration['content']; ?>
     <?php if ($script_declaration['add_tag']) { ?>
