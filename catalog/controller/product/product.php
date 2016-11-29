@@ -265,7 +265,7 @@ class ControllerProductProduct extends Controller {
             $data['button_wishlist'] = $this->language->get('button_wishlist');
             $data['button_compare'] = $this->language->get('button_compare');
             $data['button_quantity_plus'] = $this->language->get('button_quantity_plus');
-            $data['button_quantity_minus'] = $this->language->get('button_quantity_minus');
+            $data['button_quantity_minus'] = $this->language->get('button_quantity_minus');            
             $data['button_upload'] = $this->language->get('button_upload');
             $data['button_continue'] = $this->language->get('button_continue');
 
@@ -673,117 +673,7 @@ class ControllerProductProduct extends Controller {
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
     }
-
-    public function livePrice()
-    {
-        $this->language->load('product/product');
-
-        $this->load->model('catalog/product');
-
-        if (isset($this->request->post['product_id'])) {
-            $product_id = $this->request->post['product_id'];
-        } else {
-            $product_id = 0;
-        }
-
-        if (isset($this->request->post['quantity'])) {
-            $quantity = $this->request->post['quantity'];
-        } else {
-            $quantity = 1;
-        }
-
-        if (isset($this->request->post['option'])) {
-            $options = array_filter($this->request->post['option']);
-        } else {
-            $options = array();
-        }
-
-        $product_info = $this->model_catalog_product->getProduct($product_id);
-
-        if (!$product_info) {
-            return false;
-        }
-
-        $model = $product_info['model'];
-        $price = $product_info['price'];
-        $special = $product_info['special'];
-        $points = $product_info['points'];
-        $option_quantity = $product_info['quantity'];
-
-        foreach ($this->model_catalog_product->getProductOptions($product_id) as $option) {
-            if (!array_key_exists($option['product_option_id'], $options)) {
-                continue;
-            }
-
-            if ($option['product_option_value']) {
-                foreach ($option['product_option_value'] as $product_option_value) {
-                    if (!in_array($product_option_value['product_option_value_id'], $options[$option['product_option_id']])) {
-                        continue;
-                    }
-
-                    $model = $product_option_value['model'];
-                    $option_quantity = $product_option_value['quantity'];
-
-                    if ($product_option_value['price_prefix'] == '+') {
-                        $price += $product_option_value['price'];
-                        $special += $product_option_value['price'];
-                    } elseif ($product_option_value['price_prefix'] == '-') {
-                        $price -= $product_option_value['price'];
-                        $special -= $product_option_value['price'];
-                    }
-
-                    if ($product_option_value['points_prefix'] == '+') {
-                        $points += $product_option_value['points'];
-                    } elseif ($product_option_value['points_prefix'] == '-') {
-                        $points -= $product_option_value['points'];
-                    }
-                }
-            }
-        }
-
-        $json = array();
-
-        if (isset($model)) {
-            $json['model'] = $this->language->get('text_model') . ' ' . $model;
-        } else {
-            $json['model'] = false;
-        }
-
-        if ($option_quantity <= 0) {
-            $json['stock'] = $this->language->get('text_stock') . ' <span class="stock-status" style="color: ' . $product_info['stock_color'] . ';">' . $product_info['stock_status'] . '</span>';
-        } elseif ($this->config->get('config_stock_display')) {
-            $json['stock'] = $this->language->get('text_stock') . ' <span class="stock-status" style="color: #008000;">' . $option_quantity . '</span>';
-        } else {
-            $json['stock'] = $this->language->get('text_stock') . ' <span class="stock-status" style="color: #008000;">' . $this->language->get('text_instock') . '</span>';
-        }
-
-        if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-            $json['price'] = $this->currency->format($this->tax->calculate($price, $product_info['tax_class_id'], $this->config->get('config_tax')) * $quantity);
-        } else {
-            $json['price'] = false;
-        }
-
-        if ((float) $product_info['special']) {
-            $json['special'] = $this->currency->format($this->tax->calculate($special, $product_info['tax_class_id'], $this->config->get('config_tax')) * $quantity);
-        } else {
-            $json['special'] = false;
-        }
-
-        if ($this->config->get('config_tax')) {
-            $json['tax'] = $this->language->get('text_tax') . ' ' . $this->currency->format(((float) $product_info['special'] ? $special : $price) * $quantity);
-        } else {
-            $json['tax'] = false;
-        }
-
-        if ($points) {
-            $json['points'] = $this->language->get('text_points') . ' ' . $points;
-        } else {
-            $json['points'] = false;
-        }
-
-        $this->response->setOutput(json_encode($json));
-    }
-
+    
     public function getRecurringDescription() {
         $this->language->load('product/product');
         $this->load->model('catalog/product');
