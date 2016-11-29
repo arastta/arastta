@@ -19,13 +19,13 @@
     <link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
     <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
     <link href="view/javascript/bootstrap-select/css/bootstrap-select.min.css" type="text/css" rel="stylesheet" />
-	<link href="view/javascript/jquery/layout/jquery-ui.css" type="text/css" rel="stylesheet" />
+    <link href="view/javascript/jquery/layout/jquery-ui.css" type="text/css" rel="stylesheet" />
     <script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="view/javascript/bootstrap-select/js/bootstrap-select.min.js"></script>
-	<script type="text/javascript" src="view/javascript/jquery/layout/jquery-ui.js"></script>
-	<script type="text/javascript" src="view/javascript/jquery/layout/jquery-lockfixed.js"></script>
-	<script type="text/javascript" src="view/javascript/jquery/layout/jquery.ui.touch-punch.js"></script>
+    <script type="text/javascript" src="view/javascript/jquery/layout/jquery-ui.js"></script>
+    <script type="text/javascript" src="view/javascript/jquery/layout/jquery-lockfixed.js"></script>
+    <script type="text/javascript" src="view/javascript/jquery/layout/jquery.ui.touch-punch.js"></script>
     <?php if (isset($show_menu) && $show_menu == 'right') { ?>
     <link href="view/stylesheet/right_menu.css" type="text/css" rel="stylesheet" />
     <?php } ?>
@@ -41,11 +41,15 @@
     <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
     <?php } ?>
     <?php if ($style_declarations) { ?>
-    <style type="text/css">
-        <?php foreach ($style_declarations as $style) { ?>
-        <?php echo $style; ?>
+    <?php foreach ($style_declarations as $style_declaration) { ?>
+    <?php if ($style_declaration['add_tag']) { ?>
+    <style type="<?php echo $style_declaration['type']; ?>">
         <?php } ?>
+        <?php echo $style_declaration['content']; ?>
+        <?php if ($style_declaration['add_tag']) { ?>
     </style>
+    <?php } ?>
+    <?php } ?>
     <?php } ?>
     <script type="text/javascript" src="view/javascript/jquery/moment/moment.js" ></script>
     <script type="text/javascript" src="view/javascript/jquery/moment/locale/<?php echo $moment_lang; ?>.js" ></script>
@@ -58,11 +62,15 @@
     <script type="text/javascript" src="<?php echo $script; ?>"></script>
     <?php } ?>
     <?php if ($script_declarations) { ?>
-    <script type="text/javascript">
-        <?php foreach ($script_declarations as $script) { ?>
-        <?php echo $script; ?>
-        <?php } ?>
+    <?php foreach ($script_declarations as $script_declaration) { ?>
+    <?php if ($script_declaration['add_tag']) { ?>
+    <script type="<?php echo $script_declaration['type']; ?>">
+    <?php } ?>
+    <?php echo $script_declaration['content']; ?>
+    <?php if ($script_declaration['add_tag']) { ?>
     </script>
+    <?php } ?>
+    <?php } ?>
     <?php } ?>
 </head>
 <body>
