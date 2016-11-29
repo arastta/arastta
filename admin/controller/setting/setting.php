@@ -246,6 +246,12 @@ class ControllerSettingSetting extends Controller {
             $data['error_image_location'] = '';
         }
 
+        if (isset($this->error['image_maintenance'])) {
+            $data['error_image_maintenance'] = $this->error['image_maintenance'];
+        } else {
+            $data['error_image_maintenance'] = '';
+        }
+
         if (isset($this->error['error_filename'])) {
             $data['error_error_filename'] = $this->error['error_filename'];
         } else {
@@ -1003,6 +1009,17 @@ class ControllerSettingSetting extends Controller {
             $data['config_image_location_height'] = $this->config->get('config_image_location_height');
         }
 
+        if (isset($this->request->post['config_image_maintenancen_width'])) {
+            $data['config_image_lmaintenance_width'] = $this->request->post['config_image_maintenance_width'];
+        } else {
+            $data['config_image_maintenance_width'] = $this->config->get('config_image_maintenance_width');
+        }
+        if (isset($this->request->post['config_image_maintenance_height'])) {
+            $data['config_image_maintenance_height'] = $this->request->post['config_image_maintenance_height'];
+        } else {
+            $data['config_image_maintenance_height'] = $this->config->get('config_image_maintenance_height');
+        }
+
         if (isset($this->request->post['config_mail'])) {
             $config_mail = $this->request->post['config_mail'];
 
@@ -1283,6 +1300,7 @@ class ControllerSettingSetting extends Controller {
             );
         }
 
+        // Server
         if (isset($this->request->post['config_timezone'])) {
             $data['config_timezone'] = $this->request->post['config_timezone'];
         } else {
@@ -1301,12 +1319,6 @@ class ControllerSettingSetting extends Controller {
             $data['config_robots'] = $this->request->post['config_robots'];
         } else {
             $data['config_robots'] = $this->config->get('config_robots');
-        }
-
-        if (isset($this->request->post['config_maintenance'])) {
-            $data['config_maintenance'] = $this->request->post['config_maintenance'];
-        } else {
-            $data['config_maintenance'] = $this->config->get('config_maintenance');
         }
 
         if (isset($this->request->post['config_password'])) {
@@ -1343,6 +1355,35 @@ class ControllerSettingSetting extends Controller {
             $data['config_error_filename'] = $this->request->post['config_error_filename'];
         } else {
             $data['config_error_filename'] = $this->config->get('config_error_filename');
+        }
+
+        // Maintenance
+        if (isset($this->request->post['config_maintenance'])) {
+            $data['config_maintenance'] = $this->request->post['config_maintenance'];
+        } else {
+            $data['config_maintenance'] = $this->config->get('config_maintenance');
+        }
+        if (isset($this->request->post['config_maintenance_message'])) {
+            $data['config_maintenance_message'] = $this->request->post['config_maintenance_message'];
+        } else {
+            $data['config_maintenance_message'] = $this->config->get('config_maintenance_message');
+        }
+        if (isset($this->request->post['config_maintenance_image'])) {
+            $data['config_maintenance_image'] = $this->request->post['config_maintenance_image'];
+        } else {
+            $data['config_maintenance_image'] = $this->config->get('config_maintenance_image');
+        }
+        if (isset($this->request->post['config_maintenance_image']) && is_file(DIR_IMAGE . $this->request->post['config_maintenance_image'])) {
+            $data['maintenance_image'] = $this->model_tool_image->resize($this->request->post['config_maintenance_image'], 100, 100);
+        } elseif ($this->config->get('config_maintenance_image') && is_file(DIR_IMAGE . $this->config->get('config_maintenance_image'))) {
+            $data['maintenance_image'] = $this->model_tool_image->resize($this->config->get('config_maintenance_image'), 100, 100);
+        } else {
+            $data['maintenance_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+        }
+        if (isset($this->request->post['config_maintenance_login'])) {
+            $data['config_maintenance_login'] = $this->request->post['config_maintenance_login'];
+        } else {
+            $data['config_maintenance_login'] = $this->config->get('config_maintenance_login');
         }
         
         $data['header'] = $this->load->controller('common/header');
@@ -1443,6 +1484,10 @@ class ControllerSettingSetting extends Controller {
 
         if (!$this->request->post['config_image_location_width'] || !$this->request->post['config_image_location_height']) {
             $this->error['image_location'] = $this->language->get('error_image_location');
+        }
+
+        if (!$this->request->post['config_image_maintenance_width'] || !$this->request->post['config_image_maintenance_height']) {
+            $this->error['image_maintenance'] = $this->language->get('error_image_maintenance');
         }
 
         if (!$this->request->post['config_error_filename']) {
