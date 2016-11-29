@@ -56,6 +56,8 @@
                                     <option value="editor" <?php echo ($filter_type == 'editor') ? 'selected="selected"' : ''; ?> ><?php echo $text_editor; ?></option>
                                     <option value="captcha" <?php echo ($filter_type == 'captcha') ? 'selected="selected"' : ''; ?> ><?php echo $text_captcha; ?></option>
                                     <option value="twofactorauth" <?php echo ($filter_type == 'twofactorauth') ? 'selected="selected"' : ''; ?> ><?php echo $text_twofactorauth; ?></option>
+                                    <option value="analytics" <?php echo ($filter_type == 'analytics') ? 'selected="selected"' : ''; ?> ><?php echo $text_analytics; ?></option>
+                                    <option value="antifraud" <?php echo ($filter_type == 'antifraud') ? 'selected="selected"' : ''; ?> ><?php echo $text_antifraud; ?></option>
                                     <option value="other" <?php echo ($filter_type == 'other') ? 'selected="selected"' : ''; ?> ><?php echo $text_other; ?></option>
                                 </select>
                             </div>

@@ -36,11 +36,8 @@ class ControllerCommonHeader extends Controller {
             $server = $this->config->get('config_url');
         }
 
-        if (is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/customizer.css')) {
-            $this->document->addStyle('catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/customizer.css');
-            $this->checkFont();
-            $this->checkCustom();
-        }
+        // Allow 3rd parties to interfere
+        $this->trigger->fire('pre.load.header', array(&$data));
 
         $data['base'] = $server;
         $data['description'] = $this->document->getDescription();
@@ -53,12 +50,8 @@ class ControllerCommonHeader extends Controller {
         $data['script_declarations'] = $this->document->getScriptDeclarations();
         $data['lang'] = $this->language->get('code');
         $data['direction'] = $this->language->get('direction');
-        
-        if ($this->config->get('config_google_analytics_status')) {
-            $data['google_analytics'] = html_entity_decode($this->config->get('config_google_analytics'), ENT_QUOTES, 'UTF-8');
-        } else {
-            $data['google_analytics'] = '';
-        }
+
+        $data['google_analytics'] = '';
         
         $data['name'] = $this->config->get('config_name');
 
@@ -73,6 +66,9 @@ class ControllerCommonHeader extends Controller {
         } else {
             $data['logo'] = '';
         }
+
+        // Allow 3rd parties to interfere
+        $this->trigger->fire('post.load.header', array(&$data));
 
         $this->load->language('common/header');
 
@@ -255,28 +251,6 @@ class ControllerCommonHeader extends Controller {
         }
 
         return $link;
-    }
-
-    public function checkFont()
-    {
-        $this->load->model('appearance/customizer');
-
-        $data = $this->model_appearance_customizer->getDefaultData('customizer');
-
-        if (!empty($data['font']) && $data['font'] != 'inherit' && $data['font'] != 'Georgia, serif' && $data['font'] != 'Helvetica, sans-serif') {
-            $this->document->addStyle('//fonts.googleapis.com/css?family=' . str_replace(' ', '+', $data['font']), 'stylesheet', '');
-        }
-    }
-
-    public function checkCustom()
-    {
-        if (is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/custom.css')) {
-            $this->document->addStyle('catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/custom.css');
-        }
-
-        if (is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/javascript/custom.js')) {
-            $this->document->addScript('catalog/view/theme/' . $this->config->get('config_template') . '/javascript/custom.js');
-        }
     }
 
     public function checkActive($menu)

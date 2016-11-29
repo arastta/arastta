@@ -25,7 +25,7 @@ class ControllerTwofactorauthYubikey extends Controller
 
             $this->session->data['success'] = $this->language->get('text_success');
 
-            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+            if (isset($this->request->post['button']) && $this->request->post['button'] == 'save') {
                 $this->response->redirect($this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'], 'SSL'));
             }
 
@@ -51,7 +51,7 @@ class ControllerTwofactorauthYubikey extends Controller
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('twofactorauth/yubikey.tpl', $data));
+        $this->response->setOutput($this->load->output('twofactorauth/yubikey', $data));
     }
     
     protected function getFormFields($action)
