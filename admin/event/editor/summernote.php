@@ -27,7 +27,7 @@ class EventEditorSummernote extends Event
 
     public $other_options = array();
 
-    public function preAdminEditor()
+    public function preLoadHeader($data)
     {
         $editor = $this->config->get('config_text_editor');
 
