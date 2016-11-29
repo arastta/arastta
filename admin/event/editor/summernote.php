@@ -116,6 +116,6 @@ class EventEditorSummernote extends Event
         $script .= "   imageDialog();";
         $script .= "}" . chr(9) . chr(9);
     
-        $this->document->addScriptDeclarations($script);
+        $this->document->addScriptDeclaration($script);
     }
 }

@@ -59,12 +59,16 @@ if ($theme_config->get('logo_width') == 12) {
     <link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
     <?php } ?>
     <?php if ($style_declarations) { ?>
-    <style type="text/css">
-        <?php foreach ($style_declarations as $style) { ?>
-        <?php echo $style; ?>
-        <?php } ?>
+    <?php foreach ($style_declarations as $style_declaration) { ?>
+    <?php if ($style_declaration['add_tag']) { ?>
+    <style type="<?php echo $style_declaration['type']; ?>">
+    <?php } ?>
+    <?php echo $style_declaration['content']; ?>
+    <?php if ($style_declaration['add_tag']) { ?>
     </style>
-    <?php } ?>   
+    <?php } ?>
+    <?php } ?>
+    <?php } ?>
     <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
     <script src="catalog/view/javascript/arastta.js" type="text/javascript"></script>
     <script src="catalog/view/theme/second/javascript/script.js" type="text/javascript"></script>
@@ -72,11 +76,15 @@ if ($theme_config->get('logo_width') == 12) {
     <script src="<?php echo $script; ?>" type="text/javascript"></script>
     <?php } ?>
     <?php if ($script_declarations) { ?>
-    <script type="text/javascript">
-        <?php foreach ($script_declarations as $script) { ?>
-        <?php echo $script; ?>
-        <?php } ?>
+    <?php foreach ($script_declarations as $script_declaration) { ?>
+    <?php if ($script_declaration['add_tag']) { ?>
+    <script type="<?php echo $script['type']; ?>">
+    <?php } ?>
+    <?php echo $script_declaration['content']; ?>
+    <?php if ($script_declaration['add_tag']) { ?>
     </script>
+    <?php } ?>
+    <?php } ?>
     <?php } ?>
     <?php echo $google_analytics; ?>
 </head>

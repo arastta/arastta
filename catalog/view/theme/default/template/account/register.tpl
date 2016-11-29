@@ -505,16 +505,8 @@
                         </div>
                     </div>
                 </fieldset>
-                <?php if ($site_key) { ?>
-                <fieldset>
-                    <div class="form-group">
-                        <br/>
-                        <label class="col-sm-2 control-label">&nbsp;</label>
-                        <div class="col-sm-10">
-                            <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
-                        </div>
-                    </div>
-                </fieldset>
+                <?php if ($captcha) { ?>
+                <?php echo $captcha; ?>
                 <?php } ?>
                 <?php if ($text_agree) { ?>
                 <div class="buttons">
