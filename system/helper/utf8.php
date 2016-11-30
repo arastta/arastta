@@ -535,35 +535,35 @@ if (extension_loaded('mbstring')) {
         $strlen = strlen($string);
             
         for ($i = 0; $i < $strlen; $i++) {
-            $chr = ord($string[$i]);
+            $ord = ord($string[$i]);
 
-            if ($chr >= 0 && $chr <= 127) {
-                $unicode[] = ($chr * pow(64, 0));
+            if ($ord >= 0 && $ord <= 127) {
+                $unicode[] = ($ord * pow(64, 0));
                 continue;
             }
 
-            if ($chr >= 192 && $chr <= 223) {
-                $unicode[] = (($chr - 192) * pow(64, 1) + (ord($string[$i + 1]) - 128) * pow(64, 0));
+            if ($ord >= 192 && $ord <= 223) {
+                $unicode[] = (($ord - 192) * pow(64, 1) + (ord($string[$i + 1]) - 128) * pow(64, 0));
                 continue;
             }
 
-            if ($chr >= 224 && $chr <= 239) {
-                $unicode[] = (($chr - 224) * pow(64, 2) + (ord($string[$i + 1]) - 128) * pow(64, 1) + (ord($string[$i + 2]) - 128) * pow(64, 0));
+            if ($ord >= 224 && $ord <= 239) {
+                $unicode[] = (($ord - 224) * pow(64, 2) + (ord($string[$i + 1]) - 128) * pow(64, 1) + (ord($string[$i + 2]) - 128) * pow(64, 0));
                 continue;
             }
 
-            if ($chr >= 240 && $chr <= 247) {
-                $unicode[] = (($chr - 240) * pow(64, 3) + (ord($string[$i + 1]) - 128) * pow(64, 2) + (ord($string[$i + 2]) - 128) * pow(64, 1) + (ord($string[$i + 3]) - 128) * pow(64, 0));
+            if ($ord >= 240 && $ord <= 247) {
+                $unicode[] = (($ord - 240) * pow(64, 3) + (ord($string[$i + 1]) - 128) * pow(64, 2) + (ord($string[$i + 2]) - 128) * pow(64, 1) + (ord($string[$i + 3]) - 128) * pow(64, 0));
                 continue;
             }
 
-            if ($chr >= 248 && $chr <= 251) {
-                $unicode[] = (($chr - 248) * pow(64, 4) + (ord($string[$i + 1]) - 128) * pow(64, 3) + (ord($string[$i + 2]) - 128) * pow(64, 2) + (ord($string[$i + 3]) - 128) * pow(64, 1) + (ord($string[$i + 4]) - 128) * pow(64, 0));
+            if ($ord >= 248 && $ord <= 251) {
+                $unicode[] = (($ord - 248) * pow(64, 4) + (ord($string[$i + 1]) - 128) * pow(64, 3) + (ord($string[$i + 2]) - 128) * pow(64, 2) + (ord($string[$i + 3]) - 128) * pow(64, 1) + (ord($string[$i + 4]) - 128) * pow(64, 0));
                 continue;
             }
 
-            if ($chr == 252 && $chr == 253) {
-                $unicode[] = (($chr - 252) * pow(64, 5) + (ord($string[$i + 1]) - 128) * pow(64, 4) + (ord($string[$i + 2]) - 128) * pow(64, 3) + (ord($string[$i + 3]) - 128) * pow(64, 2) + (ord($string[$i + 4]) - 128) * pow(64, 1) + (ord($string[$i + 5]) - 128) * pow(64, 0));
+            if ($ord == 252 && $ord == 253) {
+                $unicode[] = (($ord - 252) * pow(64, 5) + (ord($string[$i + 1]) - 128) * pow(64, 4) + (ord($string[$i + 2]) - 128) * pow(64, 3) + (ord($string[$i + 3]) - 128) * pow(64, 2) + (ord($string[$i + 4]) - 128) * pow(64, 1) + (ord($string[$i + 5]) - 128) * pow(64, 0));
             }
         }
 
