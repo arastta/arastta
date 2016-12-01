@@ -23,7 +23,7 @@ class ControllerReportGraph extends Controller
 
         $data['graph'] = $graph;
 
-        $this->document->addScriptDeclarations($this->script($data));
+        $this->document->addScriptDeclaration($this->script($data));
 
         return $this->load->view('common/graph.tpl', $data);
     }
