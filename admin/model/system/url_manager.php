@@ -16,7 +16,7 @@ class ModelSystemUrlmanager extends Model
         $url_alias_id = 0;
 
         foreach ($data['alias'] as $language_id => $value) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET keyword = '" . $this->db->escape($value['seo_url']) . "', language_id = '" . (int)$language_id . "', query = '" . $this->db->escape($data['query']) . "'");
+            $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET keyword = '" . $this->db->escape($value['seo_url']) . "', language_id = '" . (int) $language_id . "', query = '" . $this->db->escape($data['query']) . "'");
 
             $url_alias_id = $this->db->getLastId();
         }
@@ -34,9 +34,9 @@ class ModelSystemUrlmanager extends Model
             if (!empty($data['alias_ids'][$language_id])) {
                 $url_alias_id = $data['alias_ids'][$language_id];
 
-                $this->db->query("UPDATE " . DB_PREFIX . "url_alias SET keyword = '" . $this->db->escape($value['seo_url']) . "', query = '" . $this->db->escape($data['query']) . "' WHERE url_alias_id = '" . (int)$url_alias_id . "'");
+                $this->db->query("UPDATE " . DB_PREFIX . "url_alias SET keyword = '" . $this->db->escape($value['seo_url']) . "', query = '" . $this->db->escape($data['query']) . "' WHERE url_alias_id = '" . (int) $url_alias_id . "'");
             } else {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET keyword = '" . $this->db->escape($value['seo_url']) . "', language_id = '" . (int)$language_id . "', query = '" . $this->db->escape($data['query']) . "'");
+                $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET keyword = '" . $this->db->escape($value['seo_url']) . "', language_id = '" . (int) $language_id . "', query = '" . $this->db->escape($data['query']) . "'");
             }
         }
 
@@ -52,10 +52,15 @@ class ModelSystemUrlmanager extends Model
         $aliases = $this->getAliasesByQuery($tmp['query']);
 
         foreach ($aliases as $alias) {
-            $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE url_alias_id = '" . (int)$alias['url_alias_id'] . "'");
+            $this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE url_alias_id = '" . (int) $alias['url_alias_id'] . "'");
         }
 
         $this->trigger->fire('post.admin.alias.delete');
+    }
+
+    public function updateAlias($url_alias_id, $key, $value)
+    {
+        $this->db->query("UPDATE " . DB_PREFIX . "url_alias SET " . $key . " = '" . $this->db->escape($value) . "' WHERE url_alias_id = '" . (int)$url_alias_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
     }
 
     public function getAliasById($url_alias_id)
@@ -74,10 +79,10 @@ class ModelSystemUrlmanager extends Model
 
     public function getAliases($data = array())
     {
-         if ($data) {
+        if ($data) {
             $sql = "SELECT * FROM " . DB_PREFIX . "url_alias";
 
-             $implode = array();
+            $implode = array();
 
             if (!empty($data['filter_seo_url'])) {
                 $implode[] = "keyword LIKE '%" . $this->db->escape($data['filter_seo_url']) . "%'";
@@ -87,23 +92,23 @@ class ModelSystemUrlmanager extends Model
                 $implode[] = "query LIKE '%" . $this->db->escape($data['filter_query']) . "%'";
             }
 
-             if (!empty($data['filter_type'])) {
-                 $type = $this->db->escape($data['filter_type']);
+            if (!empty($data['filter_type'])) {
+                $type = $this->db->escape($data['filter_type']);
 
-                 if ($type == 'other') {
-                     $implode[] = "SUBSTRING_INDEX(`query`, '=', 1) NOT IN ('product_id', 'category_id', 'information_id', 'manufacturer_id')";
-                 } else {
-                     $implode[] = "SUBSTRING_INDEX(`query`, '=', 1) = '" . $type.'_id' . "'";
-                 }
-             }
+                if ($type == 'other') {
+                    $implode[] = "SUBSTRING_INDEX(`query`, '=', 1) NOT IN ('product_id', 'category_id', 'information_id', 'manufacturer_id')";
+                } else {
+                    $implode[] = "SUBSTRING_INDEX(`query`, '=', 1) = '" . $type . '_id' . "'";
+                }
+            }
 
             if (!empty($data['filter_language'])) {
                 $implode[] = "language_id = '" . $this->db->escape($data['filter_language']) . "'";
             }
 
-             if ($implode) {
-                 $sql .= " WHERE " . implode(" AND ", $implode);
-             }
+            if ($implode) {
+                $sql .= " WHERE " . implode(" AND ", $implode);
+            }
 
             if (isset($data['start']) || isset($data['limit'])) {
                 if ($data['start'] < 0) {
@@ -114,7 +119,7 @@ class ModelSystemUrlmanager extends Model
                     $data['limit'] = 20;
                 }
 
-                $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+                $sql .= " LIMIT " . (int) $data['start'] . "," . (int) $data['limit'];
             }
 
             $alias_data = $this->db->query($sql)->rows;

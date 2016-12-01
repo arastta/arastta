@@ -19,7 +19,8 @@ class ControllerSystemUrlmanager extends Controller
         $this->getList();
     }
 
-    public function add() {
+    public function add()
+    {
         $this->load->language('system/url_manager');
 
         $this->document->setTitle($this->language->get('heading_title'));
@@ -63,7 +64,7 @@ class ControllerSystemUrlmanager extends Controller
 
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                $this->response->redirect($this->url->link('system/url_manager/edit', 'url_alias_id='.$url_alias_id.'&token=' . $this->session->data['token'] . $url, 'SSL'));
+                $this->response->redirect($this->url->link('system/url_manager/edit', 'url_alias_id=' . $url_alias_id . '&token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
@@ -76,7 +77,8 @@ class ControllerSystemUrlmanager extends Controller
         $this->getForm();
     }
 
-    public function edit() {
+    public function edit()
+    {
         $this->load->language('system/url_manager');
 
         $this->document->setTitle($this->language->get('heading_title'));
@@ -119,7 +121,7 @@ class ControllerSystemUrlmanager extends Controller
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                $this->response->redirect($this->url->link('system/url_manager/edit', 'url_alias_id='.$this->request->get['url_alias_id'].'&token=' . $this->session->data['token'] . $url, 'SSL'));
+                $this->response->redirect($this->url->link('system/url_manager/edit', 'url_alias_id=' . $this->request->get['url_alias_id'] . '&token=' . $this->session->data['token'] . $url, 'SSL'));
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
@@ -132,7 +134,8 @@ class ControllerSystemUrlmanager extends Controller
         $this->getForm();
     }
 
-    public function delete() {
+    public function delete()
+    {
         $this->load->language('system/url_manager');
 
         $this->document->setTitle($this->language->get('heading_title'));
@@ -261,18 +264,18 @@ class ControllerSystemUrlmanager extends Controller
             $url .= '&page=' . $this->request->get['page'];
         }
 
-        $data['add'] = $this->url->link('system/url_manager/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+        $data['add']    = $this->url->link('system/url_manager/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $data['delete'] = $this->url->link('system/url_manager/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
         $filter_data = array(
-            'filter_seo_url' => $filter_seo_url,
-            'filter_query' => $filter_query,
-            'filter_type' => $filter_type,
+            'filter_seo_url'  => $filter_seo_url,
+            'filter_query'    => $filter_query,
+            'filter_type'     => $filter_type,
             'filter_language' => $filter_language,
-            'sort'  => $sort,
-            'order' => $order,
-            'start' => ($page - 1) * $this->config->get('config_limit_admin'),
-            'limit' => $this->config->get('config_limit_admin')
+            'sort'            => $sort,
+            'order'           => $order,
+            'start'           => ($page - 1) * $this->config->get('config_limit_admin'),
+            'limit'           => $this->config->get('config_limit_admin')
         );
 
         if (!empty($filter_seo_url) || !empty($filter_query) || !empty($filter_type) || !empty($filter_language)) {
@@ -302,7 +305,7 @@ class ControllerSystemUrlmanager extends Controller
                 $type = $data['text_information'];
             }
 
-            $language_name = '';
+            $language_name  = '';
             $language_image = '';
 
             foreach ($data['languages'] as $language) {
@@ -310,19 +313,19 @@ class ControllerSystemUrlmanager extends Controller
                     continue;
                 }
 
-                $language_name = $language['name'];
+                $language_name  = $language['name'];
                 $language_image = $language['image'];
             }
 
             $data['aliases'][] = array(
-                'url_alias_id' => $result['url_alias_id'],
-                'query' => $query,
-                'keyword' => $result['keyword'],
-                'language_id' => $result['language_id'],
-                'language_name' => $language_name,
+                'url_alias_id'   => $result['url_alias_id'],
+                'query'          => $query,
+                'keyword'        => $result['keyword'],
+                'language_id'    => $result['language_id'],
+                'language_name'  => $language_name,
                 'language_image' => $language_image,
-                'type' => $type,
-                'edit' => $this->url->link('system/url_manager/edit', 'token=' . $this->session->data['token'] . '&url_alias_id=' . $result['url_alias_id'] . $url, 'SSL')
+                'type'           => $type,
+                'edit'           => $this->url->link('system/url_manager/edit', 'token=' . $this->session->data['token'] . '&url_alias_id=' . $result['url_alias_id'] . $url, 'SSL')
             );
         }
 
@@ -350,7 +353,7 @@ class ControllerSystemUrlmanager extends Controller
         }
 
         if (isset($this->request->post['selected'])) {
-            $data['selected'] = (array)$this->request->post['selected'];
+            $data['selected'] = (array) $this->request->post['selected'];
         } else {
             $data['selected'] = array();
         }
@@ -373,25 +376,25 @@ class ControllerSystemUrlmanager extends Controller
             $url .= '&filter_language=' . $this->request->get['filter_language'];
         }
 
-        $pagination = new Pagination();
+        $pagination        = new Pagination();
         $pagination->total = $total;
-        $pagination->page = $page;
+        $pagination->page  = $page;
         $pagination->limit = $this->config->get('config_limit_admin');
-        $pagination->url = $this->url->link('system/url_manager', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+        $pagination->url   = $this->url->link('system/url_manager', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
         $data['pagination'] = $pagination->render();
 
-        $data['filter_seo_url'] = $filter_seo_url;
-        $data['filter_query'] = $filter_query;
-        $data['filter_type'] = $filter_type;
+        $data['filter_seo_url']  = $filter_seo_url;
+        $data['filter_query']    = $filter_query;
+        $data['filter_type']     = $filter_type;
         $data['filter_language'] = $filter_language;
-        $data['token'] = $this->session->data['token'];
+        $data['token']           = $this->session->data['token'];
 
         $data['results'] = sprintf($this->language->get('text_pagination'), ($total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($total - $this->config->get('config_limit_admin'))) ? $total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $total, ceil($total / $this->config->get('config_limit_admin')));
 
-        $data['header'] = $this->load->controller('common/header');
+        $data['header']      = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
-        $data['footer'] = $this->load->controller('common/footer');
+        $data['footer']      = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->view('system/url_manager_list.tpl', $data));
     }
@@ -482,11 +485,11 @@ class ControllerSystemUrlmanager extends Controller
                 $aliases = $this->model_system_url_manager->getAliasesByQuery($alias['query']);
 
                 foreach ($aliases as $alias) {
-                    $data['alias'][$alias['language_id']]['seo_url'] = $alias['keyword'];
+                    $data['alias'][$alias['language_id']]['seo_url']      = $alias['keyword'];
                     $data['alias'][$alias['language_id']]['url_alias_id'] = $alias['url_alias_id'];
                 }
             } else {
-                $data['alias'][$alias['language_id']]['seo_url'] = $alias['keyword'];
+                $data['alias'][$alias['language_id']]['seo_url']      = $alias['keyword'];
                 $data['alias'][$alias['language_id']]['url_alias_id'] = $alias['url_alias_id'];
             }
 
@@ -496,9 +499,9 @@ class ControllerSystemUrlmanager extends Controller
             $data['query'] = '';
         }
 
-        $data['header'] = $this->load->controller('common/header');
+        $data['header']      = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
-        $data['footer'] = $this->load->controller('common/footer');
+        $data['footer']      = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->view('system/url_manager_form.tpl', $data));
     }
@@ -526,6 +529,35 @@ class ControllerSystemUrlmanager extends Controller
 
         if (!strstr($this->request->post['query'], '=')) {
             $this->error['query'] = $this->language->get('error_query');
+        }
+
+        return !$this->error;
+    }
+
+    public function inline()
+    {
+        $json = array();
+
+        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateInline()) {
+            $this->load->model('system/url_manager');
+
+            foreach ($this->request->post as $key => $value) {
+                $this->model_system_url_manager->updateAlias($this->request->get['url_alias_id'], $key, $value);
+            }
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+    }
+
+    protected function validateInline()
+    {
+        if (!$this->user->hasPermission('modify', 'system/url_manager')) {
+            $this->error['warning'] = $this->language->get('error_permission');
+        }
+
+        if (!isset($this->request->post['keyword'])) {
+            $this->error['warning'] = $this->language->get('error_inline_field');
         }
 
         return !$this->error;
