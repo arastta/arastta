@@ -9,7 +9,7 @@
                 <div class="col-sm-5"><a href="<?php echo $parent; ?>" data-toggle="tooltip" title="<?php echo $button_parent; ?>" id="button-parent" class="btn btn-default"><i class="fa fa-level-up"></i></a> <a href="<?php echo $refresh; ?>" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" id="button-refresh" class="btn btn-default"><i class="fa fa-refresh"></i></a>
                     <button type="button" data-toggle="tooltip" title="<?php echo $button_upload; ?>" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i></button>
                     <button type="button" data-toggle="tooltip" title="<?php echo $button_folder; ?>" id="button-folder" class="btn btn-default"><i class="fa fa-folder"></i></button>
-                    <button type="button" data-toggle="tooltip" title="<?php echo $button_add_image; ?>" id="button-add" class="btn btn-default"><i class="fa fa-plus text-success"></i></button>
+                    <button disabled type="button" data-toggle="tooltip" title="<?php echo $button_add_image; ?>" id="button-add" class="btn btn-default"><i class="fa fa-plus text-success"></i></button>
                     <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" id="button-delete" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                 </div>
                 <div class="col-sm-7">
@@ -332,7 +332,9 @@ $('#modal-image #button-delete').on('click', function(e) {
     }
 });
 
-<?php if (!empty($mode) || ($target != 'input-image' || $thumb != 'thumb-image')) { ?>
+<?php if (!empty($mode) || ((strpos($data['target'], 'input-image') === false) || (strpos($data['target'], 'input-image') === false))) { ?>
+$('#button-add').prop('disabled', false);
+
 $('#image-multiselect').on('click', function(e) {
     fakePOS = false;
 

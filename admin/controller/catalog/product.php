@@ -732,9 +732,6 @@ class ControllerCatalogProduct extends Controller {
 
         $data['cancel'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-        $this->document->addStyle('view/javascript/jquery/cs-selectable/jquery.cs-selectable.css');
-        $this->document->addScript('view/javascript/jquery/cs-selectable/jquery.cs-selectable.js');
-
         if (isset($this->request->get['product_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
             $product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
         }
