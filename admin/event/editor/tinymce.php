@@ -29,7 +29,7 @@ class EventEditorTinymce extends Event
 
     public $other_options = array();
 
-    public function preAdminEditor()
+    public function preLoadHeader($data)
     {
         $editor = $this->config->get('config_text_editor');
 
@@ -131,6 +131,6 @@ class EventEditorTinymce extends Event
         $script .= "   });" . chr(13) . chr(9) . chr(9);
         $script .= "}" . chr(9) . chr(9);
     
-        $this->document->addScriptDeclarations($script);
+        $this->document->addScriptDeclaration($script);
     }
 }

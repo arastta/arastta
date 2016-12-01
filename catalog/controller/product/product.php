@@ -480,13 +480,14 @@ class ControllerProductProduct extends Controller {
 
             $this->model_catalog_product->updateViewed($this->request->get['product_id']);
 
-            if ($this->config->get('config_google_captcha_status')) {
-                $this->document->addScript('https://www.google.com/recaptcha/api.js');
-                
-                $data['site_key'] = $this->config->get('config_google_captcha_public');
+            if ($this->config->get($this->config->get('config_captcha') . '_captcha_status')) {
+                $data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $this->error);
             } else {
-                $data['site_key'] = '';
+                $data['captcha'] = '';
             }
+
+            # BC
+            $data['site_key'] = '';
 
             $data['share'] = $this->url->link('product/product', 'product_id=' . (int)$this->request->get['product_id']);
 
@@ -613,6 +614,15 @@ class ControllerProductProduct extends Controller {
             );
         }
 
+        if ($this->config->get($this->config->get('config_captcha') . '_captcha_status')) {
+            $data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $this->error);
+        } else {
+            $data['captcha'] = '';
+        }
+
+        # BC
+        $data['site_key'] = '';
+
         $pagination = new Pagination();
         $pagination->total = $review_total;
         $pagination->page = $page;
@@ -648,17 +658,15 @@ class ControllerProductProduct extends Controller {
                 $json['error'] = $this->language->get('error_rating');
             }
 
-            if ($this->config->get('config_google_captcha_status') && empty($json['error'])) {
-                if (isset($this->request->post['g-recaptcha-response'])) {
-                    $recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=' . $this->request->post['g-recaptcha-response'] . '&remoteip=' . $this->request->server['REMOTE_ADDR']);
-                    $recaptcha = json_decode($recaptcha, true);
+            if (($this->config->get($this->config->get('config_captcha') . '_captcha_status')) && empty($json['error'])) {
+                $captcha_status = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
 
-                    if (!$recaptcha['success']) {
-                        $json['error'] = $this->language->get('error_captcha');
-                    }
-                } else {
+                if ($captcha_status == false) {
+                    $json['captcha'] = $this->language->get('error_captcha');
                     $json['error'] = $this->language->get('error_captcha');
                 }
+
+                $json['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $json);
             }
 
             if (!isset($json['error'])) {

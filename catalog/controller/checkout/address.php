@@ -377,12 +377,20 @@ class ControllerCheckoutAddress extends Controller
 
         if (isset($this->session->data['payment_address']['firstname'])) {
             $data['payment_firstname'] = $this->session->data['payment_address']['firstname'];
+        } else if (isset($this->session->data['customer_id'])) {
+            $data['payment_firstname'] = $this->customer->getFirstName();
+        } else if (isset($this->session->data['guest']['firstname'])) {
+            $data['payment_firstname'] = $this->session->data['guest']['firstname'];
         } else {
             $data['payment_firstname'] = '';
         }
 
         if (isset($this->session->data['payment_address']['lastname'])) {
             $data['payment_lastname'] = $this->session->data['payment_address']['lastname'];
+        } else if (isset($this->session->data['customer_id'])) {
+            $data['payment_lastname'] = $this->customer->getLastName();
+        } else if (isset($this->session->data['guest']['lastname'])) {
+            $data['payment_lastname'] = $this->session->data['guest']['lastname'];
         } else {
             $data['payment_lastname'] = '';
         }

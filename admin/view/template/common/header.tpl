@@ -37,11 +37,15 @@
     <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
     <?php } ?>
     <?php if ($style_declarations) { ?>
-    <style type="text/css">
-        <?php foreach ($style_declarations as $style) { ?>
-        <?php echo $style; ?>
+    <?php foreach ($style_declarations as $style_declaration) { ?>
+    <?php if ($style_declaration['add_tag']) { ?>
+    <style type="<?php echo $style_declaration['type']; ?>">
         <?php } ?>
+        <?php echo $style_declaration['content']; ?>
+        <?php if ($style_declaration['add_tag']) { ?>
     </style>
+    <?php } ?>
+    <?php } ?>
     <?php } ?>
     <script type="text/javascript" src="view/javascript/jquery/moment/moment.js" ></script>
     <script type="text/javascript" src="view/javascript/jquery/moment/locale/<?php echo $moment_lang; ?>.js" ></script>
@@ -50,11 +54,15 @@
     <script type="text/javascript" src="<?php echo $script; ?>"></script>
     <?php } ?>
     <?php if ($script_declarations) { ?>
-    <script type="text/javascript">
-        <?php foreach ($script_declarations as $script) { ?>
-        <?php echo $script; ?>
-        <?php } ?>
+    <?php foreach ($script_declarations as $script_declaration) { ?>
+    <?php if ($script_declaration['add_tag']) { ?>
+    <script type="<?php echo $script_declaration['type']; ?>">
+    <?php } ?>
+    <?php echo $script_declaration['content']; ?>
+    <?php if ($script_declaration['add_tag']) { ?>
     </script>
+    <?php } ?>
+    <?php } ?>
     <?php } ?>
 </head>
 <body>

@@ -125,6 +125,8 @@ $_['button_voucher']                = 'Apply Voucher';
 $_['button_reward']                 = 'Apply Points';
 $_['button_currency']               = 'Refresh Currency Values';
 $_['button_seo']                    = 'Edit SEO';
+$_['button_output']                 = 'Print';
+$_['button_export']                 = 'Export';
 
 // Tab
 $_['tab_address']                   = 'Address';
@@ -167,6 +169,7 @@ $_['tab_recurring']                 = 'Recurring';
 $_['tab_action']                    = 'Action';
 $_['tab_cache']                     = 'Cache';
 $_['tab_commission']                = 'Commission';
+$_['tab_maintenance']               = 'Maintenance';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';

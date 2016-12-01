@@ -81,7 +81,7 @@ class ModelSystemLanguageoverride extends Model
                 $_temp = array();
 
                 foreach ($_ as $var => $val) {
-                    if (!stristr($val, $filter_data['filter_text'])) {
+                    if (!stristr($var, $filter_data['filter_text']) && !stristr($val, $filter_data['filter_text'])) {
                         continue;
                     }
 

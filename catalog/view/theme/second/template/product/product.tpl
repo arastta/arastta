@@ -115,12 +115,8 @@
                                         <input type="radio" name="rating" value="5" />
                                         &nbsp;<?php echo $entry_good; ?></div>
                                 </div>
-                                <?php if ($site_key) { ?>
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
-                                    </div>
-                                </div>
+                                <?php if ($captcha) { ?>
+                                <?php echo $captcha; ?>
                                 <?php } ?>
                                 <div class="buttons clearfix">
                                     <div class="pull-right">

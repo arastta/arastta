@@ -445,6 +445,12 @@ if (version_compare(VERSION, '1.5.0', '<')) {
         $user_group['permission']['access'][] = 'tool/cache';
         $user_group['permission']['modify'][] = 'tool/cache';
 
+        $user_group['permission']['access'][] = 'report/graph';
+        $user_group['permission']['modify'][] = 'report/graph';
+
+        $user_group['permission']['access'][] = 'system/url_manager';
+        $user_group['permission']['modify'][] = 'system/url_manager';
+
         $this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
     }
     
@@ -462,4 +468,11 @@ if (version_compare(VERSION, '1.5.0', '<')) {
 
     // Update stock_status table
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "stock_status` ADD `preorder` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `color`";
+
+    // Add maintenance display settings
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_maintenance_message', `value` = ''");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_maintenance_image', `value` = ''");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_maintenance_login', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_image_maintenance_width', `value` = '268'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_image_maintenance_height', `value` = '50'");
 }

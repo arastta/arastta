@@ -11,6 +11,8 @@ $_['heading_title']    = 'Coupons Report';
 
 // Text
 $_['text_list']        = 'Coupon List';
+$_['text_coupon']      = 'Coupons';
+$_['text_order']       = 'Orders';
 
 // Column
 $_['column_name']      = 'Coupon Name';

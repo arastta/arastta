@@ -16,7 +16,9 @@ class ControllerCommonHeader extends Controller {
             $data['base'] = HTTP_SERVER;
         }
 
-        $this->trigger->fire('pre.admin.editor');
+        // Allow 3rd parties to interfere
+        $this->trigger->fire('pre.load.header', array(&$data));
+
         $data['description'] = $this->document->getDescription();
         $data['keywords'] = $this->document->getKeywords();
         $data['links'] = $this->document->getLinks();
@@ -57,7 +59,7 @@ class ControllerCommonHeader extends Controller {
             $data['setting'] = $this->url->link('setting/setting', 'token=' . $this->session->data['token'], 'SSL');
             $data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->data['token'], 'SSL');
 
-            $data['preturn_update'] = $this->user->hasPermission('access','common/update');
+            $data['preturn_update'] = $this->user->hasPermission('access', 'common/update');
             $data['update'] = $this->url->link('common/update', 'token=' . $this->session->data['token'], 'SSL');
 
             // News Added Menu
@@ -66,7 +68,7 @@ class ControllerCommonHeader extends Controller {
             $data['new_download'] = $this->url->link('catalog/download/add', 'token=' . $this->session->data['token'], 'SSL');
             $data['new_manufacturer'] = $this->url->link('catalog/manufacturer/add', 'token=' . $this->session->data['token'], 'SSL');
             $data['new_product'] = $this->url->link('catalog/product/add', 'token=' . $this->session->data['token'], 'SSL');
-                        
+
             // Orders
             $this->load->model('sale/order');
 
@@ -99,6 +101,7 @@ class ControllerCommonHeader extends Controller {
             $customer_total = $this->model_sale_customer->getTotalCustomers(array('filter_approved' => false));
 
             $data['customer_total'] = $customer_total;
+
             $data['customer_approval'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&filter_approved=0', 'SSL');
 
             // Products
@@ -125,6 +128,7 @@ class ControllerCommonHeader extends Controller {
             $affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates(array('filter_approved' => false));
 
             $data['affiliate_total'] = $affiliate_total;
+
             $data['affiliate_approval'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . '&filter_approved=1', 'SSL');
 
             $data['alerts'] = $customer_total + $product_total + $review_total + $return_total + $affiliate_total;
@@ -151,6 +155,8 @@ class ControllerCommonHeader extends Controller {
 
             $languages = $this->model_localisation_language->getLanguages();
 
+            $data['languages'] = '';
+
             if (count($languages) > 1) {
                 $extra_link = '';
 
@@ -175,8 +181,6 @@ class ControllerCommonHeader extends Controller {
                         'link' => $this->url->link($route, 'lang=' . $language['code'] . $extra_link . '&token=' . $this->session->data['token'], 'SSL')
                     );
                 }
-            } else {
-                $data['languages'] = '';
             }
 
             $this->load->language('user/user');
@@ -185,7 +189,7 @@ class ControllerCommonHeader extends Controller {
 
             // Themes
             $data['themes'][] = array(
-                'theme'       => 'advanced',
+                'theme'      => 'advanced',
                 'text'       => $this->language->get('text_theme_advanced'),
                 'link'       => $this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'].'&theme=advanced', 'SSL')
             );
@@ -199,7 +203,7 @@ class ControllerCommonHeader extends Controller {
                     'link'       => $this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'].'&theme=' . basename($template), 'SSL')
                 );
             }
-            
+
             $data['theme'] = $this->session->data['theme'];
 
             $this->load->language('common/menu');
@@ -209,6 +213,10 @@ class ControllerCommonHeader extends Controller {
             $this->load->model('tool/image');
 
             $user_info = $this->model_user_user->getUser($this->user->getId());
+
+            $data['name'] = '';
+            $data['image'] = '';
+            $data['basic_mode_message'] = 'hide';
 
             if ($user_info) {
                 if (!empty($user_info['firstname'])) {
@@ -224,14 +232,10 @@ class ControllerCommonHeader extends Controller {
                 } else {
                     $data['image'] = 'https://www.gravatar.com/avatar/' . md5(strtolower($user_info['email'])).'?size=45&d=mm';
                 }
-                
+
                 $user_params =  json_decode($user_info['params'], true);
-                
+
                 $data['basic_mode_message'] = isset($user_params['basic_mode_message']) ? $user_params['basic_mode_message'] : 'show';
-            } else {
-                $data['name'] = '';
-                $data['image'] = '';
-                $data['basic_mode_message'] = 'hide';
             }
 
             $data['url_user'] = $this->url->link('user/user/edit', 'user_id='.$this->user->getId().'&token=' . $this->session->data['token'], 'SSL');
@@ -250,8 +254,11 @@ class ControllerCommonHeader extends Controller {
             $data['show_menu'] = (isset($this->session->data['show_menu']) && $this->session->data['show_menu'] == 'right') ? 'right' : 'left';
         }
 
-        $data['sitename'] = (strlen($this->config->get('config_name')) > 14) ? substr($this->config->get('config_name'),0,14) . "..." : $this->config->get('config_name');
-        
+        // Allow 3rd parties to interfere
+        $this->trigger->fire('post.load.header', array(&$data));
+
+        $data['sitename'] = (strlen($this->config->get('config_name')) > 14) ? substr($this->config->get('config_name'), 0, 14) . "..." : $this->config->get('config_name');
+
         $data['site_url'] = ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG;
 
         $data['bootstrap_select_lang'] = '';
@@ -277,7 +284,7 @@ class ControllerCommonHeader extends Controller {
         if (array_key_exists($this->session->data['admin_language'], $moment_special)) {
             $data['moment_lang'] = $moment_special[$this->session->data['admin_language']];
         }
-        
+
         $data['search'] = $this->load->controller('search/search');
 
         return $this->load->view('common/header.tpl', $data);

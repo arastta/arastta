@@ -11,6 +11,9 @@ $_['heading_title']     = 'Affiliate Commission Report';
 
 // Text
 $_['text_list']         = 'Affiliate Commission List';
+$_['text_sale']         = 'Sales';
+$_['text_order']        = 'Orders';
+$_['text_commission']   = 'Commission';
 
 // Column
 $_['column_affiliate']  = 'Affiliate Name';

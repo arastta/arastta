@@ -30,7 +30,7 @@ class ControllerExtensionExtension extends Controller
         $this->load->model('setting/setting');
         $this->load->model('extension/marketplace');
 
-        $extension_types = array('captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total', 'twofactorauth');
+        $extension_types = array('antifraud', 'analytics', 'captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total', 'twofactorauth');
 
         $addons = $this->model_extension_marketplace->getAddons();
         $extensions = $this->model_extension_extension->getDiscoverExtensions();
@@ -244,6 +244,12 @@ class ControllerExtensionExtension extends Controller
                 case 'twofactorauth':
                     $cat_id = 95;
                     break;
+                case 'analytics':
+                    $cat_id = 97;
+                    break;
+                case 'antifraud':
+                    $cat_id = 98;
+                    break;
                 case 'other':
                     $cat_id = 75;
                     break;
@@ -279,7 +285,7 @@ class ControllerExtensionExtension extends Controller
         $results = $this->model_extension_extension->getExtensions($filter_data);
 
         foreach ($results as $result) {
-            $status = $this->config->get($result['code'] . '_status');
+            $status = $this->config->get($result['code'] . '_status', $this->config->get($result['code'] . '_' .$result['type'] . '_status'));
 
             // Happens when there is db record
             if (is_null($status)) {

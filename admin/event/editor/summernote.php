@@ -27,7 +27,7 @@ class EventEditorSummernote extends Event
 
     public $other_options = array();
 
-    public function preAdminEditor()
+    public function preLoadHeader($data)
     {
         $editor = $this->config->get('config_text_editor');
 
@@ -116,6 +116,6 @@ class EventEditorSummernote extends Event
         $script .= "   imageDialog();";
         $script .= "}" . chr(9) . chr(9);
     
-        $this->document->addScriptDeclarations($script);
+        $this->document->addScriptDeclaration($script);
     }
 }
