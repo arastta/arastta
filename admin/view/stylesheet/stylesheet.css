@@ -660,9 +660,10 @@ a, div {
 
 /* footer */
 #footer {
-    bottom: 0;
-    width:100%;
-    position: absolute;
+    bottom: 15px;
+    position: relative;
+    background: #f5f5f5;
+    overflow: hidden;
 }
 
 .rotate-collapse{
