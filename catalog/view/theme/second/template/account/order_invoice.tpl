@@ -16,7 +16,11 @@
         <?php foreach ($orders as $order) { ?>
         <div style="page-break-after: always;">
             <div class="col-lg-12 text-left">
+                <?php if ($order['invoice_number']) { ?>
                 <img src="image/<?php echo $logo; ?>" title="<?php echo $order['store_name']; ?>" alt="<?php echo $order['store_name']; ?>" class="img-responsive invoice-logo">
+                <?php } else { ?>
+                <h1><?php echo $text_invoice_proforma; ?></h1>
+                <?php } ?>
             </div>
             <div class="col-lg-12">
                 <table class="table table-bordered">
@@ -42,8 +46,10 @@
                             <b><?php echo $text_website; ?></b> <a href="<?php echo $order['store_url']; ?>"><?php echo $order['store_url']; ?></a>
                         </td>
                         <td class="invoice-50">
+                            <?php if ($order['invoice_number']) { ?>
                             <b><?php echo $text_invoice_no; ?></b> <?php echo $order['invoice_number']; ?><br />
                             <b><?php echo $text_invoice_date; ?></b> <?php echo $order['invoice_date']; ?><br />
+                            <?php } ?>
                             <b><?php echo $text_order_id; ?></b> <?php echo $order['order_id']; ?><br />
                             <b><?php echo $text_order_date; ?></b> <?php echo $order['order_date']; ?><br />
                             <b><?php echo $text_payment_method; ?></b> <?php echo $order['payment_method']; ?><br />

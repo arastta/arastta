@@ -323,7 +323,7 @@ class ControllerSaleOrder extends Controller {
         $data['button_delete'] = $this->language->get('button_delete');
         $data['button_filter'] = $this->language->get('button_filter');
         $data['button_show_filter'] = $this->language->get('button_show_filter');
-        $data['button_hide_filter'] = $this->language->get('button_hide_filter');        
+        $data['button_hide_filter'] = $this->language->get('button_hide_filter');
         $data['button_view'] = $this->language->get('button_view');
 
         $data['token'] = $this->session->data['token'];
@@ -1104,8 +1104,8 @@ class ControllerSaleOrder extends Controller {
             $data['fax'] = $order_info['fax'];
 
             $data['account_custom_field'] = $order_info['custom_field'];
-        
-            // Uploaded files			
+
+            // Uploaded files
             $this->load->model('tool/upload');
 
             // Custom Fields
@@ -1356,12 +1356,12 @@ class ControllerSaleOrder extends Controller {
                 }
 
                 $data['products'][] = array(
-                    'order_product_id' => $product['order_product_id'],
-                    'product_id'       => $product['product_id'],
+                    'order_product_id'    => $product['order_product_id'],
+                    'product_id'          => $product['product_id'],
                     'name'                => $product['name'],
                     'model'               => $product['model'],
                     'option'              => $option_data,
-                    'quantity'           => $product['quantity'],
+                    'quantity'            => $product['quantity'],
                     'price'               => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
                     'total'               => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
                     'href'                => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL')
@@ -2152,6 +2152,8 @@ class ControllerSaleOrder extends Controller {
             $app->request->post['selected'] = $selected;
         }
 
+        $app->request->post['proforma'] = true;
+
         $app->ecommerce();
 
         if (!empty($customer_info)) {
@@ -2335,7 +2337,7 @@ class ControllerSaleOrder extends Controller {
                 }
 
                 $data['orders'][] = array(
-                    'order_id'             => $order_id,
+                    'order_id'           => $order_id,
                     'invoice_no'         => $invoice_no,
                     'date_added'         => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
                     'store_name'         => $order_info['store_name'],
@@ -2408,7 +2410,7 @@ class ControllerSaleOrder extends Controller {
             $response['error'] = $this->error;
             unset($this->error);
 
-            $json = json_encode($response);        
+            $json = json_encode($response);
         }
 
         $this->response->addHeader('Content-Type: application/json');

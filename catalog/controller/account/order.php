@@ -542,6 +542,16 @@ class ControllerAccountOrder extends Controller {
             $order_info = $this->model_account_order->getOrder($order_id);
             $invoice_info = $this->model_account_order->getOrderInvoice($order_id);
 
+            if (empty($invoice_info) && !empty($this->request->post['proforma'])) {
+                $invoice_info = array(
+                    'invoice_id'   => 0,
+                    'order_id'     => $order_id,
+                    'invoice_date' => date('Y-m-d H:i:s')
+                );
+
+                $proforma = true;
+            }
+
             if ($order_info && $invoice_info) {
                 $store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
 
@@ -558,6 +568,10 @@ class ControllerAccountOrder extends Controller {
                 }
 
                 $invoice_number = $order_info['invoice_prefix'] . $order_info['invoice_no'];
+
+                if (isset($proforma)) {
+                    $invoice_number = false;
+                }
 
                 if ($order_info['payment_address_format']) {
                     $format = $order_info['payment_address_format'];
@@ -731,6 +745,10 @@ class ControllerAccountOrder extends Controller {
         $dest = !empty($this->request->get['dest']) ? $this->request->get['dest'] : 'D';
 
         $file_name = $invoice_number . '.pdf';
+
+        if (isset($proforma)) {
+            $file_name = $this->language->get('text_invoice_proforma') . ' ' . date($this->language->get('date_format_short'), strtotime($invoice_info['invoice_date'])) . '.pdf';
+        }
 
         // http://mpdf1.com/manual/index.php?tid=125
         switch ($dest) {
