@@ -23,6 +23,9 @@ $_['column_status']     = 'Status';
 $_['column_date_added'] = 'Date Added';
 $_['column_action']     = 'Action';
 
+// Button
+$_['button_upload']     = 'Upload Extension';
+
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify modifications!';
 $_['error_remove']      = 'Warning: Failed to remove file/directory "%s" !';

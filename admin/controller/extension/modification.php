@@ -367,6 +367,7 @@ class ControllerExtensionModification extends Controller {
 
         $data['refresh'] = $this->url->link('extension/modification/refresh', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $data['clear'] = $this->url->link('extension/modification/clear', 'token=' . $this->session->data['token'] . $url, 'SSL');
+        $data['upload'] = $this->url->link('extension/installer', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $data['delete'] = $this->url->link('extension/modification/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
         $data['modifications'] = array();
@@ -540,6 +541,7 @@ class ControllerExtensionModification extends Controller {
         $data['button_refresh'] = $this->language->get('button_refresh');
         $data['button_clear'] = $this->language->get('button_clear');
         $data['button_delete'] = $this->language->get('button_delete');
+        $data['button_upload'] = $this->language->get('button_upload');
         $data['button_link'] = $this->language->get('button_link');
         $data['button_enable'] = $this->language->get('button_enable');
         $data['button_disable'] = $this->language->get('button_disable');
