@@ -451,6 +451,21 @@ if (version_compare(VERSION, '1.5.0', '<')) {
         $user_group['permission']['access'][] = 'system/url_manager';
         $user_group['permission']['modify'][] = 'system/url_manager';
 
+        $user_group['permission']['access'][] = 'analytics/google';
+        $user_group['permission']['modify'][] = 'analytics/google';
+
+        $user_group['permission']['access'][] = 'analytics/woopra';
+        $user_group['permission']['modify'][] = 'analytics/woopra';
+
+        $user_group['permission']['access'][] = 'antifraud/maxmind';
+        $user_group['permission']['modify'][] = 'antifraud/maxmind';
+
+        $user_group['permission']['access'][] = 'captcha/basic';
+        $user_group['permission']['modify'][] = 'captcha/basic';
+
+        $user_group['permission']['access'][] = 'captcha/google';
+        $user_group['permission']['modify'][] = 'captcha/google';
+
         $this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
     }
     
@@ -475,4 +490,46 @@ if (version_compare(VERSION, '1.5.0', '<')) {
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_maintenance_login', `value` = '1'");
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_image_maintenance_width', `value` = '268'");
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_image_maintenance_height', `value` = '50'");
+    
+    // Update config for new extension types: analytics, anti-fraud, captcha
+    $this->load->model('setting/setting');
+    
+    $store_id = $this->config->get('config_store_id');
+    
+    if ($this->config->get('config_google_captcha_status')) {
+        $data = array();
+        $data['google_captcha_status'] = '1';
+        $data['google_captcha_public'] = $this->config->get('config_google_captcha_public');
+        $data['google_captcha_secret'] = $this->config->get('config_google_captcha_secret');
+        
+        $this->model_setting_setting->getSetting('google', $data, $store_id);
+        
+        $data = array();
+        $data['config_captcha'] = 'google';
+        
+        $this->model_setting_setting->getSetting('config', $data, $store_id);
+    } else {
+        $data = array();
+        $data['config_captcha'] = '';
+        
+        $this->model_setting_setting->getSetting('config', $data, $store_id);
+    }
+    
+    if ($this->config->get('config_google_analytics_status')) {
+        $data = array();
+        $data['google_analytics_status'] = '1';
+        $data['google_analytics'] = $this->config->get('config_google_analytics');
+        
+        $this->model_setting_setting->getSetting('google', $data, $store_id);
+    }
+    
+    if ($this->config->get('config_fraud_detection')) {
+        $data = array();
+        $data['maxmind_antifraud_status'] = '1';
+        $data['maxmind_antifraud_key'] = $this->config->get('config_fraud_key');
+        $data['maxmind_antifraud_score'] = $this->config->get('config_fraud_score');
+        $data['maxmind_antifraud_status_id'] = $this->config->get('config_fraud_status_id');
+        
+        $this->model_setting_setting->getSetting('maxmind', $data, $store_id);
+    }
 }
