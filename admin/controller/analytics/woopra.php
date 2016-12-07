@@ -32,7 +32,7 @@ class ControllerAnalyticsWoopra extends Controller
 
             $this->response->redirect($this->url->link('extension/extension', 'filter_type=analytics&token=' . $this->session->data['token'], 'SSL'));
         }
-        
+
         // Add all language text
         $data = $this->language->all();
 
@@ -47,14 +47,14 @@ class ControllerAnalyticsWoopra extends Controller
         $data['cancel'] = $this->url->link('extension/extension', 'filter_type=analytics&token=' . $this->session->data['token'], 'SSL');
 
         $data['form_fields'] = $this->getFormFields($data['action']);
-        
+
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->output('analytics/woopra', $data));
     }
-    
+
     protected function getFormFields($action)
     {
         $action = str_replace('amp;', '', $action);
@@ -83,7 +83,7 @@ class ControllerAnalyticsWoopra extends Controller
         if (!$this->user->hasPermission('modify', 'analytics/woopra')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
-        
+
         return !$this->error;
     }
 }

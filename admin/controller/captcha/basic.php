@@ -32,7 +32,7 @@ class ControllerCaptchaBasic extends Controller
 
             $this->response->redirect($this->url->link('extension/extension', 'filter_type=captcha&token=' . $this->session->data['token'], 'SSL'));
         }
-        
+
         // Add all language text
         $data = $this->language->all();
 
@@ -47,14 +47,14 @@ class ControllerCaptchaBasic extends Controller
         $data['cancel'] = $this->url->link('extension/extension', 'filter_type=captcha&token=' . $this->session->data['token'], 'SSL');
 
         $data['form_fields'] = $this->getFormFields($data['action']);
-        
+
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->output('captcha/basic', $data));
     }
-    
+
     protected function getFormFields($action)
     {
         $action = str_replace('amp;', '', $action);
@@ -79,7 +79,7 @@ class ControllerCaptchaBasic extends Controller
         if (!$this->user->hasPermission('modify', 'captcha/basic')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
-        
+
         return !$this->error;
     }
 }

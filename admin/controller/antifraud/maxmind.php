@@ -32,7 +32,7 @@ class ControllerAntifraudMaxmind extends Controller
 
             $this->response->redirect($this->url->link('extension/extension', 'filter_type=antifraud&token=' . $this->session->data['token'], 'SSL'));
         }
-        
+
         // Add all language text
         $data = $this->language->all();
 
@@ -47,14 +47,14 @@ class ControllerAntifraudMaxmind extends Controller
         $data['cancel'] = $this->url->link('extension/extension', 'filter_type=antifraud&token=' . $this->session->data['token'], 'SSL');
 
         $data['form_fields'] = $this->getFormFields($data['action']);
-        
+
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->output('antifraud/maxmind', $data));
     }
-    
+
     protected function getFormFields($action)
     {
         $action = str_replace('amp;', '', $action);
@@ -112,7 +112,7 @@ class ControllerAntifraudMaxmind extends Controller
         if (empty($this->request->post['maxmind_antifraud_score'])) {
             $this->error['warning'] = $this->language->get('error_score');
         }
-        
+
         return !$this->error;
     }
 }

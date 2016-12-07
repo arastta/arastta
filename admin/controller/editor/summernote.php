@@ -33,7 +33,7 @@ class ControllerEditorSummernote extends Controller
 
             $this->response->redirect($this->url->link('extension/extension', 'filter_type=editor&token=' . $this->session->data['token'], 'SSL'));
         }
-        
+
         // Add all language text
         $data = $this->language->all();
 
@@ -48,14 +48,14 @@ class ControllerEditorSummernote extends Controller
         $data['cancel'] = $this->url->link('extension/extension', 'filter_type=editor&token=' . $this->session->data['token'], 'SSL');
 
         $data['form_fields'] = $this->getFormFields($data['action']);
-        
+
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->view('editor/summernote.tpl', $data));
     }
-    
+
     protected function getFormFields($action)
     {
         $action = str_replace('amp;', '', $action);
@@ -178,7 +178,7 @@ class ControllerEditorSummernote extends Controller
         if (!$this->user->hasPermission('modify', 'editor/summernote')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
-        
+
         $this->load->model('extension/editor');
 
         $result = $this->model_extension_editor->check('summernote', $this->request->post);
@@ -186,7 +186,7 @@ class ControllerEditorSummernote extends Controller
         if (!$result) {
             $this->error['warning'] = $this->session->data['warning'];
         }
-        
+
         return !$this->error;
     }
 }
