@@ -8,6 +8,8 @@
 
 class ControllerReportGraph extends Controller
 {
+    public $month = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+
     public function index($graph)
     {
         $this->document->addStyle('view/javascript/jquery/daterangepicker/daterangepicker-bs3.css');
@@ -193,10 +195,12 @@ class ControllerReportGraph extends Controller
             case 'week':
                 $results    = $this->{$modelName}->{$modelFunction}($get);
                 $str_date   = substr($date_start, 0, 10);
+                $diff       = floor($diff / 7) + 1;
+
                 $order_data = array();
 
                 for ($i = 0; $i < $diff; $i++) {
-                    $date = date_create($str_date)->modify('+' . $i . ' day')->format('Y-m-d');
+                    $date = date_create($str_date)->modify('+' . $i . ' week')->format('Y-m-d');
 
                     $order_data[$date] = array(
                         'week'  => $date,
@@ -216,10 +220,18 @@ class ControllerReportGraph extends Controller
                     $str_date = substr($result['date_start'], 0, 10);
                     $date = date_create($str_date)->format('Y-m-d');
 
-                    $order_data[$date] = array(
-                        'week'  => $date,
-                        'total' => $total
-                    );
+                    $old_date = '';
+
+                    foreach ($order_data as $key => $value) {
+                        if ($old_date < $date && $key >= $date) {
+                            $order_data[$key] = array(
+                                'week'  => $key,
+                                'total' => $total
+                            );
+                        }
+
+                        $old_date = $key;
+                    }
                 }
 
                 $i = $result_total = 0;
@@ -253,7 +265,7 @@ class ControllerReportGraph extends Controller
                     }
 
                     $str_date = substr($result['date_start'], 0, 10);
-                    $date = date_create($str_date)->format('Y-m-d');
+                    $date = $this->month[date_create($str_date)->format('n') - 1] . date_create($str_date)->format(' Y');
 
                     $order_data[$date] = array(
                         'month' => $date,
@@ -367,14 +379,12 @@ class ControllerReportGraph extends Controller
         return $json;
     }
 
-    protected function getMonths($date1, $date2)
+    protected function getMonths($start_date, $end_date)
     {
-        $time1 = strtotime($date1);
-        $time2 = strtotime($date2);
+        $time1 = strtotime($start_date);
+        $time2 = strtotime($end_date);
 
         $my = date('n-Y', $time2);
-
-        $mesi = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
         $months = array();
 
@@ -385,7 +395,7 @@ class ControllerReportGraph extends Controller
                 $f = date('n-Y', $time1);
 
                 if (date('n-Y', $time1) != $my && ($time1 < $time2)) {
-                    $str_mese = $mesi[(date('n', $time1) - 1)];
+                    $str_mese = $this->month[(date('n', $time1) - 1)];
 
                     $months[] = $str_mese . " " . date('Y', $time1);
                 }
@@ -394,7 +404,7 @@ class ControllerReportGraph extends Controller
             $time1 = strtotime((date('Y-n-d', $time1) . ' +15days'));
         }
 
-        $str_mese = $mesi[(date('n', $time2) - 1)];
+        $str_mese = $this->month[(date('n', $time2) - 1)];
 
         $months[] = $str_mese . " " . date('Y', $time2);
 
