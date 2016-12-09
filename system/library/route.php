@@ -411,6 +411,10 @@ class Route extends Object
             $status = true;
         }
 
+        if (($status == false) && defined('IS_ADMIN')) {
+            $status = true;
+        }
+
         return $status;
     }
 }
