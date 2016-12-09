@@ -209,7 +209,7 @@ class ControllerCommonHeader extends Controller {
             case 'category':
                 $route = 'product/category';
 
-                if (!empty($child)) {
+                if (!empty($child) && !empty($parent['link'])) {
                     $args = 'path=' . $parent['link'] . '_' . $item['link'];
                 } else {
                     $args = 'path=' . $item['link'];
