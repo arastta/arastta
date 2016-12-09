@@ -28,11 +28,11 @@ final class Version extends Object
 
     protected $build = '';
 
-    protected $status = 'RC 1';
+    protected $status = 'RC 2';
 
-    protected $date = '29-November-2016';
+    protected $date = '09-December-2016';
 
-    protected $time = '15:00';
+    protected $time = '12:00';
 
     protected $zone = 'GMT +3';
 
