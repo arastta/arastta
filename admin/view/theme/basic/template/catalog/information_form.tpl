@@ -190,6 +190,8 @@
                                                     <input type="hidden" name="seo_url[<?php echo $language['language_id']; ?>]" value="<?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?>" placeholder="<?php echo $entry_seo_url; ?>" id="input-seo-url-<?php echo $language['language_id']; ?>" class="form-control" />
                                                 </div>
                                             </div>
+                                            <?php } else { ?>
+                                            <input type="hidden" name="seo_url[<?php echo $language['language_id']; ?>]" value="" placeholder="<?php echo $entry_seo_url; ?>" id="input-seo-url-<?php echo $language['language_id']; ?>" class="form-control" />
                                             <?php } ?>
                                             <div class="form-group">
                                                 <label class="col-sm-12" for="input-meta-description<?php echo $language['language_id']; ?>"><?php echo $entry_meta_description; ?></label>
@@ -225,12 +227,6 @@
             <?php } ?>
             <?php } ?>
             <input type="hidden" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
-
-
-
-
-
-
             <select name="information_layout[0]" class="form-control hidden">
                 <option value=""></option>
                 <?php foreach ($layouts as $layout) { ?>

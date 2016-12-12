@@ -302,28 +302,28 @@
                                         <span data-toggle="tooltip" title="<?php echo $help_tag; ?>"><?php echo $entry_tag; ?></span>
                                     </label>
                                     <div class="col-sm-12">
-                                        <ul class="nav nav-pills" id="tag-language">
+                                        <ul class="nav nav-tabs" id="tag-language">
                                             <?php foreach ($languages as $language) { ?>
                                             <li><a href="#tag-language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
                                             <?php } ?>
                                         </ul>
                                         <div class="tab-content">
                                             <?php foreach ($languages as $language) { ?>
-                                                <div class="tab-pane" id="tag-language<?php echo $language['language_id']; ?>">
-                                                    <div class="view-all pull-right">
-                                                        <b><a href="<?php echo $show_all[$language['language_id']]['tags']; ?>" class="popup"><?php echo $entry_view_all; ?></a></b>
-                                                    </div>
-                                                    <input type="text" name="tag" value="" placeholder="<?php echo $entry_tag; ?>" id="input-tag<?php echo $language['language_id']; ?>" class="form-control input-full-width" style="margin-bottom: 5px !important;" />
-                                                    <?php if (!empty($product_description[$language['language_id']]['tag'])) { ?>
-                                                    <div id="product-tag-<?php echo $language['language_id']; ?>" class="well well-sm" style="overflow: auto;">
-                                                        <?php foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
-                                                        <div id="product-tag<?php echo $tag_key; ?>"><i class="fa fa-minus-circle"></i> <?php echo $tag_value; ?>
-                                                            <input type="hidden" name="product_tag[<?php echo $language['language_id']; ?>][]" value="<?php echo $tag_value; ?>" />
-                                                        </div>
-                                                        <?php } ?>
+                                            <div class="tab-pane" id="tag-language<?php echo $language['language_id']; ?>">
+                                                <div class="view-all pull-right">
+                                                    <b><a href="<?php echo $show_all[$language['language_id']]['tags']; ?>" class="popup"><?php echo $entry_view_all; ?></a></b>
+                                                </div>
+                                                <input type="text" name="tag" value="" placeholder="<?php echo $entry_tag; ?>" id="input-tag<?php echo $language['language_id']; ?>" data-lang="<?php echo $language['language_id']; ?>" class="form-control input-full-width" style="margin-bottom: 5px !important;" />
+                                                <?php if (!empty($product_description[$language['language_id']]['tag'])) { ?>
+                                                <div id="product-tag-<?php echo $language['language_id']; ?>" class="well well-sm" style="overflow: auto;">
+                                                    <?php foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
+                                                    <div id="product-tag<?php echo $tag_key; ?>"><i class="fa fa-minus-circle"></i> <?php echo $tag_value; ?>
+                                                        <input type="hidden" name="product_tag[<?php echo $language['language_id']; ?>][]" value="<?php echo $tag_value; ?>" />
                                                     </div>
                                                     <?php } ?>
                                                 </div>
+                                                <?php } ?>
+                                            </div>
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -603,6 +603,8 @@
                                                     <input type="hidden" name="seo_url[<?php echo $language['language_id']; ?>]" value="<?php echo isset($seo_url[$language['language_id']]) ? $seo_url[$language['language_id']] : ''; ?>" placeholder="<?php echo $entry_seo_url; ?>" id="input-seo-url-<?php echo $language['language_id']; ?>" class="form-control" />
                                                 </div>
                                             </div>
+                                            <?php } else { ?>
+                                            <input type="hidden" name="seo_url[<?php echo $language['language_id']; ?>]" value="" placeholder="<?php echo $entry_seo_url; ?>" id="input-seo-url-<?php echo $language['language_id']; ?>" class="form-control" />
                                             <?php } ?>
                                             <div class="form-group">
                                                 <label class="col-sm-12" for="input-meta-description<?php echo $language['language_id']; ?>"><?php echo $entry_meta_description; ?></label>
@@ -892,6 +894,8 @@
         // Tag
         $('input[name=\'tag\']').autocomplete({
             'source': function(request, response) {
+                var input = this.element;
+
                 $.ajax({
                     url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&tag_name=' +  encodeURIComponent(request),
                     type: 'post',
@@ -1293,6 +1297,7 @@
     <script type="text/javascript"><!--
         $('#language a:first').tab('show');
         $('#option a:first').tab('show');
+        $('#tag-language a:first').tab('show');
         $('#seo-language a:first').tab('show');
         //--></script></div>
     <script type="text/javascript"><!--
