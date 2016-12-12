@@ -73,7 +73,7 @@ class ControllerSettingSetting extends Controller {
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'new') {
                  $this->response->redirect($this->url->link('setting/store/add', 'token=' . $this->session->data['token'], 'SSL'));
             }
-            
+
             $this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'));
         }
 
@@ -155,13 +155,13 @@ class ControllerSettingSetting extends Controller {
         } else {
             $data['error_customer_group_display'] = '';
         }
-        
+
         if (isset($this->error['login_attempts'])) {
             $data['error_login_attempts'] = $this->error['login_attempts'];
         } else {
             $data['error_login_attempts'] = '';
-        }    
-        
+        }
+
         if (isset($this->error['voucher_min'])) {
             $data['error_voucher_min'] = $this->error['voucher_min'];
         } else {
@@ -784,7 +784,7 @@ class ControllerSettingSetting extends Controller {
         } else {
             $data['config_stock_checkout'] = $this->config->get('config_stock_checkout');
         }
-        
+
         if (isset($this->request->post['config_stock_mail'])) {
             $data['config_stock_mail'] = $this->request->post['config_stock_mail'];
         } elseif ($this->config->has('config_stock_mail')) {
@@ -848,7 +848,7 @@ class ControllerSettingSetting extends Controller {
         } else {
             $data['config_return_status_id'] = $this->config->get('config_return_status_id');
         }
-    
+
         if (isset($this->request->post['config_return_mail'])) {
             $data['config_return_mail'] = $this->request->post['config_return_mail'];
         } elseif ($this->config->has('config_return_mail')) {
@@ -1014,6 +1014,7 @@ class ControllerSettingSetting extends Controller {
         } else {
             $data['config_image_maintenance_width'] = $this->config->get('config_image_maintenance_width');
         }
+
         if (isset($this->request->post['config_image_maintenance_height'])) {
             $data['config_image_maintenance_height'] = $this->request->post['config_image_maintenance_height'];
         } else {
@@ -1285,6 +1286,8 @@ class ControllerSettingSetting extends Controller {
         // List of installed captcha extensions
         $this->load->model('extension/extension');
 
+        $data['captchas'] = array();
+
         $captchas = $this->model_extension_extension->getInstalled('captcha');
 
         foreach ($captchas as $code) {
@@ -1363,16 +1366,19 @@ class ControllerSettingSetting extends Controller {
         } else {
             $data['config_maintenance'] = $this->config->get('config_maintenance');
         }
+
         if (isset($this->request->post['config_maintenance_message'])) {
             $data['config_maintenance_message'] = $this->request->post['config_maintenance_message'];
         } else {
             $data['config_maintenance_message'] = $this->config->get('config_maintenance_message');
         }
+
         if (isset($this->request->post['config_maintenance_image'])) {
             $data['config_maintenance_image'] = $this->request->post['config_maintenance_image'];
         } else {
             $data['config_maintenance_image'] = $this->config->get('config_maintenance_image');
         }
+
         if (isset($this->request->post['config_maintenance_image']) && is_file(DIR_IMAGE . $this->request->post['config_maintenance_image'])) {
             $data['maintenance_image'] = $this->model_tool_image->resize($this->request->post['config_maintenance_image'], 100, 100);
         } elseif ($this->config->get('config_maintenance_image') && is_file(DIR_IMAGE . $this->config->get('config_maintenance_image'))) {
@@ -1380,12 +1386,13 @@ class ControllerSettingSetting extends Controller {
         } else {
             $data['maintenance_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
         }
+
         if (isset($this->request->post['config_maintenance_login'])) {
             $data['config_maintenance_login'] = $this->request->post['config_maintenance_login'];
         } else {
             $data['config_maintenance_login'] = $this->config->get('config_maintenance_login');
         }
-        
+
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
@@ -1421,15 +1428,15 @@ class ControllerSettingSetting extends Controller {
         if (!$this->request->post['config_meta_title']) {
             $this->error['meta_title'] = $this->language->get('error_meta_title');
         }
-        
+
         if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
             $this->error['customer_group_display'] = $this->language->get('error_customer_group_display');
         }
-        
+
         if ($this->request->post['config_login_attempts'] < 1) {
             $this->error['login_attempts'] = $this->language->get('error_login_attempts');
         }
-        
+
         if (!$this->request->post['config_voucher_min']) {
             $this->error['voucher_min'] = $this->language->get('error_voucher_min');
         }
@@ -1576,7 +1583,7 @@ class ControllerSettingSetting extends Controller {
 
         if ($this->cache->clear()) {
             $json['message'] = $this->language->get('text_cache_cleared');
-        }else {
+        } else {
             $json['error'] = $this->language->get('error_cache_not_cleared');
         }
 
