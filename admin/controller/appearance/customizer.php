@@ -84,8 +84,10 @@ class ControllerAppearanceCustomizer extends Controller
             $data['button_back'] = $this->request->post['button_back'];
         } elseif (isset($this->request->get['button_back'])) {
             $data['button_back'] = base64_decode($this->request->get['button_back']);
-        } else {
+        } elseif (isset($this->request->server['HTTP_REFERER'])) {
             $data['button_back'] = $this->request->server['HTTP_REFERER'];
+        } else {
+            $data['button_back'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
         }
 
         if (isset($this->request->post['config_template'])) {
