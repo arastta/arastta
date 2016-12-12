@@ -173,7 +173,7 @@ class ControllerProductProduct extends Controller {
             }
 
             if (isset($this->request->get['filter'])) {
-                $url .= '&filter=' . $this->request->get['filter'];
+                $url .= '&filter=' . urldecode($this->request->get['filter']);
             }
 
             if (isset($this->request->get['manufacturer_id'])) {
@@ -511,7 +511,7 @@ class ControllerProductProduct extends Controller {
             }
 
             if (isset($this->request->get['filter'])) {
-                $url .= '&filter=' . $this->request->get['filter'];
+                $url .= '&filter=' . urldecode($this->request->get['filter']);
             }
 
             if (isset($this->request->get['manufacturer_id'])) {
