@@ -77,9 +77,9 @@
                                             <input type="text" name="tag" value="" placeholder="<?php echo $entry_tag; ?>" id="input-tag<?php echo $language['language_id']; ?>" class="form-control" />
                                             <div class="view-all"><a href="<?php echo $show_all[$language['language_id']]['tags']; ?>" class="popup"><?php echo $entry_view_all; ?></a></div>
                                             <?php if (!empty($product_description[$language['language_id']]['tag'])) { ?>
-                                            <div id="product-tag" class="well well-sm" style="overflow: auto;">
+                                            <div id="product-tag-<?php echo $language['language_id']; ?>" class="well well-sm" style="overflow: auto;">
                                                 <?php foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
-                                                <div id="product-tag<?php echo $tag_key; ?>"><i class="fa fa-minus-circle"></i> <?php echo $tag_value; ?>
+                                                <div id="product-tag-<?php echo $tag_key; ?>"><i class="fa fa-minus-circle"></i> <?php echo $tag_value; ?>
                                                     <input type="hidden" name="product_tag[<?php echo $language['language_id']; ?>][]" value="<?php echo $tag_value; ?>" />
                                                 </div>
                                                 <?php } ?>
@@ -1049,17 +1049,19 @@
             });
         },
         'select': function(item) {
-            $('input[name=\'tag\']').val('');
+
 
             $('#product-tag' + item['value']).remove();
 
-            if (!$('#product-tag').length) {
-                $(this).parent().append('<div id="product-tag" class="well well-sm" style="overflow: auto;"></div>');
+            if (!$('#product-tag-' + tag_language).length) {
+                $(this).after('<div id="product-tag-' + tag_language + '" class="well well-sm" style="overflow: auto;"></div>');
             }
 
             tag_language = parseInt($(this).attr('id').replace('input-tag',''));
 
-            $('#product-tag').append('<div id="product-tag' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['value'] + '<input type="hidden" name="product_tag[' + tag_language  +'][]" value="' + item['value'] + '" /></div>');
+            $('#product-tag-' + tag_language).append('<div id="product-tag' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['value'] + '<input type="hidden" name="product_tag[' + tag_language  +'][]" value="' + item['value'] + '" /></div>');
+
+            $(this).val('');
         }
     });
 
@@ -1080,14 +1082,18 @@
 
             $('#product-tag' + new_tag).remove();
 
-            if (!$('#product-tag').length) {
-                $(this).parent().append('<div id="product-tag" class="well well-sm" style="overflow: auto;"></div>');
-            }
+
+
+
 
 
             tag_language = parseInt($(this).attr('id').replace('input-tag',''));
 
-            tags = $('#product-tag input').serializeArray();
+            if (!$('#product-tag-' + tag_language).length) {
+                $(this).parent().append('<div id="product-tag-' + tag_language + '" class="well well-sm" style="overflow: auto;"></div>');
+            }
+
+            tags = $('#product-tag-' + tag_language + ' input').serializeArray();
 
             $.each(tags, function(key, tag) {
                 if (tag.value == new_tag) {
@@ -1098,7 +1104,7 @@
             });
 
             if (add_tag) {
-                $('#product-tag').append('<div id="product-tag' + new_tag + '"><i class="fa fa-minus-circle"></i> ' + new_tag + '<input type="hidden" name="product_tag[' + tag_language  +'][]" value="' + new_tag + '" /></div>');
+                $('#product-tag-' + tag_language).append('<div id="product-tag' + new_tag + '"><i class="fa fa-minus-circle"></i> ' + new_tag + '<input type="hidden" name="product_tag[' + tag_language  +'][]" value="' + new_tag + '" /></div>');
             } else {
                 $('input[name=\'tag\']').attr({
                     title                : '<?php echo $error_add_same_tag; ?>',

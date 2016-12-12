@@ -937,17 +937,17 @@
                 });
             },
             'select': function(item) {
-                $('input[name=\'tag\']').val('');
-
                 $('#product-tag' + item['value']).remove();
 
                 tag_language = parseInt($(this).attr('id').replace('input-tag',''));
 
                 if (!$('#product-tag-' + tag_language).length) {
-                    $(this).parent().append('<div id="product-tag' + tag_language + '" class="well well-sm" style="overflow: auto;"></div>');
+                    $(this).after('<div id="product-tag-' + tag_language + '" class="well well-sm" style="overflow: auto;"></div>');
                 }
 
                 $('#product-tag-' + tag_language).append('<div id="product-tag' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['value'] + '<input type="hidden" name="product_tag[' + tag_language  +'][]" value="' + item['value'] + '" /></div>');
+
+                $(this).val('');
             }
         });
 
@@ -973,7 +973,8 @@
                 if (!$('#product-tag-' + tag_language).length) {
                     $(this).parent().append('<div id="product-tag' + tag_language + '" class="well well-sm" style="overflow: auto;"></div>');
                 }
-                tags = $('#product-tag input').serializeArray();
+
+                tags = $('#product-tag-' + tag_language + ' input').serializeArray();
 
                 $.each(tags, function(key, tag) {
                     if (tag.value == new_tag) {
