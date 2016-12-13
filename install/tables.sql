@@ -2795,7 +2795,7 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (400, 0, 'config', 'config_meta_googlekey', '', 0),
 (401, 0, 'config', 'config_meta_alexakey', '', 0),
 (402, 0, 'config', 'config_captcha', 'basic', 0),
-(403, 0, 'config', 'basic_captcha_status', '1', 0),
+(403, 0, 'basic', 'basic_captcha_status', '1', 0),
 (404, 0, 'config', 'config_cache_storage', 'file', 0),
 (405, 0, 'config', 'config_cache_lifetime', '86400', 0),
 (406, 0, 'config', 'config_cache_clear', '1', 0),
