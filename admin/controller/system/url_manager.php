@@ -291,8 +291,6 @@ class ControllerSystemUrlmanager extends Controller
         $results = $this->model_system_url_manager->getAliases($filter_data);
 
         foreach ($results as $result) {
-            $query = str_replace('category_id', 'path', $result['query']);
-
             $type = $data['text_other'];
 
             if (strstr($result['query'], 'product_id=')) {
@@ -319,7 +317,7 @@ class ControllerSystemUrlmanager extends Controller
 
             $data['aliases'][] = array(
                 'url_alias_id'   => $result['url_alias_id'],
-                'query'          => $query,
+                'query'          => $result['query'],
                 'keyword'        => $result['keyword'],
                 'language_id'    => $result['language_id'],
                 'language_name'  => $language_name,
