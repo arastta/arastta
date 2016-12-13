@@ -51,4 +51,5 @@ $_['text_update_all']                       = 'All updates have been completed.'
 // Error
 $_['error_zip']                             = 'Warning: ZIP extension needs to be loaded on your server! Please, ask your hosting company for further help.';
 $_['error_xml']                             = 'Warning: XML extension needs to be loaded on your server! Please, ask your hosting company for further help.';
+$_['error_upload']                          = 'Warning: Upload directory needs to be writable! Please, ask your hosting company for further help.';
 $_['error_permission']                      = 'Warning: You have no permission to apply updates.';
