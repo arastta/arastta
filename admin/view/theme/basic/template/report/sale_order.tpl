@@ -3,7 +3,7 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
-                <button id="button-print" data-toggle="tooltip" title="<?php echo $button_output; ?>" class="btn btn-default"><i class="fa fa-print"></i></button>
+                <button id="button-output" data-toggle="tooltip" title="<?php echo $button_output; ?>" class="btn btn-default"><i class="fa fa-print"></i></button>
                 <button id="button-export" data-toggle="tooltip" title="<?php echo $button_export; ?>" class="btn btn-default"><i class="fa fa-file-excel-o"></i></button>
             </div>
             <h1><?php echo $heading_title; ?></h1>

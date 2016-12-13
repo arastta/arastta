@@ -27,7 +27,7 @@ class ControllerReportGraph extends Controller
 
         $this->document->addScriptDeclaration($this->script($data));
 
-        return $this->load->view('common/graph.tpl', $data);
+        return $this->load->view('report/graph.tpl', $data);
     }
 
     public function graph()
@@ -69,7 +69,47 @@ class ControllerReportGraph extends Controller
 
     public function output()
     {
-        //return $this->load->controller('report/sale_order');
+        $route = $this->request->post['route'];
+        $model = $this->request->post['model'];
+
+        $modelFunction = 'get' . ucfirst($this->request->post['function']);
+
+        $gets = explode('&amp;', $this->request->post['get']);
+
+        unset($gets[0]);
+
+        $get = array();
+
+        foreach ($gets as $value) {
+            $result = explode('=', $value);
+
+            $get[$result[0]] = $result[1];
+        }
+
+        $this->load->language($route);
+
+        $this->load->model('report/graph');
+        $this->load->model('report/' . $model);
+
+        $modelName = 'model_report_' . $model;
+
+        #Get All Language Text
+        $data = $this->language->all();
+
+        $data['title'] = $this->language->get('heading_title');
+
+        if ($this->request->server['HTTPS']) {
+            $data['base'] = HTTPS_SERVER;
+        } else {
+            $data['base'] = HTTP_SERVER;
+        }
+
+        $data['direction'] = $this->language->get('direction');
+        $data['lang'] = $this->language->get('code');
+
+        $data['results'] = $this->{$modelName}->{$modelFunction}($get);
+
+        $this->response->setOutput($this->load->view('report/output.tpl', $data));
     }
 
     public function export()
@@ -604,6 +644,22 @@ class ControllerReportGraph extends Controller
         $script .= '    $(\'body\').append(html);' . chr(13);
         $script .= '' . chr(13);
         $script .= '    $(\'#form-export\').submit();' . chr(13);
+        $script .= '});' . chr(13);
+        $script .= '' . chr(13);
+
+        $script .= '$(document).delegate(\'#button-output\', \'click\', function() {' . chr(13);
+        $script .= '    route = getURLVar(\'route\');' . chr(13);
+        $script .= '' . chr(13);
+        $script .= '    html  = \'<form action="index.php?route=report/graph/output&token=\' +  getURLVar(\'token\') + \'" method="post" enctype="multipart/form-data" id="form-output" target="_blank" class="form-horizontal">\';' . chr(13);
+        $script .= '    html += \'   <input type="hidden" name="route" value="\' + route + \'" />\';' . chr(13);
+        $script .= '    html += \'   <input type="hidden" name="model" value="' . $value['model'] . '" />\';' . chr(13);
+        $script .= '    html += \'   <input type="hidden" name="function" value="' . $value['function'] . '" />\';' . chr(13);
+        $script .= '    html += \'   <input type="hidden" name="get" value="' . $value['link'] . '" />\';' . chr(13);
+        $script .= '    html += \'</form>\';' . chr(13);
+        $script .= '' . chr(13);
+        $script .= '    $(\'body\').append(html);' . chr(13);
+        $script .= '' . chr(13);
+        $script .= '    $(\'#form-output\').submit();' . chr(13);
         $script .= '});' . chr(13);
         $script .= '' . chr(13);
 
