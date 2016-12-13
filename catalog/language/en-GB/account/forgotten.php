@@ -21,4 +21,3 @@ $_['entry_email']     = 'E-Mail Address';
 
 // Error
 $_['error_email']     = 'Warning: The E-Mail Address was not found in our records, please try again!';
-$_['error_captcha']   = 'Warning: Verification code does not match the image!';
