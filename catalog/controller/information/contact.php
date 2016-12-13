@@ -6,8 +6,6 @@
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
 
-use Gregwar\Captcha\CaptchaBuilder;
-
 class ControllerInformationContact extends Controller {
     private $error = array();
 
