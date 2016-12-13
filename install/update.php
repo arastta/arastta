@@ -482,7 +482,7 @@ if (version_compare(VERSION, '1.5.0', '<')) {
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
     // Update stock_status table
-    $this->db->query("ALTER TABLE `" . DB_PREFIX . "stock_status` ADD `preorder` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `color`";
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "stock_status` ADD `preorder` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `color`");
 
     // Add maintenance display settings
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_maintenance_message', `value` = ''");
@@ -496,6 +496,8 @@ if (version_compare(VERSION, '1.5.0', '<')) {
     
     $store_id = $this->config->get('config_store_id');
     
+    $config = $this->model_setting_setting->getSetting('config', $store_id);
+    
     if ($this->config->get('config_google_captcha_status')) {
         $data = array();
         $data['google_captcha_status'] = '1';
@@ -504,15 +506,13 @@ if (version_compare(VERSION, '1.5.0', '<')) {
         
         $this->model_setting_setting->editSetting('google', $data, $store_id);
         
-        $data = array();
-        $data['config_captcha'] = 'google';
+        $config['config_captcha'] = 'google';
         
-        $this->model_setting_setting->editSetting('config', $data, $store_id);
+        $this->model_setting_setting->editSetting('config', $config, $store_id);
     } else {
-        $data = array();
-        $data['config_captcha'] = '';
+        $config['config_captcha'] = '';
         
-        $this->model_setting_setting->editSetting('config', $data, $store_id);
+        $this->model_setting_setting->editSetting('config', $config, $store_id);
     }
     
     if ($this->config->get('config_google_analytics_status')) {
