@@ -102,4 +102,51 @@ class App extends Object
 
         return true;
     }
+
+    public function checkSslRedirection()
+    {
+        // Don't touch Ajax requests
+        if ($this->request->isAjax()) {
+            return;
+        }
+
+        $redirect = false;
+        $ssl_required = false;
+
+        $config_secure = $this->config->get('config_secure');
+
+        if ($config_secure == 3) { // everywhere
+            $ssl_required = true;
+        } elseif (Client::isCatalog()) {
+            $secure_routes = array('account/account', 'checkout/checkout');
+
+            $this->trigger->fire('pre.app.sslredirection', array(&$secure_routes));
+
+            if ($config_secure == 2) { // catalog
+                $ssl_required = true;
+            } elseif (($config_secure == 1) && (isset($this->request->get['route']) && in_array($this->request->get['route'], $secure_routes))) { // checkout
+                $ssl_required = true;
+            }
+        }
+
+        // Config set as SSL but URI comes as http
+        if ($ssl_required && !$this->uri->isSsl()) {
+            $this->uri->setScheme('https');
+
+            $redirect = true;
+        }
+
+        // Config set as non-SSL but URI comes as https
+        if (!$ssl_required && $this->uri->isSsl()) {
+            $this->uri->setScheme('http');
+
+            $redirect = true;
+        }
+
+        if ($redirect == false) {
+            return;
+        }
+
+        $this->response->redirect($this->uri->toString(), 301);
+    }
 }

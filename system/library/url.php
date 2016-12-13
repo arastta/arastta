@@ -114,11 +114,9 @@ class Url extends Object {
 
             if ($config_secure == 3) { // everywhere
                 $ret = true;
-            }
-            else if (($config_secure == 2) and (Client::isCatalog())) { // catalog
+            } elseif (($config_secure == 2) && (Client::isCatalog())) { // catalog
                 $ret = true;
-            }
-            else if (($config_secure == 1) and (Client::isCatalog()) and ($secure == true)) { // checkout
+            } elseif (($config_secure == 1) && (Client::isCatalog()) && ($secure == true)) { // checkout
                 $ret = true;
             }
         }

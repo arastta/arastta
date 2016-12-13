@@ -189,6 +189,9 @@ class Catalog extends App
         // Parse
         $route->parse();
 
+        // Check SSL redirection
+        $this->checkSslRedirection();
+
         // Set
         $this->registry->set('route', $route);
 

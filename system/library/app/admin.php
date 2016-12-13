@@ -148,6 +148,13 @@ class Admin extends App
         $this->trigger->fire('post.app.ecommerce');
     }
 
+    public function route()
+    {
+        $this->checkSslRedirection();
+
+        $this->trigger->fire('post.app.route');
+    }
+
     public function dispatch()
     {
         # B/C start
