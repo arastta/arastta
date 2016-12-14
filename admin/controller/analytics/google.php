@@ -22,7 +22,7 @@ class ControllerAnalyticsGoogle extends Controller
         $this->load->model('setting/setting');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-            $this->model_setting_setting->editSetting('google', $this->request->post);
+            $this->model_setting_setting->editSetting('google_analytics', $this->request->post);
 
             $this->session->data['success'] = $this->language->get('text_success');
 
@@ -59,7 +59,7 @@ class ControllerAnalyticsGoogle extends Controller
     {
         $action = str_replace('amp;', '', $action);
 
-        $public['value'] = $this->config->get('google_analytics', '');
+        $public['value'] = $this->config->get('google_analytics_code', '');
         $public['placeholder'] = $this->language->get('entry_code');
         $public['required'] = $this->language->get('required');
 
@@ -73,7 +73,7 @@ class ControllerAnalyticsGoogle extends Controller
 
         $form = new AForm('form-google-analytics', $action);
 
-        $form->addElement(new Arastta\Component\Form\Element\Textarea($this->language->get('entry_code'), 'google_analytics', $public));
+        $form->addElement(new Arastta\Component\Form\Element\Textarea($this->language->get('entry_code'), 'google_analytics_code', $public));
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_status'), 'google_analytics_status', $status, $option_text));
 
         return $form->render(true);

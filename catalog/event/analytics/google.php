@@ -22,7 +22,7 @@ class EventAnalyticsGoogle extends Event
             return;
         }
 
-        $analytics = html_entity_decode($this->config->get('google_analytics'), ENT_QUOTES, 'UTF-8');
+        $analytics = html_entity_decode($this->config->get('google_analytics_code'), ENT_QUOTES, 'UTF-8');
 
         $this->document->addScriptDeclaration($analytics, 'text/javascript', false);
 

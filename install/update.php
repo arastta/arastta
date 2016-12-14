@@ -504,7 +504,7 @@ if (version_compare(VERSION, '1.5.0', '<')) {
         $data['google_captcha_public'] = $this->config->get('config_google_captcha_public');
         $data['google_captcha_secret'] = $this->config->get('config_google_captcha_secret');
         
-        $this->model_setting_setting->editSetting('google', $data, $store_id);
+        $this->model_setting_setting->editSetting('google_captcha', $data, $store_id);
         
         $config['config_captcha'] = 'google';
         
@@ -518,9 +518,9 @@ if (version_compare(VERSION, '1.5.0', '<')) {
     if ($this->config->get('config_google_analytics_status')) {
         $data = array();
         $data['google_analytics_status'] = '1';
-        $data['google_analytics'] = $this->config->get('config_google_analytics');
+        $data['google_analytics_code'] = $this->config->get('config_google_analytics');
         
-        $this->model_setting_setting->editSetting('google', $data, $store_id);
+        $this->model_setting_setting->editSetting('google_analytics', $data, $store_id);
     }
     
     if ($this->config->get('config_fraud_detection')) {
@@ -530,6 +530,6 @@ if (version_compare(VERSION, '1.5.0', '<')) {
         $data['maxmind_antifraud_score'] = $this->config->get('config_fraud_score');
         $data['maxmind_antifraud_status_id'] = $this->config->get('config_fraud_status_id');
         
-        $this->model_setting_setting->editSetting('maxmind', $data, $store_id);
+        $this->model_setting_setting->editSetting('maxmind_antifraud', $data, $store_id);
     }
 }
