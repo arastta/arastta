@@ -28,9 +28,9 @@ final class Version extends Object
 
     protected $build = '';
 
-    protected $status = 'RC 2';
+    protected $status = 'Stable';
 
-    protected $date = '09-December-2016';
+    protected $date = '14-December-2016';
 
     protected $time = '12:00';
 
