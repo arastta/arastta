@@ -39,6 +39,10 @@ class ControllerCommonUpdate extends Controller
             $data['text_error'] = $this->language->get('error_zip');
         }
 
+        if (!is_writable(DIR_ROOT . 'upload')) {
+            $data['text_error'] = $this->language->get('error_upload');
+        }
+
         $data['token'] = $this->session->data['token'];
 
         $data['check'] = $this->url->link('common/update/check', 'token=' . $this->session->data['token'], 'SSL');

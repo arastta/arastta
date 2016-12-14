@@ -33,10 +33,9 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $column_country; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $column_country; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $column_country; ?>', 'filter_country');"><?php echo $column_country; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $column_name; ?>', 'filter_zone_name');"><?php echo $column_name; ?></a></li>
@@ -44,11 +43,11 @@
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_status; ?>', 'filter_status');"><?php echo $entry_status; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_country"  value="<?php echo $filter_country; ?>" placeholder="<?php echo $column_country; ?>" id="input-country" class="form-control filter">
-                                <input type="text" name="filter_zone_name"  value="<?php echo $filter_zone_name; ?>" placeholder="<?php echo $column_name; ?>" id="input-name" class="form-control filter hidden">
-                                <input type="text" name="filter_zone_code"  value="<?php echo $filter_zone_code; ?>" placeholder="<?php echo $column_code; ?>" id="input-zone-code" class="form-control filter hidden">
+                                <input type="text" name="filter_country"  value="<?php echo $filter_country; ?>" placeholder="<?php echo $text_filter . $column_country; ?>" id="input-country" class="form-control filter">
+                                <input type="text" name="filter_zone_name"  value="<?php echo $filter_zone_name; ?>" placeholder="<?php echo $text_filter . $column_name; ?>" id="input-name" class="form-control filter hidden">
+                                <input type="text" name="filter_zone_code"  value="<?php echo $filter_zone_code; ?>" placeholder="<?php echo $text_filter . $column_code; ?>" id="input-zone-code" class="form-control filter hidden">
                                 <select name="filter_status" id="input-status" class="form-control filter hidden">
-                                    <option value="*"></option>
+                                    <option value="*"><?php echo $text_filter . $entry_status; ?></option>
                                     <?php if ($filter_status) { ?>
                                     <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                                     <?php } else { ?>
@@ -63,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php if (!empty($filter_country) || !empty($filter_zone_name) || !empty($filter_zone_code) || !empty($filter_status)) { ?>
+                    <?php if (!empty($filter_country) || !empty($filter_zone_name) || !empty($filter_zone_code) || isset($filter_status)) { ?>
                     <div class="row">
                         <div class="col-lg-12 filter-tag">
                             <?php if ($filter_country) { ?>
@@ -78,15 +77,15 @@
                                 <a class="filter-remove" onclick="removeFilter(this, 'filter_zone_name');"><i class="fa fa-times"></i></a>
                             </div>
                             <?php } ?>
-                            <?php if (isset($filter_zone_code)) { ?>
+                            <?php if ($filter_zone_code) { ?>
                             <div class="filter-info pull-left">
-                                <label class="control-label"><?php echo $column_code; ?>:</label> <label class="filter-label"> <?php echo ($filter_zone_code) ? $text_enabled : $text_disabled; ?></label>
+                                <label class="control-label"><?php echo $column_code; ?>:</label> <label class="filter-label"> <?php echo $filter_zone_code; ?></label>
                                 <a class="filter-remove" onclick="removeFilter(this, 'filter_zone_code');"><i class="fa fa-times"></i></a>
                             </div>
                             <?php } ?>
-                            <?php if ($filter_status) { ?>
+                            <?php if (isset($filter_status)) { ?>
                             <div class="filter-info pull-left">
-                                <label class="control-label"><?php echo $entry_status; ?>:</label> <label class="filter-label"> <?php echo $filter_status; ?></label>
+                                <label class="control-label"><?php echo $entry_status; ?>:</label> <label class="filter-label"> <?php echo ($filter_status) ? $text_enabled : $text_disabled; ?></label>
                                 <a class="filter-remove" onclick="removeFilter(this, 'filter_status');"><i class="fa fa-times"></i></a>
                             </div>
                             <?php } ?>
@@ -99,7 +98,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <td style="width: 70px;" class="text-center">
+                                <td style="width: 70px; position: relative;" class="text-center">
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
@@ -174,6 +173,18 @@
     </div>
 </div>
 <script type="text/javascript"><!--
+$(document).ready(function() {
+    <?php if (!empty($filter_country)) { ?>
+    changeFilterType('<?php echo $column_country; ?>', 'filter_country');
+    <?php } elseif (!empty($filter_zone_name)) { ?>
+    changeFilterType('<?php echo $column_name; ?>', 'filter_zone_name');
+    <?php } elseif (!empty($filter_zone_code)) { ?>
+    changeFilterType('<?php echo $column_code; ?>', 'filter_zone_code');
+    <?php } elseif (isset($filter_status)) { ?>
+    changeFilterType('<?php echo $entry_status; ?>', 'filter_status');
+    <?php } ?>
+});
+
 $('input[name=\'filter_country\']').autocomplete({
     'source': function(request, response) {
         $.ajax({

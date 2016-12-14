@@ -25,13 +25,13 @@ class ControllerTwofactorauthYubikey extends Controller
 
             $this->session->data['success'] = $this->language->get('text_success');
 
-            if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
+            if (isset($this->request->post['button']) && $this->request->post['button'] == 'save') {
                 $this->response->redirect($this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'], 'SSL'));
             }
 
             $this->response->redirect($this->url->link('extension/extension', 'filter_type=twofactorauth&token=' . $this->session->data['token'], 'SSL'));
         }
-        
+
         // Add all language text
         $data = $this->language->all();
 
@@ -46,14 +46,14 @@ class ControllerTwofactorauthYubikey extends Controller
         $data['cancel'] = $this->url->link('extension/extension', 'filter_type=twofactorauth&token=' . $this->session->data['token'], 'SSL');
 
         $data['form_fields'] = $this->getFormFields($data['action']);
-        
+
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('twofactorauth/yubikey.tpl', $data));
+        $this->response->setOutput($this->load->output('twofactorauth/yubikey', $data));
     }
-    
+
     protected function getFormFields($action)
     {
         $action = str_replace('amp;', '', $action);
@@ -86,7 +86,7 @@ class ControllerTwofactorauthYubikey extends Controller
         if (!$this->user->hasPermission('modify', 'twofactorauth/yubikey')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
-        
+
         return !$this->error;
     }
 }

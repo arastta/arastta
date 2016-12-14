@@ -82,10 +82,11 @@ class ControllerReportSaleCoupon extends Controller {
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_list'] = $this->language->get('text_list');
         $data['text_no_results'] = $this->language->get('text_no_results');
         $data['text_confirm'] = $this->language->get('text_confirm');
+        $data['text_filter'] = $this->language->get('text_filter');
 
         $data['column_name'] = $this->language->get('column_name');
         $data['column_code'] = $this->language->get('column_code');
@@ -98,8 +99,10 @@ class ControllerReportSaleCoupon extends Controller {
 
         $data['button_edit'] = $this->language->get('button_edit');
         $data['button_filter'] = $this->language->get('button_filter');
+        $data['button_output'] = $this->language->get('button_output');
+        $data['button_export'] = $this->language->get('button_export');
         $data['button_show_filter'] = $this->language->get('button_show_filter');
-        $data['button_hide_filter'] = $this->language->get('button_hide_filter');        
+        $data['button_hide_filter'] = $this->language->get('button_hide_filter');
 
         $data['token'] = $this->session->data['token'];
 
@@ -125,6 +128,31 @@ class ControllerReportSaleCoupon extends Controller {
 
         $data['filter_date_start'] = $filter_date_start;
         $data['filter_date_end'] = $filter_date_end;
+
+        $graph = array(
+            'sales' => array(
+                'model'            => 'coupon',
+                'function'         => 'coupons',
+                'title'            => $this->language->get('text_coupon'),
+                'link'             => str_replace('&amp;', '&', $this->url->link('report/graph/graph', 'token=' . $this->session->data['token'] . '&' . http_build_query($filter_data) . '&page=' . $page, 'SSL')),
+                'color'            => '#008db9',
+                'background-color' => '#FFFFFF',
+                'total'            => 'total',
+                'price'            => true
+            ),
+            'orders'   => array(
+                'model'            => 'coupon',
+                'function'         => 'coupons',
+                'title'            => $this->language->get('text_order'),
+                'link'             => str_replace('&amp;', '&', $this->url->link('report/graph/graph', 'token=' . $this->session->data['token'] . '&' . http_build_query($filter_data) . '&page=' . $page, 'SSL')),
+                'color'            => '#5cb85c',
+                'background-color' => '#FFFFFF',
+                'total'            => 'orders',
+                'price'            => false
+            )
+        );
+
+        $data['graph'] = $this->load->controller('report/graph', $graph);
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

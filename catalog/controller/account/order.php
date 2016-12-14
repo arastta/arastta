@@ -530,215 +530,242 @@ class ControllerAccountOrder extends Controller {
         // Quick hack, must find a better way
         $data['base'] = str_replace('/admin', '', $data['base']);
 
-        $data['order'] = array();
+        $data['orders'] = array();
 
-        $order_id = $this->request->get['order_id'];
+        if (isset($this->request->post['selected'])) {
+            $orders = $this->request->post['selected'];
+        } else {
+            $orders = array($this->request->get['order_id']);
+        }
 
-        $order_info = $this->model_account_order->getOrder($order_id);
-        $invoice_info = $this->model_account_order->getOrderInvoice($order_id);
+        foreach ($orders as $order_id) {
+            $order_info = $this->model_account_order->getOrder($order_id);
+            $invoice_info = $this->model_account_order->getOrderInvoice($order_id);
 
-        if ($order_info && $invoice_info) {
-            $store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
+            if (empty($invoice_info) && !empty($this->request->post['proforma'])) {
+                $invoice_info = array(
+                    'invoice_id'   => 0,
+                    'order_id'     => $order_id,
+                    'invoice_date' => date('Y-m-d H:i:s')
+                );
 
-            if ($store_info) {
-                $store_address = $store_info['config_address'];
-                $store_email = $store_info['config_email'];
-                $store_telephone = $store_info['config_telephone'];
-                $store_fax = $store_info['config_fax'];
-            } else {
-                $store_address = $this->config->get('config_address');
-                $store_email = $this->config->get('config_email');
-                $store_telephone = $this->config->get('config_telephone');
-                $store_fax = $this->config->get('config_fax');
+                $proforma = true;
             }
 
-            $invoice_number = $order_info['invoice_prefix'] . $order_info['invoice_no'];
+            if ($order_info && $invoice_info) {
+                $store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
 
-            if ($order_info['payment_address_format']) {
-                $format = $order_info['payment_address_format'];
-            } else {
-                $format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
-            }
+                if ($store_info) {
+                    $store_address = $store_info['config_address'];
+                    $store_email = $store_info['config_email'];
+                    $store_telephone = $store_info['config_telephone'];
+                    $store_fax = $store_info['config_fax'];
+                } else {
+                    $store_address = $this->config->get('config_address');
+                    $store_email = $this->config->get('config_email');
+                    $store_telephone = $this->config->get('config_telephone');
+                    $store_fax = $this->config->get('config_fax');
+                }
 
-            $find = array(
-                '{firstname}',
-                '{lastname}',
-                '{company}',
-                '{address_1}',
-                '{address_2}',
-                '{city}',
-                '{postcode}',
-                '{zone}',
-                '{zone_code}',
-                '{country}',
-                '{company_id}',
-                '{tax_id}'
-            );
+                $invoice_number = $order_info['invoice_prefix'] . $order_info['invoice_no'];
 
-            $replace = array(
-                'firstname' => $order_info['payment_firstname'],
-                'lastname'  => $order_info['payment_lastname'],
-                'company'   => $order_info['payment_company'],
-                'address_1' => $order_info['payment_address_1'],
-                'address_2' => $order_info['payment_address_2'],
-                'city'      => $order_info['payment_city'],
-                'postcode'  => $order_info['payment_postcode'],
-                'zone'      => $order_info['payment_zone'],
-                'zone_code' => $order_info['payment_zone_code'],
-                'country'   => $order_info['payment_country']
-            );
+                if (isset($proforma)) {
+                    $invoice_number = false;
+                }
 
-            $payment_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+                if ($order_info['payment_address_format']) {
+                    $format = $order_info['payment_address_format'];
+                } else {
+                    $format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+                }
 
-            if ($order_info['shipping_address_format']) {
-                $format = $order_info['shipping_address_format'];
-            } else {
-                $format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
-            }
+                $find = array(
+                    '{firstname}',
+                    '{lastname}',
+                    '{company}',
+                    '{address_1}',
+                    '{address_2}',
+                    '{city}',
+                    '{postcode}',
+                    '{zone}',
+                    '{zone_code}',
+                    '{country}',
+                    '{company_id}',
+                    '{tax_id}'
+                );
 
-            $find = array(
-                '{firstname}',
-                '{lastname}',
-                '{company}',
-                '{address_1}',
-                '{address_2}',
-                '{city}',
-                '{postcode}',
-                '{zone}',
-                '{zone_code}',
-                '{country}'
-            );
+                $replace = array(
+                    'firstname' => $order_info['payment_firstname'],
+                    'lastname'  => $order_info['payment_lastname'],
+                    'company'   => $order_info['payment_company'],
+                    'address_1' => $order_info['payment_address_1'],
+                    'address_2' => $order_info['payment_address_2'],
+                    'city'      => $order_info['payment_city'],
+                    'postcode'  => $order_info['payment_postcode'],
+                    'zone'      => $order_info['payment_zone'],
+                    'zone_code' => $order_info['payment_zone_code'],
+                    'country'   => $order_info['payment_country']
+                );
 
-            $replace = array(
-                'firstname' => $order_info['shipping_firstname'],
-                'lastname'  => $order_info['shipping_lastname'],
-                'company'   => $order_info['shipping_company'],
-                'address_1' => $order_info['shipping_address_1'],
-                'address_2' => $order_info['shipping_address_2'],
-                'city'      => $order_info['shipping_city'],
-                'postcode'  => $order_info['shipping_postcode'],
-                'zone'      => $order_info['shipping_zone'],
-                'zone_code' => $order_info['shipping_zone_code'],
-                'country'   => $order_info['shipping_country']
-            );
+                $payment_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
-            $shipping_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+                if ($order_info['shipping_address_format']) {
+                    $format = $order_info['shipping_address_format'];
+                } else {
+                    $format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+                }
 
-            $product_data = array();
+                $find = array(
+                    '{firstname}',
+                    '{lastname}',
+                    '{company}',
+                    '{address_1}',
+                    '{address_2}',
+                    '{city}',
+                    '{postcode}',
+                    '{zone}',
+                    '{zone_code}',
+                    '{country}'
+                );
 
-            $products = $this->model_account_order->getOrderProducts($order_id);
+                $replace = array(
+                    'firstname' => $order_info['shipping_firstname'],
+                    'lastname'  => $order_info['shipping_lastname'],
+                    'company'   => $order_info['shipping_company'],
+                    'address_1' => $order_info['shipping_address_1'],
+                    'address_2' => $order_info['shipping_address_2'],
+                    'city'      => $order_info['shipping_city'],
+                    'postcode'  => $order_info['shipping_postcode'],
+                    'zone'      => $order_info['shipping_zone'],
+                    'zone_code' => $order_info['shipping_zone_code'],
+                    'country'   => $order_info['shipping_country']
+                );
 
-            foreach ($products as $product) {
-                $option_data = array();
+                $shipping_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
-                $options = $this->model_account_order->getOrderOptions($order_id, $product['order_product_id']);
+                $product_data = array();
 
-                foreach ($options as $option) {
-                    if ($option['type'] != 'file') {
-                        $value = $option['value'];
-                    } else {
-                        $upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+                $products = $this->model_account_order->getOrderProducts($order_id);
 
-                        if ($upload_info) {
-                            $value = $upload_info['name'];
+                foreach ($products as $product) {
+                    $option_data = array();
+
+                    $options = $this->model_account_order->getOrderOptions($order_id, $product['order_product_id']);
+
+                    foreach ($options as $option) {
+                        if ($option['type'] != 'file') {
+                            $value = $option['value'];
                         } else {
-                            $value = '';
+                            $upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+                            if ($upload_info) {
+                                $value = $upload_info['name'];
+                            } else {
+                                $value = '';
+                            }
                         }
+
+                        $option_data[] = array(
+                            'name'  => $option['name'],
+                            'value' => $value
+                        );
                     }
 
-                    $option_data[] = array(
-                        'name'  => $option['name'],
-                        'value' => $value
+                    $product_data[] = array(
+                        'name'     => $product['name'],
+                        'model'    => $product['model'],
+                        'option'   => $option_data,
+                        'quantity' => $product['quantity'],
+                        'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+                        'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
                     );
                 }
 
-                $product_data[] = array(
-                    'name'     => $product['name'],
-                    'model'    => $product['model'],
-                    'option'   => $option_data,
-                    'quantity' => $product['quantity'],
-                    'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-                    'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+                $voucher_data = array();
+
+                $vouchers = $this->model_account_order->getOrderVouchers($order_id);
+
+                foreach ($vouchers as $voucher) {
+                    $voucher_data[] = array(
+                        'description' => $voucher['description'],
+                        'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value'])
+                    );
+                }
+
+                $total_data = array();
+
+                $totals = $this->model_account_order->getOrderTotals($order_id);
+
+                foreach ($totals as $total) {
+                    $total_data[] = array(
+                        'title' => $total['title'],
+                        'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
+                    );
+                }
+
+                $data['orders'][] = array(
+                    'order_id'           => $order_id,
+                    'invoice_number'     => $invoice_number,
+                    'order_date'         => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
+                    'invoice_date'       => date($this->language->get('date_format_short'), strtotime($invoice_info['invoice_date'])),
+                    'store_name'         => $order_info['store_name'],
+                    'store_url'          => rtrim($order_info['store_url'], '/'),
+                    'store_address'      => nl2br($store_address),
+                    'store_email'        => $store_email,
+                    'store_telephone'    => $store_telephone,
+                    'store_fax'          => $store_fax,
+                    'email'              => $order_info['email'],
+                    'telephone'          => $order_info['telephone'],
+                    'shipping_address'   => $shipping_address,
+                    'shipping_method'    => $order_info['shipping_method'],
+                    'payment_address'    => $payment_address,
+                    'payment_method'     => $order_info['payment_method'],
+                    'product'            => $product_data,
+                    'voucher'            => $voucher_data,
+                    'total'              => $total_data,
+                    'comment'            => nl2br($order_info['comment'])
                 );
             }
+        }
 
-            $voucher_data = array();
+        // BC for Arastta old templates
+        $data['order'] = current($data['orders']);
 
-            $vouchers = $this->model_account_order->getOrderVouchers($order_id);
+        $data['logo'] = $this->config->get('config_logo');
 
-            foreach ($vouchers as $voucher) {
-                $voucher_data[] = array(
-                    'description' => $voucher['description'],
-                    'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value'])
-                );
-            }
+        $html = $this->load->output('account/order_invoice', $data);
 
-            $total_data = array();
+        include(DIR_SYSTEM . "mpdf/mpdf.php");
 
-            $totals = $this->model_account_order->getOrderTotals($order_id);
+        $mpdf = new mPDF('', 'A4', 9, 'dejavusanscondensed');
 
-            foreach ($totals as $total) {
-                $total_data[] = array(
-                    'title' => $total['title'],
-                    'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
-                );
-            }
+        $mpdf->WriteHTML($html);
 
-            $data['order'] = array(
-                'order_id'             => $order_id,
-                'invoice_number'     => $invoice_number,
-                'order_date'         => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
-                'invoice_date'       => date($this->language->get('date_format_short'), strtotime($invoice_info['invoice_date'])),
-                'store_name'         => $order_info['store_name'],
-                'store_url'          => rtrim($order_info['store_url'], '/'),
-                'store_address'      => nl2br($store_address),
-                'store_email'        => $store_email,
-                'store_telephone'    => $store_telephone,
-                'store_fax'          => $store_fax,
-                'email'              => $order_info['email'],
-                'telephone'          => $order_info['telephone'],
-                'shipping_address'   => $shipping_address,
-                'shipping_method'    => $order_info['shipping_method'],
-                'payment_address'    => $payment_address,
-                'payment_method'     => $order_info['payment_method'],
-                'product'            => $product_data,
-                'voucher'            => $voucher_data,
-                'total'              => $total_data,
-                'comment'            => nl2br($order_info['comment'])
-            );
+        // What do we want?
+        $dest = !empty($this->request->get['dest']) ? $this->request->get['dest'] : 'D';
 
-            $data['logo'] = $this->config->get('config_logo');
+        $file_name = $invoice_number . '.pdf';
 
-            $html = $this->load->output('account/order_invoice', $data);
+        if (isset($proforma)) {
+            $file_name = $this->language->get('text_invoice_proforma') . ' ' . date($this->language->get('date_format_short'), strtotime($invoice_info['invoice_date'])) . '.pdf';
+        }
 
-            include(DIR_SYSTEM . "mpdf/mpdf.php");
+        // http://mpdf1.com/manual/index.php?tid=125
+        switch ($dest) {
+            case 'D':
+            case 'I':
+                $mpdf->Output($file_name, $dest);
+                exit();
 
-            $mpdf = new mPDF('', 'A4', 9, 'dejavusanscondensed');
+                break;
+            case 'F':
+                $mpdf->Output(DIR_UPLOAD . $file_name, $dest);
 
-            $mpdf->WriteHTML($html);
+                break;
+            case 'S':
+                return $mpdf->Output('', $dest);
 
-            // What do we want?
-            $dest = !empty($this->request->get['dest']) ? $this->request->get['dest'] : 'D';
-
-            $file_name = $invoice_number . '.pdf';
-
-            // http://mpdf1.com/manual/index.php?tid=125
-            switch ($dest) {
-                case 'D':
-                case 'I':
-                    $mpdf->Output($file_name, $dest);
-                    exit();
-
-                    break;
-                case 'F':
-                    $mpdf->Output(DIR_UPLOAD . $file_name, $dest);
-
-                    break;
-                case 'S':
-                    return $mpdf->Output('', $dest);
-
-                    break;
-            }
+                break;
         }
     }
 }

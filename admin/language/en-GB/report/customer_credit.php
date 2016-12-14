@@ -9,8 +9,11 @@
 // Heading
 $_['heading_title']         = 'Customer Credit Report';
 
-// Column
+// Text
 $_['text_list']             = 'Customer Credit List';
+$_['text_sale']             = 'Sales';
+
+// Column
 $_['column_customer']       = 'Customer Name';
 $_['column_email']          = 'E-Mail';
 $_['column_customer_group'] = 'Customer Group';

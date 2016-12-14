@@ -6,6 +6,11 @@
                 <div class="logo">
                     <img src="<?php echo $thumb; ?>" alt="">
                 </div>
+                <div class="text">
+                    <h1><?php echo $name; ?></h1>
+                    <span class="message"><?php echo $message; ?></span>
+                </div>
+                <?php if ($login) { ?>
                 <div class="login-center">
                     <div class="panel panel-default">
                         <div class="panel-body">
@@ -54,6 +59,7 @@
                         </div>
                     </div>
                 </div>
+                <?php } ?>
             </div>
         </div>
     </div>

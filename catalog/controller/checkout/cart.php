@@ -30,6 +30,8 @@ class ControllerCheckoutCart extends Controller {
             $data['text_recurring_item'] = $this->language->get('text_recurring_item');
             $data['text_next'] = $this->language->get('text_next');
             $data['text_next_choice'] = $this->language->get('text_next_choice');
+            $data['text_sold_out'] = $this->language->get('text_sold_out');
+            $data['text_preorder'] = $this->language->get('text_preorder');
 
             $data['column_image'] = $this->language->get('column_image');
             $data['column_name'] = $this->language->get('column_name');
@@ -43,9 +45,7 @@ class ControllerCheckoutCart extends Controller {
             $data['button_shopping'] = $this->language->get('button_shopping');
             $data['button_checkout'] = $this->language->get('button_checkout');
 
-            if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
-                $data['error_warning'] = $this->language->get('error_stock');
-            } elseif (isset($this->session->data['error'])) {
+            if (isset($this->session->data['error'])) {
                 $data['error_warning'] = $this->session->data['error'];
 
                 unset($this->session->data['error']);
@@ -83,6 +83,16 @@ class ControllerCheckoutCart extends Controller {
             $products = $this->cart->getProducts();
 
             foreach ($products as $product) {
+                if (!$product['preorder'] && !$product['stock'] && !$this->config->get('config_stock_checkout')) {
+                    $data['error_warning'] = sprintf($this->language->get('error_stock'), $this->language->get('text_sold_out'));
+                } else if (!$product['preorder'] && !$product['stock'] && ($this->config->get('config_stock_checkout') && $this->config->get('config_stock_warning'))) {
+                    $data['error_warning'] = sprintf($this->language->get('error_stock_checkout'), $this->language->get('text_sold_out'));
+                }
+
+                if ($product['preorder']) {
+                    $data['attention'] = sprintf($this->language->get('error_stock_preorder'), $this->language->get('text_preorder'));
+                }
+
                 $product_total = 0;
 
                 foreach ($products as $product_2) {
@@ -167,6 +177,7 @@ class ControllerCheckoutCart extends Controller {
                     'recurring' => $recurring,
                     'quantity'  => $product['quantity'],
                     'stock'     => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+                    'preorder'  => $product['preorder'],
                     'reward'    => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
                     'price'     => $price,
                     'total'     => $total,

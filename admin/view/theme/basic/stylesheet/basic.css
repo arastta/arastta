@@ -21,16 +21,16 @@
 
 .item-selected {
     position: absolute;
-    color: #000;
-    padding: 3px 5px 3px 0;
-    border: 1px solid #ddd;
+    background: #00a0d2;
+    color: #fff;
+    padding: 6px 5px 3px 0;
     border-radius: 3px;
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
     height: 26px;
     margin-left: -27px;
     margin-top: -1px;
-    width: 12%;
+    width: 150px;
 }
 @media screen and (max-width: 767px) {
     .bulk-action-activate {
@@ -69,14 +69,19 @@
 
 .bulk-action-button {
     position: absolute;
-    left: 15.1%;
+    left: 148px;
     height: 26px;
     margin-top: -1px;
-    padding-top: 5px;
-    border: 1px solid #ddd;
+    padding-top: 6px;
+    background: #00a0d2;
     border-bottom-right-radius: 3px;
     border-top-right-radius: 3px;
     width: 100px;
+    border-left: 1px solid #fff;
+}
+
+.bulk-action-button a {
+    color: #fff;
 }
 
 .bulk-action i {
@@ -129,7 +134,7 @@ a.editable-click:hover {
     background: #FDFDFD;
 }
 
-.options .tab-content .table-responsive  .table , #product-category {
+.options .tab-content .table-responsive  .table , #product-category, #product-tag {
     margin-bottom: 0px;
 }
 
@@ -347,4 +352,45 @@ tbody tr td div i.fa.fa-bars {
     left: 50%;
     top: 50%;
     font-size: 68px;
+}
+
+.seo-preview-title {
+    color: #1a0dab;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.seo-preview-url {
+    color: #006621;
+    display: block;
+    font-size: 13px;
+    line-height: 16px;
+    margin-bottom: 2px;
+    word-wrap: break-word;
+}
+
+.seo-preview-description {
+    color: #545454;
+    display: block;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+.basic-filter-button {
+    padding-right: 25px;
+    padding-left: 25px;
+    position: relative;
+    width: 100%;
+}
+
+.basic-filter-button .filter-type {
+    float: left;
+    position: relative;
+    top: 1px;
+}
+
+.basic-filter-button .caret {
+    position: absolute;
+    right: 8px;
+    bottom: 14px;
 }

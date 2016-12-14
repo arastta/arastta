@@ -42,12 +42,14 @@ $_['text_bulk_action']              = 'Bulk Action';
 $_['text_selected']                 = ' Selected';
 $_['text_publish']                  = 'Publish';
 $_['text_sortable']                 = 'Please sort by order to enable reordering';
+$_['text_filter']                   = 'Type here to filter ';
 
 // Column
 $_['column_status']                 = 'Status';
 $_['column_sortable']               = 'Sortable List';
 
 // Button
+$_['button_add_image']              = 'Add';
 $_['button_add']                    = 'Add New';
 $_['button_delete']                 = 'Delete';
 $_['button_save']                   = 'Save';
@@ -122,6 +124,9 @@ $_['button_coupon']                 = 'Apply Coupon';
 $_['button_voucher']                = 'Apply Voucher';
 $_['button_reward']                 = 'Apply Points';
 $_['button_currency']               = 'Refresh Currency Values';
+$_['button_seo']                    = 'Edit SEO';
+$_['button_output']                 = 'Print';
+$_['button_export']                 = 'Export';
 
 // Tab
 $_['tab_address']                   = 'Address';
@@ -164,6 +169,7 @@ $_['tab_recurring']                 = 'Recurring';
 $_['tab_action']                    = 'Action';
 $_['tab_cache']                     = 'Cache';
 $_['tab_commission']                = 'Commission';
+$_['tab_maintenance']               = 'Maintenance';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';

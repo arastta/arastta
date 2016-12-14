@@ -9,17 +9,20 @@
                 <div class="col-sm-5"><a href="<?php echo $parent; ?>" data-toggle="tooltip" title="<?php echo $button_parent; ?>" id="button-parent" class="btn btn-default"><i class="fa fa-level-up"></i></a> <a href="<?php echo $refresh; ?>" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" id="button-refresh" class="btn btn-default"><i class="fa fa-refresh"></i></a>
                     <button type="button" data-toggle="tooltip" title="<?php echo $button_upload; ?>" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i></button>
                     <button type="button" data-toggle="tooltip" title="<?php echo $button_folder; ?>" id="button-folder" class="btn btn-default"><i class="fa fa-folder"></i></button>
+                    <button disabled type="button" data-toggle="tooltip" title="<?php echo $button_add_image; ?>" id="button-add" class="btn btn-default"><i class="fa fa-plus text-success"></i></button>
                     <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" id="button-delete" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                 </div>
                 <div class="col-sm-7">
                     <div class="input-group">
                         <input type="text" name="search" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_search; ?>" class="form-control">
-            <span class="input-group-btn">
-            <button type="button" data-toggle="tooltip" title="<?php echo $button_search; ?>" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
-            </span></div>
+                        <span class="input-group-btn">
+                            <button type="button" data-toggle="tooltip" title="<?php echo $button_search; ?>" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
                 </div>
             </div>
             <hr />
+            <div id="image-multiselect">
             <?php foreach (array_chunk($images, 4) as $image) { ?>
             <div class="row">
                 <?php foreach ($image as $image) { ?>
@@ -41,6 +44,7 @@
             </div>
             <br />
             <?php } ?>
+            </div>
         </div>
         <div class="modal-footer"><?php echo $pagination; ?></div>
     </div>
@@ -71,33 +75,33 @@ $('a.thumbnail').on('click', function(e) {
     }
     <?php } ?>
 
-	<?php if (empty($thumb) && empty($target) && empty($mode)) { ?>
+    <?php if (empty($thumb) && empty($target) && empty($mode)) { ?>
     if (typeof InsertTinyMCEImage == 'function') {
         InsertTinyMCEImage($(this).attr('href'), $(this).attr('data-original-src'));
     }
     <?php } ?>
 
-	<?php if ($mode == 'basic') { ?>
-	var basic  = '<div class="file-preview-frame">';
-		basic += '	<img src="' + $(this).find('img').attr('src') + '" class="file-preview-image" title="' + $(this).find('img').attr('src') + '" alt="' + $(this).find('img').attr('src') + '" style="width:auto;height:160px;">';
-		basic += '	<div class="file-thumbnail-footer">';
-		basic += '		<div class="file-footer-caption" title="' + $(this).find('img').attr('src') + '">' + $(this).parent().find('input').attr('value').split('/').pop() + '</div>';
-		basic += ' 		<div class="file-actions">';
-		basic += '			<div class="file-footer-buttons">';
-		basic += '				<button type="button" class="kv-file-remove btn btn-xs btn-default" title="Remove file" onclick="removeBasicImage($(this));"><i class="glyphicon glyphicon-trash text-danger"></i></button>';
-		basic += '			</div>';
-		basic += '			<div class="file-upload-indicator" title=""></div>';
-		basic += '			<div class="clearfix"></div>';
-		basic += '		</div>';
-		basic += '	</div>';
-		basic += '	<input type="hidden" name="product_image[' + image_row + '][image]" value="' + $(this).parent().find('input').attr('value') + '" id="input-image' + image_row + '" />';
-		basic += '	<input type="hidden" name="product_image[' + image_row + '][sort_order]" value="' + image_sort + '" />';
-		basic += '</div>';
+    <?php if ($mode == 'basic') { ?>
+    var basic  = '<div class="file-preview-frame">';
+        basic += '    <img src="' + $(this).find('img').attr('src') + '" class="file-preview-image" title="' + $(this).find('img').attr('src') + '" alt="' + $(this).find('img').attr('src') + '" style="width:auto;height:160px;">';
+        basic += '    <div class="file-thumbnail-footer">';
+        basic += '        <div class="file-footer-caption" title="' + $(this).find('img').attr('src') + '">' + $(this).parent().find('input').attr('value').split('/').pop() + '</div>';
+        basic += '         <div class="file-actions">';
+        basic += '            <div class="file-footer-buttons">';
+        basic += '                <button type="button" class="kv-file-remove btn btn-xs btn-default" title="Remove file" onclick="removeBasicImage($(this));"><i class="glyphicon glyphicon-trash text-danger"></i></button>';
+        basic += '            </div>';
+        basic += '            <div class="file-upload-indicator" title=""></div>';
+        basic += '            <div class="clearfix"></div>';
+        basic += '        </div>';
+        basic += '    </div>';
+        basic += '    <input type="hidden" name="product_image[' + image_row + '][image]" value="' + $(this).parent().find('input').attr('value') + '" id="input-image' + image_row + '" />';
+        basic += '    <input type="hidden" name="product_image[' + image_row + '][sort_order]" value="' + image_sort + '" />';
+        basic += '</div>';
 
-		image_row++;
-		image_sort++;
-	$('.file-preview-thumbnails').append(basic);
-	<?php } ?>
+        image_row++;
+        image_sort++;
+    $('.file-preview-thumbnails').append(basic);
+    <?php } ?>
 
     $('#modal-image').modal('hide');
 });
@@ -153,6 +157,54 @@ $('#button-search').on('click', function(e) {
 });
 //--></script>
 <script type="text/javascript"><!--
+$('#button-add').on('click', function() {
+    var images = $('#modal-image input[name^=\'path\']:checked').parent().parent().find('.thumbnail').parent().find('input[name^=\'path\']:checked');
+    var image_row = parseInt($('input[name^=\'product_image\']').length / 2);
+
+    image_sort = image_row;
+
+    $.each(images, function(key, image) {
+        <?php if ($mode == 'basic') { ?>
+        var basic  = '<div class="file-preview-frame file-preview-initial ui-draggable ui-draggable-handle">';
+            basic += '    <div class="kv-file-content">';
+            basic += '        <img src="' + $(this).parent().parent().find('img').attr('src') + '" class="file-preview-image" title="' + $(this).parent().parent().find('img').attr('src') + '" alt="' + $(this).parent().parent().find('img').attr('src') + '" style="width:auto;height:160px;">';
+            basic += '    </div>';
+            basic += '    <div class="file-thumbnail-footer">';
+            basic += '        <div class="file-footer-caption" title="' + $(this).parent().parent().find('img').attr('src') + '">' + $(this).parent().find('input').attr('value').split('/').pop() + '</div>';
+            basic += '         <div class="file-actions">';
+            basic += '            <div class="file-footer-buttons">';
+            basic += '                <button type="button" class="kv-file-remove btn btn-xs btn-default" title="Remove file" onclick="removeBasicImage($(this));"><i class="glyphicon glyphicon-trash text-danger"></i></button>';
+            basic += '            </div>';
+            basic += '            <span class="file-drag-handle drag-handle-init text-info" title="Move / Rearrange"><i class="glyphicon glyphicon-menu-hamburger"></i></span>';
+            basic += '            <div class="file-upload-indicator" title=""></div>';
+            basic += '            <div class="clearfix"></div>';
+            basic += '        </div>';
+            basic += '    </div>';
+            basic += '    <input type="hidden" name="product_image[' + image_row + '][image]" value="' + $(this).parent().find('input').attr('value') + '" id="input-image' + image_row + '" />';
+            basic += '    <input type="hidden" name="product_image[' + image_row + '][sort_order]" value="' + image_sort + '" />';
+            basic += '</div>';
+
+        image_row++;
+        image_sort++;
+
+        $('.file-preview-thumbnails').append(basic);
+         <?php } else { ?>
+            html  = '<tr id="image-row' + image_row + '">';
+            html += '  <td class="text-left"><a href="" id="thumb-image' + image_row + '"data-toggle="image" class="img-thumbnail"><img src="' + $(this).parent().parent().find('img').attr('src') + '" alt="' + $(this).parent().parent().find('img').attr('src') + '" title="' + $(this).parent().parent().find('img').attr('src') + '"/></a><input type="hidden" name="product_image[' + image_row + '][image]" value="' + $(this).parent().find('input').attr('value') + '" id="input-image' + image_row + '" /></td>';
+            html += '  <td class="text-right"><input type="text" name="product_image[' + image_row + '][sort_order]" value="' + image_sort + '" class="form-control" /></td>';
+            html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row  + '\').remove();" data-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+            html += '</tr>';
+
+            $('#images tbody').append(html);
+
+            image_sort++;
+            image_row++;
+        <?php } ?>
+    });
+
+    $('#modal-image').modal('hide');
+});
+
 $('#button-upload').on('click', function() {
     $('#form-upload').remove();
 
@@ -279,4 +331,50 @@ $('#modal-image #button-delete').on('click', function(e) {
         });
     }
 });
+
+<?php if (!empty($mode) || ((strpos($data['target'], 'input-image') === false) || (strpos($data['target'], 'input-image') === false))) { ?>
+$('#button-add').prop('disabled', false);
+
+$('#image-multiselect').on('click', function(e) {
+    fakePOS = false;
+
+    $('.row').removeClass('cs-selected');
+    $('.col-sm-3.text-center').removeClass('cs-selected');
+    $('.col-sm-3.text-center input').prop('checked', false);
+
+    $('#image-multiselect input').blur();
+});
+
+$('#image-multiselect label').on('click', function(e) {
+    e.stopImmediatePropagation();
+    $(this).parent().addClass('cs-selected');
+    $(this).children('input').prop('checked', true);
+
+    fakePOS = true;
+});
+
+$('input[name^=\'path\']').on('click', function(e) {
+    e.stopImmediatePropagation();
+    $(this).parent().parent().addClass('cs-selected');
+    $(this).prop('checked', true);
+
+    fakePOS = true;
+});
+
+$('#image-multiselect').csSelectable({
+    items         : '#image-multiselect .col-sm-3.text-center',
+    selectionClass: 'cs-selection-box',
+    selectedClass : 'cs-selected',
+    onSelect  : function (element) {
+        $(element).find('input').prop('checked', true);
+    },
+    onUnSelect: function (element) {
+        $(element).find('input').prop('checked', false);
+    },
+    onClear   : function () {
+        $('#image-multiselect').find('input').prop('checked', false);
+    },
+    autoRefresh   : true
+});
+<?php } ?>
 //--></script>

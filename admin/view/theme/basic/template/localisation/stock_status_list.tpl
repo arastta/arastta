@@ -29,7 +29,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <td style="width: 70px;" class="text-center">
+                                <td style="width: 70px; position: relative;" class="text-center">
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
@@ -50,6 +50,12 @@
                                     <?php } else { ?>
                                     <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
                                     <?php } ?></td>
+                                <td class="text-center">
+                                    <?php echo $column_color; ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo $column_preorder; ?>
+                                </td>
                             </tr>
                             </thead>
                             <tbody>
@@ -64,6 +70,8 @@
                                 <td class="text-left">
                                     <a href="<?php echo $stock_status['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary btn-sm btn-basic-list"><i class="fa fa-pencil"></i></a>
                                     <?php echo $stock_status['name']; ?></td>
+                                <td class="text-center"><i class="fa fa-2x fa-circle" style="color:<?php echo $stock_status['color']; ?>;"></i></td>
+                                <td class="text-center"><?php echo ($stock_status['preorder'] != 1 ? $text_no : $text_yes) ?></td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>

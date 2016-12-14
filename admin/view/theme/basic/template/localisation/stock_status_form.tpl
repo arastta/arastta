@@ -48,7 +48,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-12"><?php echo $entry_name; ?></label>
+                                            <label class="col-sm-12"><?php echo $entry_color; ?></label>
                                             <div class="col-sm-12">
                                                 <div class="customizer-control-content">
                                                     <div class="wp-picker-container">
@@ -63,6 +63,20 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-12" for="input-stock-status-preorder-<?php echo $language['language_id']; ?>"><span data-toggle="tooltip" title="<?php echo $help_preorder; ?>"><?php echo $entry_preorder; ?></span></label>
+                                            <div class="col-sm-12">
+                                                <select name="stock_status[<?php echo $language['language_id']; ?>][preorder]" id="input-stock-status-preorder-<?php echo $language['language_id']; ?>" class="form-control">
+                                                    <?php if ($stock_status[$language['language_id']]['preorder']) { ?>
+                                                    <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                                                    <option value="0"><?php echo $text_no; ?></option>
+                                                    <?php } else { ?>
+                                                    <option value="1"><?php echo $text_yes; ?></option>
+                                                    <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <?php } ?>
                                 </div>
@@ -75,7 +89,7 @@
     </div>
 </div>
 <script type="text/javascript">
-var wpColorPickerL10n = {"clear":"Clear","defaultString":"Default","pick":"Select Color","current":"Current Color"};
+    var wpColorPickerL10n = {"clear":"<?php echo $entry_clear; ?>","defaultString":"<?php echo $entry_default; ?>","pick":"<?php echo $entry_pick; ?>","current":"<?php echo $entry_current; ?>"};
 </script>
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');

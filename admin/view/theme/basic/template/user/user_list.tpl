@@ -33,10 +33,11 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $entry_firstname; ?></div> <span class="caret"></span>
+
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $entry_firstname; ?></div></button>
+
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_firstname; ?>', 'filter_firstname');"><?php echo $entry_firstname; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_lastname; ?>', 'filter_lastname');"><?php echo $entry_lastname; ?></a></li>
@@ -45,11 +46,12 @@
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_email; ?>', 'filter_email');"><?php echo $entry_email; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_firstname"  value="<?php echo $filter_firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control filter">
-                                <input type="text" name="filter_lastname"  value="<?php echo $filter_lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" class="form-control filter hidden">
-                                <input type="text" name="filter_user_group" value="<?php echo $filter_user_group; ?>" placeholder="<?php echo $entry_user_group; ?>" id="input-user-group" class="form-control filter hidden" />
+                                <input type="text" name="filter_firstname"  value="<?php echo $filter_firstname; ?>" placeholder="<?php echo $text_filter . $entry_firstname; ?>" id="input-firstname" class="form-control filter">
+                                <input type="text" name="filter_lastname"  value="<?php echo $filter_lastname; ?>" placeholder="<?php echo $text_filter . $entry_lastname; ?>" id="input-lastname" class="form-control filter hidden">
+                                <input type="text" name="filter_user_group" value="<?php echo $filter_user_group; ?>" placeholder="<?php echo $text_filter . $entry_user_group; ?>" id="input-user-group" class="form-control filter hidden" />
                                 <select name="filter_status" id="input-status" class="form-control filter hidden">
-                                    <option value="*"></option>
+                                    <option value="*"><?php echo $text_filter . $entry_status; ?></option>
+
                                     <?php if ($filter_status) { ?>
                                     <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                                     <?php } else { ?>
@@ -61,7 +63,7 @@
                                     <option value="0"><?php echo $text_disabled; ?></option>
                                     <?php } ?>
                                 </select>
-                                <input type="text" name="filter_email"  value="<?php echo $filter_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control filter hidden">
+                                <input type="text" name="filter_email"  value="<?php echo $filter_email; ?>" placeholder="<?php echo $text_filter . $entry_email; ?>" id="input-email" class="form-control filter hidden">
                             </div>
                         </div>
                     </div>
@@ -107,7 +109,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <td style="width: 70px;" class="text-center">
+                                <td style="width: 70px; position: relative;" class="text-center">
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
@@ -151,6 +153,7 @@
                                     <?php } else { ?>
                                     <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
                                     <?php } ?></td>
+                                <td class="text-left"><?php echo $column_date_login; ?></td>
                             </tr>
                             </thead>
                             <tbody>
@@ -170,6 +173,7 @@
                                 <td class="text-left"><?php echo $user['user_group']; ?></td>
                                 <td class="text-left"><?php echo $user['status']; ?></td>
                                 <td class="text-left"><?php echo $user['date_added']; ?></td>
+                                <td class="text-left"><?php echo $user['date_login']; ?></td>
                             </tr>
                             <?php } ?>
                             <?php } else { ?>
@@ -190,6 +194,20 @@
     </div>
 </div>
 <script type="text/javascript"><!--
+$(document).ready(function() {
+    <?php if (!empty($filter_firstname)) { ?>
+    changeFilterType('<?php echo $entry_firstname; ?>', 'filter_firstname');
+    <?php } elseif (!empty($filter_lastname)) { ?>
+    changeFilterType('<?php echo $entry_lastname; ?>', 'filter_lastname');
+    <?php } elseif (!empty($filter_user_group)) { ?>
+    changeFilterType('<?php echo $entry_user_group; ?>', 'filter_user_group');
+    <?php } elseif (isset($filter_status)) { ?>
+    changeFilterType('<?php echo $entry_status; ?>', 'filter_status');
+    <?php } elseif (!empty($filter_email)) { ?>
+    changeFilterType('<?php echo $entry_email; ?>', 'filter_email');
+    <?php } ?>
+});
+
 $('input[name=\'filter_user_group\']').autocomplete({
     'source': function(request, response) {
         $.ajax({

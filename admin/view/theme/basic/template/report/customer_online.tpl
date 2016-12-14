@@ -20,17 +20,16 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $entry_ip; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $entry_ip; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_ip; ?>', 'filter_ip');"><?php echo $entry_ip; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_customer; ?>', 'filter_customer');"><?php echo $entry_customer; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" id="input-customer" class="form-control filter hidden" />
-                                <input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" id="input-ip" class="form-control filter" />
+                                <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" placeholder="<?php echo $text_filter . $entry_ip; ?>" id="input-customer" class="form-control filter hidden" />
+                                <input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" placeholder="<?php echo $text_filter . $entry_customer; ?>" id="input-ip" class="form-control filter" />
                             </div>
                         </div>
                     </div>
@@ -99,6 +98,14 @@
         </div>
     </div>
     <script type="text/javascript"><!--
+    $(document).ready(function() {
+        <?php if (!empty($filter_ip)) { ?>
+        changeFilterType('<?php echo $entry_ip; ?>', 'filter_ip');
+        <?php } elseif (!empty($filter_customer)) { ?>
+        changeFilterType('<?php echo $entry_customer; ?>', 'filter_customer');
+        <?php } ?>
+    });
+
     function filter() {
         url = 'index.php?route=report/customer_online&token=<?php echo $token; ?>';
 

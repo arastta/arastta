@@ -15,7 +15,7 @@ class ControllerCommonMenu extends Controller {
 
         $data = $this->language->all($data);
 
-        #Catalog permissions
+        # Catalog permissions
         $p_return_category = $this->user->hasPermission('access','catalog/category');
         $p_return_product = $this->user->hasPermission('access','catalog/product');
         $p_return_recurring = $this->user->hasPermission('access','catalog/recurring');
@@ -28,19 +28,20 @@ class ControllerCommonMenu extends Controller {
         $p_return_review = $this->user->hasPermission('access','catalog/review');
         $p_return_information = $this->user->hasPermission('access','catalog/information');
 
-        #Sales permissions
+        # Sales permissions
         $p_return_order = $this->user->hasPermission('access','sale/order');
         $p_return_invoice = $this->user->hasPermission('access','sale/invoice');
         $p_return_order_recurring = $this->user->hasPermission('access','sale/recurring');
         $p_return_return = $this->user->hasPermission('access','sale/return');
         $p_return_paypal = $this->user->hasPermission('access','payment/pp_express');
-        #Customers permissions
+
+        # Customers permissions
         $p_return_customer = $this->user->hasPermission('access','sale/customer');
         $p_return_customer_group = $this->user->hasPermission('access','sale/customer_group');
         $p_return_customer_ban_ip = $this->user->hasPermission('access','sale/customer_ban_ip');
         $p_return_custom_field = $this->user->hasPermission('access','sale/custom_field');
 
-        #Marketing permissions
+        # Marketing permissions
         $p_return_marketing_affiliate = $this->user->hasPermission('access','marketing/affiliate');
         $p_return_contact = $this->user->hasPermission('access','marketing/contact');
         $p_return_coupon = $this->user->hasPermission('access','marketing/coupon');
@@ -48,20 +49,17 @@ class ControllerCommonMenu extends Controller {
         $p_return_voucher = $this->user->hasPermission('access','sale/voucher');
         $p_return_voucher_theme = $this->user->hasPermission('access','sale/voucher_theme');
 
-        #Extensions permissions
-        $p_return_installer = $this->user->hasPermission('access','extension/installer');
+        # Extensions permissions
         $p_return_extension = $this->user->hasPermission('access','extension/extension');
         $p_return_modification = $this->user->hasPermission('access','extension/modification');
-        $p_return_module = $this->user->hasPermission('access','extension/module');
         $p_return_shipping = $this->user->hasPermission('access','extension/shipping');
         $p_return_payment = $this->user->hasPermission('access','extension/payment');
         $p_return_total = $this->user->hasPermission('access','extension/total');
-        $p_return_feed = $this->user->hasPermission('access','extension/feed');        
         
-        #Marketplace permissions
+        # Marketplace permissions
         $p_return_marketplace = $this->user->hasPermission('access','extension/marketplace');
         
-        #System permissions
+        # System permissions
         $p_return_setting = $this->user->hasPermission('access','setting/setting');
         $p_return_setting_store = $this->user->hasPermission('access','setting/store');
         $p_return_design_banner = $this->user->hasPermission('access','design/banner');
@@ -70,6 +68,7 @@ class ControllerCommonMenu extends Controller {
         $p_return_user_api = $this->user->hasPermission('access','user/api');
         $p_return_email_template = $this->user->hasPermission('access','system/email_template');
         $p_return_language_override = $this->user->hasPermission('access','system/language_override');
+        $p_return_url_manager = $this->user->hasPermission('access','system/url_manager');
         $p_return_localisation = $this->user->hasPermission('access','localisation/localisation');
         $p_return_language = $this->user->hasPermission('access','localisation/language');
         $p_return_currency = $this->user->hasPermission('access','localisation/currency');
@@ -86,15 +85,16 @@ class ControllerCommonMenu extends Controller {
         $p_return_length_class = $this->user->hasPermission('access','localisation/length_class');
         $p_return_weight_class = $this->user->hasPermission('access','localisation/weight_class');
 
-        #Tools permissions
+        # Tools permissions
         $p_return_backup = $this->user->hasPermission('access','tool/backup');
         $p_return_error_log = $this->user->hasPermission('access','tool/error_log');
         $p_return_upload = $this->user->hasPermission('access','tool/upload');
         $p_return_export_import = $this->user->hasPermission('access','tool/export_import');
         $p_return_file_manager = $this->user->hasPermission('access','tool/file_manager');
+        $p_return_cache = $this->user->hasPermission('access','tool/cache');
         $p_return_system_info = $this->user->hasPermission('access','tool/system_info');
 
-        #Reports permissions
+        # Reports permissions
         $p_return_sale_order = $this->user->hasPermission('access','report/sale_order');
         $p_return_sale_tax = $this->user->hasPermission('access','report/sale_tax');
         $p_return_sale_shipping = $this->user->hasPermission('access','report/sale_shipping');
@@ -112,13 +112,13 @@ class ControllerCommonMenu extends Controller {
         $p_return_report_affiliate = $this->user->hasPermission('access','report/affiliate');
         $p_return_report_affiliate_activity = $this->user->hasPermission('access','report/affiliate_activity');
 
-        #Appearance permissions
+        # Appearance permissions
         $p_return_appearance_customizer = $this->user->hasPermission('access','appearance/customizer');
         $p_return_appearance_layout = $this->user->hasPermission('access','appearance/layout');
         $p_return_appearance_menu = $this->user->hasPermission('access','appearance/menu');
         $p_return_theme = $this->user->hasPermission('access','appearance/theme');
 
-        #Top-level menu
+        # Top-level menu
         $this->menu = array(
             'dashboard' => array(
                 'text' => $data['text_dashboard'],
@@ -207,7 +207,7 @@ class ControllerCommonMenu extends Controller {
             )
         );
 
-        #Catalog
+        # Catalog
         $this->menu['catalog']['children'] = array(
             'category' => array(
                 'text' => $data['text_category'],
@@ -284,7 +284,7 @@ class ControllerCommonMenu extends Controller {
             )
         );
 
-        #Sales
+        # Sales
         $this->menu['sale']['children'] = array(
             'order' => array(
                 'text' => $data['text_order'],
@@ -318,7 +318,7 @@ class ControllerCommonMenu extends Controller {
             )
         );
 
-        #Customers
+        # Customers
         $this->menu['customer']['children'] = array(
             'customer' => array(
                 'text' => $data['text_customer'],
@@ -346,7 +346,7 @@ class ControllerCommonMenu extends Controller {
             )
         );
 
-        #Marketing
+        # Marketing
         $this->menu['marketings']['children'] = array(
             'campaigns' => array(
                 'text' => $data['text_campaign'],
@@ -391,7 +391,7 @@ class ControllerCommonMenu extends Controller {
             )
         );
 
-        #Reports
+        # Reports
         $this->menu['reports']['children'] = array(
             'sales' => array(
                 'text' => $data['text_sale'],
@@ -519,7 +519,7 @@ class ControllerCommonMenu extends Controller {
             )
         );
 
-        #Appearance
+        # Appearance
         $this->menu['appearance']['children'] = array(
             'theme' => array(
                 'text' => $data['text_theme'],
@@ -553,7 +553,7 @@ class ControllerCommonMenu extends Controller {
             )
         );
 
-        #Extensions
+        # Extensions
         $this->menu['extension']['children'] = array(
             'modification' => array(
                 'text' => $data['text_modification'],
@@ -587,7 +587,7 @@ class ControllerCommonMenu extends Controller {
             )
         );
 
-        #Marketplace
+        # Marketplace
         $this->menu['marketplace']['children'] = array(
             'theme' => array(
                 'text' => $data['text_theme'],
@@ -621,7 +621,7 @@ class ControllerCommonMenu extends Controller {
             )
         );
 
-        #Localisation
+        # Localisation
         $this->menu['localisation']['children'] = array(
             'languages' => array(
                 'text' => $data['text_language'],
@@ -723,7 +723,7 @@ class ControllerCommonMenu extends Controller {
             )
         );
 
-        #System
+        # System
         $this->menu['system']['children'] = array(
             'settings' => array(
                 'text' => $data['text_setting'],
@@ -771,10 +771,16 @@ class ControllerCommonMenu extends Controller {
                 'href' => $this->url->link('system/language_override', 'token=' . $this->session->data['token'], 'SSL'),
                 'sort_order' => 6,
                 'permission' => $p_return_language_override
+            ),
+            'url_manager' => array(
+                'text' => $data['text_url_manager'],
+                'href' => $this->url->link('system/url_manager', 'token=' . $this->session->data['token'], 'SSL'),
+                'sort_order' => 7,
+                'permission' => $p_return_url_manager
             )
         );
 
-        #Tools
+        # Tools
         $this->menu['tools']['children'] = array(
             'backup_restore' => array(
                 'text' => $data['text_backup'],
@@ -806,10 +812,16 @@ class ControllerCommonMenu extends Controller {
                 'sort_order' => 5,
                 'permission' => $p_return_error_log
             ),
+            'cache' => array(
+                'text' => $data['text_cache'],
+                'href' => $this->url->link('tool/cache', 'token=' . $this->session->data['token'], 'SSL'),
+                'sort_order' => 6,
+                'permission' => $p_return_cache
+            ),
             'system_info' => array(
                 'text' => $data['text_system_info'],
                 'href' => $this->url->link('tool/system_info', 'token=' . $this->session->data['token'], 'SSL'),
-                'sort_order' => 6,
+                'sort_order' => 7,
                 'permission' => $p_return_system_info
             )
         );

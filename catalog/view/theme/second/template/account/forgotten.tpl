@@ -33,13 +33,8 @@
                             <input type="text" name="email" value="" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" required autocomplete="email" />
                         </div>
                     </div>
-                    <?php if ($site_key) { ?>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">&nbsp;</label>
-                        <div class="col-sm-10">
-                            <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
-                        </div>
-                    </div>
+                    <?php if ($captcha) { ?>
+                    <?php echo $captcha; ?>
                     <?php } ?>
                 </fieldset>
                 <div class="buttons clearfix">

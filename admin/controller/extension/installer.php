@@ -1047,7 +1047,7 @@ class ControllerExtensionInstaller extends Controller
 
         $tmp = explode('\\', $path);
 
-        $ext_types = array('captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total', 'twofactorauth');
+        $ext_types = array('analytics', 'antifraud', 'captcha', 'editor', 'feed', 'module', 'other', 'payment', 'shipping', 'total', 'twofactorauth');
 
         if (isset($tmp[2]) && in_array($tmp[2], $ext_types)) {
             $type = $tmp[2];

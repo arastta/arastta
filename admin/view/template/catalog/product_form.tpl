@@ -72,23 +72,19 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="input-tag<?php echo $language['language_id']; ?>"><?php echo $entry_tag; ?></label>
-                                        <div class="col-sm-10 tags-select">
-                                            <select id="tags-<?php echo $language['language_id']; ?>" name="product_description[<?php echo $language['language_id']; ?>][tag][]" class="inputbox chzn-done tags-multi-select" size="5" multiple="multiple" style="display: none !important;">
-                                                <?php if (!empty($product_description[$language['language_id']]['tag'])) {
-                                                          foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
-                                                <option data-tag-remove="<?php echo $tag_key; ?>" value="<?php echo $tag_value; ?>" selected="selected"><?php echo $tag_value; ?></option>
-                                                <?php     }
-                                                        } ?>
-                                            </select>
-                                            <div class="form-control">
-                                                <?php if (!empty($product_description[$language['language_id']]['tag'])) {
-                                                          foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
-                                                <span class="tag-choice"><?php echo $tag_value; ?><a class="tag-choice-close" onclick="removeTag(this);" data-tag-remove-index="<?php echo $tag_key; ?>"><i class="fa fa-times"></i></a></span>
-                                                <?php     }
-                                                      } ?>
-                                                <input type="text" name="tag" value="" placeholder="<?php echo $entry_tag; ?>" id="input-tag<?php echo $language['language_id']; ?>" class="form-control input-full-width tag-select" />
+                                        <label class="col-sm-2 control-label" for="input-tag<?php echo $language['language_id']; ?>"><span data-toggle="tooltip" title="<?php echo $help_tag; ?>"><?php echo $entry_tag; ?></span></label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="tag" value="" placeholder="<?php echo $entry_tag; ?>" id="input-tag<?php echo $language['language_id']; ?>" class="form-control" />
+                                            <div class="view-all"><a href="<?php echo $show_all[$language['language_id']]['tags']; ?>" class="popup"><?php echo $entry_view_all; ?></a></div>
+                                            <?php if (!empty($product_description[$language['language_id']]['tag'])) { ?>
+                                            <div id="product-tag-<?php echo $language['language_id']; ?>" class="well well-sm" style="overflow: auto;">
+                                                <?php foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
+                                                <div id="product-tag-<?php echo $tag_key; ?>"><i class="fa fa-minus-circle"></i> <?php echo $tag_value; ?>
+                                                    <input type="hidden" name="product_tag[<?php echo $language['language_id']; ?>][]" value="<?php echo $tag_value; ?>" />
+                                                </div>
+                                                <?php } ?>
                                             </div>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -243,9 +239,10 @@
                                 <div class="col-sm-3">
                                     <div class="input-group date">
                                         <input type="text" name="date_available" value="<?php echo $date_available; ?>" placeholder="<?php echo $entry_date_available; ?>" data-date-format="YYYY-MM-DD" id="input-date-available" class="form-control" />
-                    <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                    </span></div>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -367,6 +364,9 @@
                                 <label class="col-sm-2 control-label" for="input-manufacturer"><span data-toggle="tooltip" title="<?php echo $help_manufacturer; ?>"><?php echo $entry_manufacturer; ?></span></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="manufacturer" value="<?php echo $manufacturer ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer" class="form-control" />
+                                    <div class="view-all">
+                                        <a href="<?php echo $show_all[$language['language_id']]['manufacturer']; ?>" class="popup"><?php echo $entry_view_all; ?></a>
+                                    </div>
                                     <input type="hidden" name="manufacturer_id" value="<?php echo $manufacturer_id; ?>" />
                                 </div>
                             </div>
@@ -374,6 +374,9 @@
                                 <label class="col-sm-2 control-label" for="input-category"><span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_category; ?></span></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control" />
+                                    <div class="view-all">
+                                        <a href="<?php echo $show_all[$language['language_id']]['category']; ?>" class="popup"><?php echo $entry_view_all; ?></a>
+                                    </div>
                                     <div id="product-category" class="well well-sm" style="height: 150px; overflow: auto;">
                                         <?php foreach ($product_categories as $product_category) { ?>
                                         <div id="product-category<?php echo $product_category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_category['name']; ?>
@@ -557,9 +560,10 @@
                                                 <div class="col-sm-3">
                                                     <div class="input-group date">
                                                         <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" data-date-format="YYYY-MM-DD" id="input-value<?php echo $option_row; ?>" class="form-control" />
-                            <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                            </span></div>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <?php } ?>
@@ -569,9 +573,10 @@
                                                 <div class="col-sm-10">
                                                     <div class="input-group time">
                                                         <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" data-date-format="HH:mm" id="input-value<?php echo $option_row; ?>" class="form-control" />
-                            <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                            </span></div>
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <?php } ?>
@@ -581,9 +586,10 @@
                                                 <div class="col-sm-10">
                                                     <div class="input-group datetime">
                                                         <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-value<?php echo $option_row; ?>" class="form-control" />
-                            <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                            </span></div>
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <?php } ?>
@@ -772,16 +778,22 @@
                                         <td class="text-right"><input type="text" name="product_discount[<?php echo $discount_row; ?>][quantity]" value="<?php echo $product_discount['quantity']; ?>" placeholder="<?php echo $entry_quantity; ?>" class="form-control" /></td>
                                         <td class="text-right"><input type="text" name="product_discount[<?php echo $discount_row; ?>][priority]" value="<?php echo $product_discount['priority']; ?>" placeholder="<?php echo $entry_priority; ?>" class="form-control" /></td>
                                         <td class="text-right"><input type="text" name="product_discount[<?php echo $discount_row; ?>][price]" value="<?php echo $product_discount['price']; ?>" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>
-                                        <td class="text-left" style="width: 20%;"><div class="input-group date">
-                                            <input type="text" name="product_discount[<?php echo $discount_row; ?>][date_start]" value="<?php echo $product_discount['date_start']; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" class="form-control" />
-                          <span class="input-group-btn">
-                          <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                          </span></div></td>
-                                        <td class="text-left" style="width: 20%;"><div class="input-group date">
-                                            <input type="text" name="product_discount[<?php echo $discount_row; ?>][date_end]" value="<?php echo $product_discount['date_end']; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" class="form-control" />
-                          <span class="input-group-btn">
-                          <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                          </span></div></td>
+                                        <td class="text-left" style="width: 20%;">
+                                            <div class="input-group date">
+                                                <input type="text" name="product_discount[<?php echo $discount_row; ?>][date_start]" value="<?php echo $product_discount['date_start']; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" class="form-control" />
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td class="text-left" style="width: 20%;">
+                                            <div class="input-group date">
+                                                <input type="text" name="product_discount[<?php echo $discount_row; ?>][date_end]" value="<?php echo $product_discount['date_end']; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" class="form-control" />
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </td>
                                         <td class="text-left"><button type="button" onclick="$('#discount-row<?php echo $discount_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                                     </tr>
                                     <?php $discount_row++; ?>
@@ -824,16 +836,22 @@
                                         </select></td>
                                         <td class="text-right"><input type="text" name="product_special[<?php echo $special_row; ?>][priority]" value="<?php echo $product_special['priority']; ?>" placeholder="<?php echo $entry_quantity; ?>" class="form-control" /></td>
                                         <td class="text-right"><input type="text" name="product_special[<?php echo $special_row; ?>][price]" value="<?php echo $product_special['price']; ?>" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>
-                                        <td class="text-left" style="width: 20%;"><div class="input-group date">
-                                            <input type="text" name="product_special[<?php echo $special_row; ?>][date_start]" value="<?php echo $product_special['date_start']; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" class="form-control" />
-                          <span class="input-group-btn">
-                          <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                          </span></div></td>
-                                        <td class="text-left" style="width: 20%;"><div class="input-group date">
-                                            <input type="text" name="product_special[<?php echo $special_row; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" class="form-control" />
-                          <span class="input-group-btn">
-                          <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                          </span></div></td>
+                                        <td class="text-left" style="width: 20%;">
+                                            <div class="input-group date">
+                                                <input type="text" name="product_special[<?php echo $special_row; ?>][date_start]" value="<?php echo $product_special['date_start']; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" class="form-control" />
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td class="text-left" style="width: 20%;">
+                                            <div class="input-group date">
+                                                <input type="text" name="product_special[<?php echo $special_row; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" class="form-control" />
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            </div>
+                                        </td>
                                         <td class="text-left"><button type="button" onclick="$('#special-row<?php echo $special_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                                     </tr>
                                     <?php $special_row++; ?>
@@ -987,89 +1005,119 @@
         }
     });
 
-    <?php if (!empty($tag_key)) { ?>
-    var tag_key = '<?php echo $tag_key; ?>';
-    <?php } else  { ?>
-    var tag_key = 0;
-    <?php } ?>
-
     // Tag
-    $('.tag-select').autocomplete({
+    $('input[name=\'tag\']').autocomplete({
         'source': function(request, response) {
             $.ajax({
                 url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&tag_name=' +  encodeURIComponent(request),
                 type: 'post',
-                data: { tag_text: $(this).parent().parent().find('.tags-multi-select').serializeArray() },
+                data: { tag_text: $('#product-tag input').serializeArray() },
                 dataType: 'json',
                 success: function(json) {
-                    response($.map(json, function(item) {
-                        return {
-                            label: item['tag'],
-                            value: item['tag_id']
+                    if (json['new']) {
+                        add_tag = true;
+
+                        new_tag = $('input[name=\'tag\']').val();
+
+                        tags = $('#product-tag input').serializeArray();
+
+                        $.each(tags, function(key, tag) {
+                            if (tag.value == new_tag) {
+                                add_tag = false;
+
+                                return false;
+                            }
+                        });
+
+                        if (add_tag) {
+                            response($.map(json['new'], function (item) {
+                                return {
+                                    label: '<i class="fa fa-plus-circle"></i> &nbsp;<?php echo $button_add; ?> <b>' + item['tag'] + '</b>',
+                                    value: item['tag_id']
+                                }
+                            }));
                         }
-                    }));
+                    } else {
+                        response($.map(json, function(item) {
+                            return {
+                                label: item['tag'],
+                                value: item['tag_id']
+                            }
+                        }));
+                    }
                 }
             });
         },
         'select': function(item) {
-            var tag_value = item['label'];
 
-            $(this).parent().parent().find('.tags-multi-select').append('<option data-tag-remove="' + tag_key + '" value="' + tag_value +'" selected="selected">' + tag_value + '</option>');
 
-            $(this).before('<span class="tag-choice">' + item['label'] + '<a class="tag-choice-close" onclick="removeTag(this);" data-tag-remove-index="' + tag_key + '"><i class="fa fa-times"></i></a></span>');
+            $('#product-tag' + item['value']).remove();
+
+            if (!$('#product-tag-' + tag_language).length) {
+                $(this).after('<div id="product-tag-' + tag_language + '" class="well well-sm" style="overflow: auto;"></div>');
+            }
+
+            tag_language = parseInt($(this).attr('id').replace('input-tag',''));
+
+            $('#product-tag-' + tag_language).append('<div id="product-tag' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['value'] + '<input type="hidden" name="product_tag[' + tag_language  +'][]" value="' + item['value'] + '" /></div>');
 
             $(this).val('');
-
-            tag_key = tag_key + 1 ;
         }
     });
 
-    function removeTag(tag) {
-        var tag_value = $(tag).data('tag-remove-index');
-        $(tag).parent().parent().parent().parent().find('.tags-multi-select option[data-tag-remove="' + tag_value + '"]').remove();
-        $(tag).parent().remove();
-    }
+    $('#product-tag').delegate('.fa-minus-circle', 'click', function() {
+        $(this).parent().remove();
+    });
 
-    $('.tag-select').keypress(function(event){
-        if(event.keyCode == 13){
-            event.preventDefault();
-            label = $(this).val();
-            var add_tag = 1;
-            var error = '';
+    $('input[name=\'tag\']').keypress(function(e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
 
-            if (label == '') {
-                add_tag = 0;
-                error  = '<div class="alert alert-danger tag-error"><i class="fa fa-exclamation-circle"></i>  <?php echo $error_tag_empty; ?>';
-                error += '    <button type="button" class="close" data-dismiss="alert">&times;</button>';
-                error += '</div>';
+            add_tag = true;
+
+            new_tag = $(this).val();
+
+            $('input[name=\'tag\']').val('');
+
+            $('#product-tag' + new_tag).remove();
+
+
+
+
+
+
+            tag_language = parseInt($(this).attr('id').replace('input-tag',''));
+
+            if (!$('#product-tag-' + tag_language).length) {
+                $(this).parent().append('<div id="product-tag-' + tag_language + '" class="well well-sm" style="overflow: auto;"></div>');
             }
 
-            $(this).parent().parent().find( '.tags-multi-select option:selected' ).each(function() {
-                if ($(this).val() == label) {
-                    add_tag = 0;
-                    error  = '<div class="alert alert-danger tag-error"><i class="fa fa-exclamation-circle"></i>  <?php echo $error_tag; ?>';
-                    error += '    <button type="button" class="close" data-dismiss="alert">&times;</button>';
-                    error += '</div>';
+            tags = $('#product-tag-' + tag_language + ' input').serializeArray();
+
+            $.each(tags, function(key, tag) {
+                if (tag.value == new_tag) {
+                    add_tag = false;
+
+                    return false;
                 }
             });
 
-            if (add_tag == 1) {
-                $(this).parent().parent().find('.tags-multi-select').append('<option data-tag-remove="' + tag_key + '" value="' + label +'" selected="selected">' + label + '</option>');
-
-                $(this).before('<span class="tag-choice">' + label + '<a class="tag-choice-close" onclick="removeTag(this);" data-tag-remove-index="' + tag_key + '"><i class="fa fa-times"></i></a></span>');
-
-                $(this).val('');
-
-                tag_key = tag_key + 1 ;
+            if (add_tag) {
+                $('#product-tag-' + tag_language).append('<div id="product-tag' + new_tag + '"><i class="fa fa-minus-circle"></i> ' + new_tag + '<input type="hidden" name="product_tag[' + tag_language  +'][]" value="' + new_tag + '" /></div>');
             } else {
-                $(this).parent().after(error);
-                $('.tag-error').delay(5000).fadeOut('slow');
+                $('input[name=\'tag\']').attr({
+                    title                : '<?php echo $error_add_same_tag; ?>',
+                    'data-original-title': '<?php echo $error_add_same_tag; ?>',
+                    'data-toggle'        : 'tooltip',
+                    'data-placement'     : 'bottom',
+                }).tooltip('show').addClass('tag-error');
+
+                setTimeout(function(){
+                    $('input[name=\'tag\']').removeAttr('title data-original-title data-toggle data-placement');
+                }, 5000);
             }
         }
-    });
-
-    $(".tags-select").click(function () {
-        $(this).children('.form-control').find('.tag-select').focus();
     });
 
     // Category
@@ -1518,7 +1566,7 @@
         <?php foreach ($customer_groups as $customer_group) { ?>
         html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>';
         <?php } ?>
-        html += '    <select>';
+        html += '    </select>';
         html += '  </td>';
         html += '  <td class="left">';
         html += '    <a onclick="$(\'#recurring-row' + recurring_row + '\').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>';

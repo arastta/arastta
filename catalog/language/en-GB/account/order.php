@@ -34,6 +34,7 @@ $_['text_website']          = 'Web Site:';
 $_['text_to']               = 'To';
 $_['text_ship_to']          = 'Ship To (if different address)';
 $_['text_order_date']       = 'Order Date:';
+$_['text_invoice_proforma'] = 'Proforma Invoice';
 
 // Column
 $_['column_order_id']       = 'Order ID';

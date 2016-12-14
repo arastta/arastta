@@ -279,13 +279,25 @@ class ModelCheckoutOrder extends Model {
                 $safe = false;
             }
 
-            if ($this->config->get('config_fraud_detection')) {
-                $this->load->model('checkout/fraud');
+            // Fraud check if the customer is not marked safe and the order status is changing to processing or complete
+            if (!$safe && in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
+                // Anti-Fraud
+                $this->load->model('extension/extension');
 
-                $risk_score = $this->model_checkout_fraud->getFraudScore($order_info);
+                $extensions = $this->model_extension_extension->getExtensions('antifraud');
 
-                if (!$safe && $risk_score > $this->config->get('config_fraud_score')) {
-                    $order_status_id = $this->config->get('config_fraud_status_id');
+                foreach ($extensions as $extension) {
+                    if (!$this->config->get($extension['code'] . '_antifraud_status')) {
+                        continue;
+                    }
+
+                    $this->load->model('antifraud/' . $extension['code']);
+
+                    $fraud_status_id = $this->{'model_antifraud_' . $extension['code']}->check($order_info);
+
+                    if ($fraud_status_id) {
+                        $order_status_id = $fraud_status_id;
+                    }
                 }
             }
 

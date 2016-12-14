@@ -106,7 +106,7 @@ class Route extends Object
         foreach ($parts as $part) {
             $query = $seo->getAliasQuery($part);
 
-            if (!empty($query)) {
+            if (!empty($query) && strstr($query, '=')) {
                 $url = explode('=', $query);
 
                 switch ($url[0]) {
@@ -147,25 +147,18 @@ class Route extends Object
                         }
                         break;
                     case 'manufacturer_id':
-                        $this->request->get['manufacturer_id'] = $url[1];
-                        break;
                     case 'information_id':
-                        $this->request->get['information_id'] = $url[1];
-                        break;
+                    case 'route':
                     default:
-                        $this->request->get['route'] = $query;
+                        $this->request->get[$url[0]] = $url[1];
                         break;
                 }
             } elseif ($is_lang_home) {
                 $this->request->get['route'] = 'common/home';
 
                 break;
-            } elseif (in_array($seo_url, $this->getSeoRouteList())) {
-                $this->request->get['route'] = $seo_url;
-
-                break;
             } else {
-                $this->request->get['route'] = 'error/not_found';
+                $this->request->get['route'] = $seo_url;
 
                 break;
             }
@@ -287,8 +280,18 @@ class Route extends Object
                     }
                     break;
                 default:
-                    if (!$this->seoDisabled($uri->getVar('route'))) {
-                        $url = '/' . $uri->getVar('route');
+                    $route = $uri->getVar('route');
+
+                    if (!$this->seoDisabled($route)) {
+                        $alias = $seo->getAlias('route='.$route, 'other');
+
+                        if (!empty($alias)) {
+                            $alias = str_replace('route=', '', $alias);
+
+                            $url = '/' . $alias;
+                        } else {
+                            $url = '/' . $route;
+                        }
                     }
 
                     break;
@@ -404,52 +407,14 @@ class Route extends Object
     {
         $status = false;
 
-        if (!in_array($route, $this->getSeoRouteList())) {
-            $status = true;
-        }
-
         if (($status == false) and $this->request->isAjax()) {
             $status = true;
         }
 
-        return $status;
-    }
-
-    public function getSeoRouteList()
-    {
-        static $route = array();
-
-        if (empty($route)) {
-            $route[] = 'account/account';
-            $route[] = 'account/address';
-            $route[] = 'account/credit';
-            $route[] = 'account/download';
-            $route[] = 'account/forgotten';
-            $route[] = 'account/login';
-            $route[] = 'account/newsletter';
-            $route[] = 'account/order';
-            $route[] = 'account/recurring';
-            $route[] = 'account/register';
-            $route[] = 'account/return';
-            $route[] = 'account/reward';
-            $route[] = 'account/voucher';
-            $route[] = 'account/wishlist';
-            $route[] = 'affiliate/account';
-            $route[] = 'affiliate/forgotten';
-            $route[] = 'affiliate/login';
-            $route[] = 'affiliate/register';
-            $route[] = 'checkout/cart';
-            $route[] = 'checkout/checkout';
-            $route[] = 'common/home';
-            $route[] = 'information/contact';
-            $route[] = 'information/information';
-            $route[] = 'information/sitemap';
-            $route[] = 'product/category';
-            $route[] = 'product/manufacturer/info';
-            $route[] = 'product/product';
-            $route[] = 'product/special';
+        if (($status == false) && (IS_ADMIN == true)) {
+            $status = true;
         }
 
-        return $route;
+        return $status;
     }
 }

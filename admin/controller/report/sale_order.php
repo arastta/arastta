@@ -36,6 +36,12 @@ class ControllerReportSaleOrder extends Controller {
             $filter_order_status_id = 0;
         }
 
+        if (isset($this->request->get['filter_payment_code'])) {
+            $filter_payment_code = $this->request->get['filter_payment_code'];
+        } else {
+            $filter_payment_code = '';
+        }
+
         if (isset($this->request->get['page'])) {
             $page = $this->request->get['page'];
         } else {
@@ -60,6 +66,10 @@ class ControllerReportSaleOrder extends Controller {
             $url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
         }
 
+        if (isset($this->request->get['filter_payment_code'])) {
+            $url .= '&filter_payment_code=' . $this->request->get['filter_payment_code'];
+        }
+
         if (isset($this->request->get['page'])) {
             $url .= '&page=' . $this->request->get['page'];
         }
@@ -81,10 +91,11 @@ class ControllerReportSaleOrder extends Controller {
         $data['orders'] = array();
 
         $filter_data = array(
-            'filter_date_start'         => $filter_date_start,
-            'filter_date_end'         => $filter_date_end,
+            'filter_date_start'      => $filter_date_start,
+            'filter_date_end'        => $filter_date_end,
             'filter_group'           => $filter_group,
             'filter_order_status_id' => $filter_order_status_id,
+            'filter_payment_code'    => $filter_payment_code,
             'start'                  => ($page - 1) * $this->config->get('config_limit_admin'),
             'limit'                  => $this->config->get('config_limit_admin')
         );
@@ -105,11 +116,13 @@ class ControllerReportSaleOrder extends Controller {
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_list'] = $this->language->get('text_list');
         $data['text_no_results'] = $this->language->get('text_no_results');
         $data['text_confirm'] = $this->language->get('text_confirm');
         $data['text_all_status'] = $this->language->get('text_all_status');
+        $data['text_all_payment'] = $this->language->get('text_all_payment');
+        $data['text_filter'] = $this->language->get('text_filter');
 
         $data['column_date_start'] = $this->language->get('column_date_start');
         $data['column_date_end'] = $this->language->get('column_date_end');
@@ -122,16 +135,34 @@ class ControllerReportSaleOrder extends Controller {
         $data['entry_date_end'] = $this->language->get('entry_date_end');
         $data['entry_group'] = $this->language->get('entry_group');
         $data['entry_status'] = $this->language->get('entry_status');
+        $data['entry_payment'] = $this->language->get('entry_payment');
 
         $data['button_filter'] = $this->language->get('button_filter');
+        $data['button_output'] = $this->language->get('button_output');
+        $data['button_export'] = $this->language->get('button_export');
         $data['button_show_filter'] = $this->language->get('button_show_filter');
-        $data['button_hide_filter'] = $this->language->get('button_hide_filter');        
+        $data['button_hide_filter'] = $this->language->get('button_hide_filter');
 
         $data['token'] = $this->session->data['token'];
 
         $this->load->model('localisation/order_status');
 
         $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+        $this->load->model('extension/extension');
+
+        $payment_methods = $this->model_extension_extension->getExtensions(array('filter_type' => 'payment'));
+
+        $data['payment_methods'] = array();
+
+        foreach ($payment_methods as $payment_method) {
+            $this->load->language('payment/' . $payment_method['code']);
+
+            $data['payment_methods'][] = array(
+                'code'  => $payment_method['code'],
+                'title' => $this->language->get('heading_title'),
+            );
+        }
 
         $data['groups'] = array();
 
@@ -173,6 +204,10 @@ class ControllerReportSaleOrder extends Controller {
             $url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
         }
 
+        if (isset($this->request->get['filter_payment_code'])) {
+            $url .= '&filter_payment_code=' . $this->request->get['filter_payment_code'];
+        }
+
         $pagination = new Pagination();
         $pagination->total = $order_total;
         $pagination->page = $page;
@@ -187,6 +222,42 @@ class ControllerReportSaleOrder extends Controller {
         $data['filter_date_end'] = $filter_date_end;
         $data['filter_group'] = $filter_group;
         $data['filter_order_status_id'] = $filter_order_status_id;
+        $data['filter_payment_code'] = $filter_payment_code;
+
+        $graph = array(
+            'sales' => array(
+                'model'            => 'sale',
+                'function'         => 'orders',
+                'title'            => $this->language->get('text_sale'),
+                'link'             => str_replace('&amp;', '&', $this->url->link('report/graph/graph', 'token=' . $this->session->data['token'] . '&' . http_build_query($filter_data) . '&page=' . $page, 'SSL')),
+                'color'            => '#008db9',
+                'background-color' => '#FFFFFF',
+                'total'            => 'total',
+                'price'            => true
+            ),
+            'orders'   => array(
+                'model'            => 'sale',
+                'function'         => 'orders',
+                'title'            => $this->language->get('text_order'),
+                'link'             => str_replace('&amp;', '&', $this->url->link('report/graph/graph', 'token=' . $this->session->data['token'] . '&' . http_build_query($filter_data) . '&page=' . $page, 'SSL')),
+                'color'            => '#5cb85c',
+                'background-color' => '#FFFFFF',
+                'total'            => 'orders',
+                'price'            => false
+            ),
+            'products' => array(
+                'model'            => 'sale',
+                'function'         => 'orders',
+                'title'            => $this->language->get('text_product'),
+                'link'             => str_replace('&amp;', '&', $this->url->link('report/graph/graph', 'token=' . $this->session->data['token'] . '&' . http_build_query($filter_data) . '&page=' . $page, 'SSL')),
+                'color'            => '#d9534f',
+                'background-color' => '#FFFFFF',
+                'total'            => 'products',
+                'price'            => false
+            )
+        );
+
+        $data['graph'] = $this->load->controller('report/graph', $graph);
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

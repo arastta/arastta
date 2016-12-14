@@ -41,7 +41,7 @@ class ControllerCommonFileManager extends Controller {
         }
 
         // Get files
-        $files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
+        $files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF,svg,SVG}', GLOB_BRACE);
 
         if (!$files) {
             $files = array();
@@ -68,6 +68,10 @@ class ControllerCommonFileManager extends Controller {
 
                 if (isset($this->request->get['thumb'])) {
                     $url .= '&thumb=' . $this->request->get['thumb'];
+                }
+
+                if (isset($this->request->get['mode'])) {
+                    $url .= '&mode=' . $this->request->get['mode'];
                 }
 
                 $data['images'][] = array(
@@ -110,6 +114,7 @@ class ControllerCommonFileManager extends Controller {
         $data['button_folder'] = $this->language->get('button_folder');
         $data['button_delete'] = $this->language->get('button_delete');
         $data['button_search'] = $this->language->get('button_search');
+        $data['button_add_image'] = $this->language->get('button_add_image');
 
         $data['token'] = $this->session->data['token'];
 
@@ -172,6 +177,10 @@ class ControllerCommonFileManager extends Controller {
             $url .= '&thumb=' . $this->request->get['thumb'];
         }
 
+        if (isset($this->request->get['mode'])) {
+            $url .= '&mode=' . $this->request->get['mode'];
+        }
+
         $data['parent'] = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
         // Refresh
@@ -187,6 +196,10 @@ class ControllerCommonFileManager extends Controller {
 
         if (isset($this->request->get['thumb'])) {
             $url .= '&thumb=' . $this->request->get['thumb'];
+        }
+
+        if (isset($this->request->get['mode'])) {
+            $url .= '&mode=' . $this->request->get['mode'];
         }
 
         $data['refresh'] = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -207,6 +220,10 @@ class ControllerCommonFileManager extends Controller {
 
         if (isset($this->request->get['thumb'])) {
             $url .= '&thumb=' . $this->request->get['thumb'];
+        }
+
+        if (isset($this->request->get['mode'])) {
+            $url .= '&mode=' . $this->request->get['mode'];
         }
 
         $pagination = new Pagination();

@@ -52,4 +52,3 @@ $_['error_custom_field']   = '%s required!';
 $_['error_password']       = 'Password must be between 4 and 20 characters!';
 $_['error_confirm']        = 'Password confirmation does not match password!';
 $_['error_agree']          = 'Warning: You must agree to the %s!';
-$_['error_captcha']        = 'Warning: Verification code does not match the image!';

@@ -30,7 +30,7 @@ $_['text_translation']                      = 'Translations';
 $_['text_check_error']                      = 'Version checker was not able to get new versions.';
 $_['text_check_success']                    = 'Version checker has been run successfully.';
 $_['text_update_error']                     = 'Update process has failed, please, try again.';
-$_['text_update_success']                   = 'Update process has been completed successfully.';
+$_['text_update_success']                   = 'Update process has been completed successfully.<br />Note! We recommend you clear the cached content under "Tools -> Cache Manager" to ensure all is loaded correctly.';
 $_['text_up_to_date']                       = 'Congratulations! Your store is up to date.';
 $_['text_maintenance']                      = 'While your store is being updated, it will be in maintenance mode. As soon as the updates are complete, your store will return to normal.';
 
@@ -51,4 +51,5 @@ $_['text_update_all']                       = 'All updates have been completed.'
 // Error
 $_['error_zip']                             = 'Warning: ZIP extension needs to be loaded on your server! Please, ask your hosting company for further help.';
 $_['error_xml']                             = 'Warning: XML extension needs to be loaded on your server! Please, ask your hosting company for further help.';
+$_['error_upload']                          = 'Warning: Upload directory needs to be writable! Please, ask your hosting company for further help.';
 $_['error_permission']                      = 'Warning: You have no permission to apply updates.';

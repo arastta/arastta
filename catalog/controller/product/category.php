@@ -17,7 +17,7 @@ class ControllerProductCategory extends Controller {
         $this->load->model('tool/image');
 
         if (isset($this->request->get['filter'])) {
-            $filter = $this->request->get['filter'];
+            $filter = urldecode($this->request->get['filter']);
         } else {
             $filter = '';
         }
@@ -145,7 +145,7 @@ class ControllerProductCategory extends Controller {
             $url = '';
 
             if (isset($this->request->get['filter'])) {
-                $url .= '&filter=' . $this->request->get['filter'];
+                $url .= '&filter=' . urldecode($this->request->get['filter']);
             }
 
             if (isset($this->request->get['sort'])) {
@@ -244,7 +244,7 @@ class ControllerProductCategory extends Controller {
             $url = '';
 
             if (isset($this->request->get['filter'])) {
-                $url .= '&filter=' . $this->request->get['filter'];
+                $url .= '&filter=' . urldecode($this->request->get['filter']);
             }
 
             if (isset($this->request->get['limit'])) {
@@ -312,7 +312,7 @@ class ControllerProductCategory extends Controller {
             $url = '';
 
             if (isset($this->request->get['filter'])) {
-                $url .= '&filter=' . $this->request->get['filter'];
+                $url .= '&filter=' . urldecode($this->request->get['filter']);
             }
 
             if (isset($this->request->get['sort'])) {
@@ -340,7 +340,7 @@ class ControllerProductCategory extends Controller {
             $url = '';
 
             if (isset($this->request->get['filter'])) {
-                $url .= '&filter=' . $this->request->get['filter'];
+                $url .= '&filter=' . urldecode($this->request->get['filter']);
             }
 
             if (isset($this->request->get['sort'])) {
@@ -391,7 +391,7 @@ class ControllerProductCategory extends Controller {
             }
 
             if (isset($this->request->get['filter'])) {
-                $url .= '&filter=' . $this->request->get['filter'];
+                $url .= '&filter=' . urldecode($this->request->get['filter']);
             }
 
             if (isset($this->request->get['sort'])) {

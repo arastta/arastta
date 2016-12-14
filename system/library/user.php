@@ -92,6 +92,12 @@ class User extends Object {
                 }
             }
 
+            // Log this login action
+            $name = $user_query->row['firstname'] . ' ' . $user_query->row['lastname'];
+            $activity_data = array('name' => $name, 'email' => $user_query->row['email'], 'user_group_id' => $user_query->row['user_group_id']);
+
+            $this->db->query("INSERT INTO `" . DB_PREFIX . "user_activity` SET `user_id` = '" . (int)$this->user_id . "', `key` = 'login', `data` = '" . $this->db->escape(json_encode($activity_data)) . "', `ip` = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', `date_added` = NOW()");
+
             return true;
         } else {
             return false;

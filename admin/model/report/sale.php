@@ -19,14 +19,14 @@ class ModelReportSale extends Model {
 
         return $query->row['total'];
     }
-        
+
     // Map
     public function getTotalOrdersByCountry() {
         $query = $this->db->query("SELECT COUNT(*) AS total, SUM(o.total) AS amount, c.iso_code_2 FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "country` c ON (o.payment_country_id = c.country_id) WHERE o.order_status_id > '0' GROUP BY o.payment_country_id");
 
         return $query->rows;
     }
-        
+
     // Orders
     public function getTotalOrdersByDay() {
         $implode = array();
@@ -34,7 +34,7 @@ class ModelReportSale extends Model {
         foreach ($this->config->get('config_complete_status') as $order_status_id) {
             $implode[] = "'" . (int)$order_status_id . "'";
         }
-        
+
         $order_data = array();
 
         for ($i = 0; $i < 24; $i++) {
@@ -43,7 +43,7 @@ class ModelReportSale extends Model {
                 'total' => 0
             );
         }
-                
+
         $query = $this->db->query("SELECT COUNT(*) AS total, HOUR(date_added) AS hour FROM `" . DB_PREFIX . "order` WHERE order_status_id IN(" . implode(",", $implode) . ") AND DATE(date_added) = DATE(NOW()) GROUP BY HOUR(date_added) ORDER BY date_added ASC");
 
         foreach ($query->rows as $result) {
@@ -61,8 +61,8 @@ class ModelReportSale extends Model {
 
         foreach ($this->config->get('config_complete_status') as $order_status_id) {
             $implode[] = "'" . (int)$order_status_id . "'";
-        }        
-        
+        }
+
         $order_data = array();
 
         $date_start = strtotime('-' . date('w') . ' days');
@@ -94,7 +94,7 @@ class ModelReportSale extends Model {
         foreach ($this->config->get('config_complete_status') as $order_status_id) {
             $implode[] = "'" . (int)$order_status_id . "'";
         }
-                
+
         $order_data = array();
 
         for ($i = 1; $i <= date('t'); $i++) {
@@ -124,7 +124,7 @@ class ModelReportSale extends Model {
         foreach ($this->config->get('config_complete_status') as $order_status_id) {
             $implode[] = "'" . (int)$order_status_id . "'";
         }
-                
+
         $order_data = array();
 
         for ($i = 1; $i <= 12; $i++) {
@@ -145,7 +145,7 @@ class ModelReportSale extends Model {
 
         return $order_data;
     }
-    
+
     public function getOrders($data = array()) {
         $sql = "SELECT MIN(o.date_added) AS date_start, MAX(o.date_added) AS date_end, COUNT(*) AS `orders`, SUM((SELECT SUM(op.quantity) FROM `" . DB_PREFIX . "order_product` op WHERE op.order_id = o.order_id GROUP BY op.order_id)) AS products, SUM((SELECT SUM(ot.value) FROM `" . DB_PREFIX . "order_total` ot WHERE ot.order_id = o.order_id AND ot.code = 'tax' GROUP BY ot.order_id)) AS tax, SUM(o.total) AS `total` FROM `" . DB_PREFIX . "order` o";
 
@@ -153,6 +153,10 @@ class ModelReportSale extends Model {
             $sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
         } else {
             $sql .= " WHERE o.order_status_id > '0'";
+        }
+
+        if (!empty($data['filter_payment_code'])) {
+            $sql .= " AND o.payment_code = '" . $data['filter_payment_code'] . "'";
         }
 
         if (!empty($data['filter_date_start'])) {
@@ -169,8 +173,8 @@ class ModelReportSale extends Model {
             $group = 'week';
         }
 
-        switch($group) {
-            case 'day';
+        switch ($group) {
+            case 'day':
                 $sql .= " GROUP BY YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added)";
                 break;
             default:
@@ -211,8 +215,8 @@ class ModelReportSale extends Model {
             $group = 'week';
         }
 
-        switch($group) {
-            case 'day';
+        switch ($group) {
+            case 'day':
                 $sql = "SELECT COUNT(DISTINCT YEAR(date_added), MONTH(date_added), DAY(date_added)) AS total FROM `" . DB_PREFIX . "order`";
                 break;
             default:
@@ -231,6 +235,10 @@ class ModelReportSale extends Model {
             $sql .= " WHERE order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
         } else {
             $sql .= " WHERE order_status_id > '0'";
+        }
+
+        if (!empty($data['filter_payment_code'])) {
+            $sql .= " AND payment_code = '" . $data['filter_payment_code'] . "'";
         }
 
         if (!empty($data['filter_date_start'])) {
@@ -269,8 +277,8 @@ class ModelReportSale extends Model {
             $group = 'week';
         }
 
-        switch($group) {
-            case 'day';
+        switch ($group) {
+            case 'day':
                 $sql .= " GROUP BY YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added), ot.title";
                 break;
             default:
@@ -309,8 +317,8 @@ class ModelReportSale extends Model {
             $group = 'week';
         }
 
-        switch($group) {
-            case 'day';
+        switch ($group) {
+            case 'day':
                 $sql = "SELECT COUNT(DISTINCT YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added), ot.title) AS total FROM `" . DB_PREFIX . "order` o";
                 break;
             default:
@@ -369,8 +377,8 @@ class ModelReportSale extends Model {
             $group = 'week';
         }
 
-        switch($group) {
-            case 'day';
+        switch ($group) {
+            case 'day':
                 $sql .= " GROUP BY YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added), ot.title";
                 break;
             default:
@@ -409,8 +417,8 @@ class ModelReportSale extends Model {
             $group = 'week';
         }
 
-        switch($group) {
-            case 'day';
+        switch ($group) {
+            case 'day':
                 $sql = "SELECT COUNT(DISTINCT YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added), ot.title) AS total FROM `" . DB_PREFIX . "order` o";
                 break;
             default:

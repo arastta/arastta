@@ -112,8 +112,6 @@
             }
         };
 
-
-
         jQuery('#reportrange span').html(moment().subtract('days', 14).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 
         jQuery('#reportrange').daterangepicker(option_daterangepicker, cb);
@@ -278,6 +276,7 @@
                 };
 
                 json['order']['color'] = "#5cb85c";
+
                 $.plot('#chart-orders', [json['order']], option);
 
                 $('#chart-orders').bind('plothover', function(event, pos, item) {

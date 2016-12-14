@@ -2,6 +2,10 @@
 <div id="content">
     <div class="page-header">
         <div class="container-fluid">
+            <div class="pull-right">
+                <button id="button-output" data-toggle="tooltip" title="<?php echo $button_output; ?>" class="btn btn-default"><i class="fa fa-print"></i></button>
+                <button id="button-export" data-toggle="tooltip" title="<?php echo $button_export; ?>" class="btn btn-default"><i class="fa fa-file-excel-o"></i></button>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
     </div>
@@ -20,27 +24,29 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $entry_date_start; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $entry_date_start; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_date_start; ?>', 'filter_date_start');"><?php echo $entry_date_start; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_date_end; ?>', 'filter_date_end');"><?php echo $entry_date_end; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_group; ?>', 'filter_group');"><?php echo $entry_group; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_status; ?>', 'filter_order_status_id');"><?php echo $entry_status; ?></a></li>
+                                        <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_payment; ?>', 'filter_payment_code');"><?php echo $entry_payment; ?></a></li>
                                     </ul>
                                 </div>
                                 <div class="input-group date filter filter_date_start">
-                                    <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control filter" />
-                                  <span class="input-group-btn">
-                                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                  </span></div>
+                                    <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $text_filter . $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control filter" />
+                                      <span class="input-group-btn">
+                                          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                      </span>
+                                </div>
                                 <div class="input-group date filter hidden filter_date_end">
-                                    <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
-                                  <span class="input-group-btn">
-                                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                                  </span></div>
+                                    <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $text_filter . $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
+                                      <span class="input-group-btn">
+                                          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                      </span>
+                                </div>
                                 <select name="filter_group" id="input-group" class="form-control filter hidden">
                                     <?php foreach ($groups as $group) { ?>
                                     <?php if ($group['value'] == $filter_group) { ?>
@@ -60,10 +66,20 @@
                                     <?php } ?>
                                     <?php } ?>
                                 </select>
+                                <select name="filter_payment_code" id="input-payment" class="form-control filter hidden">
+                                    <option value="0"><?php echo $text_all_payment; ?></option>
+                                    <?php foreach ($payment_methods as $payment_method) { ?>
+                                    <?php if ($payment_method['code'] == $payment_method) { ?>
+                                    <option value="<?php echo $payment_method['code']; ?>" selected="selected"><?php echo $payment_method['title']; ?></option>
+                                    <?php } else { ?>
+                                    <option value="<?php echo $payment_method['code']; ?>"><?php echo $payment_method['title']; ?></option>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <?php if (!empty($filter_date_start) || !empty($filter_date_end) || !empty($filter_group) || isset($filter_order_status_id)) { ?>
+                    <?php if (!empty($filter_date_start) || !empty($filter_date_end) || !empty($filter_group) || isset($filter_order_status_id) || isset($filter_payment_code)) { ?>
                     <div class="row">
                         <div class="col-lg-12 filter-tag">
                             <?php if ($filter_date_start) { ?>
@@ -97,10 +113,24 @@
                                 <a class="filter-remove" onclick="removeFilter(this, 'filter_order_status_id');"><i class="fa fa-times"></i></a>
                             </div>
                             <?php } ?>
+                            <?php if ($filter_payment_code) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_payment; ?>:</label> 
+                                <label class="filter-label"> 
+                                <?php foreach ($payment_methods as $payment_method) { ?>
+                                <?php if ($payment_method['code'] == $filter_payment_code) { ?>
+                                <?php echo $payment_method['title']; ?>
+                                <?php } ?>
+                                <?php } ?>
+                                </label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_payment_code');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
                         </div>
                     </div>
                     <?php } ?>
                 </div>
+                <?php echo $graph; ?>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -141,6 +171,20 @@
         </div>
     </div>
     <script type="text/javascript"><!--
+    $(document).ready(function() {
+        <?php if (!empty($filter_date_start)) { ?>
+        changeFilterType('<?php echo $entry_date_start; ?>', 'filter_date_start');
+        <?php } elseif (!empty($filter_date_end)) { ?>
+        changeFilterType('<?php echo $entry_date_end; ?>', 'filter_date_end');
+        <?php } elseif (!empty($filter_group)) { ?>
+        changeFilterType('<?php echo $entry_group; ?>', 'filter_group');
+        <?php } elseif (isset($filter_order_status_id)) { ?>
+        changeFilterType('<?php echo $entry_status; ?>', 'filter_order_status_id');
+        <?php } elseif (isset($filter_payment_code)) { ?>
+        changeFilterType('<?php echo $entry_payment; ?>', 'filter_payment_code');
+        <?php } ?>
+    });
+
     function filter() {
         url = 'index.php?route=report/sale_order&token=<?php echo $token; ?>';
 
@@ -166,6 +210,12 @@
 
         if (filter_order_status_id != 0) {
             url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+        }
+
+        var filter_payment_code = $('select[name=\'filter_payment_code\']').val();
+
+        if (filter_payment_code != 0) {
+            url += '&filter_payment_code=' + encodeURIComponent(filter_payment_code);
         }
 
         location = url;

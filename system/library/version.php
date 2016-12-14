@@ -18,23 +18,23 @@ final class Version extends Object
 
     protected $name = 'Arastta';
 
-    protected $code = 'Kolari';
+    protected $code = 'Nairobi';
 
     protected $major = '1';
 
-    protected $minor = '4';
+    protected $minor = '5';
 
-    protected $patch = '2';
+    protected $patch = '0';
 
     protected $build = '';
 
     protected $status = 'Stable';
 
-    protected $date = '21-October-2016';
+    protected $date = '14-December-2016';
 
-    protected $time = '10:30';
+    protected $time = '12:00';
 
-    protected $zone = 'GMT +2';
+    protected $zone = 'GMT +3';
 
     /**
      * Compares two a "PHP standardized" version number against the current Arastta version.

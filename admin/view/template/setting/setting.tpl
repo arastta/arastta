@@ -41,8 +41,8 @@
                         <li><a href="#tab-seo" data-toggle="tab"><?php echo $tab_seo; ?></a></li>
                         <li><a href="#tab-cache" data-toggle="tab"><?php echo $tab_cache; ?></a></li>
                         <li><a href="#tab-security" data-toggle="tab"><?php echo $tab_security; ?></a></li>
-                        <li><a href="#tab-fraud" data-toggle="tab"><?php echo $tab_fraud; ?></a></li>
                         <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
+                        <li><a href="#tab-maintenance" data-toggle="tab"><?php echo $tab_maintenance; ?></a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-general">
@@ -1337,6 +1337,22 @@
                                     <?php } ?>
                                 </div>
                             </div>
+                            <div class="form-group required">
+                                <label class="col-sm-2 control-label" for="input-image-maintenance"><?php echo $entry_image_maintenance; ?></label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <input type="text" name="config_image_maintenance_width" value="<?php echo $config_image_maintenance_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-maintenance" class="form-control" />
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" name="config_image_maintenance_height" value="<?php echo $config_image_maintenance_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <?php if ($error_image_maintenance) { ?>
+                                    <div class="text-danger"><?php echo $error_image_maintenance; ?></div>
+                                    <?php } ?>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane" id="tab-mail">
                             <div class="form-group">
@@ -1624,29 +1640,6 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <fieldset>
-                                <legend><?php echo $text_google_analytics; ?></legend>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-google-analytics"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_google_analytics); ?>"><?php echo $entry_google_analytics; ?></span></label>
-                                    <div class="col-sm-10">
-                                        <textarea name="config_google_analytics" rows="5" placeholder="<?php echo $entry_google_analytics; ?>" id="input-google-analytics" class="form-control"><?php echo $config_google_analytics; ?></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-google-analytics-status"><?php echo $entry_status; ?></label>
-                                    <div class="col-sm-10">
-                                        <select name="config_google_analytics_status" id="input-google-analytics-status" class="form-control">
-                                            <?php if ($config_google_analytics_status) { ?>
-                                            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                                            <option value="0"><?php echo $text_disabled; ?></option>
-                                            <?php } else { ?>
-                                            <option value="1"><?php echo $text_enabled; ?></option>
-                                            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </fieldset>
                         </div>
                         <div class="tab-pane" id="tab-cache">
                             <fieldset>
@@ -1863,85 +1856,23 @@
                                 </div>
                             </fieldset>
                             <fieldset>
-                                <legend><?php echo $text_google_captcha; ?></legend>
+                                <legend><?php echo $text_captcha; ?></legend>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-google-captcha-public"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_google_captcha); ?>"><?php echo $entry_google_captcha_public; ?></span></label>
+                                    <label class="col-sm-2 control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="config_google_captcha_public" value="<?php echo $config_google_captcha_public; ?>" placeholder="<?php echo $entry_google_captcha_public; ?>" id="input-google-captcha-public" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-google-captcha-secret"><?php echo $entry_google_captcha_secret; ?></label>
-                                    <div class="col-sm-10">
-                                        <input type="text" name="config_google_captcha_secret" value="<?php echo $config_google_captcha_secret; ?>" placeholder="<?php echo $entry_google_captcha_secret; ?>" id="input-google-captcha-secret" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-google-captcha-status"><?php echo $entry_status; ?></label>
-                                    <div class="col-sm-10">
-                                        <select name="config_google_captcha_status" id="input-google-captcha-status" class="form-control">
-                                            <?php if ($config_google_captcha_status) { ?>
-                                            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                                            <option value="0"><?php echo $text_disabled; ?></option>
+                                        <select name="config_captcha" id="input-captcha" class="form-control">
+                                            <option value=""><?php echo $text_none; ?></option>
+                                            <?php foreach ($captchas as $captcha) { ?>
+                                            <?php if ($captcha['value'] == $config_captcha) { ?>
+                                            <option value="<?php echo $captcha['value']; ?>" selected="selected"><?php echo $captcha['name']; ?></option>
                                             <?php } else { ?>
-                                            <option value="1"><?php echo $text_enabled; ?></option>
-                                            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                                            <option value="<?php echo $captcha['value']; ?>"><?php echo $captcha['name']; ?></option>
+                                            <?php } ?>
                                             <?php } ?>
                                         </select>
                                     </div>
                                 </div>
                             </fieldset>
-                        </div>
-                        <div class="tab-pane" id="tab-fraud">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_fraud_detection); ?>"><?php echo $entry_fraud_detection; ?></span></label>
-                                <div class="col-sm-10">
-                                    <label class="radio-inline">
-                                        <?php if ($config_fraud_detection) { ?>
-                                        <input type="radio" name="config_fraud_detection" value="1" checked="checked" />
-                                        <?php echo $text_yes; ?>
-                                        <?php } else { ?>
-                                        <input type="radio" name="config_fraud_detection" value="1" />
-                                        <?php echo $text_yes; ?>
-                                        <?php } ?>
-                                    </label>
-                                    <label class="radio-inline">
-                                        <?php if (!$config_fraud_detection) { ?>
-                                        <input type="radio" name="config_fraud_detection" value="0" checked="checked" />
-                                        <?php echo $text_no; ?>
-                                        <?php } else { ?>
-                                        <input type="radio" name="config_fraud_detection" value="0" />
-                                        <?php echo $text_no; ?>
-                                        <?php } ?>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-fraud-key"><?php echo $entry_fraud_key; ?></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="config_fraud_key" value="<?php echo $config_fraud_key; ?>" placeholder="<?php echo $entry_fraud_key; ?>" id="input-fraud-key" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-fraud-score"><span data-toggle="tooltip" title="<?php echo $help_fraud_score; ?>"><?php echo $entry_fraud_score; ?></span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="config_fraud_score" value="<?php echo $config_fraud_score; ?>" placeholder="<?php echo $entry_fraud_score; ?>" id="input-fraud-score" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-fraud-status"><span data-toggle="tooltip" title="<?php echo $help_fraud_status; ?>"><?php echo $entry_fraud_status; ?></span></label>
-                                <div class="col-sm-10">
-                                    <select name="config_fraud_status_id" id="input-fraud-status" class="form-control">
-                                        <?php foreach ($order_statuses as $order_status) { ?>
-                                        <?php if ($order_status['order_status_id'] == $config_fraud_status_id) { ?>
-                                        <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                                        <?php } else { ?>
-                                        <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                                        <?php } ?>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <div class="tab-pane" id="tab-server">
                             <div class="form-group">
@@ -1986,29 +1917,6 @@
                                 <label class="col-sm-2 control-label" for="input-robots"><span data-toggle="tooltip" title="<?php echo $help_robots; ?>"><?php echo $entry_robots; ?></span></label>
                                 <div class="col-sm-10">
                                     <textarea name="config_robots" rows="5" placeholder="<?php echo $entry_robots; ?>" id="input-robots" class="form-control"><?php echo $config_robots; ?></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_maintenance; ?>"><?php echo $entry_maintenance; ?></span></label>
-                                <div class="col-sm-10">
-                                    <label class="radio-inline">
-                                        <?php if ($config_maintenance) { ?>
-                                        <input type="radio" name="config_maintenance" value="1" checked="checked" />
-                                        <?php echo $text_yes; ?>
-                                        <?php } else { ?>
-                                        <input type="radio" name="config_maintenance" value="1" />
-                                        <?php echo $text_yes; ?>
-                                        <?php } ?>
-                                    </label>
-                                    <label class="radio-inline">
-                                        <?php if (!$config_maintenance) { ?>
-                                        <input type="radio" name="config_maintenance" value="0" checked="checked" />
-                                        <?php echo $text_no; ?>
-                                        <?php } else { ?>
-                                        <input type="radio" name="config_maintenance" value="0" />
-                                        <?php echo $text_no; ?>
-                                        <?php } ?>
-                                    </label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -2093,6 +2001,66 @@
                                     <?php if ($error_error_filename) { ?>
                                     <div class="text-danger"><?php echo $error_error_filename; ?></div>
                                     <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-maintenance">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_maintenance; ?>"><?php echo $entry_maintenance; ?></span></label>
+                                <div class="col-sm-10">
+                                    <label class="radio-inline">
+                                        <?php if ($config_maintenance) { ?>
+                                        <input type="radio" name="config_maintenance" value="1" checked="checked" />
+                                        <?php echo $text_yes; ?>
+                                        <?php } else { ?>
+                                        <input type="radio" name="config_maintenance" value="1" />
+                                        <?php echo $text_yes; ?>
+                                        <?php } ?>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <?php if (!$config_maintenance) { ?>
+                                        <input type="radio" name="config_maintenance" value="0" checked="checked" />
+                                        <?php echo $text_no; ?>
+                                        <?php } else { ?>
+                                        <input type="radio" name="config_maintenance" value="0" />
+                                        <?php echo $text_no; ?>
+                                        <?php } ?>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-maintenance-message"><span data-toggle="tooltip" title="<?php echo $help_maintenance_message; ?>"><?php echo $entry_maintenance_message; ?></span></label>
+                                <div class="col-sm-10">
+                                    <textarea name="config_maintenance_message" rows="5" placeholder="<?php echo $entry_maintenance_message; ?>" id="input-maintenance-message" class="form-control"><?php echo $config_maintenance_message; ?></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-maintenance-image"><span data-toggle="tooltip" title="<?php echo $help_maintenance_image; ?>"><?php echo $entry_maintenance_image; ?></span></label>
+                                <div class="col-sm-10"><a href="" id="thumb-maintenance-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $maintenance_image; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
+                                    <input type="hidden" name="config_maintenance_image" value="<?php echo $config_maintenance_image; ?>" id="input-maintenance-image" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_maintenance_login; ?>"><?php echo $entry_maintenance_login; ?></span></label>
+                                <div class="col-sm-10">
+                                    <label class="radio-inline">
+                                        <?php if ($config_maintenance_login) { ?>
+                                        <input type="radio" name="config_maintenance_login" value="1" checked="checked" />
+                                        <?php echo $text_yes; ?>
+                                        <?php } else { ?>
+                                        <input type="radio" name="config_maintenance_login" value="1" />
+                                        <?php echo $text_yes; ?>
+                                        <?php } ?>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <?php if (!$config_maintenance_login) { ?>
+                                        <input type="radio" name="config_maintenance_login" value="0" checked="checked" />
+                                        <?php echo $text_no; ?>
+                                        <?php } else { ?>
+                                        <input type="radio" name="config_maintenance_login" value="0" />
+                                        <?php echo $text_no; ?>
+                                        <?php } ?>
+                                    </label>
                                 </div>
                             </div>
                         </div>

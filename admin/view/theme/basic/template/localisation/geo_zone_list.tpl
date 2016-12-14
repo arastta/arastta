@@ -33,17 +33,16 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $column_name; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $column_name; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $column_name; ?>', 'filter_name');"><?php echo $column_name; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $column_description; ?>', 'filter_description');"><?php echo $column_description; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" id="input-name" class="form-control filter">
-                                <input type="text" name="filter_description"  value="<?php echo $filter_description; ?>" id="input-description" class="form-control filter hidden">
+                                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $text_filter . $column_name; ?>" id="input-name" class="form-control filter">
+                                <input type="text" name="filter_description"  value="<?php echo $filter_description; ?>" placeholder="<?php echo $text_filter . $column_description; ?>" id="input-description" class="form-control filter hidden">
                             </div>
                         </div>
                     </div>
@@ -71,7 +70,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <td style="width: 70px;" class="text-center">
+                                <td style="width: 70px; position: relative;" class="text-center">
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
@@ -132,6 +131,14 @@
     </div>
 </div>
 <script type="text/javascript"><!--
+$(document).ready(function() {
+    <?php if (!empty($filter_name)) { ?>
+    changeFilterType('<?php echo $column_name; ?>', 'filter_name');
+    <?php } elseif (!empty($filter_description)) { ?>
+    changeFilterType('<?php echo $column_description; ?>', 'filter_description');
+    <?php } ?>
+});
+
 $('input[name=\'filter_name\']').autocomplete({
     'source': function(request, response) {
         $.ajax({

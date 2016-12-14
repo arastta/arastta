@@ -33,10 +33,9 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $entry_name; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $entry_name; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_name; ?>', 'filter_name');"><?php echo $entry_name; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_model; ?>', 'filter_model');"><?php echo $entry_model; ?></a></li>
@@ -46,10 +45,10 @@
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_status; ?>', 'filter_status');"><?php echo $entry_status; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_model"  value="<?php echo $filter_model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" class="form-control filter hidden">
-                                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control filter">
+                                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $text_filter . $entry_name; ?>" id="input-name" class="form-control filter">
+                                <input type="text" name="filter_model"  value="<?php echo $filter_model; ?>" placeholder="<?php echo $text_filter . $entry_model; ?>" id="input-model" class="form-control filter hidden">
                                 <select name="filter_category" id="input-category" class="form-control filter hidden">
-                                    <option value="*"></option>
+                                    <option value="*"><?php echo $text_filter . $column_category; ?></option>
                                     <?php foreach ($categories as $category) { ?>
                                     <?php if ($category['category_id'] == $filter_category) { ?>
                                     <option value="<?php echo $category['category_id']; ?>" selected="selected"><?php echo $category['name']; ?></option>
@@ -58,10 +57,10 @@
                                     <?php } ?>
                                     <?php } ?>
                                 </select>
-                                <input type="text" name="filter_price" value="<?php echo $filter_price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control filter hidden" />
-                                <input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control filter hidden" />
+                                <input type="text" name="filter_price" value="<?php echo $filter_price; ?>" placeholder="<?php echo $text_filter . $entry_price; ?>" id="input-price" class="form-control filter hidden" />
+                                <input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" placeholder="<?php echo $text_filter . $entry_quantity; ?>" id="input-quantity" class="form-control filter hidden" />
                                 <select name="filter_status" id="input-status" class="form-control filter hidden">
-                                    <option value="*"></option>
+                                    <option value="*"><?php echo $text_filter . $entry_status; ?></option>
                                     <?php if ($filter_status) { ?>
                                     <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                                     <?php } else { ?>
@@ -136,7 +135,7 @@
                                         <i class="fa fa-sort" aria-hidden="true"></i>
                                     </div>
                                 </td>
-                                <td style="width: 70px;" class="text-center">
+                                <td style="width: 70px; position: relative;" class="text-center">
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
@@ -177,12 +176,12 @@
                                     <?php } ?></td>
                             </tr>
                             </thead>
-							<?php if ($sortable) { ?>
+                            <?php if ($sortable) { ?>
                             <tbody class="sortable-list">
-							<?php } else { ?>
+                            <?php } else { ?>
                             <tbody>
-								<input type="hidden" name="sort_order_type"  id="sort-order-type" value="p.sort_order" class="form-control"/>
-							<?php } ?>
+                                <input type="hidden" name="sort_order_type"  id="sort-order-type" value="p.sort_order" class="form-control"/>
+                            <?php } ?>
                             <?php if ($products) { ?>
                             <?php foreach ($products as $product) { ?>
                             <tr>
@@ -403,6 +402,20 @@
             },
             showbuttons: false,
         });
+
+        <?php if (!empty($filter_name)) { ?>
+        changeFilterType('<?php echo $entry_name; ?>', 'filter_name');
+        <?php } elseif (!empty($filter_model)) { ?>
+        changeFilterType('<?php echo $entry_model; ?>', 'filter_model');
+        <?php } elseif (!empty($filter_category)) { ?>
+        changeFilterType('<?php echo $column_category; ?>', 'filter_category');
+        <?php } elseif (!empty($filter_price)) { ?>
+        changeFilterType('<?php echo $entry_price; ?>', 'filter_price');
+        <?php } elseif (!empty($filter_quantity)) { ?>
+        changeFilterType('<?php echo $entry_quantity; ?>', 'filter_quantity');
+        <?php } elseif (isset($filter_status)) { ?>
+        changeFilterType('<?php echo $column_status; ?>', 'filter_status');
+        <?php } ?>
     });
 
     $('input[name=\'filter_name\']').autocomplete({

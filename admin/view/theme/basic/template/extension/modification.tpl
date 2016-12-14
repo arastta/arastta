@@ -5,6 +5,7 @@
             <div class="pull-right">
                 <a href="<?php echo $refresh; ?>" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn btn-default"><i class="fa fa-refresh"></i></a>
                 <a href="<?php echo $clear; ?>" data-toggle="tooltip" title="<?php echo $button_clear; ?>" class="btn btn-default"><i class="fa fa-eraser"></i></a>
+                <a href="<?php echo $upload; ?>" data-toggle="tooltip" title="<?php echo $button_upload; ?>" class="btn btn-default"><i class="fa fa-upload"></i></a>
             </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>
@@ -30,7 +31,7 @@
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
-                                            <td style="width: 70px;" class="text-center">
+                                            <td style="width: 70px; position: relative;" class="text-center">
                                                 <div class="bulk-action">
                                                     <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                                     <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>

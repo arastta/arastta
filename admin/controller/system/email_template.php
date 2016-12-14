@@ -30,7 +30,7 @@ class ControllerSystemEmailtemplate extends Controller
         $this->load->model('system/email_template');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-    
+
             $this->model_system_email_template->editEmailTemplate($this->request->get['email_template'], $this->request->post['email_template_description']);
 
             $this->session->data['success'] = $this->language->get('text_success');
@@ -110,7 +110,7 @@ class ControllerSystemEmailtemplate extends Controller
         }
 
         $url = '';
-        
+
         if (isset($this->request->get['filter_text'])) {
             $url .= '&filter_text=' . $this->request->get['filter_text'];
         }
@@ -142,7 +142,7 @@ class ControllerSystemEmailtemplate extends Controller
         if (isset($this->request->get['page'])) {
             $url .= '&page=' . $this->request->get['page'];
         }
-        
+
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
@@ -154,7 +154,7 @@ class ControllerSystemEmailtemplate extends Controller
             'text' => $this->language->get('heading_title'),
             'href' => $this->url->link('system/email_template', 'token=' . $this->session->data['token'] . $url, 'SSL')
         );
-        
+
         $data['emailTemplates'] = array();
 
         $filter_data = array(
@@ -192,6 +192,7 @@ class ControllerSystemEmailtemplate extends Controller
         $data['text_confirm'] = $this->language->get('text_confirm');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
+        $data['text_filter'] = $this->language->get('text_filter');
 
         #Column
         $data['column_text'] = $this->language->get('column_text');
@@ -276,9 +277,9 @@ class ControllerSystemEmailtemplate extends Controller
         $data['filter_status']  = $filter_status;
 
         $data['types'] = $this->getEmailTypes();
-        
+
         $data['token'] = $this->session->data['token'];
-        
+
         $data['results'] = sprintf($this->language->get('text_pagination'), ($email_template_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($email_template_total - $this->config->get('config_limit_admin'))) ? $email_template_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $email_template_total, ceil($email_template_total / $this->config->get('config_limit_admin')));
 
         $data['sort'] = $sort;
@@ -290,11 +291,11 @@ class ControllerSystemEmailtemplate extends Controller
 
         $this->response->setOutput($this->load->view('system/email_template_list.tpl', $data));
     }
-    
+
     protected function getForm()
     {
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         $data['text_form'] = $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
@@ -332,7 +333,7 @@ class ControllerSystemEmailtemplate extends Controller
         } else {
             $data['success'] = '';
         }
-        
+
         $url = '';
 
         if (isset($this->request->get['sort'])) {
@@ -358,7 +359,7 @@ class ControllerSystemEmailtemplate extends Controller
             'text' => $this->language->get('heading_title'),
             'href' => $this->url->link('system/email_template', 'token=' . $this->session->data['token'] . $url, 'SSL')
         );
-        
+
         if (!isset($this->request->get['email_template'])) {
             $this->response->redirect($this->url->link('system/email_template', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         } else {
@@ -371,7 +372,7 @@ class ControllerSystemEmailtemplate extends Controller
         if (isset($this->request->get['email_template']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
             $email_template_info = $this->model_system_email_template->getEmailTemplate($this->request->get['email_template']);
         }
-        
+
         $this->load->model('localisation/language');
 
         $data['languages'] = $this->model_localisation_language->getLanguages();
@@ -477,6 +478,7 @@ class ControllerSystemEmailtemplate extends Controller
         if (!empty($template_product)) {
             $message = str_replace('demo_{product:start}demo_{product:stop}', $template_product, $message);
         }
+
         $data['message'] = html_entity_decode($message, ENT_QUOTES, 'UTF-8');
 
         $this->response->setOutput($this->load->view('system/email_template_html.tpl', $data));
@@ -487,7 +489,7 @@ class ControllerSystemEmailtemplate extends Controller
         if (!$this->user->hasPermission('modify', 'system/email_template')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
-        
+
         return !$this->error;
     }
     
@@ -501,9 +503,10 @@ class ControllerSystemEmailtemplate extends Controller
                 'value'     => $result[$i]
             );
         }
+
         return $types;
     }
-    
+
     public function autocomplete()
     {
         $json = array();

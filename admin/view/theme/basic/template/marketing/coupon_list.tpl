@@ -33,10 +33,9 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $column_name; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $column_name; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $column_name; ?>', 'filter_name');"><?php echo $column_name; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $column_code; ?>', 'filter_code');"><?php echo $column_code; ?></a></li>
@@ -46,21 +45,21 @@
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $column_status; ?>', 'filter_status');"><?php echo $column_status; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $column_name; ?>" id="input-name" class="form-control filter">
-                                <input type="text" name="filter_code"  value="<?php echo $filter_code; ?>" placeholder="<?php echo $column_code; ?>" id="input-code" class="form-control filter hidden">
+                                <input type="text" name="filter_name"  value="<?php echo $filter_name; ?>" placeholder="<?php echo $text_filter . $column_name; ?>" id="input-name" class="form-control filter">
+                                <input type="text" name="filter_code"  value="<?php echo $filter_code; ?>" placeholder="<?php echo $text_filter . $column_code; ?>" id="input-code" class="form-control filter hidden">
                                 <div class="input-group date filter hidden filter_date_start">
-                                  <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $column_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control filter" />
+                                  <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $text_filter . $column_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control filter" />
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                                   </span></div>
                                 <div class="input-group date filter hidden filter_date_end">
-                                  <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $column_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
+                                  <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $text_filter . $column_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control filter hidden" />
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                                   </span></div>
-                                <input type="text" name="filter_discount" value="<?php echo $filter_discount; ?>" placeholder="<?php echo $column_discount; ?>" id="input-discount" class="form-control filter hidden" />
+                                <input type="text" name="filter_discount" value="<?php echo $filter_discount; ?>" placeholder="<?php echo $text_filter . $column_discount; ?>" id="input-discount" class="form-control filter hidden" />
                                 <select name="filter_status" id="input-status" class="form-control filter hidden">
-                                    <option value="*"></option>
+                                    <option value="*"><?php echo $text_filter . $column_status; ?></option>
                                     <?php if ($filter_status) { ?>
                                     <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                                     <?php } else { ?>
@@ -123,7 +122,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <td style="width: 70px;" class="text-center">
+                                <td style="width: 70px; position: relative;" class="text-center">
                                     <div class="bulk-action">
                                         <input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" />
                                         <span class="bulk-caret"><i class="fa fa-caret-down"></i></span>
@@ -215,6 +214,22 @@ $('.date').datetimepicker({
 });
 //--></script>
 <script type="text/javascript"><!--
+$(document).ready(function() {
+    <?php if (!empty($filter_name)) { ?>
+    changeFilterType('<?php echo $column_name; ?>', 'filter_name');
+    <?php } elseif (!empty($filter_code)) { ?>
+    changeFilterType('<?php echo $column_code; ?>', 'filter_code');
+    <?php } elseif (!empty($filter_date_start)) { ?>
+    changeFilterType('<?php echo $column_date_start; ?>', 'filter_date_start');
+    <?php } elseif (!empty($filter_date_end)) { ?>
+    changeFilterType('<?php echo $column_date_end; ?>', 'filter_date_end');
+    <?php } elseif (!empty($filter_discount)) { ?>
+    changeFilterType('<?php echo $column_discount; ?>', 'filter_discount');
+    <?php } elseif (isset($filter_status)) { ?>
+    changeFilterType('<?php echo $column_status; ?>', 'filter_status');
+    <?php } ?>
+});
+
 $('input[name=\'filter_name\']').autocomplete({
     'source': function(request, response) {
         $.ajax({

@@ -45,15 +45,23 @@ class ControllerCheckoutAddress extends Controller
 
         $json = array();
 
-        // Validate cart has products and has stock.
-        if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+        // Validate cart has products.
+        if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers']))) {
             $json['redirect'] = $this->url->link('checkout/cart');
         }
 
-        // Validate minimum quantity requirements.
+        // Get products in cart.
         $products = $this->cart->getProducts();
 
         foreach ($products as $product) {
+            // Validate cart has stock or pre-order
+            if ($product['preorder'] || $product['stock'] || $this->config->get('config_stock_checkout')) {
+                continue;
+            } else if ((!$product['preorder'] || !$product['stock'])) {
+                $json['redirect'] = $this->url->link('checkout/cart');
+            }
+
+            // Validate minimum quantity requirements.
             $product_total = 0;
 
             foreach ($products as $product_2) {
@@ -369,12 +377,20 @@ class ControllerCheckoutAddress extends Controller
 
         if (isset($this->session->data['payment_address']['firstname'])) {
             $data['payment_firstname'] = $this->session->data['payment_address']['firstname'];
+        } else if (isset($this->session->data['customer_id'])) {
+            $data['payment_firstname'] = $this->customer->getFirstName();
+        } else if (isset($this->session->data['guest']['firstname'])) {
+            $data['payment_firstname'] = $this->session->data['guest']['firstname'];
         } else {
             $data['payment_firstname'] = '';
         }
 
         if (isset($this->session->data['payment_address']['lastname'])) {
             $data['payment_lastname'] = $this->session->data['payment_address']['lastname'];
+        } else if (isset($this->session->data['customer_id'])) {
+            $data['payment_lastname'] = $this->customer->getLastName();
+        } else if (isset($this->session->data['guest']['lastname'])) {
+            $data['payment_lastname'] = $this->session->data['guest']['lastname'];
         } else {
             $data['payment_lastname'] = '';
         }

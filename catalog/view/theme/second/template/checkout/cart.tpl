@@ -59,8 +59,10 @@
                                 <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-thumbnail" /></a>
                                 <?php } ?></td>
                             <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-                                <?php if (!$product['stock']) { ?>
-                                <span class="text-danger">***</span>
+                                <?php if (!$product['stock'] && !$product['preorder']) { ?>
+                                <span class="text-danger"><?php echo $text_sold_out; ?></span>
+                                <?php } else if ($product['preorder']) { ?>
+                                <span class="text-danger"><?php echo $text_preorder; ?></span>
                                 <?php } ?>
                                 <?php if ($product['option']) { ?>
                                 <?php foreach ($product['option'] as $option) { ?>

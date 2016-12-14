@@ -32,10 +32,9 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span>
+                                    <button type="button" class="btn btn-default dropdown-toggle basic-filter-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="filter-type"><?php echo $entry_order_id; ?></div> <span class="caret"></span>
                                     </button>
-                                    <button type="button" onclick="filter();" class="btn btn-default"><div class="filter-type"><?php echo $entry_order_id; ?></div></button>
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_order_id; ?>', 'filter_order_id');"><?php echo $entry_order_id; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_invoice_number; ?>', 'filter_invoice_number');"><?php echo $entry_invoice_number; ?></a></li>
@@ -45,12 +44,11 @@
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_invoice_date; ?>', 'filter_invoice_date');"><?php echo $entry_invoice_date; ?></a></li>
                                     </ul>
                                 </div>
-                                <input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" placeholder="<?php echo $entry_order_id; ?>"  id="input-order-id" class="form-control filter" />
-                                <input type="text" name="filter_invoice_number" value="<?php echo $filter_invoice_number; ?>" placeholder="<?php echo $entry_invoice_number; ?>" id="input-invoice-number" class="form-control hidden filter" />
-                                <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>"id="input-customer" class="form-control hidden filter" />
-                                <input type="text" name="filter_total" value="<?php echo $filter_total; ?>" id="input-total" class="form-control hidden filter" />
+                                <input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" placeholder="<?php echo $text_filter . $entry_order_id; ?>" id="input-order-id" class="form-control filter" />
+                                <input type="text" name="filter_invoice_number" value="<?php echo $filter_invoice_number; ?>" placeholder="<?php echo $text_filter . $entry_invoice_number; ?>" id="input-invoice-number" class="form-control hidden filter" />
+                                <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" placeholder="<?php echo $text_filter . $entry_customer; ?>" id="input-customer" class="form-control hidden filter" />
                                 <select name="filter_order_status" id="input-order-status" class="form-control hidden filter">
-                                    <option value="*"></option>
+                                    <option value="*"><?php echo $text_filter . $entry_order_status; ?></option>
                                     <?php if ($filter_order_status == '0') { ?>
                                     <option value="0" selected="selected"><?php echo $text_missing; ?></option>
                                     <?php } else { ?>
@@ -65,12 +63,12 @@
                                     <?php } ?>
                                 </select>
                                 <div class="input-group date hidden filter filter_order_date">
-                                  <input type="text" name="filter_order_date" value="<?php echo $filter_order_date; ?>"data-date-format="YYYY-MM-DD" id="input-order-date" class="form-control hidden filter" />
+                                  <input type="text" name="filter_order_date" value="<?php echo $filter_order_date; ?>" placeholder="<?php echo $text_filter . $entry_order_date; ?>" data-date-format="YYYY-MM-DD" id="input-order-date" class="form-control hidden filter" />
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                                   </span></div>
                                 <div class="input-group date hidden filter filter_invoice_date">
-                                  <input type="text" name="filter_invoice_date" value="<?php echo $filter_invoice_date; ?>"data-date-format="YYYY-MM-DD" id="input-invoice-date" class="form-control hidden filter" />
+                                  <input type="text" name="filter_invoice_date" value="<?php echo $filter_invoice_date; ?>" placeholder="<?php echo $text_filter . $entry_invoice_date; ?>" data-date-format="YYYY-MM-DD" id="input-invoice-date" class="form-control hidden filter" />
                                   <span class="input-group-btn">
                                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                                   </span></div>
@@ -100,7 +98,7 @@
                             <?php } ?>
                             <?php if ($filter_order_status) { ?>
                             <div class="filter-info pull-left">
-                                <label class="control-label"><?php echo $entry_date_end; ?>:</label>
+                                <label class="control-label"><?php echo $entry_order_status; ?>:</label>
                                 <label class="filter-label"> 
                                 <?php if ($filter_order_status == '0') { ?>
                                 <?php echo $text_missing; ?>
@@ -213,6 +211,22 @@
         </div>
     </div>
     <script type="text/javascript"><!--
+    $(document).ready(function() {
+        <?php if (!empty($filter_order_id)) { ?>
+        changeFilterType('<?php echo $entry_order_id; ?>', 'filter_order_id');
+        <?php } elseif (!empty($filter_invoice_number)) { ?>
+        changeFilterType('<?php echo $entry_invoice_number; ?>', 'filter_invoice_number');
+        <?php } elseif (!empty($filter_customer)) { ?>
+        changeFilterType('<?php echo $entry_customer; ?>', 'filter_customer');
+        <?php } elseif (!empty($filter_order_status)) { ?>
+        changeFilterType('<?php echo $entry_order_status; ?>', 'filter_order_status');
+        <?php } elseif (!empty($filter_order_date)) { ?>
+        changeFilterType('<?php echo $entry_order_date; ?>', 'filter_order_date');
+        <?php } elseif (!empty($filter_invoice_date)) { ?>
+        changeFilterType('<?php echo $entry_invoice_date; ?>', 'filter_invoice_date');
+        <?php } ?>
+    });
+
     $('input[name=\'filter_customer\']').autocomplete({
         'source': function(request, response) {
             $.ajax({

@@ -2,6 +2,10 @@
 <div id="content">
     <div class="page-header">
         <div class="container-fluid">
+            <div class="pull-right">
+                <button id="button-output" data-toggle="tooltip" title="<?php echo $button_output; ?>" class="btn btn-default"><i class="fa fa-print"></i></button>
+                <button id="button-export" data-toggle="tooltip" title="<?php echo $button_export; ?>" class="btn btn-default"><i class="fa fa-file-excel-o"></i></button>
+            </div>
             <h1><?php echo $heading_title; ?></h1>
             <ul class="breadcrumb">
                 <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -27,17 +31,19 @@
                                 <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
                                 <div class="input-group date">
                                     <input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                      <span class="input-group-btn">
+                                          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                      </span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
                                 <div class="input-group date">
                                     <input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                  </span></div>
+                                      <span class="input-group-btn">
+                                          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                                      </span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -66,10 +72,24 @@
                                     <?php } ?>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label" for="input-payment"><?php echo $entry_payment; ?></label>
+                                <select name="filter_payment_code" id="input-payment" class="form-control">
+                                    <option value="0"><?php echo $text_all_payment; ?></option>
+                                    <?php foreach ($payment_methods as $payment_method) { ?>
+                                    <?php if ($payment_method['code'] == $filter_payment_code) { ?>
+                                    <option value="<?php echo $payment_method['code']; ?>" selected="selected"><?php echo $payment_method['title']; ?></option>
+                                    <?php } else { ?>
+                                    <option value="<?php echo $payment_method['code']; ?>"><?php echo $payment_method['title']; ?></option>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </select>
+                            </div>
                             <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
                         </div>
                     </div>
                 </div>
+                <?php echo $graph; ?>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -135,6 +155,12 @@
 
         if (filter_order_status_id != 0) {
             url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+        }
+
+        var filter_payment_code = $('select[name=\'filter_payment_code\']').val();
+
+        if (filter_payment_code) {
+            url += '&filter_payment_code=' + encodeURIComponent(filter_payment_code);
         }
 
         location = url;

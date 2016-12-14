@@ -76,12 +76,14 @@ class Document {
         return $this->styles;
     }
 
-    public function addStyleDeclaration($content, $type = 'text/css') {
-        if (!isset($this->style_declarations[strtolower($type)])) {
-            $this->style_declarations[strtolower($type)] = $content;
-        } else {
-            $this->style_declarations[strtolower($type)] .= chr(13) . $content;
-        }
+    public function addStyleDeclaration($content, $type = 'text/css', $add_tag = true) {
+        $this->style_declarations[] = array(
+            'content' => $content,
+            'type' => $type,
+            'add_tag' => $add_tag,
+        );
+
+        return $this->style_declarations;
     }
 
     public function getStyleDeclarations() {
@@ -96,12 +98,12 @@ class Document {
         return $this->scripts;
     }
 
-    public function addScriptDeclarations($content, $type = 'text/javascript') {
-        if (!isset($this->script_declarations[strtolower($type)])) {
-            $this->script_declarations[strtolower($type)] = $content;
-        } else {
-            $this->script_declarations[strtolower($type)] .= chr(13) . $content;
-        }
+    public function addScriptDeclaration($content, $type = 'text/javascript', $add_tag = true) {
+        $this->script_declarations[] = array(
+            'content' => $content,
+            'type' => $type,
+            'add_tag' => $add_tag,
+        );
 
         return $this->script_declarations;
     }

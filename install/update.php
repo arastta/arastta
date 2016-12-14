@@ -290,8 +290,8 @@ if (version_compare(VERSION, '1.3.0', '<')) {
     // Update information_description table
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "information_description` CHANGE description description MEDIUMTEXT NOT NULL");
 
-    // Insert Module table Cart module => Popup after cart 
-    $this->db->query("INSERT INTO " . DB_PREFIX . "module SET `name` = 'Cart - Popup after Add to Cart', `code` = 'cart', `setting` = 'a:15:{s:4:\"name\";s:30:\"Cart - Popup after Add to Cart\";s:5:\"popup\";s:1:\"1\";s:5:\"theme\";s:9:\"mini_cart\";s:6:\"status\";s:1:\"1\";s:13:\"product_image\";s:1:\"1\";s:12:\"product_name\";s:1:\"1\";s:13:\"product_model\";s:1:\"0\";s:16:\"product_quantity\";s:1:\"1\";s:13:\"product_price\";s:1:\"1\";s:13:\"product_total\";s:1:\"1\";s:15:\"button_continue\";s:1:\"1\";s:11:\"button_cart\";s:1:\"1\";s:15:\"button_checkout\";s:1:\"1\";s:6:\"coupon\";s:1:\"1\";s:7:\"message\";s:1:\"1\";}'");
+    // Insert Module table Cart module => Modal after cart 
+    $this->db->query("INSERT INTO " . DB_PREFIX . "module SET `name` = 'Cart - Modal after Add to Cart', `code` = 'cart', `setting` = 'a:15:{s:4:\"name\";s:30:\"Cart - Modal after Add to Cart\";s:5:\"popup\";s:1:\"1\";s:5:\"theme\";s:9:\"mini_cart\";s:6:\"status\";s:1:\"1\";s:13:\"product_image\";s:1:\"1\";s:12:\"product_name\";s:1:\"1\";s:13:\"product_model\";s:1:\"0\";s:16:\"product_quantity\";s:1:\"1\";s:13:\"product_price\";s:1:\"1\";s:13:\"product_total\";s:1:\"1\";s:15:\"button_continue\";s:1:\"1\";s:11:\"button_cart\";s:1:\"1\";s:15:\"button_checkout\";s:1:\"1\";s:6:\"coupon\";s:1:\"1\";s:7:\"message\";s:1:\"1\";}'");
 
     // Update layout_module table
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "layout_module` CHANGE `position` `position` varchar(64) NOT NULL");
@@ -434,3 +434,102 @@ if (version_compare(VERSION, '1.4.1', '<')) {
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_affiliate_activity', `value` = '0'");
 }
 
+// 1.5.0 changes;
+if (version_compare(VERSION, '1.5.0', '<')) {
+    // Update the user groups
+    $user_groups = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group");
+
+    foreach ($user_groups->rows as $user_group) {
+        $user_group['permission'] = unserialize($user_group['permission']);
+        
+        $user_group['permission']['access'][] = 'tool/cache';
+        $user_group['permission']['modify'][] = 'tool/cache';
+
+        $user_group['permission']['access'][] = 'report/graph';
+        $user_group['permission']['modify'][] = 'report/graph';
+
+        $user_group['permission']['access'][] = 'system/url_manager';
+        $user_group['permission']['modify'][] = 'system/url_manager';
+
+        $user_group['permission']['access'][] = 'analytics/google';
+        $user_group['permission']['modify'][] = 'analytics/google';
+
+        $user_group['permission']['access'][] = 'analytics/woopra';
+        $user_group['permission']['modify'][] = 'analytics/woopra';
+
+        $user_group['permission']['access'][] = 'antifraud/maxmind';
+        $user_group['permission']['modify'][] = 'antifraud/maxmind';
+
+        $user_group['permission']['access'][] = 'captcha/basic';
+        $user_group['permission']['modify'][] = 'captcha/basic';
+
+        $user_group['permission']['access'][] = 'captcha/google';
+        $user_group['permission']['modify'][] = 'captcha/google';
+
+        $this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
+    }
+    
+    // Create user_activity table
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "user_activity` (
+        `activity_id` int(11) NOT NULL AUTO_INCREMENT,
+        `user_id` int(11) NOT NULL,
+        `key` varchar(64) NOT NULL,
+        `data` text NOT NULL,
+        `ip` varchar(40) NOT NULL,
+        `date_added` datetime NOT NULL,
+        PRIMARY KEY (`activity_id`),
+        KEY `user_id` (`user_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    // Update stock_status table
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "stock_status` ADD `preorder` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `color`");
+
+    // Add maintenance display settings
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_maintenance_message', `value` = ''");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_maintenance_image', `value` = ''");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_maintenance_login', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_image_maintenance_width', `value` = '268'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_image_maintenance_height', `value` = '50'");
+    
+    // Update config for new extension types: analytics, anti-fraud, captcha
+    $this->load->model('setting/setting');
+    
+    $store_id = $this->config->get('config_store_id');
+    
+    $config = $this->model_setting_setting->getSetting('config', $store_id);
+    
+    if ($this->config->get('config_google_captcha_status')) {
+        $data = array();
+        $data['google_captcha_status'] = '1';
+        $data['google_captcha_public'] = $this->config->get('config_google_captcha_public');
+        $data['google_captcha_secret'] = $this->config->get('config_google_captcha_secret');
+        
+        $this->model_setting_setting->editSetting('google_captcha', $data, $store_id);
+        
+        $config['config_captcha'] = 'google';
+        
+        $this->model_setting_setting->editSetting('config', $config, $store_id);
+    } else {
+        $config['config_captcha'] = '';
+        
+        $this->model_setting_setting->editSetting('config', $config, $store_id);
+    }
+    
+    if ($this->config->get('config_google_analytics_status')) {
+        $data = array();
+        $data['google_analytics_status'] = '1';
+        $data['google_analytics_code'] = $this->config->get('config_google_analytics');
+        
+        $this->model_setting_setting->editSetting('google_analytics', $data, $store_id);
+    }
+    
+    if ($this->config->get('config_fraud_detection')) {
+        $data = array();
+        $data['maxmind_antifraud_status'] = '1';
+        $data['maxmind_antifraud_key'] = $this->config->get('config_fraud_key');
+        $data['maxmind_antifraud_score'] = $this->config->get('config_fraud_score');
+        $data['maxmind_antifraud_status_id'] = $this->config->get('config_fraud_status_id');
+        
+        $this->model_setting_setting->editSetting('maxmind_antifraud', $data, $store_id);
+    }
+}
