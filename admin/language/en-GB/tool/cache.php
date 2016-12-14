@@ -22,7 +22,8 @@ $_['column_files']              = 'Files';
 $_['column_size']               = 'Size';
 
 // Button
-$_['button_deleteall']          = 'Group';
+$_['button_delete']             = 'Delete Selected';
+$_['button_deleteall']          = 'Delete All';
 
 // Error
 $_['error_permission']          = 'Warning: You do not have permission to modify caches!';
