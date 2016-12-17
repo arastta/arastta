@@ -14,6 +14,7 @@ including works copyrighted by any or all of the following:
 - Finder	 		(C) Fabien Potencier, Symfony, SensioLabs
 - HTML Purifier		(C) Edward Z. Yang (Ambush Commander)
 - OpenCart			(C) 2006-2015 Daniel Kerr, OpenCart Ltd.
+- Pagecache  			(C) Kerry Schwab, BudgetNeon.com
 - Parsedown			(C) Emanuil Rusev, erusev.com
 - Parsedown Extra	(C) Emanuil Rusev, erusev.com
 - PHPExcel			(C) 2006-2015 PHPExcel
