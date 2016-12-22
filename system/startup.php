@@ -95,7 +95,7 @@ function autoload($class)
     $lib = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
     $app = DIR_SYSTEM . 'library/app/' . str_replace('\\', '/', strtolower($class)) . '.php';
 
-    $command = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
+    $command = DIR_CLI . str_replace('command\\', '/', strtolower($class)) . '.php';
 
     if (is_file($lib)) {
         include(modification($lib));
@@ -105,7 +105,7 @@ function autoload($class)
         include(modification($app));
 
         return true;
-    } elseif (is_file(modification($command))) {
+    } elseif (is_file($command)) {
         include(modification($command));
 
         return true;
