@@ -22,7 +22,7 @@ class ControllerToolCache extends Controller
         $this->document->setTitle($data['heading_title']);
 
         $data['delete'] = $this->url->link('tool/cache/delete', 'token=' . $this->session->data['token'], 'SSL');
-        $data['deleteall'] = $this->url->link('tool/cache/deleteall', 'token=' . $this->session->data['token'], 'SSL');
+        $data['delete_all'] = $this->url->link('tool/cache/deleteAll', 'token=' . $this->session->data['token'], 'SSL');
 
         $data['caches'] = array();
 
@@ -150,13 +150,14 @@ class ControllerToolCache extends Controller
             }
 
             // Image cache
-            if (!$this->model_tool_upload->deleteCache(DIR_IMAGE . 'cache', '/\.(gif|jpg|jpeg|tiff|png)$/i')) {
+            if (!$this->model_tool_cache->deleteCache(DIR_IMAGE . 'cache', '/\.(gif|jpg|jpeg|tiff|png)$/i')) {
                 $status = false;
             }
 
             // Modification cache
             $this->request->get['extensionInstaller'] = 1;
             $this->load->controller('extension/modification/refresh');
+
             unset($this->request->get['extensionInstaller']);
 
             if ($status) {
@@ -169,7 +170,8 @@ class ControllerToolCache extends Controller
         $this->response->redirect($this->url->link('tool/cache', 'token=' . $this->session->data['token'], 'SSL'));
     }
 
-    protected function validateDelete() {
+    protected function validateDelete()
+    {
         if (!$this->user->hasPermission('modify', 'tool/cache')) {
             $this->session->data['warning'] = $this->language->get('error_permission');
         }

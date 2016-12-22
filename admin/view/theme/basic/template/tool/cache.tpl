@@ -3,7 +3,7 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
-                <button type="button" data-toggle="tooltip" title="<?php echo $button_deleteall; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? location = '<?php echo $deleteall; ?>' : false;"><i class="fa fa-times"></i></button>
+                <button type="button" data-toggle="tooltip" title="<?php echo $button_deleteall; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? location = '<?php echo $delete_all; ?>' : false;"><i class="fa fa-times"></i></button>
             </div>
             <h1><?php echo $heading_title; ?></h1>
         </div>

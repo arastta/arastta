@@ -26,7 +26,7 @@ class ModelToolCache extends Model
 
         foreach ($finder as $file) {
             $count++;
-            
+
             $size += number_format(filesize($file->getRealPath()) / 1024);
         }
 
