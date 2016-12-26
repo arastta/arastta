@@ -24,7 +24,7 @@ class EventAnalyticsGoogle extends Event
 
         $analytics = html_entity_decode($this->config->get('google_analytics_code'), ENT_QUOTES, 'UTF-8');
 
-        $this->document->addScriptDeclaration($analytics, 'text/javascript', false);
+        $this->document->addScriptDeclaration($analytics, 'text/javascript', true);
 
         $added = true;
     }

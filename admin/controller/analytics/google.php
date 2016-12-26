@@ -59,7 +59,7 @@ class ControllerAnalyticsGoogle extends Controller
     {
         $action = str_replace('amp;', '', $action);
 
-        $public['value'] = $this->config->get('google_analytics_code', '');
+        $public['value'] = $this->config->get('google_analytics_code');
         $public['placeholder'] = $this->language->get('entry_code');
         $public['required'] = $this->language->get('required');
 
@@ -68,7 +68,7 @@ class ControllerAnalyticsGoogle extends Controller
             'no'  => $this->language->get('text_disabled')
         );
 
-        $status['value'] = $this->config->get('google_analytics_status', 0);
+        $status['value'] = $this->config->get('google_analytics_status');
         $status['labelclass'] = 'radio-inline';
 
         $form = new AForm('form-google-analytics', $action);
@@ -85,8 +85,12 @@ class ControllerAnalyticsGoogle extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if (empty($this->request->post['google_analytics'])) {
+        if (empty($this->request->post['google_analytics_code'])) {
             $this->error['warning'] = $this->language->get('error_code');
+        } else {
+            $google_analytics_code = preg_replace('#<script(.*?)>(.*?)</script>#is', '\2', html_entity_decode($this->request->post['google_analytics_code'], ENT_QUOTES, 'UTF-8'));
+
+            $this->request->post['google_analytics_code'] = htmlentities($google_analytics_code);
         }
 
         return !$this->error;
