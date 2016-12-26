@@ -25,7 +25,7 @@ class ControllerCaptchaGoogle extends Controller
 
         $this->document->addScript('https://www.google.com/recaptcha/api.js');
 
-        return $this->load->output('captcha/basic', $data);
+        return $this->load->output('captcha/google', $data);
     }
 
     public function validate()
