@@ -394,3 +394,9 @@ tbody tr td div i.fa.fa-bars {
     right: 8px;
     bottom: 14px;
 }
+
+ul#tag-language {
+    position: initial;
+    margin-bottom: -35px;
+    margin-left: -15px;
+}
