@@ -138,6 +138,10 @@ class ControllerReportGraph extends Controller
 
         $modelName = 'model_report_' . $model;
 
+        unset($get['page']);
+        unset($get['start']);
+        unset($get['limit']);
+
         $results = $this->{$modelName}->{$modelFunction}($get);
 
         if (!empty($results)) {
