@@ -48,7 +48,12 @@ class ControllerCommonForgotten extends Controller {
 
             $this->session->data['success'] = $this->language->get('text_success');
 
-            $this->response->redirect($this->url->link('common/login', '', 'SSL'));
+            $args = '';
+            if (!empty($this->request->post['admin_keyword'])) {
+                $args = '&' . $this->request->post['admin_keyword'];
+            }
+
+            $this->response->redirect($this->url->link('common/login', $args, 'SSL'));
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -101,6 +106,14 @@ class ControllerCommonForgotten extends Controller {
             'name' => $this->config->get('config_name'),
             'href' => ($this->request->server['HTTPS']) ? HTTPS_CATALOG : HTTP_CATALOG
         );
+
+        $data['admin_keyword'] = '';
+
+        if ($this->config->get('config_sec_admin_keyword')) {
+            if (isset($this->request->get[$this->config->get('config_sec_admin_keyword')])) {
+                $data['admin_keyword'] = $this->config->get('config_sec_admin_keyword');
+            }
+        }
 
         $data['header'] = $this->load->controller('common/header');
         $data['footer'] = $this->load->controller('common/footer');
