@@ -28,6 +28,7 @@
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_reset; ?></button>
                                     <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
                                 </div>
+                                <input type="hidden" name="admin_keyword" value="<?php echo $admin_keyword; ?>" id="input-admin-keyword" />
                             </form>
                         </div>
                     </div>

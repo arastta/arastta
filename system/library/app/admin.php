@@ -213,8 +213,16 @@ class Admin extends App
             return true;
         }
 
-        if (isset($this->request->get['route']) && ($this->request->get['route'] == 'common/login') && !empty($this->request->post['email']) && !empty($this->request->post['password'])) {
-            return true;
+        if (isset($this->request->get['route'])) {
+            // Login page
+            if (($this->request->get['route'] == 'common/login') && !empty($this->request->post['email']) && !empty($this->request->post['password'])) {
+                return true;
+            }
+
+            // Password reset page
+            if (($this->request->get['route'] == 'common/forgotten') && !empty($this->request->post['admin_keyword'])) {
+                return true;
+            }
         }
 
         return false;
