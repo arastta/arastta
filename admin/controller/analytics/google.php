@@ -59,7 +59,7 @@ class ControllerAnalyticsGoogle extends Controller
     {
         $action = str_replace('amp;', '', $action);
 
-        $public['value'] = $this->config->get('google_analytics_code');
+        $public['value'] = html_entity_decode($this->config->get('google_analytics_code'), ENT_QUOTES, 'UTF-8');
         $public['placeholder'] = $this->language->get('entry_code');
         $public['required'] = $this->language->get('required');
 
