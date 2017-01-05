@@ -282,4 +282,19 @@ class ModelCommonUpdate extends Model
 
         return $file;
     }
+
+    public function showColums($table)
+    {
+        $result = array();
+
+        $query = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . $table . "`");
+
+        if ($query->num_rows) {
+            foreach ($query->rows as $row) {
+                $result[] = $row['Field'];
+            }
+        }
+
+        return $result;
+    }
 }

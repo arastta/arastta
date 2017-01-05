@@ -19,9 +19,17 @@ if (version_compare(VERSION, '1.0.3', '<')) {
     $this->db->query("UPDATE `" . DB_PREFIX . "language` SET `directory` = 'en-GB' WHERE `code` = 'en';");
 
     // Add field ('params') Addon table
+    $addon = array();
+
     $query = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "addon`");
 
-    if (!in_array('params', $query->rows)) {
+    if ($query->num_rows) {
+        foreach ($query->rows as $row) {
+            $addon[] = $row['Field'];
+        }
+    }
+
+    if (!in_array('params', $addon)) {
         $this->db->query("ALTER TABLE `" . DB_PREFIX . "addon` ADD COLUMN `params` TEXT DEFAULT NULL");
     }
 }
@@ -76,9 +84,17 @@ if (version_compare(VERSION, '1.1.3', '<')) {
 // 1.2.0 changes;
 if (version_compare(VERSION, '1.2.0', '<')) {
     // Update user table
+    $user = array();
+
     $query = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "user`");
 
-    if (!in_array('params', $query->rows)) {    
+    if ($query->num_rows) {
+        foreach ($query->rows as $row) {
+            $user[] = $row['Field'];
+        }
+    }
+
+    if (!in_array('params', $user)) {
         $this->db->query("ALTER TABLE `" . DB_PREFIX . "user` MODIFY `username` VARCHAR(100)");
         $this->db->query("ALTER TABLE `" . DB_PREFIX . "user` MODIFY `password` VARCHAR(100)");
         $this->db->query("ALTER TABLE `" . DB_PREFIX . "user` MODIFY `email` VARCHAR(100)");
@@ -86,9 +102,17 @@ if (version_compare(VERSION, '1.2.0', '<')) {
     }
 
     // Update stock status table
+    $stock_status = array();
+
     $query = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "stock_status`");
 
-    if (!in_array('color', $query->rows)) {    
+    if ($query->num_rows) {
+        foreach ($query->rows as $row) {
+            $stock_status[] = $row['Field'];
+        }
+    }
+
+    if (!in_array('color', $stock_status)) {
         $this->db->query("ALTER TABLE `" . DB_PREFIX . "stock_status` ADD `color` VARCHAR(32) NOT NULL AFTER `name`");
     }
 
@@ -111,15 +135,31 @@ if (version_compare(VERSION, '1.2.0', '<')) {
     $this->db->query("INSERT INTO `" . DB_PREFIX . "email_description` SET `email_id` = '" . $email_id . "', `name` = '{store_name} - {total_products} Product(s) Out Of Stock', `description` = 'Hello,&lt;br&gt;&lt;br&gt;We would like to notify that you have &lt;b&gt;{total_products}&lt;/b&gt; product(s) out of stock in store&nbsp;&lt;strong&gt;{store_name}&lt;/strong&gt;.&lt;br&gt;&lt;br&gt;You can view them by clicking on Notifications icon -&gt; Out of Stock, or browse to Catalog -&gt; Products and filter quantity = 0.&lt;br&gt;&lt;br&gt;Best Regards,&lt;br&gt;&lt;br&gt;The {store_name} team', `status` = '1', `language_id` = '1'");
 
     // Extension/Theme manager
+    $addon = array();
+
     $query = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "addon`");
 
-    if (!in_array('addon_files', $query->rows)) {    
+    if ($query->num_rows) {
+        foreach ($query->rows as $row) {
+            $addon[] = $row['Field'];
+        }
+    }
+
+    if (!in_array('addon_files', $addon)) {
         $this->db->query("ALTER TABLE `" . DB_PREFIX . "addon` CHANGE `addon_files` `files` TEXT NULL");
     }
 
+    $extension = array();
+
     $query = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "extension`");
 
-    if (!in_array('info', $query->rows)) {  
+    if ($query->num_rows) {
+        foreach ($query->rows as $row) {
+            $extension[] = $row['Field'];
+        }
+    }
+
+    if (!in_array('info', $extension)) {
         $this->db->query("ALTER TABLE `" . DB_PREFIX . "extension` ADD `info` TEXT NULL AFTER `code`, ADD `params` TEXT NULL AFTER `info`");
     }
 
@@ -376,9 +416,17 @@ if (version_compare(VERSION, '1.3.2', '<')) {
 // 1.4.0 changes;
 if (version_compare(VERSION, '1.4.0', '<')) {
     // Update banner_image table
+    $banner_image = array();
+
     $query = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "banner_image`");
 
-    if (!in_array('language_id', $query->rows)) {
+    if ($query->num_rows) {
+        foreach ($query->rows as $row) {
+            $banner_image[] = $row['Field'];
+        }
+    }
+
+    if (!in_array('language_id', $banner_image)) {
         $this->db->query("ALTER TABLE `" . DB_PREFIX . "banner_image` ADD `language_id` INT(11) NOT NULL AFTER `banner_id`");
         $this->db->query("ALTER TABLE `" . DB_PREFIX . "banner_image`  ADD `title` VARCHAR( 64 ) NOT NULL AFTER `language_id`");
     }
@@ -513,9 +561,17 @@ if (version_compare(VERSION, '1.5.0', '<')) {
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
     // Update stock_status table
+    $stock_status = array();
+
     $query = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "stock_status`");
 
-    if (!in_array('preorder', $query->rows)) {
+    if ($query->num_rows) {
+        foreach ($query->rows as $row) {
+            $stock_status[] = $row['Field'];
+        }
+    }
+
+    if (!in_array('preorder', $stock_status)) {
         $this->db->query("ALTER TABLE `" . DB_PREFIX . "stock_status` ADD `preorder` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `color`");
     }
 
