@@ -87,10 +87,6 @@ class ControllerAnalyticsGoogle extends Controller
 
         if (empty($this->request->post['google_analytics_code'])) {
             $this->error['warning'] = $this->language->get('error_code');
-        } else {
-            $google_analytics_code = preg_replace('#<script(.*?)>(.*?)</script>#is', '\2', html_entity_decode($this->request->post['google_analytics_code'], ENT_QUOTES, 'UTF-8'));
-
-            $this->request->post['google_analytics_code'] = htmlentities($google_analytics_code);
         }
 
         return !$this->error;
