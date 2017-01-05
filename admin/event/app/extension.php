@@ -17,6 +17,9 @@ class EventAppExtension extends Event
     public function rewrite($url)
     {
         if (!strstr($url, 'extension/')
+            && !strstr($url, 'analytics/')
+            && !strstr($url, 'antifraud/')
+            && !strstr($url, 'captcha/')
             && !strstr($url, 'editor/')
             && !strstr($url, 'feed/')
             && !strstr($url, 'module/')
@@ -31,6 +34,9 @@ class EventAppExtension extends Event
         $uri = new Uri($url);
 
         switch ($uri->getVar('route')) {
+            case 'extension/analytics':
+            case 'extension/antifraud':
+            case 'extension/captcha':
             case 'extension/editor':
             case 'extension/feed':
             case 'extension/module':
@@ -39,31 +45,40 @@ class EventAppExtension extends Event
             case 'extension/shipping':
             case 'extension/total':
             case 'extension/twofactorauth':
+            case 'extension/extension':
                 $uri->setVar('route', 'extension/extension');
                 break;
+            default:
+                return $uri->toString();
         }
 
-        if (isset($this->request->get['filter_name'])) {
+        $filter_name = $uri->getVar('filter_name');
+        if (empty($filter_name) && isset($this->request->get['filter_name'])) {
             $uri->setVar('filter_name', urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8')));
         }
 
-        if (isset($this->request->get['filter_author'])) {
+        $filter_author = $uri->getVar('filter_author');
+        if (empty($filter_author) && isset($this->request->get['filter_author'])) {
             $uri->setVar('filter_author', urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8')));
         }
 
-        if (isset($this->request->get['filter_status'])) {
+        $filter_status = $uri->getVar('filter_status');
+        if (empty($filter_status) && isset($this->request->get['filter_status'])) {
             $uri->setVar('filter_status', $this->request->get['filter_status']);
         }
 
-        if (isset($this->request->get['filter_type'])) {
+        $filter_type = $uri->getVar('filter_type');
+        if (empty($filter_type) && isset($this->request->get['filter_type'])) {
             $uri->setVar('filter_type', $this->request->get['filter_type']);
         }
 
-        if (isset($this->request->get['sort'])) {
+        $sort = $uri->getVar('sort');
+        if (empty($sort) && isset($this->request->get['sort'])) {
             $uri->setVar('sort', $this->request->get['sort']);
         }
 
-        if (isset($this->request->get['order'])) {
+        $order = $uri->getVar('order');
+        if (empty($order) && isset($this->request->get['order'])) {
             $uri->setVar('order', $this->request->get['order']);
         }
 
