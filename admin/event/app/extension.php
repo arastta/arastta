@@ -49,7 +49,7 @@ class EventAppExtension extends Event
                 $uri->setVar('route', 'extension/extension');
                 break;
             default:
-                return $uri->toString();
+                return $url;
         }
 
         $filter_name = $uri->getVar('filter_name');
