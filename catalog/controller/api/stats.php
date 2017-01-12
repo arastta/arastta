@@ -23,6 +23,13 @@ class ControllerApiStats extends Controller
             $this->load->model('api/customers');
 
             $data = array();
+                
+            if (!isset($args['status'])) {
+                $complete_status = $this->config->get('config_complete_status');
+                $processing_status = $this->config->get('config_processing_status');
+                
+                $args['status'] = implode(',', $complete_status). ',' . implode(',', $processing_status);
+            }
 
             $orders = $this->model_api_orders->getTotals($args);
             $orders['nice_price'] = $this->currency->format($orders['price']);
