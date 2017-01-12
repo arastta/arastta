@@ -39,12 +39,10 @@
                                         <div class="form-group required">
                                             <label class="col-sm-12"><?php echo $entry_seo_url; ?></label>
                                             <div class="col-sm-12">
-                                                <?php foreach ($languages as $language) { ?>
                                                 <input type="text" name="alias[<?php echo $language['language_id']; ?>][seo_url]" value="<?php echo isset($alias[$language['language_id']]) ? $alias[$language['language_id']]['seo_url'] : ''; ?>" placeholder="<?php echo $entry_seo_url; ?>" class="form-control" />
                                                 <input type="hidden" name="alias_ids[<?php echo $language['language_id']; ?>]" value="<?php echo isset($alias[$language['language_id']]['url_alias_id']) ? $alias[$language['language_id']]['url_alias_id'] : ''; ?>" placeholder="<?php echo $entry_seo_url; ?>" class="form-control" />
                                                 <?php if (isset($error_seo_url[$language['language_id']])) { ?>
                                                 <div class="text-danger"><?php echo $error_seo_url[$language['language_id']]; ?></div>
-                                                <?php } ?>
                                                 <?php } ?>
                                             </div>
                                         </div>
