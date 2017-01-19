@@ -1083,8 +1083,8 @@ CREATE TABLE IF NOT EXISTS `ar_email` (
 --
 
 INSERT INTO `ar_email` (`id`, `text`, `text_id`, `context`, `type`, `status`) VALUES
-(1, 'Canceled', 7, 'status.canceled', 'order', 1),
-(2, 'Canceled Reversal', 9, 'status.canceled.reversal', 'order', 1),
+(1, 'Cancelled', 7, 'status.canceled', 'order', 1),
+(2, 'Cancelled Reversal', 9, 'status.canceled.reversal', 'order', 1),
 (3, 'Chargeback', 13, 'status.chargeback', 'order', 1),
 (4, 'Complete', 5, 'status.complete', 'order', 1),
 (5, 'Denied', 8, 'status.denied', 'order', 1),
@@ -2113,9 +2113,9 @@ INSERT INTO `ar_order_status` (`order_status_id`, `language_id`, `name`, `messag
 (2, 1, 'Processing', ''),
 (3, 1, 'Shipped', ''),
 (5, 1, 'Complete', ''),
-(7, 1, 'Canceled', ''),
+(7, 1, 'Cancelled', ''),
 (8, 1, 'Denied', ''),
-(9, 1, 'Canceled Reversal', ''),
+(9, 1, 'Cancelled Reversal', ''),
 (10, 1, 'Failed', ''),
 (11, 1, 'Refunded', ''),
 (12, 1, 'Reversed', ''),
