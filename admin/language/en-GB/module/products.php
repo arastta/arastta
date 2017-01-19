@@ -27,6 +27,7 @@ $_['text_special']     = 'Special';
 $_['entry_name']           = 'Module Name';
 $_['entry_title']          = 'Module Title';
 $_['entry_module_class']   = 'Class Suffix';
+$_['entry_module_column']  = 'Per column show product';
 $_['entry_type']           = 'Module Type';
 $_['entry_random_product'] = 'Random Product';
 $_['entry_limit']          = 'Limit';

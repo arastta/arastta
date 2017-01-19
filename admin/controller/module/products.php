@@ -109,6 +109,14 @@ class ControllerModuleProducts extends Controller
             $data['module_class'] = '';
         }
 
+        if (isset($this->request->post['module_column'])) {
+            $data['module_column'] = $this->request->post['module_column'];
+        } elseif (!empty($module_info)) {
+            $data['module_column'] = $module_info['module_column'];
+        } else {
+            $data['module_column'] = '4';
+        }
+
         if (isset($this->request->post['type'])) {
             $data['type'] = $this->request->post['type'];
         } elseif (!empty($module_info)) {
@@ -268,7 +276,7 @@ class ControllerModuleProducts extends Controller
         $name = array('value' => $data['name'], 'required' => 'required');
         $form->addElement(new Arastta\Component\Form\Element\Textbox($this->language->get('entry_name'), 'name', $name));
 
-        $title = array('value' => $data['title']);
+        $title = array('value' => $data['title'], 'required' => 'required');
         $form->addElement(new Arastta\Component\Form\Element\Textbox($this->language->get('entry_title'), 'title', $title));
 
         $show_title = array('value' => $data['show_title'], 'labelclass' => 'radio-inline');
@@ -276,6 +284,10 @@ class ControllerModuleProducts extends Controller
 
         $module_class = array('value' => $data['module_class']);
         $form->addElement(new Arastta\Component\Form\Element\Textbox($this->language->get('entry_module_class'), 'module_class', $module_class));
+
+        $module_column = array('value' => $data['module_column'], 'selected' => $data['module_column'], 'id' => 'input-module-column');
+        $module_column_option  = array('1' => '1', '2' => '2', '3' => '3', '4' => '4', '6' => '6');
+        $form->addElement(new Arastta\Component\Form\Element\Select($this->language->get('entry_module_column'), 'module_column', $module_column_option, $module_column, $option_text));
 
         $type        = array('value' => $data['type'], 'selected' => $data['type'], 'id' => 'input-type');
         $type_option = array('bestsellers' => $this->language->get('text_bestsellers'), 'featured' => $this->language->get('text_featured'), 'latest' => $this->language->get('text_latest'), 'special' => $this->language->get('text_special'));
@@ -311,8 +323,6 @@ class ControllerModuleProducts extends Controller
 
         $status = array('value' => $data['status'], 'labelclass' => 'radio-inline');
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_status'), 'status', $status, $option_text));
-
-
 
         $form->addElement(new Arastta\Component\Form\Element\HTML('<legend>' . $this->language->get('text_view') . '</legend>'));
 

@@ -45,6 +45,7 @@ class ControllerModuleProducts extends Controller
         $data['title']               = $setting['title'];
         $data['show_title']          = $setting['show_title'];
         $data['module_class']        = $setting['module_class'];
+        $data['module_column']       = $setting['module_column'];
         $data['product_image']       = $setting['product_image'];
         $data['product_name']        = $setting['product_name'];
         $data['product_description'] = $setting['product_description'];
@@ -53,6 +54,8 @@ class ControllerModuleProducts extends Controller
         $data['add_to_cart']         = $setting['add_to_cart'];
         $data['wish_list']           = $setting['wish_list'];
         $data['compare']             = $setting['compare'];
+
+        $data['bootstrap_module_column'] = $this->bootstrapModuleColumn($setting['module_column']);
 
         if ($data['products']) {
             if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/products.tpl')) {
@@ -315,5 +318,19 @@ class ControllerModuleProducts extends Controller
         }
 
         return $products;
+    }
+
+    protected function bootstrapModuleColumn($column)
+    {
+        $columns = array(
+            '1' => '12',
+            '2' => '6',
+            '3' => '4',
+            '4' => '3',
+            '6' => '2',
+            '12' => '1',
+        );
+
+        return $columns[$column];
     }
 }
