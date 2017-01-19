@@ -171,6 +171,11 @@ class ModelReportGraph extends Model
 
     protected function worksheet(&$worksheet, &$box_format, &$text_format, $rows)
     {
+        $this->load->language($this->request->post['route']);
+
+        #Get All Language Text
+        $languages = $this->language->all();
+
         // Set the column widths
         $j = 0;
 
@@ -186,6 +191,10 @@ class ModelReportGraph extends Model
         $j = 0;
 
         foreach ($rows[0] as $key => $value) {
+            if (isset($languages['column_' . $key])) {
+                $key = $languages['column_' . $key];
+            }
+
             $data[$j++] = $key;
         }
 
