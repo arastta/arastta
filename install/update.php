@@ -638,3 +638,9 @@ if (version_compare(VERSION, '1.5.1', '<')) {
     $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = 'woopra_status'");
 }
 
+// 1.5.2 changes;
+if (version_compare(VERSION, '1.5.2', '<')) {
+    // remove command folder
+    $this->filesystem->remove(DIR_SYSTEM . 'library/command');
+}
+
