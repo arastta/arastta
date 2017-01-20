@@ -9,7 +9,6 @@
 
 class ModelAppearanceMenu extends Model
 {
-
     public function getMenus()
     {
         $data = array();
@@ -284,6 +283,7 @@ class ModelAppearanceMenu extends Model
                 }
 
                 $childStore = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = '" . $menuType[1] . "'");
+
                 if (!empty($childStore->num_rows)) {
                     foreach ($childStore->rows as $storeData) {
                         $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET menu_id = '" . (int)$menu_id . "', store_id = '" . $storeData['store_id'] . "'");
@@ -338,3 +338,4 @@ class ModelAppearanceMenu extends Model
         }
     }
 }
+

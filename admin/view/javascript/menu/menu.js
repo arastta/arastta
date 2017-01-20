@@ -4,7 +4,9 @@ $( document ).ready(function() {
     $('.accordion>h4,.accordion>.accordion-heading').click(function() {
         if (!$(this).hasClass('active')) {
             $(this).addClass('active').siblings('h4,.accordion-heading').removeClass('active');
+
             var statsTemplate = $(this).next('.accordion-content');
+
             $(statsTemplate).slideDown(350).siblings('.accordion-content').slideUp(350);
         }
     });
@@ -15,6 +17,7 @@ $( document ).ready(function() {
 
     $('#layout-add-iframe').on('load', function(event) {
         event.preventDefault();
+
         var iframe = $('#layout-add-iframe');
         var current_url = document.getElementById("layout-add-iframe").contentWindow.location.href;
 
@@ -25,16 +28,22 @@ $( document ).ready(function() {
         iframe.contents().find('form').on('submit', function(event) {
             $('#layout-add-loading').addClass('loading_iframe');
         });
+
         if (current_url.indexOf('appearance/menu/') < 0) {
             $('#layout-add').modal('hide');
+
             window.location.reload();
         } else if (current_url.indexOf('appearance/menu') > -1) {
             iframe.contents().find('html,body').css({
                 height: 'auto'
             });
+
             iframe.contents().find('#header,#content .page-header .breadcrumb,#column-left,#footer,#module').hide();
+
             iframe.contents().find('#content').css({marginLeft: '0px'});
+
             iframe.contents().find('#content').css({padding: '10px 0 0 0'});
+
             $('#layout-add-loading').removeClass('loading_iframe');
         }
     });
@@ -135,6 +144,7 @@ $( document ).ready(function() {
         $("#menu-item-settings-" + id).slideToggle();
     });
 });
+
 function addMenu(type) {
     var link = '';
 
@@ -188,6 +198,7 @@ function saveMenu(wrap_id, menu_show_id) {
 
     var heigth = $('#' + wrap_id).height() + 20;
     var _heigth = heigth/ 11;
+
     $.ajax({
         url: saveMenuHref + '&type=' + listing[1],
         type: 'post',
@@ -237,30 +248,34 @@ function statusMenu(type, menu_id, menu_show_id, id) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
-
 }
 
 function deleteMenu(menu_id, menu_show_id) {
     var checkMenuItem = 0;
 
-    $('#menu-to-edit li').each(function(index, menuItem){
-        var menuItemId = menuItem.id;
-        if( checkMenuItem && menuItemId.indexOf( 'menu-item' ) != -1 ) {
-            checkMenuItem = 0
-        }
-        if(menu_show_id == menuItemId) {
-            checkMenuItem = 1;
-        }
-        if( checkMenuItem && menuItemId.indexOf( 'menu-child-item' ) != -1 ) {
-            $('#' + menuItemId).remove();
-        }
-
-    });
-
-    $('#' + menu_show_id).remove();
     var listing = menu_show_id.split('-');
 
-    if(listing[1] == 'child') {
+    if (listing[1] != 'child') {
+        $('#menu-to-edit li').each(function (index, menuItem) {
+            var menuItemId = menuItem.id;
+
+            if (checkMenuItem && menuItemId.indexOf('menu-item') != -1) {
+                checkMenuItem = 0
+            }
+
+            if (menu_show_id == menuItemId) {
+                checkMenuItem = 1;
+            }
+
+            if (checkMenuItem && menuItemId.indexOf('menu-child-item') != -1) {
+                $('#' + menuItemId).remove();
+            }
+        });
+    }
+
+    $('#' + menu_show_id).remove();
+
+    if (listing[1] == 'child') {
         var link = deleteMenuChildHref;
     } else {
         var link = deleteMenuHref;
@@ -571,7 +586,6 @@ var wpNavMenu;
         },
 
         moveMenuItem : function( $this, dir ) {
-
             var items, newItemPosition, newDepth,
                 menuItems = $( '#menu-to-edit li' ),
                 menuItemsCount = menuItems.length,
@@ -683,7 +697,6 @@ var wpNavMenu;
         },
 
         refreshAdvancedAccessibility : function() {
-
             // Hide all links by default
             $( '.menu-item-settings .field-move a' ).css( 'display', 'none' );
 
@@ -769,8 +782,6 @@ var wpNavMenu;
         },
 
         initToggles : function() {
-
-
             // hide fields
             api.menuList.hideAdvancedMenuItemFields();
 

@@ -9,7 +9,6 @@
 
 class ControllerAppearanceMenu extends Controller
 {
-    
     private $error = array();
 
     public function index()
@@ -21,20 +20,20 @@ class ControllerAppearanceMenu extends Controller
         $this->document->addStyle('view/javascript/jquery/layout/jquery-ui.css');
         $this->document->addStyle('view/stylesheet/menu.css');
         $this->document->addStyle('view/stylesheet/layout.css');
-        
+
         $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery-lockfixed.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery.ui.touch-punch.js');
         $this->document->addScript('view/javascript/menu/menu.js');
-        
+
         $data['changeMenuPosition'] = $this->url->link('appearance/menu/changeMenuPosition', 'token=' . $this->session->data['token'], 'SSL');
-        
+
         $data['deleteMenu'] = $this->url->link('appearance/menu/deleteMenu', 'token=' . $this->session->data['token'], 'SSL');
         $data['deleteChildMenu'] = $this->url->link('appearance/menu/deleteChildMenu', 'token=' . $this->session->data['token'], 'SSL');
-                
+
         $data['enableMenu'] = $this->url->link('appearance/menu/enableMenu', 'token=' . $this->session->data['token'], 'SSL');
         $data['enableChildMenu'] = $this->url->link('appearance/menu/enableChildMenu', 'token=' . $this->session->data['token'], 'SSL');
-        
+
         $data['disableMenu'] = $this->url->link('appearance/menu/disableMenu', 'token=' . $this->session->data['token'], 'SSL');
         $data['disableChildMenu'] = $this->url->link('appearance/menu/disableChildMenu', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -88,7 +87,7 @@ class ControllerAppearanceMenu extends Controller
         $this->load->model('setting/store');
 
         $data['stores'] = $this->model_setting_store->getStores();
-        
+
         $data = $this->language->all($data);
 
         if (isset($this->error['warning'])) {
@@ -119,7 +118,7 @@ class ControllerAppearanceMenu extends Controller
         if (!$this->user->hasPermission('modify', 'appearance/menu')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
-        
+
         return !$this->error;
     }
 
@@ -161,15 +160,15 @@ class ControllerAppearanceMenu extends Controller
         $count = '0';
 
         $html  = '<li id="menu-item-' . $menu['menu_id'] . '" class="menu-item menu-item-depth-0 menu-item-page menu-item-edit-inactive pending">';
-        $html .= '	<dl class="menu-item-bar">';
-        $html .= '		<dt class="menu-item-handle">';
-        $html .= '			<span class="item-title"><span class="menu-item-title">' . $menu['name'] .'</span> <span class="is-submenu" style="display: none;">' . $data['text_sub_item'] . '</span></span>';
+        $html .= ' <dl class="menu-item-bar">';
+        $html .= '      <dt class="menu-item-handle">';
+        $html .= '          <span class="item-title"><span class="menu-item-title">' . $menu['name'] .'</span> <span class="is-submenu" style="display: none;">' . $data['text_sub_item'] . '</span></span>';
         $html .= '          <span class="item-controls">';
-        $html .= '			<span class="item-type">' . ucwords($menu['menu_type']) . '</span>';
-        $html .= '				<a class="item-edit openMenuItem ' . $menu['menu_type'] . '" id="edit-' . $menu['menu_id'] . '" title="">';
+        $html .= '          <span class="item-type">' . ucwords($menu['menu_type']) . '</span>';
+        $html .= '              <a class="item-edit openMenuItem ' . $menu['menu_type'] . '" id="edit-' . $menu['menu_id'] . '" title="">';
         $html .= '                <i class="fa fa-caret-down"></i>';
         $html .= '              </a>';
-        $html .= '			</span>';
+        $html .= '          </span>';
         $html .= '      </dt>';
         $html .= ' </dl>';
 
@@ -210,19 +209,19 @@ class ControllerAppearanceMenu extends Controller
         $html .= '</div>';
         $html .= '<br>';
         $html .= '<div class="pull-right">';
-        $html .= ' <a id="disableMenu-'. $count . '" onclick="statusMenu(\'disable\', \'' . $menu['menu_id'] . '\', \'menu-item-' . $menu['menu_id'] . '\', \'disableMenu-' . $count .'\')" data-type="iframe" data-toggle="tooltip" style="top:2px!important;font-size:1.2em !important;" title="' . $data['button_disable'] . '" class="btn btn-danger btn-xs btn-edit btn-group"><i class="fa fa-times-circle"></i></a>';
+        $html .= ' <a id="disableMenu-'. $count . '" onclick="statusMenu(\'disable\', \'' . $menu['menu_id'] . '\', \'menu-item-' . $menu['menu_id'] . '\', \'disableMenu-' . $count .'\')" data-type="iframe" data-toggle="tooltip" style="top:2px!important;font-size:1.2em !important;" title="' . $data['button_disable'] . '" class="btn btn-warning btn-xs btn-edit btn-group"><i class="fa fa-times-circle"></i></a>';
         $html .= ' <a onclick="saveMenu(\'menu-item-settings-edit-' . $menu['menu_id'] . '\', \'menu-item-' . $menu['menu_id'] . '\')" data-type="iframe" data-toggle="tooltip" style="top:2px!important;font-size:1.2em !important;" title="' . $data['button_save'] . '" class="btn btn-success btn-xs btn-edit btn-group"><i class="fa fa-save"></i></a>';
-        $html .= ' <button type="button" data-toggle="tooltip" title="" style="top:2px!important;font-size:1.2em !important;" class="btn btn-danger btn-xs btn-edit btn-group btn-loading" onclick="confirm(\'Are you sure?\') ? deleteMenu(\'' . $menu['menu_id'] . '\', \'menu-item-' . $menu['menu_id'] . '\') : false;" data-original-title="Delete"><i class="fa fa-trash-o"></i></button>';
+        $html .= ' <button type="button" data-toggle="tooltip" title="" style="top:2px!important;font-size:1.2em !important;" class="btn btn-warning btn-xs btn-edit btn-group btn-loading" onclick="confirm(\'Are you sure?\') ? deleteMenu(\'' . $menu['menu_id'] . '\', \'menu-item-' . $menu['menu_id'] . '\') : false;" data-original-title="Delete"><i class="fa fa-trash-o"></i></button>';
         $html .= '</div>';
         $html .= '<br><br>';
 
-        if(count($stores) > 0) {
+        if (count($stores) > 0) {
             $html .= $this->language->get('entry_store');
             $html .= '<br />';
             $html .= '<div class="well well-sm" style="height: 100%; max-height: 150px;  margin-right: 10px; overflow: auto;padding-right: 10px; margin-bottom: 5px;">';
             $html .= '  <div class="checkbox">';
             $html .= '    <label>';
-            
+
             if (in_array(0, $menu['store'])) {
                 $html .= '      <input type="checkbox" name="menu_store[]" value="0" checked="checked" />';
                 $html .= $this->language->get('text_default');
@@ -230,14 +229,14 @@ class ControllerAppearanceMenu extends Controller
                 $html .= '      <input type="checkbox" name="menu_store[]" value="0" />';
                 $html .= $this->language->get('text_default');
             }
-            
+
             $html .= '    </label>';
             $html .= '  </div>';
-            
+
             foreach ($stores as $store) {
                 $html .= '  <div class="checkbox">';
                 $html .= '    <label>';
-                
+
                 if (in_array($store['store_id'], $menu['store'])) {
                     $html .= '      <input type="checkbox" name="menu_store[]" value="' . $store['store_id'] . '" checked="checked" />';
                     $html .= $store['name'];
@@ -245,11 +244,11 @@ class ControllerAppearanceMenu extends Controller
                     $html .= '      <input type="checkbox" name="menu_store[]" value="' . $store['store_id'] . '" />';
                     $html .= $store['name'];
                 }
-                
+
                 $html .= '    </label>';
                 $html .= '  </div>';
             }
-            
+
             $html .= '</div>';
         }
 
@@ -286,7 +285,9 @@ class ControllerAppearanceMenu extends Controller
     public function deleteMenu()
     {
         $this->load->language('appearance/menu');
+
         $this->document->setTitle($this->language->get('heading_title'));
+
         $this->load->model('appearance/menu');
 
         if (isset($this->request->post['menu_id']) && $this->validateDelete()) {
@@ -296,14 +297,12 @@ class ControllerAppearanceMenu extends Controller
 
             $json['success'] = $this->language->get('text_success');
             $json['error']   = $this->language->get('text_error');
-
         } else {
             $this->session->data['error'] = $this->language->get('text_error');
 
             $json['success'] = '';
             $json['error']   = $this->language->get('text_error');
         }
-
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
@@ -312,7 +311,9 @@ class ControllerAppearanceMenu extends Controller
     public function deleteChildMenu()
     {
         $this->load->language('appearance/menu');
+
         $this->document->setTitle($this->language->get('heading_title'));
+
         $this->load->model('appearance/menu');
 
         if (isset($this->request->post['menu_id']) && $this->validateDelete()) {
@@ -322,14 +323,12 @@ class ControllerAppearanceMenu extends Controller
 
             $json['success'] = $this->language->get('text_success');
             $json['error']   = '';
-
         } else {
             $this->session->data['error'] = $this->language->get('text_error');
 
             $json['success'] = '';
             $json['error']   = $this->language->get('text_error');
         }
-
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
@@ -338,19 +337,21 @@ class ControllerAppearanceMenu extends Controller
     public function enableMenu()
     {
         $this->load->language('appearance/menu');
+
         $this->document->setTitle($this->language->get('heading_title'));
+
         $this->load->model('appearance/menu');
-        
+
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_appearance_menu->enableMenu($this->request->post['menu_id']);
+
             $this->session->data['success'] = $this->language->get('text_success');
-             
         }
-        
+
         $id = explode('-', $this->request->post['id']);
 
-        $button = "<a id=\"disableMenu-" . $id[1] . "\" onclick=\"statusMenu('disable', '" . $this->request->post['menu_id'] . "', 'menu-item-" .  $this->request->post['menu_id'] . "', 'disableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-danger btn-xs btn-edit btn-group\"><i class=\"fa fa-times-circle\"></i></a>";
-        
+        $button = "<a id=\"disableMenu-" . $id[1] . "\" onclick=\"statusMenu('disable', '" . $this->request->post['menu_id'] . "', 'menu-item-" .  $this->request->post['menu_id'] . "', 'disableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-warning btn-xs btn-edit btn-group\"><i class=\"fa fa-times-circle\"></i></a>";
+
         echo $button;
         exit();
     }
@@ -358,37 +359,42 @@ class ControllerAppearanceMenu extends Controller
     public function disableMenu()
     {
         $this->load->language('appearance/menu');
+
         $this->document->setTitle($this->language->get('heading_title'));
+
         $this->load->model('appearance/menu');
-        
+
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_appearance_menu->disableMenu($this->request->post['menu_id']);
+
             $this->session->data['success'] = $this->language->get('text_success');
-             
         }
-        
+
         $id = explode('-', $this->request->post['id']);
-        
+
         $button = "<a id=\"enableMenu-" . $id[1] . "\" onclick=\"statusMenu('enable', '" . $this->request->post['menu_id'] . "', 'menu-item-" .  $this->request->post['menu_id'] . "', 'enableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-success btn-xs btn-edit btn-group\"><i class=\"fa fa-check-circle\"></i></a>";
 
         echo $button;
         exit();
     }
-    
+
     public function enableChildMenu()
     {
         $this->load->language('appearance/menu');
+
         $this->document->setTitle($this->language->get('heading_title'));
+
         $this->load->model('appearance/menu');
-        
+
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_appearance_menu->enableChildMenu($this->request->post['menu_id']);
+
             $this->session->data['success'] = $this->language->get('text_success');
         }
 
         $id = explode('-', $this->request->post['id']);
-        
-        $button = "<a id=\"disableMenu-" . $id[1] . "\" onclick=\"statusMenu('disable', '" . $this->request->post['menu_id'] . "', 'menu-child-item-" .  $this->request->post['menu_id'] . "', 'disableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-danger btn-xs btn-edit btn-group\"><i class=\"fa fa-times-circle\"></i></a>";
+
+        $button = "<a id=\"disableMenu-" . $id[1] . "\" onclick=\"statusMenu('disable', '" . $this->request->post['menu_id'] . "', 'menu-child-item-" .  $this->request->post['menu_id'] . "', 'disableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-warning btn-xs btn-edit btn-group\"><i class=\"fa fa-times-circle\"></i></a>";
 
         echo $button;
         exit();
@@ -397,18 +403,21 @@ class ControllerAppearanceMenu extends Controller
     public function disableChildMenu()
     {
         $this->load->language('appearance/menu');
+
         $this->document->setTitle($this->language->get('heading_title'));
+
         $this->load->model('appearance/menu');
-        
+
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_appearance_menu->disableChildMenu($this->request->post['menu_id']);
+
             $this->session->data['success'] = $this->language->get('text_success');
         }
-        
+
         $id = explode('-', $this->request->post['id']);
 
         $button = "<a id=\"enableMenu-" . $id[1] . "\" onclick=\"statusMenu('enable', '" . $this->request->post['menu_id'] . "', 'menu-child-item-" .  $this->request->post['menu_id'] . "', 'enableMenu-" . $id[1] . "')\" data-type=\"iframe\" data-toggle=\"tooltip\" style=\"top:2px!important;font-size:1.2em !important;\" title=\"\" class=\"btn btn-success btn-xs btn-edit btn-group\"><i class=\"fa fa-check-circle\"></i></a>";
-        
+
         echo $button;
         exit();
     }
@@ -416,13 +425,15 @@ class ControllerAppearanceMenu extends Controller
     public function changeMenuPosition()
     {
         $this->load->language('appearance/menu');
+
         $this->document->setTitle($this->language->get('heading_title'));
+
         $this->load->model('appearance/menu');
-        
+
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_appearance_menu->changeMenuPosition($this->request->post);
-            $this->session->data['success'] = $this->language->get('text_success');
 
+            $this->session->data['success'] = $this->language->get('text_success');
         }
     }
 
@@ -433,13 +444,13 @@ class ControllerAppearanceMenu extends Controller
         #Category
         if (isset($this->request->get['filter_category_name'])) {
             $this->load->model('catalog/category');
-            
+
             if (isset($this->request->get['filter_category_name'])) {
                 $filter_name = $this->request->get['filter_category_name'];
             } else {
                 $filter_name = '';
             }
-            
+
             $filter_data = array(
                 'filter_name' => $filter_name,
                 'sort'        => 'name',
@@ -451,13 +462,13 @@ class ControllerAppearanceMenu extends Controller
             $results = $this->model_catalog_category->getCategories($filter_data);
 
             foreach ($results as $result) {
-                
                 $result['index'] = $result['name'];
+
                 if (strpos($result['name'], '&nbsp;&nbsp;&gt;&nbsp;&nbsp;')) {
                     $result['name'] = explode('&nbsp;&nbsp;&gt;&nbsp;&nbsp;', $result['name']);
                     $result['name'] = end($result['name']);
                 }
-                
+
                 $json[] = array(
                     'category_id' => $result['category_id'],
                     'index'       => $result['index'],
@@ -465,7 +476,7 @@ class ControllerAppearanceMenu extends Controller
                 );
             }
         }
-        
+
         #Product
         if (isset($this->request->get['filter_product_name'])) {
             $this->load->model('catalog/product');
@@ -492,17 +503,17 @@ class ControllerAppearanceMenu extends Controller
                 );
             }
         }
-        
+
         #Manufacturer
         if (isset($this->request->get['filter_manufacturer_name'])) {
             $this->load->model('catalog/manufacturer');
-            
+
             if (isset($this->request->get['filter_manufacturer_name'])) {
                 $filter_name = $this->request->get['filter_manufacturer_name'];
             } else {
                 $filter_name = '';
             }
-            
+
             $filter_data = array(
                 'filter_name' => $filter_name,
                 'start'       => 0,
@@ -523,13 +534,13 @@ class ControllerAppearanceMenu extends Controller
         #Information
         if (isset($this->request->get['filter_information_name'])) {
             $this->load->model('catalog/information');
-            
+
             if (isset($this->request->get['filter_information_name'])) {
                 $filter_name = $this->request->get['filter_information_name'];
             } else {
                 $filter_name = '';
             }
-            
+
             $filter_data = array(
                 'filter_name' => $filter_name,
                 'start'       => 0,
@@ -559,3 +570,4 @@ class ControllerAppearanceMenu extends Controller
         $this->response->setOutput(json_encode($json));
     }
 }
+
