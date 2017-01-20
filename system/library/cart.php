@@ -249,7 +249,7 @@ class Cart {
                     // Pre-Order Stock Status
                     $stock_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "stock_status` WHERE stock_status_id = '" . $product_query->row['stock_status_id'] . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-                    if ($stock_status_query->row['preorder']) {
+                    if ($stock_status_query->row['preorder'] && !$stock) {
                         $preorder = true;
                     } else {
                         $preorder = false;
