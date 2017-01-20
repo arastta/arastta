@@ -125,6 +125,33 @@ class ControllerModuleProducts extends Controller
             $data['type'] = '';
         }
 
+        // Categories
+        $this->load->model('catalog/category');
+
+        if (isset($this->request->post['category'])) {
+            $categories = $this->request->post['category'];
+        } elseif (!empty($module_info['category'])) {
+            $categories = $module_info['category'];
+        } else {
+            $categories = array();
+        }
+
+        $data['categories'] = array();
+
+        if (!empty($categories)) {
+            foreach ($categories as $category_id) {
+                $category_info = $this->model_catalog_category->getCategory($category_id);
+
+                if ($category_info) {
+                    $data['categories'][] = array(
+                        'category_id' => $category_info['category_id'],
+                        'name'        => ($category_info['path']) ? $category_info['path'] . ' &gt; ' . $category_info['name'] : $category_info['name']
+                    );
+                }
+            }
+        }
+
+        // Products
         $this->load->model('catalog/product');
 
         $data['products'] = array();
@@ -163,7 +190,7 @@ class ControllerModuleProducts extends Controller
         } elseif (!empty($module_info)) {
             $data['limit'] = $module_info['limit'];
         } else {
-            $data['limit'] = '5';
+            $data['limit'] = '4';
         }
 
         if (isset($this->request->post['width'])) {
@@ -292,6 +319,22 @@ class ControllerModuleProducts extends Controller
         $type        = array('value' => $data['type'], 'selected' => $data['type'], 'id' => 'input-type');
         $type_option = array('bestsellers' => $this->language->get('text_bestsellers'), 'featured' => $this->language->get('text_featured'), 'latest' => $this->language->get('text_latest'), 'special' => $this->language->get('text_special'));
         $form->addElement(new Arastta\Component\Form\Element\Select($this->language->get('entry_type'), 'type', $type_option, $type));
+
+        $html  = '<div class="form-group">';
+        $html .= '    <label class="col-sm-2 control-label" for="input-category"><span data-toggle="tooltip" title="' . $this->language->get('help_category') . '">' . $this->language->get('entry_category') . '</span></label>';
+        $html .= '    <div class="col-sm-10">';
+        $html .= '        <input type="text" name="category" value="" placeholder="' . $this->language->get('entry_category') . '" id="input-category" class="form-control" />';
+        $html .= '        <div id="categories" class="well well-sm" style="height: 150px; overflow: auto;">';
+                            foreach ($data['categories'] as $category) {
+        $html .= '          <div id="categories' .  $category['category_id'] . '"><i class="fa fa-minus-circle"></i> '. $category['name'];
+        $html .= '            <input type="hidden" name="category[]" value="' . $category['category_id'] . '" />';
+        $html .= '          </div>';
+                            }
+        $html .= '        </div>';
+        $html .= '    </div>';
+        $html .= '</div>';
+
+        $form->addElement(new Arastta\Component\Form\Element\HTML($html));
 
         $html  = '<div class="form-group">';
         $html .= '    <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="' . $this->language->get('help_product') . '">' . $this->language->get('entry_product') . '</span></label>';

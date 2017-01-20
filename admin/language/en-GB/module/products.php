@@ -29,6 +29,7 @@ $_['entry_title']          = 'Module Title';
 $_['entry_module_class']   = 'Class Suffix';
 $_['entry_module_column']  = 'Per column show product';
 $_['entry_type']           = 'Module Type';
+$_['entry_category']       = 'Categories';
 $_['entry_random_product'] = 'Random Product';
 $_['entry_limit']          = 'Limit';
 $_['entry_width']          = 'Width';
@@ -46,6 +47,7 @@ $_['entry_wish_list']      = 'Show Wish list button';
 $_['entry_compare']        = 'Show Compare button';
 
 // Help
+$_['help_category'] = '(Autocomplete)';
 $_['help_popup']    = '(Autocomplete)';
 
 // Error

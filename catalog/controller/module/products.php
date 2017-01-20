@@ -20,7 +20,7 @@ class ControllerModuleProducts extends Controller
         $data['button_wishlist'] = $this->language->get('button_wishlist');
         $data['button_compare']  = $this->language->get('button_compare');
 
-        $this->load->model('catalog/product');
+        $this->load->model('module/products');
 
         $this->load->model('tool/image');
 
@@ -70,7 +70,15 @@ class ControllerModuleProducts extends Controller
     {
         $products = array();
 
-        $results = $this->model_catalog_product->getBestSellerProducts($setting['limit']);
+        $filter_data = array(
+            'categories' => $setting['category'],
+            'sort'       => 'total',
+            'order'      => 'DESC',
+            'start'      => 0,
+            'limit'      => $setting['limit']
+        );
+
+        $results = $this->model_module_products->getBestSellerProducts($filter_data);
 
         if ($results) {
             foreach ($results as $result) {
@@ -197,13 +205,14 @@ class ControllerModuleProducts extends Controller
         $products = array();
 
         $filter_data = array(
-            'sort'  => 'p.date_added',
-            'order' => 'DESC',
-            'start' => 0,
-            'limit' => $setting['limit']
+            'categories' => $setting['category'],
+            'sort'       => 'p.date_added',
+            'order'      => 'DESC',
+            'start'      => 0,
+            'limit'      => $setting['limit']
         );
 
-        $results = $this->model_catalog_product->getProducts($filter_data);
+        $results = $this->model_module_products->getLatestProducts($filter_data);
 
         if ($results) {
             foreach ($results as $result) {
@@ -261,13 +270,14 @@ class ControllerModuleProducts extends Controller
         $products = array();
 
         $filter_data = array(
-            'sort'  => 'pd.name',
-            'order' => 'ASC',
-            'start' => 0,
-            'limit' => $setting['limit']
+            'categories' => $setting['category'],
+            'sort'       => 'pd.name',
+            'order'      => 'ASC',
+            'start'      => 0,
+            'limit'      => $setting['limit']
         );
 
-        $results = $this->model_catalog_product->getProductSpecials($filter_data);
+        $results = $this->model_module_products->getProductSpecials($filter_data);
 
         if ($results) {
             foreach ($results as $result) {

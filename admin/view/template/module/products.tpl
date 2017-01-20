@@ -29,22 +29,66 @@
 </div>
 <script type="text/javascript"><!--
     $(document).ready(function() {
+        if ($('#input-type').val() == 'featured') {
+            // Category
+            $('input[name=\'category\']').parent().parent().hide();
+        }
+
         if ($('#input-type').val() != 'featured') {
+            // Product
             $('input[name=\'product\']').parent().parent().hide();
             $('input[name=\'random_product\']').parent().parent().parent().parent().hide();
         }
     });
 
     $(document).on('change', 'select[name=\'type\']', function() {
+        // Category
+        $('input[name=\'category\']').parent().parent().show();
+
+        // Product
         $('input[name=\'product\']').parent().parent().hide();
         $('input[name=\'random_product\']').parent().parent().parent().parent().hide();
 
         if ($(this).val() == 'featured') {
+            // Category
+            $('input[name=\'category\']').parent().parent().hide();
+
+            // Product
             $('input[name=\'product\']').parent().parent().show();
             $('input[name=\'random_product\']').parent().parent().parent().parent().show();
         }
     });
 
+    // Category
+    $('input[name=\'category\']').autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['name'],
+                            value: item['category_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $('input[name=\'category\']').val('');
+
+            $('#categories' + item['value']).remove();
+
+            $('#categories').append('<div id="categories' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="category[]" value="' + item['value'] + '" /></div>');
+        }
+    });
+
+    $('#categories').delegate('.fa-minus-circle', 'click', function() {
+        $(this).parent().remove();
+    });
+
+    // Product
     $('input[name=\'product\']').autocomplete({
         source: function(request, response) {
             $.ajax({
