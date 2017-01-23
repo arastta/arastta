@@ -263,6 +263,37 @@ class ModelLocalisationLanguage extends Model {
 
         $this->cache->delete('email_template');
 
+        if (file_exists(DIR_ADMIN . 'language/'. $this->db->escape($data['directory']) .'/update.sql')) {
+            $file = DIR_ADMIN . 'language/'. $this->db->escape($data['directory']) .'/update.sql';
+
+            $lines = file($file);
+
+            if (!empty($lines)) {
+                $sql = '';
+
+                foreach ($lines as $line) {
+                    if (!$line || (substr($line, 0, 2) == '--') || (substr($line, 0, 1) == '#')) {
+                        continue;
+                    }
+
+                    $line = str_replace("%language_id%", (int)$language_id, $line);
+
+                    $sql .= $line;
+
+                    if (!preg_match('/;\s*$/', $line)) {
+                        continue;
+                    }
+
+                    $sql = str_replace("INSERT INTO `ar_", "INSERT INTO `" . DB_PREFIX, $sql);
+                    $sql = str_replace("UPDATE `ar_", "UPDATE `" . DB_PREFIX, $sql);
+
+                    $this->db->query($sql);
+
+                    $sql = '';
+                }
+            }
+        }
+
         $this->trigger->fire('post.admin.language.add', array(&$language_id));
 
         return $language_id;
