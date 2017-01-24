@@ -120,7 +120,13 @@ class ModelSetting extends Model
 
         $db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_encryption'");
         $db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_encryption', value = '" . $db->escape(md5(mt_rand())) . "'");
-
+        
+        // Enable SSL everywhere if installation goes through HTTPS
+        if ($this->request->isSSL()) {
+            $db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_secure'");
+            $db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_secure', value = '3'");
+        }
+        
         $db->query("UPDATE `" . DB_PREFIX . "product` SET `viewed` = '0'");
 
         // create order API user
