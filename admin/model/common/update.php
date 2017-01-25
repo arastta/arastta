@@ -124,12 +124,6 @@ class ModelCommonUpdate extends Model
 
             // Delete the temp path
             $this->filesystem->remove($temp_path);
-
-            // Check if the file mirror was successful
-            $new_version = new Version();
-            if ($new_version->getShortVersion() != $version) {
-                return false;
-            }
         } else {
             // Required for ftp & remove extension functions
             $this->request->post['path'] = $path;

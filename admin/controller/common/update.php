@@ -31,6 +31,12 @@ class ControllerCommonUpdate extends Controller
             $data['text_error'] = $this->session->data['msg_error'];
             unset($this->session->data['msg_error']);
         }
+        
+        // Check if the version has been updated
+        if (!empty($this->request->get['upd_version']) && (VERSION != $this->request->get['upd_version'])) {
+            unset($data['text_success']);
+            $data['text_error'] = $this->language->get('text_update_error');
+        }
 
         if (!extension_loaded('xml')) {
             $data['text_error'] = $this->language->get('error_xml');
@@ -104,7 +110,7 @@ class ControllerCommonUpdate extends Controller
         }
 
         // Return
-        $this->response->redirect($this->url->link('common/update', 'token=' . $this->session->data['token'], 'SSL'));
+        $this->response->redirect($this->url->link('common/update', 'upd_version=' . $this->request->get['version'] . '&token=' . $this->session->data['token'], 'SSL'));
     }
 
     public function changelog()
