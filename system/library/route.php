@@ -406,16 +406,19 @@ class Route extends Object
 
     public function seoDisabled($route = '')
     {
-        $status = false;
-
-        if (($status == false) and $this->request->isAjax()) {
-            $status = true;
+        if (IS_ADMIN == true) {
+            return true;
         }
 
-        if (($status == false) && (IS_ADMIN == true)) {
-            $status = true;
+        // Do not generate SEO URLs for payment gateways
+        if (substr($route, 0, 8) == 'payment/') {
+            return true;
         }
 
-        return $status;
+        if ($this->request->isAjax()) {
+            return true;
+        }
+
+        return false;
     }
 }
