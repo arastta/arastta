@@ -286,7 +286,7 @@ class ControllerExtensionExtension extends Controller
         $results = $this->model_extension_extension->getExtensions($filter_data);
 
         foreach ($results as $result) {
-            $status = $this->config->get($result['code'] . '_status', $this->config->get($result['code'] . '_' .$result['type'] . '_status'));
+            $status = $this->config->get($result['code'] . '_' .$result['type'] . '_status', $this->config->get($result['code'] . '_status'));
 
             // Happens when there is db record
             if (is_null($status)) {

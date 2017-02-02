@@ -27,9 +27,21 @@ class ModelCommonEdit extends Model
 
         $this->trigger->fire('pre.admin.' . $type . '.status.edit', array($data));
 
+        $new_extesion_types = array('analytics', 'antifraud', 'captcha');
+
         if ($extension) {
             foreach ($ids as $id) {
-                $extension_name = basename($id);
+                if ($this->request->post['route'] = 'extension/extension') {
+                    $tmp = explode('/', $id);
+
+                    $extension_name = $tmp[1];
+
+                    if (in_array($tmp[0], $new_extesion_types)) {
+                        $extension_name = $extension_name . '_' . $tmp[0];
+                    }
+                } else {
+                    $extension_name = basename($id);
+                }
 
                 $current = $this->config->get($extension_name . '_status');
 
