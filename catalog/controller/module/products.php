@@ -22,6 +22,7 @@ class ControllerModuleProducts extends Controller
         $data['button_compare']  = $this->language->get('button_compare');
 
         $this->load->model('module/products');
+        $this->load->model('catalog/product');
 
         $this->load->model('tool/image');
 
