@@ -77,7 +77,7 @@
                                             <input type="text" name="tag" value="" placeholder="<?php echo $entry_tag; ?>" id="input-tag<?php echo $language['language_id']; ?>" class="form-control" />
                                             <div class="view-all"><a href="<?php echo $show_all[$language['language_id']]['tags']; ?>" class="popup"><?php echo $entry_view_all; ?></a></div>
                                             <?php if (!empty($product_description[$language['language_id']]['tag'])) { ?>
-                                            <div id="product-tag-<?php echo $language['language_id']; ?>" class="well well-sm" style="overflow: auto;">
+                                            <div id="product-tag-<?php echo $language['language_id']; ?>" class="well well-sm" style="overflow: auto; clear: both;">
                                                 <?php foreach ($product_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
                                                 <div id="product-tag-<?php echo $tag_key; ?>"><i class="fa fa-minus-circle"></i> <?php echo $tag_value; ?>
                                                     <input type="hidden" name="product_tag[<?php echo $language['language_id']; ?>][]" value="<?php echo $tag_value; ?>" />
@@ -1006,12 +1006,15 @@
     });
 
     // Tag
+    var tag_language = 0;
     $('input[name=\'tag\']').autocomplete({
         'source': function(request, response) {
+            tag_language = parseInt($(this).attr('id').replace('input-tag',''));
+
             $.ajax({
                 url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&tag_name=' +  encodeURIComponent(request),
                 type: 'post',
-                data: { tag_text: $('#product-tag input').serializeArray() },
+                data: { tag_text: $('#product-tag-' + tag_language + ' input').serializeArray() },
                 dataType: 'json',
                 success: function(json) {
                     if (json['new']) {
@@ -1019,11 +1022,22 @@
 
                         new_tag = $('input[name=\'tag\']').val();
 
-                        tags = $('#product-tag input').serializeArray();
+                        tags = $('#product-tag-' + tag_language + ' input').serializeArray();
 
                         $.each(tags, function(key, tag) {
                             if (tag.value == new_tag) {
                                 add_tag = false;
+
+                                $('input[name=\'tag\']').attr({
+                                    title                : '<?php echo $error_add_same_tag; ?>',
+                                    'data-original-title': '<?php echo $error_add_same_tag; ?>',
+                                    'data-toggle'        : 'tooltip',
+                                    'data-placement'     : 'bottom',
+                                }).tooltip('show').addClass('tag-error');
+
+                                setTimeout(function(){
+                                    $('input[name=\'tag\']').removeAttr('title data-original-title data-toggle data-placement');
+                                }, 5000);
 
                                 return false;
                             }
@@ -1049,15 +1063,11 @@
             });
         },
         'select': function(item) {
-
-
-            $('#product-tag' + item['value']).remove();
-
             if (!$('#product-tag-' + tag_language).length) {
-                $(this).after('<div id="product-tag-' + tag_language + '" class="well well-sm" style="overflow: auto;"></div>');
+                $(this).parent().append('<div id="product-tag-' + tag_language + '" class="well well-sm" style="overflow: auto; clear: both;"></div>');
             }
 
-            tag_language = parseInt($(this).attr('id').replace('input-tag',''));
+            $('#product-tag-' + tag_language + ' #product-tag' + item['value']).remove();
 
             $('#product-tag-' + tag_language).append('<div id="product-tag' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['value'] + '<input type="hidden" name="product_tag[' + tag_language  +'][]" value="' + item['value'] + '" /></div>');
 
@@ -1065,8 +1075,14 @@
         }
     });
 
-    $('#product-tag').delegate('.fa-minus-circle', 'click', function() {
+    $(document).on('click', 'div[id^=\'product-tag-\'] .fa-minus-circle', function() {
+        _parent = $(this).parent().parent();
+
         $(this).parent().remove();
+        
+        if (!_parent.find('i').hasClass('fa-minus-circle')) {
+            _parent.remove();
+        }
     });
 
     $('input[name=\'tag\']').keypress(function(e) {
@@ -1082,15 +1098,10 @@
 
             $('#product-tag' + new_tag).remove();
 
-
-
-
-
-
             tag_language = parseInt($(this).attr('id').replace('input-tag',''));
 
             if (!$('#product-tag-' + tag_language).length) {
-                $(this).parent().append('<div id="product-tag-' + tag_language + '" class="well well-sm" style="overflow: auto;"></div>');
+                $(this).parent().append('<div id="product-tag-' + tag_language + '" class="well well-sm" style="overflow: auto; clear: both;"></div>');
             }
 
             tags = $('#product-tag-' + tag_language + ' input').serializeArray();
