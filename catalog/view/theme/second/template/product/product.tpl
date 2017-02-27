@@ -604,6 +604,11 @@ $('#button-review').on('click', function() {
                 $('#review').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
             }
 
+            if (json['captcha_extension'] && (json['captcha_extension'] == 'basic')) {
+                $('#input-basic-captcha').parent().parent().after(json['captcha_content']);
+                $('#input-basic-captcha').parent().parent().remove();
+            }
+
             if (json['success']) {
                 $('#review').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 

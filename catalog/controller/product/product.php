@@ -615,15 +615,6 @@ class ControllerProductProduct extends Controller {
             );
         }
 
-        if ($this->config->get($this->config->get('config_captcha') . '_captcha_status')) {
-            $data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $this->error);
-        } else {
-            $data['captcha'] = '';
-        }
-
-        # BC
-        $data['site_key'] = '';
-
         $pagination = new Pagination();
         $pagination->total = $review_total;
         $pagination->page = $page;
@@ -667,7 +658,8 @@ class ControllerProductProduct extends Controller {
                     $json['error'] = $this->language->get('error_captcha');
                 }
 
-                $json['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $json);
+                $json['captcha_extension'] = $this->config->get('config_captcha');
+                $json['captcha_content'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $json);
             }
 
             if (!isset($json['error'])) {
