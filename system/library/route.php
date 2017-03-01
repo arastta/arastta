@@ -397,7 +397,8 @@ class Route extends Object
             if (is_array($value)) {
                 $this->parseNonSeoVariables($value);
             } else {
-                $value = urlencode($value);
+                // Removed as it breaks search and seems to be out of purpose
+                //$value = urlencode($value);
 
                 $this->request->get[$variable] = $value;
             }
@@ -410,9 +411,17 @@ class Route extends Object
             return true;
         }
 
-        // Do not generate SEO URLs for payment gateways
-        if (substr($route, 0, 8) == 'payment/') {
+        // Do not generate SEO URLs if format available, to be used for format=raw, format=json etc
+        /*if (isset($this->request->get['format'])) {
             return true;
+        }*/
+
+        // Do not generate SEO URLs for special routes (payments, feeds)
+        $disabled_routes = array('payment/', 'feed/');
+        foreach($disabled_routes as $disabled_route) {
+            if (substr($route, 0, count($disabled_route)) == $disabled_route) {
+                return true;
+            }
         }
 
         if ($this->request->isAjax()) {
