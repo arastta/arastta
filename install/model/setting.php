@@ -163,6 +163,37 @@ class ModelSetting extends Model
         $db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_language', value = '" . $db->escape($lang_code) . "'");
         $db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_admin_language', value = '" . $db->escape($lang_code) . "'");
 
+        if (file_exists(DIR_ADMIN . 'language/'.$lang_directory.'/update.sql')) {
+            $file = DIR_ADMIN . 'language/'.$lang_directory.'/update.sql';
+
+            $lines = file($file);
+
+            if (!empty($lines)) {
+                $sql = '';
+
+                foreach ($lines as $line) {
+                    if (!$line || (substr($line, 0, 2) == '--') || (substr($line, 0, 1) == '#')) {
+                        continue;
+                    }
+
+                    $line = str_replace("%language_id%", 1, $line);
+
+                    $sql .= $line;
+
+                    if (!preg_match('/;\s*$/', $line)) {
+                        continue;
+                    }
+
+                    $sql = str_replace("INSERT INTO `ar_", "INSERT INTO `" . DB_PREFIX, $sql);
+                    $sql = str_replace("UPDATE `ar_", "UPDATE `" . DB_PREFIX, $sql);
+
+                    $db->query($sql);
+
+                    $sql = '';
+                }
+            }
+        }
+
         $addon_params['language_id'] = '1';
         $addon_params['theme_ids'] = array();
         $addon_params['extension_ids'] = array();
