@@ -2742,6 +2742,7 @@ li.basic-advanced {
 
 #content.show-all-content .content .bg-success {
     background : #8FBB6C;
+    cursor: pointer;
 }
 
 #content.show-all-content .content .bg-success:hover {
@@ -2751,6 +2752,10 @@ li.basic-advanced {
 
 #content.show-all-content .content .bg-info {
     background : #5BC0DE;
+}
+
+#content.show-all-content .content .bg-info i {
+    cursor: pointer;
 }
 
 #content.show-all-content .content .bg-info:hover {
