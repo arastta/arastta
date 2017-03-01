@@ -109,9 +109,9 @@
             $('.bg-info').each(function( index ) {
                 category_id = parseInt($(this).attr('id').replace('<?php echo $type;?>-', ''));
 
-                html += '<div id="product-category' + parseInt($('.bg-info').attr('id').replace('<?php echo $type;?>-', '')) + '">';
+                html += '<div id="product-category' + category_id + '">';
                 html += '<i class="fa fa-minus-circle"></i> ' + $(this).text();
-                html += '<input type="hidden" name="product_category[]" value="' + parseInt($('.bg-info').attr('id').replace('<?php echo $type;?>-', '')) + '" /></div>';
+                html += '<input type="hidden" name="product_category[]" value="' + category_id + '" /></div>';
                 html += '</div>';
             });
 
