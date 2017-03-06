@@ -92,7 +92,10 @@ class ModelSetting extends Model
         $db->query("SET @@session.sql_mode = 'MYSQL40'");
         
         // Check if admin uses Gravatar
-        $gravatar = $this->utility->getRemoteData('https://www.gravatar.com/avatar/' . md5(strtolower($data['admin_email'])).'?size=45&d=404', array('timeout' => 3));
+        $gravatar = \Httpful\Request::get('https://www.gravatar.com/avatar/' . md5(strtolower($data['admin_email'])).'?size=45&d=404')
+            ->timeout(3)
+            ->send()
+            ->raw_body;
 
         if ($gravatar) {
             $user_image = '';

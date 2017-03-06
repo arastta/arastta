@@ -17,7 +17,9 @@ class ModelLanguage extends Model
         if (empty($data)) {
             $link = 'http://arastta.io/translation/1.0/installer/translated';
 
-            $json = $this->utility->getRemoteData($link);
+            $json = \Httpful\Request::get($link)
+                ->send()
+                ->raw_body;
 
             if (!empty($json)) {
                 $data = json_decode($json, true);
@@ -48,7 +50,9 @@ class ModelLanguage extends Model
 
         $link = 'https://crowdin.com/download/project/arastta/'.$code.'.zip';
 
-        $data = $this->utility->getRemoteData($link);
+        $data = \Httpful\Request::get($link)
+            ->send()
+            ->raw_body;
 
         if (empty($data)) {
             return false;
