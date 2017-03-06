@@ -708,7 +708,7 @@ INSERT INTO `ar_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`
 (128, 9, 86, 'shipping', 1);
 
 INSERT INTO `ar_url_alias` (`url_alias_id`, `query`, `keyword`, `language_id`) VALUES
-(772, 'information_id=4', 'about_us', 1),
+(772, 'information_id=4', 'about', 1),
 (780, 'category_id=35', 'test1', 1),
 (781, 'category_id=36', 'test2', 1),
 (790, 'category_id=43', 'test11', 1),
@@ -777,7 +777,14 @@ INSERT INTO `ar_url_alias` (`url_alias_id`, `query`, `keyword`, `language_id`) V
 (1003, 'category_id=59', 'watches', 1),
 (1004, 'product_id=42', 'canvas-daily', 1),
 (1005, 'product_id=47', 'aeo-denim', 1),
-(1006, 'product_id=43', 'polo-fashion', 1);
+(1006, 'product_id=43', 'polo-fashion', 1),
+(1007, 'route=checkout/cart', 'cart', 1),
+(1008, 'route=checkout/checkout', 'checkout', 1),
+(1009, 'route=account/account', 'account', 1),
+(10010, 'route=account/register', 'register', 1),
+(10011, 'route=account/login', 'login', 1),
+(10012, 'route=information/contact', 'contact', 1),
+(10013, 'route=product/manufacturer', 'brands', 1);
 
 INSERT INTO `ar_voucher_theme` (`voucher_theme_id`, `image`) VALUES
 (6, 'catalog/demo/apple_logo.jpg'),
