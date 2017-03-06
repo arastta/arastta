@@ -12,9 +12,9 @@ class ModelPaymentFreeCheckout extends Model {
         $this->load->language('payment/free_checkout');
 
         if ($total <= 0.00) {
-            $status = true;
-        } else {
             $status = false;
+        } else {
+            $status = true;
         }
 
         $method_data = array();
