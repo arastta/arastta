@@ -645,3 +645,8 @@ if (version_compare(VERSION, '1.5.2', '<')) {
     $this->filesystem->remove(DIR_SYSTEM . 'library/command');
 }
 
+// 1.6.0 changes;
+if (version_compare(VERSION, '1.6.0', '<')) {
+    // Add CSRF setting
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_sec_csrf', `value` = 'a:7:{i:0;s:20:\"account/address/edit\";i:1;s:12:\"account/edit\";i:2;s:18:\"account/newsletter\";i:3;s:16:\"account/password\";i:4;s:14:\"affiliate/edit\";i:5;s:18:\"affiliate/password\";i:6;s:17:\"affiliate/payment\";}', `serialized` = '1'");
+}

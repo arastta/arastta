@@ -43,6 +43,20 @@ class ControllerSettingSetting extends Controller {
                 $this->request->post['config_pagecache_exclude'] = trim($ex_routes, ',');
             }
 
+            if ($this->request->post['config_sec_csrf']) {
+                $csrf_routes = array();
+
+                foreach (explode("\n", $this->request->post['config_sec_csrf']) as $route) {
+                    $route = trim($route);
+
+                    if ($route) {
+                        $csrf_routes[] = $route;
+                    }
+                }
+
+                $this->request->post['config_sec_csrf'] = $csrf_routes;
+            }
+
             if ($this->request->post['config_cache_memcache_servers']) {
                 $memcache_servers = '';
 
@@ -1252,6 +1266,12 @@ class ControllerSettingSetting extends Controller {
             $data['config_sec_xss'] = $this->request->post['config_sec_xss'];
         } else {
             $data['config_sec_xss'] = $this->config->get('config_sec_xss', array());
+        }
+
+        if (isset($this->request->post['config_sec_csrf'])) {
+            $data['config_sec_csrf'] = $this->request->post['config_sec_csrf'];
+        } else {
+            $data['config_sec_csrf'] = implode("\n", $this->config->get('config_sec_csrf', array()));
         }
 
         if (isset($this->request->post['config_sec_htmlpurifier'])) {
