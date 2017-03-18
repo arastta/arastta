@@ -318,7 +318,7 @@ class ControllerModuleProducts extends Controller
         $form->addElement(new Arastta\Component\Form\Element\Select($this->language->get('entry_module_column'), 'module_column', $module_column_option, $module_column, $option_text));
 
         $type        = array('value' => $data['type'], 'selected' => $data['type'], 'id' => 'input-type');
-        $type_option = array('bestsellers' => $this->language->get('text_bestsellers'), 'featured' => $this->language->get('text_featured'), 'latest' => $this->language->get('text_latest'), 'special' => $this->language->get('text_special'));
+        $type_option = array('all' => $this->language->get('text_all'), 'bestsellers' => $this->language->get('text_bestsellers'), 'featured' => $this->language->get('text_featured'), 'latest' => $this->language->get('text_latest'), 'special' => $this->language->get('text_special'));
         $form->addElement(new Arastta\Component\Form\Element\Select($this->language->get('entry_type'), 'type', $type_option, $type));
 
         $html  = '<div class="form-group">';

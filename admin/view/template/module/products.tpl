@@ -29,15 +29,21 @@
 </div>
 <script type="text/javascript"><!--
     $(document).ready(function() {
+        // Product
+        $('input[name=\'product\']').parent().parent().hide();
+        $('input[name=\'random_product\']').parent().parent().parent().parent().hide();
+
+        if ($('#input-type').val() == 'all') {
+            $('input[name=\'random_product\']').parent().parent().parent().parent().show();
+        }
+
         if ($('#input-type').val() == 'featured') {
             // Category
             $('input[name=\'category\']').parent().parent().hide();
-        }
 
-        if ($('#input-type').val() != 'featured') {
             // Product
-            $('input[name=\'product\']').parent().parent().hide();
-            $('input[name=\'random_product\']').parent().parent().parent().parent().hide();
+            $('input[name=\'product\']').parent().parent().show();
+            $('input[name=\'random_product\']').parent().parent().parent().parent().show();
         }
     });
 
@@ -48,6 +54,10 @@
         // Product
         $('input[name=\'product\']').parent().parent().hide();
         $('input[name=\'random_product\']').parent().parent().parent().parent().hide();
+
+        if ($(this).val() == 'all') {
+            $('input[name=\'random_product\']').parent().parent().parent().parent().show();
+        }
 
         if ($(this).val() == 'featured') {
             // Category
