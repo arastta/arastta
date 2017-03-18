@@ -51,6 +51,7 @@ class ModelLanguage extends Model
         $link = 'https://crowdin.com/download/project/arastta/'.$code.'.zip';
 
         $data = \Httpful\Request::get($link)
+            ->followRedirects()
             ->send()
             ->raw_body;
 

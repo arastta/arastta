@@ -160,18 +160,127 @@ class ModelSetting extends Model
         $lang_product_id = $this->session->data['lang_product_id'];
         $lang_version = $this->session->data['lang_version'];
 
-        $db->query("INSERT INTO `" . DB_PREFIX . "language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`)
-                    VALUES (1, '" . $db->escape($lang_name) . "', '" . $db->escape($lang_code) . "', '', '" . $db->escape($lang_image) . "', '" . $db->escape($lang_directory) . "', 1, 1);");
+        $db->query("INSERT INTO `" . DB_PREFIX . "language` (`name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`)
+                    VALUES ('" . $db->escape($lang_name) . "', '" . $db->escape($lang_code) . "', '', '" . $db->escape($lang_image) . "', '" . $db->escape($lang_directory) . "', 1, 1);");
+
+        $language_id = $db->getLastId();
 
         $db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_language', value = '" . $db->escape($lang_code) . "'");
         $db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_admin_language', value = '" . $db->escape($lang_code) . "'");
 
-        $addon_params['language_id'] = '1';
-        $addon_params['theme_ids'] = array();
+        $addon_params['language_id']   = $language_id;
+        $addon_params['theme_ids']     = array();
         $addon_params['extension_ids'] = array();
 
         $addon_params = json_encode($addon_params);
 
         $db->query("INSERT INTO " . DB_PREFIX . "addon SET `product_id` = " . (int) $lang_product_id . ", `product_name` = '" . $db->escape($lang_name) . "', `product_type` = 'translation', `product_version` = '" . $db->escape($lang_version) . "', `files` = '', `params` = '" . $db->escape($addon_params) . "'");
+
+        // Insert Email templates, order statuses, stock statuses, return statuses, return actions and return reasons languages
+        $this->prepareLanguages($language_id, $db);
+    }
+
+    private function prepareLanguages($language_id, $db)
+    {
+        $this->language->load('email_template');
+        $this->language->load('order_status');
+        $this->language->load('stock_status');
+        $this->language->load('return_status');
+        $this->language->load('return_reason');
+
+        $data = $this->language->all();
+        $this->emailTemplateLanguages($data, $language_id, $db);
+        $this->orderStatusLanguages($data, $language_id, $db);
+        $this->stockStatusLanguages($data, $language_id, $db);
+        $this->returnStatusLanguages($data, $language_id, $db);
+        $this->returnReasonLanguages($data, $language_id, $db);
+    }
+
+    private function emailTemplateLanguages($data, $language_id, $db)
+    {
+        $email_templates = glob(DIR_INSTALL . 'email_templates/*.php');
+        foreach ($email_templates as $email_template)
+        {
+            $email_template_id = rtrim(str_replace(DIR_INSTALL . 'email_templates/', '', $email_template), '.php');
+            $item              = explode('_', $email_template_id);
+            $query             = $db->query("SELECT id FROM " . DB_PREFIX . "email WHERE type = '" . $item[0] . "' AND text_id = " . $item[1]);
+            ob_clean();
+            ob_start();
+            require $email_template;
+            $content = ob_get_contents();
+            ob_end_clean();
+
+            $sql = 'INSERT INTO ' . DB_PREFIX . 'email_description (`email_id`, `name`, `description`, `status`, `language_id`) VALUES ' .
+                "(" . (int) $query->row['id'] . "," .
+                "'" . $db->escape(htmlspecialchars($data[$email_template_id . '_subject'])) . "'," .
+                "'" . $db->escape(htmlspecialchars($content)) . "', 1, " . $language_id . ")";
+
+            $db->query($sql);
+        }
+    }
+
+    private function stockStatusLanguages($data, $language_id, $db)
+    {
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'stock_status` (`language_id`, `name`, `message`) VALUES ';
+
+        $values[] = "(5, {$language_id}, '" . $data['stock_out_of_stock'] . "', '#FF0000', 0)";
+        $values[] = "(6, {$language_id}, '" . $data['stock_2_3_days'] . "', '#FFA500', 0)";
+        $values[] = "(7, {$language_id}, '" . $data['stock_in_stock'] . "', '#008000', 0)";
+        $values[] = "(8, {$language_id}, '" . $data['stock_pre_order'] . "', '#FFFF00', 1)";
+
+        $sql .= implode(',', $values);
+
+        $db->query($sql);
+    }
+
+    private function orderStatusLanguages($data, $language_id, $db)
+    {
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'order_status` (`language_id`, `name`, `message`) VALUES ';
+
+        $values[] = "({$language_id}, '" . $data['order_pending'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_processing'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_shipped'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_complete'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_cancelled'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_denied'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_cancelled_reversal'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_failed'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_refunded'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_reversed'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_chargeback'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_expired'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_processed'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_voided'] . "', '')";
+
+        $sql .= implode(',', $values);
+
+        $db->query($sql);
+    }
+
+    private function returnStatusLanguages($data, $language_id, $db)
+    {
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_status` (`language_id`, `name`, `message`) VALUES ';
+
+        $values[] = "({$language_id}, '" . $data['return_pending'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['return_awaiting_products'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['return_complete'] . "', '')";
+
+        $sql .= implode(',', $values);
+
+        $db->query($sql);
+    }
+
+    private function returnReasonLanguages($data, $language_id, $db)
+    {
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_reason` (`language_id`, `name`, `message`) VALUES ';
+
+        $values[] = "({$language_id}, '" . $data['reason_dead_on_arrival'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['reason_received_wrong_item'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['reason_order_error'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['reason_faulty_supply_details'] . "', '')";
+
+        $sql .= implode(',', $values);
+
+        $db->query($sql);
     }
 }
