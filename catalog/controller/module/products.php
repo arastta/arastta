@@ -29,6 +29,9 @@ class ControllerModuleProducts extends Controller
         $data['products'] = array();
 
         switch ($setting['type']) {
+            case 'all':
+                $data['products'] = $this->all($setting);
+                break;
             case 'bestsellers':
                 $data['products'] = $this->bestseller($setting);
                 break;
@@ -68,19 +71,23 @@ class ControllerModuleProducts extends Controller
         }
     }
 
-    protected function bestseller($setting)
+    protected function all($setting)
     {
         $products = array();
 
         $filter_data = array(
             'categories' => $setting['category'],
-            'sort'       => 'total',
-            'order'      => 'DESC',
-            'start'      => 0,
-            'limit'      => $setting['limit']
+            'sort'       => 'pd.name',
+            'order'      => 'ASC'
         );
 
-        $results = $this->model_module_products->getBestSellerProducts($filter_data);
+        $results = $this->model_module_products->getAllProducts($filter_data);
+
+        if (isset($setting['random_product']) && !empty($setting['random_product'])) {
+            shuffle($results);
+        }
+
+        $results = array_slice($results, 0, (int)$setting['limit']);
 
         if ($results) {
             foreach ($results as $result) {
@@ -88,6 +95,16 @@ class ControllerModuleProducts extends Controller
                     $image = $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height']);
                 } else {
                     $image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
+                }
+
+                $images = array();
+
+                $product_images = $this->model_catalog_product->getProductImages($result['product_id']);
+
+                foreach ($product_images as $product_image) {
+                    $images[] = array(
+                        'thumb' => $this->model_tool_image->resize($product_image['image'], $setting['width'], $setting['height'])
+                    );
                 }
 
                 if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -119,6 +136,83 @@ class ControllerModuleProducts extends Controller
                 $products[] = array(
                     'product_id'  => $result['product_id'],
                     'thumb'       => $image,
+                    'images'      => $images,
+                    'name'        => $result['name'],
+                    'description' => $result['description'],
+                    'price'       => $price,
+                    'special'     => $special,
+                    'tax'         => $tax,
+                    'rating'      => $rating,
+                    'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+                );
+            }
+        }
+
+        return $products;
+    }
+
+    protected function bestseller($setting)
+    {
+        $products = array();
+
+        $filter_data = array(
+            'categories' => $setting['category'],
+            'sort'       => 'total',
+            'order'      => 'DESC',
+            'start'      => 0,
+            'limit'      => $setting['limit']
+        );
+
+        $results = $this->model_module_products->getBestSellerProducts($filter_data);
+
+        if ($results) {
+            foreach ($results as $result) {
+                if ($result['image']) {
+                    $image = $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height']);
+                } else {
+                    $image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
+                }
+
+                $images = array();
+
+                $product_images = $this->model_catalog_product->getProductImages($result['product_id']);
+
+                foreach ($product_images as $product_image) {
+                    $images[] = array(
+                        'thumb' => $this->model_tool_image->resize($product_image['image'], $setting['width'], $setting['height'])
+                    );
+                }
+
+                if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+                    $price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
+                } else {
+                    $price = false;
+                }
+
+                if ((float) $result['special']) {
+                    $special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
+                } else {
+                    $special = false;
+                }
+
+                if ($this->config->get('config_tax')) {
+                    $tax = $this->currency->format((float) $result['special'] ? $result['special'] : $result['price']);
+                } else {
+                    $tax = false;
+                }
+
+                if ($this->config->get('config_review_status')) {
+                    $rating = $result['rating'];
+                } else {
+                    $rating = false;
+                }
+
+                $this->trigger->fire("pre.product.display", array(&$result, 'bestseller'));
+
+                $products[] = array(
+                    'product_id'  => $result['product_id'],
+                    'thumb'       => $image,
+                    'images'      => $images,
                     'name'        => $result['name'],
                     'description' => $result['description'],
                     'price'       => $price,
@@ -158,6 +252,16 @@ class ControllerModuleProducts extends Controller
                         $image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
                     }
 
+                    $images = array();
+
+                    $product_images = $this->model_catalog_product->getProductImages($result['product_id']);
+
+                    foreach ($product_images as $product_image) {
+                        $images[] = array(
+                            'thumb' => $this->model_tool_image->resize($product_image['image'], $setting['width'], $setting['height'])
+                        );
+                    }
+
                     if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
                         $price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
                     } else {
@@ -187,6 +291,7 @@ class ControllerModuleProducts extends Controller
                     $products[] = array(
                         'product_id'  => $product_info['product_id'],
                         'thumb'       => $image,
+                        'images'      => $images,
                         'name'        => $product_info['name'],
                         'description' => $product_info['description'],
                         'price'       => $price,
@@ -224,6 +329,16 @@ class ControllerModuleProducts extends Controller
                     $image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
                 }
 
+                $images = array();
+
+                $product_images = $this->model_catalog_product->getProductImages($result['product_id']);
+
+                foreach ($product_images as $product_image) {
+                    $images[] = array(
+                        'thumb' => $this->model_tool_image->resize($product_image['image'], $setting['width'], $setting['height'])
+                    );
+                }
+
                 if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
                     $price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
                 } else {
@@ -253,6 +368,7 @@ class ControllerModuleProducts extends Controller
                 $products[] = array(
                     'product_id'  => $result['product_id'],
                     'thumb'       => $image,
+                    'images'      => $images,
                     'name'        => $result['name'],
                     'description' => $result['description'],
                     'price'       => $price,
@@ -289,6 +405,16 @@ class ControllerModuleProducts extends Controller
                     $image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
                 }
 
+                $images = array();
+
+                $product_images = $this->model_catalog_product->getProductImages($result['product_id']);
+
+                foreach ($product_images as $product_image) {
+                    $images[] = array(
+                        'thumb' => $this->model_tool_image->resize($product_image['image'], $setting['width'], $setting['height'])
+                    );
+                }
+
                 if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
                     $price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
                 } else {
@@ -318,6 +444,7 @@ class ControllerModuleProducts extends Controller
                 $products[] = array(
                     'product_id'  => $result['product_id'],
                     'thumb'       => $image,
+                    'images'      => $images,
                     'name'        => $result['name'],
                     'description' => $result['description'],
                     'price'       => $price,
