@@ -1,4 +1,6 @@
 <?php
+use Symfony\Component\Finder\Finder;
+
 /**
  * @package     Arastta eCommerce
  * @copyright   2015-2017 Arastta Association. All rights reserved.
@@ -198,17 +200,17 @@ class ModelSetting extends Model
 
     private function emailTemplateLanguages($data, $language_id, $db)
     {
-        $email_templates = glob(DIR_INSTALL . 'email_templates/*.php');
-        foreach ($email_templates as $email_template)
+        $finder = new Finder();
+        $finder->files()->in(DIR_ADMIN . 'view/template/email');
+        foreach ($finder as $email_template)
         {
-            $email_template_id = rtrim(str_replace(DIR_INSTALL . 'email_templates/', '', $email_template), '.php');
+            $email_template_id = rtrim($email_template->getFilename(), '.' . $email_template->getExtension());
             $item              = explode('_', $email_template_id);
             $query             = $db->query("SELECT id FROM " . DB_PREFIX . "email WHERE type = '" . $item[0] . "' AND text_id = " . $item[1]);
-            ob_clean();
-            ob_start();
-            require $email_template;
-            $content = ob_get_contents();
-            ob_end_clean();
+            $client = Client::getName();
+            Client::setName('admin');
+            $content = $this->load->view('email/' . $email_template->getFilename(), $data);
+            Client::setName($client);
 
             $sql = 'INSERT INTO ' . DB_PREFIX . 'email_description (`email_id`, `name`, `description`, `status`, `language_id`) VALUES ' .
                 "(" . (int) $query->row['id'] . "," .
@@ -221,7 +223,7 @@ class ModelSetting extends Model
 
     private function stockStatusLanguages($data, $language_id, $db)
     {
-        $sql = 'INSERT INTO `' . DB_PREFIX . 'stock_status` (`language_id`, `name`, `message`) VALUES ';
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'stock_status` (`stock_status_id`, `language_id`, `name`, `color`, `preorder`) VALUES ';
 
         $values[] = "(5, {$language_id}, '" . $data['stock_out_of_stock'] . "', '#FF0000', 0)";
         $values[] = "(6, {$language_id}, '" . $data['stock_2_3_days'] . "', '#FFA500', 0)";
@@ -259,11 +261,11 @@ class ModelSetting extends Model
 
     private function returnStatusLanguages($data, $language_id, $db)
     {
-        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_status` (`language_id`, `name`, `message`) VALUES ';
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_status` (`language_id`, `name`) VALUES ';
 
-        $values[] = "({$language_id}, '" . $data['return_pending'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['return_awaiting_products'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['return_complete'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['return_pending'] . "')";
+        $values[] = "({$language_id}, '" . $data['return_awaiting_products'] . "')";
+        $values[] = "({$language_id}, '" . $data['return_complete'] . "')";
 
         $sql .= implode(',', $values);
 
@@ -272,12 +274,12 @@ class ModelSetting extends Model
 
     private function returnReasonLanguages($data, $language_id, $db)
     {
-        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_reason` (`language_id`, `name`, `message`) VALUES ';
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_reason` (`language_id`, `name`) VALUES ';
 
-        $values[] = "({$language_id}, '" . $data['reason_dead_on_arrival'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['reason_received_wrong_item'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['reason_order_error'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['reason_faulty_supply_details'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['reason_dead_on_arrival'] . "')";
+        $values[] = "({$language_id}, '" . $data['reason_received_wrong_item'] . "')";
+        $values[] = "({$language_id}, '" . $data['reason_order_error'] . "')";
+        $values[] = "({$language_id}, '" . $data['reason_faulty_supply_details'] . "')";
 
         $sql .= implode(',', $values);
 
