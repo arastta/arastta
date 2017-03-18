@@ -195,6 +195,7 @@ $_['entry_sec_lfi']                    = 'LFI Protection';
 $_['entry_sec_rfi']                    = 'RFI Protection';
 $_['entry_sec_sql']                    = 'SQLi Protection';
 $_['entry_sec_xss']                    = 'XSS Protection';
+$_['entry_sec_csrf']                   = 'CSRF Protection';
 $_['entry_sec_htmlpurifier']           = 'Use HTMLPurifier';
 $_['entry_cache_storage']              = 'Storage';
 $_['entry_cache_memcache_servers']     = 'Memcache Servers';
@@ -298,6 +299,7 @@ $_['help_sec_lfi']                     = '(Local File Inclusion) This feature wi
 $_['help_sec_rfi']                     = '(Remote File Inclusion) This feature will try to protect against access to URLs (such as route=http://www.malicious-site.com/exploit.txt) that might allow an attacker to download and run malicious scripts.';
 $_['help_sec_sql']                     = '(SQL Injection) This feature will try to protect against common SQL injection attacks (such as SELECT xyx FROM users) that might allow an attacker to get sensitive data from your database.';
 $_['help_sec_xss']                     = '(Cross Site Scripting) This feature will try to protect against Javascript attacks that might cause connection drop.';
+$_['help_sec_csrf']                    = '(Cross-Site Request Forgery) This feature will try to protect against authentication attacks that forces your customer to execute unwanted actions. Enter one route per line.';
 $_['help_sec_htmlpurifier']            = 'HTMLPurifier Library offers higher security level by cleaning the content of request variables. Enabling this option may affect the page load slightly.';
 $_['help_cache_storage']               = 'Select the storage to save the cached data. All options except File require a specific PHP extension to be installed in your server. Please, check the documentation for further details.';
 $_['help_cache_memcache_servers']      = 'Servers (i.e. 127.0.0.1:80) to be used as storage. Enter one server per line.';

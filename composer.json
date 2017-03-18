@@ -29,6 +29,7 @@
         "symfony/dom-crawler": "2.8.*",
         "symfony/filesystem": "2.8.*",
         "symfony/finder": "2.8.*",
-        "swiftmailer/swiftmailer": "5.4.*"
+        "swiftmailer/swiftmailer": "5.4.*",
+        "volnix/csrf": "1.0.*"
     }
 }

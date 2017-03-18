@@ -1821,6 +1821,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-sec-csrf"><span data-toggle="tooltip" title="<?php echo $help_sec_csrf; ?>"><?php echo $entry_sec_csrf; ?></span></label>
+                                    <div class="col-sm-10">
+                                        <textarea name="config_sec_csrf" rows="5" placeholder="<?php echo $entry_sec_csrf; ?>" id="input-sec-csrf" class="form-control"><?php echo $config_sec_csrf; ?></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_sec_htmlpurifier; ?>"><?php echo $entry_sec_htmlpurifier; ?></span></label>
                                     <div class="col-sm-10">
                                         <label class="radio-inline">

@@ -87,7 +87,7 @@ final class Loader {
 
             ob_end_clean();
 
-            $this->trigger->fire('post.load.view', array(&$output));
+            $this->trigger->fire('post.load.view', array(&$output, $template));
 
             return $output;
         } else {
