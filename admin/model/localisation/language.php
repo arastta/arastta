@@ -219,13 +219,6 @@ class ModelLocalisationLanguage extends Model {
         $this->cache->delete('menu');
 
         // Insert Email templates, order statuses, stock statuses, return statuses and return reasons languages
-        $this->language->load('email_template');
-        $this->language->load('order_status');
-        $this->language->load('stock_status');
-        $this->language->load('return_status');
-        $this->language->load('return_reason');
-        $this->language->load('return_action');
-
         $this->prepareLanguages($language_id, $this->db);
 
         $this->cache->delete('email_template');
@@ -242,6 +235,13 @@ class ModelLocalisationLanguage extends Model {
 
     public function prepareLanguages($language_id, $db)
     {
+        $this->language->load('email_template');
+        $this->language->load('order_status');
+        $this->language->load('stock_status');
+        $this->language->load('return_status');
+        $this->language->load('return_reason');
+        $this->language->load('return_action');
+
         $data = $this->language->all();
         $this->emailTemplateLanguages($data, $language_id, $db);
         $this->orderStatusLanguages($data, $language_id, $db);
