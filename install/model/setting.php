@@ -1,6 +1,4 @@
 <?php
-use Symfony\Component\Finder\Finder;
-
 /**
  * @package     Arastta eCommerce
  * @copyright   2015-2017 Arastta Association. All rights reserved.
@@ -179,110 +177,17 @@ class ModelSetting extends Model
         $db->query("INSERT INTO " . DB_PREFIX . "addon SET `product_id` = " . (int) $lang_product_id . ", `product_name` = '" . $db->escape($lang_name) . "', `product_type` = 'translation', `product_version` = '" . $db->escape($lang_version) . "', `files` = '', `params` = '" . $db->escape($addon_params) . "'");
 
         // Insert Email templates, order statuses, stock statuses, return statuses, return actions and return reasons languages
-        $this->prepareLanguages($language_id, $db);
-    }
-
-    private function prepareLanguages($language_id, $db)
-    {
         $this->language->load('email_template');
         $this->language->load('order_status');
         $this->language->load('stock_status');
         $this->language->load('return_status');
         $this->language->load('return_reason');
+        $this->language->load('return_action');
 
-        $data = $this->language->all();
-        $this->emailTemplateLanguages($data, $language_id, $db);
-        $this->orderStatusLanguages($data, $language_id, $db);
-        $this->stockStatusLanguages($data, $language_id, $db);
-        $this->returnStatusLanguages($data, $language_id, $db);
-        $this->returnReasonLanguages($data, $language_id, $db);
-    }
-
-    private function emailTemplateLanguages($data, $language_id, $db)
-    {
-        $finder = new Finder();
-        $finder->files()->in(DIR_ADMIN . 'view/template/email');
-        foreach ($finder as $email_template)
-        {
-            $email_template_id = rtrim($email_template->getFilename(), '.' . $email_template->getExtension());
-            $item              = explode('_', $email_template_id);
-            $query             = $db->query("SELECT id FROM " . DB_PREFIX . "email WHERE type = '" . $item[0] . "' AND text_id = " . $item[1]);
-            $client = Client::getName();
-            Client::setName('admin');
-            $content = $this->load->view('email/' . $email_template->getFilename(), $data);
-            Client::setName($client);
-
-            $sql = 'INSERT INTO ' . DB_PREFIX . 'email_description (`email_id`, `name`, `description`, `status`, `language_id`) VALUES ' .
-                "(" . (int) $query->row['id'] . "," .
-                "'" . $db->escape(htmlspecialchars($data[$email_template_id . '_subject'])) . "'," .
-                "'" . $db->escape(htmlspecialchars($content)) . "', 1, " . $language_id . ")";
-
-            $db->query($sql);
-        }
-    }
-
-    private function stockStatusLanguages($data, $language_id, $db)
-    {
-        $sql = 'INSERT INTO `' . DB_PREFIX . 'stock_status` (`stock_status_id`, `language_id`, `name`, `color`, `preorder`) VALUES ';
-
-        $values[] = "(5, {$language_id}, '" . $data['stock_out_of_stock'] . "', '#FF0000', 0)";
-        $values[] = "(6, {$language_id}, '" . $data['stock_2_3_days'] . "', '#FFA500', 0)";
-        $values[] = "(7, {$language_id}, '" . $data['stock_in_stock'] . "', '#008000', 0)";
-        $values[] = "(8, {$language_id}, '" . $data['stock_pre_order'] . "', '#FFFF00', 1)";
-
-        $sql .= implode(',', $values);
-
-        $db->query($sql);
-    }
-
-    private function orderStatusLanguages($data, $language_id, $db)
-    {
-        $sql = 'INSERT INTO `' . DB_PREFIX . 'order_status` (`language_id`, `name`, `message`) VALUES ';
-
-        $values[] = "({$language_id}, '" . $data['order_pending'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_processing'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_shipped'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_complete'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_cancelled'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_denied'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_cancelled_reversal'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_failed'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_refunded'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_reversed'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_chargeback'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_expired'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_processed'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_voided'] . "', '')";
-
-        $sql .= implode(',', $values);
-
-        $db->query($sql);
-    }
-
-    private function returnStatusLanguages($data, $language_id, $db)
-    {
-        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_status` (`language_id`, `name`) VALUES ';
-
-        $values[] = "({$language_id}, '" . $data['return_pending'] . "')";
-        $values[] = "({$language_id}, '" . $data['return_awaiting_products'] . "')";
-        $values[] = "({$language_id}, '" . $data['return_complete'] . "')";
-
-        $sql .= implode(',', $values);
-
-        $db->query($sql);
-    }
-
-    private function returnReasonLanguages($data, $language_id, $db)
-    {
-        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_reason` (`language_id`, `name`) VALUES ';
-
-        $values[] = "({$language_id}, '" . $data['reason_dead_on_arrival'] . "')";
-        $values[] = "({$language_id}, '" . $data['reason_received_wrong_item'] . "')";
-        $values[] = "({$language_id}, '" . $data['reason_order_error'] . "')";
-        $values[] = "({$language_id}, '" . $data['reason_faulty_supply_details'] . "')";
-
-        $sql .= implode(',', $values);
-
-        $db->query($sql);
+        $client = Client::getName();
+        Client::setName('admin');
+        $this->load->model('localisation/language');
+        $this->model_localisation_language->prepareLanguages($language_id, $db);
+        Client::setName($client);
     }
 }

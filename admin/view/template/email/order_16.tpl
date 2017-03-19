@@ -1,6 +1,6 @@
 <div style="width: 680px;"><p> {store_logo} </p>
     <p><?php echo $data['order_16_thank_you']; ?></p>
-    <p><?php echo $data['view_order']; ?></p>
+    <p><?php echo $data['view_order']; ?>:</p>
     <p> {order_href} </p>
     <div class="table-responsive">
         <table class="table" style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
@@ -12,22 +12,22 @@
             <tbody>
             <tr>
                 <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo $data['order_id']; ?>
+                    <b><?php echo $data['order_id']; ?>:</b> {order_id}
                     <br>
-                    <?php echo $data['date_added']; ?>
+                    <b><?php echo $data['date_added']; ?>:</b> {date}
                     <br>
-                    <?php echo $data['payment_method']; ?>
+                    <b><?php echo $data['payment_method']; ?>:</b> {payment}
                     <br>
-                    <?php echo $data['shipping_method']; ?>
+                    <b><?php echo $data['shipping_method']; ?>:</b> {shipment}
                 </td>
                 <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
-                    <?php echo $data['email']; ?>
+                    <b><?php echo $data['email']; ?>:</b> {email}
                     <br>
-                    <?php echo $data['telephone']; ?>
+                    <b><?php echo $data['telephone']; ?>:</b> {telephone}
                     <br>
-                    <?php echo $data['ip_address']; ?>
+                    <b><?php echo $data['ip_address']; ?>:</b> {ip}
                     <br>
-                    <?php echo $data['oder_status']; ?>
+                    <b><?php echo $data['order_status']; ?>:</b> {status_name}
                     <br>
                 </td>
             </tr>

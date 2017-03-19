@@ -1,3 +1,3 @@
-<p><?php echo $data['contact_1_contact']; ?></p>
+<p><?php echo $data['contact_1_contact']; ?> {email}</p>
 <p><br></p>
-<p><?php echo $data['contact_1_message']; ?></p>
+<p><?php echo $data['contact_1_message']; ?>: {enquiry}</p>
