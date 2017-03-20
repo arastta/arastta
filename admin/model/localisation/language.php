@@ -235,14 +235,15 @@ class ModelLocalisationLanguage extends Model {
 
     public function prepareLanguages($language_id, $db)
     {
-        $this->language->load('email_template');
-        $this->language->load('order_status');
-        $this->language->load('stock_status');
-        $this->language->load('return_status');
-        $this->language->load('return_reason');
-        $this->language->load('return_action');
+        $this->language->load('i18n/email_template');
+        $this->language->load('i18n/order_status');
+        $this->language->load('i18n/stock_status');
+        $this->language->load('i18n/return_status');
+        $this->language->load('i18n/return_reason');
+        $this->language->load('i18n/return_action');
 
         $data = $this->language->all();
+        
         $this->emailTemplateLanguages($data, $language_id, $db);
         $this->orderStatusLanguages($data, $language_id, $db);
         $this->stockStatusLanguages($data, $language_id, $db);
@@ -254,15 +255,15 @@ class ModelLocalisationLanguage extends Model {
     private function emailTemplateLanguages($data, $language_id, $db)
     {
         $finder = new Finder();
-        $finder->files()->in(DIR_ADMIN . 'view/template/email');
+        $finder->files()->in(DIR_ADMIN . 'view/template/i18n');
+        
         foreach ($finder as $email_template)
         {
             $email_template_id = rtrim($email_template->getFilename(), '.' . $email_template->getExtension());
             $item              = explode('_', $email_template_id);
             $query             = $db->query("SELECT id FROM " . DB_PREFIX . "email WHERE type = '" . $item[0] . "' AND text_id = " . $item[1]);
 
-            $content = $this->load->view('email/' . $email_template->getFilename(), $data);
-
+            $content = $this->load->view('i18n/' . $email_template->getFilename(), $data);
 
             $sql = 'INSERT INTO ' . DB_PREFIX . 'email_description (`email_id`, `name`, `description`, `status`, `language_id`) VALUES ' .
                 "(" . (int) $query->row['id'] . "," .
