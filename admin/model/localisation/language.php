@@ -235,12 +235,12 @@ class ModelLocalisationLanguage extends Model {
 
     public function prepareLanguages($language_id, $db)
     {
-        $this->language->load('i18n/email_template');
-        $this->language->load('i18n/order_status');
-        $this->language->load('i18n/stock_status');
-        $this->language->load('i18n/return_status');
-        $this->language->load('i18n/return_reason');
-        $this->language->load('i18n/return_action');
+        $this->language->load('demo/email_template');
+        $this->language->load('demo/order_status');
+        $this->language->load('demo/stock_status');
+        $this->language->load('demo/return_status');
+        $this->language->load('demo/return_reason');
+        $this->language->load('demo/return_action');
 
         $data = $this->language->all();
         
@@ -255,7 +255,7 @@ class ModelLocalisationLanguage extends Model {
     private function emailTemplateLanguages($data, $language_id, $db)
     {
         $finder = new Finder();
-        $finder->files()->in(DIR_ADMIN . 'view/template/i18n');
+        $finder->files()->in(DIR_ADMIN . 'view/template/demo');
         
         foreach ($finder as $email_template)
         {
@@ -263,7 +263,7 @@ class ModelLocalisationLanguage extends Model {
             $item              = explode('_', $email_template_id);
             $query             = $db->query("SELECT id FROM " . DB_PREFIX . "email WHERE type = '" . $item[0] . "' AND text_id = " . $item[1]);
 
-            $content = $this->load->view('i18n/' . $email_template->getFilename(), $data);
+            $content = $this->load->view('demo/' . $email_template->getFilename(), $data);
 
             $sql = 'INSERT INTO ' . DB_PREFIX . 'email_description (`email_id`, `name`, `description`, `status`, `language_id`) VALUES ' .
                 "(" . (int) $query->row['id'] . "," .
