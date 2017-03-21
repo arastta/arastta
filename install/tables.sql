@@ -265,6 +265,191 @@ CREATE TABLE IF NOT EXISTS `ar_banner_image` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ar_blog_post`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_blog_post` (
+  `post_id` int(11) NOT NULL AUTO_INCREMENT,
+  `allow_comment` int(1) NOT NULL DEFAULT '1',
+  `featured` int(1) NOT NULL DEFAULT '0',
+  `viewed` int(11) NOT NULL DEFAULT '0',
+  `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `author` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `date_available` date NOT NULL DEFAULT '0000-00-00',
+  `sort_order` int(3) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`post_id`),
+  KEY `allow_comment` (`allow_comment`),
+  KEY `viewed` (`viewed`),
+  KEY `author` (`author`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_blog_post_description`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_blog_post_description` (
+  `post_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `tag` text NOT NULL,
+  `meta_title` varchar(255) NOT NULL,
+  `meta_description` varchar(255) NOT NULL,
+  `meta_keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`post_id`,`language_id`),
+  KEY `name` (`name`),
+  KEY `language_id` (`language_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_blog_post_to_category`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_blog_post_to_category` (
+  `post_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`post_id`,`category_id`),
+  KEY `category_id` (`category_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_blog_post_to_layout`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_blog_post_to_layout` (
+  `post_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `layout_id` int(11) NOT NULL,
+  PRIMARY KEY (`post_id`,`store_id`),
+  KEY `store_id` (`store_id`),
+  KEY `layout_id` (`layout_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_blog_post_to_store`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_blog_post_to_store` (
+  `post_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  PRIMARY KEY (`post_id`,`store_id`),
+  KEY `store_id` (`store_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_blog_comment`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_blog_comment` (
+  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `author` varchar(64) NOT NULL,
+  `text` text NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`comment_id`),
+  KEY `post_id` (`post_id`),
+  KEY `customer_id` (`customer_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_blog_category`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_blog_category` (
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
+  `image` varchar(255) DEFAULT NULL,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `top` tinyint(1) NOT NULL,
+  `sort_order` int(3) NOT NULL DEFAULT '0',
+  `status` int(1) NOT NULL DEFAULT '1',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`category_id`),
+  KEY `parent_id` (`parent_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_blog_category_description`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_blog_category_description` (
+  `category_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `meta_title` varchar(255) NOT NULL,
+  `meta_description` varchar(255) NOT NULL,
+  `meta_keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`category_id`,`language_id`),
+  KEY `name` (`name`),
+  KEY `language_id` (`language_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_blog_category_path`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_blog_category_path` (
+  `category_id` int(11) NOT NULL,
+  `path_id` int(11) NOT NULL,
+  `level` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`path_id`),
+  KEY `path_id` (`path_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_blog_category_to_layout`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_blog_category_to_layout` (
+  `category_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `layout_id` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`store_id`),
+  KEY `store_id` (`store_id`),
+  KEY `layout_id` (`layout_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ar_blog_category_to_store`
+--
+
+CREATE TABLE IF NOT EXISTS `ar_blog_category_to_store` (
+  `category_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  PRIMARY KEY (`category_id`,`store_id`),
+  KEY `store_id` (`store_id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ar_category`
 --
 

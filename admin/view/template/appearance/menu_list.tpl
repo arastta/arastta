@@ -85,6 +85,39 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="accordion-heading"><?php echo $text_blog; ?></div>
+                        <div class="accordion-content accordion-content-drag addBlog">
+                            <div class="input-group" id="addBlogHome">
+								<span class="blog-home-menu"><label class="control-label"><?php echo $text_blog_home; ?></label></span>
+								<div class="input-group-btn">
+                                    <button type="button" onclick="addMenu('blog_home');" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="<?php echo $button_blog_home; ?>">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+							</br>
+                            <div class="input-group" id="addBlogCategory">
+								<label class="control-label"><?php echo $text_blog_category; ?></label>
+                                <input type="text" name="filter_blog_category_name" value="" placeholder="<?php echo $column_blog_category_name; ?>" id="input-blog-category-name" class="form-control input-full-width" autocomplete="off" />
+                                <input type="hidden" name="blog_category_id" value="" id="blog_category_id" class="form-control"/></td>
+                                <div class="input-group-btn blog-menu">
+                                    <button type="button" onclick="addMenu('blog_category');" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="<?php echo $button_blog_category; ?>">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+							</br>
+                            <div class="input-group" id="addBlogPost">
+								<label class="control-label"><?php echo $text_blog_post; ?></label>
+                                <input type="text" name="filter_blog_post_name" value="" placeholder="<?php echo $column_blog_post_name; ?>" id="input-blog-post-name" class="form-control input-full-width" autocomplete="off" />
+                                <input type="hidden" name="blog_post_id" value="" id="blog_post_id" class="form-control"/></td>
+                                <div class="input-group-btn blog-menu">
+                                    <button type="button" onclick="addMenu('blog_post');" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="<?php echo $button_blog_post; ?>">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-9" id="menu-management">
