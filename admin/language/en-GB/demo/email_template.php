@@ -88,7 +88,7 @@ $_['customer_4_account_approved'] = 'Your account must be approved before you ca
 $_['customer_5_subject']       = 'You have received a gift voucher from {store_name}';
 $_['customer_5_dear']          = 'Congratulations {recip_name}';
 $_['customer_5_received_gift'] = 'You have received a gift voucher worth {amount}.';
-$_['customer_5_send_by']       = 'This Gift Certificate has been sent to you by {name}, with a message saying<br /><br />{message}';
+$_['customer_5_sent_by']       = 'This Gift Certificate has been sent to you by {name}, with a message saying<br /><br />{message}';
 $_['customer_5_redeem_gift']   = 'To redeem this gift voucher, write down or copy the gift voucher code, then click on the the link below and purchase the product you wish to use this gift voucher on. You can enter the gift voucher code on the shopping cart page before you click checkout.<br /><br />Your gift voucher code is: {code}<br /><br />Store URL: {store_url}';
 
 $_['customer_6_subject']         = '{store_name} - Account Credit';
