@@ -93,6 +93,12 @@ class ModelAppearanceMenu extends Model
                 case 'blog_home':
                     $link = (int)$data['id'];
 
+                    $query = $this->db->query("SELECT name, language_id FROM " . DB_PREFIX . "language WHERE status = 1");
+
+                    foreach ($query->rows as $key => $row) {
+                        $query->rows[$key]['name'] = $this->language->get('text_blog');
+                    }
+
                     break;
                 case 'blog_category':
                     $query = $this->db->query("SELECT name, category_id, language_id FROM " . DB_PREFIX . $data['type'] . "_description WHERE category_id = '" . (int)$data['id'] . "'");

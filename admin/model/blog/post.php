@@ -31,9 +31,9 @@ class ModelBlogPost extends Model
             }
         }
 
-        if (isset($data['blog_category'])) {
-            foreach ($data['blog_category'] as $blog_category_id) {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_to_category SET post_id = '" . (int) $post_id . "', category_id = '" . (int) $blog_category_id . "'");
+        if (isset($data['post_category'])) {
+            foreach ($data['post_category'] as $post_category_id) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_to_category SET post_id = '" . (int) $post_id . "', category_id = '" . (int) $post_category_id . "'");
             }
         }
 
@@ -85,9 +85,9 @@ class ModelBlogPost extends Model
 
         $this->db->query("DELETE FROM " . DB_PREFIX . "blog_post_to_category WHERE post_id = '" . (int) $post_id . "'");
 
-        if (isset($data['blog_category'])) {
-            foreach ($data['blog_category'] as $blog_category_id) {
-                $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_to_category SET post_id = '" . (int) $post_id . "', category_id = '" . (int) $blog_category_id . "'");
+        if (isset($data['post_category'])) {
+            foreach ($data['post_category'] as $post_category_id) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_to_category SET post_id = '" . (int) $post_id . "', category_id = '" . (int) $post_category_id . "'");
             }
         }
 
