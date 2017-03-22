@@ -85,11 +85,11 @@ $_['customer_4_subject']          = '{store_name} Thank you for register approve
 $_['customer_4_thank_you']        = 'Welcome and thank you for registering at {store_name}!';
 $_['customer_4_account_approved'] = 'Your account must be approved before you can login. Once approved you can log in by using your email address and password by visiting our website or at the following URL';
 
-$_['customer_5_subject']       = 'You have been sent a gift voucher from {store_name}';
-$_['customer_5_dear']          = 'Dear {name}';
-$_['customer_5_received_gift'] = 'Congratulations, You have received a Gift Certificate worth {amount}.';
-$_['customer_5_send_by']       = 'This Gift Certificate has been sent to you by {recip_name},With a message saying {message}';
-$_['customer_5_redeem_gift']   = 'To redeem this Gift Certificate, write down the redemption code which is {code} then click on the the link below and purchase the product you wish to use this gift voucher on. You can enter the gift voucher code on the shopping cart page before you click checkout.';
+$_['customer_5_subject']       = 'You have received a gift voucher from {store_name}';
+$_['customer_5_dear']          = 'Congratulations {recip_name}';
+$_['customer_5_received_gift'] = 'You have received a gift voucher worth {amount}.';
+$_['customer_5_sent_by']       = 'This Gift Certificate has been sent to you by {name}, with a message saying:<br /><br />{message}';
+$_['customer_5_redeem_gift']   = 'To redeem this gift voucher, write down or copy the gift voucher code, then click on the the link below and purchase the product you wish to use this gift voucher on. You can enter the gift voucher code on the shopping cart page before you click checkout.<br /><br />Your gift voucher code is: {code}<br /><br />Store URL: {store_url}';
 
 $_['customer_6_subject']         = '{store_name} - Account Credit';
 $_['customer_6_received_credit'] = 'You have received {credit} credit!';
