@@ -14,6 +14,7 @@ class ControllerModuleBlogFeatured extends Controller
         $this->load->language('module/blog_featured');
 
         $data['heading_title'] = $this->language->get('heading_title');
+        $data['text_more'] = $this->language->get('text_more');
 
         $this->load->model('blog/post');
         $this->load->model('blog/comment');

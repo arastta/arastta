@@ -8,5 +8,4 @@
  */
 
 // Heading
-$_['heading_title'] = 'Blog Featured';
-$_['text_more']     = 'More...';
+$_['heading_title'] = 'Blog Comment';

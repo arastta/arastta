@@ -9,3 +9,4 @@
 
 // Heading
 $_['heading_title'] = 'Blog Latest';
+$_['text_more']     = 'More...';
