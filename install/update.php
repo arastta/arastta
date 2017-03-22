@@ -649,4 +649,142 @@ if (version_compare(VERSION, '1.5.2', '<')) {
 if (version_compare(VERSION, '1.6.0', '<')) {
     // Add CSRF setting
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_sec_csrf', `value` = 'a:7:{i:0;s:20:\"account/address/edit\";i:1;s:12:\"account/edit\";i:2;s:18:\"account/newsletter\";i:3;s:16:\"account/password\";i:4;s:14:\"affiliate/edit\";i:5;s:18:\"affiliate/password\";i:6;s:17:\"affiliate/payment\";}', `serialized` = '1'");
+
+    // add blog tables
+    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_post` (
+        `post_id` int(11) NOT NULL AUTO_INCREMENT,
+        `allow_comment` int(1) NOT NULL DEFAULT '1',
+        `featured` int(1) NOT NULL DEFAULT '0',
+        `viewed` int(11) NOT NULL DEFAULT '0',
+        `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+        `author` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+        `date_available` date NOT NULL DEFAULT '0000-00-00',
+        `sort_order` int(3) NOT NULL,
+        `status` int(1) NOT NULL DEFAULT '1',
+        `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+        `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+        PRIMARY KEY (`post_id`),
+        KEY `allow_comment` (`allow_comment`),
+        KEY `viewed` (`viewed`),
+        KEY `author` (`author`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_post_description` (
+        `post_id` int(11) NOT NULL,
+        `language_id` int(11) NOT NULL,
+        `name` varchar(255) NOT NULL,
+        `description` text NOT NULL,
+        `tag` text NOT NULL,
+        `meta_title` varchar(255) NOT NULL,
+        `meta_description` varchar(255) NOT NULL,
+        `meta_keyword` varchar(255) NOT NULL,
+        PRIMARY KEY (`post_id`,`language_id`),
+        KEY `name` (`name`),
+        KEY `language_id` (`language_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_post_to_category` (
+        `post_id` int(11) NOT NULL,
+        `category_id` int(11) NOT NULL,
+        PRIMARY KEY (`post_id`,`category_id`),
+        KEY `category_id` (`category_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_post_to_layout` (
+        `post_id` int(11) NOT NULL,
+        `store_id` int(11) NOT NULL,
+        `layout_id` int(11) NOT NULL,
+        PRIMARY KEY (`post_id`,`store_id`),
+        KEY `store_id` (`store_id`),
+        KEY `layout_id` (`layout_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_post_to_store` (
+        `post_id` int(11) NOT NULL,
+        `store_id` int(11) NOT NULL,
+        PRIMARY KEY (`post_id`,`store_id`),
+        KEY `store_id` (`store_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_comment` (
+        `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+        `post_id` int(11) NOT NULL,
+        `customer_id` int(11) NOT NULL,
+        `author` varchar(64) NOT NULL,
+        `text` text NOT NULL,
+        `status` tinyint(1) NOT NULL DEFAULT '0',
+        `date_added` datetime NOT NULL,
+        `date_modified` datetime NOT NULL,
+        PRIMARY KEY (`comment_id`),
+        KEY `post_id` (`post_id`),
+        KEY `customer_id` (`customer_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_category` (
+        `category_id` int(11) NOT NULL AUTO_INCREMENT,
+        `image` varchar(255) DEFAULT NULL,
+        `parent_id` int(11) NOT NULL DEFAULT '0',
+        `top` tinyint(1) NOT NULL,
+        `sort_order` int(3) NOT NULL DEFAULT '0',
+        `status` int(1) NOT NULL DEFAULT '1',
+        `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+        `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+        PRIMARY KEY (`category_id`),
+        KEY `parent_id` (`parent_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_category_description` (
+        `category_id` int(11) NOT NULL,
+        `language_id` int(11) NOT NULL,
+        `name` varchar(255) NOT NULL,
+        `description` text NOT NULL,
+        `meta_title` varchar(255) NOT NULL,
+        `meta_description` varchar(255) NOT NULL,
+        `meta_keyword` varchar(255) NOT NULL,
+        PRIMARY KEY (`category_id`,`language_id`),
+        KEY `name` (`name`),
+        KEY `language_id` (`language_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_category_path` (
+        `category_id` int(11) NOT NULL,
+        `path_id` int(11) NOT NULL,
+        `level` int(11) NOT NULL,
+        PRIMARY KEY (`category_id`,`path_id`),
+        KEY `path_id` (`path_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_category_to_layout` (
+        `category_id` int(11) NOT NULL,
+        `store_id` int(11) NOT NULL,
+        `layout_id` int(11) NOT NULL,
+        PRIMARY KEY (`category_id`,`store_id`),
+        KEY `store_id` (`store_id`),
+        KEY `layout_id` (`layout_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_category_to_store` (
+        `category_id` int(11) NOT NULL,
+        `store_id` int(11) NOT NULL,
+        PRIMARY KEY (`category_id`,`store_id`),
+        KEY `store_id` (`store_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    // Update the user groups
+    $user_groups = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group");
+
+    foreach ($user_groups->rows as $user_group) {
+        $user_group['permission'] = unserialize($user_group['permission']);
+
+        $user_group['permission']['access'][] = 'blog/category';
+        $user_group['permission']['modify'][] = 'blog/category';
+
+        $user_group['permission']['access'][] = 'blog/comment';
+        $user_group['permission']['modify'][] = 'blog/comment';
+
+        $user_group['permission']['access'][] = 'blog/post';
+        $user_group['permission']['modify'][] = 'blog/post';
+
+        $this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
+    }
 }

@@ -418,8 +418,9 @@ class Route extends Object
 
         // Do not generate SEO URLs for special routes (payments, feeds)
         $disabled_routes = array('payment/', 'feed/');
+
         foreach($disabled_routes as $disabled_route) {
-            if (substr($route, 0, count($disabled_route)) == $disabled_route) {
+            if (substr($route, 0, strlen($disabled_route)) == $disabled_route) {
                 return true;
             }
         }
