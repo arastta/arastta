@@ -218,8 +218,8 @@ class ModelLocalisationLanguage extends Model {
 
         $this->cache->delete('menu');
 
-        // Insert Email templates, order statuses, stock statuses, return statuses and return reasons languages
-        $this->prepareLanguages($language_id, $this->db);
+        // Internationalization of demo data
+        $this->prepareLanguages($language_id, $data['directory']);
 
         $this->cache->delete('email_template');
         $this->cache->delete('order_status');
@@ -233,26 +233,28 @@ class ModelLocalisationLanguage extends Model {
         return $language_id;
     }
 
-    public function prepareLanguages($language_id, $db)
+    public function prepareLanguages($language_id, $language_directory)
     {
-        $this->language->load('demo/email_template');
-        $this->language->load('demo/order_status');
-        $this->language->load('demo/stock_status');
-        $this->language->load('demo/return_status');
-        $this->language->load('demo/return_reason');
-        $this->language->load('demo/return_action');
+        $language = new Language($language_directory);
 
-        $data = $this->language->all();
-        
-        $this->emailTemplateLanguages($data, $language_id, $db);
-        $this->orderStatusLanguages($data, $language_id, $db);
-        $this->stockStatusLanguages($data, $language_id, $db);
-        $this->returnStatusLanguages($data, $language_id, $db);
-        $this->returnReasonLanguages($data, $language_id, $db);
-        $this->returnActionLanguages($data, $language_id, $db);
+        $language->load('demo/email_template');
+        $language->load('demo/order_status');
+        $language->load('demo/stock_status');
+        $language->load('demo/return_status');
+        $language->load('demo/return_reason');
+        $language->load('demo/return_action');
+
+        $data = $language->all();
+
+        $this->emailTemplateLanguages($data, $language_id);
+        $this->orderStatusLanguages($data, $language_id);
+        $this->stockStatusLanguages($data, $language_id);
+        $this->returnStatusLanguages($data, $language_id);
+        $this->returnReasonLanguages($data, $language_id);
+        $this->returnActionLanguages($data, $language_id);
     }
 
-    private function emailTemplateLanguages($data, $language_id, $db)
+    private function emailTemplateLanguages($data, $language_id)
     {
         $finder = new Finder();
         $finder->files()->in(DIR_ADMIN . 'view/template/demo');
@@ -261,20 +263,20 @@ class ModelLocalisationLanguage extends Model {
         {
             $email_template_id = rtrim($email_template->getFilename(), '.' . $email_template->getExtension());
             $item              = explode('_', $email_template_id);
-            $query             = $db->query("SELECT id FROM " . DB_PREFIX . "email WHERE type = '" . $item[0] . "' AND text_id = " . $item[1]);
+            $query             = $this->db->query("SELECT id FROM " . DB_PREFIX . "email WHERE type = '" . $item[0] . "' AND text_id = " . $item[1]);
 
             $content = $this->load->view('demo/' . $email_template->getFilename(), $data);
 
             $sql = 'INSERT INTO ' . DB_PREFIX . 'email_description (`email_id`, `name`, `description`, `status`, `language_id`) VALUES ' .
                 "(" . (int) $query->row['id'] . "," .
-                "'" . $db->escape(htmlspecialchars($data[$email_template_id . '_subject'])) . "'," .
-                "'" . $db->escape(htmlspecialchars($content)) . "', 1, " . $language_id . ")";
+                "'" . $this->db->escape(htmlspecialchars($data[$email_template_id . '_subject'])) . "'," .
+                "'" . $this->db->escape(htmlspecialchars($content)) . "', 1, " . $language_id . ")";
 
-            $db->query($sql);
+            $this->db->query($sql);
         }
     }
 
-    private function stockStatusLanguages($data, $language_id, $db)
+    private function stockStatusLanguages($data, $language_id)
     {
         $sql = 'INSERT INTO `' . DB_PREFIX . 'stock_status` (`stock_status_id`, `language_id`, `name`, `color`, `preorder`) VALUES ';
 
@@ -285,10 +287,10 @@ class ModelLocalisationLanguage extends Model {
 
         $sql .= implode(',', $values);
 
-        $db->query($sql);
+        $this->db->query($sql);
     }
 
-    private function orderStatusLanguages($data, $language_id, $db)
+    private function orderStatusLanguages($data, $language_id)
     {
         $sql = 'INSERT INTO `' . DB_PREFIX . 'order_status` (`language_id`, `name`, `message`) VALUES ';
 
@@ -309,10 +311,10 @@ class ModelLocalisationLanguage extends Model {
 
         $sql .= implode(',', $values);
 
-        $db->query($sql);
+        $this->db->query($sql);
     }
 
-    private function returnStatusLanguages($data, $language_id, $db)
+    private function returnStatusLanguages($data, $language_id)
     {
         $sql = 'INSERT INTO `' . DB_PREFIX . 'return_status` (`language_id`, `name`) VALUES ';
 
@@ -322,10 +324,10 @@ class ModelLocalisationLanguage extends Model {
 
         $sql .= implode(',', $values);
 
-        $db->query($sql);
+        $this->db->query($sql);
     }
 
-    private function returnReasonLanguages($data, $language_id, $db)
+    private function returnReasonLanguages($data, $language_id)
     {
         $sql = 'INSERT INTO `' . DB_PREFIX . 'return_reason` (`language_id`, `name`) VALUES ';
 
@@ -336,10 +338,10 @@ class ModelLocalisationLanguage extends Model {
 
         $sql .= implode(',', $values);
 
-        $db->query($sql);
+        $this->db->query($sql);
     }
 
-    private function returnActionLanguages($data, $language_id, $db)
+    private function returnActionLanguages($data, $language_id)
     {
         $sql = 'INSERT INTO `' . DB_PREFIX . 'return_action` (`language_id`, `name`) VALUES ';
 
@@ -349,7 +351,7 @@ class ModelLocalisationLanguage extends Model {
 
         $sql .= implode(',', $values);
 
-        $db->query($sql);
+        $this->db->query($sql);
     }
 
     public function editLanguage($language_id, $data) {

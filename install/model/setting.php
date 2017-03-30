@@ -180,7 +180,7 @@ class ModelSetting extends Model
         $client = Client::getName();
         Client::setName('admin');
         $this->load->model('localisation/language');
-        $this->model_localisation_language->prepareLanguages($language_id, $db);
+        $this->model_localisation_language->prepareLanguages($language_id, $lang_directory);
         Client::setName($client);
     }
 }
