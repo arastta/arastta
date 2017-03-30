@@ -1,5 +1,5 @@
 <p>
-    <span><?php echo $data['contact_1_thank_you']; ?></span>
+    <span><?php echo $data['customer_1_thank_you']; ?></span>
     <br><br>
     <span><?php echo $data['customer_1_account_created']; ?>:</span><br>
     <span>{account_href}</span>
