@@ -54,7 +54,7 @@
                                                     <div class="wp-picker-container">
                                                         <span class="wp-picker-input-wrap">
                                                             <div class="input-group">
-                                                                <input type="text" name="stock_status[<?php echo $language['language_id']; ?>][color]" id="stock_status_color_<?php echo $language['language_id']; ?>" class="color-picker-hex wp-color-picker" maxlength="7" value="<?php echo $stock_status[$language['language_id']]['color']; ?>" data-default-color="<?php echo $stock_status[$language['language_id']]['color']; ?>" style="display: none;">
+                                                                <input type="text" name="stock_status[<?php echo $language['language_id']; ?>][color]" id="stock_status_color_<?php echo $language['language_id']; ?>" class="color-picker-hex wp-color-picker" maxlength="7" value="<?php echo isset($stock_status[$language['language_id']]) ? $stock_status[$language['language_id']]['color'] : ''; ?>" data-default-color="<?php echo isset($stock_status[$language['language_id']]) ? $stock_status[$language['language_id']]['color'] : ''; ?>" style="display: none;">
                                                                 <input type="button" class="button button-small hidden wp-picker-default" value="<?php echo $entry_default; ?>">
                                                             </div>
                                                         </span>
@@ -67,7 +67,7 @@
                                             <label class="col-sm-12" for="input-stock-status-preorder-<?php echo $language['language_id']; ?>"><span data-toggle="tooltip" title="<?php echo $help_preorder; ?>"><?php echo $entry_preorder; ?></span></label>
                                             <div class="col-sm-12">
                                                 <select name="stock_status[<?php echo $language['language_id']; ?>][preorder]" id="input-stock-status-preorder-<?php echo $language['language_id']; ?>" class="form-control">
-                                                    <?php if ($stock_status[$language['language_id']]['preorder']) { ?>
+                                                    <?php if (isset($stock_status[$language['language_id']]['preorder'])) { ?>
                                                     <option value="1" selected="selected"><?php echo $text_yes; ?></option>
                                                     <option value="0"><?php echo $text_no; ?></option>
                                                     <?php } else { ?>
@@ -97,7 +97,7 @@ $('#language a:first').tab('show');
 <script type="text/javascript">
 <?php foreach ($languages as $language) { ?>
 picker = $('#stock_status_color_<?php echo $language["language_id"]; ?>');
-picker.val('<?php echo $stock_status[$language["language_id"]]["color"]; ?>').wpColorPicker();
+picker.val('<?php echo isset($stock_status[$language["language_id"]]) ? $stock_status[$language["language_id"]]["color"] : '#000'; ?>').wpColorPicker();
 <?php } ?>
 </script>
 <?php echo $footer; ?>
