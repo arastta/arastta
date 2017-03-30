@@ -156,7 +156,7 @@ class ControllerCommonHeader extends Controller {
 
             $languages = $this->model_localisation_language->getLanguages();
 
-            $data['languages'] = '';
+            $data['languages'] = array();
 
             if (count($languages) > 1) {
                 $extra_link = '';
