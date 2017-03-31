@@ -176,11 +176,12 @@ class ModelSetting extends Model
 
         $db->query("INSERT INTO " . DB_PREFIX . "addon SET `product_id` = " . (int) $lang_product_id . ", `product_name` = '" . $db->escape($lang_name) . "', `product_type` = 'translation', `product_version` = '" . $db->escape($lang_version) . "', `files` = '', `params` = '" . $db->escape($addon_params) . "'");
 
-        // Insert Email templates, order statuses, stock statuses, return statuses, return actions and return reasons languages
-        $client = Client::getName();
+        // Internationalization of demo data
         Client::setName('admin');
-        $this->load->model('localisation/language');
-        $this->model_localisation_language->prepareLanguages($language_id, $lang_directory);
-        Client::setName($client);
+        $admin = new Admin();
+        $admin->initialise();
+        $admin->load->model('localisation/language');
+        $admin->model_localisation_language->prepareLanguages($language_id, $lang_directory);
+        Client::setName('install');
     }
 }
