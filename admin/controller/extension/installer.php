@@ -718,7 +718,7 @@ class ControllerExtensionInstaller extends Controller
 
         $url = html_entity_decode("http://arastta.io/" . rtrim($this->request->post['store'], 's') . "/1.0/download/" . $this->request->post['product_id'] . "/latest/" . VERSION . "/" . $this->config->get('api_key'));
         $data = \Httpful\Request::get($url)
-            ->addOnCurlOption('CURLOPT_REFERER', $this->url->getDomain())
+            ->addOnCurlOption(CURLOPT_REFERER, $this->url->getDomain())
             ->send()
             ->raw_body;
 

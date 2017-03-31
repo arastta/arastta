@@ -238,7 +238,7 @@ class ModelCommonUpdate extends Model
     public function getRemoteVersion($url)
     {
         $remote_data = \Httpful\Request::get($url)
-            ->addOnCurlOption('CURLOPT_REFERER', $this->url->getDomain())
+            ->addOnCurlOption(CURLOPT_REFERER, $this->url->getDomain())
             ->send()
             ->raw_body;
 
@@ -277,7 +277,7 @@ class ModelCommonUpdate extends Model
 
         $file = \Httpful\Request::get($url)
             ->timeout(30)
-            ->addOnCurlOption('CURLOPT_REFERER', $this->url->getDomain())
+            ->addOnCurlOption(CURLOPT_REFERER, $this->url->getDomain())
             ->send()
             ->raw_body;
 
