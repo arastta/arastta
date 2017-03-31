@@ -2985,7 +2985,31 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (502, 0, 'tinymce', 'tinymce_menu_tools_searchreplace', '0', 0),
 (503, 0, 'tinymce', 'tinymce_menu_tools_pagebreak', '0', 0),
 (504, 0, 'tinymce', 'tinymce_menu_tools_nonbreaking', '0', 0),
-(505, 0, 'tinymce', 'tinymce_menu_tools_emoticons', '0', 0);
+(505, 0, 'tinymce', 'tinymce_menu_tools_emoticons', '0', 0),
+(506, 0, 'config', 'config_blog_post_list_width', '228', 0),
+(507, 0, 'config', 'config_blog_post_list_height', '228', 0),
+(508, 0, 'config', 'config_blog_post_form_width', '500', 0),
+(509, 0, 'config', 'config_blog_post_form_height', '500', 0),
+(510, 0, 'config', 'config_blog_name', '', 0),
+(511, 0, 'config', 'config_blog_description', '', 0),
+(512, 0, 'config', 'config_blog_featured_slide', '1', 0),
+(513, 0, 'config', 'config_blog_meta_title', '1', 0),
+(514, 0, 'config', 'config_blog_meta_description', '1', 0),
+(515, 0, 'config', 'config_blog_meta_keyword', '1', 0),
+(516, 0, 'config', 'config_blog_post_list_limit', '1', 0),
+(517, 0, 'config', 'config_blog_post_list_row', '1', 0),
+(518, 0, 'config', 'config_blog_post_list_date', '1', 0),
+(519, 0, 'config', 'config_blog_post_list_comment', '1', 0),
+(520, 0, 'config', 'config_blog_post_list_read', '1', 0),
+(521, 0, 'config', 'config_blog_post_list_author', '1', 0),
+(522, 0, 'config', 'config_blog_post_form_date', '1', 0),
+(523, 0, 'config', 'config_blog_post_form_comment', '1', 0),
+(524, 0, 'config', 'config_blog_post_form_read', '1', 0),
+(525, 0, 'config', 'config_blog_post_form_author', '1', 0),
+(526, 0, 'config', 'config_blog_post_form_share', '1', 0),
+(527, 0, 'config', 'config_blog_comment_enable', '1', 0),
+(528, 0, 'config', 'config_blog_comment_limit', '5', 0),
+(529, 0, 'config', 'config_blog_comment_mail', '1', 0);
 
 -- --------------------------------------------------------
 

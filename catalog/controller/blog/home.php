@@ -13,6 +13,9 @@ class ControllerBlogHome extends Controller
 
         $this->load->model('tool/image');
 
+        #Get All Language Text
+        $data = $this->language->all();
+
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(
@@ -135,14 +138,6 @@ class ControllerBlogHome extends Controller
         $data['page_view_status']      = $this->config->get('blogsetting_page_view');
         $data['author_status']         = $this->config->get('blogsetting_author');
         $data['list_columns']          = $this->config->get('blogsetting_layout');
-
-        $data['text_posted_on'] = $this->language->get('text_posted_on');
-        $data['text_read']      = $this->language->get('text_read');
-        $data['text_posted_by'] = $this->language->get('text_posted_by');
-        $data['text_comments']  = $this->language->get('text_comments');
-
-        $data['text_no_results'] = $this->language->get('text_no_results');
-        $data['text_read_more']  = $this->language->get('text_read_more');
 
         $url = '';
 

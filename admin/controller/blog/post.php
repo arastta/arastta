@@ -587,6 +587,14 @@ class ControllerBlogPost extends Controller
             $data['post_store'] = array(0);
         }
 
+        if (isset($this->request->post['seo_url'])) {
+            $data['seo_url'] = $this->request->post['seo_url'];
+        } elseif (!empty($product_info)) {
+            $data['seo_url'] = $product_info['seo_url'];
+        } else {
+            $data['seo_url'] = array();
+        }
+
         if (isset($this->request->post['image'])) {
             $data['image'] = $this->request->post['image'];
         } elseif (isset($post_info)) {
@@ -607,17 +615,29 @@ class ControllerBlogPost extends Controller
             $data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
         }
 
+        // Categories
         $this->load->model('blog/category');
 
         if (isset($this->request->post['post_category'])) {
-            $data['post_category'] = $this->request->post['post_category'];
-        } elseif (isset($post_info)) {
-            $data['post_category'] = $this->model_blog_post->getPostCategories($this->request->get['post_id']);
+            $categories = $this->request->post['post_category'];
+        } elseif (isset($this->request->get['post_id'])) {
+            $categories = $this->model_blog_post->getPostCategories($this->request->get['post_id']);
         } else {
-            $data['post_category'] = array();
+            $categories = array();
         }
 
-        $data['post_categories'] = $this->model_blog_category->getCategories(0);
+        $data['post_categories'] = array();
+
+        foreach ($categories as $category_id) {
+            $category_info = $this->model_blog_category->getCategory($category_id);
+
+            if ($category_info) {
+                $data['post_categories'][] = array(
+                    'category_id' => $category_info['category_id'],
+                    'name' => ($category_info['path']) ? $category_info['path'] . ' &gt; ' . $category_info['name'] : $category_info['name']
+                );
+            }
+        }
 
         if (isset($this->request->post['sort_order'])) {
             $data['sort_order'] = $this->request->post['sort_order'];
@@ -672,6 +692,20 @@ class ControllerBlogPost extends Controller
         foreach ($this->request->post['post_description'] as $language_id => $value) {
             if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 255)) {
                 $this->error['name'][$language_id] = $this->language->get('error_name');
+            }
+        }
+
+        $this->load->model('catalog/url_alias');
+
+        foreach ($this->request->post['seo_url'] as $language_id => $value) {
+            $url_alias_info = $this->model_catalog_url_alias->getUrlAlias($value, $language_id);
+
+            if ($url_alias_info && isset($this->request->get['product_id']) && $url_alias_info['query'] != 'product_id=' . $this->request->get['product_id']) {
+                $this->error['seo_url'][$language_id] = sprintf($this->language->get('error_seo_url'));
+            }
+
+            if ($url_alias_info && !isset($this->request->get['product_id'])) {
+                $this->error['seo_url'][$language_id] = sprintf($this->language->get('error_seo_url'));
             }
         }
 
