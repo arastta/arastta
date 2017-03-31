@@ -784,7 +784,8 @@ INSERT INTO `ar_url_alias` (`url_alias_id`, `query`, `keyword`, `language_id`) V
 (10010, 'route=account/register', 'register', 1),
 (10011, 'route=account/login', 'login', 1),
 (10012, 'route=information/contact', 'contact', 1),
-(10013, 'route=product/manufacturer', 'brands', 1);
+(10013, 'route=product/manufacturer', 'brands', 1),
+(10014, 'route=blog/home', 'blog', 1);
 
 INSERT INTO `ar_voucher_theme` (`voucher_theme_id`, `image`) VALUES
 (6, 'catalog/demo/apple_logo.jpg'),

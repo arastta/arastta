@@ -147,6 +147,29 @@ class Route extends Object
                             }
                         }
                         break;
+                    case 'blog_category_id':
+                        $this->request->get['route'] = 'blog/category';
+
+                        if ($this->config->get('config_seo_category') == 'last') {
+                            $categories = $seo->getParentCategoriesIds($url[1], 'blog_');
+
+                            $categories[] = $url[1];
+
+                            if (!empty($categories)) {
+                                $this->request->get['path'] = implode('_', $categories);
+                            }
+                        } else {
+                            if (!isset($this->request->get['path'])) {
+                                $this->request->get['path'] = $url[1];
+                            } else {
+                                $this->request->get['path'] .= '_' . $url[1];
+                            }
+                        }
+                        break;
+                    case 'blog_post_id':
+                        $this->request->get['route'] = 'blog/post';
+                        $this->request->get['post_id'] = $url[1];
+                        break;
                     case 'manufacturer_id':
                     case 'information_id':
                     case 'route':
@@ -199,7 +222,7 @@ class Route extends Object
                     break;
                 case 'product/product':
                     if ($this->config->get('config_seo_category')) {
-                        if ($uri->getVar('path') and ($this->config->get('config_seo_category') == 'last')) {
+                        if ($uri->getVar('path') && ($this->config->get('config_seo_category') == 'last')) {
                             $categories = explode('_', $uri->getVar('path'));
 
                             $categories = array(end($categories));
@@ -278,6 +301,46 @@ class Route extends Object
                         }
 
                         $uri->delVar('manufacturer_id');
+                    }
+                    break;
+                case 'blog/category':
+                    if ($uri->getVar('path')) {
+                        // Add blog home first
+                        $blog_home = $seo->getAlias('route=blog/home', 'other');
+
+                        if ($blog_home) {
+                            $url .= '/' . $blog_home;
+                        }
+
+                        $categories = explode('_', $uri->getVar('path'));
+
+                        foreach ($categories as $category) {
+                            $alias = $seo->getAlias($category, 'blog_category');
+
+                            if ($alias) {
+                                $url .= '/' . $alias;
+                            }
+                        }
+
+                        $uri->delVar('path');
+                    }
+                    break;
+                case 'blog/post':
+                    if ($uri->getVar('post_id')) {
+                        // Add blog home first
+                        $blog_home = $seo->getAlias('route=blog/home', 'other');
+
+                        if ($blog_home) {
+                            $url .= '/' . $blog_home;
+                        }
+
+                        $alias = $seo->getAlias($uri->getVar('post_id'), 'blog_post');
+
+                        if ($alias) {
+                            $url .= '/' . $alias;
+                        }
+
+                        $uri->delVar('post_id');
                     }
                     break;
                 default:
