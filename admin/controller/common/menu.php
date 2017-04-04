@@ -68,6 +68,7 @@ class ControllerCommonMenu extends Controller {
         # System permissions
         $p_return_setting = $this->user->hasPermission('access','setting/setting');
         $p_return_setting_store = $this->user->hasPermission('access','setting/store');
+        $p_return_store_locatios = $this->user->hasPermission('access','localisation/location');
         $p_return_design_banner = $this->user->hasPermission('access','design/banner');
         $p_return_user = $this->user->hasPermission('access','user/user');
         $p_return_user_permission = $this->user->hasPermission('access','user/user_permission');
@@ -772,9 +773,15 @@ class ControllerCommonMenu extends Controller {
                 'sort_order' => 2,
                 'permission' => $p_return_setting_store
             ),
+            'locations' => array(
+                'text' => $data['text_locations'],
+                'href' => $this->url->link('localisation/location', 'token=' . $this->session->data['token'], 'SSL'),
+                'sort_order' => 3,
+                'permission' => $p_return_store_locatios
+            ),
             'users' => array(
                 'text' => $data['text_users'],
-                'sort_order' => 3,
+                'sort_order' => 4,
                 'permission' => $p_return_user || $p_return_user_permission,
                 'children' => array(
                     'users' => array(
@@ -792,25 +799,25 @@ class ControllerCommonMenu extends Controller {
             'api' => array(
                 'text' => $data['text_api'],
                 'href' => $this->url->link('user/api', 'token=' . $this->session->data['token'], 'SSL'),
-                'sort_order' => 4,
+                'sort_order' => 5,
                 'permission' => $p_return_user_api
             ),
             'email_templates' => array(
                 'text' => $data['text_email_template'],
                 'href' => $this->url->link('system/email_template', 'token=' . $this->session->data['token'], 'SSL'),
-                'sort_order' => 5,
+                'sort_order' => 6,
                 'permission' => $p_return_email_template
             ),
             'language_overrides' => array(
                 'text' => $data['text_language_override'],
                 'href' => $this->url->link('system/language_override', 'token=' . $this->session->data['token'], 'SSL'),
-                'sort_order' => 6,
+                'sort_order' => 7,
                 'permission' => $p_return_language_override
             ),
             'url_manager' => array(
                 'text' => $data['text_url_manager'],
                 'href' => $this->url->link('system/url_manager', 'token=' . $this->session->data['token'], 'SSL'),
-                'sort_order' => 7,
+                'sort_order' => 8,
                 'permission' => $p_return_url_manager
             )
         );

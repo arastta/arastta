@@ -88,6 +88,7 @@ $_['text_sale']                        = 'Sales';
 $_['text_shipping']                    = 'Shipping';
 $_['text_setting']                     = 'Settings';
 $_['text_store']                       = 'Stores';
+$_['text_locations']                   = 'Locations';
 $_['text_stock_status']                = 'Stock Statuses';
 $_['text_system']                      = 'System';
 $_['text_tax']                         = 'Taxes';
