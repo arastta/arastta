@@ -82,7 +82,7 @@ class ModelBlogCategory extends Model
 
         $isTop = $this->db->query("SELECT * FROM `" . DB_PREFIX . "blog_category` WHERE category_id = '" . (int)$category_id . "'");
 
-        $this->db->query("UPDATE " . DB_PREFIX . "blog_category SET parent_id = '" . (int) $data['parent_id'] . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "' WHERE category_id = '" . (int) $category_id . "'");
+        $this->db->query("UPDATE " . DB_PREFIX . "blog_category SET parent_id = '" . (int) $data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', sort_order = '" . (int) $data['sort_order'] . "', status = '" . (int) $data['status'] . "' WHERE category_id = '" . (int) $category_id . "'");
 
         if (isset($data['image'])) {
             $this->db->query("UPDATE " . DB_PREFIX . "blog_category SET image = '" . $this->db->escape($data['image']) . "' WHERE category_id = '" . (int) $category_id . "'");
@@ -167,7 +167,7 @@ class ModelBlogCategory extends Model
 
         $this->load->model('catalog/url_alias');
 
-        $this->model_catalog_url_alias->clearAliases('category', $category_id);
+        $this->model_catalog_url_alias->clearAliases('blog_category', $category_id);
 
         foreach ($data['seo_url'] as $language_id => $value) {
             $alias = empty($value) ? $data['category_description'][$language_id]['name'] : $value;

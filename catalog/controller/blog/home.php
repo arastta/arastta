@@ -139,6 +139,8 @@ class ControllerBlogHome extends Controller
         $data['author_status']         = $this->config->get('blogsetting_author');
         $data['list_columns']          = $this->config->get('blogsetting_layout');
 
+        $data['continue'] = $this->url->link('common/home');
+
         $url = '';
 
         if (isset($this->request->get['page'])) {

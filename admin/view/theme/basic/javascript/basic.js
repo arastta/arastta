@@ -171,22 +171,26 @@ function changeFilterType(text, filter_type) {
 
 function save(type) {
     var input = document.createElement('input');
+
     input.type = 'hidden';
     input.name = 'button';
     input.value = type;
+
     form = $("form[id^='form-']").append(input);
+
     form.submit();
 }
 
 function removeFilter(filter_tag, filter_selector) {
     $('input[name=\'' + filter_selector  + '\']').val('');
     $('select[name=\'' + filter_selector  + '\'] option:selected').removeAttr('selected');
+
     $(filter_tag).parent().remove();
+
     filter();
 }
 
 var BasicImage = function() {
-
     var start = function() {
         BasicImage.handleDraggable();
     };

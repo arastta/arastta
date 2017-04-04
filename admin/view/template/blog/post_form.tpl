@@ -3,9 +3,9 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
-                <button type="submit" onclick="save('save')" form="form-blog" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success" data-original-title="Save"><i class="fa fa-check"></i></button>
-                <button type="submit" form="form-blog" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
-                <button type="submit" onclick="save('new')" form="form-blog" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
+                <button type="submit" onclick="save('save')" form="form-post" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-success" data-original-title="Save"><i class="fa fa-check"></i></button>
+                <button type="submit" form="form-post" data-toggle="tooltip" title="<?php echo $button_saveclose; ?>" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
+                <button type="submit" onclick="save('new')" form="form-post" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
                 <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
             </div>
             <h1><?php echo $heading_title; ?></h1>
@@ -27,7 +27,7 @@
                 <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
             </div>
             <div class="panel-body">
-                <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-blog" class="form-horizontal">
+                <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-post" class="form-horizontal">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
                         <li><a href="#tab-data" data-toggle="tab"><?php echo $tab_data; ?></a></li>
@@ -66,9 +66,9 @@
                                             <input type="text" name="tag" value="" placeholder="<?php echo $entry_tag; ?>" id="input-tag<?php echo $language['language_id']; ?>" class="form-control" />
                                             <div class="view-all"><a href="<?php echo $show_all[$language['language_id']]['tag']; ?>" class="popup"><?php echo $entry_view_all; ?></a></div>
                                             <?php if (!empty($post_description[$language['language_id']]['tag'])) { ?>
-                                            <div id="blog-tag-<?php echo $language['language_id']; ?>" class="well well-sm" style="overflow: auto; clear: both;">
+                                            <div id="post-tag-<?php echo $language['language_id']; ?>" class="well well-sm" style="overflow: auto; clear: both;">
                                                 <?php foreach ($post_description[$language['language_id']]['tag'] as $tag_key => $tag_value) { ?>
-                                                <div id="blog-tag-<?php echo $tag_key; ?>"><i class="fa fa-minus-circle"></i> <?php echo $tag_value; ?>
+                                                <div id="post-tag-<?php echo $tag_key; ?>"><i class="fa fa-minus-circle"></i> <?php echo $tag_value; ?>
                                                     <input type="hidden" name="post_tag[<?php echo $language['language_id']; ?>][]" value="<?php echo $tag_value; ?>" />
                                                 </div>
                                                 <?php } ?>
@@ -140,17 +140,17 @@
                                     </label>
                                 </div>
                             </div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label" for="input-date-available"><?php echo $entry_date_available; ?></label>
-								<div class="col-sm-3">
-									<div class="input-group date">
-										<input type="text" name="date_available" value="<?php echo $date_available; ?>" placeholder="<?php echo $entry_date_available; ?>" data-date-format="YYYY-MM-DD" id="input-date-available" class="form-control" />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-date-available"><?php echo $entry_date_available; ?></label>
+                                <div class="col-sm-3">
+                                    <div class="input-group date">
+                                        <input type="text" name="date_available" value="<?php echo $date_available; ?>" placeholder="<?php echo $entry_date_available; ?>" data-date-format="YYYY-MM-DD" id="input-date-available" class="form-control" />
                                         <span class="input-group-btn">
                                             <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
                                         </span>
-									</div>
-								</div>
-							</div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"><?php echo $entry_status; ?></label>
                                 <div class="col-sm-10">
@@ -225,11 +225,14 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"><?php echo $entry_category; ?></label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" class="form-control"/>
-                                    <div id="blog-category" class="well well-sm" style="height: 150px; overflow: auto;">
+                                    <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control"/>
+                                    <div class="view-all">
+                                        <a href="<?php echo $show_all[$language['language_id']]['category']; ?>" class="popup"><?php echo $entry_view_all; ?></a>
+                                    </div>
+                                    <div id="post-category" class="well well-sm" style="height: 150px; overflow: auto;">
                                         <?php foreach ($post_categories as $post_category) { ?>
                                         <?php if (in_array($post_category['category_id'], $post_category)) { ?>
-                                        <div id="blog-category<?php echo $post_category['category_id']; ?>">
+                                        <div id="post-category<?php echo $post_category['category_id']; ?>">
                                             <i class="fa fa-minus-circle"></i> <?php echo $post_category['name']; ?>
                                             <input type="hidden" name="post_category[]" value="<?php echo $post_category['category_id']; ?>"/>
                                         </div>
@@ -458,7 +461,7 @@
         $('input[name=\'category\']').autocomplete({
             'source': function (request, response) {
                 $.ajax({
-                    url     : 'index.php?route=blog/blog_category/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request),
+                    url     : 'index.php?route=blog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request),
                     dataType: 'json',
                     success : function (json) {
                         response($.map(json, function (item) {
@@ -473,19 +476,19 @@
             'select': function (item) {
                 $('input[name=\'category\']').val('');
 
-                $('#blog-category' + item['value']).remove();
+                $('#post-category' + item['value']).remove();
 
-                $('#blog-category').append('<div id="blog-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="post_category[]" value="' + item['value'] + '" /></div>');
+                $('#post-category').append('<div id="post-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="post_category[]" value="' + item['value'] + '" /></div>');
             }
         });
 
-        $('#blog-category').delegate('.fa-minus-circle', 'click', function () {
+        $('#post-category').delegate('.fa-minus-circle', 'click', function () {
             $(this).parent().remove();
         });
 
-		$('.date').datetimepicker({
-			pickTime: false
-		});
+        $('.date').datetimepicker({
+            pickTime: false
+        });
         //--></script>
     <script type="text/javascript"><!--
         function save(type){

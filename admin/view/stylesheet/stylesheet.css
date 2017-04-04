@@ -2481,7 +2481,7 @@ input[type="radio"], .radio input[type="radio"], .radio-inline input[type="radio
     margin-top: 15px;
 }
 
-div[id^='product-tag'] div {
+div[id^='product-tag'] div, div[id^='post-tag'] div {
     float: left;
     margin-left: 10px;
 }
@@ -2490,7 +2490,7 @@ input[id^='input-tag'], .view-all, #tab-links #input-manufacturer, #tab-links #i
     float: left;
 }
 
-#product-tag, #tab-links #product-category {
+#product-tag, #post-tag, #tab-links #product-category, #tab-links #post-category {
     clear: both;
 }
 

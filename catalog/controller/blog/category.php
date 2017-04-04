@@ -94,7 +94,7 @@ class ControllerBlogCategory extends Controller
                     $path .= '_' . (int)$path_id;
                 }
 
-                $category_info = $this->model_catalog_category->getCategory($path_id);
+                $category_info = $this->model_blog_category->getCategory($path_id);
 
                 if ($category_info) {
                     $data['breadcrumbs'][] = array(

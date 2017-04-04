@@ -572,6 +572,10 @@ class ControllerBlogComment extends Controller
             $this->load->model('blog/comment');
 
             foreach ($this->request->post as $key => $value) {
+                if ($key == 'date_added') {
+                    $value = preg_replace("/(\d+)\D+(\d+)\D+(\d+)/", "$3-$2-$1", $value);
+                }
+
                 $this->model_blog_comment->updateComment($this->request->get['comment_id'], $key, $value);
             }
         }

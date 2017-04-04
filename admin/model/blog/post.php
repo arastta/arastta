@@ -294,7 +294,7 @@ class ModelBlogPost extends Model
         return $blog_post_description_data;
     }
 
-    public function getBlogTags($post_id)
+    public function getPostTags($post_id)
     {
         $post_tag_data = array();
 

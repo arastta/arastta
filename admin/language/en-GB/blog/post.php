@@ -19,10 +19,13 @@ $_['text_blog_setting']  = 'Settings';
 $_['text_blog_category'] = 'Categories';
 $_['text_blog_post']     = 'Posts';
 $_['text_blog_comment']  = 'Comments';
+$_['text_preview']       = 'View Post';
 $_['text_yes']           = 'Yes';
 $_['text_no']            = 'No';
 $_['text_please_select'] = '--- Please Select ---';
 $_['text_new_post_seo']  = 'Add a title and description to see how this post might appear in a search engine listing.';
+$_['text_applicable']    = 'Applicable';
+$_['text_applied']       = 'Applied';
 
 // Column
 $_['column_image']      = 'Image';

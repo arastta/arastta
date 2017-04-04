@@ -267,11 +267,7 @@ class ControllerBlogCategory extends Controller
             'limit'         => $this->config->get('config_limit_admin')
         );
 
-        if (!empty($filter_name) || !empty($filter_status) || !(is_null($filter_status))) {
-            $category_total = $this->model_blog_category->getTotalCategoriesFilter($filter_data);
-        } else {
-            $category_total = $this->model_blog_category->getTotalCategories();
-        }
+        $category_total = $this->model_blog_category->getTotalCategories($filter_data);
 
         $results = $this->model_blog_category->getCategories($filter_data);
 
@@ -573,6 +569,24 @@ class ControllerBlogCategory extends Controller
             }
         }
 
+        $this->load->model('catalog/url_alias');
+
+        foreach ($this->request->post['seo_url'] as $language_id => $value) {
+            $url_alias_info = $this->model_catalog_url_alias->getUrlAlias($value, $language_id);
+
+            if ($url_alias_info && isset($this->request->get['category_id']) && $url_alias_info['query'] != 'blog_category_id=' . $this->request->get['category_id']) {
+                $this->error['seo_url'][$language_id] = sprintf($this->language->get('error_seo_url'));
+            }
+
+            if ($url_alias_info && !isset($this->request->get['category_id'])) {
+                $this->error['seo_url'][$language_id] = sprintf($this->language->get('error_seo_url'));
+            }
+        }
+
+        if ($this->error && !isset($this->error['warning'])) {
+            $this->error['warning'] = $this->language->get('error_warning');
+        }
+
         if ($this->error && !isset($this->error['warning'])) {
             $this->error['warning'] = $this->language->get('error_warning');
         }
@@ -684,7 +698,7 @@ class ControllerBlogCategory extends Controller
                 }
             }
 
-            $category_id = $this->model_catalog_category->addCategory($this->request->post);
+            $category_id = $this->model_blog_category->addCategory($this->request->post);
 
             $this->trigger->fire('post.admin.blog.category.quick', array($category_id));
 

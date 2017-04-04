@@ -1352,6 +1352,38 @@
                                         <?php } ?>
                                     </div>
                                 </div>
+                                <div class="form-group required">
+                                    <label class="col-sm-12" for="input-image-blog-post-list"><?php echo $entry_image_blog_post_list; ?></label>
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input type="text" name="config_blog_post_list_width" value="<?php echo $config_blog_post_list_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-blog-post-list" class="form-control" />
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="config_blog_post_list_height" value="<?php echo $config_blog_post_list_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <?php if ($error_image_blog_post_list) { ?>
+                                        <div class="text-danger"><?php echo $error_image_blog_post_list; ?></div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <label class="col-sm-12" for="input-image-blog-post-form"><?php echo $entry_image_blog_post_form; ?></label>
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input type="text" name="config_blog_post_form_width" value="<?php echo $config_blog_post_form_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-blog-post-form" class="form-control" />
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="config_blog_post_form_height" value="<?php echo $config_blog_post_form_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <?php if ($error_image_blog_post_form) { ?>
+                                        <div class="text-danger"><?php echo $error_image_blog_post_form; ?></div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

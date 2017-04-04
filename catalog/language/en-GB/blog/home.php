@@ -24,6 +24,7 @@ $_['text_write_comment'] = 'Write Comment';
 $_['email_notification'] = 'New blog comment from: %s';
 $_['text_share_this']    = 'Share this:';
 $_['text_more']          = 'More...';
+$_['text_empty']         = 'There are no post to home page';
 
 // Comment
 $_['entry_name']           = 'Name';

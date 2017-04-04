@@ -589,8 +589,8 @@ class ControllerBlogPost extends Controller
 
         if (isset($this->request->post['seo_url'])) {
             $data['seo_url'] = $this->request->post['seo_url'];
-        } elseif (!empty($product_info)) {
-            $data['seo_url'] = $product_info['seo_url'];
+        } elseif (!empty($post_info)) {
+            $data['seo_url'] = $post_info['seo_url'];
         } else {
             $data['seo_url'] = array();
         }
@@ -665,8 +665,8 @@ class ControllerBlogPost extends Controller
         // Show All
         foreach ($data['languages'] as $language) {
             $data['show_all'][$language['language_id']] = array(
-                'category' => $this->url->link('catalog/product/viewAll', 'type=category&post_id=' . $data['post_id'] . '&language_id=' . $language['language_id'] . '&token=' . $this->session->data['token'], 'SSL'),
-                'tag'      => $this->url->link('catalog/product/viewAll', 'type=tag&post_id=' . $data['post_id'] . '&language_id=' . $language['language_id'] . '&token=' . $this->session->data['token'], 'SSL')
+                'category' => $this->url->link('blog/post/viewAll', 'type=category&post_id=' . $data['post_id'] . '&language_id=' . $language['language_id'] . '&token=' . $this->session->data['token'], 'SSL'),
+                'tag'      => $this->url->link('blog/post/viewAll', 'type=tag&post_id=' . $data['post_id'] . '&language_id=' . $language['language_id'] . '&token=' . $this->session->data['token'], 'SSL')
             );
         }
 
@@ -700,11 +700,11 @@ class ControllerBlogPost extends Controller
         foreach ($this->request->post['seo_url'] as $language_id => $value) {
             $url_alias_info = $this->model_catalog_url_alias->getUrlAlias($value, $language_id);
 
-            if ($url_alias_info && isset($this->request->get['product_id']) && $url_alias_info['query'] != 'product_id=' . $this->request->get['product_id']) {
+            if ($url_alias_info && isset($this->request->get['post_id']) && $url_alias_info['query'] != 'blog_post_id=' . $this->request->get['post_id']) {
                 $this->error['seo_url'][$language_id] = sprintf($this->language->get('error_seo_url'));
             }
 
-            if ($url_alias_info && !isset($this->request->get['product_id'])) {
+            if ($url_alias_info && !isset($this->request->get['post_id'])) {
                 $this->error['seo_url'][$language_id] = sprintf($this->language->get('error_seo_url'));
             }
         }
@@ -824,8 +824,8 @@ class ControllerBlogPost extends Controller
 
     public function viewAll()
     {
-        $this->load->language('catalog/product');
-        $this->load->model('catalog/product');
+        $this->load->language('blog/psot');
+        $this->load->model('blog/post');
 
         $data['text_applicable'] = $this->language->get('text_applicable');
         $data['text_applied']    = $this->language->get('text_applied');
@@ -835,42 +835,31 @@ class ControllerBlogPost extends Controller
         $data['type'] = $type;
 
         switch ($type) {
-            case 'manufacturer':
-                $data['text_all'] = $this->language->get('entry_all_manufacturer');
-
-                $this->load->model('catalog/manufacturer');
-
-                $product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
-
-                $data['applied'][] = $product_info['manufacturer_id'];
-
-                $data['all'] = $this->model_catalog_manufacturer->getManufacturers();
-                break;
             case 'category':
                 $data['text_all'] = $this->language->get('entry_all_category');
 
-                $this->load->model('catalog/category');
+                $this->load->model('blog/category');
 
-                $categories = $this->model_catalog_product->getProductCategories($this->request->get['product_id']);
+                $categories = $this->model_blog_post->getPostCategories($this->request->get['post_id']);
 
                 foreach ($categories as $category_id) {
-                    $category_info = $this->model_catalog_category->getCategory($category_id);
+                    $category_info = $this->model_blog_category->getCategory($category_id);
 
                     if ($category_info) {
                         $data['applied'][] = $category_info['category_id'];
                     }
                 }
 
-                $data['all'] = $this->model_catalog_category->getCategories();
+                $data['all'] = $this->model_blog_category->getCategories();
                 break;
             case 'tag':
                 $data['text_all'] = $this->language->get('entry_all_tags');
 
-                $tags = $this->model_catalog_product->getProductTags($this->request->get['product_id']);
+                $tags = $this->model_blog_post->getPostTags($this->request->get['post_id']);
 
                 $data['applied'] = (!empty($tags)) ? $tags : array();
 
-                $data['all'] = $this->model_catalog_product->getTags();
+                $data['all'] = $this->model_blog_post->getTags();
                 break;
         }
 
