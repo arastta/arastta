@@ -14,7 +14,7 @@ class ModelBlogComment extends Model
     {
         $this->trigger->fire('pre.comment.add', array(&$data));
 
-        $this->db->query("INSERT INTO " . DB_PREFIX . "blog_comment SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int) $this->customer->getId() . "', post_id = '" . (int) $post_id . "', text = '" . $this->db->escape($data['text']) . "', date_added = NOW()");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "blog_comment SET author = '" . $this->db->escape($data['name']) . "', email = '" . $this->db->escape($data['email']) . "', customer_id = '" . (int) $this->customer->getId() . "', post_id = '" . (int) $post_id . "', text = '" . $this->db->escape($data['text']) . "', date_added = NOW()");
 
         $comment_id = $this->db->getLastId();
 
@@ -61,6 +61,7 @@ class ModelBlogComment extends Model
         $sort_data = array(
             'c.post_id',
             'c.customer_id',
+            'c.email',
             'c.author',
             'c.sort_order',
             'c.date_added'
@@ -105,7 +106,7 @@ class ModelBlogComment extends Model
             $limit = 20;
         }
 
-        $query = $this->db->query("SELECT c.*, p.post_id, pd.name, p.image FROM " . DB_PREFIX . "blog_comment c LEFT JOIN " . DB_PREFIX . "blog_post p ON (c.post_id = p.post_id) LEFT JOIN " . DB_PREFIX . "blog_post_description pd ON (p.post_id = pd.post_id) WHERE p.post_id = '" . (int) $post_id . "' AND p.date_available <= NOW() AND p.status = '1' AND r.status = '1' AND pd.language_id = '" . (int) $this->config->get('config_language_id') . "' ORDER BY r.date_added DESC LIMIT " . (int) $start . "," . (int) $limit);
+        $query = $this->db->query("SELECT c.*, p.post_id, pd.name, p.image FROM " . DB_PREFIX . "blog_comment c LEFT JOIN " . DB_PREFIX . "blog_post p ON (c.post_id = p.post_id) LEFT JOIN " . DB_PREFIX . "blog_post_description pd ON (p.post_id = pd.post_id) WHERE p.post_id = '" . (int) $post_id . "' AND p.date_available <= NOW() AND p.status = '1' AND c.status = '1' AND pd.language_id = '" . (int) $this->config->get('config_language_id') . "' ORDER BY c.date_added DESC LIMIT " . (int) $start . "," . (int) $limit);
 
         return $query->rows;
     }

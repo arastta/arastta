@@ -56,37 +56,47 @@
                 <?php } ?>
                 <?php if ($comment_status) { ?>
                 <div class="ar-blog-comments">
-                    <h3><i class="fa fa-comments"></i> <?php echo $comments; ?></h3>
+                    <h3><i class="fa fa-comments"></i> <?php echo $text_comments; ?></h3>
                     <hr>
                     <div id="comment"></div>
                     <div class="comment-add">
-                        <h3><i class="fa fa-pencil"></i> Add comment</h3>
+                        <h3><i class="fa fa-pencil"></i> <?php $text_add_comment; ?></h3>
                         <form class="form-group">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <label class="control-label">Name</label>
-                                    <input type="text" class="form-control" placeholder="Your name">
+                                    <label class="control-label"><?php echo $text_name; ?></label>
+                                    <input type="text" value="<?php echo $comment_name; ?>" id="comment-name" class="form-control" placeholder="<?php echo $text_name; ?>">
                                 </div>
                                 <div class="col-xs-3">
-                                    <label class="control-label">E-mail</label>
-                                    <input type="text" class="form-control" placeholder="Your email address">
+                                    <label class="control-label"><?php echo $text_email; ?></label>
+                                    <input type="text" value="<?php echo $comment_email; ?>" id="comment-email" class="form-control" placeholder="<?php echo $text_email; ?>">
                                 </div>
                             </div>
                             <br>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <label class="control-label">Comment</label>
-                                    <textarea class="form-control" rows="3"></textarea>
+                                    <label class="control-label"><?php echo $text_comment; ?></label>
+                                    <textarea id="comment-text" class="form-control" rows="3"></textarea>
                                 </div>
                             </div>
-                            <?php if ($captcha) { ?>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <?php echo $captcha; ?>
-                                    <br>
-                                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                                <?php if ($captcha) { ?>
+                                <?php echo $captcha; ?>
+                                <?php } ?>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="buttons clearfix">
+                                        <div class="pull-right">
+                                            <button type="button" id="button-comment" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_continue; ?></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } else { ?>
+                            <?php echo $text_login; ?>
                             <?php } ?>
                         </form>
                     </div>
@@ -109,7 +119,26 @@ $('#comment').delegate('.pagination a', 'click', function(e) {
     $('#comment').fadeIn('slow');
 });
 
-$('#comment').load('index.php?route=blog/post/comment&post_id=<?php echo $post_id; ?>');
+$(document).ready(function() {
+    $.ajax({
+        url: 'index.php?route=blog/post/comment&post_id=<?php echo $post_id; ?>',
+        type: 'post',
+        dataType: 'html',
+        success: function(html) {
+            $('#comment').html(html);
+
+            hash = location.hash.replace('#','');
+
+            if (hash != '') {
+                $('html, body').animate({
+                    scrollTop: $('#comment-' + hash).offset().top
+                }, 1000);
+            }
+        }
+    }).done(function() {
+
+    });
+});
 
 $('#button-comment').on('click', function() {
     $.ajax({
@@ -139,19 +168,9 @@ $('#button-comment').on('click', function() {
                 $('#comment').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 
                 $('input[name=\'name\']').val('');
+                $('input[name=\'email\']').val('');
                 $('textarea[name=\'text\']').val('');
-                $('input[name=\'rating\']:checked').prop('checked', false);
             }
-        }
-    });
-});
-
-$(document).ready(function() {
-    $('.thumbnails').magnificPopup({
-        type:'image',
-        delegate: 'a',
-        gallery: {
-            enabled:true
         }
     });
 });

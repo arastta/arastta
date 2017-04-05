@@ -2057,6 +2057,29 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-comment-guest"><?php echo $entry_blog_comment_guest; ?></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_comment_guest) { ?>
+                                                <input type="radio" name="config_blog_comment_guest" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_comment_guest" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_comment_guest) { ?>
+                                                <input type="radio" name="config_blog_comment_guest" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_comment_guest" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-12" for="input-blog-comment-limit"><span data-toggle="tooltip" title="<?php echo $help_blog_comment_limit; ?>"><?php echo $entry_blog_comment_limit; ?></span></label>
                                         <div class="col-sm-12">
                                             <input type="text" name="config_blog_comment_limit" value="<?php echo $config_blog_comment_limit; ?>" placeholder="<?php echo $entry_blog_comment_limit; ?>" id="input-blog-comment-limit" class="form-control" />

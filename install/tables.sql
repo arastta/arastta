@@ -357,6 +357,7 @@ CREATE TABLE IF NOT EXISTS `ar_blog_comment` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT,
   `post_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
+  `email` varchar(96) NOT NULL,
   `author` varchar(64) NOT NULL,
   `text` text NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',

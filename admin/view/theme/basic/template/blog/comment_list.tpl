@@ -39,12 +39,14 @@
                                     <ul class="dropdown-menu">
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_post; ?>', 'filter_post');"><?php echo $entry_post; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_author; ?>', 'filter_author');"><?php echo $entry_author; ?></a></li>
+                                        <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_email; ?>', 'filter_email');"><?php echo $entry_email; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_status; ?>', 'filter_status');"><?php echo $entry_status; ?></a></li>
                                         <li><a class="filter-list-type" onclick="changeFilterType('<?php echo $entry_date_added; ?>', 'filter_date_added');"><?php echo $entry_date_added; ?></a></li>
                                     </ul>
                                 </div>
                                 <input type="text" name="filter_post"  value="<?php echo $filter_post; ?>" placeholder="<?php echo $text_filter . $entry_post; ?>" id="input-product" class="form-control filter">
                                 <input type="text" name="filter_author" value="<?php echo $filter_author; ?>" placeholder="<?php echo $text_filter . $entry_author; ?>" id="input-author" class="form-control hidden filter" />
+                                <input type="text" name="filter_email" value="<?php echo $filter_email; ?>" placeholder="<?php echo $text_filter . $entry_email; ?>" id="input-email" class="form-control hidden filter" />
                                 <select name="filter_status" id="input-status" class="form-control filter hidden">
                                     <option value="*"><?php echo $text_filter . $entry_status; ?></option>
                                     <?php if ($filter_status) { ?>
@@ -67,7 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php if (!empty($filter_post) || !empty($filter_author) || isset($filter_status) || !empty($filter_date_added)) { ?>
+                    <?php if (!empty($filter_post) || !empty($filter_author) || !empty($filter_email) || isset($filter_status) || !empty($filter_date_added)) { ?>
                     <div class="row">
                         <div class="col-lg-12 filter-tag">
                             <?php if ($filter_post) { ?>
@@ -80,6 +82,12 @@
                             <div class="filter-info pull-left">
                                 <label class="control-label"><?php echo $entry_author; ?>:</label> <label class="filter-label"> <?php echo $filter_author; ?></label>
                                 <a class="filter-remove" onclick="removeFilter(this, 'filter_author');"><i class="fa fa-times"></i></a>
+                            </div>
+                            <?php } ?>
+                            <?php if ($filter_email) { ?>
+                            <div class="filter-info pull-left">
+                                <label class="control-label"><?php echo $entry_email; ?>:</label> <label class="filter-label"> <?php echo $filter_email; ?></label>
+                                <a class="filter-remove" onclick="removeFilter(this, 'filter_email');"><i class="fa fa-times"></i></a>
                             </div>
                             <?php } ?>
                             <?php if (isset($filter_status)) { ?>
@@ -131,6 +139,11 @@
                                     <?php } else { ?>
                                     <a href="<?php echo $sort_author; ?>"><?php echo $column_author; ?></a>
                                     <?php } ?></td>
+                                <td class="text-left"><?php if ($sort == 'c.email') { ?>
+                                    <a href="<?php echo $sort_email; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_email; ?></a>
+                                    <?php } else { ?>
+                                    <a href="<?php echo $sort_email; ?>"><?php echo $column_email; ?></a>
+                                    <?php } ?></td>
                                 <td class="text-left"><?php if ($sort == 'c.status') { ?>
                                     <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                                     <?php } else { ?>
@@ -158,6 +171,9 @@
                                 </td>
                                 <td class="text-left">
                                     <span class="comment-author"><?php echo $comment['author']; ?></span>
+                                </td>
+                                <td class="text-left">
+                                    <span class="comment-email"><?php echo $comment['email']; ?></span>
                                 </td>
                                 <td class="text-left">
                                     <span class="comment-status"data-prepend="<?php echo $text_select; ?>" data-source="{'1': '<?php echo $text_enabled; ?>', '0': '<?php echo $text_disabled; ?>'}"><?php echo $comment['status']; ?></span>
@@ -194,6 +210,21 @@
                     type: 'post',
                     url: 'index.php?route=blog/comment/inline&token=<?php echo $token; ?>&comment_id=' + $(this).parent().parent().find( "input[name*=\'selected\']").val(),
                     data: {author: params.value},
+                    async: false,
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        return false;
+                    }
+                })
+            },
+            showbuttons: false,
+        });
+
+        $('.comment-email').editable({
+            url: function (params) {
+                $.ajax({
+                    type: 'post',
+                    url: 'index.php?route=blog/comment/inline&token=<?php echo $token; ?>&comment_id=' + $(this).parent().parent().find( "input[name*=\'selected\']").val(),
+                    data: {email: params.value},
                     async: false,
                     error: function (xhr, ajaxOptions, thrownError) {
                         return false;
@@ -261,6 +292,12 @@
 
         if (filter_author) {
             url += '&filter_author=' + encodeURIComponent(filter_author);
+        }
+
+        var filter_email = $('input[name=\'filter_email\']').val();
+
+        if (filter_email) {
+            url += '&filter_email=' + encodeURIComponent(filter_email);
         }
 
         var filter_status = $('select[name=\'filter_status\']').val();

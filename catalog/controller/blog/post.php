@@ -241,7 +241,7 @@ class ControllerBlogPost extends Controller
 
             $data['comment_status'] = $this->config->get('config_blog_comment_enable');
 
-            if ($this->config->get('config_comment_guest') || $this->customer->isLogged()) {
+            if ($this->config->get('config_blog_comment_guest') || $this->customer->isLogged()) {
                 $data['comment_guest'] = true;
             } else {
                 $data['comment_guest'] = false;
@@ -253,7 +253,9 @@ class ControllerBlogPost extends Controller
                 $data['customer_name'] = '';
             }
 
-            $data['comments'] = sprintf($this->language->get('text_comments'), (int)$post_info['comments']);
+            $data['text_comments'] = sprintf(((int)$post_info['comments'] > 1) ? $this->language->get('text_comments') : $this->language->get('text_comment'), (int)$post_info['comments']);
+
+            $data['comments'] = $post_info['comments'];
 
             $data['description'] = html_entity_decode($post_info['description'], ENT_QUOTES, 'UTF-8');
 
@@ -398,13 +400,14 @@ class ControllerBlogPost extends Controller
 
         $limit = $this->config->get('config_blog_comment_limit');
 
-        $results = $this->model_blog_comment->getCommentsByBlogId($this->request->get['post_id'], ($page - 1) * $limit, $limit);
+        $results = $this->model_blog_comment->getCommentsByPostId($this->request->get['post_id'], ($page - 1) * $limit, $limit);
 
         foreach ($results as $result) {
             $data['comments'][] = array(
-                'author' => $result['author'],
-                'email'  => $result['email'],
-                'text'   => strip_tags($result['text']),
+                'comment_id' => $result['comment_id'],
+                'author'     => $result['author'],
+                'email'      => $result['email'],
+                'text'       => strip_tags($result['text']),
                 'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
             );
         }

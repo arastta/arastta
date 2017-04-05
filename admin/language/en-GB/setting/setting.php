@@ -238,6 +238,7 @@ $_['entry_blog_related_row']           = 'Posts Per Row';
 $_['entry_blog_related_thumb']         = 'Display Post Thumb';
 $_['entry_blog_comment_limit']         = 'Comments Per Page';
 $_['entry_blog_comment_enable']        = 'Allow Comment';
+$_['entry_blog_comment_guest']         = 'Allow Guest';
 $_['entry_blog_comment_mail']          = 'New Comment Alert Mail';
 $_['entry_blog_related_short_description_length'] = 'Related Short Description Limit';
 

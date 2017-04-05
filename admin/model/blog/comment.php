@@ -10,10 +10,11 @@
 class ModelBlogComment extends Model
 {
 
-    public function addComment($data) {
+    public function addComment($data)
+    {
         $this->trigger->fire('pre.admin.blog.comment.add', array(&$data));
 
-        $this->db->query("INSERT INTO " . DB_PREFIX . "blog_comment SET author = '" . $this->db->escape($data['author']) . "', post_id = '" . (int)$data['post_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
+        $this->db->query("INSERT INTO " . DB_PREFIX . "blog_comment SET email = '" . $this->db->escape($data['email']) . "', author = '" . $this->db->escape($data['author']) . "', post_id = '" . (int) $data['post_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', status = '" . (int) $data['status'] . "', date_added = NOW()");
 
         $comment_id = $this->db->getLastId();
 
@@ -24,46 +25,54 @@ class ModelBlogComment extends Model
         return $comment_id;
     }
 
-    public function editComment($comment_id, $data) {
+    public function editComment($comment_id, $data)
+    {
         $this->trigger->fire('pre.admin.blog.comment.edit', array(&$data));
 
-        $this->db->query("UPDATE " . DB_PREFIX . "blog_comment SET author = '" . $this->db->escape($data['author']) . "', post_id = '" . (int)$data['post_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE comment_id = '" . (int)$comment_id . "'");
+        $this->db->query("UPDATE " . DB_PREFIX . "blog_comment SET email = '" . $this->db->escape($data['email']) . "', author = '" . $this->db->escape($data['author']) . "', post_id = '" . (int) $data['post_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', status = '" . (int) $data['status'] . "', date_modified = NOW() WHERE comment_id = '" . (int) $comment_id . "'");
 
         $this->cache->delete('blog.post');
 
         $this->trigger->fire('post.admin.blog.comment.edit', array(&$comment_id));
     }
 
-    public function deleteComment($comment_id) {
+    public function deleteComment($comment_id)
+    {
         $this->trigger->fire('pre.admin.blog.comment.delete', array(&$comment_id));
 
-        $this->db->query("DELETE FROM " . DB_PREFIX . "blog_comment WHERE comment_id = '" . (int)$comment_id . "'");
+        $this->db->query("DELETE FROM " . DB_PREFIX . "blog_comment WHERE comment_id = '" . (int) $comment_id . "'");
 
         $this->cache->delete('blog.post');
 
         $this->trigger->fire('post.admin.blog.comment.delete', array(&$comment_id));
     }
 
-    public function updateComment($comment_id, $key, $value) {
+    public function updateComment($comment_id, $key, $value)
+    {
         $this->trigger->fire('pre.admin.blog.comment.update', array(&$comment_id, &$key, &$value));
 
-        $this->db->query("UPDATE " . DB_PREFIX . "blog_comment SET " . $key . " = '" . $this->db->escape($value) . "', date_modified = NOW() WHERE comment_id = '" . (int)$comment_id . "'");
+        $this->db->query("UPDATE " . DB_PREFIX . "blog_comment SET " . $key . " = '" . $this->db->escape($value) . "', date_modified = NOW() WHERE comment_id = '" . (int) $comment_id . "'");
 
         $this->trigger->fire('post.admin.blog.comment.update', array(&$comment_id, &$key, &$value));
     }
 
-    public function getComment($comment_id) {
-        $query = $this->db->query("SELECT DISTINCT *, (SELECT pd.name FROM " . DB_PREFIX . "blog_post_description pd WHERE pd.post_id = c.post_id AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS post FROM " . DB_PREFIX . "blog_comment c WHERE c.comment_id = '" . (int)$comment_id . "'");
+    public function getComment($comment_id)
+    {
+        $query = $this->db->query("SELECT DISTINCT *, (SELECT pd.name FROM " . DB_PREFIX . "blog_post_description pd WHERE pd.post_id = c.post_id AND pd.language_id = '" . (int) $this->config->get('config_language_id') . "') AS post FROM " . DB_PREFIX . "blog_comment c WHERE c.comment_id = '" . (int) $comment_id . "'");
 
         return $query->row;
     }
 
     public function getComments($data = array())
     {
-        $sql = "SELECT c.*, pd.name as name FROM " . DB_PREFIX . "blog_comment c LEFT JOIN " . DB_PREFIX . "blog_post_description pd ON (c.post_id = pd.post_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+        $sql = "SELECT c.*, pd.name as name FROM " . DB_PREFIX . "blog_comment c LEFT JOIN " . DB_PREFIX . "blog_post_description pd ON (c.post_id = pd.post_id) WHERE pd.language_id = '" . (int) $this->config->get('config_language_id') . "'";
 
         if (!empty($data['filter_post'])) {
             $sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_post']) . "%'";
+        }
+
+        if (!empty($data['filter_email'])) {
+            $sql .= " AND c.email LIKE '" . $this->db->escape($data['filter_email']) . "%'";
         }
 
         if (!empty($data['filter_author'])) {
@@ -71,7 +80,7 @@ class ModelBlogComment extends Model
         }
 
         if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
-            $sql .= " AND c.status = '" . (int)$data['filter_status'] . "'";
+            $sql .= " AND c.status = '" . (int) $data['filter_status'] . "'";
         }
 
         if (!empty($data['filter_date_added'])) {
@@ -80,6 +89,7 @@ class ModelBlogComment extends Model
 
         $sort_data = array(
             'pd.name',
+            'c.email',
             'c.author',
             'c.rating',
             'c.status',
@@ -117,10 +127,14 @@ class ModelBlogComment extends Model
 
     public function getTotalComments()
     {
-        $sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "blog_comment c LEFT JOIN " . DB_PREFIX . "blog_post_description pd ON (c.post_id = pd.post_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+        $sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "blog_comment c LEFT JOIN " . DB_PREFIX . "blog_post_description pd ON (c.post_id = pd.post_id) WHERE pd.language_id = '" . (int) $this->config->get('config_language_id') . "'";
 
         if (!empty($data['filter_product'])) {
             $sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_product']) . "%'";
+        }
+
+        if (!empty($data['filter_email'])) {
+            $sql .= " AND c.email LIKE '" . $this->db->escape($data['filter_email']) . "%'";
         }
 
         if (!empty($data['filter_author'])) {
@@ -128,7 +142,7 @@ class ModelBlogComment extends Model
         }
 
         if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
-            $sql .= " AND c.status = '" . (int)$data['filter_status'] . "'";
+            $sql .= " AND c.status = '" . (int) $data['filter_status'] . "'";
         }
 
         if (!empty($data['filter_date_added'])) {

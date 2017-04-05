@@ -23,9 +23,13 @@ $_['text_week']        = 'week';
 $_['text_semi_month']  = 'half-month';
 $_['text_month']       = 'month';
 $_['text_year']        = 'year';
+$_['text_comment']     = '%s comment';
 $_['text_comments']    = '%s comments';
 $_['tab_comments']     = 'Comments (%s)';
-$_['text_more']          = 'More...';
+$_['text_more']        = 'More...';
+$_['text_name']        = 'Your Name';
+$_['text_email']       = 'Your Email';
+$_['text_new_commet']  = 'Comment';
 
 // Buttons
 

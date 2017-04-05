@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package     Arastta eCommerce
  * @copyright   2015-2017 Arastta Association. All rights reserved.
@@ -7,7 +6,8 @@
  * @license     GNU GPL version 3; see LICENSE.txt
  * @link        https://arastta.org
  */
-class ControllerBlogComment extends Controller
+
+ class ControllerBlogComment extends Controller
 {
     private $error = array();
 
@@ -39,6 +39,10 @@ class ControllerBlogComment extends Controller
 
             if (isset($this->request->get['filter_post'])) {
                 $url .= '&filter_post=' . urlencode(html_entity_decode($this->request->get['filter_post'], ENT_QUOTES, 'UTF-8'));
+            }
+
+            if (isset($this->request->get['filter_email'])) {
+                $url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
             }
 
             if (isset($this->request->get['filter_author'])) {
@@ -96,6 +100,10 @@ class ControllerBlogComment extends Controller
 
             if (isset($this->request->get['filter_post'])) {
                 $url .= '&filter_post=' . urlencode(html_entity_decode($this->request->get['filter_post'], ENT_QUOTES, 'UTF-8'));
+            }
+
+            if (isset($this->request->get['filter_email'])) {
+                $url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
             }
 
             if (isset($this->request->get['filter_author'])) {
@@ -157,6 +165,10 @@ class ControllerBlogComment extends Controller
                 $url .= '&filter_post=' . urlencode(html_entity_decode($this->request->get['filter_post'], ENT_QUOTES, 'UTF-8'));
             }
 
+            if (isset($this->request->get['filter_email'])) {
+                $url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
+            }
+
             if (isset($this->request->get['filter_author'])) {
                 $url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
             }
@@ -193,6 +205,12 @@ class ControllerBlogComment extends Controller
             $filter_post = $this->request->get['filter_post'];
         } else {
             $filter_post = null;
+        }
+
+        if (isset($this->request->get['filter_email'])) {
+            $filter_email = $this->request->get['filter_email'];
+        } else {
+            $filter_email = null;
         }
 
         if (isset($this->request->get['filter_author'])) {
@@ -238,6 +256,10 @@ class ControllerBlogComment extends Controller
             $url .= '&filter_post=' . urlencode(html_entity_decode($this->request->get['filter_post'], ENT_QUOTES, 'UTF-8'));
         }
 
+        if (isset($this->request->get['filter_email'])) {
+            $url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
+        }
+
         if (isset($this->request->get['filter_author'])) {
             $url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
         }
@@ -274,6 +296,7 @@ class ControllerBlogComment extends Controller
 
         $filter_data = array(
             'filter_post'       => $filter_post,
+            'filter_email'      => $filter_email,
             'filter_author'     => $filter_author,
             'filter_status'     => $filter_status,
             'filter_date_added' => $filter_date_added,
@@ -291,6 +314,7 @@ class ControllerBlogComment extends Controller
             $data['comments'][] = array(
                 'comment_id' => $result['comment_id'],
                 'name'       => $result['name'],
+                'email'      => $result['email'],
                 'author'     => $result['author'],
                 'status'     => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
                 'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
@@ -326,6 +350,10 @@ class ControllerBlogComment extends Controller
             $url .= '&filter_post=' . urlencode(html_entity_decode($this->request->get['filter_post'], ENT_QUOTES, 'UTF-8'));
         }
 
+        if (isset($this->request->get['filter_email'])) {
+            $url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
+        }
+
         if (isset($this->request->get['filter_author'])) {
             $url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
         }
@@ -349,6 +377,7 @@ class ControllerBlogComment extends Controller
         }
 
         $data['sort_post']    = $this->url->link('blog/comment', 'token=' . $this->session->data['token'] . '&sort=pd.name' . $url, 'SSL');
+        $data['sort_email']     = $this->url->link('blog/comment', 'token=' . $this->session->data['token'] . '&sort=c.email' . $url, 'SSL');
         $data['sort_author']     = $this->url->link('blog/comment', 'token=' . $this->session->data['token'] . '&sort=c.author' . $url, 'SSL');
         $data['sort_status']     = $this->url->link('blog/comment', 'token=' . $this->session->data['token'] . '&sort=c.status' . $url, 'SSL');
         $data['sort_date_added'] = $this->url->link('blog/comment', 'token=' . $this->session->data['token'] . '&sort=c.date_added' . $url, 'SSL');
@@ -357,6 +386,10 @@ class ControllerBlogComment extends Controller
 
         if (isset($this->request->get['filter_post'])) {
             $url .= '&filter_post=' . urlencode(html_entity_decode($this->request->get['filter_post'], ENT_QUOTES, 'UTF-8'));
+        }
+
+        if (isset($this->request->get['filter_email'])) {
+            $url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
         }
 
         if (isset($this->request->get['filter_author'])) {
@@ -391,6 +424,7 @@ class ControllerBlogComment extends Controller
         $data['results'] = sprintf($this->language->get('text_pagination'), ($comment_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($comment_total - $this->config->get('config_limit_admin'))) ? $comment_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $comment_total, ceil($comment_total / $this->config->get('config_limit_admin')));
 
         $data['filter_post']       = $filter_post;
+        $data['filter_email']      = $filter_email;
         $data['filter_author']     = $filter_author;
         $data['filter_status']     = $filter_status;
         $data['filter_date_added'] = $filter_date_added;
@@ -424,6 +458,12 @@ class ControllerBlogComment extends Controller
             $data['error_post'] = '';
         }
 
+        if (isset($this->error['email'])) {
+            $data['error_email'] = $this->error['email'];
+        } else {
+            $data['error_email'] = '';
+        }
+
         if (isset($this->error['author'])) {
             $data['error_author'] = $this->error['author'];
         } else {
@@ -448,6 +488,10 @@ class ControllerBlogComment extends Controller
 
         if (isset($this->request->get['filter_post'])) {
             $url .= '&filter_post=' . urlencode(html_entity_decode($this->request->get['filter_post'], ENT_QUOTES, 'UTF-8'));
+        }
+
+        if (isset($this->request->get['filter_email'])) {
+            $url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
         }
 
         if (isset($this->request->get['filter_author'])) {
@@ -504,6 +548,14 @@ class ControllerBlogComment extends Controller
             $data['post'] = '';
         }
 
+        if (isset($this->request->post['email'])) {
+            $data['email'] = $this->request->post['email'];
+        } elseif (!empty($comment_info)) {
+            $data['email'] = $comment_info['email'];
+        } else {
+            $data['email'] = '';
+        }
+
         if (isset($this->request->post['author'])) {
             $data['author'] = $this->request->post['author'];
         } elseif (!empty($comment_info)) {
@@ -542,6 +594,10 @@ class ControllerBlogComment extends Controller
         }
         if (!$this->request->post['post_id']) {
             $this->error['post'] = $this->language->get('error_post');
+        }
+
+        if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
+            $this->error['email'] = $this->language->get('error_email');
         }
 
         if ((utf8_strlen($this->request->post['author']) < 3) || (utf8_strlen($this->request->post['author']) > 64)) {
@@ -590,7 +646,7 @@ class ControllerBlogComment extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if (!isset($this->request->post['author']) && !isset($this->request->post['status']) && !isset($this->request->post['date_added'])) {
+        if (!isset($this->request->post['email']) && !isset($this->request->post['author']) && !isset($this->request->post['status']) && !isset($this->request->post['date_added'])) {
             $this->error['warning'] = $this->language->get('error_inline_field');
         }
 

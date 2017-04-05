@@ -37,6 +37,15 @@
                         </div>
                     </div>
                     <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
+                            <?php if ($error_email) { ?>
+                            <div class="text-danger"><?php echo $error_email; ?></div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <div class="form-group required">
                         <label class="col-sm-2 control-label" for="input-post"><span data-toggle="tooltip" title="<?php echo $help_post; ?>"><?php echo $entry_post; ?></span></label>
                         <div class="col-sm-10">
                             <input type="text" name="post" value="<?php echo $post; ?>" placeholder="<?php echo $entry_post; ?>" id="input-post" class="form-control" />

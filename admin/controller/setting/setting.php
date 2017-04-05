@@ -1407,6 +1407,12 @@ class ControllerSettingSetting extends Controller {
             $data['config_blog_comment_enable'] = $this->config->get('config_blog_comment_enable');
         }
 
+        if (isset($this->request->post['config_blog_comment_guest'])) {
+            $data['config_blog_comment_guest'] = $this->request->post['config_blog_comment_guest'];
+        } else {
+            $data['config_blog_comment_guest'] = $this->config->get('config_blog_comment_guest');
+        }
+
         if (isset($this->request->post['config_blog_comment_mail'])) {
             $data['config_blog_comment_mail'] = $this->request->post['config_blog_comment_mail'];
         } else {

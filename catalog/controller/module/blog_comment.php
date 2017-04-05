@@ -40,11 +40,11 @@ class ControllerModuleBlogComment extends Controller
                     'post_id'     => $result['post_id'],
                     'customer_id' => $result['customer_id'],
                     'name'        => $result['name'],
-                    'text'        => utf8_substr(strip_tags(html_entity_decode($result['text'], ENT_QUOTES, 'UTF-8')), 0, $settingt['description_length']) . '..';,
+                    'text'        => $result['text'],
                     'thumb'       => $image,
                     'author'      => $result['author'],
                     'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-                    'href'        => $this->url->link('blog/post', 'post_id=' . $result['post_id'])
+                    'href'        => $this->url->link('blog/post', 'post_id=' . $result['post_id']) . '#' . $result['comment_id']
                 );
             }
 

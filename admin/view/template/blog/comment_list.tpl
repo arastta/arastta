@@ -89,6 +89,11 @@
                                     <?php } else { ?>
                                     <a href="<?php echo $sort_author; ?>"><?php echo $column_author; ?></a>
                                     <?php } ?></td>
+                                <td class="text-left"><?php if ($sort == 'c.email') { ?>
+                                    <a href="<?php echo $sort_email; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_email; ?></a>
+                                    <?php } else { ?>
+                                    <a href="<?php echo $sort_email; ?>"><?php echo $column_email; ?></a>
+                                    <?php } ?></td>
                                 <td class="text-left"><?php if ($sort == 'c.status') { ?>
                                     <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                                     <?php } else { ?>
@@ -113,6 +118,7 @@
                                     <?php } ?></td>
                                 <td class="text-left"><?php echo $comment['name']; ?></td>
                                 <td class="text-left"><?php echo $comment['author']; ?></td>
+                                <td class="text-left"><?php echo $comment['email']; ?></td>
                                 <td class="text-left"><?php echo $comment['status']; ?></td>
                                 <td class="text-left"><?php echo $comment['date_added']; ?></td>
                                 <td class="text-right"><a href="<?php echo $comment['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
@@ -149,6 +155,12 @@
 
         if (filter_author) {
             url += '&filter_author=' + encodeURIComponent(filter_author);
+        }
+
+        var filter_email = $('input[name=\'filter_email\']').val();
+
+        if (filter_email ) {
+            url += '&filter_email=' + encodeURIComponent(filter_email);
         }
 
         var filter_status = $('select[name=\'filter_status\']').val();
