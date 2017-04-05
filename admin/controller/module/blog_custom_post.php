@@ -9,13 +9,13 @@
 
 use Arastta\Component\Form\Form as AForm;
 
-class ControllerModuleBlogFeatured extends Controller
+class ControllerModuleBlogCustomPost extends Controller
 {
     private $error = array();
 
     public function index()
     {
-        $this->load->language('module/blog_featured');
+        $this->load->language('module/blog_custom_post');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
@@ -23,7 +23,7 @@ class ControllerModuleBlogFeatured extends Controller
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             if (!isset($this->request->get['module_id'])) {
-                $this->model_extension_module->addModule('blog_featured', $this->request->post);
+                $this->model_extension_module->addModule('blog_custom_post', $this->request->post);
             } else {
                 $this->model_extension_module->editModule($this->request->get['module_id'], $this->request->post);
             }
@@ -39,11 +39,11 @@ class ControllerModuleBlogFeatured extends Controller
                     $module_id = '&module_id=' . $this->db->getLastId();
                 }
 
-                $this->response->redirect($this->url->link('module/blog_featured', 'token=' . $this->session->data['token'] . $module_id, 'SSL'));
+                $this->response->redirect($this->url->link('module/blog_custom_post', 'token=' . $this->session->data['token'] . $module_id, 'SSL'));
             }
 
             if (isset($this->request->post['button']) && $this->request->post['button'] == 'new') {
-                $this->response->redirect($this->url->link('module/blog_featured', 'token=' . $this->session->data['token'], 'SSL'));
+                $this->response->redirect($this->url->link('module/blog_custom_post', 'token=' . $this->session->data['token'], 'SSL'));
             }
 
             $this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
@@ -77,9 +77,9 @@ class ControllerModuleBlogFeatured extends Controller
         }
 
         if (!isset($this->request->get['module_id'])) {
-            $data['action'] = $this->url->link('module/blog_featured', 'token=' . $this->session->data['token'], 'SSL');
+            $data['action'] = $this->url->link('module/blog_custom_post', 'token=' . $this->session->data['token'], 'SSL');
         } else {
-            $data['action'] = $this->url->link('module/blog_featured', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL');
+            $data['action'] = $this->url->link('module/blog_custom_post', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL');
         }
 
         $data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
@@ -146,7 +146,7 @@ class ControllerModuleBlogFeatured extends Controller
         } elseif (!empty($module_info)) {
             $data['width'] = $module_info['width'];
         } else {
-            $data['width'] = 200;
+            $data['width'] = 40;
         }
 
         if (isset($this->request->post['height'])) {
@@ -154,7 +154,7 @@ class ControllerModuleBlogFeatured extends Controller
         } elseif (!empty($module_info)) {
             $data['height'] = $module_info['height'];
         } else {
-            $data['height'] = 200;
+            $data['height'] = 40;
         }
 
         if (isset($this->request->post['status'])) {
@@ -171,7 +171,7 @@ class ControllerModuleBlogFeatured extends Controller
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer']      = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('module/blog_featured.tpl', $data));
+        $this->response->setOutput($this->load->view('module/blog_custom_post.tpl', $data));
     }
 
     protected function getFormFields($data)
@@ -221,7 +221,7 @@ class ControllerModuleBlogFeatured extends Controller
 
     protected function validate()
     {
-        if (!$this->user->hasPermission('modify', 'module/blog_featured')) {
+        if (!$this->user->hasPermission('modify', 'module/blog_custom_post')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 

@@ -3,9 +3,9 @@
     <div class="page-header">
         <div class="container-fluid">
             <div class="pull-right">
-                <button type="submit" onclick="save('save')" form="form-blog-feature" data-toggle="tooltip" title="" class="btn btn-success" data-original-title="Save"><i class="fa fa-check"></i></button>
-                <button type="submit" form="form-blog-feature" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
-                <button type="submit" onclick="save('new')" form="form-blog-feature" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
+                <button type="submit" onclick="save('save')" form="form-blog-custom-post" data-toggle="tooltip" title="" class="btn btn-success" data-original-title="Save"><i class="fa fa-check"></i></button>
+                <button type="submit" form="form-blog-custom-post" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Save & Close"><i class="fa fa-save text-success"></i></button>
+                <button type="submit" onclick="save('new')" form="form-blog-custom-post" data-toggle="tooltip" title="<?php echo $button_savenew; ?>" class="btn btn-default" data-original-title="Save & New"><i class="fa fa-plus text-success"></i></button>
                 <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-times-circle text-danger"></i></a>
             </div>
             <h1><?php echo $heading_title; ?></h1>
@@ -26,7 +26,8 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript"><!--
+</div>
+<script type="text/javascript"><!--
     $('input[name=\'post\']').autocomplete({
         source: function(request, response) {
             $.ajax({
@@ -45,16 +46,16 @@
         select: function(item) {
             $('input[name=\'post\']').val('');
 
-            $('#featured-post' + item['value']).remove();
+            $('#custom_postd-post' + item['value']).remove();
 
-            $('#featured-post').append('<div id="featured-post' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="post[]" value="' + item['value'] + '" /></div>');
+            $('#custom_postd-post').append('<div id="custom_postd-post' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="post[]" value="' + item['value'] + '" /></div>');
         }
     });
 
-    $('#featured-post').delegate('.fa-minus-circle', 'click', function() {
+    $('#custom_postd-post').delegate('.fa-minus-circle', 'click', function() {
         $(this).parent().remove();
     });
-    //--></script></div>
+    //--></script>
 <script type="text/javascript"><!--
 function save(type){
     var input = document.createElement('input');

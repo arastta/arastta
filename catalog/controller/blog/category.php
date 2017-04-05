@@ -30,16 +30,22 @@ class ControllerBlogCategory extends Controller
             $filter = '';
         }
 
+        $default_post_sort_order = explode('-', $this->config->get('config_blog_post_list_sort_order'));
+
+        if (count($default_post_sort_order) > 1) {
+            $sort  = $default_post_sort_order[0];
+            $order = $default_post_sort_order[1];
+        } else {
+            $sort  = $default_post_sort_order[0];
+            $order = 'ASC';
+        }
+
         if (isset($this->request->get['sort'])) {
             $sort = $this->request->get['sort'];
-        } else {
-            $sort = 'p.sort_order';
         }
 
         if (isset($this->request->get['order'])) {
             $order = $this->request->get['order'];
-        } else {
-            $order = 'ASC';
         }
 
         if (isset($this->request->get['page'])) {
@@ -203,14 +209,14 @@ class ControllerBlogCategory extends Controller
                 if ($result['image']) {
                     $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_blog_post_list_width'), $this->config->get('config_blog_post_list_height'));
                 } else {
-                    $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_blog_post_list_width'), $this->config->get('config_blog_post_list_height'));
+                    $image = '';
                 }
 
                 $category = $category_info['name'];
 
                 $comment_total = $this->model_blog_comment->getTotalCommentsByPostId($result['post_id']);
 
-                $this->trigger->fire('pre.blog.display', array(&$result, 'category'));
+                $this->trigger->fire('pre.post.display', array(&$result, 'category'));
 
                 $data['posts'][] = array(
                     'post_id'       => $result['post_id'],

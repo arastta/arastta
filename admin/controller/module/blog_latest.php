@@ -111,7 +111,7 @@ class ControllerModuleBlogLatest extends Controller
         } elseif (!empty($module_info)) {
             $data['width'] = $module_info['width'];
         } else {
-            $data['width'] = 200;
+            $data['width'] = 40;
         }
 
         if (isset($this->request->post['height'])) {
@@ -119,7 +119,7 @@ class ControllerModuleBlogLatest extends Controller
         } elseif (!empty($module_info)) {
             $data['height'] = $module_info['height'];
         } else {
-            $data['height'] = 200;
+            $data['height'] = 40;
         }
 
         if (isset($this->request->post['status'])) {

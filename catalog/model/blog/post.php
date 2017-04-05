@@ -55,6 +55,10 @@ class ModelBlogPost extends Model
 
         $sql .= " LEFT JOIN " . DB_PREFIX . "blog_post_description pd ON (p.post_id = pd.post_id) LEFT JOIN " . DB_PREFIX . "blog_post_to_store p2s ON (p.post_id = p2s.post_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
 
+        if (isset($data['filter_featured'])) {
+            $sql .= " AND p.featured= '" . (int)$data['filter_featured'] . "'";
+        }
+
         if (!empty($data['filter_category_id'])) {
             if (!empty($data['filter_sub_category'])) {
                 $sql .= " AND cp.path_id = '" . (int)$data['filter_category_id'] . "'";
@@ -102,8 +106,19 @@ class ModelBlogPost extends Model
             'p.viewed',
             'p.author',
             'p.sort_order',
-            'p.date_added'
+            'p.date_added',
+            'p.date_modified'
         );
+
+        $default_post_sort_order = explode('-', $this->config->get('config_blog_post_list_sort_order'));
+
+        if (count($default_post_sort_order) > 1) {
+            $sort  = $default_post_sort_order[0];
+            $order = $default_post_sort_order[1];
+        } else {
+            $sort  = $default_post_sort_order[0];
+            $order = 'ASC';
+        }
 
         if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
             if ($data['sort'] == 'pd.name' || $data['sort'] == 'p.author') {
@@ -112,13 +127,17 @@ class ModelBlogPost extends Model
                 $sql .= " ORDER BY " . $data['sort'];
             }
         } else {
-            $sql .= " ORDER BY p.sort_order";
+            if ($sort == 'pd.name' || $sort == 'p.author') {
+                $sql .= " ORDER BY LCASE(" . $sort . ")";
+            } else {
+                $sql .= " ORDER BY " . $sort;
+            }
         }
 
         if (isset($data['order']) && ($data['order'] == 'DESC')) {
             $sql .= " DESC, LCASE(pd.name) DESC";
         } else {
-            $sql .= " ASC, LCASE(pd.name) ASC";
+            $sql .= " " . $order . ", LCASE(pd.name) " . $order;
         }
 
         if (isset($data['start']) || isset($data['limit'])) {
@@ -225,6 +244,13 @@ class ModelBlogPost extends Model
     public function getLatestPosts($data = array())
     {
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "blog i LEFT JOIN " . DB_PREFIX . "blog_description id ON (i.post_id = id.post_id) LEFT JOIN " . DB_PREFIX . "blog_to_store i2s ON (i.post_id = i2s.post_id) WHERE id.language_id = '" . (int) $this->config->get('config_language_id') . "' AND i2s.store_id = '" . (int) $this->config->get('config_store_id') . "' AND i.status = '1' AND i.sort_order <> '-1' ORDER BY i.sort_order, i.post_id DESC LIMIT " . (int) $data['start'] . "," . (int) $data['limit'] . "");
+
+        return $query->rows;
+    }
+
+    public function getCategories($post_id)
+    {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "blog_post_to_category WHERE post_id = '" . (int)$post_id . "'");
 
         return $query->rows;
     }

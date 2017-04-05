@@ -788,6 +788,25 @@ if (version_compare(VERSION, '1.6.0', '<')) {
         $this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
     }
 
+    // Insert Blog Layout
+    $this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = 'Blog Home'");
+
+    $layout_id = $this->db->getLastId();
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', `store_id` = '0', `route` = 'blog/home'");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = 'Blog Post'");
+
+    $layout_id = $this->db->getLastId();
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', `store_id` = '0', `route` = 'blog/post'");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = 'Blog Category'");
+
+    $layout_id = $this->db->getLastId();
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', `store_id` = '0', `route` = 'blog/category'");
+
     // Insert setting table
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_list_width', `value` = '228'");
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_list_height', `value` = '228'");

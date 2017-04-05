@@ -106,6 +106,14 @@ class ControllerModuleBlogComment extends Controller
             $data['limit'] = 5;
         }
 
+        if (isset($this->request->post['description_length'])) {
+            $data['description_length'] = $this->request->post['description_length'];
+        } elseif (!empty($module_info)) {
+            $data['description_length'] = $module_info['description_length'];
+        } else {
+            $data['description_length'] = 300;
+        }
+
         if (isset($this->request->post['image'])) {
             $data['image'] = $this->request->post['image'];
         } elseif (!empty($module_info)) {
@@ -119,7 +127,7 @@ class ControllerModuleBlogComment extends Controller
         } elseif (!empty($module_info)) {
             $data['width'] = $module_info['width'];
         } else {
-            $data['width'] = 200;
+            $data['width'] = 40;
         }
 
         if (isset($this->request->post['height'])) {
@@ -127,7 +135,7 @@ class ControllerModuleBlogComment extends Controller
         } elseif (!empty($module_info)) {
             $data['height'] = $module_info['height'];
         } else {
-            $data['height'] = 200;
+            $data['height'] = 40;
         }
 
         if (isset($this->request->post['status'])) {
@@ -160,6 +168,9 @@ class ControllerModuleBlogComment extends Controller
 
         $limit = array('value' => $data['limit'], 'required' => 'required');
         $form->addElement(new Arastta\Component\Form\Element\Textbox($this->language->get('entry_limit'), 'limit', $limit));
+
+        $description_length = array('value' => $data['description_length'], 'required' => 'required');
+        $form->addElement(new Arastta\Component\Form\Element\Textbox($this->language->get('entry_description_length'), 'description_length', $description_length));
 
         $image = array('value' => $data['image'], 'labelclass' => 'radio-inline');
         $form->addElement(new Arastta\Component\Form\Element\YesNo($this->language->get('entry_image'), 'image', $image, $option_text));

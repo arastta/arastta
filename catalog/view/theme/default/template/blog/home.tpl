@@ -24,10 +24,19 @@
                 <?php foreach ($featured_posts as $featured_post) { ?>
                 <div class="item">
                   <div class="row">
+                    <?php if ($featured_post['thumb']) { ?>
+                    <?php $class_featured_post = 'col-sm-8'; ?>
+                    <?php } else { ?>
+                    <?php $class_featured_post = 'col-sm-12'; ?>
+                    <?php } ?>
+                    <?php if ($featured_post['thumb']) { ?>
                     <div class="col-sm-4">
-                      <img src="<?php echo $featured_post['thumb']; ?>" class="img-responsive" title="<?php echo $featured_post['name']; ?>" alt="<?php echo $featured_post['name']; ?>" />
+                        <a href="<?php echo $featured_post['href']; ?>" title="<?php echo $featured_post['name']; ?>">
+                            <img src="<?php echo $featured_post['thumb']; ?>" class="img-responsive" title="<?php echo $featured_post['name']; ?>" alt="<?php echo $featured_post['name']; ?>" />
+                        </a>
                     </div>
-                    <div class="col-sm-8" style="padding-right:10px;">
+                    <?php } ?>
+                    <div class="<?php echo $class_featured_post; ?>" style="padding-right:10px;">
                       <h3><?php echo $featured_post['name']; ?></h3>
                       <p><?php echo $featured_post['description']; ?></p>
                     </div>
@@ -45,7 +54,9 @@
                     <?php if ($author) { ?>
                     <a class="blog-author" href="#"><i class="fa fa-user"></i> <?php echo $post['author']; ?></a>
                     <?php } ?>
+                    <?php if ($category) { ?>
                     <a class="blog-category" href="#"><i class="fa fa-bookmark"></i> <?php echo $post['category']; ?></a>
+                    <?php } ?>
                     <?php if ($date_added) { ?>
                     <span class="blog-date"><i class="fa fa-calendar"></i> <?php echo $post['date_added']; ?></span>
                     <?php } ?>
@@ -54,10 +65,19 @@
                     <?php } ?>
                   </div>
                   <div class="row">
+                    <?php if ($post['thumb']) { ?>
+                    <?php $class_post = 'col-sm-8'; ?>
+                    <?php } else { ?>
+                    <?php $class_post = 'col-sm-12'; ?>
+                    <?php } ?>
+                    <?php if ($post['thumb']) { ?>
                     <div class="col-sm-4">
-                      <img src="<?php echo $post['thumb']; ?>" width="300" class="img-responsive" alt="<?php echo $post['name']; ?>" />
+                        <a href="<?php echo $post['href']; ?>" title="<?php echo $post['name']; ?>">
+                            <img src="<?php echo $post['thumb']; ?>" width="300" class="img-responsive" alt="<?php echo $post['name']; ?>" />
+                        </a>
                     </div>
-                    <div class="col-sm-8">
+                    <?php } ?>
+                    <div class="<?php echo $class_post; ?>">
                       <div class="intro">
                         <p><?php echo $post['description']; ?></p>
                         <div class="blog-readmore pull-right">
@@ -69,10 +89,12 @@
                 </div>
                 <?php } ?>
             </div>
+            <?php if ($pagination) { ?>
             <div class="row">
                 <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
                 <div class="col-sm-6 text-right"><?php echo $results; ?></div>
             </div>
+            <?php } ?>
             <?php } ?>
             <?php if (!$featured_posts && !$posts) { ?>
             <p><?php echo $text_empty; ?></p>
@@ -83,12 +105,12 @@
             <?php echo $content_bottom; ?></div>
         <?php echo $column_right; ?></div>
 </div>
-<script>
+<script type="text/javascript"><!--
 $('.blog-slide').owlCarousel({
     loop:true,
     items: 1,
     nav:true,
     autoPlay:3000
 })
-</script>
+//--></script>
 <?php echo $footer; ?>

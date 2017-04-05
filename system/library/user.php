@@ -11,6 +11,8 @@ class User extends Object {
 
     protected $user_id;
     protected $username;
+    protected $firstname;
+    protected $lastname;
     protected $email;
     protected $user_group_id;
     protected $theme;
@@ -36,6 +38,8 @@ class User extends Object {
             if ($user_query->num_rows) {
                 $this->user_id = $user_query->row['user_id'];
                 $this->username = $user_query->row['username'];
+                $this->firstname = $user_query->row['firstname'];
+                $this->lastname = $user_query->row['lastname'];
                 $this->email = $user_query->row['email'];
                 $this->user_group_id = $user_query->row['user_group_id'];
 
@@ -44,7 +48,7 @@ class User extends Object {
                 if (!isset($this->session->data['theme'])) {
                     $this->session->data['theme'] = !empty($params['theme']) ? $params['theme'] : 'basic';
                 }
-                
+
                 $this->theme = !empty($params['theme']) ? $params['theme'] : 'basic';
                 $this->params = $params;
 
@@ -78,6 +82,8 @@ class User extends Object {
 
             $this->user_id = $user_query->row['user_id'];
             $this->username = $user_query->row['username'];
+            $this->firstname = $user_query->row['firstname'];
+            $this->lastname = $user_query->row['lastname'];
             $this->email = $user_query->row['email'];
             $this->user_group_id = $user_query->row['user_group_id'];
             $this->theme = !empty($params['theme']) ? $params['theme'] : 'basic';
@@ -111,6 +117,8 @@ class User extends Object {
 
         $this->user_id = '';
         $this->username = '';
+        $this->firstname = '';
+        $this->lastname = '';
         $this->email = '';
         $this->theme = '';
         $this->params = '';
@@ -144,10 +152,18 @@ class User extends Object {
         return $this->username;
     }
 
+    public function getFirstName() {
+        return $this->firstname;
+    }
+
+    public function getLastName() {
+        return $this->lastname;
+    }
+
     public function getEmail() {
         return $this->email;
     }
-    
+
     public function getGroupId() {
         return $this->user_group_id;
     }
@@ -155,7 +171,7 @@ class User extends Object {
     public function getTheme() {
         return $this->theme;
     }
-    
+
     public function getParams() {
         return $this->params;
     }

@@ -1592,7 +1592,10 @@ INSERT INTO `ar_layout` (`layout_id`, `name`) VALUES
 (11, 'Information'),
 (12, 'Compare'),
 (13, 'Search'),
-(14, 'Manufacturer Info');
+(14, 'Manufacturer Info'),
+(15, 'Blog Home'),
+(16, 'Blog Post'),
+(17, 'Blog Category');
 
 -- --------------------------------------------------------
 
@@ -1644,7 +1647,10 @@ INSERT INTO `ar_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `rout
 (45, 5, 0, 'product/manufacturer'),
 (46, 14, 0, 'product/manufacturer/info'),
 (52, 12, 0, 'product/compare'),
-(53, 13, 0, 'product/search');
+(53, 13, 0, 'product/search'),
+(53, 15, 0, 'blog/home'),
+(53, 16, 0, 'blog/post'),
+(53, 17, 0, 'blog/category');
 
 -- --------------------------------------------------------
 

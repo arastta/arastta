@@ -30,4 +30,24 @@ class EventEditorReadmore extends Event
                 }
         }
     }
+
+    public function prePostDisplay(&$result, $page)
+    {
+        //$readmore = preg_match_all('~(&lt;img.*view/image/read-more.png[\s\w\d;&=]*&gt;)~', $result['description'], $matches);
+        switch ($page) {
+            case 'post':
+                $result['description'] = str_replace("\r\n<p><!--readmore--></p>\r\n", "", $result['description']);
+                $result['description'] = str_replace('<p><!--readmore--></p>', '', $result['description']);
+                break;
+            default:
+                $check_readmore = strpos($result['description'], $this->readmore);
+
+                if ($check_readmore !== false) {
+                    $description = explode($this->readmore, $result['description']);
+                    $result['description'] = strip_tags(html_entity_decode($description[0])) . '..';
+                } else {
+                    $result['description'] = utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_post_list_description_length', 300)) . '..';
+                }
+        }
+    }
 }

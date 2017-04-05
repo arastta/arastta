@@ -1229,10 +1229,74 @@ class ControllerSettingSetting extends Controller {
             $data['config_blog_post_list_limit'] = $this->config->get('config_blog_post_list_limit');
         }
 
+        if (isset($this->request->post['config_blog_post_list_description_length'])) {
+            $data['config_blog_post_list_description_length'] = $this->request->post['config_blog_post_list_description_length'];
+        } else {
+            $data['config_blog_post_list_description_length'] = $this->config->get('config_blog_post_list_description_length');
+        }
+
         if (isset($this->request->post['config_blog_post_list_row'])) {
             $data['config_blog_post_list_row'] = $this->request->post['config_blog_post_list_row'];
         } else {
             $data['config_blog_post_list_row'] = $this->config->get('config_blog_post_list_row');
+        }
+
+        $data['blog_post_list_sort_orders'] = array();
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_name_asc'),
+            'value' => 'pd.name-ASC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_name_desc'),
+            'value' => 'pd.name-DESC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_date_added_asc'),
+            'value' => 'p.date_added-ASC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_date_added_desc'),
+            'value' => 'p.date_added-DESC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_date_modified_asc'),
+            'value' => 'p.date_modified-ASC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_date_modified_desc'),
+            'value' => 'p.date_modified-DESC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_viewed_asc'),
+            'value' => 'p.viewed-ASC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_viewed_desc'),
+            'value' => 'p.viewed-DESC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_random'),
+            'value' => 'random',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_sort_order'),
+            'value' => 'p.sort_order',
+        );
+
+        if (isset($this->request->post['config_blog_post_list_sort_order'])) {
+            $data['config_blog_post_list_sort_order'] = $this->request->post['config_blog_post_list_sort_order'];
+        } else {
+            $data['config_blog_post_list_sort_order'] = $this->config->get('config_blog_post_list_sort_order');
         }
 
         if (isset($this->request->post['config_blog_post_list_date'])) {

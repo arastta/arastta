@@ -40,7 +40,7 @@ class ControllerModuleBlogComment extends Controller
                     'post_id'     => $result['post_id'],
                     'customer_id' => $result['customer_id'],
                     'name'        => $result['name'],
-                    'text'        => $result['text'],
+                    'text'        => utf8_substr(strip_tags(html_entity_decode($result['text'], ENT_QUOTES, 'UTF-8')), 0, $settingt['description_length']) . '..';,
                     'thumb'       => $image,
                     'author'      => $result['author'],
                     'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),

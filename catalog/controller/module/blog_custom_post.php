@@ -7,11 +7,11 @@
  * @link        https://arastta.org
  */
 
-class ControllerModuleBlogFeatured extends Controller
+class ControllerModuleBlogCustomPost extends Controller
 {
     public function index($setting)
     {
-        $this->load->language('module/blog_featured');
+        $this->load->language('module/blog_custom_post');
 
         $data['heading_title'] = $this->language->get('heading_title');
         $data['text_more'] = $this->language->get('text_more');
@@ -46,7 +46,7 @@ class ControllerModuleBlogFeatured extends Controller
 
                     $comment_total = $this->model_blog_comment->getTotalCommentsByPostId($post_info['post_id']);
 
-                    $this->trigger->fire('pre.post.display', array(&$post_info, 'featured'));
+                    $this->trigger->fire('pre.post.display', array(&$post_info, 'custom_post'));
 
                     $data['posts'][] = array(
                         'post_id'       => $post_info['post_id'],
@@ -64,10 +64,10 @@ class ControllerModuleBlogFeatured extends Controller
         }
 
         if ($data['posts']) {
-            if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/blog_featured.tpl')) {
-                return $this->load->view($this->config->get('config_template') . '/template/module/blog_featured.tpl', $data);
+            if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/blog_custom_post.tpl')) {
+                return $this->load->view($this->config->get('config_template') . '/template/module/blog_custom_post.tpl', $data);
             } else {
-                return $this->load->view('default/template/module/blog_featured.tpl', $data);
+                return $this->load->view('default/template/module/blog_custom_post.tpl', $data);
             }
         }
     }

@@ -16,12 +16,13 @@ $_['text_success'] = 'Success: You have modified blog comment module!';
 $_['text_edit']    = 'Edit Comment Module';
 
 // Entry
-$_['entry_name']        = 'Module Name';
-$_['entry_limit']       = 'Limit';
-$_['entry_image']       = 'Display Image';
-$_['entry_width']       = 'Width';
-$_['entry_height']      = 'Height';
-$_['entry_status']      = 'Status';
+$_['entry_name']                = 'Module Name';
+$_['entry_limit']               = 'Limit';
+$_['entry_description_length']  = 'Description Limit';
+$_['entry_image']               = 'Display Image';
+$_['entry_width']               = 'Width';
+$_['entry_height']              = 'Height';
+$_['entry_status']              = 'Status';
 
 // Help
 $_['help_post']        = '(Autocomplete)';

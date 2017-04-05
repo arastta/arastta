@@ -8,5 +8,5 @@
  */
 
 // Heading
-$_['heading_title'] = 'Blog Featured';
+$_['heading_title'] = 'Blog Custom Posts';
 $_['text_more']     = 'More...';

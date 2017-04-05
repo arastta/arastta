@@ -45,14 +45,14 @@ class ControllerBlogHome extends Controller
             if ($result['image']) {
                 $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_blog_post_list_width'), $this->config->get('config_blog_post_list_height'));
             } else {
-                $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_blog_post_list_width'), $this->config->get('config_blog_post_list_height'));
+                $image = '';
             }
 
             $category = 'Test';
 
             $comment_total = $this->model_blog_comment->getTotalCommentsByPostId($result['post_id']);
 
-            $this->trigger->fire('pre.blog.display', array(&$result, 'home'));
+            $this->trigger->fire('pre.post.display', array(&$result, 'home'));
 
             $data['featured_posts'][] = array(
                 'post_id'       => $result['post_id'],
@@ -69,8 +69,9 @@ class ControllerBlogHome extends Controller
         }
 
         $filter_data = array(
-            'start'      => ($page - 1) * $limit,
-            'limit'      => $limit
+            'filter_featured' => '0',
+            'start'           => ($page - 1) * $limit,
+            'limit'           => $limit
         );
 
         $post_total = $this->model_blog_post->getTotalPosts($filter_data);
@@ -81,14 +82,14 @@ class ControllerBlogHome extends Controller
             if ($result['image']) {
                 $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_blog_post_list_width'), $this->config->get('config_blog_post_list_height'));
             } else {
-                $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_blog_post_list_width'), $this->config->get('config_blog_post_list_height'));
+                $image = '';
             }
 
             $category = 'Test';
 
             $comment_total = $this->model_blog_comment->getTotalCommentsByPostId($result['post_id']);
 
-            $this->trigger->fire('pre.blog.display', array(&$result, 'home'));
+            $this->trigger->fire('pre.post.display', array(&$result, 'home'));
 
             $data['posts'][] = array(
                 'post_id'       => $result['post_id'],

@@ -1692,29 +1692,29 @@
                                         <textarea name="config_blog_description" rows="5" placeholder="<?php echo $entry_blog_description; ?>" id="input-blog-description" class="form-control"><?php echo $config_blog_description; ?></textarea>
                                     </div>
                                 </div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label" for="input-blog-featured-slide"><span data-toggle="tooltip" title="<?php echo $help_blog_featured_slide; ?>"><?php echo $entry_blog_featured_slide; ?></span></label>
-									<div class="col-sm-10">
-										<label class="radio-inline">
-											<?php if ($config_blog_featured_slide) { ?>
-											<input type="radio" name="config_blog_featured_slide" value="1" checked="checked" />
-											<?php echo $text_yes; ?>
-											<?php } else { ?>
-											<input type="radio" name="config_blog_featured_slide" value="1" />
-											<?php echo $text_yes; ?>
-											<?php } ?>
-										</label>
-										<label class="radio-inline">
-											<?php if (!$config_blog_featured_slide) { ?>
-											<input type="radio" name="config_blog_featured_slide" value="0" checked="checked" />
-											<?php echo $text_no; ?>
-											<?php } else { ?>
-											<input type="radio" name="config_blog_featured_slide" value="0" />
-											<?php echo $text_no; ?>
-											<?php } ?>
-										</label>
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-blog-featured-slide"><span data-toggle="tooltip" title="<?php echo $help_blog_featured_slide; ?>"><?php echo $entry_blog_featured_slide; ?></span></label>
+                                    <div class="col-sm-10">
+                                        <label class="radio-inline">
+                                            <?php if ($config_blog_featured_slide) { ?>
+                                            <input type="radio" name="config_blog_featured_slide" value="1" checked="checked" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_blog_featured_slide" value="1" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } ?>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <?php if (!$config_blog_featured_slide) { ?>
+                                            <input type="radio" name="config_blog_featured_slide" value="0" checked="checked" />
+                                            <?php echo $text_no; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_blog_featured_slide" value="0" />
+                                            <?php echo $text_no; ?>
+                                            <?php } ?>
+                                        </label>
+                                    </div>
+                                </div>
                                 <div class="form-group required">
                                     <label class="col-sm-2 control-label" for="input-blog-meta-title"><?php echo $entry_meta_title; ?></label>
                                     <div class="col-sm-10">
@@ -1746,6 +1746,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-blog-post-list-description-length"><span data-toggle="tooltip" title="<?php echo $help_blog_post_description_lenth; ?>"><?php echo $entry_blog_post_description_lenth; ?></span></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="config_blog_post_list_description_length" value="<?php echo $config_blog_post_list_description_length; ?>" placeholder="<?php echo $entry_blog_post_description_lenth; ?>" id="input-blog-post-list-limit" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-2 control-label" for="input-blog-post-list-row"><span data-toggle="tooltip" title="<?php echo $help_blog_post_row; ?>"><?php echo $entry_blog_post_row; ?></span></label>
                                     <div class="col-sm-10">
                                         <select name="config_blog_post_list_row" id="input-blog-post-list-row" class="form-control">
@@ -1768,6 +1774,20 @@
                                             <option value="4" selected="selected">4</option>
                                             <?php } else { ?>
                                             <option value="4">4</option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-blog-post-list-sort-order"><span data-toggle="tooltip" title="<?php echo $help_blog_post_sot_order; ?>"><?php echo $entry_blog_post_sort_order; ?></span></label>
+                                    <div class="col-sm-10">
+                                        <select name="config_blog_post_list_sort_order" id="input-blog-post-list-sort-order" class="form-control">
+                                            <?php foreach ($blog_post_list_sort_orders as $blog_post_list_sort_order) { ?>
+                                            <?php if ($config_blog_post_list_sort_order == $blog_post_list_sort_order['value']) { ?>
+                                            <option value="<?php echo $blog_post_list_sort_order['value']; ?>" selected="selected"><?php echo $blog_post_list_sort_order['text']; ?></option>
+                                            <?php } else { ?>
+                                            <option value="<?php echo $blog_post_list_sort_order['value']; ?>"><?php echo $blog_post_list_sort_order['text']; ?></option>
+                                            <?php } ?>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -1985,29 +2005,29 @@
                             </fieldset>
                             <fieldset>
                                 <legend><?php echo $text_comment; ?></legend>
-								<div class="form-group">
-									<label class="col-sm-2 control-label" for="input-blog-comment-enable"><span data-toggle="tooltip" title="<?php echo $help_blog_comment_activity; ?>"><?php echo $entry_blog_comment_enable; ?></span></label>
-									<div class="col-sm-10">
-										<label class="radio-inline">
-											<?php if ($config_blog_comment_enable) { ?>
-											<input type="radio" name="config_blog_comment_enable" value="1" checked="checked" />
-											<?php echo $text_yes; ?>
-											<?php } else { ?>
-											<input type="radio" name="config_blog_comment_enable" value="1" />
-											<?php echo $text_yes; ?>
-											<?php } ?>
-										</label>
-										<label class="radio-inline">
-											<?php if (!$config_blog_comment_enable) { ?>
-											<input type="radio" name="config_blog_comment_enable" value="0" checked="checked" />
-											<?php echo $text_no; ?>
-											<?php } else { ?>
-											<input type="radio" name="config_blog_comment_enable" value="0" />
-											<?php echo $text_no; ?>
-											<?php } ?>
-										</label>
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-blog-comment-enable"><span data-toggle="tooltip" title="<?php echo $help_blog_comment_activity; ?>"><?php echo $entry_blog_comment_enable; ?></span></label>
+                                    <div class="col-sm-10">
+                                        <label class="radio-inline">
+                                            <?php if ($config_blog_comment_enable) { ?>
+                                            <input type="radio" name="config_blog_comment_enable" value="1" checked="checked" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_blog_comment_enable" value="1" />
+                                            <?php echo $text_yes; ?>
+                                            <?php } ?>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <?php if (!$config_blog_comment_enable) { ?>
+                                            <input type="radio" name="config_blog_comment_enable" value="0" checked="checked" />
+                                            <?php echo $text_no; ?>
+                                            <?php } else { ?>
+                                            <input type="radio" name="config_blog_comment_enable" value="0" />
+                                            <?php echo $text_no; ?>
+                                            <?php } ?>
+                                        </label>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="input-blog-comment-limit"><span data-toggle="tooltip" title="<?php echo $help_blog_comment_limit; ?>"><?php echo $entry_blog_comment_limit; ?></span></label>
                                     <div class="col-sm-10">

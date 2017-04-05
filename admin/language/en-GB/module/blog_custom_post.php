@@ -8,12 +8,12 @@
  */
 
 // Heading
-$_['heading_title'] = 'Blog Featured';
+$_['heading_title'] = 'Blog Custom Posts';
 
 // Text
 $_['text_module']  = 'Modules';
-$_['text_success'] = 'Success: You have modified blog featured module!';
-$_['text_edit']    = 'Edit Featured Module';
+$_['text_success'] = 'Success: You have modified blog custom post module!';
+$_['text_edit']    = 'Edit Custom Post Module';
 
 // Entry
 $_['entry_name']        = 'Module Name';
@@ -26,10 +26,10 @@ $_['entry_status']      = 'Status';
 
 // Help
 $_['help_post']        = '(Autocomplete)';
-$_['help_random_post'] = 'Show random Posts inside the featured module according selected Posts.';
+$_['help_random_post'] = 'Show random Posts inside the custom post module according selected Posts.';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify blog featured module!';
+$_['error_permission'] = 'Warning: You do not have permission to modify blog custom post module!';
 $_['error_name']       = 'Module Name must be between 3 and 64 characters!';
 $_['error_width']      = 'Width required!';
 $_['error_height']     = 'Height required!';
