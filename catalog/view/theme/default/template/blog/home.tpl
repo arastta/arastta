@@ -46,49 +46,47 @@
             </div>
             <?php } ?>
             <?php if ($posts) { ?>
-            <div class="row">
-                <?php foreach ($posts as $post) { ?>
-                <div class="ar-blog-cat-item">
-                  <h3><a href="<?php echo $post['href']; ?>"><?php echo $post['name']; ?></a></h3>
-                  <div class="meta">
-                    <?php if ($author) { ?>
-                    <a class="blog-author" href="#"><i class="fa fa-user"></i> <?php echo $post['author']; ?></a>
-                    <?php } ?>
-                    <?php if ($category) { ?>
-                    <a class="blog-category" href="#"><i class="fa fa-bookmark"></i> <?php echo $post['category']; ?></a>
-                    <?php } ?>
-                    <?php if ($date_added) { ?>
-                    <span class="blog-date"><i class="fa fa-calendar"></i> <?php echo $post['date_added']; ?></span>
-                    <?php } ?>
-                    <?php if ($viewed) { ?>
-                    <span class="blog-view"><i class="fa fa-eye"></i> <?php echo $post['viewed']; ?></span>
-                    <?php } ?>
-                  </div>
-                  <div class="row">
-                    <?php if ($post['thumb']) { ?>
-                    <?php $class_post = 'col-sm-8'; ?>
-                    <?php } else { ?>
-                    <?php $class_post = 'col-sm-12'; ?>
-                    <?php } ?>
-                    <?php if ($post['thumb']) { ?>
-                    <div class="col-sm-4">
-                        <a href="<?php echo $post['href']; ?>" title="<?php echo $post['name']; ?>">
-                            <img src="<?php echo $post['thumb']; ?>" width="300" class="img-responsive" alt="<?php echo $post['name']; ?>" />
-                        </a>
-                    </div>
-                    <?php } ?>
-                    <div class="<?php echo $class_post; ?>">
-                      <div class="intro">
-                        <p><?php echo $post['description']; ?></p>
-                        <div class="blog-readmore pull-right">
-                          <a href="<?php echo $post['href']; ?>" class="btn btn-lg btn-primary"><?php echo $text_more; ?></a>
-                        </div>
-                      </div>
+            <?php foreach ($posts as $post) { ?>
+            <div class="ar-blog-cat-item">
+              <h3><a href="<?php echo $post['href']; ?>"><?php echo $post['name']; ?></a></h3>
+              <div class="meta">
+                <?php if ($author) { ?>
+                <a class="blog-author" href="#"><i class="fa fa-user"></i> <?php echo $post['author']; ?></a>
+                <?php } ?>
+                <?php if ($category) { ?>
+                <a class="blog-category" href="#"><i class="fa fa-bookmark"></i> <?php echo $post['category']; ?></a>
+                <?php } ?>
+                <?php if ($date_added) { ?>
+                <span class="blog-date"><i class="fa fa-calendar"></i> <?php echo $post['date_added']; ?></span>
+                <?php } ?>
+                <?php if ($viewed) { ?>
+                <span class="blog-view"><i class="fa fa-eye"></i> <?php echo $post['viewed']; ?></span>
+                <?php } ?>
+              </div>
+              <div class="row">
+                <?php if ($post['thumb']) { ?>
+                <?php $class_post = 'col-sm-8'; ?>
+                <?php } else { ?>
+                <?php $class_post = 'col-sm-12'; ?>
+                <?php } ?>
+                <?php if ($post['thumb']) { ?>
+                <div class="col-sm-4">
+                    <a href="<?php echo $post['href']; ?>" title="<?php echo $post['name']; ?>">
+                        <img src="<?php echo $post['thumb']; ?>" width="300" class="img-responsive" alt="<?php echo $post['name']; ?>" />
+                    </a>
+                </div>
+                <?php } ?>
+                <div class="<?php echo $class_post; ?>">
+                  <div class="intro">
+                    <p><?php echo $post['description']; ?></p>
+                    <div class="blog-readmore pull-right">
+                      <a href="<?php echo $post['href']; ?>" class="btn btn-lg btn-primary"><?php echo $text_more; ?></a>
                     </div>
                   </div>
                 </div>
-                <?php } ?>
+              </div>
             </div>
+            <?php } ?>
             <?php if ($pagination) { ?>
             <div class="row">
                 <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
