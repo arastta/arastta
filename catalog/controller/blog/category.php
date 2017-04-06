@@ -228,7 +228,7 @@ class ControllerBlogCategory extends Controller
                     'comment_total' => $comment_total,
                     'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_available'])),
                     'author'        => $result['author'],
-                    'href'          => $this->url->link('blog/post', 'post_id=' . $result['post_id'])
+                    'href'          => $this->url->link('blog/post', 'path=' . $this->request->get['path'] . '&post_id=' . $result['post_id'])
                 );
             }
 
