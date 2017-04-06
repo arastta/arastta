@@ -235,7 +235,7 @@ class ModelBlogPost extends Model
 
     public function getFeaturedPosts()
     {
-        $sql = "SELECT * FROM " . DB_PREFIX . "blog_post p LEFT JOIN " . DB_PREFIX . "blog_post_description pd ON (p.post_id = pd.post_id) LEFT JOIN " . DB_PREFIX . "blog_post_to_store p2s ON (p.post_id = p2s.post_id) WHERE p.featured = 1 AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
+        $sql = "SELECT * FROM " . DB_PREFIX . "blog_post p LEFT JOIN " . DB_PREFIX . "blog_post_description pd ON (p.post_id = pd.post_id) LEFT JOIN " . DB_PREFIX . "blog_post_to_store p2s ON (p.post_id = p2s.post_id) WHERE p.featured = 1 AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY p.date_added DESC";
 
         $post_data = array();
 

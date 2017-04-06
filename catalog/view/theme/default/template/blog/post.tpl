@@ -39,7 +39,7 @@
                 </div>
                 <?php if ($thumb) { ?>
                 <div class="blog-image">
-                    <img src="<?php echo $thumb; ?>" width="300" class="img-responsive" alt="<?php echo $heading_title; ?>" />
+                    <img src="<?php echo $thumb; ?>" class="img-responsive" alt="<?php echo $heading_title; ?>" />
                 </div>
                 <?php } ?>
                 <div class="intro">

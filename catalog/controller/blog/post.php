@@ -218,7 +218,7 @@ class ControllerBlogPost extends Controller
             $data['thumb'] = '';
 
             if ($post_info['image']) {
-                $data['thumb'] = $this->model_tool_image->resize($post_info['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
+                $data['thumb'] = $this->model_tool_image->resize($post_info['image'], $this->config->get('config_blog_post_form_width'), $this->config->get('config_blog_post_form_height'));
             }
 
             $data['date_added'] = false;

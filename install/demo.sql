@@ -50,6 +50,50 @@ INSERT INTO `ar_banner_image` (`banner_image_id`, `banner_id`, `language_id`, `t
 (118, 7, 1, 'Slide 1', 'index.php?route=product/product&amp;path=18_46&amp;product_id=47', 'catalog/demo/banners/slide-1.jpg', 0),
 (119, 7, 1, 'Slide 2', 'index.php?route=product/product&amp;path=34&amp;product_id=48', 'catalog/demo/banners/slide-2.jpg', 0);
 
+INSERT INTO `ar_blog_category` (`category_id`, `image`, `parent_id`, `top`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES
+(1, '', 0, 0, 0, 1, '2017-04-06 14:06:13', '0000-00-00 00:00:00');
+
+INSERT INTO `ar_blog_category_description` (`category_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
+(1, 1, 'General', '', 'General', '', '');
+
+INSERT INTO `ar_blog_category_path` (`category_id`, `path_id`, `level`) VALUES
+(1, 1, 0);
+
+INSERT INTO `ar_blog_category_to_layout` (`category_id`, `store_id`, `layout_id`) VALUES
+(1, 0, 0);
+
+INSERT INTO `ar_blog_category_to_store` (`category_id`, `store_id`) VALUES
+(1, 0);
+
+INSERT INTO `ar_blog_comment` (`comment_id`, `post_id`, `customer_id`, `email`, `author`, `text`, `status`, `date_added`, `date_modified`) VALUES
+(1, 1, 0, 'test@test.com', 'Denis', 'Hey, this is cool! I like it.', 1, '2017-04-06 14:54:56', '0000-00-00 00:00:00'),
+(2, 2, 0, 'test@test2.com', 'Cüneyt Şentürk', 'This release is awesome! I will update my store as soon as possible.', 1, '2017-04-06 14:55:32', '0000-00-00 00:00:00');
+
+INSERT INTO `ar_blog_post` (`post_id`, `allow_comment`, `featured`, `viewed`, `image`, `author`, `date_available`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES
+(1, 1, 1, 21, 'catalog/demo/blog/yet-another.jpg', 'Cüneyt Şentürk', '2017-04-06', 0, 1, '2017-04-06 14:13:54', '2017-04-06 14:26:07'),
+(2, 1, 0, 9, 'catalog/demo/blog/arastta.jpg', 'Enes Ertuğrul', '2017-04-06', 0, 1, '2017-04-06 14:31:03', '2017-04-06 15:34:24'),
+(3, 1, 1, 6, 'catalog/demo/blog/big-thing-arastta.jpg', 'Denis Duliçi', '2017-04-06', 0, 1, '2017-04-06 15:00:51', '0000-00-00 00:00:00');
+
+INSERT INTO `ar_blog_post_description` (`post_id`, `language_id`, `name`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
+(1, 1, 'Yet another great post', '&lt;p&gt;Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.&lt;/p&gt;\r\n&lt;h1&gt;HTML Ipsum Presents&lt;/h1&gt;\r\n&lt;p&gt;&lt;strong&gt;Pellentesque habitant morbi tristique&lt;/strong&gt; senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. &lt;em&gt;Aenean ultricies mi vitae est.&lt;/em&gt; Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, &lt;code&gt;commodo vitae&lt;/code&gt;, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. &lt;a href=&quot;#&quot;&gt;Donec non enim&lt;/a&gt; in turpis pulvinar facilisis. Ut felis.&lt;/p&gt;\r\n&lt;h2&gt;Header Level 2&lt;/h2&gt;\r\n&lt;ol&gt;\r\n&lt;li&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.&lt;/li&gt;\r\n&lt;li&gt;Aliquam tincidunt mauris eu risus.&lt;/li&gt;\r\n&lt;/ol&gt;\r\n&lt;blockquote&gt;\r\n&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.&lt;/p&gt;\r\n&lt;/blockquote&gt;\r\n&lt;h3&gt;Header Level 3&lt;/h3&gt;\r\n&lt;ul&gt;\r\n&lt;li&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.&lt;/li&gt;\r\n&lt;li&gt;Aliquam tincidunt mauris eu risus.&lt;/li&gt;\r\n&lt;/ul&gt;', 'tag 1,tag 2,tag 3', 'Yet another great post', '', ''),
+(2, 1, 'Arastta 1.6 Released', '&lt;p&gt;Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.&lt;/p&gt;\r\n&lt;h1&gt;HTML Ipsum Presents&lt;/h1&gt;\r\n&lt;p&gt;&lt;strong&gt;Pellentesque habitant morbi tristique&lt;/strong&gt; senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. &lt;em&gt;Aenean ultricies mi vitae est.&lt;/em&gt; Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, &lt;code&gt;commodo vitae&lt;/code&gt;, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. &lt;a href=&quot;#&quot;&gt;Donec non enim&lt;/a&gt; in turpis pulvinar facilisis. Ut felis.&lt;/p&gt;\r\n&lt;h2&gt;Header Level 2&lt;/h2&gt;\r\n&lt;ol&gt;\r\n&lt;li&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.&lt;/li&gt;\r\n&lt;li&gt;Aliquam tincidunt mauris eu risus.&lt;/li&gt;\r\n&lt;/ol&gt;\r\n&lt;blockquote&gt;\r\n&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.&lt;/p&gt;\r\n&lt;/blockquote&gt;\r\n&lt;h3&gt;Header Level 3&lt;/h3&gt;\r\n&lt;ul&gt;\r\n&lt;li&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.&lt;/li&gt;\r\n&lt;li&gt;Aliquam tincidunt mauris eu risus.&lt;/li&gt;\r\n&lt;/ul&gt;', '', 'Arastta 1.6 Released', '', ''),
+(3, 1, 'The next big Arastta thing ;)', '&lt;p&gt;Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.&lt;/p&gt;\r\n&lt;h1&gt;HTML Ipsum Presents&lt;/h1&gt;\r\n&lt;p&gt;&lt;strong&gt;Pellentesque habitant morbi tristique&lt;/strong&gt; senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. &lt;em&gt;Aenean ultricies mi vitae est.&lt;/em&gt; Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, &lt;code&gt;commodo vitae&lt;/code&gt;, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. &lt;a href=&quot;#&quot;&gt;Donec non enim&lt;/a&gt; in turpis pulvinar facilisis. Ut felis.&lt;/p&gt;\r\n&lt;h2&gt;Header Level 2&lt;/h2&gt;\r\n&lt;ol&gt;\r\n&lt;li&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.&lt;/li&gt;\r\n&lt;li&gt;Aliquam tincidunt mauris eu risus.&lt;/li&gt;\r\n&lt;/ol&gt;\r\n&lt;blockquote&gt;\r\n&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.&lt;/p&gt;\r\n&lt;/blockquote&gt;\r\n&lt;h3&gt;Header Level 3&lt;/h3&gt;\r\n&lt;ul&gt;\r\n&lt;li&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.&lt;/li&gt;\r\n&lt;li&gt;Aliquam tincidunt mauris eu risus.&lt;/li&gt;\r\n&lt;/ul&gt;', '', 'The next big Arastta thing ;)', '', '');
+
+INSERT INTO `ar_blog_post_to_category` (`post_id`, `category_id`) VALUES
+(1, 1),
+(2, 1),
+(3, 1);
+
+INSERT INTO `ar_blog_post_to_layout` (`post_id`, `store_id`, `layout_id`) VALUES
+(1, 0, 0),
+(2, 0, 0),
+(3, 0, 0);
+
+INSERT INTO `ar_blog_post_to_store` (`post_id`, `store_id`) VALUES
+(1, 0),
+(2, 0),
+(3, 0);
+
 INSERT INTO `ar_category` (`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES
 (18, '', 0, 1, 0, 2, 1, '2015-05-18 00:00:00', '2016-04-18 14:16:22'),
 (20, '', 0, 1, 1, 1, 1, '2015-05-18 00:00:00', '2016-04-18 14:12:38'),
@@ -279,7 +323,9 @@ INSERT INTO `ar_layout_module` (`layout_module_id`, `layout_id`, `code`, `positi
 (348, 1, 'html.34', 'bottom_a', 0),
 (349, 1, 'latest.32', 'bottom_b', 3),
 (350, 1, 'carousel.29', 'bottom_b', 4),
-(351, 1, 'html.33', 'bottom_c', 5);
+(351, 1, 'html.33', 'bottom_c', 5),
+(352, 15, 'blog_latest.35', 'column_right', 0),
+(353, 16, 'blog_comment.36', 'column_right', 0);
 
 INSERT INTO `ar_manufacturer` (`manufacturer_id`, `image`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES
 (5, 'catalog/demo/manufacturer/obey.jpg', 0, 1, '2015-05-18 00:00:00', '2016-04-19 08:22:16'),
@@ -312,7 +358,8 @@ INSERT INTO `ar_menu` (`menu_id`, `sort_order`, `columns`, `menu_type`, `status`
 (5, 5, 0, 'category', 1),
 (6, 6, 0, 'category', 1),
 (7, 7, 0, 'category', 1),
-(8, 4, 4, 'category', 1);
+(8, 4, 4, 'category', 1),
+(9, 8, 1, 'blog_home', 1);
 
 INSERT INTO `ar_menu_child` (`menu_child_id`, `menu_id`, `sort_order`, `menu_type`, `status`) VALUES
 (1, 1, 1, 'category', 1),
@@ -409,7 +456,8 @@ INSERT INTO `ar_menu_description` (`menu_id`, `name`, `link`, `language_id`) VAL
 (5, 'Watches', '59', 1),
 (6, 'Bags', '24', 1),
 (7, 'Hats', '33', 1),
-(8, 'Jackets', '34', 1);
+(8, 'Jackets', '34', 1),
+(9, 'Blog', '0', 1);
 
 INSERT INTO `ar_menu_to_store` (`menu_id`, `store_id`) VALUES
 (1, 0),
@@ -418,7 +466,8 @@ INSERT INTO `ar_menu_to_store` (`menu_id`, `store_id`) VALUES
 (5, 0),
 (6, 0),
 (7, 0),
-(8, 0);
+(8, 0),
+(9, 0);
 
 INSERT INTO `ar_module` (`module_id`, `name`, `code`, `setting`) VALUES
 (27, 'Slideshow - Home Page', 'slideshow', 'a:6:{s:4:"name";s:21:"Slideshow - Home Page";s:9:"banner_id";s:1:"7";s:5:"width";s:4:"2048";s:6:"height";s:3:"640";s:10:"pagination";s:1:"0";s:6:"status";s:1:"1";}'),
@@ -428,7 +477,9 @@ INSERT INTO `ar_module` (`module_id`, `name`, `code`, `setting`) VALUES
 (31, 'Cart - Modal after Add to Cart', 'cart', 'a:16:{s:4:"name";s:30:"Cart - Modal after Add to Cart";s:5:"popup";s:1:"1";s:5:"theme";s:9:"mini_cart";s:6:"status";s:1:"1";s:13:"product_image";s:1:"1";s:12:"product_name";s:1:"1";s:13:"product_model";s:1:"0";s:16:"product_quantity";s:1:"1";s:13:"product_price";s:1:"1";s:13:"product_total";s:1:"1";s:15:"button_continue";s:1:"1";s:11:"button_cart";s:1:"1";s:15:"button_checkout";s:1:"1";s:6:"coupon";s:1:"1";s:7:"message";s:1:"1";s:6:"button";s:4:"save";}'),
 (32, 'Latest - Home Page', 'latest', 'a:5:{s:4:"name";s:18:"Latest - Home Page";s:5:"limit";s:1:"8";s:5:"width";s:3:"200";s:6:"height";s:3:"200";s:6:"status";s:1:"1";}'),
 (33, 'Bottom Boxes - Home Page', 'html', 'a:4:{s:4:"name";s:24:"Bottom Boxes - Home Page";s:18:"module_description";a:1:{i:1;a:2:{s:5:"title";s:0:"";s:11:"description";s:2205:"&lt;div class=&quot;row&quot;&gt;\r\n    &lt;div class=&quot;col-sm-6&quot;&gt;\r\n        &lt;div class=&quot;panel panel-default&quot;&gt;\r\n            &lt;div class=&quot;panel-heading&quot;&gt;\r\n                &lt;h3 class=&quot;ar-margin-remove&quot;&gt;About Us&lt;/h3&gt;\r\n            &lt;/div&gt;\r\n            &lt;div class=&quot;panel-body&quot;&gt;\r\n                &lt;p&gt;Pellentesque &lt;strong&gt;Second Theme&lt;/strong&gt; habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. &lt;em&gt;Donec eu libero sit amet quam egestas semper.&lt;/em&gt; Aenean ultricies mi vitae est. Mauris placerat eleifend leo.&lt;/p&gt;\r\n                &lt;p&gt;Morbi in sem quis dui placerat ornare.&lt;/p&gt;\r\n                &lt;p class=&quot;text-right&quot;&gt;&lt;button class=&quot;btn btn-primary&quot;&gt;Details &lt;span class=&quot;fa fa-angle-double-right&quot;&gt;&lt;/span&gt;&lt;/button&gt;&lt;/p&gt;\r\n            &lt;/div&gt;\r\n        &lt;/div&gt;\r\n    &lt;/div&gt;\r\n    &lt;div class=&quot;col-sm-6&quot;&gt;\r\n        &lt;div class=&quot;panel panel-default&quot;&gt;\r\n            &lt;div class=&quot;panel-heading&quot;&gt;\r\n                &lt;h3 class=&quot;ar-margin-remove&quot;&gt;Newsletter&lt;/h3&gt;\r\n            &lt;/div&gt;\r\n            &lt;div class=&quot;panel-body&quot;&gt;\r\n                &lt;p&gt;We regularly send promotional news and discounts to our subscribers. Join our mail list and get the latest updates from our channel.&lt;/p&gt;\r\n                &lt;div class=&quot;input-group&quot;&gt;\r\n                  &lt;span class=&quot;input-group-addon&quot; id=&quot;basic-addon1&quot;&gt;@&lt;/span&gt;\r\n                  &lt;input class=&quot;form-control&quot; placeholder=&quot;Mail address&quot; aria-describedby=&quot;basic-addon1&quot; type=&quot;text&quot;&gt;\r\n                &lt;/div&gt;\r\n                &lt;button class=&quot;btn btn-block ar-btn-outline-white btn-lg ar-margin&quot;&gt;&lt;span class=&quot;fa fa-envelope&quot;&gt;&lt;/span&gt; Subscribe Now&lt;/button&gt;\r\n            &lt;/div&gt;\r\n        &lt;/div&gt;\r\n    &lt;/div&gt;\r\n&lt;/div&gt;";}}s:6:"status";s:1:"1";s:6:"button";s:4:"save";}'),
-(34, 'Store Images - Home Page', 'html', 'a:3:{s:4:"name";s:24:"Store Images - Home Page";s:18:"module_description";a:1:{i:1;a:2:{s:5:"title";s:25:"Visit &amp; See Our Store";s:11:"description";s:1557:"&lt;div class=&quot;row&quot;&gt;\r\n    &lt;div class=&quot;col-sm-6&quot;&gt;\r\n        &lt;div class=&quot;row&quot;&gt;\r\n            &lt;div class=&quot;col-sm-6&quot;&gt;\r\n                &lt;img class=&quot;img-responsive&quot; src=&quot;image/catalog/demo/store/store-1.jpg&quot;&gt;\r\n            &lt;/div&gt;\r\n            &lt;div class=&quot;col-sm-6&quot;&gt;\r\n                &lt;img class=&quot;img-responsive&quot; src=&quot;image/catalog/demo/store/store-1.jpg&quot;&gt;\r\n            &lt;/div&gt;\r\n        &lt;/div&gt;\r\n        &lt;div class=&quot;row ar-margin-top&quot;&gt;\r\n            &lt;div class=&quot;col-sm-6&quot;&gt;\r\n                &lt;img class=&quot;img-responsive&quot; src=&quot;image/catalog/demo/store/store-1.jpg&quot;&gt;\r\n            &lt;/div&gt;\r\n            &lt;div class=&quot;col-sm-6&quot;&gt;\r\n                &lt;img class=&quot;img-responsive&quot; src=&quot;image/catalog/demo/store/store-1.jpg&quot;&gt;\r\n            &lt;/div&gt;\r\n        &lt;/div&gt;\r\n    &lt;/div&gt;\r\n    &lt;div class=&quot;col-sm-6&quot;&gt;\r\n        &lt;img class=&quot;img-responsive&quot; src=&quot;image/catalog/demo/store/store-2.jpg&quot;&gt;\r\n    &lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;h3 class=&quot;text-center&quot;&gt;&lt;a class=&quot;btn btn-lg btn-primary&quot; href=&quot;#&quot;&gt;&lt;span class=&quot;fa fa-info-circle&quot;&gt;&lt;/span&gt; Contact Information&lt;/a&gt; &lt;a class=&quot;btn btn-lg ar-btn-outline-white&quot; href=&quot;#&quot;&gt;&lt;span class=&quot;fa fa-map&quot;&gt;&lt;/span&gt; See Map&lt;/a&gt;&lt;/h3&gt;";}}s:6:"status";s:1:"1";}');
+(34, 'Store Images - Home Page', 'html', 'a:3:{s:4:"name";s:24:"Store Images - Home Page";s:18:"module_description";a:1:{i:1;a:2:{s:5:"title";s:25:"Visit &amp; See Our Store";s:11:"description";s:1557:"&lt;div class=&quot;row&quot;&gt;\r\n    &lt;div class=&quot;col-sm-6&quot;&gt;\r\n        &lt;div class=&quot;row&quot;&gt;\r\n            &lt;div class=&quot;col-sm-6&quot;&gt;\r\n                &lt;img class=&quot;img-responsive&quot; src=&quot;image/catalog/demo/store/store-1.jpg&quot;&gt;\r\n            &lt;/div&gt;\r\n            &lt;div class=&quot;col-sm-6&quot;&gt;\r\n                &lt;img class=&quot;img-responsive&quot; src=&quot;image/catalog/demo/store/store-1.jpg&quot;&gt;\r\n            &lt;/div&gt;\r\n        &lt;/div&gt;\r\n        &lt;div class=&quot;row ar-margin-top&quot;&gt;\r\n            &lt;div class=&quot;col-sm-6&quot;&gt;\r\n                &lt;img class=&quot;img-responsive&quot; src=&quot;image/catalog/demo/store/store-1.jpg&quot;&gt;\r\n            &lt;/div&gt;\r\n            &lt;div class=&quot;col-sm-6&quot;&gt;\r\n                &lt;img class=&quot;img-responsive&quot; src=&quot;image/catalog/demo/store/store-1.jpg&quot;&gt;\r\n            &lt;/div&gt;\r\n        &lt;/div&gt;\r\n    &lt;/div&gt;\r\n    &lt;div class=&quot;col-sm-6&quot;&gt;\r\n        &lt;img class=&quot;img-responsive&quot; src=&quot;image/catalog/demo/store/store-2.jpg&quot;&gt;\r\n    &lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;h3 class=&quot;text-center&quot;&gt;&lt;a class=&quot;btn btn-lg btn-primary&quot; href=&quot;#&quot;&gt;&lt;span class=&quot;fa fa-info-circle&quot;&gt;&lt;/span&gt; Contact Information&lt;/a&gt; &lt;a class=&quot;btn btn-lg ar-btn-outline-white&quot; href=&quot;#&quot;&gt;&lt;span class=&quot;fa fa-map&quot;&gt;&lt;/span&gt; See Map&lt;/a&gt;&lt;/h3&gt;";}}s:6:"status";s:1:"1";}'),
+(35, 'Recent posts', 'blog_latest', 'a:5:{s:4:\"name\";s:12:\"Recent posts\";s:5:\"limit\";s:1:\"5\";s:5:\"width\";s:2:\"60\";s:6:\"height\";s:2:\"40\";s:6:\"status\";s:1:\"1\";}'),
+(36, 'Recent comments', 'blog_comment', 'a:7:{s:4:\"name\";s:15:\"Recent comments\";s:5:\"limit\";s:1:\"2\";s:18:\"description_length\";s:3:\"300\";s:5:\"image\";s:1:\"1\";s:5:\"width\";s:2:\"40\";s:6:\"height\";s:2:\"40\";s:6:\"status\";s:1:\"1\";}');
 
 INSERT INTO `ar_option` (`option_id`, `type`, `sort_order`) VALUES
 (1, 'radio', 1),
@@ -785,7 +836,11 @@ INSERT INTO `ar_url_alias` (`url_alias_id`, `query`, `keyword`, `language_id`) V
 (10011, 'route=account/login', 'login', 1),
 (10012, 'route=information/contact', 'contact', 1),
 (10013, 'route=product/manufacturer', 'brands', 1),
-(10014, 'route=blog/home', 'blog', 1);
+(10014, 'route=blog/home', 'blog', 1),
+(10015, 'blog_category_id=1', 'general', 1),
+(10026, 'blog_post_id=1', 'yet-another-great-post', 1),
+(10028, 'blog_post_id=3', 'the-next-big-arastta-thing', 1),
+(10029, 'blog_post_id=2', 'arastta-1-6-released', 1);
 
 INSERT INTO `ar_voucher_theme` (`voucher_theme_id`, `image`) VALUES
 (6, 'catalog/demo/apple_logo.jpg'),
