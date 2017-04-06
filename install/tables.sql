@@ -1649,9 +1649,9 @@ INSERT INTO `ar_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `rout
 (46, 14, 0, 'product/manufacturer/info'),
 (52, 12, 0, 'product/compare'),
 (53, 13, 0, 'product/search'),
-(53, 15, 0, 'blog/home'),
-(53, 16, 0, 'blog/post'),
-(53, 17, 0, 'blog/category');
+(54, 15, 0, 'blog/home'),
+(55, 16, 0, 'blog/post'),
+(56, 17, 0, 'blog/category');
 
 -- --------------------------------------------------------
 
