@@ -24,10 +24,10 @@ class ControllerBlogCategory extends Controller
         #Get All Language Text
         $data = $this->language->all();
 
+        $filter = '';
+
         if (isset($this->request->get['filter'])) {
             $filter = urldecode($this->request->get['filter']);
-        } else {
-            $filter = '';
         }
 
         $default_post_sort_order = explode('-', $this->config->get('config_blog_post_list_sort_order'));
@@ -48,16 +48,16 @@ class ControllerBlogCategory extends Controller
             $order = $this->request->get['order'];
         }
 
+        $page = 1;
+
         if (isset($this->request->get['page'])) {
             $page = $this->request->get['page'];
-        } else {
-            $page = 1;
         }
+
+        $limit = $this->config->get('config_product_limit');
 
         if (isset($this->request->get['limit'])) {
             $limit = $this->request->get['limit'];
-        } else {
-            $limit = $this->config->get('config_product_limit');
         }
 
         $data['breadcrumbs'] = array();
@@ -139,10 +139,10 @@ class ControllerBlogCategory extends Controller
                 'href' => $this->url->link('blog/category', 'path=' . $this->request->get['path'])
             );
 
+            $data['thumb'] = '';
+
             if ($category_info['image']) {
                 $data['thumb'] = $this->model_tool_image->resize($category_info['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
-            } else {
-                $data['thumb'] = '';
             }
 
             $data['description'] = html_entity_decode($category_info['description'], ENT_QUOTES, 'UTF-8');
@@ -206,10 +206,10 @@ class ControllerBlogCategory extends Controller
             $results = $this->model_blog_post->getPosts($filter_data);
 
             foreach ($results as $result) {
+                $image = '';
+
                 if ($result['image']) {
                     $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_blog_post_list_width'), $this->config->get('config_blog_post_list_height'));
-                } else {
-                    $image = '';
                 }
 
                 $category = $category_info['name'];

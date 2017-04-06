@@ -14,7 +14,9 @@ class ModelBlogComment extends Model
     {
         $this->trigger->fire('pre.comment.add', array(&$data));
 
-        $this->db->query("INSERT INTO " . DB_PREFIX . "blog_comment SET author = '" . $this->db->escape($data['name']) . "', email = '" . $this->db->escape($data['email']) . "', customer_id = '" . (int) $this->customer->getId() . "', post_id = '" . (int) $post_id . "', text = '" . $this->db->escape($data['text']) . "', date_added = NOW()");
+        $status = ($this->config->get('config_blog_comment_status')) ? 1 : 0;
+
+        $this->db->query("INSERT INTO " . DB_PREFIX . "blog_comment SET author = '" . $this->db->escape($data['name']) . "', email = '" . $this->db->escape($data['email']) . "', customer_id = '" . (int) $this->customer->getId() . "', post_id = '" . (int) $post_id . "', text = '" . $this->db->escape($data['text']) . "', status = " . (int) $status . ", date_added = NOW()");
 
         $comment_id = $this->db->getLastId();
 

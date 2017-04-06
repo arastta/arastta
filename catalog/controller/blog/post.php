@@ -213,10 +213,10 @@ class ControllerBlogPost extends Controller
 
             $this->load->model('tool/image');
 
+            $data['thumb'] = '';
+
             if ($post_info['image']) {
                 $data['thumb'] = $this->model_tool_image->resize($post_info['image'], $this->config->get('config_image_thumb_width'), $this->config->get('config_image_thumb_height'));
-            } else {
-                $data['thumb'] = '';
             }
 
             $data['date_added'] = false;
@@ -246,6 +246,10 @@ class ControllerBlogPost extends Controller
             } else {
                 $data['comment_guest'] = false;
             }
+
+            $data['comment_name'] = $this->customer->getFirstName() . ' ' . $this->customer->getLastName();
+
+            $data['comment_email'] = $this->customer->getEmail();
 
             if ($this->customer->isLogged()) {
                 $data['customer_name'] = $this->customer->getFirstName() . '&nbsp;' . $this->customer->getLastName();
@@ -388,10 +392,10 @@ class ControllerBlogPost extends Controller
 
         $data['text_no_comment'] = $this->language->get('text_no_comment');
 
+        $page = 1;
+
         if (isset($this->request->get['page'])) {
             $page = $this->request->get['page'];
-        } else {
-            $page = 1;
         }
 
         $data['comments'] = array();
@@ -402,13 +406,25 @@ class ControllerBlogPost extends Controller
 
         $results = $this->model_blog_comment->getCommentsByPostId($this->request->get['post_id'], ($page - 1) * $limit, $limit);
 
+        $this->load->model('tool/image');
+
         foreach ($results as $result) {
+            $default = '';
+
+            if (is_file(DIR_IMAGE . 'admin-default.png')) {
+                $default = $this->model_tool_image->resize(DIR_IMAGE . 'admin-default.png', 45, 45);
+            }
+
+            $image = 'https://www.gravatar.com/avatar/' . md5(strtolower($result['email'])).'?d=' . urlencode($default). '&size=45&d=mm';
+
             $data['comments'][] = array(
                 'comment_id' => $result['comment_id'],
+                'image'      => $image,
                 'author'     => $result['author'],
                 'email'      => $result['email'],
                 'text'       => strip_tags($result['text']),
-                'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+                'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+                'href'       => $this->url->link('blog/post', 'post_id=' . $result['post_id']) . '#' . $result['comment_id']
             );
         }
 
@@ -444,7 +460,7 @@ class ControllerBlogPost extends Controller
                 $json['error'] = $this->language->get('error_email');
             }
 
-            if ((utf8_strlen($this->request->post['comment']) < 5) || (utf8_strlen($this->request->post['comment']) > 3000)) {
+            if ((utf8_strlen($this->request->post['text']) < 5) || (utf8_strlen($this->request->post['text']) > 3000)) {
                 $json['error'] = $this->language->get('error_comment');
             }
 
@@ -469,16 +485,6 @@ class ControllerBlogPost extends Controller
                     $json['success'] = $this->language->get('text_success_approve');
                 } else {
                     $json['success'] = $this->language->get('text_success');
-                }
-
-                if ($this->config->get('blogsetting_comment_notification')) {
-                    $mail = new Mail($this->config->get('config_mail'));
-                    $mail->setTo($this->config->get('config_email'));
-                    $mail->setFrom($this->config->get('config_email'));
-                    $mail->setSender($this->request->post['name']);
-                    $mail->setSubject(sprintf($this->language->get('email_notification'), $this->request->post['name']));
-                    $mail->setText(strip_tags($this->request->post['comment']));
-                    $mail->send();
                 }
             }
         }

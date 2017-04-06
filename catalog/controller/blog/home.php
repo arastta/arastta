@@ -35,10 +35,10 @@ class ControllerBlogHome extends Controller
             'href' => $this->url->link('blog/home')
         );
 
+        $page = 1;
+
         if (isset($this->request->get['page'])) {
             $page = $this->request->get['page'];
-        } else {
-            $page = 1;
         }
 
         $limit = $this->config->get('config_blog_post_list_limit');
@@ -86,10 +86,10 @@ class ControllerBlogHome extends Controller
         $results = $this->model_blog_post->getPosts($filter_data);
 
         foreach ($results as $result) {
+            $image = '';
+
             if ($result['image']) {
                 $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_blog_post_list_width'), $this->config->get('config_blog_post_list_height'));
-            } else {
-                $image = '';
             }
 
             $category = 'Test';
