@@ -32,7 +32,13 @@ class ControllerModuleBlogComment extends Controller
 
         if ($results) {
             foreach ($results as $result) {
-                $image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
+                $default = '';
+
+                if (is_file(DIR_IMAGE . 'admin-default.png')) {
+                    $default = $this->model_tool_image->resize(DIR_IMAGE . 'admin-default.png', 45, 45);
+                }
+
+                $image = 'https://www.gravatar.com/avatar/' . md5(strtolower($result['email'])).'?d=' . urlencode($default). '&size=45&d=mm';
 
                 $this->trigger->fire('pre.comment.display', array(&$result, 'module'));
 

@@ -23,6 +23,7 @@ $_['text_week']        = 'week';
 $_['text_semi_month']  = 'half-month';
 $_['text_month']       = 'month';
 $_['text_year']        = 'year';
+$_['text_add_comment'] = 'Add comment';
 $_['text_comment']     = '%s comment';
 $_['text_comments']    = '%s comments';
 $_['tab_comments']     = 'Comments (%s)';

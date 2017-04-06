@@ -523,6 +523,7 @@ header #cart > .dropdown-toggle:hover {
     border: none;
     border-bottom: 1px solid #ececec;
 }
+
 /* content */
 #content {
     min-height: 600px;
@@ -1121,6 +1122,11 @@ h2.price {
     position: relative;
     padding: 5px;
 }
+
+aside .module-title {
+    font-size: 18px;
+}
+
 /* Product Detail */
 .product-detail .col-sm-4 h1 {
     margin-top: 0;

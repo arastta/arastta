@@ -65,12 +65,12 @@ $_['text_error_advanced']              = 'Advanced';
 $_['text_none']                        = '- None -';
 $_['text_name_asc']                    = 'Post Name (A - Z)';
 $_['text_name_desc']                   = 'Post Name (Z - A)';
-$_['text_date_added_asc']              = 'Date Added (Newest - Oldest)';
-$_['text_date_added_desc']             = 'Date Added (Oldest - Newest)';
+$_['text_date_added_asc']              = 'Date Added (Oldest - Newest)';
+$_['text_date_added_desc']             = 'Date Added (Newest - Oldest)';
 $_['text_date_modified_asc']           = 'Date Modified (Newest - Oldest)';
 $_['text_date_modified_desc']          = 'Date Modified (Oldest - Newest)';
-$_['text_viewed_asc']                  = 'Viewed (Most - Least)';
-$_['text_viewed_desc']                 = 'Viewed (Least - Most)';
+$_['text_viewed_asc']                  = 'Viewed (Least - Most)';
+$_['text_viewed_desc']                 = 'Viewed (Most - Least)';
 $_['text_random']                      = 'Random';
 $_['text_sort_order']                  = 'Use Post Sort Order';
 

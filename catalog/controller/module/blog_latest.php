@@ -34,10 +34,10 @@ class ControllerModuleBlogLatest extends Controller
 
         if ($results) {
             foreach ($results as $result) {
+                $image = '';
+
                 if ($result['image']) {
                     $image = $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height']);
-                } else {
-                    $image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
                 }
 
                 $comment_total = $this->model_blog_comment->getTotalCommentsByPostId($result['post_id']);

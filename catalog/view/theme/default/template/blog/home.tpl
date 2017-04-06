@@ -37,7 +37,7 @@
                     </div>
                     <?php } ?>
                     <div class="<?php echo $class_featured_post; ?>" style="padding-right:10px;">
-                      <h3><?php echo $featured_post['name']; ?></h3>
+                      <h3><a href="<?php echo $featured_post['href']; ?>" title="<?php echo $featured_post['name']; ?>"><?php echo $featured_post['name']; ?></a></h3>
                       <p><?php echo $featured_post['description']; ?></p>
                     </div>
                   </div>
@@ -61,6 +61,9 @@
                 <?php } ?>
                 <?php if ($viewed) { ?>
                 <span class="blog-view"><i class="fa fa-eye"></i> <?php echo $post['viewed']; ?></span>
+                <?php } ?>
+                <?php if ($viewed) { ?>
+                <span class="blog-comment"><i class="fa fa-comments"></i> 1 comment</span>
                 <?php } ?>
               </div>
               <div class="row">

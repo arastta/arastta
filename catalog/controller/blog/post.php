@@ -19,6 +19,8 @@ class ControllerBlogPost extends Controller
         #Get All Language Text
         $data = $this->language->all();
 
+        $data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
+
         $data['breadcrumbs'] = array();
 
         $data['breadcrumbs'][] = array(

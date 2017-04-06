@@ -60,7 +60,7 @@
                     <hr>
                     <div id="comment"></div>
                     <div class="comment-add">
-                        <h3><i class="fa fa-pencil"></i> <?php $text_add_comment; ?></h3>
+                        <h3><i class="fa fa-pencil"></i> <?php echo $text_add_comment; ?></h3>
                         <form class="form-group" id="form-comment">
                             <?php if ($comment_guest) { ?>
                             <div class="row">

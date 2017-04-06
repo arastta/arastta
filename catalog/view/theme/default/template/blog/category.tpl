@@ -37,6 +37,9 @@
                     <?php if ($viewed) { ?>
                     <span class="blog-view"><i class="fa fa-eye"></i> <?php echo $post['viewed']; ?></span>
                     <?php } ?>
+                    <?php if ($viewed) { ?>
+                    <span class="blog-comment"><i class="fa fa-comments"></i> 1 comment</span>
+                    <?php } ?>
                   </div>
                   <div class="row">
                     <?php if ($post['thumb']) { ?>

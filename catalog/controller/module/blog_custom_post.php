@@ -38,10 +38,10 @@ class ControllerModuleBlogCustomPost extends Controller
                 $post_info = $this->model_blog_post->getPost($post_id);
 
                 if ($post_info) {
+                    $image = '';
+
                     if ($post_info['image']) {
                         $image = $this->model_tool_image->resize($post_info['image'], $setting['width'], $setting['height']);
-                    } else {
-                        $image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
                     }
 
                     $comment_total = $this->model_blog_comment->getTotalCommentsByPostId($post_info['post_id']);
