@@ -15,7 +15,7 @@ class ModelSystemEmailtemplate extends Model
         $this->trigger->fire('pre.admin.emailtemplate.edit', array(&$email_template_description));
 
         $item = explode("_", $email_template);
-        
+
         $query = $this->db->query("SELECT id FROM " . DB_PREFIX . "email WHERE type = '" . $item[0] ."' AND text_id = '" . (int)$item[1] ."'");
 
         $email_id = $query->row['id'];
@@ -34,7 +34,7 @@ class ModelSystemEmailtemplate extends Model
         $item = explode("_", $email_template);
 
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "email AS e LEFT JOIN " . DB_PREFIX . "email_description AS ed ON ed.email_id = e.id WHERE e.type = '" . $item[0] . "' AND e.text_id = '" . $item[1] . "'");
-        
+
         foreach ($query->rows as $result) {
             $email_template_data[$result['language_id']] = array(
                 'text'         => $result['text'],
@@ -53,47 +53,34 @@ class ModelSystemEmailtemplate extends Model
     public function getEmailTemplates($data = array())
     {
         $sql = "SELECT * FROM `" . DB_PREFIX . "email` AS e";
-        
-        $isWhere = 0;
-        $_sql = array();
-        
+
         if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
-            $isWhere = 1;
-            
             $sql .= " LEFT JOIN `" . DB_PREFIX . "email_description` AS ed ON e.id = ed.email_id ";
-            $_sql[] = "ed.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
         }
-        
+
+        $sql .= " WHERE e.status = '1'";
+
+        if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
+            $sql .= " AND ed.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+        }
+
         if (isset($data['filter_text']) && !is_null($data['filter_text'])) {
-            $isWhere = 1;
-            
-            $_sql[] = "e.text LIKE '" . $this->db->escape($data['filter_text']) . "%'";
+            $sql .= " AND e.text LIKE '" . $this->db->escape($data['filter_text']) . "%'";
         }
 
         if (isset($data['filter_context']) && !is_null($data['filter_context'])) {
-            $isWhere = 1;
-            
-            $_sql[] = "e.context LIKE '" . $this->db->escape($data['filter_context']) . "%'";
+            $sql .= " AND e.context LIKE '" . $this->db->escape($data['filter_context']) . "%'";
         }
 
         if (isset($data['filter_type']) && !is_null($data['filter_type'])) {
-            $isWhere = 1;
-            
             $filterType = $this->getEmailTypes($data['filter_type']);
-            
-            $_sql[] = "e.type = '" . $this->db->escape($filterType) . "'";
+
+            $sql .= " AND e.type = '" . $this->db->escape($filterType) . "'";
         }
-                
+
         if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
-            $isWhere = 1;
-            
-            $_sql[] = "e.status LIKE '" . $this->db->escape($data['filter_status']) . "%'";
+            $sql .= " AND e.status LIKE '" . $this->db->escape($data['filter_status']) . "%'";
         }
-
-        if ($isWhere) {
-            $sql .= " WHERE " . implode(" AND ", $_sql);
-        }
-
 
         $sort_data = array(
             'name',
@@ -140,10 +127,10 @@ class ModelSystemEmailtemplate extends Model
 
         return $query->rows;
     }
-    
+
     protected function getEmailTypes($item)
     {
-        $result = array ( 'order', 'customer', 'affiliate', 'review', 'contact', 'cron', 'mail' );
+        $result = array('order', 'customer', 'affiliate', 'review', 'contact', 'cron', 'mail' );
 
         if ($item < 1  || $item > 7) {
             $item = 1;
@@ -151,7 +138,7 @@ class ModelSystemEmailtemplate extends Model
 
         return $result[$item-1];
     }
-    
+
     public function getEmailTemplatesStores($email_template)
     {
         $manufacturer_store_data = array();
@@ -169,48 +156,36 @@ class ModelSystemEmailtemplate extends Model
     {
         $sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "email AS e";
 
-        $isWhere = 0;
-        $_sql = array();
-        
         if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
-            $isWhere = 1;
-            
             $sql .= " LEFT JOIN `" . DB_PREFIX . "email_description` AS ed ON e.id = ed.email_id ";
-            $_sql[] = "ed.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
         }
-        
+
+        $sql .= " WHERE e.status = '1'";
+
+        if (isset($data['filter_name']) && !is_null($data['filter_name'])) {
+            $sql .= " AND ed.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+        }
+
         if (isset($data['filter_text']) && !is_null($data['filter_text'])) {
-            $isWhere = 1;
-            
-            $_sql[] = "e.text LIKE '" . $this->db->escape($data['filter_text']) . "%'";
+            $sql .= " AND e.text LIKE '" . $this->db->escape($data['filter_text']) . "%'";
         }
 
         if (isset($data['filter_context']) && !is_null($data['filter_context'])) {
-            $isWhere = 1;
-            
-            $_sql[] = "e.context LIKE '" . $this->db->escape($data['filter_context']) . "%'";
+            $sql .= " AND e.context LIKE '" . $this->db->escape($data['filter_context']) . "%'";
         }
 
         if (isset($data['filter_type']) && !is_null($data['filter_type'])) {
-            $isWhere = 1;
-            
             $filterType = $this->getEmailTypes($data['filter_type']);
-            
-            $_sql[] = "e.type = '" . $this->db->escape($filterType) . "'";
+
+            $sql .= " AND e.type = '" . $this->db->escape($filterType) . "'";
         }
-                
+
         if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
-            $isWhere = 1;
-            
-            $_sql[] = "e.status LIKE '" . $this->db->escape($data['filter_status']) . "%'";
-        }
-                
-        if ($isWhere) {
-            $sql .= " WHERE " . implode(" AND ", $_sql);
+            $sql .= " AND e.status LIKE '" . $this->db->escape($data['filter_status']) . "%'";
         }
 
         $query = $this->db->query($sql);
-        
+
         return $query->row['total'];
     }
 

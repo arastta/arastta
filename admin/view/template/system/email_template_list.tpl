@@ -141,64 +141,62 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript"><!--
-$('#button-filter').on('click', function() {
-    var url = 'index.php?route=system/email_template&token=<?php echo $token; ?>';
+    $('#button-filter').on('click', function() {
+        var url = 'index.php?route=system/email_template&token=<?php echo $token; ?>';
 
-    var filter_text = $('input[name=\'filter_text\']').val();
+        var filter_text = $('input[name=\'filter_text\']').val();
 
-    if (filter_text) {
-        url += '&filter_text=' + encodeURIComponent(filter_text);
-    }
+        if (filter_text) {
+            url += '&filter_text=' + encodeURIComponent(filter_text);
+        }
 
-    var filter_context = $('input[name=\'filter_context\']').val();
+        var filter_context = $('input[name=\'filter_context\']').val();
 
-    if (filter_context) {
-        url += '&filter_context=' + encodeURIComponent(filter_context);
-    }
+        if (filter_context) {
+            url += '&filter_context=' + encodeURIComponent(filter_context);
+        }
 
-    var filter_name = $('input[name=\'filter_name\']').val();
+        var filter_name = $('input[name=\'filter_name\']').val();
 
-    if (filter_name) {
-        url += '&filter_name=' + encodeURIComponent(filter_name);
-    }
+        if (filter_name) {
+            url += '&filter_name=' + encodeURIComponent(filter_name);
+        }
 
-    var filter_type = $('select[name=\'filter_type\']').val();
+        var filter_type = $('select[name=\'filter_type\']').val();
 
-    if (filter_type != '') {
-        url += '&filter_type=' + encodeURIComponent(filter_type);
-    }
+        if (filter_type != '') {
+            url += '&filter_type=' + encodeURIComponent(filter_type);
+        }
 
-    var filter_status = $('select[name=\'filter_status\']').val();
+        var filter_status = $('select[name=\'filter_status\']').val();
 
-    if (filter_status != '*') {
-        url += '&filter_status=' + encodeURIComponent(filter_status);
-    }
+        if (filter_status != '*') {
+            url += '&filter_status=' + encodeURIComponent(filter_status);
+        }
 
-    location = url;
-});
+        location = url;
+    });
 //--></script>
 <script type="text/javascript"><!--
-$('input[name=\'filter_name\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=system/email_template/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['name'],
-                        value: item['product_id']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_name\']').val(item['label']);
-    }
-});
+    $('input[name=\'filter_name\']').autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=system/email_template/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['name'],
+                            value: item['product_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $('input[name=\'filter_name\']').val(item['label']);
+        }
+    });
 //--></script>
-
 <?php echo $footer; ?>
