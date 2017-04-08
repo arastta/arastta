@@ -55,7 +55,7 @@ class ControllerFeedFacebookStore extends Controller
             }
 
             if ($this->config->get('facebook_store_show_header_language')) {
-                $data = $this->getLangauge($data);
+                $data = $this->getLanguage($data);
             } else {
                 $data['languages'] = array();
             }
@@ -412,7 +412,6 @@ class ControllerFeedFacebookStore extends Controller
             );
         }
 
-
         foreach ($categories as $key => $value) {
             $data[$key] = $value;
         }
@@ -420,7 +419,7 @@ class ControllerFeedFacebookStore extends Controller
         return $data;
     }
 
-    protected function getLangauge($data)
+    protected function getLanguage($data)
     {
         $language = array();
 
@@ -444,7 +443,6 @@ class ControllerFeedFacebookStore extends Controller
 
         foreach ($results as $result) {
             if ($result['status']) {
-
                 $language['languages'][] = array(
                     'name'  => $result['name'],
                     'code'  => $result['code'],

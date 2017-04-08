@@ -8,7 +8,7 @@
  */
 
 // Heading
-$_['heading_title']                   = 'Facebook Store Feed';
+$_['heading_title'] = 'Facebook Store Feed';
 
 // Text
 $_['text_not_active_facebook_store'] = 'Facebook Store feed not active. Please active, then test again.';
