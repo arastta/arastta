@@ -262,6 +262,25 @@ class ModelBlogPost extends Model
         return $query->rows;
     }
 
+    public function getPostCategory($post_id)
+    {
+        $categories = $this->getCategories($post_id);
+
+        if (!$categories) {
+            return false;
+        }
+
+        $category = end($categories);
+
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "blog_category_description WHERE category_id = '" . (int)$category['category_id'] . "' AND language_id = '" . (int) $this->config->get('config_language_id') . "'");
+
+        if (!$query->num_rows) {
+            return false;
+        }
+
+        return $query->row;
+    }
+
     public function getPostsByBlogCategoryId($blog_category_id, $start = 0, $limit = 40)
     {
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "blog n LEFT JOIN " . DB_PREFIX . "blog_description nd ON (n.post_id = nd.post_id) LEFT JOIN " . DB_PREFIX . "blog_to_store n2s ON (n.post_id = n2s.post_id) LEFT JOIN " . DB_PREFIX . "blog_to_category n2c ON (n.post_id = n2c.post_id) WHERE nd.language_id = '" . (int) $this->config->get('config_language_id') . "' AND n2s.store_id = '" . (int) $this->config->get('config_store_id') . "' AND n2c.blog_category_id = '" . (int) $blog_category_id . "' AND n.status = '1' AND n.sort_order <> '-1' ORDER BY n.sort_order, n.post_id DESC LIMIT " . (int) $start . "," . (int) $limit);
@@ -331,5 +350,34 @@ class ModelBlogPost extends Model
         $blog_comment_id = $this->db->getLastId();
 
         $this->event->trigger('post.comment.add', $blog_comment_id);
+    }
+
+    public function checkMenu($type, $link = null)
+    {
+        $sql = "SELECT * FROM " . DB_PREFIX . "menu m LEFT JOIN " . DB_PREFIX . "menu_description md ON (m.menu_id = md.menu_id) WHERE m.menu_type = 'blog_" . $this->db->escape($type) . "' AND md.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+
+        if ($link) {
+            $sql .= " AND md.link = " . $this->db->escape($link);
+        }
+
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows) {
+            return $query->row['name'];
+        }
+
+        $sql = "SELECT * FROM " . DB_PREFIX . "menu_child mc LEFT JOIN " . DB_PREFIX . "menu_child_description mcd ON (mc.menu_child_id = mcd.menu_id) WHERE mc.menu_type = 'blog_" . $this->db->escape($type) . "' AND mcd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+
+        if ($link) {
+            $sql .= " AND mcd.link = " . $this->db->escape($link);
+        }
+
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows) {
+            return $query->row['name'];
+        }
+
+        return false;
     }
 }

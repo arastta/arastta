@@ -16,6 +16,8 @@ class ControllerBlogPost extends Controller
     {
         $this->load->language('blog/post');
 
+        $this->load->model('blog/post');
+
         #Get All Language Text
         $data = $this->language->all();
 
@@ -23,9 +25,18 @@ class ControllerBlogPost extends Controller
 
         $data['breadcrumbs'] = array();
 
+        $menu_home = $this->model_blog_post->checkMenu('home');
+
+        $text_home = ($menu_home) ? $menu_home : $this->language->get('text_blog') ;
+
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
             'href' => $this->url->link('common/home')
+        );
+
+        $data['breadcrumbs'][] = array(
+            'text' => $text_home,
+            'href' => $this->url->link('blog/home')
         );
 
         $this->load->model('blog/category');
@@ -134,8 +145,6 @@ class ControllerBlogPost extends Controller
             $post_id = 0;
         }
 
-        $this->load->model('blog/post');
-
         $post_info = $this->model_blog_post->getPost($post_id);
 
         if ($post_info) {
@@ -209,6 +218,15 @@ class ControllerBlogPost extends Controller
 
             $data['post_id'] = (int)$this->request->get['post_id'];
 
+            $category = $this->model_blog_post->getPostCategory($data['post_id']);
+
+            $data['category'] = false;
+
+            if ($this->config->get('config_blog_post_form_category', 1) && $category) {
+                $data['category'] = $category['name'];
+                $data['category_href'] = $this->url->link('blog/category', 'path=' . $category['category_id']);
+            }
+
             $this->load->model('blog/comment');
 
             $data['comment_total'] = $this->model_blog_comment->getTotalCommentsByPostId($this->request->get['post_id']);
@@ -231,6 +249,7 @@ class ControllerBlogPost extends Controller
 
             if ($this->config->get('config_blog_post_form_author')) {
                 $data['author'] = $post_info['author'];
+                $data['author_href'] = $this->url->link('blog/home', 'filter_author=' . $post_info['author']);
             }
 
             $data['viewed'] = false;
@@ -275,7 +294,7 @@ class ControllerBlogPost extends Controller
                 foreach ($tags as $tag) {
                     $data['tags'][] = array(
                         'tag'  => trim($tag),
-                        'href' => $this->url->link('blog/search', 'tag=' . trim($tag))
+                        'href' => $this->url->link('blog/home', 'tag=' . trim($tag))
                     );
                 }
             }

@@ -25,15 +25,31 @@ class ControllerBlogHome extends Controller
 
         $data['breadcrumbs'] = array();
 
+        $menu_home = $this->model_blog_post->checkMenu('home');
+
+        $text_home = ($menu_home) ? $menu_home : $this->language->get('text_blog') ;
+
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
             'href' => $this->url->link('common/home')
         );
 
         $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_blog'),
+            'text' => $text_home,
             'href' => $this->url->link('blog/home')
         );
+
+        $filter_author = false;
+
+        if (isset($this->request->get['filter_author'])) {
+            $filter_author = $this->request->get['filter_author'];
+        }
+
+        $filter_tag= false;
+
+        if (isset($this->request->get['tag'])) {
+            $filter_tag = $this->request->get['tag'];
+        }
 
         $page = 1;
 
@@ -49,13 +65,13 @@ class ControllerBlogHome extends Controller
         $results = $this->model_blog_post->getFeaturedPosts();
 
         foreach ($results as $result) {
+            $image = '';
+
             if ($result['image']) {
                 $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_blog_post_list_width'), $this->config->get('config_blog_post_list_height'));
-            } else {
-                $image = '';
             }
 
-            $category = 'Test';
+            $category = $this->model_blog_post->getPostCategory($result['post_id']);
 
             $comment_total = $this->model_blog_comment->getTotalCommentsByPostId($result['post_id']);
 
@@ -66,17 +82,21 @@ class ControllerBlogHome extends Controller
                 'thumb'         => $image,
                 'name'          => $result['name'],
                 'description'   => $result['description'],
-                'category'      => $category,
+                'category'      => $category['name'],
+                'category_href' => $this->url->link('blog/category', 'path=' . $category['category_id']),
                 'viewed'        => $result['viewed'],
-                'comment_total' => $comment_total,
+                'comment_total' => sprintf((($comment_total > 1) ? $this->language->get('text_comment_totals') : $this->language->get('text_comment_total')), $comment_total),
                 'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_available'])),
                 'author'        => $result['author'],
+                'author_href'   => $this->url->link('blog/home', 'filter_author=' . rawurlencode($result['author'])),
                 'href'          => $this->url->link('blog/post', 'post_id=' . $result['post_id'])
             );
         }
 
         $filter_data = array(
             'filter_featured' => '0',
+            'filter_author'   => $filter_author,
+            'filter_tag'      => $filter_tag,
             'start'           => ($page - 1) * $limit,
             'limit'           => $limit
         );
@@ -92,7 +112,7 @@ class ControllerBlogHome extends Controller
                 $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_blog_post_list_width'), $this->config->get('config_blog_post_list_height'));
             }
 
-            $category = 'Test';
+            $category = $this->model_blog_post->getPostCategory($result['post_id']);
 
             $comment_total = $this->model_blog_comment->getTotalCommentsByPostId($result['post_id']);
 
@@ -103,16 +123,19 @@ class ControllerBlogHome extends Controller
                 'thumb'         => $image,
                 'name'          => $result['name'],
                 'description'   => $result['description'],
-                'category'      => $category,
+                'category'      => $category['name'],
+                'category_href' => $this->url->link('blog/category', 'path=' . $category['category_id']),
                 'viewed'        => $result['viewed'],
-                'comment_total' => $comment_total,
+                'comment_total' => sprintf((($comment_total > 1) ? $this->language->get('text_comment_totals') : $this->language->get('text_comment_total')), $comment_total),
                 'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_available'])),
                 'author'        => $result['author'],
+                'author_href'   => $this->url->link('blog/home', 'filter_author=' . rawurlencode($result['author'])),
                 'href'          => $this->url->link('blog/post', 'post_id=' . $result['post_id'])
             );
         }
 
         $data['author'] = $this->config->get('config_blog_post_list_author');
+        $data['category'] = $this->config->get('config_blog_post_list_category', 1);
         $data['date_added'] = $this->config->get('config_blog_post_list_date');
         $data['viewed'] = $this->config->get('config_blog_post_list_read');
 
