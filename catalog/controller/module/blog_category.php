@@ -13,7 +13,8 @@ class ControllerModuleBlogCategory extends Controller
     {
         $this->load->language('module/blog_category');
 
-        $data['heading_title'] = $this->language->get('heading_title');
+        #Get All Language Text
+        $data = $this->language->all();
 
         if (isset($this->request->get['path'])) {
             $parts = explode('_', (string) $this->request->get['path']);

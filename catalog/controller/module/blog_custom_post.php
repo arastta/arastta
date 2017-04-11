@@ -13,8 +13,8 @@ class ControllerModuleBlogCustomPost extends Controller
     {
         $this->load->language('module/blog_custom_post');
 
-        $data['heading_title'] = $this->language->get('heading_title');
-        $data['text_more'] = $this->language->get('text_more');
+        #Get All Language Text
+        $data = $this->language->all();
 
         $this->load->model('blog/post');
         $this->load->model('blog/comment');

@@ -13,7 +13,8 @@ class ControllerModuleBlogComment extends Controller
     {
         $this->load->language('module/blog_comment');
 
-        $data['heading_title'] = $this->language->get('heading_title');
+        #Get All Language Text
+        $data = $this->language->all();
 
         $this->load->model('blog/comment');
 

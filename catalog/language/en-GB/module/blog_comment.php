@@ -9,3 +9,6 @@
 
 // Heading
 $_['heading_title'] = 'Blog Comment';
+
+// Text
+$_['text_write'] = 'Written by';
