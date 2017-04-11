@@ -651,7 +651,7 @@ if (version_compare(VERSION, '1.6.0', '<')) {
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_sec_csrf', `value` = 'a:7:{i:0;s:20:\"account/address/edit\";i:1;s:12:\"account/edit\";i:2;s:18:\"account/newsletter\";i:3;s:16:\"account/password\";i:4;s:14:\"affiliate/edit\";i:5;s:18:\"affiliate/password\";i:6;s:17:\"affiliate/payment\";}', `serialized` = '1'");
 
     // Add blog tables
-    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_post` (
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_post` (
         `post_id` int(11) NOT NULL AUTO_INCREMENT,
         `allow_comment` int(1) NOT NULL DEFAULT '1',
         `featured` int(1) NOT NULL DEFAULT '0',
@@ -669,7 +669,7 @@ if (version_compare(VERSION, '1.6.0', '<')) {
         KEY `author` (`author`)
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
-    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_post_description` (
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_post_description` (
         `post_id` int(11) NOT NULL,
         `language_id` int(11) NOT NULL,
         `name` varchar(255) NOT NULL,
@@ -683,14 +683,14 @@ if (version_compare(VERSION, '1.6.0', '<')) {
         KEY `language_id` (`language_id`)
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
-    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_post_to_category` (
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_post_to_category` (
         `post_id` int(11) NOT NULL,
         `category_id` int(11) NOT NULL,
         PRIMARY KEY (`post_id`,`category_id`),
         KEY `category_id` (`category_id`)
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
-    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_post_to_layout` (
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_post_to_layout` (
         `post_id` int(11) NOT NULL,
         `store_id` int(11) NOT NULL,
         `layout_id` int(11) NOT NULL,
@@ -699,14 +699,14 @@ if (version_compare(VERSION, '1.6.0', '<')) {
         KEY `layout_id` (`layout_id`)
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
-    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_post_to_store` (
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_post_to_store` (
         `post_id` int(11) NOT NULL,
         `store_id` int(11) NOT NULL,
         PRIMARY KEY (`post_id`,`store_id`),
         KEY `store_id` (`store_id`)
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
-    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_comment` (
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_comment` (
         `comment_id` int(11) NOT NULL AUTO_INCREMENT,
         `post_id` int(11) NOT NULL,
         `customer_id` int(11) NOT NULL,
@@ -721,7 +721,7 @@ if (version_compare(VERSION, '1.6.0', '<')) {
         KEY `customer_id` (`customer_id`)
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
-    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_category` (
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_category` (
         `category_id` int(11) NOT NULL AUTO_INCREMENT,
         `image` varchar(255) DEFAULT NULL,
         `parent_id` int(11) NOT NULL DEFAULT '0',
@@ -734,7 +734,7 @@ if (version_compare(VERSION, '1.6.0', '<')) {
         KEY `parent_id` (`parent_id`)
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
-    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_category_description` (
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_category_description` (
         `category_id` int(11) NOT NULL,
         `language_id` int(11) NOT NULL,
         `name` varchar(255) NOT NULL,
@@ -747,7 +747,7 @@ if (version_compare(VERSION, '1.6.0', '<')) {
         KEY `language_id` (`language_id`)
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
-    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_category_path` (
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_category_path` (
         `category_id` int(11) NOT NULL,
         `path_id` int(11) NOT NULL,
         `level` int(11) NOT NULL,
@@ -755,7 +755,7 @@ if (version_compare(VERSION, '1.6.0', '<')) {
         KEY `path_id` (`path_id`)
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
-    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_category_to_layout` (
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_category_to_layout` (
         `category_id` int(11) NOT NULL,
         `store_id` int(11) NOT NULL,
         `layout_id` int(11) NOT NULL,
@@ -764,7 +764,7 @@ if (version_compare(VERSION, '1.6.0', '<')) {
         KEY `layout_id` (`layout_id`)
         ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
 
-    $this->db->query("CREATE TABLE IF NOT EXISTS `ar_blog_category_to_store` (
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_category_to_store` (
         `category_id` int(11) NOT NULL,
         `store_id` int(11) NOT NULL,
         PRIMARY KEY (`category_id`,`store_id`),
@@ -802,7 +802,7 @@ if (version_compare(VERSION, '1.6.0', '<')) {
     $module_id = $this->db->getLastId();
 
     // Add Blog Modules
-    $this->db->query("INSERT INTO " . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$layout_id . "', `code` = 'blog_latest." .$module_id ."', `position` = 'column_right', `sort_order` = '0'");
+    $this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$layout_id . "', `code` = 'blog_latest." .$module_id ."', `position` = 'column_right', `sort_order` = '0'");
 
     $this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = 'Blog Post'");
 
@@ -816,7 +816,7 @@ if (version_compare(VERSION, '1.6.0', '<')) {
     $module_id = $this->db->getLastId();
 
     // Add Blog Modules
-    $this->db->query("INSERT INTO " . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$layout_id . "', `code` = 'blog_comment." .$module_id ."', `position` = 'column_right', `sort_order` = '0'");
+    $this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$layout_id . "', `code` = 'blog_comment." .$module_id ."', `position` = 'column_right', `sort_order` = '0'");
 
     $this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = 'Blog Category'");
 
