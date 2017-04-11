@@ -163,15 +163,16 @@ class ControllerBlogCategory extends Controller
         $this->getList();
     }
 
-    public function repair() {
-        $this->load->language('catalog/category');
+    public function repair()
+    {
+        $this->load->language('blog/category');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('catalog/category');
+        $this->load->model('blog/category');
 
         if ($this->validateRepair()) {
-            $this->model_catalog_category->repairCategories();
+            $this->model_blog_category->repairCategories();
 
             $this->session->data['success'] = $this->language->get('text_success');
 
@@ -189,7 +190,7 @@ class ControllerBlogCategory extends Controller
                 $url .= '&page=' . $this->request->get['page'];
             }
 
-            $this->response->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+            $this->response->redirect($this->url->link('blog/category', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
 
         $this->getList();
@@ -254,7 +255,7 @@ class ControllerBlogCategory extends Controller
 
         $data['add']    = $this->url->link('blog/category/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $data['delete'] = $this->url->link('blog/category/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
-        $data['repair'] = $this->url->link('catalog/category/repair', 'token=' . $this->session->data['token'] . $url, 'SSL');
+        $data['repair'] = $this->url->link('blog/category/repair', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
         $data['categories'] = array();
 
@@ -605,7 +606,7 @@ class ControllerBlogCategory extends Controller
 
     protected function validateRepair()
     {
-        if (!$this->user->hasPermission('modify', 'catalog/category')) {
+        if (!$this->user->hasPermission('modify', 'blog/category')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
@@ -778,7 +779,7 @@ class ControllerBlogCategory extends Controller
 
         $route = new Route($this->registry);
 
-        $url .= ltrim($route->rewrite('index.php?route=blog/category&category_id=' . $category_id), '/');
+        $url .= ltrim($route->rewrite('index.php?route=blog/category&path=' . $category_id), '/');
 
         if (!empty($old_session_code)) {
             $this->session->data['language'] = $old_session_code;

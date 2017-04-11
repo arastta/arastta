@@ -90,22 +90,6 @@ class ControllerBlogPost extends Controller
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $this->model_blog_post->editPost($this->request->get['post_id'], $this->request->post);
 
-            if (isset($this->request->post['selected'])) {
-                if ($this->request->post['set_as'] == 'delete') {
-                    foreach ($this->request->post['selected'] as $blog_comment_id) {
-                        $this->model_blog_post->deleteComments($blog_comment_id);
-                    }
-                } elseif ($this->request->post['set_as'] == 'disabled') {
-                    foreach ($this->request->post['selected'] as $blog_comment_id) {
-                        $this->model_blog_post->disableComments($blog_comment_id);
-                    }
-                } elseif ($this->request->post['set_as'] == 'enabled') {
-                    foreach ($this->request->post['selected'] as $blog_comment_id) {
-                        $this->model_blog_post->enableComments($blog_comment_id);
-                    }
-                }
-            }
-
             $this->session->data['success'] = $this->language->get('text_success');
 
             $url = '';
@@ -163,6 +147,57 @@ class ControllerBlogPost extends Controller
         if (isset($this->request->post['selected']) && $this->validateDelete()) {
             foreach ($this->request->post['selected'] as $post_id) {
                 $this->model_blog_post->deletePost($post_id);
+            }
+
+            $this->session->data['success'] = $this->language->get('text_success');
+
+            $url = '';
+
+            if (isset($this->request->get['filter_name'])) {
+                $url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+            }
+
+            if (isset($this->request->get['filter_author'])) {
+                $url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
+            }
+
+            if (isset($this->request->get['filter_category'])) {
+                $url .= '&filter_category=' . $this->request->get['filter_category'];
+            }
+
+            if (isset($this->request->get['filter_status'])) {
+                $url .= '&filter_status=' . $this->request->get['filter_status'];
+            }
+
+            if (isset($this->request->get['page'])) {
+                $url .= '&page=' . $this->request->get['page'];
+            }
+
+            if (isset($this->request->get['sort'])) {
+                $url .= '&sort=' . $this->request->get['sort'];
+            }
+
+            if (isset($this->request->get['order'])) {
+                $url .= '&order=' . $this->request->get['order'];
+            }
+
+            $this->response->redirect($this->url->link('blog/post', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+        }
+
+        $this->getList();
+    }
+
+    public function copy()
+    {
+        $this->load->language('blog/post');
+
+        $this->document->setTitle($this->language->get('heading_title'));
+
+        $this->load->model('blog/post');
+
+        if (isset($this->request->post['selected']) && $this->validateCopy()) {
+            foreach ($this->request->post['selected'] as $post_id) {
+                $this->model_blog_post->copyProduct($post_id);
             }
 
             $this->session->data['success'] = $this->language->get('text_success');
@@ -725,6 +760,15 @@ class ControllerBlogPost extends Controller
         return !$this->error;
     }
 
+    protected function validateCopy()
+    {
+        if (!$this->user->hasPermission('modify', 'blog/post')) {
+            $this->error['warning'] = $this->language->get('error_permission');
+        }
+
+        return !$this->error;
+    }
+
     public function autocomplete()
     {
         $json = array();
@@ -780,7 +824,7 @@ class ControllerBlogPost extends Controller
 
     protected function validateInline()
     {
-        if (!$this->user->hasPermission('modify', 'catalog/product')) {
+        if (!$this->user->hasPermission('modify', 'blog/post')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
