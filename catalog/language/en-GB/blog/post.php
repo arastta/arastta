@@ -11,11 +11,11 @@
 $_['text_search']      = 'Search';
 $_['text_author']      = 'Author';
 $_['text_comments']    = '%s comments';
-$_['text_write']       = 'Write a review';
-$_['text_login']       = 'Please <a href="%s">login</a> or <a href="%s">register</a> to review';
+$_['text_write']       = 'Write a comment';
+$_['text_login']       = 'Please <a href="%s">login</a> or <a href="%s">register</a> to comment';
 $_['text_no_comments'] = 'There are no comments for this post.';
 $_['text_note']        = '<span class="text-danger">Note:</span> HTML is not translated!';
-$_['text_success']     = 'Thank you for your review. It has been submitted to the webmaster for approval.';
+$_['text_success']     = 'Thank you for your comment. It has been submitted to the webmaster for approval.';
 $_['text_tags']        = 'Tags:';
 $_['text_error']       = 'Post not found!';
 $_['text_day']         = 'day';
@@ -39,5 +39,5 @@ $_['entry_name']    = 'Your Name';
 $_['entry_comment'] = 'Your Comment';
 
 // Error
-$_['error_name'] = 'Warning: Review Name must be between 3 and 25 characters!';
-$_['error_text'] = 'Warning: Review Text must be between 25 and 1000 characters!';
+$_['error_name'] = 'Warning: Comment Name must be between 3 and 25 characters!';
+$_['error_text'] = 'Warning: Comment Text must be between 25 and 1000 characters!';
