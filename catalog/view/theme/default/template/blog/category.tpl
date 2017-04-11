@@ -26,10 +26,10 @@
                   <h3><a href="<?php echo $post['href']; ?>"><?php echo $post['name']; ?></a></h3>
                   <div class="meta">
                     <?php if ($author) { ?>
-                    <a class="blog-author" href="#"><i class="fa fa-user"></i> <?php echo $post['author']; ?></a>
+                    <a class="blog-author" href="<?php echo $post['author_href']; ?>"><i class="fa fa-user"></i> <?php echo $post['author']; ?></a>
                     <?php } ?>
                     <?php if ($category) { ?>
-                    <a class="blog-category" href="#"><i class="fa fa-bookmark"></i> <?php echo $post['category']; ?></a>
+                    <a class="blog-category" href="<?php echo $post['category_href']; ?>"><i class="fa fa-bookmark"></i> <?php echo $post['category']; ?></a>
                     <?php } ?>
                     <?php if ($date_added) { ?>
                     <span class="blog-date"><i class="fa fa-calendar"></i> <?php echo $post['date_added']; ?></span>
@@ -38,7 +38,7 @@
                     <span class="blog-view"><i class="fa fa-eye"></i> <?php echo $post['viewed']; ?></span>
                     <?php } ?>
                     <?php if ($viewed) { ?>
-                    <span class="blog-comment"><i class="fa fa-comments"></i> 1 comment</span>
+                    <span class="blog-comment"><i class="fa fa-comments"></i> <?php echo $post['comment_total']; ?></span>
                     <?php } ?>
                   </div>
                   <div class="row">
@@ -80,12 +80,4 @@
             <?php echo $content_bottom; ?></div>
         <?php echo $column_right; ?></div>
 </div>
-<script type="text/javascript"><!--
-$('.blog-slide').owlCarousel({
-    loop:true,
-    items: 1,
-    nav:true,
-    autoPlay:3000
-})
-//--></script>
 <?php echo $footer; ?>

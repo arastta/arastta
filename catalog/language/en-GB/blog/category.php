@@ -17,3 +17,5 @@ $_['text_sort']    = 'Sort By:';
 $_['text_default'] = 'Default';
 $_['text_limit']   = 'Show:';
 $_['text_more']    = 'More...';
+$_['text_comment_total']    = '%s comment';
+$_['text_comment_totals']   = '%s comments';

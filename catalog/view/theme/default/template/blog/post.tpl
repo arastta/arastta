@@ -27,9 +27,11 @@
                 <h1><a href="#"><?php echo $heading_title; ?></a></h1>
                 <div class="meta">
                     <?php if ($author) { ?>
-                    <a class="blog-author" href="#"><i class="fa fa-user"></i> <?php echo $author; ?></a>
+                    <a class="blog-author" href="<?php echo $author_href; ?>"><i class="fa fa-user"></i> <?php echo $author; ?></a>
                     <?php } ?>
-                    <a class="blog-category" href="#"><i class="fa fa-bookmark"></i> General</a>
+                    <?php if ($category) { ?>
+                    <a class="blog-category" href="<?php echo $category_href; ?>"><i class="fa fa-bookmark"></i> <?php echo $category; ?></a>
+                    <?php } ?>
                     <?php if ($date_added) { ?>
                     <span class="blog-date"><i class="fa fa-calendar"></i> <?php echo $date_added; ?></span>
                     <?php } ?>
