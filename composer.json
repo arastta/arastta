@@ -21,13 +21,15 @@
         "joomla/cache": "1.*@dev",
         "joomla/profiler": "1.*@dev",
         "joomla/uri": "1.*@dev",
-        "psr/log": "1.0.0",
         "kartik-v/bootstrap-fileinput": "4.3.*",
+        "nategood/httpful": "0.2.*",
+        "psr/log": "1.0.0",
         "symfony/console": "2.8.*",
         "symfony/debug": "2.8.*",
         "symfony/dom-crawler": "2.8.*",
         "symfony/filesystem": "2.8.*",
         "symfony/finder": "2.8.*",
-        "swiftmailer/swiftmailer": "5.4.*"
+        "swiftmailer/swiftmailer": "5.4.*",
+        "volnix/csrf": "1.0.*"
     }
 }

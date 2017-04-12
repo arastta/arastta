@@ -29,7 +29,7 @@ class Seo extends Object
 
     public function getAlias($id, $type = 'product')
     {
-        static $rows = array('product' => array(), 'category' => array(), 'manufacturer' => array(), 'information' => array(), 'other' => array());
+        static $rows = array('product' => array(), 'category' => array(), 'manufacturer' => array(), 'information' => array(), 'blog_post' => array(), 'blog_category' => array(), 'other' => array());
         
         if ($type == 'other') {
             $query = $id;
@@ -116,7 +116,7 @@ class Seo extends Object
             $query = !empty($found) ? $found : $tmp;
         } elseif (strpos($keyword, '-')) {
             $tmp = explode('-', $keyword);
-            $routes = array('product', 'category', 'manufacturer', 'information');
+            $routes = array('product', 'category', 'manufacturer', 'information', 'blog_post', 'blog_category');
 
             if (!empty($tmp[0]) && in_array($tmp[0], $routes) && !empty($tmp[1]) && is_numeric($tmp[1])) {
                 $query = $tmp[0].'_id='.$tmp[1];
@@ -227,15 +227,17 @@ class Seo extends Object
         return $data[$product_id];
     }
 
-    public function getParentCategoriesIds($category_id = 0)
+    public function getParentCategoriesIds($category_id = 0, $table_prefix = '')
     {
         static $data = array();
 
-        if (!isset($data[$category_id])) {
-            $data[$category_id] = array();
+        $unique_id = $table_prefix . $category_id;
 
-            $sql = "SELECT c.parent_id FROM " . DB_PREFIX . "category c";
-            $sql .= " LEFT JOIN " . DB_PREFIX . "category_to_store c2s ON (c.category_id = c2s.category_id)";
+        if (!isset($data[$unique_id])) {
+            $data[$unique_id] = array();
+
+            $sql = "SELECT c.parent_id FROM " . DB_PREFIX . $table_prefix . "category c";
+            $sql .= " LEFT JOIN " . DB_PREFIX . $table_prefix . "category_to_store c2s ON (c.category_id = c2s.category_id)";
             $sql .= " WHERE c.category_id = '" . (int)$category_id . "'";
             $sql .= " AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "'";
             $sql .= " ORDER BY c.sort_order";
@@ -244,14 +246,14 @@ class Seo extends Object
             $query = $this->db->query($sql);
 
             if (empty($query->row) || !isset($query->row['parent_id'])) {
-                return $data[$category_id];
+                return $data[$unique_id];
             }
 
-            $data[$category_id][] = $query->row['parent_id'];
+            $data[$unique_id][] = $query->row['parent_id'];
 
-            $data[$category_id] = array_merge($this->getParentCategoriesIds($query->row['parent_id']), $data[$category_id]);
+            $data[$unique_id] = array_merge($this->getParentCategoriesIds($query->row['parent_id']), $data[$unique_id]);
         }
 
-        return $data[$category_id];
+        return $data[$unique_id];
     }
 }

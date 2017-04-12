@@ -11,7 +11,7 @@ class ControllerFeedFacebookStore extends Controller
 {
 
     private $error = array();
-    
+
     public function index()
     {
         $this->load->language('feed/facebook_store');
@@ -20,7 +20,7 @@ class ControllerFeedFacebookStore extends Controller
 
         $this->document->addStyle('view/stylesheet/facebook-store.css');
         $this->document->addStyle('view/javascript/jquery/layout/jquery-ui.css');
-        
+
         $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery-lockfixed.js');
         $this->document->addScript('view/javascript/jquery/layout/jquery.ui.touch-punch.js');
@@ -38,14 +38,15 @@ class ControllerFeedFacebookStore extends Controller
             }
 
             if (isset($this->request->post['button']) and $this->request->post['button'] == 'save') {
-                $route = $this->request->get['route'];
                 $module_id = '';
+
                 if (isset($this->request->get['module_id'])) {
                     $module_id = '&module_id=' . $this->request->get['module_id'];
                 } elseif ($this->db->getLastId()) {
                     $module_id = '&module_id=' . $this->db->getLastId();
                 }
-                $this->response->redirect($this->url->link($route, 'token=' . $this->session->data['token'] . $module_id, 'SSL'));
+
+                $this->response->redirect($this->url->link($this->request->get['route'], 'token=' . $this->session->data['token'] . $module_id, 'SSL'));
             }
 
             $this->response->redirect($this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL'));
@@ -228,16 +229,12 @@ class ControllerFeedFacebookStore extends Controller
         if (!$this->user->hasPermission('modify', 'feed/facebook_store')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
-        
+
         if (utf8_strlen($this->request->post['facebook_store_app_id']) < 1) {
             $this->error['app_id'] = $this->language->get('error_app_id');
         }
 
-        if (!$this->error) {
-            return true;
-        } else {
-            return false;
-        }
+        return !$this->error;
     }
 
     protected function getModules()
@@ -299,7 +296,6 @@ class ControllerFeedFacebookStore extends Controller
                     'id'    => $type[1],
                     'name'  => $module['name']
                 );
-
             }
         }
 

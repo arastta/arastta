@@ -152,6 +152,7 @@ $_['tab_special']                   = 'Special';
 $_['tab_local']                     = 'Local';
 $_['tab_mail']                      = 'Mail';
 $_['tab_seo']                       = 'SEO';
+$_['tab_blog']                      = 'Blog';
 $_['tab_security']                  = 'Security';
 $_['tab_module']                    = 'Module';
 $_['tab_order']                     = 'Order Details';

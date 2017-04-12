@@ -19,6 +19,7 @@ $_['text_general'] = 'General';
 $_['text_view']    = 'View';
 
 $_['text_type']        = 'Type';
+$_['text_all']         = 'All';
 $_['text_bestsellers'] = 'Bestsellers';
 $_['text_featured']    = 'Featured';
 $_['text_latest']      = 'Latest';

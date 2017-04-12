@@ -178,76 +178,76 @@
     </div>
 </div>
 <script type="text/javascript"><!--
-$(document).ready(function() {
-    <?php if (!empty($filter_text)) { ?>
-    changeFilterType('<?php echo $entry_text; ?>', 'filter_text');
-    <?php } elseif (isset($filter_context)) { ?>
-    changeFilterType('<?php echo $entry_context; ?>', 'filter_context');
-    <?php } elseif (isset($filter_name)) { ?>
-    changeFilterType('<?php echo $entry_name; ?>', 'filter_name');
-    <?php } elseif (isset($filter_type)) { ?>
-    changeFilterType('<?php echo $entry_type; ?>', 'filter_type');
-    <?php } elseif (isset($filter_status)) { ?>
-    changeFilterType('<?php echo $column_status; ?>', 'filter_status');
-    <?php } ?>
-});
+    $(document).ready(function() {
+        <?php if (!empty($filter_text)) { ?>
+        changeFilterType('<?php echo $entry_text; ?>', 'filter_text');
+        <?php } elseif (isset($filter_context)) { ?>
+        changeFilterType('<?php echo $entry_context; ?>', 'filter_context');
+        <?php } elseif (isset($filter_name)) { ?>
+        changeFilterType('<?php echo $entry_name; ?>', 'filter_name');
+        <?php } elseif (isset($filter_type)) { ?>
+        changeFilterType('<?php echo $entry_type; ?>', 'filter_type');
+        <?php } elseif (isset($filter_status)) { ?>
+        changeFilterType('<?php echo $column_status; ?>', 'filter_status');
+        <?php } ?>
+    });
 
-$('input[name=\'filter_name\']').autocomplete({
-    'source': function(request, response) {
-        $.ajax({
-            url: 'index.php?route=system/email_template/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-            dataType: 'json',
-            success: function(json) {
-                response($.map(json, function(item) {
-                    return {
-                        label: item['name'],
-                        value: item['product_id']
-                    }
-                }));
-            }
-        });
-    },
-    'select': function(item) {
-        $('input[name=\'filter_name\']').val(item['label']);
-        filter();
-    }
-});
+    $('input[name=\'filter_name\']').autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=system/email_template/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['name'],
+                            value: item['product_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $('input[name=\'filter_name\']').val(item['label']);
+            filter();
+        }
+    });
 //--></script>
 <script type="text/javascript"><!--
-function filter() {
-    var url = 'index.php?route=system/email_template&token=<?php echo $token; ?>';
+    function filter() {
+        var url = 'index.php?route=system/email_template&token=<?php echo $token; ?>';
 
-    var filter_text = $('input[name=\'filter_text\']').val();
+        var filter_text = $('input[name=\'filter_text\']').val();
 
-    if (filter_text) {
-        url += '&filter_text=' + encodeURIComponent(filter_text);
+        if (filter_text) {
+            url += '&filter_text=' + encodeURIComponent(filter_text);
+        }
+
+        var filter_context = $('input[name=\'filter_context\']').val();
+
+        if (filter_context) {
+            url += '&filter_context=' + encodeURIComponent(filter_context);
+        }
+
+        var filter_name = $('input[name=\'filter_name\']').val();
+
+        if (filter_name) {
+            url += '&filter_name=' + encodeURIComponent(filter_name);
+        }
+
+        var filter_type = $('select[name=\'filter_type\']').val();
+
+        if (filter_type != '') {
+            url += '&filter_type=' + encodeURIComponent(filter_type);
+        }
+
+        var filter_status = $('select[name=\'filter_status\']').val();
+
+        if (filter_status != '*') {
+            url += '&filter_status=' + encodeURIComponent(filter_status);
+        }
+
+        location = url;
     }
-
-    var filter_context = $('input[name=\'filter_context\']').val();
-
-    if (filter_context) {
-        url += '&filter_context=' + encodeURIComponent(filter_context);
-    }
-
-    var filter_name = $('input[name=\'filter_name\']').val();
-
-    if (filter_name) {
-        url += '&filter_name=' + encodeURIComponent(filter_name);
-    }
-
-    var filter_type = $('select[name=\'filter_type\']').val();
-
-    if (filter_type != '') {
-        url += '&filter_type=' + encodeURIComponent(filter_type);
-    }
-
-    var filter_status = $('select[name=\'filter_status\']').val();
-
-    if (filter_status != '*') {
-        url += '&filter_status=' + encodeURIComponent(filter_status);
-    }
-
-    location = url;
-}
 //--></script>
 <?php echo $footer; ?>

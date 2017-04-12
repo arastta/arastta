@@ -19,6 +19,10 @@ $_['text_category']             = 'Category';
 $_['text_product']              = 'Product';
 $_['text_manufacturer']         = 'Manufacturer';
 $_['text_information']          = 'Information';
+$_['text_blog']                 = 'Blog';
+$_['text_blog_home']            = 'Home Page';
+$_['text_blog_category']        = 'Category';
+$_['text_blog_post']            = 'Post';
 $_['text_custom']               = 'Custom Link';
 $_['text_confirm']              = 'Are you sure?';
 
@@ -38,6 +42,8 @@ $_['column_category_name']      = 'Please enter Category Name';
 $_['column_product_name']       = 'Please enter Product Name';
 $_['column_manufacturer_name']  = 'Please enter Manufacturer Name';
 $_['column_information_name']   = 'Please enter Information Name';
+$_['column_blog_category_name'] = 'Please enter Blog Category Name';
+$_['column_blog_post_name']     = 'Please enter Blog Post Name';
 
 // Entry
 $_['entry_name']                = 'Name';
@@ -52,6 +58,9 @@ $_['button_categories']         = 'Add Category to Menu';
 $_['button_products']           = 'Add Product to Menu';
 $_['button_manufacturers']      = 'Add Manufacturer to Menu';
 $_['button_informations']       = 'Add Information to Menu';
+$_['button_blog_home']          = 'Add Blog Home to Menu';
+$_['button_blog_category']      = 'Add Blog Category to Menu';
+$_['button_blog_post']          = 'Add Blog Post to Menu';
 
 
 // Error

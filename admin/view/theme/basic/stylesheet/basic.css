@@ -32,10 +32,12 @@
     margin-top: -1px;
     width: 150px;
 }
+
 @media screen and (max-width: 767px) {
     .bulk-action-activate {
         position: relative;
     }
+
     .bulk-action-activate .item-selected {
         margin-left: 0;
         position: relative;
@@ -45,6 +47,7 @@
         top: -3px;
     }
 }
+
 .bulk-action {
     border: 1px solid #ddd;
     border-radius: 3px;
@@ -101,6 +104,7 @@
     width: 15px !important;
     height: 15px !important;
 }
+
 @media screen and (max-width: 767px) {
     #content input[type="radio"],
     #content .radio input[type="radio"],
@@ -134,7 +138,7 @@ a.editable-click:hover {
     background: #FDFDFD;
 }
 
-.options .tab-content .table-responsive  .table , #product-category, #product-tag {
+.options .tab-content .table-responsive  .table , #product-category, #product-tag, #post-category, #post-tag {
     margin-bottom: 0px;
 }
 
@@ -142,7 +146,7 @@ a.editable-click:hover {
     min-width: 46px !important;
 }
 
-#product-category  div{
+#product-category  div, #post-category  div {
     float:left;
     margin-left: 10px;
 }
@@ -190,6 +194,7 @@ a.editable-click:hover {
     /*transform: rotate(180deg);*/
     transition: .3s;
 }
+
 .rotate-reset {
     transform: rotate(0deg);
     transition: .3s;
@@ -225,6 +230,7 @@ a.editable-click:hover {
     margin-top: 10px;
     margin-bottom: -10px;
 }
+
 .well .row .filter-tag .filter-info.pull-left {
     margin-right: 15px;
     border-radius: 2px;
@@ -337,6 +343,7 @@ tbody tr td div i.fa.fa-bars {
 .panel-default {
     position: relative;
 }
+
 .panel.panel-default .spinner {
     position: absolute;
     top: 0;

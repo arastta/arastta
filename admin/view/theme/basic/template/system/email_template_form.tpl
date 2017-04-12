@@ -113,17 +113,17 @@
 
 //--></style>
 <script type="text/javascript"><!--
-$(document).ready(function() {
-<?php foreach ($languages as $language) { ?>
-textEditor('#input-description<?php echo $language['language_id']; ?>');
-<?php } ?>
-});
+    $(document).ready(function() {
+    <?php foreach ($languages as $language) { ?>
+    textEditor('#input-description<?php echo $language['language_id']; ?>');
+    <?php } ?>
+    });
 
-function shortCode(button) {
-    $(".jumbotron").slideToggle();
-}
+    function shortCode(button) {
+        $(".jumbotron").slideToggle();
+    }
 //--></script>
 <script type="text/javascript"><!--
-$('#language a:first').tab('show');
+    $('#language a:first').tab('show');
 //--></script>
 <?php echo $footer; ?>

@@ -1352,6 +1352,38 @@
                                         <?php } ?>
                                     </div>
                                 </div>
+                                <div class="form-group required">
+                                    <label class="col-sm-12" for="input-image-blog-post-list"><?php echo $entry_image_blog_post_list; ?></label>
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input type="text" name="config_blog_post_list_width" value="<?php echo $config_blog_post_list_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-blog-post-list" class="form-control" />
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="config_blog_post_list_height" value="<?php echo $config_blog_post_list_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <?php if ($error_image_blog_post_list) { ?>
+                                        <div class="text-danger"><?php echo $error_image_blog_post_list; ?></div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div class="form-group required">
+                                    <label class="col-sm-12" for="input-image-blog-post-form"><?php echo $entry_image_blog_post_form; ?></label>
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input type="text" name="config_blog_post_form_width" value="<?php echo $config_blog_post_form_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-blog-post-form" class="form-control" />
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="config_blog_post_form_height" value="<?php echo $config_blog_post_form_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <?php if ($error_image_blog_post_form) { ?>
+                                        <div class="text-danger"><?php echo $error_image_blog_post_form; ?></div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1664,6 +1696,447 @@
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
+                            <h3 class="panel-title"><?php echo $tab_blog; ?></h3>
+                            <div class="pull-right">
+                                <div class="panel-chevron"><i class="fa fa-chevron-up rotate-reset"></i></div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="blog">
+                                <fieldset>
+                                    <legend><?php echo $text_blog_home; ?></legend>
+                                    <div class="form-group required">
+                                        <label class="col-sm-12" for="input-blog-name"><?php echo $entry_blog_name; ?></label>
+                                        <div class="col-sm-12">
+                                            <input type="text" name="config_blog_name" value="<?php echo $config_blog_name; ?>" placeholder="<?php echo $entry_blog_name; ?>" id="input-blog-name" class="form-control" />
+                                            <?php if ($error_blog_name) { ?>
+                                            <div class="text-danger"><?php echo $error_blog_name; ?></div>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-description"><?php echo $entry_blog_description; ?></label>
+                                        <div class="col-sm-12">
+                                            <textarea name="config_blog_description" rows="5" placeholder="<?php echo $entry_blog_description; ?>" id="input-blog-description" class="form-control"><?php echo $config_blog_description; ?></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-featured-slide"><span data-toggle="tooltip" title="<?php echo $help_blog_featured_slide; ?>"><?php echo $entry_blog_featured_slide; ?></span></label>
+                                        <div class="col-sm-11">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_featured_slide) { ?>
+                                                <input type="radio" name="config_blog_featured_slide" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_featured_slide" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_featured_slide) { ?>
+                                                <input type="radio" name="config_blog_featured_slide" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_featured_slide" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group required">
+                                        <label class="col-sm-12" for="input-blog-meta-title"><?php echo $entry_meta_title; ?></label>
+                                        <div class="col-sm-12">
+                                            <input type="text" name="config_blog_meta_title" value="<?php echo $config_blog_meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-blog-meta-title" class="form-control" />
+                                            <?php if ($error_blog_meta_title) { ?>
+                                            <div class="text-danger"><?php echo $error_blog_meta_title; ?></div>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-meta-description"><?php echo $entry_meta_description; ?></label>
+                                        <div class="col-sm-12">
+                                            <textarea name="config_blog_meta_description" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-blog-meta-description" class="form-control"><?php echo $config_blog_meta_description; ?></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-meta-keyword"><?php echo $entry_meta_keyword; ?></label>
+                                        <div class="col-sm-12">
+                                            <textarea name="config_blog_meta_keyword" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-blog-meta-keyword" class="form-control"><?php echo $config_blog_meta_keyword; ?></textarea>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend><?php echo $text_post_list; ?></legend>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-post-list-limit"><span data-toggle="tooltip" title="<?php echo $help_blog_post_limit; ?>"><?php echo $entry_blog_post_limit; ?></span></label>
+                                        <div class="col-sm-12">
+                                            <input type="text" name="config_blog_post_list_limit" value="<?php echo $config_blog_post_list_limit; ?>" placeholder="<?php echo $entry_blog_post_limit; ?>" id="input-blog-post-list-limit" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-post-list-description-length"><span data-toggle="tooltip" title="<?php echo $help_blog_post_description_lenth; ?>"><?php echo $entry_blog_post_description_lenth; ?></span></label>
+                                        <div class="col-sm-12">
+                                            <input type="text" name="config_blog_post_list_description_length" value="<?php echo $config_blog_post_list_description_length; ?>" placeholder="<?php echo $entry_blog_post_description_lenth; ?>" id="input-blog-post-list-limit" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-post-list-row"><span data-toggle="tooltip" title="<?php echo $help_blog_post_row; ?>"><?php echo $entry_blog_post_row; ?></span></label>
+                                        <div class="col-sm-12">
+                                            <select name="config_blog_post_list_row" id="input-blog-post-list-row" class="form-control">
+                                                <?php if ($config_blog_post_list_row == '1') { ?>
+                                                <option value="1" selected="selected">1</option>
+                                                <?php } else { ?>
+                                                <option value="1">1</option>
+                                                <?php } ?>
+                                                <?php if ($config_blog_post_list_row == '2') { ?>
+                                                <option value="2" selected="selected">2</option>
+                                                <?php } else { ?>
+                                                <option value="2">2</option>
+                                                <?php } ?>
+                                                <?php if ($config_blog_post_list_row == '3') { ?>
+                                                <option value="3" selected="selected">3</option>
+                                                <?php } else { ?>
+                                                <option value="3">3</option>
+                                                <?php } ?>
+                                                <?php if ($config_blog_post_list_row == '4') { ?>
+                                                <option value="4" selected="selected">4</option>
+                                                <?php } else { ?>
+                                                <option value="4">4</option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-post-list-sort-order"><span data-toggle="tooltip" title="<?php echo $help_blog_post_sot_order; ?>"><?php echo $entry_blog_post_sort_order; ?></span></label>
+                                        <div class="col-sm-12">
+                                            <select name="config_blog_post_list_sort_order" id="input-blog-post-list-sort-order" class="form-control">
+                                                <?php foreach ($blog_post_list_sort_orders as $blog_post_list_sort_order) { ?>
+                                                <?php if ($config_blog_post_list_sort_order == $blog_post_list_sort_order['value']) { ?>
+                                                <option value="<?php echo $blog_post_list_sort_order['value']; ?>" selected="selected"><?php echo $blog_post_list_sort_order['text']; ?></option>
+                                                <?php } else { ?>
+                                                <option value="<?php echo $blog_post_list_sort_order['value']; ?>"><?php echo $blog_post_list_sort_order['text']; ?></option>
+                                                <?php } ?>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-post-list-date"><?php echo $entry_blog_post_date; ?></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_post_list_date) { ?>
+                                                <input type="radio" name="config_blog_post_list_date" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_list_date" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_post_list_date) { ?>
+                                                <input type="radio" name="config_blog_post_list_date" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_list_date" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-post-list-comment"><?php echo $entry_blog_post_comment; ?></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_post_list_comment) { ?>
+                                                <input type="radio" name="config_blog_post_list_comment" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_list_comment" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_post_list_comment) { ?>
+                                                <input type="radio" name="config_blog_post_list_comment" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_list_comment" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-post-list-read"><?php echo $entry_blog_post_read; ?></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_post_list_read) { ?>
+                                                <input type="radio" name="config_blog_post_list_read" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_list_read" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_post_list_read) { ?>
+                                                <input type="radio" name="config_blog_post_list_read" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_list_read" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-post-list-author"><?php echo $entry_blog_post_author; ?></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_post_list_author) { ?>
+                                                <input type="radio" name="config_blog_post_list_author" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_list_author" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_post_list_author) { ?>
+                                                <input type="radio" name="config_blog_post_list_author" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_list_author" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend><?php echo $text_post_form; ?></legend>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-post-form-date"><?php echo $entry_blog_post_date; ?></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_post_form_date) { ?>
+                                                <input type="radio" name="config_blog_post_form_date" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_form_date" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_post_form_date) { ?>
+                                                <input type="radio" name="config_blog_post_form_date" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_form_date" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-post-form-comment"><?php echo $entry_blog_post_comment; ?></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_post_form_comment) { ?>
+                                                <input type="radio" name="config_blog_post_form_comment" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_form_comment" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_post_form_comment) { ?>
+                                                <input type="radio" name="config_blog_post_form_comment" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_form_comment" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-post-view-read"><?php echo $entry_blog_post_read; ?></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_post_form_read) { ?>
+                                                <input type="radio" name="config_blog_post_form_read" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_form_read" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_post_form_read) { ?>
+                                                <input type="radio" name="config_blog_post_form_read" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_form_read" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-post-view-author"><?php echo $entry_blog_post_author; ?></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_post_form_author) { ?>
+                                                <input type="radio" name="config_blog_post_form_author" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_form_author" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_post_form_author) { ?>
+                                                <input type="radio" name="config_blog_post_form_author" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_form_author" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-post-view-share"><?php echo $entry_blog_post_share; ?></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_post_form_share) { ?>
+                                                <input type="radio" name="config_blog_post_form_share" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_form_share" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_post_form_share) { ?>
+                                                <input type="radio" name="config_blog_post_form_share" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_post_form_share" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend><?php echo $text_comment; ?></legend>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-comment-enable"><span data-toggle="tooltip" title="<?php echo $help_blog_comment_activity; ?>"><?php echo $entry_blog_comment_enable; ?></span></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_comment_enable) { ?>
+                                                <input type="radio" name="config_blog_comment_enable" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_comment_enable" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_comment_enable) { ?>
+                                                <input type="radio" name="config_blog_comment_enable" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_comment_enable" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-comment-status"><span data-toggle="tooltip" title="<?php echo $help_blog_comment_status; ?>"><?php echo $entry_blog_comment_status; ?></span></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_comment_status) { ?>
+                                                <input type="radio" name="config_blog_comment_status" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_comment_status" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_comment_status) { ?>
+                                                <input type="radio" name="config_blog_comment_status" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_comment_status" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-comment-guest"><?php echo $entry_blog_comment_guest; ?></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_comment_guest) { ?>
+                                                <input type="radio" name="config_blog_comment_guest" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_comment_guest" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_comment_guest) { ?>
+                                                <input type="radio" name="config_blog_comment_guest" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_comment_guest" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-comment-limit"><span data-toggle="tooltip" title="<?php echo $help_blog_comment_limit; ?>"><?php echo $entry_blog_comment_limit; ?></span></label>
+                                        <div class="col-sm-12">
+                                            <input type="text" name="config_blog_comment_limit" value="<?php echo $config_blog_comment_limit; ?>" placeholder="<?php echo $entry_blog_comment_limit; ?>" id="input-blog-comment-limit" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-blog-comment-mail"><span data-toggle="tooltip" title="<?php echo $help_blog_comment_mail; ?>"><?php echo $entry_blog_comment_mail; ?></span></label>
+                                        <div class="col-sm-12">
+                                            <label class="radio-inline">
+                                                <?php if ($config_blog_comment_mail) { ?>
+                                                <input type="radio" name="config_blog_comment_mail" value="1" checked="checked" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_comment_mail" value="1" />
+                                                <?php echo $text_yes; ?>
+                                                <?php } ?>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <?php if (!$config_blog_comment_mail) { ?>
+                                                <input type="radio" name="config_blog_comment_mail" value="0" checked="checked" />
+                                                <?php echo $text_no; ?>
+                                                <?php } else { ?>
+                                                <input type="radio" name="config_blog_comment_mail" value="0" />
+                                                <?php echo $text_no; ?>
+                                                <?php } ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
                             <h3 class="panel-title"><?php echo $tab_cache; ?></h3>
                             <div class="pull-right">
                                 <div class="panel-chevron"><i class="fa fa-chevron-up rotate-reset"></i></div>
@@ -1857,6 +2330,12 @@
                                                 <input type="checkbox" name="config_sec_xss[]" value="post" <?php echo (in_array('post', $config_sec_xss)) ? 'checked="checked"' : ''; ?>/>
                                                 <?php echo $text_sec_post; ?>
                                             </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-12" for="input-sec-csrf"><span data-toggle="tooltip" title="<?php echo $help_sec_csrf; ?>"><?php echo $entry_sec_csrf; ?></span></label>
+                                        <div class="col-sm-12">
+                                            <textarea name="config_sec_csrf" rows="5" placeholder="<?php echo $entry_sec_csrf; ?>" id="input-sec-csrf" class="form-control"><?php echo $config_sec_csrf; ?></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -2129,12 +2608,14 @@
             </div>
         </form>
     </div>
-
+</div>
 <script type="text/javascript"><!--
+    textEditor('#input-blog-description');
+
     $(document).ready(function() {
         $('.panel-chevron').trigger('click');
     });
-    
+
     $('select[name=\'config_template\']').on('change', function() {
         $.ajax({
             url: 'index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value),
@@ -2166,16 +2647,14 @@
             $("input[name=\'config_mail[smtp_password]\']").prop('disabled', true);
             $("input[name=\'config_mail[smtp_port]\']").prop('disabled', true);
             $("select[name=\'config_mail[smtp_encryption]\']").prop('disabled', true);
-        }
-        else if(configMail == 'sendmail') {
+        } else if(configMail == 'sendmail') {
             $("input[name=\'config_mail[sendmail_path]\']").prop('disabled', false);
             $("input[name=\'config_mail[smtp_hostname]\']").prop('disabled', true);
             $("input[name=\'config_mail[smtp_username]\']").prop('disabled', true);
             $("input[name=\'config_mail[smtp_password]\']").prop('disabled', true);
             $("input[name=\'config_mail[smtp_port]\']").prop('disabled', true);
             $("select[name=\'config_mail[smtp_encryption]\']").prop('disabled', true);
-        }
-        else if (configMail == 'smtp') {
+        } else if (configMail == 'smtp') {
             $("input[name=\'config_mail[sendmail_path]\']").prop('disabled', true);
             $("input[name=\'config_mail[smtp_hostname]\']").prop('disabled', false);
             $("input[name=\'config_mail[smtp_username]\']").prop('disabled', false);
@@ -2190,7 +2669,7 @@
 
     $('select[name=\'config_mail[protocol]\']').trigger('change');
     //--></script>
-    <script type="text/javascript"><!--
+<script type="text/javascript"><!--
     $('select[name=\'config_country_id\']').on('change', function() {
         $.ajax({
             url: 'index.php?route=setting/setting/country&token=<?php echo $token; ?>&country_id=' + this.value,
@@ -2245,7 +2724,6 @@
         }
     });
     //--></script>
-</div>
 <script type="text/javascript"><!--
 $('#button-clear').on('click', function() {
     $.ajax({
@@ -2260,8 +2738,7 @@ $('#button-clear').on('click', function() {
             if (json['message']) {
                 $('#button-clear').addClass('btn-success');
                 $('#button-clear').html('<i class="fa fa-check-circle"></i>&nbsp;&nbsp;'+json['message']);
-            }
-            else {
+            } else {
                 $('#button-clear').addClass('btn-danger');
                 $('#button-clear').html('<i class="fa fa-times-circle"></i>&nbsp;&nbsp;'+json['error']);
             }

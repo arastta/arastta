@@ -91,7 +91,7 @@
         </div>
     </div>
 </div>
-<style>
+<style type="text/css"><!--
     .jumbotron {
         padding-left: 20px !important;
         padding-right: 20px !important;
@@ -109,31 +109,29 @@
             margin: 30px auto;
         }
     }
-
-</style>
+//--></style>
 <script type="text/javascript"><!--
-$(document).ready(function() {
-    <?php foreach ($languages as $language) { ?>
-        textEditor('#input-description<?php echo $language['language_id']; ?>');
-        <?php } ?>
-    });
+    $(document).ready(function() {
+        <?php foreach ($languages as $language) { ?>
+            textEditor('#input-description<?php echo $language['language_id']; ?>');
+            <?php } ?>
+        });
 
-function shortCode(button) {
-    $(".jumbotron").slideToggle();
-}
+    function shortCode(button) {
+        $(".jumbotron").slideToggle();
+    }
 //--></script>
 <script type="text/javascript"><!--
-
-$('#language a:first').tab('show');
+    $('#language a:first').tab('show');
 //--></script>
 <script type="text/javascript"><!--
-function save(type){
-    var input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'button';
-    input.value = type;
-    form = $("form[id^='form-']").append(input);
-    form.submit();
-}
+    function save(type){
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'button';
+        input.value = type;
+        form = $("form[id^='form-']").append(input);
+        form.submit();
+    }
 //--></script>
 <?php echo $footer; ?>

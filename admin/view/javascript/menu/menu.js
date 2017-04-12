@@ -136,6 +136,50 @@ $( document ).ready(function() {
         }
     });
 
+    $('input[name=\'filter_blog_category_name\']').autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=blog/category/autocomplete&token=' + token + '&filter_name=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['name'],
+                            name: item['name'],
+                            value: item['category_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $('input[name=\'filter_blog_category_name\']').val(item['name']);
+            $('#blog_category_id').val(item['value']);
+        }
+    });
+
+    $('input[name=\'filter_blog_post_name\']').autocomplete({
+        'source': function(request, response) {
+            $.ajax({
+                url: 'index.php?route=blog/post/autocomplete&token=' + token + '&filter_name=' +  encodeURIComponent(request),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            label: item['name'],
+                            name: item['name'],
+                            value: item['post_id']
+                        }
+                    }));
+                }
+            });
+        },
+        'select': function(item) {
+            $('input[name=\'filter_blog_post_name\']').val(item['name']);
+            $('#blog_post_id').val(item['value']);
+        }
+    });
+
 
     $(document).on('click', '.openMenuItem', function() {
         var id = $(this).attr('id');
@@ -169,6 +213,18 @@ function addMenu(type) {
         var name = $('#input-custom-name').val();
         var link = $('#input-custom-link').val();
         var loading = $('#addCustom');
+    } else if (type == 'blog_home') {
+        var id = 0;
+        var name = '';
+        var loading = $('#addBlogHome');
+    } else if (type == 'blog_category') {
+        var id = $('#blog_category_id').val();
+        var name = '';
+        var loading = $('#addBlogCategory');
+    } else if (type == 'blog_post') {
+        var id = $('#blog_post_id').val();
+        var name = '';
+        var loading = $('#addBlogPost');
     }
 
     $.ajax({

@@ -186,7 +186,7 @@ class ControllerSystemEmailtemplate extends Controller
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
-        
+
         #Text
         $data['text_list'] = $this->language->get('text_list');
         $data['text_no_results'] = $this->language->get('text_no_results');
@@ -216,7 +216,7 @@ class ControllerSystemEmailtemplate extends Controller
         $data['entry_name'] = $this->language->get('entry_name');
         $data['entry_type'] = $this->language->get('entry_type');
         $data['entry_status'] = $this->language->get('entry_status');
-        
+
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {
@@ -270,7 +270,7 @@ class ControllerSystemEmailtemplate extends Controller
         $pagination->url = $this->url->link('system/email_template', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
         $data['pagination'] = $pagination->render();
-            
+
         $data['filter_text']    = $filter_text;
         $data['filter_context'] = $filter_context;
         $data['filter_name']    = $filter_name;
@@ -493,15 +493,15 @@ class ControllerSystemEmailtemplate extends Controller
 
         return !$this->error;
     }
-    
+
     protected function getEmailTypes()
     {
-        $result = array ( 'Order Status', 'Customer', 'Affiliate', 'Contact', 'Reviews', 'Cron', 'Mail' );
-    
+        $result = array('Order Status', 'Customer', 'Affiliate', 'Contact', 'Reviews', 'Cron', 'Mail');
+
         for ($i = 0; $i <= 6; $i++) {
             $types[] = array(
                 'id'    => $i+1,
-                'value'     => $result[$i]
+                'value' => $result[$i]
             );
         }
 

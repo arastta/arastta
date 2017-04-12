@@ -28,7 +28,9 @@ class ModelCommonUpdate extends Model
 
         $url = 'https://api.github.com/repos/arastta/arastta/releases';
 
-        $json = $this->utility->getRemoteData($url);
+        $json = \Httpful\Request::get($url)
+            ->send()
+            ->raw_body;
 
         if (empty($json)) {
             return $output;
@@ -235,7 +237,10 @@ class ModelCommonUpdate extends Model
 
     public function getRemoteVersion($url)
     {
-        $remote_data = $this->utility->getRemoteData($url, array('referrer' => true));
+        $remote_data = \Httpful\Request::get($url)
+            ->addOnCurlOption(CURLOPT_REFERER, $this->url->getDomain())
+            ->send()
+            ->raw_body;
 
         if (is_string($remote_data)) {
             $version = json_decode($remote_data);
@@ -270,10 +275,11 @@ class ModelCommonUpdate extends Model
             $url = $base_url.'/'.$type.'/1.0/update/'.$product_id.'/'.$version.'/'.$info['arastta'].'/'.$info['api'];
         }
 
-        $options['timeout'] = 30;
-        $options['referrer'] = true;
-
-        $file = $this->utility->getRemoteData($url, $options);
+        $file = \Httpful\Request::get($url)
+            ->timeout(30)
+            ->addOnCurlOption(CURLOPT_REFERER, $this->url->getDomain())
+            ->send()
+            ->raw_body;
 
         return $file;
     }

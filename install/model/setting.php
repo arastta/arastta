@@ -92,7 +92,10 @@ class ModelSetting extends Model
         $db->query("SET @@session.sql_mode = 'MYSQL40'");
         
         // Check if admin uses Gravatar
-        $gravatar = $this->utility->getRemoteData('https://www.gravatar.com/avatar/' . md5(strtolower($data['admin_email'])).'?size=45&d=404', array('timeout' => 3));
+        $gravatar = \Httpful\Request::get('https://www.gravatar.com/avatar/' . md5(strtolower($data['admin_email'])).'?size=45&d=404')
+            ->timeout(3)
+            ->send()
+            ->raw_body;
 
         if ($gravatar) {
             $user_image = '';
@@ -157,18 +160,28 @@ class ModelSetting extends Model
         $lang_product_id = $this->session->data['lang_product_id'];
         $lang_version = $this->session->data['lang_version'];
 
-        $db->query("INSERT INTO `" . DB_PREFIX . "language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`)
-                    VALUES (1, '" . $db->escape($lang_name) . "', '" . $db->escape($lang_code) . "', '', '" . $db->escape($lang_image) . "', '" . $db->escape($lang_directory) . "', 1, 1);");
+        $db->query("INSERT INTO `" . DB_PREFIX . "language` (`name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`)
+                    VALUES ('" . $db->escape($lang_name) . "', '" . $db->escape($lang_code) . "', '', '" . $db->escape($lang_image) . "', '" . $db->escape($lang_directory) . "', 1, 1);");
+
+        $language_id = $db->getLastId();
 
         $db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_language', value = '" . $db->escape($lang_code) . "'");
         $db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'config', `key` = 'config_admin_language', value = '" . $db->escape($lang_code) . "'");
 
-        $addon_params['language_id'] = '1';
-        $addon_params['theme_ids'] = array();
+        $addon_params['language_id']   = $language_id;
+        $addon_params['theme_ids']     = array();
         $addon_params['extension_ids'] = array();
 
         $addon_params = json_encode($addon_params);
 
         $db->query("INSERT INTO " . DB_PREFIX . "addon SET `product_id` = " . (int) $lang_product_id . ", `product_name` = '" . $db->escape($lang_name) . "', `product_type` = 'translation', `product_version` = '" . $db->escape($lang_version) . "', `files` = '', `params` = '" . $db->escape($addon_params) . "'");
+
+        // Internationalization of demo data
+        Client::setName('admin');
+        $admin = new Admin();
+        $admin->initialise();
+        $admin->load->model('localisation/language');
+        $admin->model_localisation_language->prepareLanguages($language_id, $lang_directory);
+        Client::setName('install');
     }
 }

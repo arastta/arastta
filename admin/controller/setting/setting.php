@@ -43,6 +43,20 @@ class ControllerSettingSetting extends Controller {
                 $this->request->post['config_pagecache_exclude'] = trim($ex_routes, ',');
             }
 
+            if ($this->request->post['config_sec_csrf']) {
+                $csrf_routes = array();
+
+                foreach (explode("\n", $this->request->post['config_sec_csrf']) as $route) {
+                    $route = trim($route);
+
+                    if ($route) {
+                        $csrf_routes[] = $route;
+                    }
+                }
+
+                $this->request->post['config_sec_csrf'] = $csrf_routes;
+            }
+
             if ($this->request->post['config_cache_memcache_servers']) {
                 $memcache_servers = '';
 
@@ -253,6 +267,18 @@ class ControllerSettingSetting extends Controller {
             $data['error_image_maintenance'] = '';
         }
 
+        if (isset($this->error['image_blog_post_list'])) {
+            $data['error_image_blog_post_list'] = $this->error['image_blog_post_list'];
+        } else {
+            $data['error_image_blog_post_list'] = '';
+        }
+
+        if (isset($this->error['image_blog_post_form'])) {
+            $data['error_image_blog_post_form'] = $this->error['image_blog_post_form'];
+        } else {
+            $data['error_image_blog_post_form'] = '';
+        }
+
         if (isset($this->error['error_filename'])) {
             $data['error_error_filename'] = $this->error['error_filename'];
         } else {
@@ -281,6 +307,18 @@ class ControllerSettingSetting extends Controller {
             $data['error_encryption'] = $this->error['encryption'];
         } else {
             $data['error_encryption'] = '';
+        }
+
+        if (isset($this->error['blog_name'])) {
+            $data['error_blog_name'] = $this->error['blog_name'];
+        } else {
+            $data['error_blog_name'] = '';
+        }
+
+        if (isset($this->error['blog_meta_title'])) {
+            $data['error_blog_meta_title'] = $this->error['blog_meta_title'];
+        } else {
+            $data['error_blog_meta_title'] = '';
         }
 
         if (isset($this->error['cache_lifetime'])) {
@@ -1142,6 +1180,251 @@ class ControllerSettingSetting extends Controller {
         $data['config_sitemap_categories'] = str_replace('admin/', '', $this->url->link('feed/google_sitemap/categories'));
         $data['config_sitemap_manufacturers'] = str_replace('admin/', '', $this->url->link('feed/google_sitemap/manufacturers'));
 
+        // Blog
+        if (isset($this->request->post['config_blog_name'])) {
+            $data['config_blog_name'] = $this->request->post['config_blog_name'];
+        } else {
+            $data['config_blog_name'] = $this->config->get('config_blog_name');
+        }
+
+        if (isset($this->request->post['config_blog_description'])) {
+            $data['config_blog_description'] = $this->request->post['config_blog_description'];
+        } else {
+            $data['config_blog_description'] = $this->config->get('config_blog_description');
+        }
+
+        if (isset($this->request->post['config_blog_featured_slide'])) {
+            $data['config_blog_featured_slide'] = $this->request->post['config_blog_featured_slide'];
+        } else {
+            $data['config_blog_featured_slide'] = $this->config->get('config_blog_featured_slide');
+        }
+
+        if (isset($this->request->post['config_blog_meta_title'])) {
+            $data['config_blog_meta_title'] = $this->request->post['config_blog_meta_title'];
+        } else {
+            $data['config_blog_meta_title'] = $this->config->get('config_blog_meta_title');
+        }
+
+        if (isset($this->request->post['config_blog_meta_title'])) {
+            $data['config_blog_meta_title'] = $this->request->post['config_blog_meta_title'];
+        } else {
+            $data['config_blog_meta_title'] = $this->config->get('config_blog_meta_title');
+        }
+
+        if (isset($this->request->post['config_blog_meta_description'])) {
+            $data['config_blog_meta_description'] = $this->request->post['config_blog_meta_description'];
+        } else {
+            $data['config_blog_meta_description'] = $this->config->get('config_blog_meta_description');
+        }
+
+        if (isset($this->request->post['config_blog_meta_keyword'])) {
+            $data['config_blog_meta_keyword'] = $this->request->post['config_blog_meta_keyword'];
+        } else {
+            $data['config_blog_meta_keyword'] = $this->config->get('config_blog_meta_keyword');
+        }
+
+        if (isset($this->request->post['config_blog_post_list_limit'])) {
+            $data['config_blog_post_list_limit'] = $this->request->post['config_blog_post_list_limit'];
+        } else {
+            $data['config_blog_post_list_limit'] = $this->config->get('config_blog_post_list_limit');
+        }
+
+        if (isset($this->request->post['config_blog_post_list_description_length'])) {
+            $data['config_blog_post_list_description_length'] = $this->request->post['config_blog_post_list_description_length'];
+        } else {
+            $data['config_blog_post_list_description_length'] = $this->config->get('config_blog_post_list_description_length');
+        }
+
+        if (isset($this->request->post['config_blog_post_list_row'])) {
+            $data['config_blog_post_list_row'] = $this->request->post['config_blog_post_list_row'];
+        } else {
+            $data['config_blog_post_list_row'] = $this->config->get('config_blog_post_list_row');
+        }
+
+        $data['blog_post_list_sort_orders'] = array();
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_name_asc'),
+            'value' => 'pd.name-ASC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_name_desc'),
+            'value' => 'pd.name-DESC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_date_added_asc'),
+            'value' => 'p.date_added-ASC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_date_added_desc'),
+            'value' => 'p.date_added-DESC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_date_modified_asc'),
+            'value' => 'p.date_modified-ASC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_date_modified_desc'),
+            'value' => 'p.date_modified-DESC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_viewed_asc'),
+            'value' => 'p.viewed-ASC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_viewed_desc'),
+            'value' => 'p.viewed-DESC',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_random'),
+            'value' => 'random',
+        );
+
+        $data['blog_post_list_sort_orders'][] = array(
+            'text'  => $this->language->get('text_sort_order'),
+            'value' => 'p.sort_order',
+        );
+
+        if (isset($this->request->post['config_blog_post_list_sort_order'])) {
+            $data['config_blog_post_list_sort_order'] = $this->request->post['config_blog_post_list_sort_order'];
+        } else {
+            $data['config_blog_post_list_sort_order'] = $this->config->get('config_blog_post_list_sort_order');
+        }
+
+        if (isset($this->request->post['config_blog_post_list_date'])) {
+            $data['config_blog_post_list_date'] = $this->request->post['config_blog_post_list_date'];
+        } else {
+            $data['config_blog_post_list_date'] = $this->config->get('config_blog_post_list_date');
+        }
+
+        if (isset($this->request->post['config_blog_post_list_comment'])) {
+            $data['config_blog_post_list_comment'] = $this->request->post['config_blog_post_list_comment'];
+        } else {
+            $data['config_blog_post_list_comment'] = $this->config->get('config_blog_post_list_comment');
+        }
+
+        if (isset($this->request->post['config_blog_post_list_read'])) {
+            $data['config_blog_post_list_read'] = $this->request->post['config_blog_post_list_read'];
+        } else {
+            $data['config_blog_post_list_read'] = $this->config->get('config_blog_post_list_read');
+        }
+
+        if (isset($this->request->post['config_blog_post_list_author'])) {
+            $data['config_blog_post_list_author'] = $this->request->post['config_blog_post_list_author'];
+        } else {
+            $data['config_blog_post_list_author'] = $this->config->get('config_blog_post_list_author');
+        }
+
+        if (isset($this->request->post['config_blog_post_form_date'])) {
+            $data['config_blog_post_form_date'] = $this->request->post['config_blog_post_form_date'];
+        } else {
+            $data['config_blog_post_form_date'] = $this->config->get('config_blog_post_form_date');
+        }
+
+        if (isset($this->request->post['config_blog_post_form_comment'])) {
+            $data['config_blog_post_form_comment'] = $this->request->post['config_blog_post_form_comment'];
+        } else {
+            $data['config_blog_post_form_comment'] = $this->config->get('config_blog_post_form_comment');
+        }
+
+        if (isset($this->request->post['config_blog_post_form_read'])) {
+            $data['config_blog_post_form_read'] = $this->request->post['config_blog_post_form_read'];
+        } else {
+            $data['config_blog_post_form_read'] = $this->config->get('config_blog_post_form_read');
+        }
+
+        if (isset($this->request->post['config_blog_post_form_author'])) {
+            $data['config_blog_post_form_author'] = $this->request->post['config_blog_post_form_author'];
+        } else {
+            $data['config_blog_post_form_author'] = $this->config->get('config_blog_post_form_author');
+        }
+
+        if (isset($this->request->post['config_blog_post_form_share'])) {
+            $data['config_blog_post_form_share'] = $this->request->post['config_blog_post_form_share'];
+        } else {
+            $data['config_blog_post_form_share'] = $this->config->get('config_blog_post_form_share');
+        }
+
+        if (isset($this->request->post['config_blog_related_row'])) {
+            $data['config_blog_related_row'] = $this->request->post['config_blog_related_row'];
+        } else {
+            $data['config_blog_related_row'] = $this->config->get('config_blog_related_row');
+        }
+
+        if (isset($this->request->post['config_blog_related_thumb'])) {
+            $data['config_blog_related_thumb'] = $this->request->post['config_blog_related_thumb'];
+        } else {
+            $data['config_blog_related_thumb'] = $this->config->get('config_blog_related_thumb');
+        }
+
+        if (isset($this->request->post['config_blog_related_short_description_length'])) {
+            $data['config_blog_related_short_description_length'] = $this->request->post['config_blog_related_short_description_length'];
+        } else {
+            $data['config_blog_related_short_description_length'] = $this->config->get('config_blog_related_short_description_length');
+        }
+
+        if (isset($this->request->post['config_blog_post_list_width'])) {
+            $data['config_blog_post_list_width'] = $this->request->post['config_blog_post_list_width'];
+        } else {
+            $data['config_blog_post_list_width'] = $this->config->get('config_blog_post_list_width');
+        }
+
+        if (isset($this->request->post['config_blog_post_list_height'])) {
+            $data['config_blog_post_list_height'] = $this->request->post['config_blog_post_list_height'];
+        } else {
+            $data['config_blog_post_list_height'] = $this->config->get('config_blog_post_list_height');
+        }
+
+        if (isset($this->request->post['config_blog_post_form_width'])) {
+            $data['config_blog_post_form_width'] = $this->request->post['config_blog_post_form_width'];
+        } else {
+            $data['config_blog_post_form_width'] = $this->config->get('config_blog_post_form_width');
+        }
+
+        if (isset($this->request->post['config_blog_post_form_height'])) {
+            $data['config_blog_post_form_height'] = $this->request->post['config_blog_post_form_height'];
+        } else {
+            $data['config_blog_post_form_height'] = $this->config->get('config_blog_post_form_height');
+        }
+
+        if (isset($this->request->post['config_blog_comment_limit'])) {
+            $data['config_blog_comment_limit'] = $this->request->post['config_blog_comment_limit'];
+        } else {
+            $data['config_blog_comment_limit'] = $this->config->get('config_blog_comment_limit');
+        }
+
+        if (isset($this->request->post['config_blog_comment_enable'])) {
+            $data['config_blog_comment_enable'] = $this->request->post['config_blog_comment_enable'];
+        } else {
+            $data['config_blog_comment_enable'] = $this->config->get('config_blog_comment_enable');
+        }
+
+        if (isset($this->request->post['config_blog_comment_status'])) {
+            $data['config_blog_comment_status'] = $this->request->post['config_blog_comment_status'];
+        } else {
+            $data['config_blog_comment_status'] = $this->config->get('config_blog_comment_status');
+        }
+
+        if (isset($this->request->post['config_blog_comment_guest'])) {
+            $data['config_blog_comment_guest'] = $this->request->post['config_blog_comment_guest'];
+        } else {
+            $data['config_blog_comment_guest'] = $this->config->get('config_blog_comment_guest');
+        }
+
+        if (isset($this->request->post['config_blog_comment_mail'])) {
+            $data['config_blog_comment_mail'] = $this->request->post['config_blog_comment_mail'];
+        } else {
+            $data['config_blog_comment_mail'] = $this->config->get('config_blog_comment_mail');
+        }
+
         // Cache
         if (isset($this->request->post['config_cache_storage'])) {
             $data['config_cache_storage'] = $this->request->post['config_cache_storage'];
@@ -1252,6 +1535,12 @@ class ControllerSettingSetting extends Controller {
             $data['config_sec_xss'] = $this->request->post['config_sec_xss'];
         } else {
             $data['config_sec_xss'] = $this->config->get('config_sec_xss', array());
+        }
+
+        if (isset($this->request->post['config_sec_csrf'])) {
+            $data['config_sec_csrf'] = $this->request->post['config_sec_csrf'];
+        } else {
+            $data['config_sec_csrf'] = implode("\n", $this->config->get('config_sec_csrf', array()));
         }
 
         if (isset($this->request->post['config_sec_htmlpurifier'])) {
@@ -1498,11 +1787,19 @@ class ControllerSettingSetting extends Controller {
             $this->error['image_maintenance'] = $this->language->get('error_image_maintenance');
         }
 
+        if (!$this->request->post['config_blog_post_list_width'] || !$this->request->post['config_blog_post_list_height']) {
+            $this->error['image_blog_post_list'] = $this->language->get('error_image_blog_post_list');
+        }
+
+        if (!$this->request->post['config_blog_post_form_width'] || !$this->request->post['config_blog_post_form_height']) {
+            $this->error['image_blog_post_form'] = $this->language->get('error_image_blog_post_form');
+        }
+
         if (!$this->request->post['config_error_filename']) {
             $this->error['error_error_filename'] = $this->language->get('error_error_filename');
         } else {
             $this->request->post['config_error_filename'] = str_replace(array('../', '..\\', '..'), '', $this->request->post['config_error_filename']);
-         }
+        }
 
         if (!$this->request->post['config_product_limit']) {
             $this->error['product_limit'] = $this->language->get('error_limit');
@@ -1518,6 +1815,14 @@ class ControllerSettingSetting extends Controller {
 
         if ((utf8_strlen($this->request->post['config_encryption']) < 3) || (utf8_strlen($this->request->post['config_encryption']) > 32)) {
             $this->error['encryption'] = $this->language->get('error_encryption');
+        }
+
+        if (!$this->request->post['config_blog_name']) {
+            $this->error['blog_name'] = $this->language->get('error_blog_name');
+        }
+
+        if (!$this->request->post['config_blog_meta_title']) {
+            $this->error['blog_meta_title'] = $this->language->get('error_blog_meta_title');
         }
 
         if (!$this->request->post['config_cache_lifetime']) {

@@ -21,7 +21,7 @@ class ModelSystemLanguageoverride extends Model
         }
 
         $languages = new Finder();
-        $languages->directories()->in($lang_dir)->exclude('override')->depth('== 0');
+        $languages->directories()->in($lang_dir)->exclude('override')->exclude('demo')->depth('== 0');
 
         $data = array();
 
@@ -43,7 +43,7 @@ class ModelSystemLanguageoverride extends Model
         }
 
         $files = new Finder();
-        $files->files()->in($lang_dir)->exclude('override');
+        $files->files()->in($lang_dir)->exclude('override')->exclude('demo');
 
         foreach ($files as $file) {
             // example: en-GB/catalog/attribute.php

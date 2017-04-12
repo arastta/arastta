@@ -19,21 +19,21 @@ final class Version extends Object
 
     protected $name = 'Arastta';
 
-    protected $code = 'Nairobi';
+    protected $code = 'Tianjin';
 
     protected $major = '1';
 
-    protected $minor = '5';
+    protected $minor = '6';
 
-    protected $patch = '5';
+    protected $patch = '0';
 
     protected $build = '';
 
-    protected $status = 'Stable';
+    protected $status = 'RC 2';
 
-    protected $date = '1-March-2017';
+    protected $date = '06-April-2017';
 
-    protected $time = '13:00';
+    protected $time = '20:00';
 
     protected $zone = 'GMT +3';
 

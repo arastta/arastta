@@ -330,20 +330,19 @@
     </div>
 </div>
 <script type="text/javascript"><!--
-var confirm_text = '<?php echo $text_remove_feed; ?>';
+    var confirm_text = '<?php echo $text_remove_feed; ?>';
 
-$(document).ready(function() {
-    FaceBook.init();
-});
+    $(document).ready(function() {
+        FaceBook.init();
+    });
 
-function save(type){
-    var input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'button';
-    input.value = type;
-    form = $("form[id^='form-']").append(input);
-    form.submit();
-}
+    function save(type) {
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'button';
+        input.value = type;
+        form = $("form[id^='form-']").append(input);
+        form.submit();
+    }
 //--></script>
-
 <?php echo $footer; ?>

@@ -228,6 +228,23 @@ class ControllerCommonHeader extends Controller {
                 $route = 'information/information';
                 $args = 'information_id=' . $item['link'];
                 break;
+            case 'blog_home':
+                $route = 'blog/home';
+                $args = '';
+                break;
+            case 'blog_category':
+                $route = 'blog/category';
+
+                if (!empty($child) && !empty($parent['link'])) {
+                    $args = 'path=' . $parent['link'] . '_' . $item['link'];
+                } else {
+                    $args = 'path=' . $item['link'];
+                }
+                break;
+            case 'blog_post':
+                $route = 'blog/post';
+                $args = 'post_id=' . $item['link'];
+                break;
             default:
                 $tmp = explode('&', str_replace('index.php?route=', '', $item['link']));
 
@@ -290,6 +307,22 @@ class ControllerCommonHeader extends Controller {
                 break;
             case 'information':
                 if (isset($this->request->get['information_id']) && $menu['link'] == $this->request->get['information_id']) {
+                    return true;
+                }
+                break;
+            case 'blog_category':
+                if (isset($this->request->get['path'])) {
+                    $paths = explode('_', $this->request->get['path']);
+
+                    if (in_array($menu['link'], $paths)) {
+                        return true;
+                    }
+                } elseif (isset($this->request->get['category_id']) && $menu['link'] == $this->request->get['category_id']) {
+                    return true;
+                }
+                break;
+            case 'blog_post':
+                if (isset($this->request->get['post_id']) && $menu['link'] == $this->request->get['post_id']) {
                     return true;
                 }
                 break;

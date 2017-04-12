@@ -1010,3 +1010,20 @@ ul {
     padding: 2px 5px;
     line-height: 35px;
 }
+
+.blog-menu {
+    padding-top: 22px;
+}
+
+.blog-home-menu {
+    display: block;
+    background: #f4f4f4;
+    padding: 4px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.blog-home-menu .control-label {
+    padding-top: 5px;
+    margin-left: 5px;
+}

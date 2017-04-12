@@ -86,6 +86,29 @@ class ModelAppearanceMenu extends Model
             foreach ($languages as $language) {
                 $query->rows[] = array('name' => $data['name'], 'language_id' => $language['language_id']);
             }
+        } elseif (($data['type'] == 'blog_home') || ($data['type'] == 'blog_category') || ($data['type'] == 'blog_post')) {
+            $link = (int)$data['id'];
+
+            switch ($data['type']) {
+                case 'blog_home':
+                    $link = (int)$data['id'];
+
+                    $query = $this->db->query("SELECT name, language_id FROM " . DB_PREFIX . "language WHERE status = 1");
+
+                    foreach ($query->rows as $key => $row) {
+                        $query->rows[$key]['name'] = $this->language->get('text_blog');
+                    }
+
+                    break;
+                case 'blog_category':
+                    $query = $this->db->query("SELECT name, category_id, language_id FROM " . DB_PREFIX . $data['type'] . "_description WHERE category_id = '" . (int)$data['id'] . "'");
+
+                    break;
+                case 'blog_post':
+                    $query = $this->db->query("SELECT name, post_id, language_id FROM " . DB_PREFIX . $data['type'] . "_description WHERE post_id = '" . (int)$data['id'] . "'");
+
+                    break;
+            }
         } else {
             $link = (int)$data['id'];
 

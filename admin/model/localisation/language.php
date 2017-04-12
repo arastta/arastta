@@ -7,6 +7,8 @@
  * @link        https://arastta.org
  */
 
+use Symfony\Component\Finder\Finder;
+
 class ModelLocalisationLanguage extends Model {
     public function addLanguage($data) {
         $this->trigger->fire('pre.admin.language.add', array(&$data));
@@ -139,15 +141,6 @@ class ModelLocalisationLanguage extends Model {
             $this->db->query("INSERT INTO " . DB_PREFIX . "option_value_description SET option_value_id = '" . (int)$option_value['option_value_id'] . "', language_id = '" . (int)$language_id . "', option_id = '" . (int)$option_value['option_id'] . "', name = '" . $this->db->escape($option_value['name']) . "'");
         }
 
-        // Order Status
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
-
-        foreach ($query->rows as $order_status) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "order_status SET order_status_id = '" . (int)$order_status['order_status_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($order_status['name']) . "'");
-        }
-
-        $this->cache->delete('order_status');
-
         // Product
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
@@ -169,36 +162,6 @@ class ModelLocalisationLanguage extends Model {
         foreach ($query->rows as $product_attribute) {
             $this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_attribute['product_id'] . "', attribute_id = '" . (int)$product_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" . $this->db->escape($product_attribute['text']) . "'");
         }
-
-        // Return Action
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_action WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
-
-        foreach ($query->rows as $return_action) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "return_action SET return_action_id = '" . (int)$return_action['return_action_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($return_action['name']) . "'");
-        }
-
-        // Return Reason
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_reason WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
-
-        foreach ($query->rows as $return_reason) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "return_reason SET return_reason_id = '" . (int)$return_reason['return_reason_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($return_reason['name']) . "'");
-        }
-
-        // Return Status
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "return_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
-
-        foreach ($query->rows as $return_status) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "return_status SET return_status_id = '" . (int)$return_status['return_status_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($return_status['name']) . "'");
-        }
-
-        // Stock Status
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "stock_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
-
-        foreach ($query->rows as $stock_status) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "stock_status SET stock_status_id = '" . (int)$stock_status['stock_status_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($stock_status['name']) . "', color = '" . $this->db->escape($stock_status['color']) . "'");
-        }
-
-        $this->cache->delete('stock_status');
 
         // Voucher Theme
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "voucher_theme_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
@@ -255,18 +218,140 @@ class ModelLocalisationLanguage extends Model {
 
         $this->cache->delete('menu');
 
-        // Email Template
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "email_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
-
-        foreach ($query->rows as $email) {
-            $this->db->query("INSERT INTO " . DB_PREFIX . "email_description SET email_id = '" . (int)$email['email_id'] . "', name = '" . $this->db->escape($email['name']) . "', description = '" . $this->db->escape($email['description']) . "', status = '1', language_id = '" . (int)$language_id . "'");
-        }
+        // Internationalization of demo data
+        $this->prepareLanguages($language_id, $data['directory']);
 
         $this->cache->delete('email_template');
+        $this->cache->delete('order_status');
+        $this->cache->delete('stock_status');
+        $this->cache->delete('return_status');
+        $this->cache->delete('return_reason');
+        $this->cache->delete('return_action');
 
         $this->trigger->fire('post.admin.language.add', array(&$language_id));
 
         return $language_id;
+    }
+
+    public function prepareLanguages($language_id, $language_directory)
+    {
+        $language = new Language($language_directory);
+
+        $language->load('demo/email_template');
+        $language->load('demo/order_status');
+        $language->load('demo/stock_status');
+        $language->load('demo/return_status');
+        $language->load('demo/return_reason');
+        $language->load('demo/return_action');
+
+        $data = $language->all();
+
+        $this->emailTemplateLanguages($data, $language_id);
+        $this->orderStatusLanguages($data, $language_id);
+        $this->stockStatusLanguages($data, $language_id);
+        $this->returnStatusLanguages($data, $language_id);
+        $this->returnReasonLanguages($data, $language_id);
+        $this->returnActionLanguages($data, $language_id);
+    }
+
+    private function emailTemplateLanguages($data, $language_id)
+    {
+        $finder = new Finder();
+        $finder->files()->in(DIR_ADMIN . 'view/template/demo');
+        
+        foreach ($finder as $email_template)
+        {
+            $email_template_id = rtrim($email_template->getFilename(), '.' . $email_template->getExtension());
+            $item              = explode('_', $email_template_id);
+            $query             = $this->db->query("SELECT id FROM " . DB_PREFIX . "email WHERE type = '" . $item[0] . "' AND text_id = " . $item[1]);
+
+            $content = $this->load->view('demo/' . $email_template->getFilename(), $data);
+
+            $sql = 'INSERT INTO ' . DB_PREFIX . 'email_description (`email_id`, `name`, `description`, `status`, `language_id`) VALUES ' .
+                "(" . (int) $query->row['id'] . "," .
+                "'" . $this->db->escape(htmlspecialchars($data[$email_template_id . '_subject'])) . "'," .
+                "'" . $this->db->escape(htmlspecialchars($content)) . "', 1, " . $language_id . ")";
+
+            $this->db->query($sql);
+        }
+    }
+
+    private function stockStatusLanguages($data, $language_id)
+    {
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'stock_status` (`stock_status_id`, `language_id`, `name`, `color`, `preorder`) VALUES ';
+
+        $values[] = "(5, {$language_id}, '" . $data['stock_out_of_stock'] . "', '#FF0000', 0)";
+        $values[] = "(6, {$language_id}, '" . $data['stock_2_3_days'] . "', '#FFA500', 0)";
+        $values[] = "(7, {$language_id}, '" . $data['stock_in_stock'] . "', '#008000', 0)";
+        $values[] = "(8, {$language_id}, '" . $data['stock_pre_order'] . "', '#FFFF00', 1)";
+
+        $sql .= implode(',', $values);
+
+        $this->db->query($sql);
+    }
+
+    private function orderStatusLanguages($data, $language_id)
+    {
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'order_status` (`language_id`, `name`, `message`) VALUES ';
+
+        $values[] = "({$language_id}, '" . $data['order_pending'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_processing'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_shipped'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_complete'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_cancelled'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_denied'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_cancelled_reversal'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_failed'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_refunded'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_reversed'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_chargeback'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_expired'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_processed'] . "', '')";
+        $values[] = "({$language_id}, '" . $data['order_voided'] . "', '')";
+
+        $sql .= implode(',', $values);
+
+        $this->db->query($sql);
+    }
+
+    private function returnStatusLanguages($data, $language_id)
+    {
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_status` (`language_id`, `name`) VALUES ';
+
+        $values[] = "({$language_id}, '" . $data['return_pending'] . "')";
+        $values[] = "({$language_id}, '" . $data['return_awaiting_products'] . "')";
+        $values[] = "({$language_id}, '" . $data['return_complete'] . "')";
+
+        $sql .= implode(',', $values);
+
+        $this->db->query($sql);
+    }
+
+    private function returnReasonLanguages($data, $language_id)
+    {
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_reason` (`language_id`, `name`) VALUES ';
+
+        $values[] = "({$language_id}, '" . $data['reason_dead_on_arrival'] . "')";
+        $values[] = "({$language_id}, '" . $data['reason_received_wrong_item'] . "')";
+        $values[] = "({$language_id}, '" . $data['reason_order_error'] . "')";
+        $values[] = "({$language_id}, '" . $data['reason_faulty_supply_details'] . "')";
+
+        $sql .= implode(',', $values);
+
+        $this->db->query($sql);
+    }
+
+    private function returnActionLanguages($data, $language_id)
+    {
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_action` (`language_id`, `name`) VALUES ';
+
+        $values[] = "({$language_id}, '" . $data['action_refunded'] . "')";
+        $values[] = "({$language_id}, '" . $data['action_credit_issued'] . "')";
+        $values[] = "({$language_id}, '" . $data['action_replacement_sent'] . "')";
+
+        $sql .= implode(',', $values);
+
+        $this->db->query($sql);
     }
 
     public function editLanguage($language_id, $data) {

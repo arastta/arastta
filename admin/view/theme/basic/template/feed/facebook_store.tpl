@@ -351,10 +351,10 @@
     </div>
 </div>
 <script type="text/javascript"><!--
-var confirm_text = '<?php echo $text_remove_feed; ?>';
+    var confirm_text = '<?php echo $text_remove_feed; ?>';
 
-$(document).ready(function() {
-    FaceBook.init();
-});
+    $(document).ready(function() {
+        FaceBook.init();
+    });
 //--></script>
 <?php echo $footer; ?>

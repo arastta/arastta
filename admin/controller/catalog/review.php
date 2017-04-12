@@ -461,7 +461,7 @@ class ControllerCatalogReview extends Controller {
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_savenew'] = $this->language->get('button_savenew');
-        $data['button_saveclose'] = $this->language->get('button_saveclose');   
+        $data['button_saveclose'] = $this->language->get('button_saveclose');
         $data['button_cancel'] = $this->language->get('button_cancel');
   
         if (isset($this->error['warning'])) {
@@ -654,6 +654,10 @@ class ControllerCatalogReview extends Controller {
             $this->load->model('catalog/review');
 
             foreach ($this->request->post as $key => $value) {
+                if ($key == 'date_added') {
+                    $value = preg_replace("/(\d+)\D+(\d+)\D+(\d+)/", "$3-$2-$1", $value);
+                }
+
                 $this->model_catalog_review->updateReview($this->request->get['review_id'], $key, $value);
             }
         }

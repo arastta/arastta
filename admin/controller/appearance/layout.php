@@ -57,7 +57,7 @@ class ControllerAppearanceLayout extends Controller
         $data['add'] = $this->url->link('appearance/layout/add', 'token=' . $this->session->data['token'], 'SSL');
         $data['cancel'] = $this->url->link('appearance/layout', 'token=' . $this->session->data['token'], 'SSL');
 
-        $data['extension_module'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+        $data['extension_module'] = $this->url->link('extension/extension', 'filter_type=module&token=' . $this->session->data['token'], 'SSL');
         $data['removeModule'] = $this->url->link('appearance/layout/removeModule', 'token=' . $this->session->data['token'], 'SSL');
 
         $data['layouts'] = $this->getLayouts();

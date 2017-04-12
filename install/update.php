@@ -645,3 +645,295 @@ if (version_compare(VERSION, '1.5.2', '<')) {
     $this->filesystem->remove(DIR_SYSTEM . 'library/command');
 }
 
+// 1.6.0 changes;
+if (version_compare(VERSION, '1.6.0', '<')) {
+    // Add CSRF setting
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_sec_csrf', `value` = 'a:7:{i:0;s:20:\"account/address/edit\";i:1;s:12:\"account/edit\";i:2;s:18:\"account/newsletter\";i:3;s:16:\"account/password\";i:4;s:14:\"affiliate/edit\";i:5;s:18:\"affiliate/password\";i:6;s:17:\"affiliate/payment\";}', `serialized` = '1'");
+
+    // Add blog tables
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_post` (
+        `post_id` int(11) NOT NULL AUTO_INCREMENT,
+        `allow_comment` int(1) NOT NULL DEFAULT '1',
+        `featured` int(1) NOT NULL DEFAULT '0',
+        `viewed` int(11) NOT NULL DEFAULT '0',
+        `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+        `author` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+        `date_available` date NOT NULL DEFAULT '0000-00-00',
+        `sort_order` int(3) NOT NULL,
+        `status` int(1) NOT NULL DEFAULT '1',
+        `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+        `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+        PRIMARY KEY (`post_id`),
+        KEY `allow_comment` (`allow_comment`),
+        KEY `viewed` (`viewed`),
+        KEY `author` (`author`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_post_description` (
+        `post_id` int(11) NOT NULL,
+        `language_id` int(11) NOT NULL,
+        `name` varchar(255) NOT NULL,
+        `description` text NOT NULL,
+        `tag` text NOT NULL,
+        `meta_title` varchar(255) NOT NULL,
+        `meta_description` varchar(255) NOT NULL,
+        `meta_keyword` varchar(255) NOT NULL,
+        PRIMARY KEY (`post_id`,`language_id`),
+        KEY `name` (`name`),
+        KEY `language_id` (`language_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_post_to_category` (
+        `post_id` int(11) NOT NULL,
+        `category_id` int(11) NOT NULL,
+        PRIMARY KEY (`post_id`,`category_id`),
+        KEY `category_id` (`category_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_post_to_layout` (
+        `post_id` int(11) NOT NULL,
+        `store_id` int(11) NOT NULL,
+        `layout_id` int(11) NOT NULL,
+        PRIMARY KEY (`post_id`,`store_id`),
+        KEY `store_id` (`store_id`),
+        KEY `layout_id` (`layout_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_post_to_store` (
+        `post_id` int(11) NOT NULL,
+        `store_id` int(11) NOT NULL,
+        PRIMARY KEY (`post_id`,`store_id`),
+        KEY `store_id` (`store_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_comment` (
+        `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+        `post_id` int(11) NOT NULL,
+        `customer_id` int(11) NOT NULL,
+        `email` varchar(96) NOT NULL,
+        `author` varchar(64) NOT NULL,
+        `text` text NOT NULL,
+        `status` tinyint(1) NOT NULL DEFAULT '0',
+        `date_added` datetime NOT NULL,
+        `date_modified` datetime NOT NULL,
+        PRIMARY KEY (`comment_id`),
+        KEY `post_id` (`post_id`),
+        KEY `customer_id` (`customer_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_category` (
+        `category_id` int(11) NOT NULL AUTO_INCREMENT,
+        `image` varchar(255) DEFAULT NULL,
+        `parent_id` int(11) NOT NULL DEFAULT '0',
+        `top` tinyint(1) NOT NULL,
+        `sort_order` int(3) NOT NULL DEFAULT '0',
+        `status` int(1) NOT NULL DEFAULT '1',
+        `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+        `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+        PRIMARY KEY (`category_id`),
+        KEY `parent_id` (`parent_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_category_description` (
+        `category_id` int(11) NOT NULL,
+        `language_id` int(11) NOT NULL,
+        `name` varchar(255) NOT NULL,
+        `description` text NOT NULL,
+        `meta_title` varchar(255) NOT NULL,
+        `meta_description` varchar(255) NOT NULL,
+        `meta_keyword` varchar(255) NOT NULL,
+        PRIMARY KEY (`category_id`,`language_id`),
+        KEY `name` (`name`),
+        KEY `language_id` (`language_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_category_path` (
+        `category_id` int(11) NOT NULL,
+        `path_id` int(11) NOT NULL,
+        `level` int(11) NOT NULL,
+        PRIMARY KEY (`category_id`,`path_id`),
+        KEY `path_id` (`path_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_category_to_layout` (
+        `category_id` int(11) NOT NULL,
+        `store_id` int(11) NOT NULL,
+        `layout_id` int(11) NOT NULL,
+        PRIMARY KEY (`category_id`,`store_id`),
+        KEY `store_id` (`store_id`),
+        KEY `layout_id` (`layout_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "blog_category_to_store` (
+        `category_id` int(11) NOT NULL,
+        `store_id` int(11) NOT NULL,
+        PRIMARY KEY (`category_id`,`store_id`),
+        KEY `store_id` (`store_id`)
+        ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;");
+
+    // Update the user groups
+    $user_groups = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group");
+
+    foreach ($user_groups->rows as $user_group) {
+        $user_group['permission'] = unserialize($user_group['permission']);
+
+        $user_group['permission']['access'][] = 'blog/category';
+        $user_group['permission']['modify'][] = 'blog/category';
+
+        $user_group['permission']['access'][] = 'blog/comment';
+        $user_group['permission']['modify'][] = 'blog/comment';
+
+        $user_group['permission']['access'][] = 'blog/post';
+        $user_group['permission']['modify'][] = 'blog/post';
+
+        $this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($user_group['name']) . "', permission = '" . $this->db->escape(serialize($user_group['permission'])) . "' WHERE user_group_id = '" . (int)$user_group['user_group_id'] . "'");
+    }
+
+    // Add Blog Layout
+    $this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = 'Blog Home'");
+
+    $layout_id = $this->db->getLastId();
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', `store_id` = '0', `route` = 'blog/home'");
+
+    // Add Module
+    $this->db->query("INSERT INTO " . DB_PREFIX . "module SET name = 'Recent posts', `code` = 'blog_latest', `setting` = 'a:5:{s:4:\"name\";s:12:\"Recent posts\";s:5:\"limit\";s:1:\"5\";s:5:\"width\";s:2:\"60\";s:6:\"height\";s:2:\"40\";s:6:\"status\";s:1:\"1\";}'");
+
+    $module_id = $this->db->getLastId();
+
+    // Add Blog Modules
+    $this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$layout_id . "', `code` = 'blog_latest." .$module_id ."', `position` = 'column_right', `sort_order` = '0'");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = 'Blog Post'");
+
+    $layout_id = $this->db->getLastId();
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', `store_id` = '0', `route` = 'blog/post'");
+
+    // Add Module
+    $this->db->query("INSERT INTO " . DB_PREFIX . "module SET name = 'Recent comments', `code` = 'blog_comment', `setting` = 'a:7:{s:4:\"name\";s:15:\"Recent comments\";s:5:\"limit\";s:1:\"2\";s:18:\"description_length\";s:3:\"300\";s:5:\"image\";s:1:\"1\";s:5:\"width\";s:2:\"40\";s:6:\"height\";s:2:\"40\";s:6:\"status\";s:1:\"1\";}'");
+
+    $module_id = $this->db->getLastId();
+
+    // Add Blog Modules
+    $this->db->query("INSERT INTO `" . DB_PREFIX . "layout_module` SET `layout_id` = '" . (int)$layout_id . "', `code` = 'blog_comment." .$module_id ."', `position` = 'column_right', `sort_order` = '0'");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = 'Blog Category'");
+
+    $layout_id = $this->db->getLastId();
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', `store_id` = '0', `route` = 'blog/category'");
+
+    // Add Blog Items
+    // Add Blog Category
+    $this->db->query("INSERT INTO `" . DB_PREFIX . "blog_category` SET `image` = '', `parent_id` = '0', `top` = '0', `sort_order` = '0', `status` = '1', `date_added` = '2017-04-06 14:06:13', `date_modified` = '0000-00-00 00:00:00'");
+
+    $blog_category_id = $this->db->getLastId();
+
+    $this->db->query("INSERT INTO `" . DB_PREFIX . "blog_category_description` SET `category_id` = " . (int)$blog_category_id . ", `language_id` = '1', `name` = 'General', `description` = '', `meta_title` = 'General', `meta_description` = '', `meta_keyword` = ''");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_category_path SET category_id = '" . (int)$blog_category_id . "', `path_id` = '1', `level` = '0'");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_category_to_layout SET category_id = '" . (int)$blog_category_id . "', `store_id` = '0', `layout_id` = '0'");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_category_to_store SET category_id = '" . (int)$blog_category_id . "', `store_id` = '0'");
+
+    // Add Blog Category Url Alias
+    $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET `query` = 'blog_category_id=" . (int)$blog_category_id . "', `keyword` = 'general', `language_id` = '1'");
+
+    // Add Blog Post
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post SET `allow_comment` = '1', `featured` = '1', `viewed` = '37', `image` = 'catalog/demo/blog/yet-another.jpg', `author` = 'Cüneyt Şentürk', `date_available` = '2017-04-06', `sort_order` = '0', `status` = '1', `date_added` = '2017-04-06 14:13:54', `date_modified` = '2017-04-06 14:26:07'");
+
+    $blog_post_id = $this->db->getLastId();
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_description SET post_id = '" . (int)$blog_post_id . "', `language_id` = '1', `name` = 'Yet another great post', `description` = '&lt;p&gt;Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.&lt;/p&gt;\r\n&lt;h1&gt;HTML Ipsum Presents&lt;/h1&gt;\r\n&lt;p&gt;&lt;strong&gt;Pellentesque habitant morbi tristique&lt;/strong&gt; senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. &lt;em&gt;Aenean ultricies mi vitae est.&lt;/em&gt; Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, &lt;code&gt;commodo vitae&lt;/code&gt;, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. &lt;a href=&quot;#&quot;&gt;Donec non enim&lt;/a&gt; in turpis pulvinar facilisis. Ut felis.&lt;/p&gt;\r\n&lt;h2&gt;Header Level 2&lt;/h2&gt;\r\n&lt;ol&gt;\r\n&lt;li&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.&lt;/li&gt;\r\n&lt;li&gt;Aliquam tincidunt mauris eu risus.&lt;/li&gt;\r\n&lt;/ol&gt;\r\n&lt;blockquote&gt;\r\n&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.&lt;/p&gt;\r\n&lt;/blockquote&gt;\r\n&lt;h3&gt;Header Level 3&lt;/h3&gt;\r\n&lt;ul&gt;\r\n&lt;li&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.&lt;/li&gt;\r\n&lt;li&gt;Aliquam tincidunt mauris eu risus.&lt;/li&gt;\r\n&lt;/ul&gt;', `tag` = 'tag 1,tag 2,tag 3', `meta_title` = 'Yet another great post', `meta_description` = '', `meta_keyword` = ''");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_to_category SET post_id = '" . (int)$blog_post_id . "', category_id = '" . (int)$blog_category_id . "'");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_to_layout SET post_id = '" . (int)$blog_post_id . "', `store_id` = '0', `layout_id` = '0'");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_to_store SET post_id = '" . (int)$blog_post_id . "', `store_id` = '0'");
+
+    // Add Blog Comment
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_comment SET `post_id` = '" . (int)$blog_post_id . "', `customer_id` = '0', `email` = 'test@test.com', `author` = 'Denis', `text` = 'Hey, this is cool! I like it.', `status` = '1', `date_added` = '2017-04-06 14:54:56', `date_modified` = '0000-00-00 00:00:00'");
+
+    // Add Blog Post Url Alias
+    $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET `query` = 'blog_post_id=" . (int)$blog_post_id . "', `keyword` = 'yet-another-great-post', `language_id` = '1'");
+
+    // Add Blog Post
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post SET `allow_comment` = '1', `featured` = '0', `viewed` = '10', `image` = 'catalog/demo/blog/arastta.jpg', `author` = 'Enes Ertuğrul', `date_available` = '2017-04-06', `sort_order` = '0', `status` = '1', `date_added` = '2017-04-06 14:31:03', `date_modified` = '2017-04-06 15:34:24'");
+
+    $blog_post_id = $this->db->getLastId();
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_description SET post_id = '" . (int)$blog_post_id . "', `language_id` = '1', `name` = 'Arastta 1.6 Released', `description` = '&lt;p&gt;Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.&lt;/p&gt;\r\n&lt;h1&gt;HTML Ipsum Presents&lt;/h1&gt;\r\n&lt;p&gt;&lt;strong&gt;Pellentesque habitant morbi tristique&lt;/strong&gt; senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. &lt;em&gt;Aenean ultricies mi vitae est.&lt;/em&gt; Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, &lt;code&gt;commodo vitae&lt;/code&gt;, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. &lt;a href=&quot;#&quot;&gt;Donec non enim&lt;/a&gt; in turpis pulvinar facilisis. Ut felis.&lt;/p&gt;\r\n&lt;h2&gt;Header Level 2&lt;/h2&gt;\r\n&lt;ol&gt;\r\n&lt;li&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.&lt;/li&gt;\r\n&lt;li&gt;Aliquam tincidunt mauris eu risus.&lt;/li&gt;\r\n&lt;/ol&gt;\r\n&lt;blockquote&gt;\r\n&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.&lt;/p&gt;\r\n&lt;/blockquote&gt;\r\n&lt;h3&gt;Header Level 3&lt;/h3&gt;\r\n&lt;ul&gt;\r\n&lt;li&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.&lt;/li&gt;\r\n&lt;li&gt;Aliquam tincidunt mauris eu risus.&lt;/li&gt;\r\n&lt;/ul&gt;', `tag` = '', `meta_title` = 'Arastta 1.6 Released', `meta_description` = '', `meta_keyword` = ''");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_to_category SET post_id = '" . (int)$blog_post_id . "', category_id = '" . (int)$blog_category_id . "'");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_to_layout SET post_id = '" . (int)$blog_post_id . "', `store_id` = '0', `layout_id` = '0'");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_to_store SET post_id = '" . (int)$blog_post_id . "', `store_id` = '0'");
+
+    // Add Blog Comment
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_comment SET `post_id` = '" . (int)$blog_post_id . "', `customer_id` = '0', `email` = 'test@test2.com', `author` = 'Cüneyt Şentürk', `text` = 'This release is awesome! I will update my store as soon as possible.', `status` = '1', `date_added` = '2017-04-06 14:55:32', `date_modified` = '0000-00-00 00:00:00'");
+
+    // Add Blog Post Url Alias
+    $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET `query` = 'blog_post_id=" . (int)$blog_post_id . "', `keyword` = 'arastta-1-6-released', `language_id` = '1'");
+
+    // Add Blog Post
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post SET `allow_comment` = '1', `featured` = '1', `viewed` = '5', `image` = 'catalog/demo/blog/big-thing-arastta.jpg', `author` = 'Denis Duliçi', `date_available` = '2017-04-06', `sort_order` = '0', `status` = '1', `date_added` = '2017-04-06 15:00:51', `date_modified` = '0000-00-00 00:00:00'");
+
+    $blog_post_id = $this->db->getLastId();
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_description SET post_id = '" . (int)$blog_post_id . "', `language_id` = '1', `name` = 'The next big Arastta thing ;)', `description` = '&lt;p&gt;Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.&lt;/p&gt;\r\n&lt;h1&gt;HTML Ipsum Presents&lt;/h1&gt;\r\n&lt;p&gt;&lt;strong&gt;Pellentesque habitant morbi tristique&lt;/strong&gt; senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. &lt;em&gt;Aenean ultricies mi vitae est.&lt;/em&gt; Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, &lt;code&gt;commodo vitae&lt;/code&gt;, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. &lt;a href=&quot;#&quot;&gt;Donec non enim&lt;/a&gt; in turpis pulvinar facilisis. Ut felis.&lt;/p&gt;\r\n&lt;h2&gt;Header Level 2&lt;/h2&gt;\r\n&lt;ol&gt;\r\n&lt;li&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.&lt;/li&gt;\r\n&lt;li&gt;Aliquam tincidunt mauris eu risus.&lt;/li&gt;\r\n&lt;/ol&gt;\r\n&lt;blockquote&gt;\r\n&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.&lt;/p&gt;\r\n&lt;/blockquote&gt;\r\n&lt;h3&gt;Header Level 3&lt;/h3&gt;\r\n&lt;ul&gt;\r\n&lt;li&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.&lt;/li&gt;\r\n&lt;li&gt;Aliquam tincidunt mauris eu risus.&lt;/li&gt;\r\n&lt;/ul&gt;', `tag` = '', `meta_title` = 'The next big Arastta thing ;)', `meta_description` = '', `meta_keyword` = ''");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_to_category SET post_id = '" . (int)$blog_post_id . "', category_id = '" . (int)$blog_category_id . "'");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_to_layout SET post_id = '" . (int)$blog_post_id . "', `store_id` = '0', `layout_id` = '0'");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "blog_post_to_store SET post_id = '" . (int)$blog_post_id . "', `store_id` = '0'");
+
+    // Add Blog Post Url Alias
+    $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET `query` = 'blog_post_id=" . (int)$blog_post_id . "', `keyword` = 'the-next-big-arastta-thing', `language_id` = '1'");
+
+    // Add Blog Menu
+    $this->db->query("INSERT INTO " . DB_PREFIX . "menu SET `sort_order` = '8', `columns` = '1', `menu_type` = 'blog_home', `status` = '1'");
+
+    $blog_menu_id = $this->db->getLastId();
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET `menu_id` = '" . (int)$blog_menu_id . "', `name` = 'Blog', `link` = '0', `language_id` = '1'");
+
+    $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET `menu_id` = '" . (int)$blog_menu_id . "', `store_id` = '0'");
+
+    // Add Blog Home Url Alias
+    $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET `query` = 'route=blog/home', `keyword` = 'blog', `language_id` = '1'");
+
+    // Add setting table
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_list_width', `value` = '600'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_list_height', `value` = '400'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_form_width', `value` = '600'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_form_height', `value` = '400'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_name', `value` = 'Arastta Blog'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_description', `value` = '&lt;p&gt;Welcome to the Arastta Blog\'s home&lt;/p&gt;'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_featured_slide', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_meta_title', `value` = 'Arastta Blog'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_meta_description', `value` = ''");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_meta_keyword', `value` = ''");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_list_limit', `value` = '5'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_list_description_length', `value` = '300'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_list_row', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_list_sort_order', `value` = 'p.date_added-DESC'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_list_date', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_list_comment', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_list_read', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_list_author', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_form_date', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_form_comment', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_form_read', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_form_author', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_post_form_share', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_comment_enable', `value` = '1'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_comment_status', `value` = '0'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_comment_guest', `value` = '0'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_comment_limit', `value` = '5'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_comment_mail', `value` = '1'");
+}

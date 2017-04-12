@@ -56,7 +56,7 @@ class ModelFeedFacebookStore extends Model
         }
 
         $cache = md5(http_build_query($data));
-        
+
         $product_data = $this->cache->get('facebook.store.product.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . (int)$customer_group_id . '.' . $cache);
 
         if ($data['start'] > 0) {
@@ -150,7 +150,7 @@ class ModelFeedFacebookStore extends Model
                 $this->cache->set('facebook.store.product.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . (int)$customer_group_id . '.' . $cache, $product_data);
             }
         }
-        
+
         return $product_data;
     }
         
@@ -169,7 +169,7 @@ class ModelFeedFacebookStore extends Model
 
             return count($product_data);
         }
-    
+
         $result = array();
 
         if ($feeds) {
