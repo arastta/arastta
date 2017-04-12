@@ -895,15 +895,6 @@ if (version_compare(VERSION, '1.6.0', '<')) {
     // Add Blog Post Url Alias
     $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET `query` = 'blog_post_id=" . (int)$blog_post_id . "', `keyword` = 'the-next-big-arastta-thing', `language_id` = '1'");
 
-    // Add Blog Menu
-    $this->db->query("INSERT INTO " . DB_PREFIX . "menu SET `sort_order` = '8', `columns` = '1', `menu_type` = 'blog_home', `status` = '1'");
-
-    $blog_menu_id = $this->db->getLastId();
-
-    $this->db->query("INSERT INTO " . DB_PREFIX . "menu_description SET `menu_id` = '" . (int)$blog_menu_id . "', `name` = 'Blog', `link` = '0', `language_id` = '1'");
-
-    $this->db->query("INSERT INTO " . DB_PREFIX . "menu_to_store SET `menu_id` = '" . (int)$blog_menu_id . "', `store_id` = '0'");
-
     // Add Blog Home Url Alias
     $this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET `query` = 'route=blog/home', `keyword` = 'blog', `language_id` = '1'");
 
