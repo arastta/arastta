@@ -37,7 +37,7 @@ class Route extends Object
         // Attach the URL builder
         $this->url->addRewrite($this);
 
-        $query_string = $this->uri->getQuery();
+        $query_string = rawurldecode($this->uri->getQuery());
 
         $route = str_replace($this->url->getFullUrl(), '', rawurldecode($this->uri->toString()));
         $route = str_replace('?'.$query_string, '', $route);
