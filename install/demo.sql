@@ -351,6 +351,18 @@ INSERT INTO `ar_manufacturer_description` (`manufacturer_id`, `language_id`, `na
 (13, 1, 'SUPRA', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'SUPRA', '', ''),
 (14, 1, 'Spiral', '&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 'Spiral', '', '');
 
+INSERT INTO `ar_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
+(5, 0),
+(6, 0),
+(7, 0),
+(8, 0),
+(9, 0),
+(10, 0),
+(11, 0),
+(12, 0),
+(13, 0),
+(14, 0);
+
 INSERT INTO `ar_menu` (`menu_id`, `sort_order`, `columns`, `menu_type`, `status`) VALUES
 (1, 1, 0, 'category', 1),
 (2, 2, 0, 'category', 1),
