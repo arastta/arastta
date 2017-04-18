@@ -141,6 +141,7 @@ class ControllerAppearanceCustomizer extends Controller
         $this->document->addStyle('view/stylesheet/customizer.css');
         $this->document->addStyle('view/stylesheet/dashicons.css');
         $this->document->addStyle('view/stylesheet/color-picker.css');
+        $this->document->addStyle('view/javascript/jquery/cs-selectable/jquery.cs-selectable.css');
     }
 
     public function installJavascript()
@@ -150,6 +151,7 @@ class ControllerAppearanceCustomizer extends Controller
         $this->document->addScript('view/javascript/jquery/layout/jquery-ui.js');
         $this->document->addScript('view/javascript/colorpicker/color-picker.js');
         $this->document->addScript('view/javascript/colorpicker/iris.min.js');
+        $this->document->addScript('view/javascript/jquery/cs-selectable/jquery.cs-selectable.js');
 
         if (is_file(DIR_CATALOG . 'view/theme/' . $this->config->get('config_template') . '/javascript/customizer.js')) {
             $this->document->addScript('../catalog/view/theme/' . $this->config->get('config_template') . '/javascript/customizer.js');
