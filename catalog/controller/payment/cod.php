@@ -26,7 +26,7 @@ class ControllerPaymentCod extends Controller {
         if ($this->session->data['payment_method']['code'] == 'cod') {
             $this->load->model('checkout/order');
 
-            $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('cod_order_status_id'));
+            $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('cod_order_status_id'), '', true);
         }
     }
 }
