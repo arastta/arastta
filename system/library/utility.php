@@ -56,10 +56,10 @@ class Utility extends Object
                 if (!empty($route_parts[0]) && (strlen($route_parts[0]) == 2)) {
                     $code = $route_parts[0];
                 } else {
-                    $code = $this->getBrowserDefaultLanguage($languages);
+                    $code = $this->getBrowserDefaultLanguage($languages['code']);
                 }
             } else {
-                $code = $this->getBrowserDefaultLanguage($languages);
+                $code = $this->getBrowserDefaultLanguage($languages['code']);
             }
         }
 
