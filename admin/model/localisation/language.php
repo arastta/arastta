@@ -292,22 +292,22 @@ class ModelLocalisationLanguage extends Model {
 
     private function orderStatusLanguages($data, $language_id)
     {
-        $sql = 'INSERT INTO `' . DB_PREFIX . 'order_status` (`language_id`, `name`, `message`) VALUES ';
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'order_status` (`order_status_id`, `language_id`, `name`, `message`) VALUES ';
 
-        $values[] = "({$language_id}, '" . $data['order_pending'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_processing'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_shipped'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_complete'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_cancelled'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_denied'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_cancelled_reversal'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_failed'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_refunded'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_reversed'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_chargeback'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_expired'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_processed'] . "', '')";
-        $values[] = "({$language_id}, '" . $data['order_voided'] . "', '')";
+        $values[] = "(1, {$language_id}, '" . $data['order_pending'] . "', '')";
+        $values[] = "(2, {$language_id}, '" . $data['order_processing'] . "', '')";
+        $values[] = "(3, {$language_id}, '" . $data['order_shipped'] . "', '')";
+        $values[] = "(5, {$language_id}, '" . $data['order_complete'] . "', '')";
+        $values[] = "(7, {$language_id}, '" . $data['order_cancelled'] . "', '')";
+        $values[] = "(8, {$language_id}, '" . $data['order_denied'] . "', '')";
+        $values[] = "(9, {$language_id}, '" . $data['order_cancelled_reversal'] . "', '')";
+        $values[] = "(10, {$language_id}, '" . $data['order_failed'] . "', '')";
+        $values[] = "(11, {$language_id}, '" . $data['order_refunded'] . "', '')";
+        $values[] = "(12, {$language_id}, '" . $data['order_reversed'] . "', '')";
+        $values[] = "(13, {$language_id}, '" . $data['order_chargeback'] . "', '')";
+        $values[] = "(14, {$language_id}, '" . $data['order_expired'] . "', '')";
+        $values[] = "(15, {$language_id}, '" . $data['order_processed'] . "', '')";
+        $values[] = "(16, {$language_id}, '" . $data['order_voided'] . "', '')";
 
         $sql .= implode(',', $values);
 
@@ -316,11 +316,11 @@ class ModelLocalisationLanguage extends Model {
 
     private function returnStatusLanguages($data, $language_id)
     {
-        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_status` (`language_id`, `name`) VALUES ';
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_status` (`return_status_id`, `language_id`, `name`) VALUES ';
 
-        $values[] = "({$language_id}, '" . $data['return_pending'] . "')";
-        $values[] = "({$language_id}, '" . $data['return_awaiting_products'] . "')";
-        $values[] = "({$language_id}, '" . $data['return_complete'] . "')";
+        $values[] = "(1, {$language_id}, '" . $data['return_pending'] . "')";
+        $values[] = "(2, {$language_id}, '" . $data['return_awaiting_products'] . "')";
+        $values[] = "(3, {$language_id}, '" . $data['return_complete'] . "')";
 
         $sql .= implode(',', $values);
 
@@ -329,12 +329,13 @@ class ModelLocalisationLanguage extends Model {
 
     private function returnReasonLanguages($data, $language_id)
     {
-        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_reason` (`language_id`, `name`) VALUES ';
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_reason` (`return_reason_id`, `language_id`, `name`) VALUES ';
 
-        $values[] = "({$language_id}, '" . $data['reason_dead_on_arrival'] . "')";
-        $values[] = "({$language_id}, '" . $data['reason_received_wrong_item'] . "')";
-        $values[] = "({$language_id}, '" . $data['reason_order_error'] . "')";
-        $values[] = "({$language_id}, '" . $data['reason_faulty_supply_details'] . "')";
+        $values[] = "(1, {$language_id}, '" . $data['reason_dead_on_arrival'] . "')";
+        $values[] = "(2, {$language_id}, '" . $data['reason_received_wrong_item'] . "')";
+        $values[] = "(3, {$language_id}, '" . $data['reason_order_error'] . "')";
+        $values[] = "(4, {$language_id}, '" . $data['reason_faulty_supply_details'] . "')";
+        $values[] = "(5, {$language_id}, '" . $data['reason_other_supply_details'] . "')";
 
         $sql .= implode(',', $values);
 
@@ -343,11 +344,11 @@ class ModelLocalisationLanguage extends Model {
 
     private function returnActionLanguages($data, $language_id)
     {
-        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_action` (`language_id`, `name`) VALUES ';
+        $sql = 'INSERT INTO `' . DB_PREFIX . 'return_action` (`return_action_id`, `language_id`, `name`) VALUES ';
 
-        $values[] = "({$language_id}, '" . $data['action_refunded'] . "')";
-        $values[] = "({$language_id}, '" . $data['action_credit_issued'] . "')";
-        $values[] = "({$language_id}, '" . $data['action_replacement_sent'] . "')";
+        $values[] = "(1, {$language_id}, '" . $data['action_refunded'] . "')";
+        $values[] = "(2, {$language_id}, '" . $data['action_credit_issued'] . "')";
+        $values[] = "(3, {$language_id}, '" . $data['action_replacement_sent'] . "')";
 
         $sql .= implode(',', $values);
 
