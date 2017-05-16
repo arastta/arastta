@@ -115,7 +115,7 @@ $_['order_3_subject']   = '{store_name} Order -  {order_id} Shipped';
 $_['order_3_thank_you'] = 'Thank you for your interest in {store_name} products.';
 
 $_['order_5_subject']   = '{store_name} Order -  {order_id} Complete';
-$_['order_5_thank_you'] = 'Thank you for your interest in Arastta products. Your order has been received and will be processed once payment has been confirmed.';
+$_['order_5_thank_you'] = 'Thank you for your interest in {store_name} products. Your order has been received and will be processed once payment has been confirmed.';
 
 $_['order_7_subject']   = '{store_name} Order -  {order_id} Cancelled';
 $_['order_7_thank_you'] = 'Thank you for your interest in {store_name} products but your order was cancelled.';
