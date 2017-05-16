@@ -254,7 +254,7 @@ class ControllerModuleProducts extends Controller
 
                     $images = array();
 
-                    $product_images = $this->model_catalog_product->getProductImages($result['product_id']);
+                    $product_images = $this->model_catalog_product->getProductImages($result);
 
                     foreach ($product_images as $product_image) {
                         $images[] = array(
