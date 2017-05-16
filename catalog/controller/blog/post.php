@@ -411,7 +411,7 @@ class ControllerBlogPost extends Controller
 
         $data['text_comments'] = $this->language->get('text_comments');
 
-        $data['text_no_comment'] = $this->language->get('text_no_comment');
+        $data['text_no_comments'] = $this->language->get('text_no_comments');
 
         $page = 1;
 
