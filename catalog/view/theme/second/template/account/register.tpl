@@ -675,8 +675,10 @@ $('select[name=\'country_id\']').on('change', function() {
         success: function(json) {
             if (json['postcode_required'] == '1') {
                 $('input[name=\'postcode\']').parent().parent().addClass('required');
+                $('input[name=\'postcode\']').prop('required', true);
             } else {
                 $('input[name=\'postcode\']').parent().parent().removeClass('required');
+                $('input[name=\'postcode\']').removeAttr('required');
             }
 
             html = '<option value=""><?php echo $text_select; ?></option>';

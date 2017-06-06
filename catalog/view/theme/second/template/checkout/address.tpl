@@ -636,8 +636,10 @@ $('#payment-address select[name=\'payment_country_id\']').on('change', function(
         success: function(json) {
             if (json['postcode_required'] == '1') {
                 $('#payment-address input[name=\'payment_postcode\']').parent().addClass('required');
+                $('#payment-address input[name=\'payment_postcode\']').prop('required', true);
             } else {
                 $('#payment-address input[name=\'payment_postcode\']').parent().removeClass('required');
+                $('#payment-address input[name=\'payment_postcode\']').removeAttr('required');
             }
 
             html = '<option value=""><?php echo $text_select; ?></option>';
@@ -703,8 +705,10 @@ $('#payment-address select[name=\'payment_country_id\']').ready(function() {
             success: function(json) {
                 if (json['postcode_required'] == '1') {
                     $('#shipping-address input[name=\'shipping_postcode\']').parent().addClass('required');
+                    $('#shipping-address input[name=\'shipping_postcode\']').prop('required', true);
                 } else {
                     $('#shipping-address input[name=\'shipping_postcode\']').parent().removeClass('required');
+                    $('#shipping-address input[name=\'shipping_postcode\']').removeAttr('required');
                 }
 
                 html = '<option value=""><?php echo $text_select; ?></option>';
