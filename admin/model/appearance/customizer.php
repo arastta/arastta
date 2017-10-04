@@ -36,7 +36,7 @@ class ModelAppearanceCustomizer extends Model
                 }
             }
 
-            if ($key != 'save' && $key != 'sitename' && $key != 'font' && $key != 'custom-css' && $key != 'custom-js') {
+            if ($key != 'save' && $key != 'sitename' && $key != 'font' && $key != 'custom-css' && $key != 'custom-js' && $key != 'colorscheme') {
                 $item = $this->getCustomizerItem($key);
 
                 if ($key == 'layout_width' || $key == 'container_background-color' || $key == 'container-color_color' || $key == 'container_background-image') {
