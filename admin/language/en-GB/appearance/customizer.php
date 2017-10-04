@@ -28,6 +28,7 @@ $_['text_general_sitename_label']               = 'Site Title';
 $_['text_general_font_label']                   = 'Site Font';
 $_['text_general_layout_label']                 = 'Layout';
 $_['text_colors_title']                         = 'Colours';
+$_['text_colors_colorscheme_label']             = 'Colour Scheme';
 $_['text_colors_container_background_label']    = 'Background Colour';
 $_['text_colors_container_color_label']         = 'Text Colour';
 $_['text_images_title']                         = 'Images';
