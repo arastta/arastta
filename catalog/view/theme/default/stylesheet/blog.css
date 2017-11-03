@@ -11,6 +11,10 @@
     margin-right: 10px;
 }
 
+.ar-blog-cat-item .intro > *:first-child {
+    margin-top: -5px;
+}
+
 .blog-slide {
     margin-bottom: 50px !important;
 }
