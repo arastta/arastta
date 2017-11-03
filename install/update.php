@@ -928,3 +928,8 @@ if (version_compare(VERSION, '1.6.0', '<')) {
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_comment_limit', `value` = '5'");
     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_blog_comment_mail', `value` = '1'");
 }
+
+// 1.7.0 changes;
+if (version_compare(VERSION, '1.7.0', '<')) {
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "setting` MODIFY `code` VARCHAR(64) NOT NULL");
+}
