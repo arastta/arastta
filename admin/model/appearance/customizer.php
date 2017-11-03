@@ -16,7 +16,7 @@ class ModelAppearanceCustomizer extends Model
         $customizerCss = '';
 
         foreach ($data as $key => $value) {
-            if ($key != 'save' && $key != 'custom-css' && $key != 'custom-js' && $key != 'advance-conrol') {
+            if ($key != 'save' && $key != 'custom-css' && $key != 'custom-js' && $key != 'advance-control') {
                 if (!is_array($value)) {
                     $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '" . (int)$store_id . "', `code` = '" . $this->db->escape($code . "_" . $this->config->get('config_template')) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape($value) . "'");
                 } else {

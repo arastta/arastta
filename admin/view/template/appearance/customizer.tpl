@@ -45,7 +45,7 @@
                 <i class="fa fa-save text-success"></i>
             </button>
             <div class="checkbox advance">
-                <label><input type="checkbox" id="advance-conrol" value=""><span><?php echo $text_advance; ?></span></label>
+                <label><input type="checkbox" id="advance-control" value=""><span><?php echo $text_advance; ?></span></label>
             </div>
             <a class="customizer-controls-close" href="<?php echo $button_back;?>">
                 <span class="screen-reader-text"><?php echo $entry_close; ?></span>
@@ -462,7 +462,7 @@ $(document).ready(function() {
         var advance = '0';
         $('.advance').css('display', 'inherit');
 
-        $( '#advance-conrol').on('change', function() {
+        $( '#advance-control').on('change', function() {
             if (advance == '0') {
                 $('.advance-hide').addClass('advance-show');
                 $('.advance-hide').removeClass('advance-hide');

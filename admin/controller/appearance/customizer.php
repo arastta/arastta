@@ -20,7 +20,7 @@ class ControllerAppearanceCustomizer extends Controller
         $this->document->setTitle($this->language->get('heading_title'));
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-            $this->model_appearance_customizer->saveCustomizer('customizer', $this->request->post);
+            $this->model_appearance_customizer->saveCustomizer('customizer', $this->request->post, $this->config->get('config_store_id', 0));
 
             $this->session->data['success'] = $this->language->get('text_success');
         }
