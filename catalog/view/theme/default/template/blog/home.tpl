@@ -53,7 +53,7 @@
                 <?php if ($author) { ?>
                 <a class="blog-author" href="<?php echo $post['author_href']; ?>"><i class="fa fa-user"></i> <?php echo $post['author']; ?></a>
                 <?php } ?>
-                <?php if ($category) { ?>
+                <?php if ($post['category']) { ?>
                 <a class="blog-category" href="<?php echo $post['category_href']; ?>"><i class="fa fa-bookmark"></i> <?php echo $post['category']; ?></a>
                 <?php } ?>
                 <?php if ($date_added) { ?>
