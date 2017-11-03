@@ -35,7 +35,7 @@ $_['text_update_success']                   = 'Update process has been completed
 $_['text_up_to_date']                       = 'Congratulations! Your store is up to date.';
 $_['text_maintenance']                      = 'While your store is being updated, it will be in maintenance mode. As soon as the updates are complete, your store will return to normal.';
 
-$_['text_latest_core']                      = 'Congratulations! You have the latest version of Arastta. Future security updates will be applied automatically.';
+$_['text_latest_core']                      = 'Congratulations! You have the latest version of Arastta.';
 $_['text_latest_extension']                 = 'Congratulations! Your extensions are all up to date.';
 $_['text_latest_theme']                     = 'Congratulations! Your themes are all up to date.';
 $_['text_latest_translation']               = 'Congratulations! Your translations are all up to date.';
