@@ -225,7 +225,7 @@ class ControllerBlogCategory extends Controller
                     'post_id'       => $result['post_id'],
                     'thumb'         => $image,
                     'name'          => $result['name'],
-                    'description'   => $result['description'],
+                    'description'   => substr($result['description'], 0, $this->config->get('config_blog_post_list_description_length')) . '...',
                     'category'      => $category,
                     'category_href' => $this->url->link('blog/category', 'path=' . $category_id),
                     'viewed'        => $result['viewed'],

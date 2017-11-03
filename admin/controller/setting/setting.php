@@ -1247,12 +1247,6 @@ class ControllerSettingSetting extends Controller {
             $data['config_blog_post_list_description_length'] = $this->config->get('config_blog_post_list_description_length');
         }
 
-        if (isset($this->request->post['config_blog_post_list_row'])) {
-            $data['config_blog_post_list_row'] = $this->request->post['config_blog_post_list_row'];
-        } else {
-            $data['config_blog_post_list_row'] = $this->config->get('config_blog_post_list_row');
-        }
-
         $data['blog_post_list_sort_orders'] = array();
 
         $data['blog_post_list_sort_orders'][] = array(

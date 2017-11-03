@@ -1752,33 +1752,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label" for="input-blog-post-list-row"><span data-toggle="tooltip" title="<?php echo $help_blog_post_row; ?>"><?php echo $entry_blog_post_row; ?></span></label>
-                                    <div class="col-sm-10">
-                                        <select name="config_blog_post_list_row" id="input-blog-post-list-row" class="form-control">
-                                            <?php if ($config_blog_post_list_row == '1') { ?>
-                                            <option value="1" selected="selected">1</option>
-                                            <?php } else { ?>
-                                            <option value="1">1</option>
-                                            <?php } ?>
-                                            <?php if ($config_blog_post_list_row == '2') { ?>
-                                            <option value="2" selected="selected">2</option>
-                                            <?php } else { ?>
-                                            <option value="2">2</option>
-                                            <?php } ?>
-                                            <?php if ($config_blog_post_list_row == '3') { ?>
-                                            <option value="3" selected="selected">3</option>
-                                            <?php } else { ?>
-                                            <option value="3">3</option>
-                                            <?php } ?>
-                                            <?php if ($config_blog_post_list_row == '4') { ?>
-                                            <option value="4" selected="selected">4</option>
-                                            <?php } else { ?>
-                                            <option value="4">4</option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-sm-2 control-label" for="input-blog-post-list-sort-order"><span data-toggle="tooltip" title="<?php echo $help_blog_post_sot_order; ?>"><?php echo $entry_blog_post_sort_order; ?></span></label>
                                     <div class="col-sm-10">
                                         <select name="config_blog_post_list_sort_order" id="input-blog-post-list-sort-order" class="form-control">
