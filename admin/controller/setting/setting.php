@@ -530,7 +530,11 @@ class ControllerSettingSetting extends Controller {
 
         $this->load->model('localisation/country');
 
-        $data['countries'] = $this->model_localisation_country->getCountries();
+        $filter_data = array(
+            'filter_status' => 1,
+        );
+
+        $data['countries'] = $this->model_localisation_country->getCountries($filter_data);
 
         if (isset($this->request->post['config_zone_id'])) {
             $data['config_zone_id'] = $this->request->post['config_zone_id'];
@@ -546,7 +550,11 @@ class ControllerSettingSetting extends Controller {
 
         $this->load->model('localisation/language');
 
-        $data['languages'] = $this->model_localisation_language->getLanguages();
+        $filter_data = array(
+            'status' => 1,
+        );
+
+        $data['languages'] = $this->model_localisation_language->getLanguages($filter_data);
 
         if (isset($this->request->post['config_admin_language'])) {
             $data['config_admin_language'] = $this->request->post['config_admin_language'];
@@ -568,7 +576,11 @@ class ControllerSettingSetting extends Controller {
 
         $this->load->model('localisation/currency');
 
-        $data['currencies'] = $this->model_localisation_currency->getCurrencies();
+        $filter_data = array(
+            'filter_status' => 1,
+        );
+
+        $data['currencies'] = $this->model_localisation_currency->getCurrencies($filter_data);
 
         if (isset($this->request->post['config_length_class_id'])) {
             $data['config_length_class_id'] = $this->request->post['config_length_class_id'];

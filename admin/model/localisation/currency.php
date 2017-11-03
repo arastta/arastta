@@ -48,6 +48,19 @@ class ModelLocalisationCurrency extends Model {
         if ($data) {
             $sql = "SELECT * FROM " . DB_PREFIX . "currency";
 
+            $isWhere = 0;
+            $_sql = array();
+
+            if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+                $isWhere = 1;
+
+                $_sql[] = "status LIKE '" . $this->db->escape($data['filter_status']) . "%'";
+            }
+
+            if($isWhere) {
+                $sql .= " WHERE " . implode(" AND ", $_sql);
+            }
+
             $sort_data = array(
                 'title',
                 'code',

@@ -587,7 +587,11 @@ class ControllerSettingStore extends Controller {
 
         $this->load->model('localisation/country');
 
-        $data['countries'] = $this->model_localisation_country->getCountries();
+        $filter_data = array(
+            'filter_status' => 1,
+        );
+
+        $data['countries'] = $this->model_localisation_country->getCountries($filter_data);
 
         if (isset($this->request->post['config_zone_id'])) {
             $data['config_zone_id'] = $this->request->post['config_zone_id'];
@@ -607,7 +611,11 @@ class ControllerSettingStore extends Controller {
 
         $this->load->model('localisation/language');
 
-        $data['languages'] = $this->model_localisation_language->getLanguages();
+        $filter_data = array(
+            'status' => 1,
+        );
+
+        $data['languages'] = $this->model_localisation_language->getLanguages($filter_data);
 
         if (isset($this->request->post['config_currency'])) {
             $data['config_currency'] = $this->request->post['config_currency'];
@@ -619,7 +627,11 @@ class ControllerSettingStore extends Controller {
 
         $this->load->model('localisation/currency');
 
-        $data['currencies'] = $this->model_localisation_currency->getCurrencies();
+        $filter_data = array(
+            'filter_status' => 1,
+        );
+
+        $data['currencies'] = $this->model_localisation_currency->getCurrencies($filter_data);
 
         if (isset($this->request->post['config_product_limit'])) {
             $data['config_product_limit'] = $this->request->post['config_product_limit'];
@@ -1113,12 +1125,4 @@ class ControllerSettingStore extends Controller {
                 'iso_code_3'        => $country_info['iso_code_3'],
                 'address_format'    => $country_info['address_format'],
                 'postcode_required' => $country_info['postcode_required'],
-                'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
-                'status'            => $country_info['status']
-            );
-        }
-
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
-    }
-}
+                'zone'              => $this->model_localisation_zone->getZonesByCountryId($t
