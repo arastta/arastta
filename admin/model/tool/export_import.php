@@ -13,7 +13,7 @@ static $registry = null;
 function error_handler_for_export_import($errno, $errstr, $errfile, $errline)
 {
     global $registry;
-    
+
     switch ($errno) {
         case E_NOTICE:
         case E_USER_NOTICE:
@@ -31,13 +31,13 @@ function error_handler_for_export_import($errno, $errstr, $errfile, $errline)
             $errors = "Unknown";
             break;
     }
-    
+
     $config = $registry->get('config');
     $url = $registry->get('url');
     $request = $registry->get('request');
     $session = $registry->get('session');
     $log = $registry->get('log');
-    
+
     if ($config->get('config_error_log')) {
         $log->write('PHP ' . $errors . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
     }
@@ -270,7 +270,7 @@ class ModelToolExportImport extends Model
     {
         // find the default language id
         $language_id = $this->getDefaultLanguageId();
-        
+
         // find all weight classes already stored in the database
         $weight_class_ids = array();
         $sql = "SELECT `weight_class_id`, `unit` FROM `".DB_PREFIX."weight_class_description` WHERE `language_id`=$language_id;";
@@ -292,7 +292,7 @@ class ModelToolExportImport extends Model
     {
         // find the default language id
         $language_id = $this->getDefaultLanguageId();
-        
+
         // find all length classes already stored in the database
         $length_class_ids = array();
         $sql = "SELECT `length_class_id`, `unit` FROM `".DB_PREFIX."length_class_description` WHERE `language_id`=$language_id;";
@@ -348,14 +348,45 @@ class ModelToolExportImport extends Model
         return $available_product_ids;
     }
 
+    protected function getAvailableMenuIds()
+    {
+        $sql = "SELECT `menu_id` FROM `" . DB_PREFIX . "menu` WHERE menu_type = 'category';";
+        $result = $this->db->query($sql);
+
+        $menu_ids = array();
+
+        foreach ($result->rows as $row) {
+            $menu_ids[$row['menu_id']] = $row['menu_id'];
+        }
+
+        return $menu_ids;
+    }
+
+    protected function getAvailableMenuChildIds()
+    {
+        $sql = "SELECT `menu_child_id` FROM `" . DB_PREFIX . "menu` WHERE menu_type = 'category';";
+        $result = $this->db->query($sql);
+
+        $menu_child_ids = array();
+
+        foreach ($result->rows as $row) {
+            $menu_child_ids[$row['menu_child_id']] = $row['menu_child_id'];
+        }
+
+        return $menu_child_ids;
+    }
+
     protected function getAvailableCategoryIds()
     {
         $sql = "SELECT `category_id` FROM `".DB_PREFIX."category`;";
         $result = $this->db->query($sql);
+
         $category_ids = array();
+
         foreach ($result->rows as $row) {
             $category_ids[$row['category_id']] = $row['category_id'];
         }
+
         return $category_ids;
     }
 
@@ -389,13 +420,107 @@ class ModelToolExportImport extends Model
         $sql .= "FROM `".DB_PREFIX."url_alias` ";
         $sql .= "WHERE query LIKE 'category_id=%'";
         $query = $this->db->query($sql);
+
         $url_alias_ids = array();
+
         foreach ($query->rows as $row) {
             $url_alias_id = $row['url_alias_id'];
             $category_id = $row['category_id'];
             $url_alias_ids[$category_id] = $url_alias_id;
         }
+
         return $url_alias_ids;
+    }
+
+    protected function storeMenuIntoDatabase(&$category, &$languages, $exist_meta_title, &$layout_ids, &$available_store_ids, &$url_alias_ids)
+    {
+        // extract the category details
+        $names = $category['names'];
+        $category_id = $category['category_id'];
+        $parent_id = $category['parent_id'];
+        $top = $category['top'];
+        $top = ((strtoupper($top)=="TRUE") || (strtoupper($top)=="YES") || (strtoupper($top)=="ENABLED")) ? 1 : 0;
+        $columns = $category['columns'];
+        $sort_order = $category['sort_order'];
+        $store_ids = $category['store_ids'];
+        $status = $category['status'];
+        $status = ((strtoupper($status)=="TRUE") || (strtoupper($status)=="YES") || (strtoupper($status)=="ENABLED")) ? 1 : 0;
+
+        if (empty($top) || !empty($parent_id)) {
+            return;
+        }
+
+        $this->db->query("INSERT INTO `" . DB_PREFIX . "menu` SET sort_order = '" . (int)$sort_order . "', columns = '" . (int)$columns . "', menu_type = 'category', status = '" . $status . "'");
+
+        $menu_id = $this->db->getLastId();
+
+        foreach ($languages as $language) {
+            $language_code = $language['code'];
+            $language_id = $language['language_id'];
+
+            $name = isset($names[$language_code]) ? $this->db->escape($names[$language_code]) : '';
+
+            $sql  = "INSERT INTO `" . DB_PREFIX . "menu_description` (`menu_id`, `language_id`, `name`, `link`) VALUES ($menu_id, $language_id, '$name', $category_id);";
+
+            $this->db->query($sql);
+        }
+
+        foreach ($store_ids as $store_id) {
+            if (in_array((int)$store_id, $available_store_ids)) {
+                $sql = "INSERT INTO `".DB_PREFIX."menu_to_store` (`menu_id`,`store_id`) VALUES ($menu_id, $store_id);";
+
+                $this->db->query($sql);
+            }
+        }
+    }
+
+    protected function storeMenuChildIntoDatabase(&$category, &$languages, $exist_meta_title, &$layout_ids, &$available_store_ids, &$url_alias_ids)
+    {
+        // extract the category details
+        $names = $category['names'];
+        $category_id = $category['category_id'];
+        $parent_id = $category['parent_id'];
+        $top = $category['top'];
+        $top = ((strtoupper($top)=="TRUE") || (strtoupper($top)=="YES") || (strtoupper($top)=="ENABLED")) ? 1 : 0;
+        $sort_order = $category['sort_order'];
+        $store_ids = $category['store_ids'];
+        $status = $category['status'];
+        $status = ((strtoupper($status)=="TRUE") || (strtoupper($status)=="YES") || (strtoupper($status)=="ENABLED")) ? 1 : 0;
+
+        if (empty($top) || empty($parent_id)) {
+            return false;
+        }
+
+        $menu = $this->db->query("SELECT * FROM `" . DB_PREFIX . "menu` WHERE link = '" . (int)$parent_id . "' AND menu_type = 'category'");
+
+        if (empty($menu)) {
+            return false;
+        }
+
+        $menu_id = $menu->row['menu_id'];
+
+        $this->db->query("INSERT INTO " . DB_PREFIX . "menu_child SET menu_id = '" . (int)$menu_id . "', sort_order = '" . (int)$sort_order . "', menu_type = 'category', status = '" . $status . "'");
+
+        $menu_child_id = $this->db->getLastId();
+
+        foreach ($languages as $language) {
+            $language_code = $language['code'];
+            $language_id = $language['language_id'];
+
+            $name = isset($names[$language_code]) ? $this->db->escape($names[$language_code]) : '';
+
+            $sql = "INSERT INTO `" . DB_PREFIX . "menu_child_description` (`menu_child_id`, `language_id`, menu_id, `name`, `link`) VALUES ($menu_child_id, $language_id, $menu_id, '$name', $category_id);";
+
+            $this->db->query($sql);
+        }
+
+        foreach ($store_ids as $store_id) {
+            if (in_array((int)$store_id, $available_store_ids)) {
+                $sql = "INSERT INTO `".DB_PREFIX."menu_child_to_store` (`menu_child_id`,`store_id`) VALUES ($menu_child_id, $store_id);";
+
+                $this->db->query($sql);
+            }
+        }
     }
 
     protected function storeCategoryIntoDatabase(&$category, &$languages, $exist_meta_title, &$layout_ids, &$available_store_ids, &$url_alias_ids)
@@ -412,9 +537,11 @@ class ModelToolExportImport extends Model
         $date_modified = $category['date_modified'];
         $names = $category['names'];
         $descriptions = $category['descriptions'];
+
         if ($exist_meta_title) {
             $meta_titles = $category['meta_titles'];
         }
+
         $meta_descriptions = $category['meta_descriptions'];
         $meta_keywords = $category['meta_keywords'];
         $seo_keyword = $category['seo_keyword'];
@@ -429,17 +556,23 @@ class ModelToolExportImport extends Model
         $sql .= ($date_added=='NOW()') ? "$date_added," : "'$date_added',";
         $sql .= ($date_modified=='NOW()') ? "$date_modified," : "'$date_modified',";
         $sql .= " $status);";
+
         $this->db->query($sql);
+
         foreach ($languages as $language) {
             $language_code = $language['code'];
             $language_id = $language['language_id'];
+
             $name = isset($names[$language_code]) ? $this->db->escape($names[$language_code]) : '';
             $description = isset($descriptions[$language_code]) ? $this->db->escape($descriptions[$language_code]) : '';
+
             if ($exist_meta_title) {
                 $meta_title = isset($meta_titles[$language_code]) ? $this->db->escape($meta_titles[$language_code]) : '';
             }
+
             $meta_description = isset($meta_descriptions[$language_code]) ? $this->db->escape($meta_descriptions[$language_code]) : '';
             $meta_keyword = isset($meta_keywords[$language_code]) ? $this->db->escape($meta_keywords[$language_code]) : '';
+
             if ($exist_meta_title) {
                 $sql  = "INSERT INTO `".DB_PREFIX."category_description` (`category_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES ";
                 $sql .= "( $category_id, $language_id, '$name', '$description', '$meta_title', '$meta_description', '$meta_keyword' );";
@@ -447,45 +580,58 @@ class ModelToolExportImport extends Model
                 $sql  = "INSERT INTO `".DB_PREFIX."category_description` (`category_id`, `language_id`, `name`, `description`, `meta_description`, `meta_keyword`) VALUES ";
                 $sql .= "( $category_id, $language_id, '$name', '$description', '$meta_description', '$meta_keyword' );";
             }
+
             $this->db->query($sql);
         }
+
         if ($seo_keyword) {
             if (isset($url_alias_ids[$category_id])) {
                 $url_alias_id = $url_alias_ids[$category_id];
                 $sql = "INSERT INTO `".DB_PREFIX."url_alias` (`url_alias_id`,`query`,`keyword`) VALUES ($url_alias_id,'category_id=$category_id','$seo_keyword');";
+
                 unset($url_alias_ids[$category_id]);
             } else {
                 $sql = "INSERT INTO `".DB_PREFIX."url_alias` (`query`,`keyword`) VALUES ('category_id=$category_id','$seo_keyword');";
             }
+
             $this->db->query($sql);
         }
+
         foreach ($store_ids as $store_id) {
             if (in_array((int)$store_id, $available_store_ids)) {
                 $sql = "INSERT INTO `".DB_PREFIX."category_to_store` (`category_id`,`store_id`) VALUES ($category_id,$store_id);";
                 $this->db->query($sql);
             }
         }
+
         $layouts = array();
+
         foreach ($layout as $layout_part) {
             $next_layout = explode(':', $layout_part);
+
             if ($next_layout===false) {
                 $next_layout = array( 0, $layout_part );
             } elseif (count($next_layout)==1) {
                 $next_layout = array( 0, $layout_part );
             }
+
             if ((count($next_layout)==2) && (in_array((int)$next_layout[0], $available_store_ids)) && (is_string($next_layout[1]))) {
                 $store_id = (int)$next_layout[0];
                 $layout_name = $next_layout[1];
+
                 if (isset($layout_ids[$layout_name])) {
                     $layout_id = (int)$layout_ids[$layout_name];
+
                     if (!isset($layouts[$store_id])) {
                         $layouts[$store_id] = $layout_id;
                     }
                 }
             }
         }
+
         foreach ($layouts as $store_id => $layout_id) {
             $sql = "INSERT INTO `".DB_PREFIX."category_to_layout` (`category_id`,`store_id`,`layout_id`) VALUES ($category_id,$store_id,$layout_id);";
+
             $this->db->query($sql);
         }
     }
@@ -497,12 +643,64 @@ class ModelToolExportImport extends Model
         $sql .= "DELETE FROM `".DB_PREFIX."category_to_store` WHERE `category_id` = '".(int)$category_id."' ;\n";
         $sql .= "DELETE FROM `".DB_PREFIX."url_alias` WHERE `query` LIKE 'category_id=".(int)$category_id."';\n";
         $sql .= "DELETE FROM `".DB_PREFIX."category_to_layout` WHERE `category_id` = '".(int)$category_id."' ;\n";
+
         $this->multiquery($sql);
+
         $sql = "SHOW TABLES LIKE \"".DB_PREFIX."category_path\"";
+
         $query = $this->db->query($sql);
+
         if ($query->num_rows) {
             $sql = "DELETE FROM `".DB_PREFIX."category_path` WHERE `category_id` = '".(int)$category_id."'";
             $this->db->query($sql);
+        }
+    }
+
+    protected function deleteMenu($category_id)
+    {
+        $sql  = "DELETE FROM `" . DB_PREFIX . "menu` WHERE menu_id = " . $category_id . ";\n";
+        $sql .= "DELETE FROM `" . DB_PREFIX . "menu_description` WHERE menu_id = " . $category_id . ";\n";
+        $sql .= "DELETE FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = " . $category_id . ";\n";
+
+        $this->multiquery($sql);
+    }
+
+    protected function deleteMenuChild($category_id)
+    {
+        $sql  = "DELETE FROM `" . DB_PREFIX . "menu_child` WHERE menu_child_id = " . $category_id . ";\n";
+        $sql .= "DELETE FROM `" . DB_PREFIX . "menu_child_description` WHERE menu_child_id = " . $category_id . ";\n";
+        $sql .= "DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = " . $category_id . ";\n";
+
+        $this->multiquery($sql);
+    }
+
+    protected function deleteMenus(&$url_alias_ids)
+    {
+        $menus = $this->getAvailableMenuIds();
+
+        foreach ($url_alias_ids as $category_id => $url_alias_id) {
+            if (array_key_exists($category_id, $menus)) {
+                $sql  = "DELETE FROM `" . DB_PREFIX . "menu` WHERE menu_id = " . $category_id . ";\n";
+                $sql .= "DELETE FROM `" . DB_PREFIX . "menu_description` WHERE menu_id = " . $category_id . ";\n";
+                $sql .= "DELETE FROM `" . DB_PREFIX . "menu_to_store` WHERE menu_id = " . $category_id . ";\n";
+
+                $this->multiquery($sql);
+            }
+        }
+    }
+
+    protected function deleteChildMenus(&$url_alias_ids)
+    {
+        $menus = $this->getAvailableMenuChildIds();
+
+        foreach ($url_alias_ids as $category_id => $url_alias_id) {
+            if (array_key_exists($category_id, $menus)) {
+                $sql  = "DELETE FROM `" . DB_PREFIX . "menu_child` WHERE menu_child_id = " . $category_id . ";\n";
+                $sql .= "DELETE FROM `" . DB_PREFIX . "menu_child_description` WHERE menu_child_id = " . $category_id . ";\n";
+                $sql .= "DELETE FROM `" . DB_PREFIX . "menu_child_to_store` WHERE menu_child_id = " . $category_id . ";\n";
+
+                $this->multiquery($sql);
+            }
         }
     }
 
@@ -514,23 +712,30 @@ class ModelToolExportImport extends Model
         $sql .= "DELETE FROM `".DB_PREFIX."url_alias` WHERE `query` LIKE 'category_id=%';\n";
         $sql .= "TRUNCATE TABLE `".DB_PREFIX."category_to_layout`;\n";
         $this->multiquery($sql);
+
         $sql = "SHOW TABLES LIKE \"".DB_PREFIX."category_path\"";
         $query = $this->db->query($sql);
+
         if ($query->num_rows) {
             $sql = "TRUNCATE TABLE `".DB_PREFIX."category_path`";
             $this->db->query($sql);
         }
+
         $sql = "SELECT (MAX(url_alias_id)+1) AS next_url_alias_id FROM `".DB_PREFIX."url_alias` LIMIT 1";
         $query = $this->db->query($sql);
         $next_url_alias_id = $query->row['next_url_alias_id'];
+
         $sql = "ALTER TABLE `".DB_PREFIX."url_alias` AUTO_INCREMENT = $next_url_alias_id";
         $this->db->query($sql);
+
         $remove = array();
+
         foreach ($url_alias_ids as $category_id => $url_alias_id) {
             if ($url_alias_id >= $next_url_alias_id) {
                 $remove[$category_id] = $url_alias_id;
             }
         }
+
         foreach ($remove as $category_id => $url_alias_id) {
             unset($url_alias_ids[$category_id]);
         }
@@ -546,6 +751,7 @@ class ModelToolExportImport extends Model
     {
         // get worksheet if there
         $data = $reader->getSheetByName('Categories');
+
         if ($data==null) {
             return;
         }
@@ -553,17 +759,25 @@ class ModelToolExportImport extends Model
         // Opencart versions from 2.0 onwards also have category_description.meta_title
         $sql = "SHOW COLUMNS FROM `".DB_PREFIX."category_description` LIKE 'meta_title'";
         $query = $this->db->query($sql);
+
         $exist_meta_title = ($query->num_rows > 0) ? true : false;
 
         // get old url_alias_ids
         $url_alias_ids = $this->getCategoryUrlAliasIds();
 
         // if incremental then find current category IDs else delete all old categories
+        $available_menu_ids = array();
         $available_category_ids = array();
+        $available_menu_child_ids = array();
+
         if ($incremental) {
+            $available_menu_ids = $this->getAvailableMenuIds();
             $available_category_ids = $this->getAvailableCategoryIds();
+            $available_menu_child_ids = $this->getAvailableMenuChildIds();
         } else {
+            $this->deleteMenus($url_alias_ids);
             $this->deleteCategories($url_alias_ids);
+            $this->deleteChildMenus($url_alias_ids);
         }
 
         // get pre-defined layouts
@@ -582,24 +796,31 @@ class ModelToolExportImport extends Model
         for ($i=0; $i<$k; $i+=1) {
             if ($i==0) {
                 $max_col = PHPExcel_Cell::columnIndexFromString($data->getHighestColumn());
+
                 for ($j=1; $j<=$max_col; $j+=1) {
                     $first_row[] = $this->getCell($data, $i, $j);
                 }
                 continue;
             }
+
             $j = 1;
+
             $category_id = trim($this->getCell($data, $i, $j++));
+
             if ($category_id=="") {
                 continue;
             }
+
             $parent_id = $this->getCell($data, $i, $j++, '0');
             $names = array();
+
             while ($this->startsWith($first_row[$j-1], "name(")) {
                 $language_code = substr($first_row[$j-1], strlen("name("), strlen($first_row[$j-1])-strlen("name(")-1);
                 $name = $this->getCell($data, $i, $j++);
                 $name = htmlspecialchars($name);
                 $names[$language_code] = $name;
             }
+
             $top = $this->getCell($data, $i, $j++, ($parent_id=='0')?'true':'false');
             $columns = $this->getCell($data, $i, $j++, ($parent_id=='0')?'1':'0');
             $sort_order = $this->getCell($data, $i, $j++, '0');
@@ -610,14 +831,17 @@ class ModelToolExportImport extends Model
             $date_modified = ((is_string($date_modified)) && (strlen($date_modified)>0)) ? $date_modified : "NOW()";
             $seo_keyword = $this->getCell($data, $i, $j++);
             $descriptions = array();
+
             while ($this->startsWith($first_row[$j-1], "description(")) {
                 $language_code = substr($first_row[$j-1], strlen("description("), strlen($first_row[$j-1])-strlen("description(")-1);
                 $description = $this->getCell($data, $i, $j++);
                 $description = htmlspecialchars($description);
                 $descriptions[$language_code] = $description;
             }
+
             if ($exist_meta_title) {
                 $meta_titles = array();
+
                 while ($this->startsWith($first_row[$j-1], "meta_title(")) {
                     $language_code = substr($first_row[$j-1], strlen("meta_title("), strlen($first_row[$j-1])-strlen("meta_title(")-1);
                     $meta_title = $this->getCell($data, $i, $j++);
@@ -625,24 +849,31 @@ class ModelToolExportImport extends Model
                     $meta_titles[$language_code] = $meta_title;
                 }
             }
+
             $meta_descriptions = array();
+
             while ($this->startsWith($first_row[$j-1], "meta_description(")) {
                 $language_code = substr($first_row[$j-1], strlen("meta_description("), strlen($first_row[$j-1])-strlen("meta_description(")-1);
                 $meta_description = $this->getCell($data, $i, $j++);
                 $meta_description = htmlspecialchars($meta_description);
                 $meta_descriptions[$language_code] = $meta_description;
             }
+
             $meta_keywords = array();
+
             while ($this->startsWith($first_row[$j-1], "meta_keywords(")) {
                 $language_code = substr($first_row[$j-1], strlen("meta_keywords("), strlen($first_row[$j-1])-strlen("meta_keywords(")-1);
                 $meta_keyword = $this->getCell($data, $i, $j++);
                 $meta_keyword = htmlspecialchars($meta_keyword);
                 $meta_keywords[$language_code] = $meta_keyword;
             }
+
             $store_ids = $this->getCell($data, $i, $j++);
             $layout = $this->getCell($data, $i, $j++, '');
             $status = $this->getCell($data, $i, $j++, 'true');
+
             $category = array();
+
             $category['category_id'] = $category_id;
             $category['image'] = $image_name;
             $category['parent_id'] = $parent_id;
@@ -653,35 +884,58 @@ class ModelToolExportImport extends Model
             $category['top'] = $top;
             $category['columns'] = $columns;
             $category['descriptions'] = $descriptions;
+
             if ($exist_meta_title) {
                 $category['meta_titles'] = $meta_titles;
             }
+
             $category['meta_descriptions'] = $meta_descriptions;
             $category['meta_keywords'] = $meta_keywords;
             $category['seo_keyword'] = $seo_keyword;
             $store_ids = trim($this->clean($store_ids, false));
             $category['store_ids'] = ($store_ids=="") ? array() : explode(",", $store_ids);
+
             if ($category['store_ids']===false) {
                 $category['store_ids'] = array();
             }
+
             $category['layout'] = ($layout=="") ? array() : explode(",", $layout);
+
             if ($category['layout']===false) {
                 $category['layout'] = array();
             }
+
             $category['status'] = $status;
+
             if ($incremental) {
                 if ($available_category_ids) {
                     if (in_array((int)$category_id, $available_category_ids)) {
                         $this->deleteCategory($category_id);
                     }
                 }
+
+                if ($available_menu_ids) {
+                    if (in_array((int)$category_id, $available_menu_ids)) {
+                        $this->deleteMenu($category_id);
+                    }
+                }
+
+                if ($available_menu_child_ids) {
+                    if (in_array((int)$category_id, $available_menu_child_ids)) {
+                        $this->deleteMenuChild($category_id);
+                    }
+                }
             }
+
             $this->moreCategoryCells($i, $j, $data, $category);
             $this->storeCategoryIntoDatabase($category, $languages, $exist_meta_title, $layout_ids, $available_store_ids, $url_alias_ids);
+            $this->storeMenuIntoDatabase($category, $languages, $exist_meta_title, $layout_ids, $available_store_ids, $url_alias_ids);
+            $this->storeMenuChildIntoDatabase($category, $languages, $exist_meta_title, $layout_ids, $available_store_ids, $url_alias_ids);
         }
 
         // restore category paths for faster lookups on the frontend (only for newer OpenCart versions)
         $this->load->model('catalog/category');
+
         if (method_exists($this->model_catalog_category, 'repairCategories')) {
             $this->model_catalog_category->repairCategories(0);
         }
@@ -691,8 +945,10 @@ class ModelToolExportImport extends Model
     {
         $category_id = $category_filter['category_id'];
         $filter_id = $category_filter['filter_id'];
+
         $sql  = "INSERT INTO `".DB_PREFIX."category_filter` (`category_id`, `filter_id`) VALUES ";
         $sql .= "( $category_id, $filter_id );";
+
         $this->db->query($sql);
     }
 
@@ -799,7 +1055,7 @@ class ModelToolExportImport extends Model
             $this->deleteUnlistedCategoryFilters($unlisted_category_ids);
         }
     }
-    
+
     protected function getProductViewCounts()
     {
         $query = $this->db->query("SELECT product_id, viewed FROM `".DB_PREFIX."product`");
@@ -2977,7 +3233,7 @@ class ModelToolExportImport extends Model
         $sql = "DELETE FROM `".DB_PREFIX."filter_description` WHERE filter_id='".(int)$filter_id."'";
         $this->db->query($sql);
     }
-    
+
     // function for reading additional cells in class extensions
     protected function moreFilterCells($i, &$j, &$worksheet, &$option)
     {
@@ -3419,7 +3675,7 @@ class ModelToolExportImport extends Model
             return true;
         }
         $ok = true;
-        
+
         // only unique numeric product_ids can be used in worksheet 'Products'
         $has_missing_product_ids = false;
         $product_ids = array();
@@ -3449,7 +3705,7 @@ class ModelToolExportImport extends Model
             }
             $product_ids[] = $product_id;
         }
-        
+
         // make sure product_ids are numeric entries and are also mentioned in worksheet 'Products'
         $worksheets = array( 'AdditionalImages', 'Specials', 'Discounts', 'Rewards', 'ProductOptions', 'ProductOptionValues', 'ProductAttributes' );
         foreach ($worksheets as $worksheet) {
@@ -3488,7 +3744,7 @@ class ModelToolExportImport extends Model
                 }
             }
         }
-        
+
         return $ok;
     }
 
@@ -3581,7 +3837,7 @@ class ModelToolExportImport extends Model
                 }
             }
         }
-        
+
         // only existing options can be used in 'ProductOptions' worksheet
         $product_options = array();
         $data = $reader->getSheetByName('ProductOptions');
@@ -3638,7 +3894,7 @@ class ModelToolExportImport extends Model
                 $product_options[$product_id][$option_name] = true;
             }
         }
-        
+
         // only existing options and option values can be used in 'ProductOptionValues' worksheet
         $data = $reader->getSheetByName('ProductOptionValues');
         if ($data==null) {
@@ -3795,7 +4051,7 @@ class ModelToolExportImport extends Model
                 }
             }
         }
-        
+
         return $ok;
     }
 
@@ -3848,7 +4104,7 @@ class ModelToolExportImport extends Model
                 }
             }
         }
-        
+
         // only existing attribute_groups and attributes can be used in 'ProductAttributes' worksheet
         $data = $reader->getSheetByName('ProductAttributes');
         if ($data==null) {
@@ -3985,7 +4241,7 @@ class ModelToolExportImport extends Model
                 }
             }
         }
-        
+
         return $ok;
     }
 
@@ -4181,7 +4437,7 @@ class ModelToolExportImport extends Model
 
         return $ok;
     }
-    
+
     protected function validateUpload(&$reader)
     {
         $ok = true;
@@ -4442,19 +4698,19 @@ class ModelToolExportImport extends Model
         if (!$ok) {
             return false;
         }
-        
+
         if (!$this->validateProductIdColumns($reader)) {
             return false;
         }
-        
+
         if (!$this->validateCustomerGroupColumns($reader)) {
             $ok = false;
         }
-        
+
         if (!$this->validateOptionColumns($reader)) {
             $ok = false;
         }
-        
+
         if (!$this->validateAttributeColumns($reader)) {
             $ok = false;
         }
@@ -4463,7 +4719,7 @@ class ModelToolExportImport extends Model
                 $ok = false;
             }
         }
-        
+
         return $ok;
     }
 
@@ -4488,7 +4744,7 @@ class ModelToolExportImport extends Model
             chdir(DIR_SYSTEM.'PHPExcel');
             require_once('Classes/PHPExcel.php');
             chdir($cwd);
-            
+
             // Memory Optimization
             if ($this->config->get('export_import_settings_use_import_cache')) {
                 $cacheMethod = PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp;
@@ -4723,7 +4979,7 @@ class ModelToolExportImport extends Model
         $worksheet->getColumnDimensionByColumn($j++)->setWidth(max(strlen('store_ids'), 16)+1);
         $worksheet->getColumnDimensionByColumn($j++)->setWidth(max(strlen('layout'), 16)+1);
         $worksheet->getColumnDimensionByColumn($j++)->setWidth(max(strlen('status'), 5)+1);
-        
+
         // The heading row and column styles
         $styles = array();
         $data = array();
@@ -4956,7 +5212,7 @@ class ModelToolExportImport extends Model
         }
 
     }
-    
+
     protected function getStoreIdsForProducts()
     {
         $sql =  "SELECT product_id, store_id FROM `".DB_PREFIX."product_to_store` ps;";
@@ -5690,7 +5946,7 @@ class ModelToolExportImport extends Model
     {
         // get default language id
         $language_id = $this->getDefaultLanguageId();
-        
+
         // Opencart versions from 2.0 onwards use product_option.value instead of the older product_option.option_value
         $sql = "SHOW COLUMNS FROM `".DB_PREFIX."product_option` LIKE 'value'";
         $query = $this->db->query($sql);
@@ -6123,7 +6379,7 @@ class ModelToolExportImport extends Model
         }
 
     }
-    
+
     protected function getOptionDescriptions(&$languages)
     {
         // query the option_description table for each language
@@ -6343,7 +6599,7 @@ class ModelToolExportImport extends Model
         foreach ($languages as $language) {
             $worksheet->getColumnDimensionByColumn($j++)->setWidth(max(strlen('name')+4, 30)+1);
         }
-        
+
         // The attribute groups headings row and column styles
         $styles = array();
         $data = array();
@@ -6436,7 +6692,7 @@ class ModelToolExportImport extends Model
         }
         $worksheet->getRowDimension($i)->setRowHeight(30);
         $this->setCellRow($worksheet, $i, $data, $box_format);
-        
+
         // The actual attributes values data
         $i += 1;
         $j = 0;
@@ -6500,7 +6756,7 @@ class ModelToolExportImport extends Model
         foreach ($languages as $language) {
             $worksheet->getColumnDimensionByColumn($j++)->setWidth(max(strlen('name')+4, 30)+1);
         }
-        
+
         // The filter groups headings row and column styles
         $styles = array();
         $data = array();
@@ -6593,7 +6849,7 @@ class ModelToolExportImport extends Model
         }
         $worksheet->getRowDimension($i)->setRowHeight(30);
         $this->setCellRow($worksheet, $i, $data, $box_format);
-        
+
         // The actual filters values data
         $i += 1;
         $j = 0;
@@ -6613,11 +6869,11 @@ class ModelToolExportImport extends Model
         }
 
     }
-    
+
     protected function clearSpreadsheetCache()
     {
         $files = glob(DIR_CACHE . 'Spreadsheet_Excel_Writer' . '*');
-        
+
         if ($files) {
             foreach ($files as $file) {
                 if (file_exists($file)) {
@@ -6660,7 +6916,7 @@ class ModelToolExportImport extends Model
         }
         return $count;
     }
- 
+
     public function getMaxCategoryId()
     {
         $query = $this->db->query("SELECT MAX(category_id) as max_category_id FROM `".DB_PREFIX."category`");
@@ -6791,7 +7047,7 @@ class ModelToolExportImport extends Model
 					*/
                 )
             );
-            
+
             // create the worksheets
             $worksheet_index = 0;
             switch ($export_type) {
