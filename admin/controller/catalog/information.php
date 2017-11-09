@@ -553,6 +553,8 @@ class ControllerCatalogInformation extends Controller {
             if (isset($this->request->post['seo_url'])) {
                 $this->load->model('catalog/url_alias');
 
+                $this->model_catalog_url_alias->clearAliases('information', $this->request->get['information_id'], $this->request->post['language_id']);
+
                 $this->model_catalog_url_alias->addAlias('information', $this->request->get['information_id'], $this->request->post['seo_url'], $this->request->post['language_id']);
 
                 $json['language_id'] = $this->request->post['language_id'];
