@@ -17,8 +17,11 @@ class ControllerToolExportImport extends Controller
     public function index()
     {
         $this->load->language('tool/export_import');
+
         $this->document->setTitle($this->language->get('heading_title'));
+
         $this->load->model('tool/export_import');
+
         $this->getForm();
     }
     
@@ -33,9 +36,12 @@ class ControllerToolExportImport extends Controller
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateUploadForm())) {
             if ((isset($this->request->files['upload'])) && (is_uploaded_file($this->request->files['upload']['tmp_name']))) {
                 $file = $this->request->files['upload']['tmp_name'];
+
                 $incremental = ($this->request->post['incremental']) ? true : false;
-                if ($this->model_tool_export_import->upload($file, $this->request->post['incremental'])===true) {
+
+                if ($this->model_tool_export_import->upload($file, $this->request->post['incremental']) === true) {
                     $this->session->data['success'] = $this->language->get('text_success');
+
                     $this->response->redirect($this->url->link('tool/export_import', 'token=' . $this->session->data['token'], 'SSL'));
                 } else {
                     $this->error['warning']  = $this->language->get('error_upload');
@@ -79,36 +85,44 @@ class ControllerToolExportImport extends Controller
             default:
                 break;
         }
+
         return $val;
     }
 
     public function download()
     {
         $this->load->language('tool/export_import');
+
         $this->document->setTitle($this->language->get('heading_title'));
 
         $this->load->model('tool/export_import');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateDownloadForm()) {
             $export_type = $this->request->post['export_type'];
+
             switch ($export_type) {
                 case 'c':
                 case 'p':
                     $min = null;
+
                     if (isset($this->request->post['min']) && ($this->request->post['min']!='')) {
                         $min = $this->request->post['min'];
                     }
+
                     $max = null;
+
                     if (isset($this->request->post['max']) && ($this->request->post['max']!='')) {
                         $max = $this->request->post['max'];
                     }
-                    if (($min==null) || ($max==null)) {
+
+                    if (($min == null) || ($max == null)) {
                         $this->model_tool_export_import->download($export_type, null, null, null, null);
                     } elseif ($this->request->post['range_type'] == 'id') {
                         $this->model_tool_export_import->download($export_type, null, null, $min, $max);
                     } else {
                         $this->model_tool_export_import->download($export_type, $min*($max-1-1), $min, null, null);
                     }
+
                     break;
                 case 'o':
                     $this->model_tool_export_import->download('o', null, null, null, null);
@@ -121,10 +135,12 @@ class ControllerToolExportImport extends Controller
                         $this->model_tool_export_import->download('f', null, null, null, null);
                         break;
                     }
+
                     break;
                 default:
                     break;
             }
+
             $this->response->redirect($this->url->link('tool/export_import', 'token='.$this->request->get['token'], 'SSL'));
         }
 
@@ -134,20 +150,29 @@ class ControllerToolExportImport extends Controller
     public function settings()
     {
         $this->load->language('tool/export_import');
+
         $this->document->setTitle($this->language->get('heading_title'));
+
         $this->load->model('tool/export_import');
+
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validateSettingsForm())) {
             if (!isset($this->request->post['export_import_settings_use_export_cache'])) {
                 $this->request->post['export_import_settings_use_export_cache'] = '0';
             }
+
             if (!isset($this->request->post['export_import_settings_use_import_cache'])) {
                 $this->request->post['export_import_settings_use_import_cache'] = '0';
             }
+
             $this->load->model('setting/setting');
+
             $this->model_setting_setting->editSetting('export_import', $this->request->post);
+
             $this->session->data['success'] = $this->language->get('text_success_settings');
+
             $this->response->redirect($this->url->link('tool/export_import', 'token=' . $this->session->data['token'], 'SSL'));
         }
+
         $this->getForm();
     }
 
@@ -185,10 +210,12 @@ class ControllerToolExportImport extends Controller
         unset($this->session->data['export_import_nochange']);
         
         $data['breadcrumbs'] = array();
+
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
             'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
         );
+
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
             'href' => $this->url->link('tool/export_import', 'token=' . $this->session->data['token'], 'SSL')
@@ -318,7 +345,6 @@ class ControllerToolExportImport extends Controller
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-
         $this->response->setOutput($this->load->view('tool/export_import.tpl', $data));
     }
 
@@ -331,6 +357,7 @@ class ControllerToolExportImport extends Controller
 
         if (!$this->config->get('export_import_settings_use_option_id')) {
             $option_names = $this->model_tool_export_import->getOptionNameCounts();
+
             foreach ($option_names as $option_name) {
                 if ($option_name['count'] > 1) {
                     $this->error['warning'] = str_replace('%1', $option_name['name'], $this->language->get('error_option_name'));
@@ -341,6 +368,7 @@ class ControllerToolExportImport extends Controller
 
         if (!$this->config->get('export_import_settings_use_option_value_id')) {
             $option_value_names = $this->model_tool_export_import->getOptionValueNameCounts();
+
             foreach ($option_value_names as $option_value_name) {
                 if ($option_value_name['count'] > 1) {
                     $this->error['warning'] = str_replace('%1', $option_value_name['name'], $this->language->get('error_option_value_name'));
@@ -351,6 +379,7 @@ class ControllerToolExportImport extends Controller
 
         if (!$this->config->get('export_import_settings_use_attribute_group_id')) {
             $attribute_group_names = $this->model_tool_export_import->getAttributeGroupNameCounts();
+
             foreach ($attribute_group_names as $attribute_group_name) {
                 if ($attribute_group_name['count'] > 1) {
                     $this->error['warning'] = str_replace('%1', $attribute_group_name['name'], $this->language->get('error_attribute_group_name'));
@@ -361,6 +390,7 @@ class ControllerToolExportImport extends Controller
 
         if (!$this->config->get('export_import_settings_use_attribute_id')) {
             $attribute_names = $this->model_tool_export_import->getAttributeNameCounts();
+
             foreach ($attribute_names as $attribute_name) {
                 if ($attribute_name['count'] > 1) {
                     $this->error['warning'] = str_replace('%1', $attribute_name['name'], $this->language->get('error_attribute_name'));
@@ -371,6 +401,7 @@ class ControllerToolExportImport extends Controller
 
         if (!$this->config->get('export_import_settings_use_filter_group_id')) {
             $filter_group_names = $this->model_tool_export_import->getFilterGroupNameCounts();
+
             foreach ($filter_group_names as $filter_group_name) {
                 if ($filter_group_name['count'] > 1) {
                     $this->error['warning'] = str_replace('%1', $filter_group_name['name'], $this->language->get('error_filter_group_name'));
@@ -381,6 +412,7 @@ class ControllerToolExportImport extends Controller
 
         if (!$this->config->get('export_import_settings_use_filter_id')) {
             $filter_names = $this->model_tool_export_import->getFilterNameCounts();
+
             foreach ($filter_names as $filter_name) {
                 if ($filter_name['count'] > 1) {
                     $this->error['warning'] = str_replace('%1', $filter_name['name'], $this->language->get('error_filter_name'));
@@ -412,6 +444,7 @@ class ControllerToolExportImport extends Controller
             }
         } else {
             $ext = strtolower(pathinfo($this->request->files['upload']['name'], PATHINFO_EXTENSION));
+
             if (($ext != 'xls') && ($ext != 'xlsx') && ($ext != 'ods')) {
                 if (isset($this->error['warning'])) {
                     $this->error['warning'] .= "<br /\n" . $this->language->get('error_upload_ext');
@@ -437,6 +470,7 @@ class ControllerToolExportImport extends Controller
 
         if (empty($this->request->post['export_import_settings_use_option_id'])) {
             $option_names = $this->model_tool_export_import->getOptionNameCounts();
+
             foreach ($option_names as $option_name) {
                 if ($option_name['count'] > 1) {
                     $this->error['warning'] = str_replace('%1', $option_name['name'], $this->language->get('error_option_name'));
@@ -447,6 +481,7 @@ class ControllerToolExportImport extends Controller
 
         if (empty($this->request->post['export_import_settings_use_option_value_id'])) {
             $option_value_names = $this->model_tool_export_import->getOptionValueNameCounts();
+
             foreach ($option_value_names as $option_value_name) {
                 if ($option_value_name['count'] > 1) {
                     $this->error['warning'] = str_replace('%1', $option_value_name['name'], $this->language->get('error_option_value_name'));
@@ -457,6 +492,7 @@ class ControllerToolExportImport extends Controller
 
         if (empty($this->request->post['export_import_settings_use_attribute_group_id'])) {
             $attribute_group_names = $this->model_tool_export_import->getAttributeGroupNameCounts();
+
             foreach ($attribute_group_names as $attribute_group_name) {
                 if ($attribute_group_name['count'] > 1) {
                     $this->error['warning'] = str_replace('%1', $attribute_group_name['name'], $this->language->get('error_attribute_group_name'));
@@ -467,6 +503,7 @@ class ControllerToolExportImport extends Controller
 
         if (empty($this->request->post['export_import_settings_use_attribute_id'])) {
             $attribute_names = $this->model_tool_export_import->getAttributeNameCounts();
+
             foreach ($attribute_names as $attribute_name) {
                 if ($attribute_name['count'] > 1) {
                     $this->error['warning'] = str_replace('%1', $attribute_name['name'], $this->language->get('error_attribute_name'));
@@ -477,6 +514,7 @@ class ControllerToolExportImport extends Controller
 
         if (empty($this->request->post['export_import_settings_use_filter_group_id'])) {
             $filter_group_names = $this->model_tool_export_import->getFilterGroupNameCounts();
+
             foreach ($filter_group_names as $filter_group_name) {
                 if ($filter_group_name['count'] > 1) {
                     $this->error['warning'] = str_replace('%1', $filter_group_name['name'], $this->language->get('error_filter_group_name'));
@@ -487,6 +525,7 @@ class ControllerToolExportImport extends Controller
 
         if (empty($this->request->post['export_import_settings_use_filter_id'])) {
             $filter_names = $this->model_tool_export_import->getFilterNameCounts();
+
             foreach ($filter_names as $filter_name) {
                 if ($filter_name['count'] > 1) {
                     $this->error['warning'] = str_replace('%1', $filter_name['name'], $this->language->get('error_filter_name'));
