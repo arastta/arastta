@@ -15,7 +15,7 @@ class ModelLanguage extends Model
         static $data = array();
 
         if (empty($data)) {
-            $link = 'http://arastta.io/translation/1.0/installer/translated';
+            $link = 'https://arastta.io/translation/1.0/installer/translated';
 
             $json = \Httpful\Request::get($link)
                 ->send()

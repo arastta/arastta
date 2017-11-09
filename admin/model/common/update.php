@@ -212,7 +212,7 @@ class ModelCommonUpdate extends Model
 
             // Check core first
             $info = $this->utility->getInfo();
-            $base_url = 'http://arastta.io';
+            $base_url = 'https://arastta.io';
 
             $url = $base_url.'/core/1.0/version/'.$info['arastta'].'/'.$info['php'].'/'.$info['mysql'].'/'.$info['langs'].'/'.$info['stores'];
 
@@ -261,7 +261,7 @@ class ModelCommonUpdate extends Model
     {
         // Check core first
         $info = $this->utility->getInfo();
-        $base_url = 'http://arastta.io';
+        $base_url = 'https://arastta.io';
 
         if ($product_id == 'core') {
             $url = $base_url.'/core/1.0/update/'.$version.'/'.$info['php'].'/'.$info['mysql'];
