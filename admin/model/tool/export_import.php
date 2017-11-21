@@ -6350,7 +6350,19 @@ class ModelToolExportImport extends Model
 
             $query = $this->db->query($sql);
 
-            $category_keywords[$language_code] = $query->rows;
+            $keywords = array();
+
+            foreach($query->rows as $row) {
+                $id = (int) str_replace('category_id=', '', $row['query']);
+
+                $keywords[$id] = $row;
+            }
+
+            ksort($keywords);
+
+            $keywords = array_merge($keywords);
+
+            $category_keywords[$language_code] = $keywords;
         }
 
         return $category_keywords;
@@ -6900,7 +6912,19 @@ class ModelToolExportImport extends Model
 
             $query = $this->db->query($sql);
 
-            $product_keywords[$language_code] = $query->rows;
+            $keywords = array();
+
+            foreach($query->rows as $row) {
+                $id = (int) str_replace('product_id=', '', $row['query']);
+
+                $keywords[$id] = $row;
+            }
+
+            ksort($keywords);
+
+            $keywords = array_merge($keywords);
+
+            $product_keywords[$language_code] = $keywords;
         }
 
         return $product_keywords;
