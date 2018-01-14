@@ -239,6 +239,11 @@ class Emailtemplate
 
     public function getCustomerReplace($data)
     {
+        $admin_folder = str_replace(DIR_ROOT, '', DIR_ADMIN);
+        
+        $account_href = str_replace($admin_folder, '', $this->url->link('account/login', '', 'SSL'));
+        $activate_href = str_replace($admin_folder, '', $this->url->link('account/activate', 'passkey=' . $data['confirm_code'], 'SSL'));
+        
         $result = array(
             'store_logo'     => $this->storeLogo(),
             'firstname'      => $data['firstname'],
@@ -250,8 +255,8 @@ class Emailtemplate
             'store_name'     => $this->config->get('config_name'),
             'email'          => $data['email'],
             'password'       => $data['password'],
-            'account_href'   => $this->url->link('account/login', '', 'SSL'),
-            'activate_href'  => (!empty($data['confirm_code'])) ? $this->url->link('account/activate', 'passkey=' . $data['confirm_code'], 'SSL') : ''
+            'account_href'   => $account_href,
+            'activate_href'  => (!empty($data['confirm_code'])) ? $activate_href : ''
         );
 
         return $result;
