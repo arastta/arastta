@@ -126,6 +126,7 @@ class ControllerExtensionInstaller extends Controller
                         'url'  => str_replace('&amp;', '&', $this->url->link('extension/modification/refresh', 'token=' . $this->session->data['token'] . '&extensionInstaller=1', 'SSL')),
                         'path' => $path
                     );
+
                     // Clear temporary files
                     $json['step'][] = array(
                         'text' => $this->language->get('text_remove'),
@@ -717,40 +718,45 @@ class ControllerExtensionInstaller extends Controller
         }
 
         $url = html_entity_decode("https://arastta.io/" . rtrim($this->request->post['store'], 's') . "/1.0/download/" . $this->request->post['product_id'] . "/latest/" . VERSION . "/" . $this->config->get('api_key'));
-        $data = \Httpful\Request::get($url)
-            ->addOnCurlOption(CURLOPT_REFERER, $this->url->getDomain())
-            ->send()
-            ->raw_body;
 
-        $response = json_decode($data, true);
+        try {
+            $data = \Httpful\Request::get($url)
+                ->addOnCurlOption(CURLOPT_REFERER, $this->url->getDomain())
+                ->send()
+                ->raw_body;
 
-        if (empty($data) and isset($response['error']) or (isset($response['status']) and $response['status'] == 'Error')) {
-            if (isset($response['error'])) {
-                $json['error'] = $response['error'];
+            $response = json_decode($data, true);
+
+            if (empty($data) and isset($response['error']) or (isset($response['status']) and $response['status'] == 'Error')) {
+                if (isset($response['error'])) {
+                    $json['error'] = $response['error'];
+                } else {
+                    $json['error'] = $this->language->get('error_download');
+                }
+            }
+
+            if ($data and !isset($json['error'])) {
+                $path = 'temp-' . md5(mt_rand());
+
+                $file = DIR_UPLOAD . $path . '/upload.zip';
+
+                if (!is_dir(DIR_UPLOAD . $path)) {
+                    $this->filesystem->mkdir(DIR_UPLOAD . $path);
+                }
+
+                $ret = is_int(file_put_contents($file, $data)) ? true : false;
+
+                if ($ret) {
+                    $this->request->post['path'] = $path;
+
+                    $this->prepareSteps($file, $path, $json);
+                } else {
+                    $json['error'] = $this->language->get('error_file');
+                }
             } else {
                 $json['error'] = $this->language->get('error_download');
             }
-        }
-
-        if ($data and !isset($json['error'])) {
-            $path = 'temp-' . md5(mt_rand());
-
-            $file = DIR_UPLOAD . $path . '/upload.zip';
-
-            if (!is_dir(DIR_UPLOAD . $path)) {
-                $this->filesystem->mkdir(DIR_UPLOAD . $path);
-            }
-
-            $ret = is_int(file_put_contents($file, $data)) ? true : false;
-
-            if ($ret) {
-                $this->request->post['path'] = $path;
-
-                $this->prepareSteps($file, $path, $json);
-            } else {
-                $json['error'] = $this->language->get('error_file');
-            }
-        } else {
+        } catch (Exception $e) {
             $json['error'] = $this->language->get('error_download');
         }
 

@@ -28,9 +28,13 @@ class ModelCommonUpdate extends Model
 
         $url = 'https://api.github.com/repos/arastta/arastta/releases';
 
-        $json = \Httpful\Request::get($url)
-            ->send()
-            ->raw_body;
+        try {
+            $json = \Httpful\Request::get($url)
+                ->send()
+                ->raw_body;
+        } catch (Exception $e) {
+            return $output;
+        }
 
         if (empty($json)) {
             return $output;
@@ -44,7 +48,7 @@ class ModelCommonUpdate extends Model
             if ($release->tag_name <= VERSION) {
                 continue;
             }
-            
+
             if ($release->prerelease == true) {
                 continue;
             }
@@ -212,9 +216,9 @@ class ModelCommonUpdate extends Model
 
             // Check core first
             $info = $this->utility->getInfo();
-            $base_url = 'https://arastta.io';
+            $base_url = 'https://ara1stta.io';
 
-            $url = $base_url.'/core/1.0/version/'.$info['arastta'].'/'.$info['php'].'/'.$info['mysql'].'/'.$info['langs'].'/'.$info['stores'];
+            $url = $base_url . '/core/1.0/version/' . $info['arastta'] . '/' . $info['php'] . '/' . $info['mysql'] . '/' . $info['langs'] . '/' . $info['stores'];
 
             $data['core'] = $this->getRemoteVersion($url);
 
@@ -223,7 +227,7 @@ class ModelCommonUpdate extends Model
                 foreach ($addons as $addon) {
                     $type = $addon['product_type'];
 
-                    $url = $base_url.'/'.$type.'/1.0/version/'.$addon['product_id'].'/'.$addon['product_version'].'/'.$info['arastta'];
+                    $url = $base_url . '/' . $type . '/1.0/version/' . $addon['product_id'] . '/' . $addon['product_version'] . '/' . $info['arastta'];
 
                     $data[$type][$addon['product_id']] = $this->getRemoteVersion($url);
                 }
@@ -237,10 +241,20 @@ class ModelCommonUpdate extends Model
 
     public function getRemoteVersion($url)
     {
-        $remote_data = \Httpful\Request::get($url)
-            ->addOnCurlOption(CURLOPT_REFERER, $this->url->getDomain())
-            ->send()
-            ->raw_body;
+        try {
+            $remote_data = \Httpful\Request::get($url)
+                ->addOnCurlOption(CURLOPT_REFERER, $this->url->getDomain())
+                ->send()
+                ->raw_body;
+        } catch (Exception $e) {
+            if (strpos($url, '/core/1.0/version/') !== false) {
+                return VERSION;
+            } else {
+                $paths = explode('/', $url);
+
+                return $paths[count($paths) - 2];
+            }
+        }
 
         if (is_string($remote_data)) {
             $version = json_decode($remote_data);
@@ -275,11 +289,15 @@ class ModelCommonUpdate extends Model
             $url = $base_url.'/'.$type.'/1.0/update/'.$product_id.'/'.$version.'/'.$info['arastta'].'/'.$info['api'];
         }
 
-        $file = \Httpful\Request::get($url)
-            ->timeout(30)
-            ->addOnCurlOption(CURLOPT_REFERER, $this->url->getDomain())
-            ->send()
-            ->raw_body;
+        try {
+            $file = \Httpful\Request::get($url)
+                ->timeout(30)
+                ->addOnCurlOption(CURLOPT_REFERER, $this->url->getDomain())
+                ->send()
+                ->raw_body;
+        } catch (Exception $e) {
+            $file = false;
+        }
 
         return $file;
     }
