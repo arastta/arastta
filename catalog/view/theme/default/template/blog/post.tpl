@@ -63,39 +63,32 @@
                     <div id="comment"></div>
                     <div class="comment-add">
                         <h3><i class="fa fa-pencil"></i> <?php echo $text_add_comment; ?></h3>
-                        <form class="form-group" id="form-comment">
+                        <form class="form-horizontal" id="form-comment">
                             <?php if ($comment_guest) { ?>
-                            <div class="row">
-                                <div class="col-xs-3 form-group required">
-                                    <label class="control-label"><?php echo $text_name; ?></label>
-                                    <input type="text" name="name" value="<?php echo $comment_name; ?>" id="comment-name" class="form-control" placeholder="<?php echo $text_name; ?>">
-                                </div>
-                                <div class="col-xs-3 form-group required">
-                                    <label class="control-label"><?php echo $text_email; ?></label>
-                                    <input type="text" name="email" value="<?php echo $comment_email; ?>" id="comment-email" class="form-control" placeholder="<?php echo $text_email; ?>">
+                            <div class="form-group required">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="comment-name"><?php echo $entry_name; ?></label>
+                                    <input type="text" name="name" value="<?php echo $comment_name; ?>" id="comment-name" class="form-control" />
                                 </div>
                             </div>
-                            <br>
-                            <div class="row">
-                                <div class="col-sm-6 form-group required">
-                                    <label class="control-label"><?php echo $text_comment; ?></label>
-                                    <textarea name="text" id="comment-text" class="form-control" rows="3"></textarea>
+                            <div class="form-group required">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="comment-email"><?php echo $entry_email; ?></label>
+                                    <input type="text" name="email" value="<?php echo $comment_email; ?>" id="comment-email" class="form-control" />
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                <?php if ($captcha) { ?>
-                                <?php echo $captcha; ?>
-                                <?php } ?>
+                            <div class="form-group required">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="comment-text"><?php echo $entry_comment; ?></label>
+                                    <textarea name="text" rows="5" id="comment-text" class="form-control"></textarea>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="buttons clearfix">
-                                        <div class="pull-right">
-                                            <button type="button" id="button-comment" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_continue; ?></button>
-                                        </div>
-                                    </div>
+                            <?php if ($captcha) { ?>
+                            <?php echo $captcha; ?>
+                            <?php } ?>
+                            <div class="buttons clearfix">
+                                <div class="pull-right">
+                                    <button type="button" id="button-comment" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_continue; ?></button>
                                 </div>
                             </div>
                             <?php } else { ?>

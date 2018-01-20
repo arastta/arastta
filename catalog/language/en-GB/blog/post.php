@@ -10,7 +10,6 @@
 // Text
 $_['text_search']      = 'Search';
 $_['text_author']      = 'Author';
-$_['text_comments']    = '%s comments';
 $_['text_write']       = 'Write a comment';
 $_['text_login']       = 'Please <a href="%s">login</a> or <a href="%s">register</a> to comment';
 $_['text_no_comments'] = 'There are no comments for this post.';
@@ -28,14 +27,12 @@ $_['text_comment']     = '%s comment';
 $_['text_comments']    = '%s comments';
 $_['tab_comments']     = 'Comments (%s)';
 $_['text_more']        = 'More...';
-$_['text_name']        = 'Your Name';
-$_['text_email']       = 'Your Email';
-$_['text_new_commet']  = 'Comment';
 
 // Buttons
 
 // Entry
 $_['entry_name']    = 'Your Name';
+$_['entry_email']   = 'Your Email';
 $_['entry_comment'] = 'Your Comment';
 
 // Error
