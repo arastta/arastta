@@ -216,7 +216,7 @@ class ModelCommonUpdate extends Model
 
             // Check core first
             $info = $this->utility->getInfo();
-            $base_url = 'https://ara1stta.io';
+            $base_url = 'https://arastta.io';
 
             $url = $base_url . '/core/1.0/version/' . $info['arastta'] . '/' . $info['php'] . '/' . $info['mysql'] . '/' . $info['langs'] . '/' . $info['stores'];
 
