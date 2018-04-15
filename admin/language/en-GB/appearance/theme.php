@@ -11,7 +11,6 @@
 $_['heading_title']             = 'Themes';
 
 // Text
-$_['text_list']                 = 'Theme List';
 $_['text_form']                 = 'Theme Edit';
 
 $_['text_current']              = 'Current Theme';

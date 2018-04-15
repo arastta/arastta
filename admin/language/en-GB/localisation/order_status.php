@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Order Statuses';
 
 // Text
-$_['text_list']        = 'Order Status List';
 $_['text_add']         = 'Add Order Status';
 
 // Column

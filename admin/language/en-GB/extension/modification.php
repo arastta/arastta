@@ -12,7 +12,6 @@ $_['heading_title'] = 'Modifications';
 
 // Text
 $_['text_refresh'] = 'Please wait until the modification files created!';
-$_['text_list']    = 'Modification List';
 
 // Column
 $_['column_name']       = 'Modification Name';

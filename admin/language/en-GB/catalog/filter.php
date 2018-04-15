@@ -11,7 +11,6 @@
 $_['heading_title']     = 'Filters';
 
 // Text
-$_['text_list']         = 'Filter List';
 $_['text_add']          = 'Add Filter';
 
 // Column

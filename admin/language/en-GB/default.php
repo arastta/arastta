@@ -37,6 +37,7 @@ $_['text_edit']                     = 'Edit';
 $_['text_enabled']                  = 'Enabled';
 $_['text_filter']                   = 'Type here to filter ';
 $_['text_home']                     = 'Home';
+$_['text_list']                     = 'List';
 $_['text_loading']                  = 'Loading...';
 $_['text_no']                       = 'No';
 $_['text_no_results']               = 'No results!';

@@ -11,7 +11,6 @@
 $_['heading_title']         = 'Extensions';
 
 // Text
-$_['text_list']             = 'Extension List';
 $_['text_payment']          = 'Payment';
 $_['text_shipping']         = 'Shipping';
 $_['text_module']           = 'Module';

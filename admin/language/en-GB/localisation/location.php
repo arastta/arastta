@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Store Locations';
 
 // Text
-$_['text_list']        = 'Store Location List';
 $_['text_add']         = 'Add Store Location';
 $_['text_default']     = 'Default';
 $_['text_time']        = 'Opening Times';

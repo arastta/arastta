@@ -11,7 +11,6 @@
 $_['heading_title']          = 'Zones';
 
 // Text
-$_['text_list']              = 'Zone List';
 $_['text_add']               = 'Add Zone';
 
 // Column

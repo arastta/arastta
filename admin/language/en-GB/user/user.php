@@ -11,7 +11,6 @@
 $_['heading_title']             = 'Users';
 
 // Text
-$_['text_list']                 = 'User List';
 $_['text_add']                  = 'Add User';
 $_['text_theme_advanced']       = 'Advanced';
 $_['text_theme_basic']          = 'Basic';

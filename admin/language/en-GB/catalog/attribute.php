@@ -11,7 +11,6 @@
 $_['heading_title']          = 'Attributes';
 
 // Text
-$_['text_list']              = 'Attribute List';
 $_['text_add']               = 'Add Attribute';
 
 // Column

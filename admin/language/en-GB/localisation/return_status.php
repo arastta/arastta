@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Return Statuses';
 
 // Text
-$_['text_list']        = 'Return Status List';
 $_['text_add']         = 'Add Return Status';
 
 // Column

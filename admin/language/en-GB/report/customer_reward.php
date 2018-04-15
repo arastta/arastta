@@ -11,7 +11,6 @@
 $_['heading_title']         = 'Customer Reward Points Report';
 
 // Text
-$_['text_list']             = 'Customer Reward Points List';
 $_['text_sale']             = 'Sales';
 $_['text_order']            = 'Orders';
 $_['text_point']            = 'Points';

@@ -11,7 +11,6 @@
 $_['heading_title']        = 'Currencies';
 
 // Text
-$_['text_list']            = 'Currency List';
 $_['text_add']             = 'Add Currency';
 
 // Column

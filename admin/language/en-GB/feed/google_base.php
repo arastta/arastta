@@ -12,7 +12,6 @@ $_['heading_title']    = 'Google Base';
 
 // Text
 $_['text_feed']        = 'Feeds';
-$_['text_list']        = 'Layout List';
 
 // Entry
 $_['entry_status']     = 'Status';

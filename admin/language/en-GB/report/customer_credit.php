@@ -11,7 +11,6 @@
 $_['heading_title']         = 'Customer Credit Report';
 
 // Text
-$_['text_list']             = 'Customer Credit List';
 $_['text_sale']             = 'Sales';
 
 // Column

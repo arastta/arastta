@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']     = 'Payments';
 
-// Text
-$_['text_list']         = 'Payment List';
-
 // Column
 $_['column_name']       = 'Payment Method';
 $_['column_status']     = 'Status';

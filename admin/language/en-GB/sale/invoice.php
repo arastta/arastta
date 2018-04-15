@@ -11,7 +11,6 @@
 $_['heading_title']                           = 'Invoices';
 
 // Text
-$_['text_list']                               = 'Invoice List';
 $_['text_generate']                           = 'Generate';
 $_['text_order_date']                         = 'Order Date:';
 $_['text_invoice_date']                       = 'Invoice Date:';

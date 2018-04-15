@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Return Reasons';
 
 // Text
-$_['text_list']        = 'Return Reason List';
 $_['text_add']         = 'Add Return Reason';
 
 // Column

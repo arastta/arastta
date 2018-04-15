@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Return Actions';
 
 // Text
-$_['text_list']        = 'Return Action List';
 $_['text_add']         = 'Add Return Action';
 
 // Column

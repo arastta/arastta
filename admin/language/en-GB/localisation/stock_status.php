@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Stock Statuses';
 
 // Text
-$_['text_list']        = 'Stock Status List';
 $_['text_add']         = 'Add Stock Status';
 
 // Column

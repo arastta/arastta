@@ -11,7 +11,6 @@
 $_['heading_title']             = 'Recurring Profiles';
 
 // Text
-$_['text_list']             = 'Recurring Profile List';
 $_['text_add']              = 'Add Recurring Profile';
 $_['text_day']              = 'Day';
 $_['text_week']                 = 'Week';

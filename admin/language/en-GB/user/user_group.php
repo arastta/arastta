@@ -11,7 +11,6 @@
 $_['heading_title']     = 'User Groups';
 
 // Text
-$_['text_list']         = 'User Group';
 $_['text_add']          = 'Add User Group';
 
 // Column

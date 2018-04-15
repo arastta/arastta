@@ -11,8 +11,6 @@
 $_['heading_title']             = 'Menus';
 
 // Text
-$_['text_list']                 = 'Menu List';
-
 $_['text_new_menu_item']        = 'New Menu Item';
 $_['text_category']             = 'Category';
 $_['text_product']              = 'Product';

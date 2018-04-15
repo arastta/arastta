@@ -11,7 +11,6 @@
 $_['heading_title']           = 'Countries';
 
 // Text
-$_['text_list']               = 'Country List';
 $_['text_add']                = 'Add Country';
 
 // Column

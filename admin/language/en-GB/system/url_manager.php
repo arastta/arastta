@@ -11,7 +11,6 @@
 $_['heading_title']          = 'URL Manager';
 
 // Text
-$_['text_list']              = 'URL List';
 $_['text_product']           = 'Product';
 $_['text_category']          = 'Category';
 $_['text_manufacturer']      = 'Manufacturer';

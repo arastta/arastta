@@ -11,7 +11,6 @@
 $_['heading_title']     = 'Attribute Groups';
 
 // Text
-$_['text_list']         = 'Attribute Group List';
 $_['text_add']          = 'Add Attribute Group';
 
 // Column

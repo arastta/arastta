@@ -11,7 +11,6 @@
 $_['heading_title'] = 'Comments';
 
 // Text
-$_['text_list']    = 'Comment List';
 $_['text_add']     = 'Add Comment';
 $_['text_select']  = 'Please Select';
 

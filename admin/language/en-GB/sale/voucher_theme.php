@@ -11,7 +11,6 @@
 $_['heading_title']     = 'Voucher Themes';
 
 // Text
-$_['text_list']         = 'Voucher Theme List';
 $_['text_add']          = 'Add Voucher Theme';
 
 // Column

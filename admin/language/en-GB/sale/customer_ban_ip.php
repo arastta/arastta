@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Banned IPs';
 
 // Text
-$_['text_list']        = 'Banned IP List';
 $_['text_add']         = 'Add Banned IP';
 
 // Column

@@ -11,7 +11,6 @@
 $_['heading_title']     = 'Tax Report';
 
 // Text
-$_['text_list']         = 'Tax List';
 $_['text_sale']         = 'Sales';
 $_['text_order']        = 'Orders';
 $_['text_year']         = 'Years';

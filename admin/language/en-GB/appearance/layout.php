@@ -13,7 +13,6 @@ $_['heading_title']       = 'Layouts';
 // Text
 $_['text_layout']         = 'Layout';
 $_['text_assign']         = 'Success: Layout assign on store!';
-$_['text_list']           = 'Layout List';
 $_['text_add']            = 'Add Layout';
 $_['text_default']        = 'Default';
 $_['text_header_top']     = 'Header Top';

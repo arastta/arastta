@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']     = 'Uploads';
 
-// Text
-$_['text_list']         = 'Upload List';
-
 // Column
 $_['column_name']       = 'Upload Name';
 $_['column_filename']   = 'Filename';

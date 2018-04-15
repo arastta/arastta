@@ -11,7 +11,6 @@
 $_['heading_title']         = 'Customer Orders Report';
 
 // Text
-$_['text_list']             = 'Customer Orders List';
 $_['text_sale']             = 'Sales';
 $_['text_order']            = 'Orders';
 $_['text_product']          = 'Products';

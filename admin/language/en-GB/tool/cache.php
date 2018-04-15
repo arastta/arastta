@@ -12,7 +12,6 @@ $_['heading_title']             = 'Cache Manager';
 
 // Text
 $_['text_success']              = 'Success: You have deleted caches!';
-$_['text_list']                 = 'Cache List';
 $_['text_group_system']         = 'System';
 $_['text_group_image']          = 'Image';
 $_['text_group_modification']   = 'Modification';

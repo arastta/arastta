@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']     = 'Order Totals';
 
-// Text
-$_['text_list']         = 'Order Total List';
-
 // Column
 $_['column_name']       = 'Order Totals';
 $_['column_status']     = 'Status';

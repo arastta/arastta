@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Products Viewed Report';
 
 // Text
-$_['text_list']        = 'Products Viewed List';
 $_['text_viewed']      = 'Viewed';
 
 // Column
