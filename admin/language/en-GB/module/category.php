@@ -12,7 +12,6 @@ $_['heading_title']    = 'Category';
 
 // Text
 $_['text_module']      = 'Modules';
-$_['text_edit']        = 'Edit Category Module';
 
 // Entry
 $_['entry_status']     = 'Status';

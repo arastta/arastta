@@ -15,7 +15,6 @@ $_['entry_name']          = 'Module Name';
 $_['entry_category']      = 'Parent Category';
 $_['entry_root_category'] = '- Root Category -';
 $_['text_module']         = 'Modules';
-$_['text_edit']           = 'Edit Category Home Module';
 
 // Entry
 $_['entry_status'] = 'Status';

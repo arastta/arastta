@@ -12,7 +12,6 @@ $_['heading_title']    = 'Free Shipping';
 
 // Text
 $_['text_shipping']    = 'Shipping';
-$_['text_edit']        = 'Edit Free Shipping';
 
 // Entry
 $_['entry_total']      = 'Total';

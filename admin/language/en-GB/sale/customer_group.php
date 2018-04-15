@@ -13,7 +13,6 @@ $_['heading_title']     = 'Customer Groups';
 // Text
 $_['text_list']         = 'Customer Group List';
 $_['text_add']          = 'Add Customer Group';
-$_['text_edit']         = 'Edit Customer Group';
 
 // Column
 $_['column_name']       = 'Customer Group Name';

@@ -12,7 +12,6 @@ $_['heading_title'] = 'Blog Comment';
 
 // Text
 $_['text_module']  = 'Modules';
-$_['text_edit']    = 'Edit Comment Module';
 
 // Entry
 $_['entry_name']                = 'Module Name';

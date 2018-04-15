@@ -12,7 +12,6 @@ $_['heading_title']     = 'HTML Content';
 
 // Text
 $_['text_module']       = 'Modules';
-$_['text_edit']         = 'Edit HTML Content Module';
 
 // Entry
 $_['entry_name']        = 'Module Name';

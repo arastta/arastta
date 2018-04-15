@@ -12,7 +12,6 @@ $_['heading_title']                 = 'YubiKey';
 
 // Text
 $_['text_success']                  = 'Success: You have modified YubiKey!';
-$_['text_edit']                     = 'Edit YubiKey';
 
 // Entry
 $_['entry_status']                  = 'Status';

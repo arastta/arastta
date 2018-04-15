@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']                 = 'Google reCAPTCHA';
 
-// Text
-$_['text_edit']                     = 'Edit Google reCAPTCHA';
-
 // Entry
 $_['entry_public']                  = 'Site key';
 $_['entry_secret']                  = 'Secret key';

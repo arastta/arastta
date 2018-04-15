@@ -12,7 +12,6 @@ $_['heading_title']                 = 'Summernote';
 
 // Text
 $_['text_editor']                   = 'Editor';
-$_['text_edit']                     = 'Edit Summernote';
 
 // Entry
 $_['entry_height']                  = 'Height';

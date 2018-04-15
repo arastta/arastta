@@ -13,7 +13,6 @@ $_['heading_title']      = 'Email Templates';
 // Text
 $_['text_list']          = 'Email Templates List';
 $_['text_add']           = 'Add Email Template';
-$_['text_edit']          = 'Edit Email Template';
 $_['text_default']       = 'Default';
 $_['text_percent']       = 'Percentage';
 $_['text_amount']        = 'Fixed Amount';

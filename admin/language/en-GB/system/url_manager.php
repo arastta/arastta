@@ -18,7 +18,6 @@ $_['text_manufacturer']      = 'Manufacturer';
 $_['text_information']       = 'Information';
 $_['text_other']             = 'Other';
 $_['text_add']               = 'Add SEO URL';
-$_['text_edit']              = 'Edit SEO URL';
 
 // Column
 $_['column_seo_url']         = 'SEO URL';

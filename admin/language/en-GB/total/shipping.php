@@ -12,7 +12,6 @@ $_['heading_title']    = 'Shipping';
 
 // Text
 $_['text_total']       = 'Order Totals';
-$_['text_edit']        = 'Edit Shipping Total';
 
 // Entry
 $_['entry_estimator']  = 'Shipping Estimator';

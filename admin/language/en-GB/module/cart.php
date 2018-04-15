@@ -12,7 +12,6 @@ $_['heading_title']    = 'Cart';
 
 // Text
 $_['text_module']      = 'Modules';
-$_['text_edit']        = 'Edit Cart Module';
 $_['text_general']     = 'General';
 $_['text_product']     = 'Product';
 $_['text_button']      = 'Button';

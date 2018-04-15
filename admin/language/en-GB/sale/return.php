@@ -13,7 +13,6 @@ $_['heading_title']       = 'Product Returns';
 // Text
 $_['text_list']           = 'Product Return List';
 $_['text_add']            = 'Add Product Return';
-$_['text_edit']           = 'Edit Product Return';
 $_['text_opened']         = 'Opened';
 $_['text_unopened']       = 'Unopened';
 $_['text_order']          = 'Order Information';

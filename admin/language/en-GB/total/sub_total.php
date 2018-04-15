@@ -12,7 +12,6 @@ $_['heading_title']    = 'Sub-Total';
 
 // Text
 $_['text_total']       = 'Order Totals';
-$_['text_edit']        = 'Edit Sub-Total Total';
 
 // Entry
 $_['entry_status']     = 'Status';

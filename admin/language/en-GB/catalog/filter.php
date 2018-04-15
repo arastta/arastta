@@ -13,7 +13,6 @@ $_['heading_title']     = 'Filters';
 // Text
 $_['text_list']         = 'Filter List';
 $_['text_add']          = 'Add Filter';
-$_['text_edit']         = 'Edit Filter';
 
 // Column
 $_['column_group']      = 'Filter Group';

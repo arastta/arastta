@@ -13,8 +13,6 @@ $_['heading_title']    = 'Return Reasons';
 // Text
 $_['text_list']        = 'Return Reason List';
 $_['text_add']         = 'Add Return Reason';
-$_['text_edit']        = 'Edit Return Reason';
-$_['text_edit']        = 'Edit Return Reason';
 
 // Column
 $_['column_name']      = 'Return Reason Name';

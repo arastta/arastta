@@ -12,7 +12,6 @@ $_['heading_title']    = 'Filter';
 
 // Text
 $_['text_module']      = 'Modules';
-$_['text_edit']        = 'Edit Filter Module';
 
 // Entry
 $_['entry_status']     = 'Status';

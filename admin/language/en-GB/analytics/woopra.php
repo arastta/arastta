@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']                 = 'Woopra';
 
-// Text
-$_['text_edit']                     = 'Edit Woopra';
-
 // Entry
 $_['entry_customer']                = 'Identify Customers';
 $_['entry_status']                  = 'Status';

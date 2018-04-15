@@ -13,7 +13,6 @@ $_['heading_title']        = 'Tax Rates';
 // Text
 $_['text_list']            = 'Tax Rate List';
 $_['text_add']             = 'Add Tax Rate';
-$_['text_edit']            = 'Edit Tax Rate';
 $_['text_percent']         = 'Percentage';
 $_['text_amount']          = 'Fixed Amount';
 

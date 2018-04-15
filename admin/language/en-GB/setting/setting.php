@@ -12,7 +12,6 @@ $_['heading_title']                    = 'Settings';
 
 // Text
 $_['text_stores']                      = 'Stores';
-$_['text_edit']                        = 'Edit Setting';
 $_['text_product']                     = 'Products';
 $_['text_review']                      = 'Reviews';
 $_['text_voucher']                     = 'Vouchers';

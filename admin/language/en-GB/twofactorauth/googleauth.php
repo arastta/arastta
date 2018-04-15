@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']                 = 'Google Authenticator';
 
-// Text
-$_['text_edit']                     = 'Edit Google Authenticator';
-
 // Entry
 $_['entry_status']                  = 'Status';
 $_['entry_account']                 = 'Account';

@@ -12,7 +12,6 @@ $_['heading_title']    = 'Low Order Fee';
 
 // Text
 $_['text_total']       = 'Order Totals';
-$_['text_edit']        = 'Edit Low Order Fee Total';
 
 // Entry
 $_['entry_total']      = 'Order Total';

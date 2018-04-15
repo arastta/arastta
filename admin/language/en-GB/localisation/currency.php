@@ -13,7 +13,6 @@ $_['heading_title']        = 'Currencies';
 // Text
 $_['text_list']            = 'Currency List';
 $_['text_add']             = 'Add Currency';
-$_['text_edit']            = 'Edit Currency';
 
 // Column
 $_['column_title']         = 'Currency Title';

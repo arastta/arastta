@@ -12,7 +12,6 @@ $_['heading_title']     = 'Per Item';
 
 // Text
 $_['text_shipping']    = 'Shipping';
-$_['text_edit']        = 'Edit Per Item Shipping';
 
 // Entry
 $_['entry_cost']       = 'Cost';

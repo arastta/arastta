@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']                 = 'Google Analytics';
 
-// Text
-$_['text_edit']                     = 'Edit Google Analytics';
-
 // Entry
 $_['entry_code']                    = 'Code';
 $_['entry_status']                  = 'Status';

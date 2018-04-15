@@ -13,7 +13,6 @@ $_['heading_title']     = 'Languages';
 // Text
 $_['text_list']         = 'Language List';
 $_['text_add']          = 'Add Language';
-$_['text_edit']         = 'Edit Language';
 $_['text_upload']       = 'Upload Translation';
 
 // Column

@@ -12,7 +12,6 @@ $_['heading_title']    = 'Manufacturer';
 
 // Text
 $_['text_module']         = 'Modules';
-$_['text_edit']           = 'Edit Manufacturer Module';
 
 // Entry
 $_['entry_status'] = 'Status';

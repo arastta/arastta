@@ -33,6 +33,7 @@ $_['text_confirm']                  = 'Are you sure?';
 $_['text_confirm_title']            = 'Confirm Delete %s';
 $_['text_default']                  = ' <b>(Default)</b>';
 $_['text_disabled']                 = 'Disabled';
+$_['text_edit']                     = 'Edit';
 $_['text_enabled']                  = 'Enabled';
 $_['text_filter']                   = 'Type here to filter ';
 $_['text_home']                     = 'Home';

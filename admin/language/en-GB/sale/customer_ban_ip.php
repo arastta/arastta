@@ -13,7 +13,7 @@ $_['heading_title']    = 'Banned IPs';
 // Text
 $_['text_list']        = 'Banned IP List';
 $_['text_add']         = 'Add Banned IP';
-$_['text_edit']        = 'Edit Banned IP';
+
 // Column
 $_['column_ip']        = 'IP';
 $_['column_customer']  = 'Customers';

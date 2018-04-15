@@ -12,7 +12,6 @@ $_['heading_title']    = 'Handling Fee';
 
 // Text
 $_['text_total']       = 'Order Totals';
-$_['text_edit']        = 'Edit Handling Fee Total';
 
 // Entry
 $_['entry_total']      = 'Order Total';

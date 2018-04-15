@@ -13,7 +13,6 @@ $_['heading_title']      = 'Free Checkout';
 // Text
 $_['text_free_checkout'] = '<img src="view/image/payment/free-checkout.jpg" alt="Free Checkout" title="Free Checkout" style="border: 1px solid #EEEEEE;" />';
 $_['text_payment']       = 'Payment';
-$_['text_edit']          = 'Edit Free Checkout';
 
 // Entry
 $_['entry_order_status'] = 'Order Status';

@@ -12,7 +12,6 @@ $_['heading_title']    = 'Bestsellers';
 
 // Text
 $_['text_module']      = 'Modules';
-$_['text_edit']        = 'Edit Bestsellers Module';
 
 // Entry
 $_['entry_name']       = 'Module Name';

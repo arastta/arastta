@@ -12,7 +12,6 @@ $_['heading_title']                  = 'PayPal Payments Standard';
 
 // Text
 $_['text_payment']                   = 'Payment';
-$_['text_edit']                      = 'Edit PayPal Payments Standard';
 $_['text_pp_standard']               = '<a target="_BLANK" href="https://www.paypal.com"><img src="view/image/payment/paypal.png" alt="PayPal Payments Standard" title="PayPal Payments Standard" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_authorization']             = 'Authorization';
 $_['text_sale']                      = 'Sale';

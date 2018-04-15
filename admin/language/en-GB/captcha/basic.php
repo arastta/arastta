@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']                 = 'Basic Captcha';
 
-// Text
-$_['text_edit']                     = 'Edit Basic Captcha';
-
 // Entry
 $_['entry_status']                  = 'Status';
 

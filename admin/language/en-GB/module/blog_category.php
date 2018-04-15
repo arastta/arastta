@@ -12,7 +12,6 @@ $_['heading_title'] = 'Blog Category';
 
 // Text
 $_['text_module']  = 'Modules';
-$_['text_edit']    = 'Edit Blog Category Module';
 
 // Entry
 $_['entry_status'] = 'Status';

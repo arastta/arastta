@@ -13,7 +13,6 @@ $_['heading_title'] = 'Posts';
 // Text
 $_['text_list']          = 'Post List';
 $_['text_add']           = 'Add Post';
-$_['text_edit']          = 'Edit Post';
 $_['text_blog_setting']  = 'Settings';
 $_['text_blog_category'] = 'Categories';
 $_['text_blog_post']     = 'Posts';

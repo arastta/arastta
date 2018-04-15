@@ -12,7 +12,6 @@ $_['heading_title']    = 'Specials';
 
 // Text
 $_['text_module']      = 'Modules';
-$_['text_edit']        = 'Edit Specials Module';
 
 // Entry
 $_['entry_name']       = 'Module Name';

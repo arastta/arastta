@@ -12,7 +12,6 @@ $_['heading_title']    = 'Slideshow';
 
 // Text
 $_['text_module']      = 'Modules';
-$_['text_edit']        = 'Edit Slideshow Module';
 
 // Entry
 $_['entry_name']       = 'Module Name';

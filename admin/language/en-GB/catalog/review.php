@@ -13,7 +13,6 @@ $_['heading_title']         = 'Reviews';
 // Text
 $_['text_list']             = 'Review List';
 $_['text_add']              = 'Add Review';
-$_['text_edit']             = 'Edit Review';
 $_['text_select']           = 'Please Select';
 
 // Column

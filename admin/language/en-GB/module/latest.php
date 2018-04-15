@@ -12,7 +12,6 @@ $_['heading_title']    = 'Latest';
 
 // Text
 $_['text_module']      = 'Modules';
-$_['text_edit']        = 'Edit Latest Module';
 
 // Entry
 $_['entry_name']       = 'Module Name';

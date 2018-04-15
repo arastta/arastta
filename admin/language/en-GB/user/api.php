@@ -13,7 +13,6 @@ $_['heading_title']        = 'APIs';
 // Text
 $_['text_list']            = 'API List';
 $_['text_add']             = 'Add API';
-$_['text_edit']            = 'Edit API';
 
 // Column
 $_['column_username']      = 'Username';

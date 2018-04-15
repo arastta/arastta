@@ -11,7 +11,6 @@
 $_['heading_title']                 = 'MaxMind';
 
 // Text
-$_['text_edit']                               = 'Edit MaxMind';
 $_['text_country_match']                      = 'Country Match:';
 $_['text_country_code']                       = 'Country Code:';
 $_['text_high_risk_country']                  = 'High Risk Country:';

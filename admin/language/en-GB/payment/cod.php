@@ -13,7 +13,6 @@ $_['heading_title']                 = 'Cash On Delivery';
 // Text
 $_['text_cod']                      = '<img src="view/image/payment/cash-on-delivery.jpg" alt="Cash On Delivery" title="Cash On Delivery" style="border: 1px solid #EEEEEE;" />';
 $_['text_payment']                  = 'Payment';
-$_['text_edit']                     = 'Edit Cash On Delivery';
 
 // Entry
 $_['entry_total']                   = 'Total';

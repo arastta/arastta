@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Affiliate';
 
 $_['text_module']      = 'Modules';
-$_['text_edit']        = 'Edit Affiliate Module';
 
 // Entry
 $_['entry_status']     = 'Status';

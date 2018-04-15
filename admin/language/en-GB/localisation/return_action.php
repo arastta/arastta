@@ -13,7 +13,6 @@ $_['heading_title']    = 'Return Actions';
 // Text
 $_['text_list']        = 'Return Action List';
 $_['text_add']         = 'Add Return Action';
-$_['text_edit']        = 'Edit Return Action';
 
 // Column
 $_['column_name']      = 'Return Action Name';

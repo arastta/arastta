@@ -14,7 +14,6 @@ $_['column_status']          = 'Status';
 // Text
 $_['text_list']              = 'Information List';
 $_['text_add']               = 'Add Information';
-$_['text_edit']              = 'Edit Information';
 $_['text_default']           = 'Default';
 $_['text_preview']           = 'View Information';
 

@@ -13,7 +13,6 @@ $_['heading_title']      = 'Bank Transfer';
 // Text
 $_['text_bank_transfer'] = '<img src="view/image/payment/bank_transfer.jpg" alt="Bank Transfer" title="Bank Transfer" style="border: 1px solid #EEEEEE;" />';
 $_['text_payment']       = 'Payment';
-$_['text_edit']          = 'Edit Bank Transfer';
 
 // Entry
 $_['entry_bank']         = 'Bank Transfer Instructions';

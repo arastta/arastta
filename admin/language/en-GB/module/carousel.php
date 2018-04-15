@@ -12,7 +12,6 @@ $_['heading_title']    = 'Carousel';
 
 // Text
 $_['text_module']      = 'Modules';
-$_['text_edit']        = 'Edit Carousel Module';
 
 // Entry
 $_['entry_name']       = 'Module Name';
