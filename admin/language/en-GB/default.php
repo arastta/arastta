@@ -68,9 +68,12 @@ $_['column_total']                  = 'Total';
 $_['entry_date_added']              = 'Date Added';
 $_['entry_date_modified']           = 'Date Modified';
 $_['entry_geo_zone']                = 'Geo Zone';
+$_['entry_height']                  = 'Height';
+$_['entry_limit']                   = 'Limit';
 $_['entry_sort_order']              = 'Sort Order';
 $_['entry_status']                  = 'Status';
 $_['entry_total']                   = 'Total';
+$_['entry_width']                   = 'Width';
 
 // Help
 $_['help_total']                    = 'The checkout total the order must reach before this extension or rule becomes active.';
@@ -200,6 +203,7 @@ $_['tab_voucher']                   = 'Vouchers';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';
+$_['error_height']                  = 'Height required!';
 $_['error_permission']              = 'Warning: You do not have permission to perform the selected action.';
 $_['error_slug']                    = 'Warning: Not able to generate slug!';
 $_['error_slug_unique']             = 'Warning: Not unique slug!';
@@ -211,4 +215,5 @@ $_['error_upload_6']                = 'Warning: Missing a temporary folder!';
 $_['error_upload_7']                = 'Warning: Failed to write file to disk!';
 $_['error_upload_8']                = 'Warning: File upload stopped by extension!';
 $_['error_upload_999']              = 'Warning: No error code available!';
+$_['error_width']                   = 'Width required!';
 

@@ -17,10 +17,8 @@ $_['text_module']      = 'Modules';
 $_['entry_name']       = 'Module Name';
 $_['entry_banner']     = 'Banner';
 $_['entry_dimension']  = 'Dimension (W x H) and Resize Type';
-$_['entry_width']      = 'Width';
-$_['entry_height']     = 'Height';
 
 // Error
 $_['error_name']       = 'Module Name must be between 3 and 64 characters!';
-$_['error_width']      = 'Width required!';
-$_['error_height']     = 'Height required!';
+
+

@@ -15,9 +15,6 @@ $_['text_module']  = 'Modules';
 
 // Entry
 $_['entry_name']        = 'Module Name';
-$_['entry_limit']       = 'Limit';
-$_['entry_width']       = 'Width';
-$_['entry_height']      = 'Height';
 
 // Help
 $_['help_post']        = '(Autocomplete)';
@@ -25,5 +22,3 @@ $_['help_random_post'] = 'Show random Posts inside the latest module according s
 
 // Error
 $_['error_name']       = 'Module Name must be between 3 and 64 characters!';
-$_['error_width']      = 'Width required!';
-$_['error_height']     = 'Height required!';

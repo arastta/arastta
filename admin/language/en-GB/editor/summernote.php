@@ -14,7 +14,6 @@ $_['heading_title']                 = 'Summernote';
 $_['text_editor']                   = 'Editor';
 
 // Entry
-$_['entry_height']                  = 'Height';
 $_['entry_tool_style']              = 'Style';
 $_['entry_tool_font_bold']          = 'Bold';
 $_['entry_tool_font_italic']        = 'Italic';

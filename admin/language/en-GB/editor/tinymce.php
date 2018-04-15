@@ -16,7 +16,6 @@ $_['text_menu']                         = 'Menu';
 $_['text_tool']                         = 'Toolbar';
 
 // Entry
-$_['entry_height']                       = 'Height';
 $_['entry_menubar']                      = 'Menubar';
 $_['entry_menu_edit_insertfile']         = 'Insert file';
 $_['entry_menu_edit_undo']               = 'Undo';

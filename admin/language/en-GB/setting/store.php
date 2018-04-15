@@ -77,8 +77,6 @@ $_['entry_image_compare']              = 'Compare Image Size';
 $_['entry_image_wishlist']             = 'Wish List Image Size';
 $_['entry_image_cart']                 = 'Cart Image Size';
 $_['entry_image_location']             = 'Store Image Size';
-$_['entry_width']                      = 'Width';
-$_['entry_height']                     = 'Height';
 $_['entry_secure']                     = 'Use SSL';
 $_['entry_timezone']                   = 'Time Zone';
 
