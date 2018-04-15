@@ -11,7 +11,6 @@
 $_['heading_title'] = 'Categories';
 
 // Text
-$_['text_add']              = 'Add Category';
 $_['text_default']          = 'Default';
 $_['text_preview']          = 'View Category';
 $_['text_new_category_seo'] = 'Add a title and description to see how this category might appear in a search engine listing.';

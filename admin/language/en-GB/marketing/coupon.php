@@ -11,7 +11,6 @@
 $_['heading_title']       = 'Coupons';
 
 // Text
-$_['text_add']            = 'Add Coupon';
 $_['text_percent']        = 'Percentage';
 $_['text_amount']         = 'Fixed Amount';
 

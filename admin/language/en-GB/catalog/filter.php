@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']     = 'Filters';
 
-// Text
-$_['text_add']          = 'Add Filter';
-
 // Column
 $_['column_group']      = 'Filter Group';
 $_['column_sort_order'] = 'Sort Order';

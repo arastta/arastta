@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']     = 'User Groups';
 
-// Text
-$_['text_add']          = 'Add User Group';
-
 // Column
 $_['column_name']       = 'User Group Name';
 $_['column_action']     = 'Action';

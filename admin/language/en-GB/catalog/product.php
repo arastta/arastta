@@ -11,7 +11,6 @@
 $_['heading_title']          = 'Products';
 
 // Text
-$_['text_add']               = 'Add Product';
 $_['text_plus']              = '+';
 $_['text_minus']             = '-';
 $_['text_default']           = 'Default';

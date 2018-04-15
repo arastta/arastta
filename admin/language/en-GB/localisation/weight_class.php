@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Weight Classes';
 
 // Text
-$_['text_add']         = 'Add Weight Class';
 $_['text_items']       = 'Items';
 
 // Column

@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']    = 'Stock Statuses';
 
-// Text
-$_['text_add']         = 'Add Stock Status';
-
 // Column
 $_['column_name']      = 'Stock Status Name';
 $_['column_action']    = 'Action';

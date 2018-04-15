@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']     = 'Voucher Themes';
 
-// Text
-$_['text_add']          = 'Add Voucher Theme';
-
 // Column
 $_['column_name']       = 'Voucher Theme Name';
 $_['column_action']     = 'Action';

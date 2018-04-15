@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']     = 'Marketing Tracking';
 
-// Text
-$_['text_add']          = 'Add Marketing Tracking';
-
 // Column
 $_['column_name']       = 'Campaign Name';
 $_['column_code']       = 'Code';

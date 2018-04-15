@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']          = 'Zones';
 
-// Text
-$_['text_add']               = 'Add Zone';
-
 // Column
 $_['column_name']            = 'Zone Name';
 $_['column_code']            = 'Zone Code';

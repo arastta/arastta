@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']    = 'Order Statuses';
 
-// Text
-$_['text_add']         = 'Add Order Status';
-
 // Column
 $_['column_name']      = 'Order Status Name';
 $_['column_action']    = 'Action';

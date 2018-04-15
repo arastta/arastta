@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']    = 'Return Reasons';
 
-// Text
-$_['text_add']         = 'Add Return Reason';
-
 // Column
 $_['column_name']      = 'Return Reason Name';
 $_['column_action']    = 'Action';

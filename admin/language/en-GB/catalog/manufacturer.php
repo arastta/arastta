@@ -11,7 +11,6 @@
 $_['heading_title']         = 'Manufacturers';
 
 // Text
-$_['text_add']              = 'Add Manufacturer';
 $_['text_default']          = 'Default';
 $_['text_percent']          = 'Percentage';
 $_['text_amount']           = 'Fixed Amount';

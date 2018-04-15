@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']    = 'Return Actions';
 
-// Text
-$_['text_add']         = 'Add Return Action';
-
 // Column
 $_['column_name']      = 'Return Action Name';
 $_['column_action']    = 'Action';

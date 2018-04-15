@@ -11,7 +11,6 @@
 $_['heading_title']     = 'Downloads';
 
 // Text
-$_['text_add']          = 'Add Download';
 $_['text_upload']       = 'Your file was successfully uploaded!';
 
 // Column

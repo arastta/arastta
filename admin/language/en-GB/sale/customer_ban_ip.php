@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']    = 'Banned IPs';
 
-// Text
-$_['text_add']         = 'Add Banned IP';
-
 // Column
 $_['column_ip']        = 'IP';
 $_['column_customer']  = 'Customers';

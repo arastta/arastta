@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']        = 'APIs';
 
-// Text
-$_['text_add']             = 'Add API';
-
 // Column
 $_['column_username']      = 'Username';
 $_['column_status']        = 'Status';

@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']    = 'Return Statuses';
 
-// Text
-$_['text_add']         = 'Add Return Status';
-
 // Column
 $_['column_name']      = 'Return Status Name';
 $_['column_action']    = 'Action';

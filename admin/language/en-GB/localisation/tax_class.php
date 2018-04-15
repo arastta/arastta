@@ -11,7 +11,6 @@
 $_['heading_title']     = 'Tax Classes';
 
 // Text
-$_['text_add']          = 'Add Tax Class';
 $_['text_shipping']     = 'Shipping Address';
 $_['text_payment']      = 'Payment Address';
 $_['text_store']        = 'Store Address';

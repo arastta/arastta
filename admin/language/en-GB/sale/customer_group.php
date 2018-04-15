@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']     = 'Customer Groups';
 
-// Text
-$_['text_add']          = 'Add Customer Group';
-
 // Column
 $_['column_name']       = 'Customer Group Name';
 $_['column_sort_order'] = 'Sort Order';

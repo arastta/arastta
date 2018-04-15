@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']        = 'Currencies';
 
-// Text
-$_['text_add']             = 'Add Currency';
-
 // Column
 $_['column_title']         = 'Currency Title';
 $_['column_code']          = 'Code';

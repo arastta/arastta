@@ -26,6 +26,7 @@ $_['thousand_suffix']               = 'K';
 $_['trillion_suffix']               = 'T';
 
 // Text
+$_['text_add']                      = 'Add';
 $_['text_all_zones']                = 'All Zones';
 $_['text_bulk_action']              = 'Bulk Action';
 $_['text_close']                    = 'Close';

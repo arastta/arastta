@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']     = 'Attribute Groups';
 
-// Text
-$_['text_add']          = 'Add Attribute Group';
-
 // Column
 $_['column_name']       = 'Attribute Group Name';
 $_['column_sort_order'] = 'Sort Order';

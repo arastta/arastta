@@ -11,7 +11,6 @@
 $_['heading_title']      = 'Banners';
 
 // Text
-$_['text_add']           = 'Add Banner';
 $_['text_default']       = 'Default';
 
 // Column

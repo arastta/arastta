@@ -12,7 +12,6 @@ $_['heading_title']    = 'Modules';
 
 // Text
 $_['text_layout']      = 'After you have installed and configured a module you can add it to a layout <a href="%s" class="alert-link">here</a>!';
-$_['text_add']         = 'Add Module';
 
 // Column
 $_['column_name']      = 'Module Name';

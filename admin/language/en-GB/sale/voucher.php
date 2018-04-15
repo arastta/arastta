@@ -11,7 +11,6 @@
 $_['heading_title']     = 'Gift Vouchers';
 
 // Text
-$_['text_add']          = 'Add Gift Voucher';
 $_['text_sent']         = 'Success: Gift Voucher e-mail has been sent!';
 
 // Column

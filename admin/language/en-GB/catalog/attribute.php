@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']          = 'Attributes';
 
-// Text
-$_['text_add']               = 'Add Attribute';
-
 // Column
 $_['column_name']            = 'Attribute Name';
 $_['column_attribute_group'] = 'Attribute Group';

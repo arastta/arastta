@@ -11,7 +11,6 @@
 $_['heading_title']         = 'Custom Fields';
 
 // Text
-$_['text_add']              = 'Add Custom Field';
 $_['text_choose']           = 'Choose';
 $_['text_select']           = 'Select';
 $_['text_radio']            = 'Radio';

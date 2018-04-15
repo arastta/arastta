@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Length Classes';
 
 // Text
-$_['text_add']         = 'Add Length Class';
 $_['text_items']       = 'Items';
 
 // Column

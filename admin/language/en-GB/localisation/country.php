@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']           = 'Countries';
 
-// Text
-$_['text_add']                = 'Add Country';
-
 // Column
 $_['column_name']             = 'Country Name';
 $_['column_iso_code_2']       = 'ISO Code (2)';

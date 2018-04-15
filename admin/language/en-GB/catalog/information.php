@@ -12,7 +12,6 @@ $_['heading_title']          = 'Information';
 $_['column_status']          = 'Status';
 
 // Text
-$_['text_add']               = 'Add Information';
 $_['text_default']           = 'Default';
 $_['text_preview']           = 'View Information';
 

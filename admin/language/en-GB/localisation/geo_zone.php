@@ -11,7 +11,6 @@
 $_['heading_title']      = 'Geo Zones';
 
 // Text
-$_['text_add']           = 'Add Geo Zone';
 $_['text_edit']          = 'Edit Geo Zone';
 $_['text_items']         = 'Items';
 
