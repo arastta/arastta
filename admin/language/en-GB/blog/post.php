@@ -27,7 +27,6 @@ $_['text_applied']       = 'Applied';
 $_['column_image']      = 'Image';
 $_['column_name']       = 'Name';
 $_['column_category']   = 'Category';
-$_['column_date_added'] = 'Date Added';
 $_['column_comments']   = 'Comments';
 $_['column_viewed']     = 'Page Views';
 

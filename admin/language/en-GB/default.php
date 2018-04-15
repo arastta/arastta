@@ -55,11 +55,15 @@ $_['text_yes']                      = 'Yes';
 
 // Column
 $_['column_action']                 = 'Action';
+$_['column_date_added']             = 'Date Added';
+$_['column_date_modified']          = 'Date Modified';
 $_['column_sort_order']             = 'Sort Order';
 $_['column_sortable']               = 'Sortable List';
 $_['column_status']                 = 'Status';
 
 // Entry
+$_['entry_date_added']              = 'Date Added';
+$_['entry_date_modified']           = 'Date Modified';
 $_['entry_sort_order']              = 'Sort Order';
 $_['entry_status']                  = 'Status';
 

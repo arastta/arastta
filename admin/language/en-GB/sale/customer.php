@@ -20,7 +20,6 @@ $_['text_remove_ban_ip']    = 'Remove Ban IP';
 $_['column_name']           = 'Customer Name';
 $_['column_email']          = 'E-Mail';
 $_['column_customer_group'] = 'Customer Group';
-$_['column_date_added']     = 'Date Added';
 $_['column_comment']        = 'Comment';
 $_['column_description']    = 'Description';
 $_['column_amount']         = 'Amount';
@@ -54,7 +53,6 @@ $_['entry_amount']          = 'Amount';
 $_['entry_points']          = 'Points';
 $_['entry_name']            = 'Customer Name';
 $_['entry_ip']              = 'IP';
-$_['entry_date_added']      = 'Date Added';
 $_['entry_send_email']      = 'Send Email';
 
 // Help

@@ -23,7 +23,6 @@ $_['column_email']              = 'E-Mail';
 $_['column_code']               = 'Tracking Code';
 $_['column_balance']            = 'Balance';
 $_['column_approved']           = 'Approved';
-$_['column_date_added']         = 'Date Added';
 $_['column_description']        = 'Description';
 $_['column_amount']             = 'Amount';
 
@@ -58,7 +57,6 @@ $_['entry_amount']              = 'Amount';
 $_['entry_description']         = 'Description';
 $_['entry_name']                = 'Affiliate Name';
 $_['entry_approved']            = 'Approved';
-$_['entry_date_added']          = 'Date Added';
 $_['entry_send_email']          = 'Send Email';
 
 // Help

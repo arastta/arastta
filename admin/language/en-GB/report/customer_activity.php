@@ -28,7 +28,6 @@ $_['text_order_guest']    = '%s created a <a href="order_id=%d">new order</a>.';
 $_['column_customer']     = 'Customer';
 $_['column_comment']      = 'Comment';
 $_['column_ip']           = 'IP';
-$_['column_date_added']   = 'Date Added';
 
 // Entry
 $_['entry_customer']      = 'Customer';

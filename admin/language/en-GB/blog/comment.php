@@ -17,14 +17,12 @@ $_['text_select']  = 'Please Select';
 $_['column_post']       = 'Post';
 $_['column_email']      = 'Email';
 $_['column_author']     = 'Author';
-$_['column_date_added'] = 'Date Added';
 
 // Entry
 $_['entry_post']       = 'Post';
 $_['entry_email']      = 'Email';
 $_['entry_author']     = 'Author';
 $_['entry_text']       = 'Text';
-$_['entry_date_added'] = 'Date Added';
 
 // Help
 $_['help_post'] = '(Autocomplete)';

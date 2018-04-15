@@ -37,7 +37,6 @@ $_['entry_order_recurring']                = 'ID';
 $_['entry_order_id']                       = 'Order ID';
 $_['entry_reference']                      = 'Payment Reference';
 $_['entry_customer']                       = 'Customer';
-$_['entry_date_added']                     = 'Date Added';
 $_['entry_type']                           = 'Type';
 $_['entry_action']                         = 'Action';
 $_['entry_email']                          = 'Email';

@@ -17,14 +17,12 @@ $_['text_select']           = 'Please Select';
 $_['column_product']        = 'Product';
 $_['column_author']         = 'Author';
 $_['column_rating']         = 'Rating';
-$_['column_date_added']     = 'Date Added';
 
 // Entry
 $_['entry_product']         = 'Product';
 $_['entry_author']          = 'Author';
 $_['entry_rating']          = 'Rating';
 $_['entry_text']            = 'Text';
-$_['entry_date_added']      = 'Date Added';
 
 // Help
 $_['help_product']          = '(Autocomplete)';

@@ -12,8 +12,6 @@ $_['heading_title']        = 'APIs';
 
 // Column
 $_['column_username']      = 'Username';
-$_['column_date_added']    = 'Date Added';
-$_['column_date_modified'] = 'Date Modified';
 
 // Entry
 $_['entry_username']       = 'Username';

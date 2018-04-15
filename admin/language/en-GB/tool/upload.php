@@ -13,9 +13,7 @@ $_['heading_title']     = 'Uploads';
 // Column
 $_['column_name']       = 'Upload Name';
 $_['column_filename']   = 'Filename';
-$_['column_date_added'] = 'Date Added';
 
 // Entry
 $_['entry_name']        = 'Upload Name';
 $_['entry_filename']    = 'Filename';
-$_['entry_date_added']  = 'Date Added';

@@ -23,8 +23,6 @@ $_['column_order_id']      = 'Order ID';
 $_['column_customer']      = 'Customer';
 $_['column_product']       = 'Product';
 $_['column_model']         = 'Model';
-$_['column_date_added']    = 'Date Added';
-$_['column_date_modified'] = 'Date Modified';
 $_['column_comment']       = 'Comment';
 $_['column_notify']        = 'Customer Notified';
 
@@ -46,8 +44,6 @@ $_['entry_return_action'] = 'Return Action';
 $_['entry_return_status'] = 'Return Status';
 $_['entry_notify']        = 'Notify Customer';
 $_['entry_return_id']     = 'Return ID';
-$_['entry_date_added']    = 'Date Added';
-$_['entry_date_modified'] = 'Date Modified';
 
 // Help
 $_['help_product']        = '(Autocomplete)';

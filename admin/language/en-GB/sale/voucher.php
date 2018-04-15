@@ -22,7 +22,6 @@ $_['column_theme']      = 'Theme';
 $_['column_amount']     = 'Amount';
 $_['column_order_id']   = 'Order ID';
 $_['column_customer']   = 'Customer';
-$_['column_date_added'] = 'Date Added';
 
 // Entry
 $_['entry_code']        = 'Code';
