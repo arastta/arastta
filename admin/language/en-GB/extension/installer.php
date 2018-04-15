@@ -31,7 +31,6 @@ $_['entry_progress']         = 'Progress';
 $_['help_upload']            = 'Requires a modification file with extension ( ".ocmod.zip", ".zip" ) or ( ".ocmod.xml", ".xml" ) .';
 
 // Error
-$_['error_permission']       = 'Warning: You do not have permission to modify extensions!';
 $_['error_temporary']        = 'Warning: There are some temporary files that require deleting. Click the clear button to remove them!';
 $_['error_download']         = 'File could not be downloaded!';
 $_['error_upload']           = 'File could not be uploaded!';

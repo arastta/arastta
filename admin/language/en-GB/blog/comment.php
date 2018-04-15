@@ -33,7 +33,6 @@ $_['entry_date_added'] = 'Date Added';
 $_['help_post'] = '(Autocomplete)';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify comments!';
 $_['error_post']       = 'Post required!';
 $_['error_email']      = 'E-Mail Address does not appear to be valid!';
 $_['error_author']     = 'Author must be between 3 and 64 characters!';

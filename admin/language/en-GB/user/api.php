@@ -23,6 +23,5 @@ $_['entry_password']       = 'Password';
 $_['entry_status']         = 'Status';
 
 // Error
-$_['error_permission']     = 'Warning: You do not have permission to modify APIs!';
 $_['error_username']       = 'Username must be between 3 and 20 characters!';
 $_['error_password']       = 'API password must be between 3 and 256 characters!';

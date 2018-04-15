@@ -45,7 +45,6 @@ $_['entry_twofactorauth']       = 'Two-Factor Authentication';
 $_['entry_basic_mode_message']  = 'Basic Mode Message';
 
 // Error
-$_['error_permission']          = 'Warning: You do not have permission to modify users!';
 $_['error_account']             = 'Warning: You can not delete your own account!';
 $_['error_email_exists']        = 'Warning: Email is already in use!';
 $_['error_email_short']         = 'Email must be higher than 3 characters!';

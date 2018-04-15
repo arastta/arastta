@@ -20,5 +20,4 @@ $_['entry_description'] = 'Description';
 $_['entry_status']      = 'Status';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify HTML Content module!';
 $_['error_name']        = 'Module Name must be between 3 and 64 characters!';

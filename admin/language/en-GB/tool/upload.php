@@ -20,6 +20,3 @@ $_['column_action']     = 'Action';
 $_['entry_name']        = 'Upload Name';
 $_['entry_filename']    = 'Filename';
 $_['entry_date_added']  = 'Date Added';
-
-// Error
-$_['error_permission']  = 'Warning: You do not have permission to modify uploads!';

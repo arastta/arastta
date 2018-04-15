@@ -39,5 +39,4 @@ $_['help_ssl']                       = 'This feed works only with SSL enabled!';
 $_['help_data_feed']                 = 'Just copy-paste this code to Facebook.';
 
 // Error
-$_['error_permission']               = 'Warning: You do not have permission to modify Facebook Store feed!';
 $_['error_app_id']                   = 'Facebook App ID is required!';

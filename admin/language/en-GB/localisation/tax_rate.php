@@ -31,7 +31,6 @@ $_['entry_customer_group'] = 'Customer Group';
 $_['entry_geo_zone']       = 'Geo Zone';
 
 // Error
-$_['error_permission']     = 'Warning: You do not have permission to modify tax rates!';
 $_['error_tax_rule']       = 'Warning: This tax rate cannot be deleted as it is currently assigned to %s tax classes!';
 $_['error_name']           = 'Tax Name must be between 3 and 32 characters!';
 $_['error_rate']           = 'Tax Rate required!';

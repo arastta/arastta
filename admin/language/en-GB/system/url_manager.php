@@ -30,6 +30,5 @@ $_['entry_query']            = 'Query';
 $_['entry_language']         = 'Language';
 
 // Error
-$_['error_permission']       = 'Warning: You do not have permission to modify URLs!';
 $_['error_seo_url']          = 'Warning: SEO URL must be between 3 and 64 characters!';
 $_['error_query']            = 'Warning: Query must contain = (equal) character!';

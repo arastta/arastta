@@ -26,5 +26,4 @@ $_['button_delete']             = 'Delete Selected';
 $_['button_deleteall']          = 'Delete All';
 
 // Error
-$_['error_permission']          = 'Warning: You do not have permission to modify caches!';
 $_['error_fail']                = 'Warning: Some of the caches were not deleted!';

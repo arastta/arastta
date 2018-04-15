@@ -70,7 +70,6 @@ $_['help_commission']           = 'Percentage the affiliate receives on each ord
 $_['help_send_email']           = 'Send an information email to the affiliate after being saved.';
 
 // Error
-$_['error_permission']          = 'Warning: You do not have permission to modify affiliates!';
 $_['error_exists']              = 'Warning: E-Mail Address is already registered!';
 $_['error_firstname']           = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']            = 'Last Name must be between 1 and 32 characters!';

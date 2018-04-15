@@ -19,5 +19,4 @@ $_['column_action']    = 'Action';
 $_['entry_ip']         = 'IP';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify customer banned IPs!';
 $_['error_ip']         = 'IP must be between 1 and 40 characters!';

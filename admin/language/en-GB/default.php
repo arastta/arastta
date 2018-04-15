@@ -182,6 +182,7 @@ $_['tab_voucher']                   = 'Vouchers';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';
+$_['error_permission']              = 'Warning: You do not have permission to perform the selected action.';
 $_['error_slug']                    = 'Warning: Not able to generate slug!';
 $_['error_slug_unique']             = 'Warning: Not unique slug!';
 $_['error_upload_1']                = 'Warning: The uploaded file exceeds the upload_max_filesize directive in php.ini!';

@@ -40,7 +40,6 @@ $_['entry_invoice_date']                      = 'Invoice Date';
 
 // Error
 $_['error_warning']                           = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']                        = 'Warning: You do not have permission to modify invoices!';
 $_['error_action']                            = 'Warning: Could not complete this action!';
 $_['error_generate_empty']                    = 'Warning: No order available to generate invoices!';
 $_['error_invoice_not_found']                 = 'Warning: Invoice not found!';

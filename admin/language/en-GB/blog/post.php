@@ -74,7 +74,6 @@ $_['help_tag']      = '(Autocomplete)';
 
 // Error 
 $_['error_warning']       = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']    = 'Warning: You do not have permission to modify blog!';
 $_['error_name']          = 'Blog Title must be between 3 and 64 characters!';
 $_['error_store']         = 'Warning: This blog page cannot be deleted as its currently used by %s stores!';
 $_['error_required_data'] = 'Required Data has not been entered. Check for field errors!';

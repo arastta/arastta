@@ -19,6 +19,5 @@ $_['entry_status']                  = 'Status';
 $_['help_captcha']                  = 'Go to <a href="https://www.google.com/recaptcha/intro/index.html" target="_blank"><u>Google reCAPTCHA page</u></a> and register your website.';
 
 // Error
-$_['error_permission']              = 'Warning: You do not have permission to modify Google reCAPTCHA!';
 $_['error_public']                  = 'Warning: Site Key is reuqired!';
 $_['error_secret']                  = 'Warning: Secret Key is reuqired!';

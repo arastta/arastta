@@ -29,6 +29,5 @@ $_['button_next']               = 'Show next theme';
 $_['button_close']              = 'Close';
 
 // Error
-$_['error_permission']          = 'Warning: You do not have permission to modify themes!';
 $_['error_warning']             = 'Warning: Please check the form carefully for errors!';
 $_['error_default_theme']       = 'Warning: You can not uninstall Default theme!';

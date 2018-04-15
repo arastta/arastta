@@ -61,6 +61,5 @@ $_['button_blog_post']          = 'Add Blog Post to Menu';
 
 
 // Error
-$_['error_permission']          = 'Warning: You do not have permission to modify top headers !';
 $_['error_name']                = 'Menu Name must be between 1 and 64 characters!';
 $_['error_link']                = 'Menu Link Can not be empty!';

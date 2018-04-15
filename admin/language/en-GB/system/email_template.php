@@ -165,6 +165,3 @@ $_['demo_tax_title']   = 'VAT (20%)';
 $_['demo_tax_value']   = '$50';
 $_['demo_total_title']   = 'Total';
 $_['demo_total_value']   = '$1650';
-
-// Error
-$_['error_permission']   = 'Warning: You do not have permission to modify manufacturers!';

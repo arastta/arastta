@@ -51,5 +51,3 @@ $_['entry_collapse_sidebar']= 'Collapse Sidebar';
 $_['entry_select_color']    = 'Select Colour';
 $_['entry_current_color']   = 'Current Colour';
 
-// Error
-$_['error_permission']      = 'Warning: You do not have permission to modify customizer!';

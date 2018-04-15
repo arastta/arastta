@@ -18,6 +18,3 @@ $_['entry_status']                  = 'Status';
 $_['entry_apikey']                  = 'API Key';
 $_['entry_clientid']                = 'Client ID';
 $_['entry_code']                    = 'Secret Code';
-
-// Error
-$_['error_permission']              = 'Warning: You do not have permission to modify YubiKey!';

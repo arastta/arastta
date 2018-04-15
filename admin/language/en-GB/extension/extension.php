@@ -37,6 +37,5 @@ $_['column_sort_order']     = 'Sort Order';
 $_['column_action']         = 'Action';
 
 // Error
-$_['error_permission']      = 'Warning: You do not have permission to modify extensions!';
 $_['error_editor_setting']  = 'Warning: Status for this editor cannot be changed as it is currently assigned as default in settings!';
 $_['error_editor_user']     = 'Warning: Status for this editor cannot be changed as it is currently assigned to %s users!';

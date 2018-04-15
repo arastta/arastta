@@ -25,7 +25,6 @@ $_['help_post']        = '(Autocomplete)';
 $_['help_random_post'] = 'Show random Posts inside the latest module according selected Posts.';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify blog latest module!';
 $_['error_name']       = 'Module Name must be between 3 and 64 characters!';
 $_['error_width']      = 'Width required!';
 $_['error_height']     = 'Height required!';

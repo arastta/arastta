@@ -14,6 +14,3 @@ $_['heading_title']    = 'Feeds';
 $_['column_name']      = 'Product Feed Name';
 $_['column_status']    = 'Status';
 $_['column_action']    = 'Action';
-
-// Error
-$_['error_permission'] = 'Warning: You do not have permission to modify feeds!';

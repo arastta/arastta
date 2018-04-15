@@ -44,6 +44,5 @@ $_['help_update_menu_name']  = 'If you checked this field update Menu Category n
 
 // Error 
 $_['error_warning']    = 'Warning: Please check the form for errors';
-$_['error_permission'] = 'Warning: You do not have permission to modify blog categories';
 $_['error_name']       = 'Category Name must be between 2 and 32 characters';
 $_['error_seo_url']    = 'SEO URL already in use!';

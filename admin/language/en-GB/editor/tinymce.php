@@ -76,6 +76,3 @@ $_['help_menu_file_indent']             = 'Show Increase Indent button.';
 $_['help_menu_insert_link']             = 'Show Insert/edit Link button.';
 $_['help_menu_insert_image']            = 'Show Insert/edit Image button.';
 $_['help_menu_tools_imagetools']        = 'Show Emoticons button.';
-
-// Error
-$_['error_permission']                  = 'Warning: You do not have permission to modify editor TinyMCE!';

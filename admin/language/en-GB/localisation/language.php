@@ -31,7 +31,6 @@ $_['help_directory']    = 'Name of the language directory (case-sensitive)';
 $_['help_status']       = 'Select whether to enable this language or not. It will also affect the language dropdown in front-end.';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify languages!';
 $_['error_name']        = 'Language Name must be between 3 and 32 characters!';
 $_['error_code']        = 'Language Code must at least 2 characters!';
 $_['error_image']       = 'Image Filename must be between 3 and 64 characters!';

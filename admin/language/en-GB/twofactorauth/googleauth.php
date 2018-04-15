@@ -16,6 +16,3 @@ $_['entry_account']                 = 'Account';
 $_['entry_key']                     = 'Key';
 $_['entry_qrcode']                  = 'QR Code';
 $_['entry_code']                    = 'Secret Code';
-
-// Error
-$_['error_permission']              = 'Warning: You do not have permission to modify Google Authenticator!';

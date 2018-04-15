@@ -23,7 +23,6 @@ $_['entry_email_template'] = 'Email Template';
 $_['help_email_template'] = 'If you generate a new "Order Status" and its textarea field is empty, the demo template will be loaded.';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify order statuses!';
 $_['error_name']       = 'Order Status Name must be between 3 and 32 characters!';
 $_['error_message']    = 'Order Status Message must be enter Text!';
 $_['error_default']    = 'Warning: This order status cannot be deleted as it is currently assigned as the default store order status!';

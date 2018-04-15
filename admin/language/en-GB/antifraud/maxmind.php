@@ -69,7 +69,6 @@ $_['entry_order']                   = 'Fraud Order Status';
 $_['entry_status']                  = 'Status';
 
 // Error
-$_['error_permission']              = 'Warning: You do not have permission to modify MaxMind!';
 $_['error_key']                     = 'Warning: License Key is reuqired!';
 $_['error_score']                   = 'Warning: Risk Score is reuqired!';
 

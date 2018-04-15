@@ -355,7 +355,6 @@ $_['help_timezone']                    = 'Choose a city in the list to configure
 
 // Error
 $_['error_warning']                    = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']                 = 'Warning: You do not have permission to modify settings!';
 $_['error_name']                       = 'Store Name must be between 3 and 32 characters!';
 $_['error_owner']                      = 'Store Owner must be between 3 and 64 characters!';
 $_['error_address']                    = 'Store Address must be between 10 and 256 characters!';

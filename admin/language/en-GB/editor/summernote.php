@@ -61,6 +61,3 @@ $_['help_tool_insert_hr']           = 'Summernote Editor Tool Insert Horizontal 
 $_['help_tool_view_fullscreen']     = 'Summernote Editor Tool Insert Full Screen button.';
 $_['help_tool_view_codeview']       = 'Summernote Editor Tool Insert Code View button.';
 $_['help_tool_help']                = 'Summernote Editor Tool Help button.';
-
-// Error
-$_['error_permission']              = 'Warning: You do not have permission to modify editor Summernote!';

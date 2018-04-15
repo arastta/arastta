@@ -15,5 +15,4 @@ $_['entry_customer']                = 'Identify Customers';
 $_['entry_status']                  = 'Status';
 
 // Error
-$_['error_permission']              = 'Warning: You do not have permission to modify Woopra!';
 $_['error_code']                    = 'Warning: JavaScript code is reuqired!';

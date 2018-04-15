@@ -27,7 +27,6 @@ $_['help_product']     = '(Autocomplete)';
 $_['help_random_product'] = 'Show random products inside the featured module according selected products.';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify featured module!';
 $_['error_name']       = 'Module Name must be between 3 and 64 characters!';
 $_['error_width']      = 'Width required!';
 $_['error_height']     = 'Height required!';

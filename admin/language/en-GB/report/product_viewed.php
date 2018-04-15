@@ -18,6 +18,3 @@ $_['column_name']      = 'Product Name';
 $_['column_model']     = 'Model';
 $_['column_viewed']    = 'Viewed';
 $_['column_percent']   = 'Percent';
-
-// Error
-$_['error_permission'] = 'Warning: You do not have permission to reset products viewed report!';

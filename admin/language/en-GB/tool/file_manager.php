@@ -14,5 +14,4 @@ $_['heading_title']     = 'File Manager';
 $_['text_list']         = 'Files and Folders';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify modifications!';
 $_['error_zip']         = 'Warning: ZIP extension needs to be loaded on your server! Please, ask your hosting company for further help.';

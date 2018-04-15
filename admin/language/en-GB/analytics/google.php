@@ -18,5 +18,4 @@ $_['entry_status']                  = 'Status';
 $_['help_analytics']                = 'Login to your <a href="http://www.google.com/analytics/" target="_blank"><u>Google Analytics</u></a> account and after creating your website profile copy and paste the analytics code into this field.';
 
 // Error
-$_['error_permission']              = 'Warning: You do not have permission to modify Google Analytics!';
 $_['error_code']                    = 'Warning: JavaScript code is reuqired!';

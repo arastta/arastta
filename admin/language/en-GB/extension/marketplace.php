@@ -30,7 +30,6 @@ $_['button_login_marketplace'] = 'Log in to Marketplace';
 $_['help_api_key'] = 'Please insert your API Key in order to use Marketplace. If you do not have any, please, click the &quot;API Key&quot; link nearby this tooltip, login and create one.';
 
 // Error
-$_['error_permission']        = 'Warning: You do not have permission to modify modifications!';
 $_['error_warning']           = 'Warning: Please check the form carefully for errors!';
 $_['error_curl']              = 'Warning: cURL error %s(%s)!';
 $_['error_action']            = 'Warning: Could not complete this action!';
