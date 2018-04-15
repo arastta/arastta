@@ -11,7 +11,6 @@
 $_['heading_title']                 = 'Google Authenticator';
 
 // Text
-$_['text_success']                  = 'Success: You have modified Google Authenticator!';
 $_['text_edit']                     = 'Edit Google Authenticator';
 
 // Entry

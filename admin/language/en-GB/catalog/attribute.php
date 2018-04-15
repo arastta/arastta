@@ -11,7 +11,6 @@
 $_['heading_title']          = 'Attributes';
 
 // Text
-$_['text_success']           = 'Success: You have modified attributes!';
 $_['text_list']              = 'Attribute List';
 $_['text_add']               = 'Add Attribute';
 $_['text_edit']              = 'Edit Attribute';

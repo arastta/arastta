@@ -11,7 +11,6 @@
 $_['heading_title']        = 'Tax Rates';
 
 // Text
-$_['text_success']         = 'Success: You have modified tax rates!';
 $_['text_list']            = 'Tax Rate List';
 $_['text_add']             = 'Add Tax Rate';
 $_['text_edit']            = 'Edit Tax Rate';

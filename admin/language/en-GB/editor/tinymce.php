@@ -12,7 +12,6 @@ $_['heading_title']                     = 'TinyMCE';
 
 // Text
 $_['text_editor']                       = 'Editor';
-$_['text_success']                      = 'Success: You have modified TinyMCE editor!';
 $_['text_edit']                         = 'Edit TinyMCE';
 $_['text_menu']                         = 'Menu';
 $_['text_tool']                         = 'Toolbar';

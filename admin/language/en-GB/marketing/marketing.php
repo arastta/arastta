@@ -11,7 +11,6 @@
 $_['heading_title']     = 'Marketing Tracking';
 
 // Text
-$_['text_success']      = 'Success: You have modified marketing tracking!';
 $_['text_list']         = 'Marketing Tracking List';
 $_['text_add']          = 'Add Marketing Tracking';
 $_['text_edit']         = 'Edit Marketing Tracking';

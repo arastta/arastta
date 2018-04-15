@@ -11,7 +11,6 @@
 $_['heading_title']     = 'User Groups';
 
 // Text
-$_['text_success']      = 'Success: You have modified user groups!';
 $_['text_list']         = 'User Group';
 $_['text_add']          = 'Add User Group';
 $_['text_edit']         = 'Edit User Group';

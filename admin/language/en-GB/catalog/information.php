@@ -12,7 +12,6 @@ $_['heading_title']          = 'Information';
 $_['column_status']          = 'Status';
 
 // Text
-$_['text_success']           = 'Success: You have modified information!';
 $_['text_list']              = 'Information List';
 $_['text_add']               = 'Add Information';
 $_['text_edit']              = 'Edit Information';

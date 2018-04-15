@@ -11,7 +11,6 @@
 $_['heading_title']          = 'Language Overrides';
 
 // Text
-$_['text_success']           = 'Success: You have modified language strings!';
 $_['text_list']              = 'String List';
 $_['text_admin']             = 'Admin';
 $_['text_catalog']           = 'Catalog';

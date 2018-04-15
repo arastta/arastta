@@ -12,7 +12,6 @@ $_['heading_title']    = 'Slideshow';
 
 // Text
 $_['text_module']      = 'Modules';
-$_['text_success']     = 'Success: You have modified slideshow module!';
 $_['text_edit']        = 'Edit Slideshow Module';
 
 // Entry

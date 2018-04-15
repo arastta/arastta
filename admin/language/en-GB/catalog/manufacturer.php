@@ -11,7 +11,6 @@
 $_['heading_title']         = 'Manufacturers';
 
 // Text
-$_['text_success']          = 'Success: You have modified manufacturers!';
 $_['text_list']             = 'Manufacturer List';
 $_['text_add']              = 'Add Manufacturer';
 $_['text_edit']             = 'Edit Manufacturer';

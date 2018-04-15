@@ -12,7 +12,6 @@ $_['heading_title'] = 'Blog Comment';
 
 // Text
 $_['text_module']  = 'Modules';
-$_['text_success'] = 'Success: You have modified blog comment module!';
 $_['text_edit']    = 'Edit Comment Module';
 
 // Entry

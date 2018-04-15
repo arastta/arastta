@@ -14,7 +14,6 @@ $_['heading_title'] = 'Marketplace';
 $_['entry_api_key'] = 'API Key';
 
 // Text
-$_['text_success']           = 'Success: You have installed your add-on!';
 $_['text_uninstall_success'] = 'Success: You have uninstalled your add-on!';
 $_['text_login_api_key']     = 'Login with API Key';
 $_['text_login_email']       = 'Login with Email';

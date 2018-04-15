@@ -11,7 +11,6 @@
 $_['heading_title']                 = 'Woopra';
 
 // Text
-$_['text_success']                  = 'Success: You have modified Woopra!';
 $_['text_edit']                     = 'Edit Woopra';
 
 // Entry

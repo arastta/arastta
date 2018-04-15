@@ -12,7 +12,6 @@ $_['heading_title']                 = 'Summernote';
 
 // Text
 $_['text_editor']                   = 'Editor';
-$_['text_success']                  = 'Success: You have modified Summernote editor!';
 $_['text_edit']                     = 'Edit Summernote';
 
 // Entry

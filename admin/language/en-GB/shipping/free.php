@@ -12,7 +12,6 @@ $_['heading_title']    = 'Free Shipping';
 
 // Text
 $_['text_shipping']    = 'Shipping';
-$_['text_success']     = 'Success: You have modified free shipping!';
 $_['text_edit']        = 'Edit Free Shipping';
 
 // Entry

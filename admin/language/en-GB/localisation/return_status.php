@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Return Statuses';
 
 // Text
-$_['text_success']     = 'Success: You have modified return statuses!';
 $_['text_list']        = 'Return Status List';
 $_['text_add']         = 'Add Return Status';
 $_['text_edit']        = 'Edit Return Status';

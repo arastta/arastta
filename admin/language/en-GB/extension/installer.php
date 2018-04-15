@@ -11,7 +11,6 @@
 $_['heading_title']          = 'Installer';
 
 // Text
-$_['text_success']           = 'Success: You have installed your add-on!';
 $_['text_uninstall_success'] = 'Success: You have uninstalled your add-on!';
 $_['text_unzip']             = 'Extracting files!';
 $_['text_ftp']               = 'Copying files!';

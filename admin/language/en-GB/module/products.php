@@ -12,7 +12,6 @@ $_['heading_title'] = 'Products';
 
 // Text
 $_['text_module']  = 'Modules';
-$_['text_success'] = 'Success: You have modified products module!';
 $_['text_edit']    = 'Edit Products Module';
 
 $_['text_general'] = 'General';

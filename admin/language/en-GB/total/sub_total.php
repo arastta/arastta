@@ -12,7 +12,6 @@ $_['heading_title']    = 'Sub-Total';
 
 // Text
 $_['text_total']       = 'Order Totals';
-$_['text_success']     = 'Success: You have modified sub-total total!';
 $_['text_edit']        = 'Edit Sub-Total Total';
 
 // Entry

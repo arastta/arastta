@@ -11,7 +11,6 @@
 $_['heading_title']             = 'Menus';
 
 // Text
-$_['text_success']              = 'Success: You have modified Menu!';
 $_['text_list']                 = 'Menu List';
 
 $_['text_new_menu_item']        = 'New Menu Item';

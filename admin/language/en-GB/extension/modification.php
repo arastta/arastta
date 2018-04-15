@@ -11,7 +11,6 @@
 $_['heading_title'] = 'Modifications';
 
 // Text
-$_['text_success'] = 'Success: You have modified modifications!';
 $_['text_refresh'] = 'Please wait until the modification files created!';
 $_['text_list']    = 'Modification List';
 

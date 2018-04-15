@@ -12,7 +12,6 @@ $_['heading_title']    = 'Bestsellers';
 
 // Text
 $_['text_module']      = 'Modules';
-$_['text_success']     = 'Success: You have modified bestsellers module!';
 $_['text_edit']        = 'Edit Bestsellers Module';
 
 // Entry

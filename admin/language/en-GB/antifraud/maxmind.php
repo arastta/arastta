@@ -11,7 +11,6 @@
 $_['heading_title']                 = 'MaxMind';
 
 // Text
-$_['text_success']                            = 'Success: You have modified MaxMind!';
 $_['text_edit']                               = 'Edit MaxMind';
 $_['text_country_match']                      = 'Country Match:';
 $_['text_country_code']                       = 'Country Code:';

@@ -11,7 +11,6 @@
 $_['heading_title']     = 'Shipping';
 
 // Text
-$_['text_success']      = 'Success: You have modified shipping!';
 $_['text_list']         = 'Shipping List';
 
 // Column

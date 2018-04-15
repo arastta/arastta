@@ -11,7 +11,6 @@
 $_['heading_title']             = 'Affiliates';
 
 // Text
-$_['text_success']              = 'Success: You have modified affiliates!';
 $_['text_approved']             = 'You have approved %s accounts!';
 $_['text_list']                 = 'Affiliate List';
 $_['text_add']                  = 'Add Affiliate';

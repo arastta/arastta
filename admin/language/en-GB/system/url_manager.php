@@ -11,7 +11,6 @@
 $_['heading_title']          = 'URL Manager';
 
 // Text
-$_['text_success']           = 'Success: You have modified URLs!';
 $_['text_list']              = 'URL List';
 $_['text_product']           = 'Product';
 $_['text_category']          = 'Category';

@@ -12,7 +12,6 @@ $_['heading_title'] = 'Blog Custom Posts';
 
 // Text
 $_['text_module']  = 'Modules';
-$_['text_success'] = 'Success: You have modified blog custom post module!';
 $_['text_edit']    = 'Edit Custom Post Module';
 
 // Entry

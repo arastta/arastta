@@ -12,7 +12,6 @@ $_['heading_title']       = 'Layouts';
 
 // Text
 $_['text_layout']         = 'Layout';
-$_['text_success']        = 'Success: You have modified layouts!';
 $_['text_assign']         = 'Success: Layout assign on store!';
 $_['text_list']           = 'Layout List';
 $_['text_add']            = 'Add Layout';

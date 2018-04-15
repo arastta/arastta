@@ -11,7 +11,6 @@
 $_['heading_title']     = 'Tax Classes';
 
 // Text
-$_['text_success']      = 'Success: You have modified tax classes!';
 $_['text_list']         = 'Tax Class List';
 $_['text_add']          = 'Add Tax Class';
 $_['text_edit']         = 'Edit Tax Class';

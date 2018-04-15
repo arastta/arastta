@@ -11,7 +11,6 @@
 $_['heading_title']     = 'Customer Groups';
 
 // Text
-$_['text_success']      = 'Success: You have modified customer groups!';
 $_['text_list']         = 'Customer Group List';
 $_['text_add']          = 'Add Customer Group';
 $_['text_edit']         = 'Edit Customer Group';

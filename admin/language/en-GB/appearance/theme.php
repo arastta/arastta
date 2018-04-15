@@ -11,7 +11,6 @@
 $_['heading_title']             = 'Themes';
 
 // Text
-$_['text_success']              = 'Success: You have modified Theme!';
 $_['text_list']                 = 'Theme List';
 $_['text_form']                 = 'Theme Edit';
 

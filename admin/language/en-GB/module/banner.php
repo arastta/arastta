@@ -12,7 +12,6 @@ $_['heading_title']    = 'Banner';
 
 // Text
 $_['text_module']      = 'Modules';
-$_['text_success']     = 'Success: You have modified banner module!';
 $_['text_edit']        = 'Edit Banner Module';
 
 // Entry

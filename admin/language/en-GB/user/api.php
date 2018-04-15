@@ -11,7 +11,6 @@
 $_['heading_title']        = 'APIs';
 
 // Text
-$_['text_success']         = 'Success: You have modified APIs!';
 $_['text_list']            = 'API List';
 $_['text_add']             = 'Add API';
 $_['text_edit']            = 'Edit API';

@@ -11,7 +11,6 @@
 $_['heading_title']                 = 'Google Analytics';
 
 // Text
-$_['text_success']                  = 'Success: You have modified Google Analytics!';
 $_['text_edit']                     = 'Edit Google Analytics';
 
 // Entry

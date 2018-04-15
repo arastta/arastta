@@ -11,7 +11,6 @@
 $_['heading_title']                 = 'Basic Captcha';
 
 // Text
-$_['text_success']                  = 'Success: You have modified Basic Captcha!';
 $_['text_edit']                     = 'Edit Basic Captcha';
 
 // Entry

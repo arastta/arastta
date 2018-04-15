@@ -13,7 +13,6 @@ $_['heading_title']    = 'Products Viewed Report';
 // Text
 $_['text_list']        = 'Products Viewed List';
 $_['text_viewed']      = 'Viewed';
-$_['text_success']     = 'Success: You have reset the products viewed report!';
 
 // Column
 $_['column_name']      = 'Product Name';
