@@ -33,7 +33,6 @@ $_['entry_refunded_status']          = 'Refunded Status';
 $_['entry_reversed_status']          = 'Reversed Status';
 $_['entry_voided_status']            = 'Voided Status';
 $_['entry_no_shipping_status']       = 'No Shipping';
-$_['entry_geo_zone']                 = 'Geo Zone';
 
 // Tab
 $_['tab_general']                    = 'General';

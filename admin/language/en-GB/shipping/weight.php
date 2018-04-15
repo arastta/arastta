@@ -16,7 +16,6 @@ $_['text_shipping']    = 'Shipping';
 // Entry
 $_['entry_rate']       = 'Rates';
 $_['entry_tax_class']  = 'Tax Class';
-$_['entry_geo_zone']   = 'Geo Zone';
 
 // Help
 $_['help_rate']        = 'Example: 5:10.00,7:12.00 Weight:Cost,Weight:Cost, etc..';

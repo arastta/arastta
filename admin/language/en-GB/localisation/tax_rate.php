@@ -18,14 +18,12 @@ $_['text_amount']          = 'Fixed Amount';
 $_['column_name']          = 'Tax Name';
 $_['column_rate']          = 'Tax Rate';
 $_['column_type']          = 'Type';
-$_['column_geo_zone']      = 'Geo Zone';
 
 // Entry
 $_['entry_name']           = 'Tax Name';
 $_['entry_rate']           = 'Tax Rate';
 $_['entry_type']           = 'Type';
 $_['entry_customer_group'] = 'Customer Group';
-$_['entry_geo_zone']       = 'Geo Zone';
 
 // Error
 $_['error_tax_rule']       = 'Warning: This tax rate cannot be deleted as it is currently assigned to %s tax classes!';
