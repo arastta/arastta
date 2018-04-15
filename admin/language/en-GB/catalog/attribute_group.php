@@ -13,7 +13,6 @@ $_['heading_title']     = 'Attribute Groups';
 // Column
 $_['column_name']       = 'Attribute Group Name';
 $_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';
 
 // Entry
 $_['entry_name']        = 'Attribute Group Name';

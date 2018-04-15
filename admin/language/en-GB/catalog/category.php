@@ -18,7 +18,6 @@ $_['text_new_category_seo']  = 'Add a title and description to see how this cate
 // Column
 $_['column_name']            = 'Category Name';
 $_['column_sort_order']      = 'Sort Order';
-$_['column_action']          = 'Action';
 $_['column_status']          = 'Status';
 
 // Entry

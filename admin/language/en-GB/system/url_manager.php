@@ -22,7 +22,6 @@ $_['column_seo_url']         = 'SEO URL';
 $_['column_query']           = 'Query';
 $_['column_type']            = 'Type';
 $_['column_language']        = 'Language';
-$_['column_action']          = 'Action';
 
 // Entry
 $_['entry_seo_url']          = 'SEO URL';

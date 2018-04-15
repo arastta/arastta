@@ -54,6 +54,7 @@ $_['text_unselect_all']             = 'Unselect All';
 $_['text_yes']                      = 'Yes';
 
 // Column
+$_['column_action']                 = 'Action';
 $_['column_sortable']               = 'Sortable List';
 $_['column_status']                 = 'Status';
 

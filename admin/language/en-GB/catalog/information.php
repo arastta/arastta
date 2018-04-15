@@ -20,7 +20,6 @@ $_['text_new_information_seo']  = 'Add a title and description to see how this i
 // Column
 $_['column_title']           = 'Information Title';
 $_['column_sort_order']      = 'Sort Order';
-$_['column_action']          = 'Action';
 
 // Entry
 $_['entry_title']            = 'Information Title';

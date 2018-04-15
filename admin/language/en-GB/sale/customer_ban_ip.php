@@ -13,7 +13,6 @@ $_['heading_title']    = 'Banned IPs';
 // Column
 $_['column_ip']        = 'IP';
 $_['column_customer']  = 'Customers';
-$_['column_action']    = 'Action';
 
 // Entry
 $_['entry_ip']         = 'IP';

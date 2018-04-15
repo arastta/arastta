@@ -14,4 +14,3 @@ $_['heading_title']     = 'Payments';
 $_['column_name']       = 'Payment Method';
 $_['column_status']     = 'Status';
 $_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';

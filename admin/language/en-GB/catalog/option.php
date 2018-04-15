@@ -28,7 +28,6 @@ $_['text_items']          = 'Items';
 // Column
 $_['column_name']         = 'Option Name';
 $_['column_sort_order']   = 'Sort Order';
-$_['column_action']       = 'Action';
 
 // Entry
 $_['entry_name']          = 'Option Name';

@@ -13,7 +13,6 @@ $_['heading_title']     = 'Filters';
 // Column
 $_['column_group']      = 'Filter Group';
 $_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';
 
 // Entry
 $_['entry_group']       = 'Filter Group Name';

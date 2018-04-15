@@ -12,7 +12,6 @@ $_['heading_title']    = 'Return Reasons';
 
 // Column
 $_['column_name']      = 'Return Reason Name';
-$_['column_action']    = 'Action';
 
 // Entry
 $_['entry_name']       = 'Return Reason Name';

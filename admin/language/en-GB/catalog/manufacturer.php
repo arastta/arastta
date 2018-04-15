@@ -21,7 +21,6 @@ $_['text_new_manufacturer_seo']  = 'Add a title and description to see how this 
 // Column
 $_['column_name']           = 'Manufacturer Name';
 $_['column_sort_order']     = 'Sort Order';
-$_['column_action']         = 'Action';
 $_['column_status']         = 'Status';
 
 // Entry

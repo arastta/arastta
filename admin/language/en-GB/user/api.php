@@ -15,7 +15,6 @@ $_['column_username']      = 'Username';
 $_['column_status']        = 'Status';
 $_['column_date_added']    = 'Date Added';
 $_['column_date_modified'] = 'Date Modified';
-$_['column_action']        = 'Action';
 
 // Entry
 $_['entry_username']       = 'Username';

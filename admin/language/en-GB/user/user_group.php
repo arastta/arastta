@@ -12,7 +12,6 @@ $_['heading_title']     = 'User Groups';
 
 // Column
 $_['column_name']       = 'User Group Name';
-$_['column_action']     = 'Action';
 
 // Entry
 $_['entry_name']        = 'User Group Name';

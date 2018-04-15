@@ -24,7 +24,6 @@ $_['column_status']         = 'Status';
 $_['column_orders']         = 'No. Orders';
 $_['column_products']       = 'No. Products';
 $_['column_total']          = 'Total';
-$_['column_action']         = 'Action';
 
 // Entry
 $_['entry_date_start']      = 'Date Start';

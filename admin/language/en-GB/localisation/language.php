@@ -13,9 +13,6 @@ $_['heading_title']     = 'Languages';
 // Text
 $_['text_upload']       = 'Upload Translation';
 
-// Column
-$_['column_action']     = 'Action';
-
 // Entry
 $_['entry_name']        = 'Name';
 $_['entry_code']        = 'Code';

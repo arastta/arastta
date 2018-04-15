@@ -26,7 +26,6 @@ $_['text_secure_all']                  = 'All Site (Catalog + Admin)';
 // Column
 $_['column_name']                      = 'Store Name';
 $_['column_url']                       = 'Store URL';
-$_['column_action']                    = 'Action';
 
 // Entry
 $_['entry_url']                        = 'Store URL';

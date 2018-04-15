@@ -40,7 +40,6 @@ $_['button_module']      = 'Modules';
 
 // Column
 $_['column_name']         = 'Layout Name';
-$_['column_action']       = 'Action';
 
 // Entry
 $_['entry_addnew']        = ' - Add New - ';

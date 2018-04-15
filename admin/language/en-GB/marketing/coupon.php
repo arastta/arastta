@@ -25,7 +25,6 @@ $_['column_order_id']     = 'Order ID';
 $_['column_customer']     = 'Customer';
 $_['column_amount']       = 'Amount';
 $_['column_date_added']   = 'Date Added';
-$_['column_action']       = 'Action';
 
 // Entry
 $_['entry_name']          = 'Coupon Name';

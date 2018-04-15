@@ -12,7 +12,6 @@ $_['heading_title']    = 'Return Statuses';
 
 // Column
 $_['column_name']      = 'Return Status Name';
-$_['column_action']    = 'Action';
 
 // Entry
 $_['entry_name']       = 'Return Status Name';

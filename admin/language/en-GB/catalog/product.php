@@ -36,7 +36,6 @@ $_['column_price']           = 'Price';
 $_['column_category']        = 'Category';
 $_['column_quantity']        = 'Quantity';
 $_['column_status']          = 'Status';
-$_['column_action']          = 'Action';
 
 // Entry
 $_['entry_name']             = 'Name';

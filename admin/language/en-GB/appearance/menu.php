@@ -31,7 +31,6 @@ $_['text_menu_link']            = 'Link';
 
 // Column
 $_['column_sort_order']         = 'Sort Order';
-$_['column_action']             = 'Action';
 
 $_['column_custom_name']        = 'Please enter Name';
 $_['column_custom_link']        = 'Please enter Link';

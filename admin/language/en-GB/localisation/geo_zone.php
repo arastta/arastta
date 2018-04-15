@@ -17,7 +17,6 @@ $_['text_items']         = 'Items';
 // Column
 $_['column_name']        = 'Geo Zone Name';
 $_['column_description'] = 'Description';
-$_['column_action']      = 'Action';
 
 // Entry
 $_['entry_name']         = 'Geo Zone Name';

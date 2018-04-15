@@ -18,7 +18,6 @@ $_['text_items']        = 'Items';
 
 // Column
 $_['column_title']      = 'Tax Class Title';
-$_['column_action']     = 'Action';
 
 // Entry
 $_['entry_title']       = 'Tax Class Title';

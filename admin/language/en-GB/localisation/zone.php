@@ -14,7 +14,6 @@ $_['heading_title']          = 'Zones';
 $_['column_name']            = 'Zone Name';
 $_['column_code']            = 'Zone Code';
 $_['column_country']         = 'Country';
-$_['column_action']          = 'Action';
 
 // Entry
 $_['entry_status']           = 'Zone Status';

@@ -16,7 +16,6 @@ $_['text_default']       = 'Default';
 // Column
 $_['column_name']        = 'Banner Name';
 $_['column_status']      = 'Status';
-$_['column_action']      = 'Action';
 
 // Entry
 $_['entry_name']         = 'Banner Name';

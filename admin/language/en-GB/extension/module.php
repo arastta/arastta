@@ -15,7 +15,6 @@ $_['text_layout']      = 'After you have installed and configured a module you c
 
 // Column
 $_['column_name']      = 'Module Name';
-$_['column_action']    = 'Action';
 
 // Entry
 $_['entry_code']       = 'Module';

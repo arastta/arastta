@@ -23,7 +23,6 @@ $_['column_status']         = 'Status';
 $_['column_points']         = 'Reward Points';
 $_['column_orders']         = 'No. Orders';
 $_['column_total']          = 'Total';
-$_['column_action']         = 'Action';
 
 // Entry
 $_['entry_date_start']      = 'Date Start';

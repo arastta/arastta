@@ -17,7 +17,6 @@ $_['text_items']       = 'Items';
 $_['column_title']     = 'Length Title';
 $_['column_unit']      = 'Length Unit';
 $_['column_value']     = 'Value';
-$_['column_action']    = 'Action';
 
 // Entry
 $_['entry_title']      = 'Length Title';

@@ -26,7 +26,6 @@ $_['column_user_group']         = 'User Group';
 $_['column_status']             = 'Status';
 $_['column_date_added']         = 'Date Added';
 $_['column_date_login']         = 'Last Login Date';
-$_['column_action']             = 'Action';
 
 // Entry
 $_['entry_user_group']          = 'User Group';

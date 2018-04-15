@@ -90,7 +90,6 @@ $_['column_comment']                          = 'Comment';
 $_['column_notify']                           = 'Customer Notified';
 $_['column_location']                         = 'Location';
 $_['column_reference']                        = 'Reference';
-$_['column_action']                           = 'Action';
 $_['column_weight']                           = 'Product weight';
 
 // Button

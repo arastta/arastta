@@ -12,7 +12,6 @@ $_['heading_title']     = 'Voucher Themes';
 
 // Column
 $_['column_name']       = 'Voucher Theme Name';
-$_['column_action']     = 'Action';
 
 // Entry
 $_['entry_name']        = 'Voucher Theme Name';

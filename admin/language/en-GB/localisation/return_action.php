@@ -12,7 +12,6 @@ $_['heading_title']    = 'Return Actions';
 
 // Column
 $_['column_name']      = 'Return Action Name';
-$_['column_action']    = 'Action';
 
 // Entry
 $_['entry_name']       = 'Return Action Name';

@@ -23,7 +23,6 @@ $_['column_text']        = 'Name';
 $_['column_type']        = 'Type';
 $_['column_context']     = 'Context';
 $_['column_status']      = 'Status';
-$_['column_action']      = 'Action';
 
 // Button
 $_['button_show_shortcode'] = 'Show Shortcode';

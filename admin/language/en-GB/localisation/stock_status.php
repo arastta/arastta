@@ -12,7 +12,6 @@ $_['heading_title']    = 'Stock Statuses';
 
 // Column
 $_['column_name']      = 'Stock Status Name';
-$_['column_action']    = 'Action';
 $_['column_color']     = 'Colour';
 $_['column_preorder']  = 'Pre-Order';
 

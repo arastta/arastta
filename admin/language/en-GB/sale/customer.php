@@ -28,7 +28,6 @@ $_['column_amount']         = 'Amount';
 $_['column_points']         = 'Points';
 $_['column_ip']             = 'IP';
 $_['column_total']          = 'Total Accounts';
-$_['column_action']         = 'Action';
 
 // Entry
 $_['entry_customer_group']  = 'Customer Group';

@@ -14,7 +14,6 @@ $_['heading_title']                         = 'Update Center';
 $_['column_name']                           = 'Name';
 $_['column_installed']                      = 'Installed Version';
 $_['column_latest']                         = 'Latest Version';
-$_['column_action']                         = 'Action';
 
 //Button
 $_['button_check']                          = 'Check Again';

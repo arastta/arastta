@@ -12,7 +12,6 @@ $_['heading_title']    = 'Order Statuses';
 
 // Column
 $_['column_name']      = 'Order Status Name';
-$_['column_action']    = 'Action';
 
 // Entry
 $_['entry_name']       = 'Order Status Name';

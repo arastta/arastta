@@ -32,7 +32,6 @@ $_['column_comments']   = 'Comments';
 $_['column_status']     = 'Status';
 $_['column_viewed']     = 'Page Views';
 $_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';
 
 // Button
 $_['button_category_add'] = 'Add New Category';
