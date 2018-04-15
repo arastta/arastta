@@ -21,7 +21,6 @@ $_['entry_email']                    = 'E-Mail';
 $_['entry_test']                     = 'Sandbox Mode';
 $_['entry_transaction']              = 'Transaction Method';
 $_['entry_debug']                    = 'Debug Mode';
-$_['entry_total']                    = 'Total';
 $_['entry_canceled_reversal_status'] = 'Cancelled Reversal Status';
 $_['entry_completed_status']         = 'Completed Status';
 $_['entry_denied_status']            = 'Denied Status';
@@ -41,7 +40,6 @@ $_['tab_order_status']               = 'Order Status';
 // Help
 $_['help_test']                      = 'Use the live or testing (sandbox) gateway server to process transactions?';
 $_['help_debug']                     = 'Logs additional information to the system log';
-$_['help_total']                     = 'The checkout total the order must reach before this payment method becomes active';
 
 // Error
 $_['error_email']                    = 'E-Mail required!';

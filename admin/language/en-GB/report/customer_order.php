@@ -22,7 +22,6 @@ $_['column_email']          = 'E-Mail';
 $_['column_customer_group'] = 'Customer Group';
 $_['column_orders']         = 'No. Orders';
 $_['column_products']       = 'No. Products';
-$_['column_total']          = 'Total';
 
 // Entry
 $_['entry_date_start']      = 'Date Start';

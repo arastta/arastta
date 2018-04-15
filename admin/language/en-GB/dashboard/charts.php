@@ -86,7 +86,6 @@ $_['text_most_viewed']               = 'Most Viewed';
 // Column
 $_['column_order_id']              = 'Order ID';
 $_['column_customer']              = 'Customer';
-$_['column_total']                 = 'Total';
 $_['column_product_name']          = 'Product Name';
 $_['column_product_id']            = 'Product ID';
 

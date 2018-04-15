@@ -27,7 +27,6 @@ $_['column_date_end']   = 'Date End';
 $_['column_orders']     = 'No. Orders';
 $_['column_products']   = 'No. Products';
 $_['column_tax']        = 'Tax';
-$_['column_total']      = 'Total';
 
 // Entry
 $_['entry_date_start']  = 'Date Start';

@@ -12,9 +12,3 @@ $_['heading_title']    = 'Free Shipping';
 
 // Text
 $_['text_shipping']    = 'Shipping';
-
-// Entry
-$_['entry_total']      = 'Total';
-
-// Help
-$_['help_total']       = 'Sub-Total amount needed before the free shipping module becomes available.';

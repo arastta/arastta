@@ -17,6 +17,3 @@ $_['text_total']       = 'Order Totals';
 $_['entry_total']      = 'Order Total';
 $_['entry_fee']        = 'Fee';
 $_['entry_tax_class']  = 'Tax Class';
-
-// Help
-$_['help_total']       = 'The checkout total the order must reach before this order total is deactivated.';

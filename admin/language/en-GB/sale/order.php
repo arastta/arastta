@@ -78,7 +78,6 @@ $_['text_history']                            = 'Add Order History';
 // Column
 $_['column_order_id']                         = 'Order ID';
 $_['column_customer']                         = 'Customer';
-$_['column_total']                            = 'Total';
 $_['column_product']                          = 'Product';
 $_['column_model']                            = 'Model';
 $_['column_quantity']                         = 'Quantity';
@@ -130,7 +129,6 @@ $_['entry_coupon']                            = 'Coupon';
 $_['entry_voucher']                           = 'Voucher';
 $_['entry_reward']                            = 'Reward';
 $_['entry_order_id']                          = 'Order ID';
-$_['entry_total']                             = 'Total';
 $_['entry_currency']                          = 'Currency';
 
 // Help

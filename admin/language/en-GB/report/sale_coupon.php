@@ -18,7 +18,6 @@ $_['text_order']       = 'Orders';
 $_['column_name']      = 'Coupon Name';
 $_['column_code']      = 'Code';
 $_['column_orders']    = 'Orders';
-$_['column_total']     = 'Total';
 
 // Entry
 $_['entry_date_start'] = 'Date Start';

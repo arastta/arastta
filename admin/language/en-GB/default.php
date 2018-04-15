@@ -61,6 +61,7 @@ $_['column_geo_zone']               = 'Geo Zone';
 $_['column_sort_order']             = 'Sort Order';
 $_['column_sortable']               = 'Sortable List';
 $_['column_status']                 = 'Status';
+$_['column_total']                  = 'Total';
 
 // Entry
 $_['entry_date_added']              = 'Date Added';
@@ -68,6 +69,10 @@ $_['entry_date_modified']           = 'Date Modified';
 $_['entry_geo_zone']                = 'Geo Zone';
 $_['entry_sort_order']              = 'Sort Order';
 $_['entry_status']                  = 'Status';
+$_['entry_total']                   = 'Total';
+
+// Help
+$_['help_total']                    = 'The checkout total the order must reach before this extension or rule becomes active.';
 
 // Button
 $_['button_add']                    = 'Add New';

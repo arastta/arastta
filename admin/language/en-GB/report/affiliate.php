@@ -20,7 +20,6 @@ $_['column_affiliate']  = 'Affiliate Name';
 $_['column_email']      = 'E-Mail';
 $_['column_commission'] = 'Commission';
 $_['column_orders']     = 'No. Orders';
-$_['column_total']      = 'Total';
 
 // Entry
 $_['entry_date_start']  = 'Date Start';

@@ -16,11 +16,7 @@ $_['text_payment']       = 'Payment';
 
 // Entry
 $_['entry_bank']         = 'Bank Transfer Instructions';
-$_['entry_total']        = 'Total';
 $_['entry_order_status'] = 'Order Status';
-
-// Help
-$_['help_total']         = 'The checkout total the order must reach before this payment method becomes active.';
 
 // Error
 $_['error_bank']         = 'Bank Transfer Instructions Required!';
