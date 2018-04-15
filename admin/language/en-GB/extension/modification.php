@@ -18,7 +18,6 @@ $_['column_name']       = 'Modification Name';
 $_['column_author']     = 'Author';
 $_['column_version']    = 'Version';
 $_['column_type']       = 'Type';
-$_['column_status']     = 'Status';
 $_['column_date_added'] = 'Date Added';
 
 // Button

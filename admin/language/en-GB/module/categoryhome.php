@@ -16,8 +16,5 @@ $_['entry_category']      = 'Parent Category';
 $_['entry_root_category'] = '- Root Category -';
 $_['text_module']         = 'Modules';
 
-// Entry
-$_['entry_status'] = 'Status';
-
 // Error
 $_['error_name']       = 'Module Name must be between 3 and 64 characters!';

@@ -11,7 +11,6 @@
 $_['heading_title']                 = 'Google Authenticator';
 
 // Entry
-$_['entry_status']                  = 'Status';
 $_['entry_account']                 = 'Account';
 $_['entry_key']                     = 'Key';
 $_['entry_qrcode']                  = 'QR Code';

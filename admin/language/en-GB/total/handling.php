@@ -17,7 +17,6 @@ $_['text_total']       = 'Order Totals';
 $_['entry_total']      = 'Order Total';
 $_['entry_fee']        = 'Fee';
 $_['entry_tax_class']  = 'Tax Class';
-$_['entry_status']     = 'Status';
 $_['entry_sort_order'] = 'Sort Order';
 
 // Help

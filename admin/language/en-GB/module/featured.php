@@ -20,7 +20,7 @@ $_['entry_random_product'] = 'Random Product';
 $_['entry_limit']      = 'Limit';
 $_['entry_width']      = 'Width';
 $_['entry_height']     = 'Height';
-$_['entry_status']     = 'Status';
+
 
 // Help
 $_['help_product']     = '(Autocomplete)';

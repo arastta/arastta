@@ -16,7 +16,6 @@ $_['column_code']            = 'Zone Code';
 $_['column_country']         = 'Country';
 
 // Entry
-$_['entry_status']           = 'Zone Status';
 $_['entry_name']             = 'Zone Name';
 $_['entry_code']             = 'Zone Code';
 $_['entry_country']          = 'Country';

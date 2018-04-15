@@ -22,7 +22,6 @@ $_['text_html_preview']  = 'HTML Preview';
 $_['column_text']        = 'Name';
 $_['column_type']        = 'Type';
 $_['column_context']     = 'Context';
-$_['column_status']      = 'Status';
 
 // Button
 $_['button_show_shortcode'] = 'Show Shortcode';
@@ -32,7 +31,6 @@ $_['button_hide_shortcode'] = 'Hide Shortcode';
 $_['entry_text']         = 'Name';
 $_['entry_context']      = 'Context';
 $_['entry_name']         = 'Subject';
-$_['entry_status']       = 'Status';
 $_['entry_type']         = 'Type';
 $_['entry_description']  = 'Description';
 

@@ -19,7 +19,6 @@ $_['entry_banner']     = 'Banner';
 $_['entry_width']      = 'Width';
 $_['entry_height']     = 'Height';
 $_['entry_pagination'] = 'Pagination';
-$_['entry_status']     = 'Status';
 
 // Error
 $_['error_name']       = 'Module Name must be between 3 and 64 characters!';

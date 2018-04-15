@@ -12,4 +12,3 @@ $_['heading_title']    = 'Feeds';
 
 // Column
 $_['column_name']      = 'Product Feed Name';
-$_['column_status']    = 'Status';

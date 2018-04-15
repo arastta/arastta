@@ -34,7 +34,6 @@ $_['entry_random_product'] = 'Random Product';
 $_['entry_limit']          = 'Limit';
 $_['entry_width']          = 'Width';
 $_['entry_height']         = 'Height';
-$_['entry_status']         = 'Status';
 $_['entry_product']        = 'Product';
 $_['entry_show_title']     = 'Show Module Title';
 $_['entry_image']          = 'Show Product Image';

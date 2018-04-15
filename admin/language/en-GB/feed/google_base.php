@@ -14,5 +14,4 @@ $_['heading_title']    = 'Google Base';
 $_['text_feed']        = 'Feeds';
 
 // Entry
-$_['entry_status']     = 'Status';
 $_['entry_data_feed']  = 'Data Feed Url';

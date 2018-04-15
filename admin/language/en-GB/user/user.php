@@ -23,7 +23,6 @@ $_['column_firstname']          = 'First Name';
 $_['column_lastname']           = 'Last Name';
 $_['column_email']              = 'Email';
 $_['column_user_group']         = 'User Group';
-$_['column_status']             = 'Status';
 $_['column_date_added']         = 'Date Added';
 $_['column_date_login']         = 'Last Login Date';
 
@@ -35,7 +34,6 @@ $_['entry_firstname']           = 'First Name';
 $_['entry_lastname']            = 'Last Name';
 $_['entry_email']               = 'Email';
 $_['entry_image']               = 'Image';
-$_['entry_status']              = 'Status';
 $_['entry_enabled']             = 'Enabled';
 $_['entry_theme']               = 'Theme';
 $_['entry_admin_language']      = 'Admin Language';

@@ -23,7 +23,6 @@ $_['entry_value']          = 'Value';
 $_['entry_symbol_left']    = 'Symbol Left';
 $_['entry_symbol_right']   = 'Symbol Right';
 $_['entry_decimal_place']  = 'Decimal Places';
-$_['entry_status']         = 'Status';
 
 // Help
 $_['help_code']            = 'Do not change if this is your default currency. Must be valid <a href="http://www.xe.com/iso4217.php" target="_blank">ISO code</a>.';

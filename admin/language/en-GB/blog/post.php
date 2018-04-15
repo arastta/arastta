@@ -29,7 +29,6 @@ $_['column_name']       = 'Name';
 $_['column_category']   = 'Category';
 $_['column_date_added'] = 'Date Added';
 $_['column_comments']   = 'Comments';
-$_['column_status']     = 'Status';
 $_['column_viewed']     = 'Page Views';
 $_['column_sort_order'] = 'Sort Order';
 
@@ -49,7 +48,6 @@ $_['entry_tags']                  = 'Tags';
 $_['entry_category']              = 'Category';
 $_['entry_related']               = 'Related Posts';
 $_['entry_date_available']        = 'Date Published';
-$_['entry_status']                = 'Status';
 $_['entry_store']                 = 'Stores';
 $_['entry_image']                 = 'Image';
 $_['entry_author']                = 'Author';

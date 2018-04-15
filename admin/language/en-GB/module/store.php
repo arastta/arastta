@@ -15,4 +15,3 @@ $_['text_module']      = 'Modules';
 
 // Entry
 $_['entry_admin']      = 'Admin Users Only';
-$_['entry_status']     = 'Status';

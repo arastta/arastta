@@ -17,7 +17,6 @@ $_['text_sale']             = 'Sales';
 $_['column_customer']       = 'Customer Name';
 $_['column_email']          = 'E-Mail';
 $_['column_customer_group'] = 'Customer Group';
-$_['column_status']         = 'Status';
 $_['column_total']          = 'Total';
 
 // Entry

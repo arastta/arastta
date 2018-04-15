@@ -9,7 +9,6 @@
 
 // Heading
 $_['heading_title']          = 'Information';
-$_['column_status']          = 'Status';
 
 // Text
 $_['text_default']           = 'Default';
@@ -30,7 +29,6 @@ $_['entry_meta_keyword']     = 'Meta Tag Keywords';
 $_['entry_meta_description'] = 'Meta Tag Description';
 $_['entry_seo_url']          = 'SEO URL';
 $_['entry_bottom']           = 'Bottom';
-$_['entry_status']           = 'Status';
 $_['entry_sort_order']       = 'Sort Order';
 $_['entry_layout']           = 'Layout Override';
 

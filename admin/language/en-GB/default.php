@@ -58,6 +58,9 @@ $_['column_action']                 = 'Action';
 $_['column_sortable']               = 'Sortable List';
 $_['column_status']                 = 'Status';
 
+// Entry
+$_['entry_status']                  = 'Status';
+
 // Button
 $_['button_add']                    = 'Add New';
 $_['button_add_image']              = 'Add';

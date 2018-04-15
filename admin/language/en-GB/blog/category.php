@@ -17,7 +17,6 @@ $_['text_new_category_seo'] = 'Add a title and description to see how this categ
 
 // Column
 $_['column_name']       = 'Name';
-$_['column_status']     = 'Status';
 $_['column_sort_order'] = 'Sort Order';
 
 // Entry
@@ -32,7 +31,6 @@ $_['entry_store']            = 'Stores';
 $_['entry_image']            = 'Image';
 $_['entry_top']              = 'Top Menu';
 $_['entry_sort_order']       = 'Sort Order';
-$_['entry_status']           = 'Status';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_update_menu_name'] = 'Update Menu Name';
 

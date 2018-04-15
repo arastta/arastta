@@ -34,7 +34,6 @@ $_['entry_continue']   = 'Continue';
 $_['entry_cart']       = 'Cart';
 $_['entry_checkout']   = 'Checkout';
 $_['entry_message']    = 'Message';
-$_['entry_status']     = 'Status';
 
 // Help
 $_['help_popup']       = '(Autocomplete)';

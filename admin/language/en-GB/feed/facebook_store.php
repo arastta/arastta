@@ -31,7 +31,6 @@ $_['entry_show_product_description'] = 'Display Product Description';
 $_['entry_show_product_price']       = 'Display Product Price';
 $_['entry_show_product_rating']      = 'Display Product Rating';
 $_['entry_show_addtocart']           = 'Display Add to Cart Button';
-$_['entry_status']                   = 'Status';
 $_['entry_data_feed']                = 'Generated Code';
 
 // Help

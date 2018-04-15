@@ -34,7 +34,6 @@ $_['entry_tool_insert_hr']          = 'Insert Horizontal Rule';
 $_['entry_tool_view_fullscreen']    = 'Full Screen';
 $_['entry_tool_view_codeview']      = 'Code View';
 $_['entry_tool_help']               = 'Help';
-$_['entry_status']                  = 'Status';
 $_['entry_sort_order']              = 'Sort Order';
 
 // Tab

@@ -11,6 +11,3 @@
 $_['heading_title']    = 'Account';
 
 $_['text_module']      = 'Modules';
-
-// Entry
-$_['entry_status']     = 'Status';

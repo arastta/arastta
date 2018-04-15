@@ -20,7 +20,6 @@ $_['entry_random_post'] = 'Random Post';
 $_['entry_limit']       = 'Limit';
 $_['entry_width']       = 'Width';
 $_['entry_height']      = 'Height';
-$_['entry_status']      = 'Status';
 
 // Help
 $_['help_post']        = '(Autocomplete)';

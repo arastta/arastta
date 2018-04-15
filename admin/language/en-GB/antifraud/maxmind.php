@@ -66,7 +66,6 @@ $_['text_error']                              = 'Error:';
 $_['entry_key']                     = 'License Key';
 $_['entry_score']                   = 'Risk Score';
 $_['entry_order']                   = 'Fraud Order Status';
-$_['entry_status']                  = 'Status';
 
 // Error
 $_['error_key']                     = 'Warning: License Key is reuqired!';

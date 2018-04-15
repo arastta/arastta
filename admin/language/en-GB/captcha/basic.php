@@ -9,6 +9,3 @@
 
 // Heading
 $_['heading_title']                 = 'Basic Captcha';
-
-// Entry
-$_['entry_status']                  = 'Status';

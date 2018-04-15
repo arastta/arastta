@@ -14,7 +14,6 @@ $_['heading_title']             = 'System Information';
 $_['column_setting']            = 'Setting';
 $_['column_value']              = 'Value';
 $_['column_folder']             = 'Folder';
-$_['column_status']             = 'Status';
 
 // Tab
 $_['tab_general']               = 'General';

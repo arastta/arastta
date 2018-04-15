@@ -17,5 +17,4 @@ $_['text_shipping']    = 'Shipping';
 $_['entry_cost']       = 'Cost';
 $_['entry_tax_class']  = 'Tax Class';
 $_['entry_geo_zone']   = 'Geo Zone';
-$_['entry_status']     = 'Status';
 $_['entry_sort_order'] = 'Sort Order';

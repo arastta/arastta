@@ -21,7 +21,6 @@ $_['text_new_manufacturer_seo']  = 'Add a title and description to see how this 
 // Column
 $_['column_name']           = 'Manufacturer Name';
 $_['column_sort_order']     = 'Sort Order';
-$_['column_status']         = 'Status';
 
 // Entry
 $_['entry_name']             = 'Manufacturer Name';
@@ -33,7 +32,6 @@ $_['entry_seo_url']          = 'SEO URL';
 $_['entry_store']            = 'Stores';
 $_['entry_image']            = 'Image';
 $_['entry_sort_order']       = 'Sort Order';
-$_['entry_status']           = 'Status';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_type']             = 'Type';
 

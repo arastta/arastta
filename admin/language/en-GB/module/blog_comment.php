@@ -20,7 +20,6 @@ $_['entry_description_length']  = 'Description Limit';
 $_['entry_image']               = 'Display Image';
 $_['entry_width']               = 'Width';
 $_['entry_height']              = 'Height';
-$_['entry_status']              = 'Status';
 
 // Help
 $_['help_post']        = '(Autocomplete)';

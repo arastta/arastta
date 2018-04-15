@@ -39,7 +39,6 @@ $_['entry_value']           = 'Value';
 $_['entry_custom_value']    = 'Custom Field Value Name';
 $_['entry_customer_group']  = 'Customer Group';
 $_['entry_required']        = 'Required';
-$_['entry_status']          = 'Status';
 $_['entry_sort_order']      = 'Sort Order';
 
 // Help

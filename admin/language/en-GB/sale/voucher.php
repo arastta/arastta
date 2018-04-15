@@ -20,7 +20,6 @@ $_['column_from']       = 'From';
 $_['column_to']         = 'To';
 $_['column_theme']      = 'Theme';
 $_['column_amount']     = 'Amount';
-$_['column_status']     = 'Status';
 $_['column_order_id']   = 'Order ID';
 $_['column_customer']   = 'Customer';
 $_['column_date_added'] = 'Date Added';
@@ -34,7 +33,6 @@ $_['entry_to_email']    = 'To E-Mail';
 $_['entry_theme']       = 'Theme';
 $_['entry_message']     = 'Message';
 $_['entry_amount']      = 'Amount';
-$_['entry_status']      = 'Status';
 
 // Help
 $_['help_code']         = 'The code the customer enters to activate the voucher.';

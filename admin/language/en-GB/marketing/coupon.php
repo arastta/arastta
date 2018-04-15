@@ -20,7 +20,6 @@ $_['column_code']         = 'Code';
 $_['column_discount']     = 'Discount';
 $_['column_date_start']   = 'Date Start';
 $_['column_date_end']     = 'Date End';
-$_['column_status']       = 'Status';
 $_['column_order_id']     = 'Order ID';
 $_['column_customer']     = 'Customer';
 $_['column_amount']       = 'Amount';
@@ -40,7 +39,6 @@ $_['entry_date_start']    = 'Date Start';
 $_['entry_date_end']      = 'Date End';
 $_['entry_uses_total']    = 'Uses Per Coupon';
 $_['entry_uses_customer'] = 'Uses Per Customer';
-$_['entry_status']        = 'Status';
 
 // Help
 $_['help_code']           = 'The code the customer enters to get the discount.';

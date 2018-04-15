@@ -18,7 +18,6 @@ $_['text_new_category_seo']  = 'Add a title and description to see how this cate
 // Column
 $_['column_name']            = 'Category Name';
 $_['column_sort_order']      = 'Sort Order';
-$_['column_status']          = 'Status';
 
 // Entry
 $_['entry_name']             = 'Category Name';
@@ -34,7 +33,6 @@ $_['entry_image']            = 'Image';
 $_['entry_top']              = 'Top Menu';
 $_['entry_column']           = 'Columns';
 $_['entry_sort_order']       = 'Sort Order';
-$_['entry_status']           = 'Status';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_update_menu_name'] = 'Update Menu Name';
 

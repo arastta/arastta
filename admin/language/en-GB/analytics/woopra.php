@@ -12,7 +12,6 @@ $_['heading_title']                 = 'Woopra';
 
 // Entry
 $_['entry_customer']                = 'Identify Customers';
-$_['entry_status']                  = 'Status';
 
 // Error
 $_['error_code']                    = 'Warning: JavaScript code is reuqired!';

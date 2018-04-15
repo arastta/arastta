@@ -18,7 +18,6 @@ $_['text_commission']   = 'Commission';
 // Column
 $_['column_affiliate']  = 'Affiliate Name';
 $_['column_email']      = 'E-Mail';
-$_['column_status']     = 'Status';
 $_['column_commission'] = 'Commission';
 $_['column_orders']     = 'No. Orders';
 $_['column_total']      = 'Total';

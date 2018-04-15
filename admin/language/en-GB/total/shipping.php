@@ -15,5 +15,4 @@ $_['text_total']       = 'Order Totals';
 
 // Entry
 $_['entry_estimator']  = 'Shipping Estimator';
-$_['entry_status']     = 'Status';
 $_['entry_sort_order'] = 'Sort Order';
