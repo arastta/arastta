@@ -9,6 +9,3 @@
 
 // Heading
 $_['heading_title']    = 'Reward Points';
-
-// Text
-$_['text_total']       = 'Order Totals';

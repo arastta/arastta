@@ -95,7 +95,6 @@ $_['text_tax']                         = 'Taxes';
 $_['text_tax_class']                   = 'Tax Classes';
 $_['text_tax_rate']                    = 'Tax Rates';
 $_['text_tools']                       = 'Tools';
-$_['text_total']                       = 'Order Totals';
 $_['text_upload']                      = 'Uploads';
 $_['text_user']                        = 'Users';
 $_['text_users']                       = 'Users';
