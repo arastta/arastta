@@ -32,7 +32,6 @@ $_['column_author']         = 'Author';
 $_['column_version']        = 'Version';
 $_['column_type']           = 'Type';
 $_['column_date_added']     = 'Date Added';
-$_['column_sort_order']     = 'Sort Order';
 
 // Error
 $_['error_editor_setting']  = 'Warning: Status for this editor cannot be changed as it is currently assigned as default in settings!';

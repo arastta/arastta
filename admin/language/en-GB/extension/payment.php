@@ -12,4 +12,3 @@ $_['heading_title']     = 'Payments';
 
 // Column
 $_['column_name']       = 'Payment Method';
-$_['column_sort_order'] = 'Sort Order';

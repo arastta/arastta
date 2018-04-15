@@ -30,7 +30,6 @@ $_['column_category']   = 'Category';
 $_['column_date_added'] = 'Date Added';
 $_['column_comments']   = 'Comments';
 $_['column_viewed']     = 'Page Views';
-$_['column_sort_order'] = 'Sort Order';
 
 // Button
 $_['button_category_add'] = 'Add New Category';
@@ -52,7 +51,6 @@ $_['entry_store']                 = 'Stores';
 $_['entry_image']                 = 'Image';
 $_['entry_author']                = 'Author';
 $_['entry_keyword']               = 'SEO URL';
-$_['entry_sort_order']            = 'Sort Order';
 $_['entry_allow_comment']         = 'Allow Comment';
 $_['entry_featured']              = 'Featured';
 $_['entry_comment_permission']    = 'Comment Permission';

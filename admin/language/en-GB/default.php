@@ -55,10 +55,12 @@ $_['text_yes']                      = 'Yes';
 
 // Column
 $_['column_action']                 = 'Action';
+$_['column_sort_order']             = 'Sort Order';
 $_['column_sortable']               = 'Sortable List';
 $_['column_status']                 = 'Status';
 
 // Entry
+$_['entry_sort_order']              = 'Sort Order';
 $_['entry_status']                  = 'Status';
 
 // Button

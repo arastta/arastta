@@ -21,7 +21,6 @@ $_['entry_name']         = 'Banner Name';
 $_['entry_title']        = 'Title';
 $_['entry_link']         = 'Link';
 $_['entry_image']        = 'Image';
-$_['entry_sort_order']   = 'Sort Order';
 
 // Error
 $_['error_name']         = 'Banner Name must be between 3 and 64 characters!';

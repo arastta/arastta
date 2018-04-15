@@ -29,7 +29,6 @@ $_['text_address']          = 'Address';
 $_['column_name']           = 'Custom Field Name';
 $_['column_location']       = 'Location';
 $_['column_type']           = 'Type';
-$_['column_sort_order']     = 'Sort Order';
 
 // Entry
 $_['entry_name']            = 'Custom Field Name';
@@ -39,7 +38,6 @@ $_['entry_value']           = 'Value';
 $_['entry_custom_value']    = 'Custom Field Value Name';
 $_['entry_customer_group']  = 'Customer Group';
 $_['entry_required']        = 'Required';
-$_['entry_sort_order']      = 'Sort Order';
 
 // Help
 $_['help_sort_order']       = 'Use minus to count backwards from the last field in the set.';

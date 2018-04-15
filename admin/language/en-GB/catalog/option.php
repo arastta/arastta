@@ -27,14 +27,12 @@ $_['text_items']          = 'Items';
 
 // Column
 $_['column_name']         = 'Option Name';
-$_['column_sort_order']   = 'Sort Order';
 
 // Entry
 $_['entry_name']          = 'Option Name';
 $_['entry_type']          = 'Type';
 $_['entry_option_value']  = 'Option Value Name';
 $_['entry_image']         = 'Image';
-$_['entry_sort_order']    = 'Sort Order';
 
 // Error
 $_['error_name']          = 'Option Name must be between 1 and 128 characters!';

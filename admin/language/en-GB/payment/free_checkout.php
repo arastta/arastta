@@ -16,4 +16,3 @@ $_['text_payment']       = 'Payment';
 
 // Entry
 $_['entry_order_status'] = 'Order Status';
-$_['entry_sort_order']   = 'Sort Order';

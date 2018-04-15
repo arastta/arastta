@@ -12,4 +12,3 @@ $_['heading_title']     = 'Shipping';
 
 // Column
 $_['column_name']       = 'Shipping Method';
-$_['column_sort_order'] = 'Sort Order';

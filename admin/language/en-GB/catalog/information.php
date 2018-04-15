@@ -18,7 +18,6 @@ $_['text_new_information_seo']  = 'Add a title and description to see how this i
 
 // Column
 $_['column_title']           = 'Information Title';
-$_['column_sort_order']      = 'Sort Order';
 
 // Entry
 $_['entry_title']            = 'Information Title';
@@ -29,7 +28,6 @@ $_['entry_meta_keyword']     = 'Meta Tag Keywords';
 $_['entry_meta_description'] = 'Meta Tag Description';
 $_['entry_seo_url']          = 'SEO URL';
 $_['entry_bottom']           = 'Bottom';
-$_['entry_sort_order']       = 'Sort Order';
 $_['entry_layout']           = 'Layout Override';
 
 // Help

@@ -30,8 +30,6 @@ $_['text_menu_name']            = 'Name';
 $_['text_menu_link']            = 'Link';
 
 // Column
-$_['column_sort_order']         = 'Sort Order';
-
 $_['column_custom_name']        = 'Please enter Name';
 $_['column_custom_link']        = 'Please enter Link';
 $_['column_category_name']      = 'Please enter Category Name';
@@ -45,7 +43,6 @@ $_['column_blog_post_name']     = 'Please enter Blog Post Name';
 $_['entry_name']                = 'Name';
 $_['entry_link']                = 'Link';
 $_['entry_columns']             = 'Columns';
-$_['entry_sort_order']          = 'Sort Order';
 $_['entry_store']               = 'Stores';
 
 // Buttons

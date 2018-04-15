@@ -18,7 +18,6 @@ $_['entry_name']        = 'Name';
 $_['entry_code']        = 'Code';
 $_['entry_image']       = 'Image';
 $_['entry_directory']   = 'Directory';
-$_['entry_sort_order']  = 'Sort Order';
 
 // Help
 $_['help_code']         = 'Example: en. Do not change if this is your default language.';

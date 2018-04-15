@@ -12,6 +12,3 @@ $_['heading_title']    = 'Coupon';
 
 // Text
 $_['text_total']       = 'Order Totals';
-
-// Entry
-$_['entry_sort_order'] = 'Sort Order';

@@ -53,7 +53,6 @@ $_['entry_menu_tools_searchreplace']     = 'Find and replace';
 $_['entry_menu_tools_pagebreak']         = 'Page break';
 $_['entry_menu_tools_nonbreaking']       = 'Non-breaking space';
 $_['entry_menu_tools_emoticons']         = 'Emoticons';
-$_['entry_sort_order']                   = 'Sort order';
 
 // Tab
 $_['tab_advanced'] = 'Advanced';

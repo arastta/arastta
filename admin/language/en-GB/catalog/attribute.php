@@ -13,12 +13,10 @@ $_['heading_title']          = 'Attributes';
 // Column
 $_['column_name']            = 'Attribute Name';
 $_['column_attribute_group'] = 'Attribute Group';
-$_['column_sort_order']      = 'Sort Order';
 
 // Entry
 $_['entry_name']            = 'Attribute Name';
 $_['entry_attribute_group'] = 'Attribute Group';
-$_['entry_sort_order']      = 'Sort Order';
 
 // Error
 $_['error_name']            = 'Attribute Name must be between 3 and 64 characters!';

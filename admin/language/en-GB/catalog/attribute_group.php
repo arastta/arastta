@@ -12,11 +12,9 @@ $_['heading_title']     = 'Attribute Groups';
 
 // Column
 $_['column_name']       = 'Attribute Group Name';
-$_['column_sort_order'] = 'Sort Order';
 
 // Entry
 $_['entry_name']        = 'Attribute Group Name';
-$_['entry_sort_order']  = 'Sort Order';
 
 // Error
 $_['error_name']        = 'Attribute Group Name must be between 3 and 64 characters!';

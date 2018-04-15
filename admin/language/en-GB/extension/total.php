@@ -12,4 +12,3 @@ $_['heading_title']     = 'Order Totals';
 
 // Column
 $_['column_name']       = 'Order Totals';
-$_['column_sort_order'] = 'Sort Order';

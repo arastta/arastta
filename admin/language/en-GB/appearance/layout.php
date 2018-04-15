@@ -51,7 +51,6 @@ $_['entry_modules']       = 'Modules';
 $_['entry_add_modules']   = 'Add Module';
 $_['entry_edit_modules']  = 'Edit Module';
 $_['entry_position']      = 'Position';
-$_['entry_sort_order']    = 'Sort Order';
 
 // Error
 $_['error_name']          = 'Layout Name must be between 3 and 64 characters!';
