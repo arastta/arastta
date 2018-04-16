@@ -15,4 +15,3 @@ $_['text_shipping']    = 'Shipping';
 
 // Entry
 $_['entry_cost']       = 'Cost';
-$_['entry_tax_class']  = 'Tax Class';

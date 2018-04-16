@@ -72,6 +72,7 @@ $_['entry_height']                  = 'Height';
 $_['entry_limit']                   = 'Limit';
 $_['entry_sort_order']              = 'Sort Order';
 $_['entry_status']                  = 'Status';
+$_['entry_tax_class']               = 'Tax Class';
 $_['entry_total']                   = 'Total';
 $_['entry_width']                   = 'Width';
 

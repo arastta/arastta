@@ -12,4 +12,3 @@ $_['heading_title']    = 'Low Order Fee';
 
 // Entry
 $_['entry_fee']        = 'Fee';
-$_['entry_tax_class']  = 'Tax Class';
