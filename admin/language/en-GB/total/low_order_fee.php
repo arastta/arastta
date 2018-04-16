@@ -9,6 +9,3 @@
 
 // Heading
 $_['heading_title']    = 'Low Order Fee';
-
-// Entry
-$_['entry_fee']        = 'Fee';

@@ -10,8 +10,5 @@
 // Heading
 $_['heading_title']    = 'Flat Rate';
 
-// Text
-$_['text_shipping']    = 'Shipping';
-
 // Entry
 $_['entry_cost']       = 'Cost';

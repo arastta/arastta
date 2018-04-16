@@ -9,6 +9,3 @@
 
 // Heading
 $_['heading_title']    = 'Free Shipping';
-
-// Text
-$_['text_shipping']    = 'Shipping';

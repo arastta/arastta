@@ -49,6 +49,7 @@ $_['text_publish']                  = 'Publish';
 $_['text_select']                   = ' --- Please Select --- ';
 $_['text_select_all']               = 'Select All';
 $_['text_selected']                 = ' Selected';
+$_['text_shipping']                 = 'Shipping';
 $_['text_sortable']                 = 'Please sort by order to enable reordering';
 $_['text_success']                  = 'Settings successfully saved.';
 $_['text_unselect_all']             = 'Unselect All';
@@ -67,6 +68,7 @@ $_['column_total']                  = 'Total';
 // Entry
 $_['entry_date_added']              = 'Date Added';
 $_['entry_date_modified']           = 'Date Modified';
+$_['entry_fee']                     = 'Fee';
 $_['entry_geo_zone']                = 'Geo Zone';
 $_['entry_height']                  = 'Height';
 $_['entry_limit']                   = 'Limit';
