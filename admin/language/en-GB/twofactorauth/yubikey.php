@@ -10,9 +10,6 @@
 // Heading
 $_['heading_title']                 = 'YubiKey';
 
-// Text
-$_['text_success']                  = 'Success: You have modified YubiKey!';
-
 // Entry
 $_['entry_apikey']                  = 'API Key';
 $_['entry_clientid']                = 'Client ID';
