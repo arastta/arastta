@@ -10,19 +10,13 @@
 // Heading
 $_['heading_title']                 = 'Google reCAPTCHA';
 
-// Text
-$_['text_success']                  = 'Success: You have modified Google reCAPTCHA!';
-$_['text_edit']                     = 'Edit Google reCAPTCHA';
-
 // Entry
 $_['entry_public']                  = 'Site key';
 $_['entry_secret']                  = 'Secret key';
-$_['entry_status']                  = 'Status';
 
 // Help
 $_['help_captcha']                  = 'Go to <a href="https://www.google.com/recaptcha/intro/index.html" target="_blank"><u>Google reCAPTCHA page</u></a> and register your website.';
 
 // Error
-$_['error_permission']              = 'Warning: You do not have permission to modify Google reCAPTCHA!';
 $_['error_public']                  = 'Warning: Site Key is reuqired!';
 $_['error_secret']                  = 'Warning: Secret Key is reuqired!';

@@ -11,10 +11,6 @@
 $_['heading_title']                        = 'Recurring Profiles';
 
 // Text
-$_['text_success']                         = 'Success: You have modified recurring profiles!';
-$_['text_list']                            = 'Recurring Profile List';
-$_['text_add']                             = 'Add Recurring Profile';
-$_['text_edit']                            = 'Edit Recurring Profile';
 $_['text_payment_profiles']                = 'Recurring Profiles';
 $_['text_status_active']                   = 'Active';
 $_['text_status_inactive']                 = 'Inactive';
@@ -41,8 +37,6 @@ $_['entry_order_recurring']                = 'ID';
 $_['entry_order_id']                       = 'Order ID';
 $_['entry_reference']                      = 'Payment Reference';
 $_['entry_customer']                       = 'Customer';
-$_['entry_date_added']                     = 'Date Added';
-$_['entry_status']                         = 'Status';
 $_['entry_type']                           = 'Type';
 $_['entry_action']                         = 'Action';
 $_['entry_email']                          = 'Email';

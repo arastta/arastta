@@ -11,7 +11,6 @@
 $_['heading_title']       = 'Customer Activity Report';
 
 // Text
-$_['text_list']           = 'Customer Activity List';
 $_['text_address_add']    = '<a href="customer_id=%d">%s</a> added a new address.';
 $_['text_address_edit']   = '<a href="customer_id=%d">%s</a> updated their address.';
 $_['text_address_delete'] = '<a href="customer_id=%d">%s</a> deleted one of their addresses.';
@@ -29,7 +28,6 @@ $_['text_order_guest']    = '%s created a <a href="order_id=%d">new order</a>.';
 $_['column_customer']     = 'Customer';
 $_['column_comment']      = 'Comment';
 $_['column_ip']           = 'IP';
-$_['column_date_added']   = 'Date Added';
 
 // Entry
 $_['entry_customer']      = 'Customer';

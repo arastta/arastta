@@ -11,9 +11,6 @@
 $_['heading_title']             = 'Menus';
 
 // Text
-$_['text_success']              = 'Success: You have modified Menu!';
-$_['text_list']                 = 'Menu List';
-
 $_['text_new_menu_item']        = 'New Menu Item';
 $_['text_category']             = 'Category';
 $_['text_product']              = 'Product';
@@ -33,9 +30,6 @@ $_['text_menu_name']            = 'Name';
 $_['text_menu_link']            = 'Link';
 
 // Column
-$_['column_sort_order']         = 'Sort Order';
-$_['column_action']             = 'Action';
-
 $_['column_custom_name']        = 'Please enter Name';
 $_['column_custom_link']        = 'Please enter Link';
 $_['column_category_name']      = 'Please enter Category Name';
@@ -49,7 +43,6 @@ $_['column_blog_post_name']     = 'Please enter Blog Post Name';
 $_['entry_name']                = 'Name';
 $_['entry_link']                = 'Link';
 $_['entry_columns']             = 'Columns';
-$_['entry_sort_order']          = 'Sort Order';
 $_['entry_store']               = 'Stores';
 
 // Buttons
@@ -64,6 +57,5 @@ $_['button_blog_post']          = 'Add Blog Post to Menu';
 
 
 // Error
-$_['error_permission']          = 'Warning: You do not have permission to modify top headers !';
 $_['error_name']                = 'Menu Name must be between 1 and 64 characters!';
 $_['error_link']                = 'Menu Link Can not be empty!';

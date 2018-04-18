@@ -19,7 +19,6 @@ $_['text_customizer']       = 'Customizer';
 $_['text_menu_description'] = 'Press return or enter to expand';
 $_['text_title']            = 'Title';
 $_['text_advance']          = 'Advanced';
-$_['text_success']          = 'Success: You have modified Customizer!';
 $_['text_remove']           = 'Success: You have delete modified Customizer and Theme default show!';
 
 $_['text_general_title']                        = 'General';
@@ -52,5 +51,3 @@ $_['entry_collapse_sidebar']= 'Collapse Sidebar';
 $_['entry_select_color']    = 'Select Colour';
 $_['entry_current_color']   = 'Current Colour';
 
-// Error
-$_['error_permission']      = 'Warning: You do not have permission to modify customizer!';

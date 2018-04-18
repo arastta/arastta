@@ -11,10 +11,6 @@
 $_['heading_title']      = 'Email Templates';
 
 // Text
-$_['text_success']       = 'Success: You have modified email tempaltes!';
-$_['text_list']          = 'Email Templates List';
-$_['text_add']           = 'Add Email Template';
-$_['text_edit']          = 'Edit Email Template';
 $_['text_default']       = 'Default';
 $_['text_percent']       = 'Percentage';
 $_['text_amount']        = 'Fixed Amount';
@@ -26,8 +22,6 @@ $_['text_html_preview']  = 'HTML Preview';
 $_['column_text']        = 'Name';
 $_['column_type']        = 'Type';
 $_['column_context']     = 'Context';
-$_['column_status']      = 'Status';
-$_['column_action']      = 'Action';
 
 // Button
 $_['button_show_shortcode'] = 'Show Shortcode';
@@ -37,7 +31,6 @@ $_['button_hide_shortcode'] = 'Hide Shortcode';
 $_['entry_text']         = 'Name';
 $_['entry_context']      = 'Context';
 $_['entry_name']         = 'Subject';
-$_['entry_status']       = 'Status';
 $_['entry_type']         = 'Type';
 $_['entry_description']  = 'Description';
 
@@ -169,6 +162,3 @@ $_['demo_tax_title']   = 'VAT (20%)';
 $_['demo_tax_value']   = '$50';
 $_['demo_total_title']   = 'Total';
 $_['demo_total_value']   = '$1650';
-
-// Error
-$_['error_permission']   = 'Warning: You do not have permission to modify manufacturers!';

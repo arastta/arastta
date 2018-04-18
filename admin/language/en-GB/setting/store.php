@@ -12,10 +12,6 @@ $_['heading_title']                    = 'Stores';
 
 // Text
 $_['text_settings']                    = 'Settings';
-$_['text_success']                     = 'Success: You have modified Stores!';
-$_['text_list']                        = 'Store List';
-$_['text_add']                         = 'Add Store';
-$_['text_edit']                        = 'Edit Store';
 $_['text_items']                       = 'Items';
 $_['text_tax']                         = 'Taxes';
 $_['text_account']                     = 'Account';
@@ -30,7 +26,6 @@ $_['text_secure_all']                  = 'All Site (Catalog + Admin)';
 // Column
 $_['column_name']                      = 'Store Name';
 $_['column_url']                       = 'Store URL';
-$_['column_action']                    = 'Action';
 
 // Entry
 $_['entry_url']                        = 'Store URL';
@@ -82,8 +77,6 @@ $_['entry_image_compare']              = 'Compare Image Size';
 $_['entry_image_wishlist']             = 'Wish List Image Size';
 $_['entry_image_cart']                 = 'Cart Image Size';
 $_['entry_image_location']             = 'Store Image Size';
-$_['entry_width']                      = 'Width';
-$_['entry_height']                     = 'Height';
 $_['entry_secure']                     = 'Use SSL';
 $_['entry_timezone']                   = 'Time Zone';
 
@@ -114,7 +107,6 @@ $_['help_timezone']                    = 'Choose a city in the list to configure
 
 // Error
 $_['error_warning']                    = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']                 = 'Warning: You do not have permission to modify stores!';
 $_['error_name']                       = 'Store Name must be between 3 and 32 characters!';
 $_['error_owner']                      = 'Store Owner must be between 3 and 64 characters!';
 $_['error_address']                    = 'Store Address must be between 10 and 256 characters!';

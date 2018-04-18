@@ -12,8 +12,6 @@ $_['heading_title']    = 'Cart';
 
 // Text
 $_['text_module']      = 'Modules';
-$_['text_success']     = 'Success: You have modified cart module!';
-$_['text_edit']        = 'Edit Cart Module';
 $_['text_general']     = 'General';
 $_['text_product']     = 'Product';
 $_['text_button']      = 'Button';
@@ -36,7 +34,6 @@ $_['entry_continue']   = 'Continue';
 $_['entry_cart']       = 'Cart';
 $_['entry_checkout']   = 'Checkout';
 $_['entry_message']    = 'Message';
-$_['entry_status']     = 'Status';
 
 // Help
 $_['help_popup']       = '(Autocomplete)';
@@ -53,6 +50,5 @@ $_['help_checkout']    = 'Show Checkout Button';
 $_['help_message']     = 'Show Success Message';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify cart module!';
 $_['error_name']       = 'Module Name must be between 3 and 64 characters!';
 $_['error_popup']      = 'Warning: You cannot set this module as Popup as it is used by <u><b>%s</b></u> module!';

@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Coupons Report';
 
 // Text
-$_['text_list']        = 'Coupon List';
 $_['text_coupon']      = 'Coupons';
 $_['text_order']       = 'Orders';
 
@@ -19,8 +18,6 @@ $_['text_order']       = 'Orders';
 $_['column_name']      = 'Coupon Name';
 $_['column_code']      = 'Code';
 $_['column_orders']    = 'Orders';
-$_['column_total']     = 'Total';
-$_['column_action']    = 'Action';
 
 // Entry
 $_['entry_date_start'] = 'Date Start';

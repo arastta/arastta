@@ -11,10 +11,6 @@
 $_['heading_title']         = 'Customers';
 
 // Text
-$_['text_success']          = 'Success: You have modified customers!';
-$_['text_list']             = 'Customer List';
-$_['text_add']              = 'Add Customer';
-$_['text_edit']             = 'Edit Customer';
 $_['text_default']          = 'Default';
 $_['text_balance']          = 'Balance';
 $_['text_add_ban_ip']       = 'Add Ban IP';
@@ -24,15 +20,12 @@ $_['text_remove_ban_ip']    = 'Remove Ban IP';
 $_['column_name']           = 'Customer Name';
 $_['column_email']          = 'E-Mail';
 $_['column_customer_group'] = 'Customer Group';
-$_['column_status']         = 'Status';
-$_['column_date_added']     = 'Date Added';
 $_['column_comment']        = 'Comment';
 $_['column_description']    = 'Description';
 $_['column_amount']         = 'Amount';
 $_['column_points']         = 'Points';
 $_['column_ip']             = 'IP';
 $_['column_total']          = 'Total Accounts';
-$_['column_action']         = 'Action';
 
 // Entry
 $_['entry_customer_group']  = 'Customer Group';
@@ -42,7 +35,6 @@ $_['entry_email']           = 'E-Mail';
 $_['entry_telephone']       = 'Telephone';
 $_['entry_fax']             = 'Fax';
 $_['entry_newsletter']      = 'Newsletter';
-$_['entry_status']          = 'Status';
 $_['entry_approved']        = 'Approved';
 $_['entry_safe']            = 'Safe';
 $_['entry_password']        = 'Password';
@@ -61,7 +53,6 @@ $_['entry_amount']          = 'Amount';
 $_['entry_points']          = 'Points';
 $_['entry_name']            = 'Customer Name';
 $_['entry_ip']              = 'IP';
-$_['entry_date_added']      = 'Date Added';
 $_['entry_send_email']      = 'Send Email';
 
 // Help
@@ -71,7 +62,6 @@ $_['help_send_email']       = 'Send an information email to the customer after b
 
 // Error
 $_['error_warning']         = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']      = 'Warning: You do not have permission to modify customers!';
 $_['error_exists']          = 'Warning: E-Mail Address is already registered!';
 $_['error_firstname']       = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']        = 'Last Name must be between 1 and 32 characters!';

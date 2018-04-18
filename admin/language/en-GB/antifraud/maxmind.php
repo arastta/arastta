@@ -11,8 +11,6 @@
 $_['heading_title']                 = 'MaxMind';
 
 // Text
-$_['text_success']                            = 'Success: You have modified MaxMind!';
-$_['text_edit']                               = 'Edit MaxMind';
 $_['text_country_match']                      = 'Country Match:';
 $_['text_country_code']                       = 'Country Code:';
 $_['text_high_risk_country']                  = 'High Risk Country:';
@@ -68,10 +66,8 @@ $_['text_error']                              = 'Error:';
 $_['entry_key']                     = 'License Key';
 $_['entry_score']                   = 'Risk Score';
 $_['entry_order']                   = 'Fraud Order Status';
-$_['entry_status']                  = 'Status';
 
 // Error
-$_['error_permission']              = 'Warning: You do not have permission to modify MaxMind!';
 $_['error_key']                     = 'Warning: License Key is reuqired!';
 $_['error_score']                   = 'Warning: Risk Score is reuqired!';
 

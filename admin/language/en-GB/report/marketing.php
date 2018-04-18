@@ -11,7 +11,6 @@
 $_['heading_title']    = 'Marketing Report';
 
 // Text
-$_['text_list']         = 'Marketing List';
 $_['text_sale']         = 'Sales';
 $_['text_order']        = 'Orders';
 $_['text_click']        = 'Clicks';
@@ -22,7 +21,6 @@ $_['column_campaign']  = 'Campaign Name';
 $_['column_code']      = 'Code';
 $_['column_clicks']    = 'Clicks';
 $_['column_orders']    = 'No. Orders';
-$_['column_total']     = 'Total';
 
 // Entry
 $_['entry_date_start'] = 'Date Start';

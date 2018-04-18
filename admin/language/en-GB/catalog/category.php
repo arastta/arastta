@@ -11,19 +11,12 @@
 $_['heading_title']          = 'Categories';
 
 // Text
-$_['text_success']           = 'Success: You have modified categories!';
-$_['text_list']              = 'Category List';
-$_['text_add']               = 'Add Category';
-$_['text_edit']              = 'Edit Category';
 $_['text_default']           = 'Default';
 $_['text_preview']           = 'View Category';
 $_['text_new_category_seo']  = 'Add a title and description to see how this category might appear in a search engine listing.';
 
 // Column
 $_['column_name']            = 'Category Name';
-$_['column_sort_order']      = 'Sort Order';
-$_['column_action']          = 'Action';
-$_['column_status']          = 'Status';
 
 // Entry
 $_['entry_name']             = 'Category Name';
@@ -38,8 +31,6 @@ $_['entry_store']            = 'Stores';
 $_['entry_image']            = 'Image';
 $_['entry_top']              = 'Top Menu';
 $_['entry_column']           = 'Columns';
-$_['entry_sort_order']       = 'Sort Order';
-$_['entry_status']           = 'Status';
 $_['entry_layout']           = 'Layout Override';
 $_['entry_update_menu_name'] = 'Update Menu Name';
 
@@ -52,7 +43,6 @@ $_['help_update_menu_name']  = 'If you checked this field update Menu Category n
 
 // Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']       = 'Warning: You do not have permission to modify categories!';
 $_['error_name']             = 'Category Name must be between 2 and 32 characters!';
 $_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
 $_['error_seo_url']          = 'SEO URL already in use!';

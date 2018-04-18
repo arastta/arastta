@@ -11,8 +11,6 @@
 $_['heading_title']         = 'Extensions';
 
 // Text
-$_['text_success']          = 'Success: You have modified extension!';
-$_['text_list']             = 'Extension List';
 $_['text_payment']          = 'Payment';
 $_['text_shipping']         = 'Shipping';
 $_['text_module']           = 'Module';
@@ -33,12 +31,7 @@ $_['column_name']           = 'Name';
 $_['column_author']         = 'Author';
 $_['column_version']        = 'Version';
 $_['column_type']           = 'Type';
-$_['column_status']         = 'Status';
-$_['column_date_added']     = 'Date Added';
-$_['column_sort_order']     = 'Sort Order';
-$_['column_action']         = 'Action';
 
 // Error
-$_['error_permission']      = 'Warning: You do not have permission to modify extensions!';
 $_['error_editor_setting']  = 'Warning: Status for this editor cannot be changed as it is currently assigned as default in settings!';
 $_['error_editor_user']     = 'Warning: Status for this editor cannot be changed as it is currently assigned to %s users!';

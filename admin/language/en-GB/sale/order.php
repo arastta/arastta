@@ -11,9 +11,6 @@
 $_['heading_title']                           = 'Orders';
 
 // Text
-$_['text_list']                               = 'Order List';
-$_['text_add']                                = 'Add Order';
-$_['text_edit']                               = 'Edit Order';
 $_['text_order_detail']                       = 'Order Details';
 $_['text_order_id']                           = 'Order ID:';
 $_['text_invoice_no']                         = 'Invoice No.:';
@@ -81,10 +78,6 @@ $_['text_history']                            = 'Add Order History';
 // Column
 $_['column_order_id']                         = 'Order ID';
 $_['column_customer']                         = 'Customer';
-$_['column_status']                           = 'Status';
-$_['column_date_added']                       = 'Date Added';
-$_['column_date_modified']                    = 'Date Modified';
-$_['column_total']                            = 'Total';
 $_['column_product']                          = 'Product';
 $_['column_model']                            = 'Model';
 $_['column_quantity']                         = 'Quantity';
@@ -93,7 +86,6 @@ $_['column_comment']                          = 'Comment';
 $_['column_notify']                           = 'Customer Notified';
 $_['column_location']                         = 'Location';
 $_['column_reference']                        = 'Reference';
-$_['column_action']                           = 'Action';
 $_['column_weight']                           = 'Product weight';
 
 // Button
@@ -137,9 +129,6 @@ $_['entry_coupon']                            = 'Coupon';
 $_['entry_voucher']                           = 'Voucher';
 $_['entry_reward']                            = 'Reward';
 $_['entry_order_id']                          = 'Order ID';
-$_['entry_total']                             = 'Total';
-$_['entry_date_added']                        = 'Date Added';
-$_['entry_date_modified']                     = 'Date Modified';
 $_['entry_currency']                          = 'Currency';
 
 // Help
@@ -196,6 +185,5 @@ $_['help_error']                              = 'Returns an error string with a 
 
 // Error
 $_['error_warning']                           = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']                        = 'Warning: You do not have permission to modify orders!';
 $_['error_curl']                              = 'Warning: CURL error %s(%s)!';
 $_['error_action']                            = 'Warning: Could not complete this action!';

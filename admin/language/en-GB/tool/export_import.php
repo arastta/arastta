@@ -49,7 +49,6 @@ $_['entry_settings_use_export_cache']       = 'Use phpTemp cache for large Expor
 $_['entry_settings_use_import_cache']       = 'Use phpTemp cache for large Imports (will be slightly slower)';
 
 // Error
-$_['error_permission']                      = 'Warning: You do not have permission to modify Export/Import!';
 $_['error_upload']                          = 'Uploaded spreadsheet file has validation errors!';
 $_['error_categories_header']               = 'Export/Import: Invalid header in the Categories worksheet';
 $_['error_category_filters_header']         = 'Export/Import: Invalid header in the CategoryFilters worksheet';

@@ -11,10 +11,6 @@
 $_['heading_title'] = 'Posts';
 
 // Text
-$_['text_success']       = 'Success: You have modified posts!';
-$_['text_list']          = 'Post List';
-$_['text_add']           = 'Add Post';
-$_['text_edit']          = 'Edit Post';
 $_['text_blog_setting']  = 'Settings';
 $_['text_blog_category'] = 'Categories';
 $_['text_blog_post']     = 'Posts';
@@ -31,12 +27,8 @@ $_['text_applied']       = 'Applied';
 $_['column_image']      = 'Image';
 $_['column_name']       = 'Name';
 $_['column_category']   = 'Category';
-$_['column_date_added'] = 'Date Added';
 $_['column_comments']   = 'Comments';
-$_['column_status']     = 'Status';
 $_['column_viewed']     = 'Page Views';
-$_['column_sort_order'] = 'Sort Order';
-$_['column_action']     = 'Action';
 
 // Button
 $_['button_category_add'] = 'Add New Category';
@@ -54,12 +46,10 @@ $_['entry_tags']                  = 'Tags';
 $_['entry_category']              = 'Category';
 $_['entry_related']               = 'Related Posts';
 $_['entry_date_available']        = 'Date Published';
-$_['entry_status']                = 'Status';
 $_['entry_store']                 = 'Stores';
 $_['entry_image']                 = 'Image';
 $_['entry_author']                = 'Author';
 $_['entry_keyword']               = 'SEO URL';
-$_['entry_sort_order']            = 'Sort Order';
 $_['entry_allow_comment']         = 'Allow Comment';
 $_['entry_featured']              = 'Featured';
 $_['entry_comment_permission']    = 'Comment Permission';
@@ -78,7 +68,6 @@ $_['help_tag']      = '(Autocomplete)';
 
 // Error 
 $_['error_warning']       = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']    = 'Warning: You do not have permission to modify blog!';
 $_['error_name']          = 'Blog Title must be between 3 and 64 characters!';
 $_['error_store']         = 'Warning: This blog page cannot be deleted as its currently used by %s stores!';
 $_['error_required_data'] = 'Required Data has not been entered. Check for field errors!';

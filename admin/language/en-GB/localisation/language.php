@@ -11,22 +11,13 @@
 $_['heading_title']     = 'Languages';
 
 // Text
-$_['text_success']      = 'Success: You have modified languages!';
-$_['text_list']         = 'Language List';
-$_['text_add']          = 'Add Language';
-$_['text_edit']         = 'Edit Language';
 $_['text_upload']       = 'Upload Translation';
-
-// Column
-$_['column_action']     = 'Action';
 
 // Entry
 $_['entry_name']        = 'Name';
 $_['entry_code']        = 'Code';
 $_['entry_image']       = 'Image';
 $_['entry_directory']   = 'Directory';
-$_['entry_status']      = 'Status';
-$_['entry_sort_order']  = 'Sort Order';
 
 // Help
 $_['help_code']         = 'Example: en. Do not change if this is your default language.';
@@ -35,7 +26,6 @@ $_['help_directory']    = 'Name of the language directory (case-sensitive)';
 $_['help_status']       = 'Select whether to enable this language or not. It will also affect the language dropdown in front-end.';
 
 // Error
-$_['error_permission']  = 'Warning: You do not have permission to modify languages!';
 $_['error_name']        = 'Language Name must be between 3 and 32 characters!';
 $_['error_code']        = 'Language Code must at least 2 characters!';
 $_['error_image']       = 'Image Filename must be between 3 and 64 characters!';

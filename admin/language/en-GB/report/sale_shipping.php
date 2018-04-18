@@ -11,7 +11,6 @@
 $_['heading_title']     = 'Shipping Report';
 
 // Text
-$_['text_list']         = 'Shipping List';
 $_['text_sale']         = 'Sales';
 $_['text_order']        = 'Orders';
 $_['text_year']         = 'Years';
@@ -25,7 +24,6 @@ $_['column_date_start'] = 'Date Start';
 $_['column_date_end']   = 'Date End';
 $_['column_title']      = 'Shipping Title';
 $_['column_orders']     = 'No. Orders';
-$_['column_total']      = 'Total';
 
 // Entry
 $_['entry_date_start']  = 'Date Start';

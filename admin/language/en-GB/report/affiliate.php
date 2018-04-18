@@ -11,7 +11,6 @@
 $_['heading_title']     = 'Affiliate Commission Report';
 
 // Text
-$_['text_list']         = 'Affiliate Commission List';
 $_['text_sale']         = 'Sales';
 $_['text_order']        = 'Orders';
 $_['text_commission']   = 'Commission';
@@ -19,11 +18,8 @@ $_['text_commission']   = 'Commission';
 // Column
 $_['column_affiliate']  = 'Affiliate Name';
 $_['column_email']      = 'E-Mail';
-$_['column_status']     = 'Status';
 $_['column_commission'] = 'Commission';
 $_['column_orders']     = 'No. Orders';
-$_['column_total']      = 'Total';
-$_['column_action']     = 'Action';
 
 // Entry
 $_['entry_date_start']  = 'Date Start';

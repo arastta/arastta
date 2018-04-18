@@ -12,7 +12,6 @@ $_['heading_title']             = 'Cache Manager';
 
 // Text
 $_['text_success']              = 'Success: You have deleted caches!';
-$_['text_list']                 = 'Cache List';
 $_['text_group_system']         = 'System';
 $_['text_group_image']          = 'Image';
 $_['text_group_modification']   = 'Modification';
@@ -27,5 +26,4 @@ $_['button_delete']             = 'Delete Selected';
 $_['button_deleteall']          = 'Delete All';
 
 // Error
-$_['error_permission']          = 'Warning: You do not have permission to modify caches!';
 $_['error_fail']                = 'Warning: Some of the caches were not deleted!';

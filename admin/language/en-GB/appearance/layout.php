@@ -12,11 +12,7 @@ $_['heading_title']       = 'Layouts';
 
 // Text
 $_['text_layout']         = 'Layout';
-$_['text_success']        = 'Success: You have modified layouts!';
 $_['text_assign']         = 'Success: Layout assign on store!';
-$_['text_list']           = 'Layout List';
-$_['text_add']            = 'Add Layout';
-$_['text_edit']           = 'Edit Layout';
 $_['text_default']        = 'Default';
 $_['text_header_top']     = 'Header Top';
 $_['text_top']            = 'Top';
@@ -44,7 +40,6 @@ $_['button_module']      = 'Modules';
 
 // Column
 $_['column_name']         = 'Layout Name';
-$_['column_action']       = 'Action';
 
 // Entry
 $_['entry_addnew']        = ' - Add New - ';
@@ -56,10 +51,8 @@ $_['entry_modules']       = 'Modules';
 $_['entry_add_modules']   = 'Add Module';
 $_['entry_edit_modules']  = 'Edit Module';
 $_['entry_position']      = 'Position';
-$_['entry_sort_order']    = 'Sort Order';
 
 // Error
-$_['error_permission']    = 'Warning: You do not have permission to modify layouts!';
 $_['error_name']          = 'Layout Name must be between 3 and 64 characters!';
 $_['error_default']       = 'Warning: This layout cannot be deleted as it is currently assigned as the default store layout!';
 $_['error_store']         = 'Warning: This layout cannot be deleted as it is currently assigned to %s stores!';

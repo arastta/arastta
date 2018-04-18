@@ -11,10 +11,6 @@
 $_['heading_title']             = 'Recurring Profiles';
 
 // Text
-$_['text_success']          = 'Success: You have modified recurring profiles!';
-$_['text_list']             = 'Recurring Profile List';
-$_['text_add']              = 'Add Recurring Profile';
-$_['text_edit']             = 'Edit Recurring Profile';
 $_['text_day']              = 'Day';
 $_['text_week']                 = 'Week';
 $_['text_semi_month']       = 'Semi Month';
@@ -35,16 +31,11 @@ $_['entry_trial_duration']  = 'Trial duration';
 $_['entry_trial_status']    = 'Trial status';
 $_['entry_trial_cycle']     = 'Trial cycle';
 $_['entry_trial_frequency']     = 'Trial frequency';
-$_['entry_status']          = 'Status';
-$_['entry_sort_order']      = 'Sort Order';
 
 // Column
 $_['column_name']           = 'Name';
-$_['column_sort_order']     = 'Sort Order';
-$_['column_action']         = 'Action';
 
 // Error
 $_['error_warning']         = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']      = 'Warning: You do not have permission to modify recurring profiles!';
 $_['error_name']            = 'Profile Name must be greater than 3 and less than 255 characters!';
 $_['error_product']             = 'Warning: This recurring profile cannot be deleted as it is currently assigned to %s products!';

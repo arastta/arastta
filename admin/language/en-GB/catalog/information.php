@@ -9,13 +9,8 @@
 
 // Heading
 $_['heading_title']          = 'Information';
-$_['column_status']          = 'Status';
 
 // Text
-$_['text_success']           = 'Success: You have modified information!';
-$_['text_list']              = 'Information List';
-$_['text_add']               = 'Add Information';
-$_['text_edit']              = 'Edit Information';
 $_['text_default']           = 'Default';
 $_['text_preview']           = 'View Information';
 
@@ -23,8 +18,6 @@ $_['text_new_information_seo']  = 'Add a title and description to see how this i
 
 // Column
 $_['column_title']           = 'Information Title';
-$_['column_sort_order']      = 'Sort Order';
-$_['column_action']          = 'Action';
 
 // Entry
 $_['entry_title']            = 'Information Title';
@@ -35,8 +28,6 @@ $_['entry_meta_keyword']     = 'Meta Tag Keywords';
 $_['entry_meta_description'] = 'Meta Tag Description';
 $_['entry_seo_url']          = 'SEO URL';
 $_['entry_bottom']           = 'Bottom';
-$_['entry_status']           = 'Status';
-$_['entry_sort_order']       = 'Sort Order';
 $_['entry_layout']           = 'Layout Override';
 
 // Help
@@ -45,7 +36,6 @@ $_['help_bottom']            = 'Display in the bottom footer.';
 
 // Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']       = 'Warning: You do not have permission to modify information!';
 $_['error_title']            = 'Information Title must be between 3 and 64 characters!';
 $_['error_description']      = 'Description must be more than 3 characters!';
 $_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';

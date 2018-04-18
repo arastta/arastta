@@ -12,8 +12,6 @@ $_['heading_title']                    = 'Settings';
 
 // Text
 $_['text_stores']                      = 'Stores';
-$_['text_success']                     = 'Success: You have modified settings!';
-$_['text_edit']                        = 'Edit Setting';
 $_['text_product']                     = 'Products';
 $_['text_review']                      = 'Reviews';
 $_['text_voucher']                     = 'Vouchers';
@@ -160,8 +158,6 @@ $_['entry_image_location']             = 'Store Image Size';
 $_['entry_image_maintenance']          = 'Maintenance Image Size';
 $_['entry_image_blog_post_list']       = 'Blog Post List Image Size';
 $_['entry_image_blog_post_form']       = 'Blog Post Detail Image Size';
-$_['entry_width']                      = 'Width';
-$_['entry_height']                     = 'Height';
 $_['entry_mail_protocol']              = 'Protocol';
 $_['entry_mail_sendmail_path']         = 'Sendmail Path';
 $_['entry_smtp_hostname']              = 'SMTP Host';
@@ -186,7 +182,6 @@ $_['entry_debug_system']               = 'Debug System';
 $_['entry_error_display']              = 'Display Errors';
 $_['entry_error_log']                  = 'Log Errors';
 $_['entry_error_filename']             = 'Error Log Filename';
-$_['entry_status']                     = 'Status';
 $_['entry_text_editor']                = 'Text Editor (Admin)';
 $_['entry_seo_url']                    = 'Use SEO URLs';
 $_['entry_seo_rewrite']                = 'Remove index.php';
@@ -357,7 +352,6 @@ $_['help_timezone']                    = 'Choose a city in the list to configure
 
 // Error
 $_['error_warning']                    = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']                 = 'Warning: You do not have permission to modify settings!';
 $_['error_name']                       = 'Store Name must be between 3 and 32 characters!';
 $_['error_owner']                      = 'Store Owner must be between 3 and 64 characters!';
 $_['error_address']                    = 'Store Address must be between 10 and 256 characters!';

@@ -11,10 +11,6 @@
 $_['heading_title']       = 'Product Returns';
 
 // Text
-$_['text_success']        = 'Success: You have modified returns!';
-$_['text_list']           = 'Product Return List';
-$_['text_add']            = 'Add Product Return';
-$_['text_edit']           = 'Edit Product Return';
 $_['text_opened']         = 'Opened';
 $_['text_unopened']       = 'Unopened';
 $_['text_order']          = 'Order Information';
@@ -27,12 +23,8 @@ $_['column_order_id']      = 'Order ID';
 $_['column_customer']      = 'Customer';
 $_['column_product']       = 'Product';
 $_['column_model']         = 'Model';
-$_['column_status']        = 'Status';
-$_['column_date_added']    = 'Date Added';
-$_['column_date_modified'] = 'Date Modified';
 $_['column_comment']       = 'Comment';
 $_['column_notify']        = 'Customer Notified';
-$_['column_action']        = 'Action';
 
 // Entry
 $_['entry_customer']      = 'Customer';
@@ -52,15 +44,12 @@ $_['entry_return_action'] = 'Return Action';
 $_['entry_return_status'] = 'Return Status';
 $_['entry_notify']        = 'Notify Customer';
 $_['entry_return_id']     = 'Return ID';
-$_['entry_date_added']    = 'Date Added';
-$_['entry_date_modified'] = 'Date Modified';
 
 // Help
 $_['help_product']        = '(Autocomplete)';
 
 // Error
 $_['error_warning']       = 'Warning: Please check the form carefully for errors!';
-$_['error_permission']    = 'Warning: You do not have permission to modify returns!';
 $_['error_order_id']      = 'Order ID required!';
 $_['error_firstname']     = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']      = 'Last Name must be between 1 and 32 characters!';

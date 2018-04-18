@@ -11,11 +11,7 @@
 $_['heading_title']             = 'Affiliates';
 
 // Text
-$_['text_success']              = 'Success: You have modified affiliates!';
 $_['text_approved']             = 'You have approved %s accounts!';
-$_['text_list']                 = 'Affiliate List';
-$_['text_add']                  = 'Add Affiliate';
-$_['text_edit']                 = 'Edit Affiliate';
 $_['text_balance']              = 'Balance';
 $_['text_cheque']               = 'Cheque';
 $_['text_paypal']               = 'PayPal';
@@ -26,12 +22,9 @@ $_['column_name']               = 'Affiliate Name';
 $_['column_email']              = 'E-Mail';
 $_['column_code']               = 'Tracking Code';
 $_['column_balance']            = 'Balance';
-$_['column_status']             = 'Status';
 $_['column_approved']           = 'Approved';
-$_['column_date_added']         = 'Date Added';
 $_['column_description']        = 'Description';
 $_['column_amount']             = 'Amount';
-$_['column_action']             = 'Action';
 
 // Entry
 $_['entry_firstname']           = 'First Name';
@@ -39,7 +32,6 @@ $_['entry_lastname']            = 'Last Name';
 $_['entry_email']               = 'E-Mail';
 $_['entry_telephone']           = 'Telephone';
 $_['entry_fax']                 = 'Fax';
-$_['entry_status']              = 'Status';
 $_['entry_password']            = 'Password';
 $_['entry_confirm']             = 'Confirm';
 $_['entry_company']             = 'Company';
@@ -65,7 +57,6 @@ $_['entry_amount']              = 'Amount';
 $_['entry_description']         = 'Description';
 $_['entry_name']                = 'Affiliate Name';
 $_['entry_approved']            = 'Approved';
-$_['entry_date_added']          = 'Date Added';
 $_['entry_send_email']          = 'Send Email';
 
 // Help
@@ -74,7 +65,6 @@ $_['help_commission']           = 'Percentage the affiliate receives on each ord
 $_['help_send_email']           = 'Send an information email to the affiliate after being saved.';
 
 // Error
-$_['error_permission']          = 'Warning: You do not have permission to modify affiliates!';
 $_['error_exists']              = 'Warning: E-Mail Address is already registered!';
 $_['error_firstname']           = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']            = 'Last Name must be between 1 and 32 characters!';

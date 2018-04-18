@@ -10,14 +10,8 @@
 // Heading
 $_['heading_title']                 = 'Woopra';
 
-// Text
-$_['text_success']                  = 'Success: You have modified Woopra!';
-$_['text_edit']                     = 'Edit Woopra';
-
 // Entry
 $_['entry_customer']                = 'Identify Customers';
-$_['entry_status']                  = 'Status';
 
 // Error
-$_['error_permission']              = 'Warning: You do not have permission to modify Woopra!';
 $_['error_code']                    = 'Warning: JavaScript code is reuqired!';

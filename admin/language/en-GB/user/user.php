@@ -11,10 +11,6 @@
 $_['heading_title']             = 'Users';
 
 // Text
-$_['text_success']              = 'Success: You have modified users!';
-$_['text_list']                 = 'User List';
-$_['text_add']                  = 'Add User';
-$_['text_edit']                 = 'Edit User';
 $_['text_theme_advanced']       = 'Advanced';
 $_['text_theme_basic']          = 'Basic';
 $_['text_show']                 = 'Show';
@@ -27,10 +23,7 @@ $_['column_firstname']          = 'First Name';
 $_['column_lastname']           = 'Last Name';
 $_['column_email']              = 'Email';
 $_['column_user_group']         = 'User Group';
-$_['column_status']             = 'Status';
-$_['column_date_added']         = 'Date Added';
 $_['column_date_login']         = 'Last Login Date';
-$_['column_action']             = 'Action';
 
 // Entry
 $_['entry_user_group']          = 'User Group';
@@ -40,7 +33,6 @@ $_['entry_firstname']           = 'First Name';
 $_['entry_lastname']            = 'Last Name';
 $_['entry_email']               = 'Email';
 $_['entry_image']               = 'Image';
-$_['entry_status']              = 'Status';
 $_['entry_enabled']             = 'Enabled';
 $_['entry_theme']               = 'Theme';
 $_['entry_admin_language']      = 'Admin Language';
@@ -49,7 +41,6 @@ $_['entry_twofactorauth']       = 'Two-Factor Authentication';
 $_['entry_basic_mode_message']  = 'Basic Mode Message';
 
 // Error
-$_['error_permission']          = 'Warning: You do not have permission to modify users!';
 $_['error_account']             = 'Warning: You can not delete your own account!';
 $_['error_email_exists']        = 'Warning: Email is already in use!';
 $_['error_email_short']         = 'Email must be higher than 3 characters!';

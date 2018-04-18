@@ -15,12 +15,6 @@ $_['entry_name']          = 'Module Name';
 $_['entry_category']      = 'Parent Category';
 $_['entry_root_category'] = '- Root Category -';
 $_['text_module']         = 'Modules';
-$_['text_success']        = 'Success: You have modified category home module!';
-$_['text_edit']           = 'Edit Category Home Module';
-
-// Entry
-$_['entry_status'] = 'Status';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify module category home module!';
 $_['error_name']       = 'Module Name must be between 3 and 64 characters!';

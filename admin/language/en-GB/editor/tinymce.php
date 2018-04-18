@@ -12,13 +12,10 @@ $_['heading_title']                     = 'TinyMCE';
 
 // Text
 $_['text_editor']                       = 'Editor';
-$_['text_success']                      = 'Success: You have modified TinyMCE editor!';
-$_['text_edit']                         = 'Edit TinyMCE';
 $_['text_menu']                         = 'Menu';
 $_['text_tool']                         = 'Toolbar';
 
 // Entry
-$_['entry_height']                       = 'Height';
 $_['entry_menubar']                      = 'Menubar';
 $_['entry_menu_edit_insertfile']         = 'Insert file';
 $_['entry_menu_edit_undo']               = 'Undo';
@@ -55,8 +52,6 @@ $_['entry_menu_tools_searchreplace']     = 'Find and replace';
 $_['entry_menu_tools_pagebreak']         = 'Page break';
 $_['entry_menu_tools_nonbreaking']       = 'Non-breaking space';
 $_['entry_menu_tools_emoticons']         = 'Emoticons';
-$_['entry_status']                       = 'Status';
-$_['entry_sort_order']                   = 'Sort order';
 
 // Tab
 $_['tab_advanced'] = 'Advanced';
@@ -78,6 +73,3 @@ $_['help_menu_file_indent']             = 'Show Increase Indent button.';
 $_['help_menu_insert_link']             = 'Show Insert/edit Link button.';
 $_['help_menu_insert_image']            = 'Show Insert/edit Image button.';
 $_['help_menu_tools_imagetools']        = 'Show Emoticons button.';
-
-// Error
-$_['error_permission']                  = 'Warning: You do not have permission to modify editor TinyMCE!';

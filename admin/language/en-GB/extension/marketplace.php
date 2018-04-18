@@ -14,7 +14,6 @@ $_['heading_title'] = 'Marketplace';
 $_['entry_api_key'] = 'API Key';
 
 // Text
-$_['text_success']           = 'Success: You have installed your add-on!';
 $_['text_uninstall_success'] = 'Success: You have uninstalled your add-on!';
 $_['text_login_api_key']     = 'Login with API Key';
 $_['text_login_email']       = 'Login with Email';
@@ -31,7 +30,6 @@ $_['button_login_marketplace'] = 'Log in to Marketplace';
 $_['help_api_key'] = 'Please insert your API Key in order to use Marketplace. If you do not have any, please, click the &quot;API Key&quot; link nearby this tooltip, login and create one.';
 
 // Error
-$_['error_permission']        = 'Warning: You do not have permission to modify modifications!';
 $_['error_warning']           = 'Warning: Please check the form carefully for errors!';
 $_['error_curl']              = 'Warning: cURL error %s(%s)!';
 $_['error_action']            = 'Warning: Could not complete this action!';

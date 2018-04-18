@@ -11,8 +11,6 @@
 $_['heading_title']             = 'Themes';
 
 // Text
-$_['text_success']              = 'Success: You have modified Theme!';
-$_['text_list']                 = 'Theme List';
 $_['text_form']                 = 'Theme Edit';
 
 $_['text_current']              = 'Current Theme';
@@ -31,6 +29,5 @@ $_['button_next']               = 'Show next theme';
 $_['button_close']              = 'Close';
 
 // Error
-$_['error_permission']          = 'Warning: You do not have permission to modify themes!';
 $_['error_warning']             = 'Warning: Please check the form carefully for errors!';
 $_['error_default_theme']       = 'Warning: You can not uninstall Default theme!';

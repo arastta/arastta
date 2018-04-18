@@ -12,11 +12,8 @@ $_['heading_title']                 = 'Summernote';
 
 // Text
 $_['text_editor']                   = 'Editor';
-$_['text_success']                  = 'Success: You have modified Summernote editor!';
-$_['text_edit']                     = 'Edit Summernote';
 
 // Entry
-$_['entry_height']                  = 'Height';
 $_['entry_tool_style']              = 'Style';
 $_['entry_tool_font_bold']          = 'Bold';
 $_['entry_tool_font_italic']        = 'Italic';
@@ -36,8 +33,6 @@ $_['entry_tool_insert_hr']          = 'Insert Horizontal Rule';
 $_['entry_tool_view_fullscreen']    = 'Full Screen';
 $_['entry_tool_view_codeview']      = 'Code View';
 $_['entry_tool_help']               = 'Help';
-$_['entry_status']                  = 'Status';
-$_['entry_sort_order']              = 'Sort Order';
 
 // Tab
 $_['tab_advanced']                  = 'Advanced';
@@ -63,6 +58,3 @@ $_['help_tool_insert_hr']           = 'Summernote Editor Tool Insert Horizontal 
 $_['help_tool_view_fullscreen']     = 'Summernote Editor Tool Insert Full Screen button.';
 $_['help_tool_view_codeview']       = 'Summernote Editor Tool Insert Code View button.';
 $_['help_tool_help']                = 'Summernote Editor Tool Help button.';
-
-// Error
-$_['error_permission']              = 'Warning: You do not have permission to modify editor Summernote!';
