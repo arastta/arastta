@@ -178,6 +178,11 @@ class ControllerCommonHeader extends Controller {
         $data['search'] = $this->load->controller('common/search');
         $data['cart'] = $this->load->controller('common/cart');
 
+        // Get Customizer settings
+        $this->load->model('appearance/customizer');
+
+        $data['customizer'] = $this->model_appearance_customizer->getDefaultData('customizer');
+
         // For page specific css
         if (isset($this->request->get['route'])) {
             if (isset($this->request->get['product_id'])) {
