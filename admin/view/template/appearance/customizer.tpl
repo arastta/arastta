@@ -47,7 +47,7 @@
             <div class="checkbox advance">
                 <label><input type="checkbox" id="advance-control" value=""><span><?php echo $text_advance; ?></span></label>
             </div>
-            <a class="customizer-controls-close" href="<?php echo $button_back;?>">
+            <a class="customizer-controls-close" href="<?php echo $cancel;?>">
                 <span class="screen-reader-text"><?php echo $entry_close; ?></span>
             </a>
             <span class="control-panel-back" tabindex="-1">

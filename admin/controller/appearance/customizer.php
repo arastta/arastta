@@ -113,6 +113,8 @@ class ControllerAppearanceCustomizer extends Controller
             $data['templates'][] = basename($directory);
         }
 
+        $data['cancel'] = $this->url->link('appearance/theme', 'token=' . $this->session->data['token'] . $url, 'SSL');
+
         $data['token'] = $this->session->data['token'];
 
         $this->response->setOutput($this->load->view('appearance/customizer.tpl', $data));
