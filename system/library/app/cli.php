@@ -29,7 +29,7 @@ class Cli extends App
         $this->registry->set('filesystem', $filesystem);
 
         // Config
-        $this->registry->set('config', new Object());
+        $this->registry->set('config', new BaseObject());
 
         // Loader
         $loader = new Loader($this->registry);
