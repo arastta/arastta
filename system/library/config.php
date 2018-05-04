@@ -13,7 +13,7 @@
  * @since       1.0
  * @deprecated  1.3 - Use the Object class instead
  */
-class Config extends Object
+class Config extends BaseObject
 {
 
     public function load($filename)

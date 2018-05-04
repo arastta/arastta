@@ -7,7 +7,7 @@
  * @link        https://arastta.org
  */
 
-class Url extends Object {
+class Url extends BaseObject {
 
     protected $domain;
     protected $ssl;

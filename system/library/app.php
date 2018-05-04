@@ -9,7 +9,7 @@
 
 use Joomla\Profiler\Profiler;
 
-class App extends Object
+class App extends BaseObject
 {
 
     protected $registry;

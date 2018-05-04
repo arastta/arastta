@@ -7,7 +7,7 @@
  * @link        https://arastta.org
  */
 
-class Route extends Object
+class Route extends BaseObject
 {
 
     protected $registry;

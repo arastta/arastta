@@ -9,7 +9,7 @@
 
 use Symfony\Component\Finder\Finder;
 
-class Trigger extends Object
+class Trigger extends BaseObject
 {
 
     protected $registry;

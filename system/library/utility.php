@@ -7,7 +7,7 @@
  * @link        https://arastta.org
  */
 
-class Utility extends Object
+class Utility extends BaseObject
 {
 
     protected $registry;

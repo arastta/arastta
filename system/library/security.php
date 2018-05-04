@@ -7,7 +7,7 @@
  * @link        https://arastta.org
  */
 
-class Security extends Object
+class Security extends BaseObject
 {
 
     protected $uri;
