@@ -59,7 +59,7 @@ class ModelToolSysteminfo extends Model
         $data['output_buffering']       = (bool) ini_get('output_buffering');
         $data['gd']                     = extension_loaded('gd');
         $data['curl']                   = extension_loaded('curl');
-        $data['mcrypt_encrypt']         = function_exists('mcrypt_encrypt');
+        $data['openssl_encrypt']         = function_exists('openssl_encrypt');
         $data['zip']                    = function_exists('zip_open') && function_exists('zip_read');
         $data['zlib']                   = extension_loaded('zlib');
         $data['mbstring']               = extension_loaded('mbstring');

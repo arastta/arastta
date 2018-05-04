@@ -50,8 +50,8 @@ class ModelMain extends Model
             $errors[] = 'Warning: cURL extension needs to be loaded!';
         }
 
-        if (!function_exists('mcrypt_encrypt')) {
-            $errors[] = 'Warning: mCrypt extension needs to be loaded!';
+        if (!function_exists('openssl_encrypt')) {
+            $errors[] = 'Warning: OpenSSL extension needs to be loaded!';
         }
 
         if (!extension_loaded('zlib')) {
