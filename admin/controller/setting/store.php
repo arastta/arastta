@@ -1125,4 +1125,12 @@ class ControllerSettingStore extends Controller {
                 'iso_code_3'        => $country_info['iso_code_3'],
                 'address_format'    => $country_info['address_format'],
                 'postcode_required' => $country_info['postcode_required'],
-                'zone'              => $this->model_localisation_zone->getZonesByCountryId($t
+                'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
+                'status'            => $country_info['status']	
+            );	
+        }	
+	
+        $this->response->addHeader('Content-Type: application/json');	
+        $this->response->setOutput(json_encode($json));	
+    }	
+}
