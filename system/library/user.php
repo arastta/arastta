@@ -7,7 +7,7 @@
  * @link        https://arastta.org
  */
 
-class User extends Object {
+class User extends BaseObject {
 
     protected $user_id;
     protected $username;

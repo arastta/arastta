@@ -7,7 +7,7 @@
  * @link        https://arastta.org
  */
 
-class Installer extends Object
+class Installer extends BaseObject
 {
 
     public function __construct($registry)

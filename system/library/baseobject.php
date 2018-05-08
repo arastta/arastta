@@ -7,7 +7,7 @@
  * @link        https://arastta.org
  */
 
-class Object
+class BaseObject
 {
 
     public function get($property, $default = null)

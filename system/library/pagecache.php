@@ -7,7 +7,7 @@
  * @link        https://arastta.org
  */
 
-class Pagecache extends Object
+class Pagecache extends BaseObject
 {
 
     protected $key = null;

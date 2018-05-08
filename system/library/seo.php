@@ -7,7 +7,7 @@
  * @link        https://arastta.org
  */
 
-class Seo extends Object
+class Seo extends BaseObject
 {
 
     protected $registry;

@@ -14,7 +14,7 @@ defined('AREXE') or die;
  *
  * @since  1.0
  */
-final class Version extends Object
+final class Version extends BaseObject
 {
 
     protected $name = 'Arastta';
