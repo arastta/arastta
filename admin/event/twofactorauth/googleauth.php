@@ -32,7 +32,7 @@ class EventTwofactorauthGoogleauth extends Event
         $secretcode = $this->request->post['secretcode'];
 
         if (!empty($secretcode) && (strlen($secretcode) == 6)) {
-            $key = $this->encryption->decrypt($params['twofactorauth']['googleauth']['key']);
+            $key = $this->encryption->decrypt($this->config->get('config_encryption'), $params['twofactorauth']['googleauth']['key']);
 
             $g = new \GAuth\Auth($key);
             $verify = $g->validateCode($secretcode);
@@ -63,7 +63,7 @@ class EventTwofactorauthGoogleauth extends Event
 
         $key = $data['params']['twofactorauth'][$method]['key'];
 
-        $data['params']['twofactorauth'][$method]['key'] = $this->encryption->encrypt($key);
+        $data['params']['twofactorauth'][$method]['key'] = $this->encryption->encrypt($this->config->get('config_encryption'), $key);
     }
 
     public function preAdminTwofactorauthDisplay(&$method, &$data, &$user_info)
@@ -75,7 +75,7 @@ class EventTwofactorauthGoogleauth extends Event
         $params = json_decode($user_info['params'], true);
 
         if (isset($params['twofactorauth']) && ($params['twofactorauth']['method'] == 'googleauth')) {
-            $data['key'] = $this->encryption->decrypt($params['twofactorauth'][$method]['key']);
+            $data['key'] = $this->encryption->decrypt($this->config->get('config_encryption'), $params['twofactorauth'][$method]['key']);
             $data['new'] = 0;
         } else {
             // Generate new key
