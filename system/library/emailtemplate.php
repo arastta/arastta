@@ -1199,7 +1199,7 @@ class Emailtemplate
         $html_data['text_total'] = $this->language->get('text_new_total');
         $html_data['text_footer'] = $this->language->get('text_new_footer');
 
-        $html_data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+        $html_data['logo'] = $order_info['store_url'] . 'image/' . $this->config->get('config_logo');
         $html_data['store_name'] = $order_info['store_name'];
         $html_data['store_url'] = $order_info['store_url'];
         $html_data['customer_id'] = $order_info['customer_id'];
