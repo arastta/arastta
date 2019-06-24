@@ -64,13 +64,6 @@ class ControllerCheckoutLogin extends Controller {
         $products = $this->cart->getProducts();
 
         foreach ($products as $product) {
-            // Validate cart has stock or pre-order
-            if ($product['preorder'] || $product['stock'] || $this->config->get('config_stock_checkout')) {
-                continue;
-            } else if ((!$product['preorder'] || !$product['stock'])) {
-                $json['redirect'] = $this->url->link('checkout/cart');
-            }
-
             // Validate minimum quantity requirements.
             $product_total = 0;
 
@@ -81,6 +74,15 @@ class ControllerCheckoutLogin extends Controller {
             }
 
             if ($product['minimum'] > $product_total) {
+                $json['redirect'] = $this->url->link('checkout/cart');
+
+                break;
+            }
+
+            // Validate cart has stock or pre-order
+            if ($product['preorder'] || $product['stock'] || $this->config->get('config_stock_checkout')) {
+                continue;
+            } else if ((!$product['preorder'] || !$product['stock'])) {
                 $json['redirect'] = $this->url->link('checkout/cart');
 
                 break;
