@@ -141,16 +141,6 @@ class ControllerApiCart extends Controller {
             $products = $this->cart->getProducts();
 
             foreach ($products as $product) {
-                if (!$product['preorder'] && !$product['stock'] && !$this->config->get('config_stock_checkout')) {
-                    $json['error_warning'] = sprintf($this->language->get('error_stock'), $this->language->get('text_sold_out'));
-                } else if (!$product['preorder'] && !$product['stock'] && ($this->config->get('config_stock_checkout') && $this->config->get('config_stock_warning'))) {
-                    $json['error_warning'] = sprintf($this->language->get('error_stock_checkout'), $this->language->get('text_sold_out'));
-                }
-
-                if ($product['preorder']) {
-                    $json['attention'] = sprintf($this->language->get('error_stock_preorder'), $this->language->get('text_preorder'));
-                }
-
                 $product_total = 0;
 
                 foreach ($products as $product_2) {
@@ -161,6 +151,16 @@ class ControllerApiCart extends Controller {
 
                 if ($product['minimum'] > $product_total) {
                     $json['error']['minimum'][] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+                }
+
+                if (!$product['preorder'] && !$product['stock'] && !$this->config->get('config_stock_checkout')) {
+                    $json['error_warning'] = sprintf($this->language->get('error_stock'), $this->language->get('text_sold_out'));
+                } else if (!$product['preorder'] && !$product['stock'] && ($this->config->get('config_stock_checkout') && $this->config->get('config_stock_warning'))) {
+                    $json['error_warning'] = sprintf($this->language->get('error_stock_checkout'), $this->language->get('text_sold_out'));
+                }
+
+                if ($product['preorder']) {
+                    $json['attention'] = sprintf($this->language->get('error_stock_preorder'), $this->language->get('text_preorder'));
                 }
 
                 $option_data = array();
