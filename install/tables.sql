@@ -2329,6 +2329,7 @@ CREATE TABLE IF NOT EXISTS `ar_product` (
   `length_class_id` int(11) NOT NULL DEFAULT '0',
   `subtract` tinyint(1) NOT NULL DEFAULT '1',
   `minimum` int(11) NOT NULL DEFAULT '1',
+  `maximum` int(11) NOT NULL DEFAULT '0',
   `sort_order` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `viewed` int(5) NOT NULL DEFAULT '0',

@@ -53,7 +53,7 @@ class ControllerApiOrder extends Controller {
                 $json['error'] = $this->language->get('error_stock');
             }
 
-            // Validate minimum quantity requirements.
+            // Validate minimum and maximum quantity requirements.
             $products = $this->cart->getProducts();
 
             foreach ($products as $product) {
@@ -67,6 +67,12 @@ class ControllerApiOrder extends Controller {
 
                 if ($product['minimum'] > $product_total) {
                     $json['error'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+
+                    break;
+                }
+
+                if ($product['maximum'] != 0 && $product['maximum'] < $product_total) {
+                    $json['error'] = sprintf($this->language->get('error_maximum'), $product['name'], $product['maximum']);
 
                     break;
                 }
@@ -385,7 +391,7 @@ class ControllerApiOrder extends Controller {
                     $json['error'] = $this->language->get('error_stock');
                 }
 
-                // Validate minimum quantity requirements.
+                // Validate minimum and maximum quantity requirements.
                 $products = $this->cart->getProducts();
 
                 foreach ($products as $product) {
@@ -399,6 +405,12 @@ class ControllerApiOrder extends Controller {
 
                     if ($product['minimum'] > $product_total) {
                         $json['error'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+
+                        break;
+                    }
+
+                    if ($product['maximum'] != 0 && $product['maximum'] < $product_total) {
+                        $json['error'] = sprintf($this->language->get('error_maximum'), $product['name'], $product['maximum']);
 
                         break;
                     }

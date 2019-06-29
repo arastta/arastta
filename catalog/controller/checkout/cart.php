@@ -96,6 +96,10 @@ class ControllerCheckoutCart extends Controller {
                     $data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
                 }
 
+                if ($product['maximum'] != 0 && $product['maximum'] < $product_total) {
+                    $data['error_warning'] = sprintf($this->language->get('error_maximum'), $product['name'], $product['maximum']);
+                }
+
                 if ($product['image']) {
                     $image = $this->model_tool_image->resize($product['image'], $this->config->get('config_image_cart_width'), $this->config->get('config_image_cart_height'));
                 } else {

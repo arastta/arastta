@@ -137,7 +137,7 @@ class ControllerCheckoutRegister extends Controller {
         $products = $this->cart->getProducts();
 
         foreach ($products as $product) {
-            // Validate minimum quantity requirements.
+            // Validate minimum and maximum quantity requirements.
             $product_total = 0;
 
             foreach ($products as $product_2) {
@@ -147,6 +147,12 @@ class ControllerCheckoutRegister extends Controller {
             }
 
             if ($product['minimum'] > $product_total) {
+                $json['redirect'] = $this->url->link('checkout/cart');
+
+                break;
+            }
+
+            if ($product['maximum'] != 0 && $product['maximum'] < $product_total) {
                 $json['redirect'] = $this->url->link('checkout/cart');
 
                 break;

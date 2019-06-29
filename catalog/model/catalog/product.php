@@ -57,6 +57,7 @@ class ModelCatalogProduct extends Model {
                 'rating'           => round($query->row['rating']),
                 'reviews'          => $query->row['reviews'] ? $query->row['reviews'] : 0,
                 'minimum'          => $query->row['minimum'],
+                'maximum'          => $query->row['maximum'],
                 'sort_order'       => $query->row['sort_order'],
                 'status'           => $query->row['status'],
                 'date_added'       => $query->row['date_added'],

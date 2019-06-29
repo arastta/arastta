@@ -153,6 +153,10 @@ class ControllerApiCart extends Controller {
                     $json['error']['minimum'][] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
                 }
 
+                if ($product['maximum'] != 0 && $product['maximum'] < $product_total) {
+                    $json['error']['maximum'][] = sprintf($this->language->get('error_maximum'), $product['name'], $product['maximum']);
+                }
+
                 if (!$product['preorder'] && !$product['stock'] && !$this->config->get('config_stock_checkout')) {
                     $json['error_warning'] = sprintf($this->language->get('error_stock'), $this->language->get('text_sold_out'));
                 } else if (!$product['preorder'] && !$product['stock'] && ($this->config->get('config_stock_checkout') && $this->config->get('config_stock_warning'))) {

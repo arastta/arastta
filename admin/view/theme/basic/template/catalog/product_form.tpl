@@ -635,6 +635,7 @@
             <input type="hidden" name="mpn" value="<?php echo $mpn; ?>" placeholder="<?php echo $entry_mpn; ?>" id="input-mpn" class="form-control" />
             <input type="hidden" name="location" value="<?php echo $location; ?>" placeholder="<?php echo $entry_location; ?>" id="input-location" class="form-control" />
             <input type="hidden" name="minimum" value="<?php echo $minimum; ?>" placeholder="<?php echo $entry_minimum; ?>" id="input-minimum" class="form-control" />
+            <input type="hidden" name="maximum" value="<?php echo $maximum; ?>" placeholder="<?php echo $entry_maximum; ?>" id="input-maximum" class="form-control" />
             <select name="subtract" id="input-subtract" class="form-control hidden">
                 <?php if ($subtract) { ?>
                 <option value="1" selected="selected"><?php echo $text_yes; ?></option>
