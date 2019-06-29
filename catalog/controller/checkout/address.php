@@ -75,6 +75,8 @@ class ControllerCheckoutAddress extends Controller
                 continue;
             } else if ((!$product['preorder'] || !$product['stock'])) {
                 $json['redirect'] = $this->url->link('checkout/cart');
+
+                break;
             }
         }
 
