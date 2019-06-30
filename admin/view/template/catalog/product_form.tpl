@@ -184,6 +184,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-2 control-label" for="input-maximum"><span data-toggle="tooltip" title="<?php echo $help_maximum; ?>"><?php echo $entry_maximum; ?></span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="maximum" value="<?php echo $maximum; ?>" placeholder="<?php echo $entry_maximum; ?>" id="input-maximum" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-subtract"><?php echo $entry_subtract; ?></label>
                                 <div class="col-sm-10">
                                     <select name="subtract" id="input-subtract" class="form-control">

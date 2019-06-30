@@ -49,6 +49,7 @@ $_['error_stock']              = 'Products marked with <strong>%s</strong> are n
 $_['error_stock_checkout']     = 'Products marked with <strong>%s</strong> are not available in the desired quantity, or not in stock. You can continue the checkout process, and they will be delivered as soon as they get in.';
 $_['error_stock_preorder']     = 'Products marked with <strong>%s</strong> are not available in the desired quantity, or not in stock, they will be delivered as soon as they get in.';
 $_['error_minimum']            = 'Minimum order amount for %s is %s!';
+$_['error_maximum']            = 'Maximum order amount for %s is %s!';
 $_['error_required']           = '%s required!';
 $_['error_product']            = 'Warning: There are no products in your cart!';
 $_['error_recurring_required'] = 'Please select a payment recurring!';

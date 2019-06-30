@@ -336,6 +336,9 @@
                         <?php if ($minimum > 1) { ?>
                         <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_minimum; ?></div>
                         <?php } ?>
+                        <?php if ($maximum != 0) { ?>
+                        <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_maximum; ?></div>
+                        <?php } ?>
                     </div>
                     <?php if ($review_status) { ?>
                     <div class="rating">

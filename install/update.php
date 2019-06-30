@@ -931,4 +931,6 @@ if (version_compare(VERSION, '1.6.0', '<')) {
 // 1.7.0 changes;
 if (version_compare(VERSION, '1.7.0', '<')) {
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "setting` MODIFY `code` VARCHAR(64) NOT NULL");
+
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "product` ADD `maximum` INT(11) NOT NULL DEFAULT '0' AFTER `minimum`");
 }

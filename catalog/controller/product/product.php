@@ -248,6 +248,7 @@ class ControllerProductProduct extends Controller {
             $data['text_tax'] = $this->language->get('text_tax');
             $data['text_option'] = $this->language->get('text_option');
             $data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
+            $data['text_maximum'] = sprintf($this->language->get('text_maximum'), $product_info['maximum']);
             $data['text_write'] = $this->language->get('text_write');
             $data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
             $data['text_note'] = $this->language->get('text_note');
@@ -389,6 +390,12 @@ class ControllerProductProduct extends Controller {
                 $data['minimum'] = $product_info['minimum'];
             } else {
                 $data['minimum'] = 1;
+            }
+
+            if ($product_info['maximum']) {
+                $data['maximum'] = $product_info['maximum'];
+            } else {
+                $data['maximum'] = 0;
             }
 
             $data['review_status'] = $this->config->get('config_review_status');
