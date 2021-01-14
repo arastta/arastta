@@ -22,7 +22,7 @@
             </ul>
         </div>
         <input type="hidden" name="code" value="" />
-        <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
+        <input type="hidden" name="redirect" value="<?php echo htmlentities($redirect); ?>" />
     </form>
 </div>
 <?php } ?>
