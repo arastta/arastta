@@ -88,7 +88,7 @@ if ($theme_config->get('logo_width') == 12) {
     <?php } ?>
     <?php echo $google_analytics; ?>
 </head>
-<body class="<?php echo $class; ?>">
+<body class="<?php echo htmlentities($class); ?>">
   
 <nav id="top">
     <div class="container">
